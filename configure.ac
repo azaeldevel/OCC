@@ -1,7 +1,5 @@
-dnl Process this file with autoconf to produce a configure script.
-dnl Created by Anjuta application wizard.
 
-AC_INIT(cc, 0.1.0-alpha)
+AC_INIT(cc, 0.1.0-alpha,azael.devel@gmailo.com)
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -10,7 +8,7 @@ AM_INIT_AUTOMAKE([1.11])
 AM_SILENT_RULES([yes])
 
 AC_PROG_CXX
-
+AX_CXX_COMPILE_STDCXX(20)
 
 
 
@@ -25,16 +23,23 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
 AM_GLIB_GNU_GETTEXT
 
 
+LT_INIT
 
+AM_CONDITIONAL(WITH_TESTS, test x"$with_tests" = "xyes")
+AC_ARG_WITH([tests], AS_HELP_STRING([--with-tests], [Compilando con soporte para Tests]))
+if test "x$with_tests" = "xyes"; then 
+	PKG_CHECK_MODULES(CUNIT,cunit)
+fi
 
-
-
+PKG_CHECK_MODULES(OCTETOS_CC, [octetos-core])
 
 
 
 
 AC_OUTPUT([
 Makefile
-src/Makefile
+core/Makefile
 po/Makefile.in
+core/octetos-cc.pc
+tests/Makefile
 ])
