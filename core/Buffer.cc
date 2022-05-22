@@ -20,7 +20,7 @@
 #include "Buffer.hh"
 #include "Exception.hh"
 
-#include <iostream>
+//#include <iostream>
 #include <fstream>
 
 namespace oct::cc
@@ -38,7 +38,12 @@ Buffer::Buffer(const std::filesystem::path& file) : buffer(NULL)
 	std::ifstream sfile;
 	sfile.rdbuf()->pubsetbuf(buffer,size);
 	sfile.open (file);
-	std::cout << sfile.rdbuf();
+	//std::cout << sfile.rdbuf();
+}
+
+Buffer::~Buffer()
+{
+	if(buffer) delete[] buffer;
 }
 
 }

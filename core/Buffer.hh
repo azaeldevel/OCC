@@ -36,6 +36,7 @@ class Buffer
 {
 public:
 	Buffer(const std::filesystem::path& file);
+	~Buffer();
 
 	
 private:
