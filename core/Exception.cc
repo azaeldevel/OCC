@@ -46,6 +46,8 @@ const char* Exception::what () const throw ()
 		return "No error.";
 	case Errors::FILE_TERGET_NOT_FOUND:
 		return "Archivo objetivo no encontrado";
+	case Errors::INDEX_OUT_OF_RANGE:
+		return "Indice furea de rango";
 	default:
 		return "Error desconocido.";
 	}

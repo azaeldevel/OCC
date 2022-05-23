@@ -53,6 +53,7 @@ public:
 	{
 		NO_ERROR,
 		FILE_TERGET_NOT_FOUND,
+		INDEX_OUT_OF_RANGE,
 	};
 
 public:

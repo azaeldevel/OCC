@@ -24,10 +24,12 @@
 
 #include <filesystem>
 #include <list>
+#include <fstream>
 
 namespace oct::cc
 {
 
+typedef char symbol;
 /**
 *\brief
 *
@@ -38,9 +40,16 @@ public:
 	Buffer(const std::filesystem::path& file);
 	~Buffer();
 
+	explicit operator const symbol*()const;
+	char operator[](unsigned int)const;
+
+	std::uintmax_t size() const;
 	
 private:
-	char* buffer;
+	symbol* buffer;
+	std::uintmax_t _size;
+	std::ifstream sfile;
+	std::filebuf* pbuf;
 };
 
 
