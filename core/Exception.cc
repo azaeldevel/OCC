@@ -48,6 +48,10 @@ const char* Exception::what () const throw ()
 		return "Archivo objetivo no encontrado";
 	case Errors::INDEX_OUT_OF_RANGE:
 		return "Indice furea de rango";
+	case Errors::DESSYNCHRONIZATION_BUFEER_SENTINEL:
+		return "Los sentinelas del buffer no cumplem con el criterio de sincrinizacion";
+	case Errors::NEGATIVE_STRING:
+		return "Secuencia negativa de caracteres";
 	default:
 		return "Error desconocido.";
 	}

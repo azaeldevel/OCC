@@ -1,6 +1,3 @@
 start:
-	mov     $1, %rax
-	mov     $1, %rdi
-	mov     $message, %rsi
-	mov     $13, %rdx
-	syscall  
+	mov    #Hx15, @ax;
+	mov    #0xA1, @di;
