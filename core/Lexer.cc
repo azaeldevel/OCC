@@ -28,9 +28,9 @@
 namespace oct::cc
 {
 
-Lexer::Token::Token(const Buffer& buffer, std::uintmax_t b, std::uintmax_t e,Type t) : type(t), text(NULL)
+Lexer::Token::Token(const Buffer& buffer, std::uintmax_t begin, std::uintmax_t end,Type t) : type(t), text(NULL)
 {
-	copy(buffer,b,e);
+	copy(buffer,begin,end);
 }
 Lexer::Token::~Token()
 {
@@ -74,20 +74,17 @@ void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax
 
 
 
-Lexer::Lexer(const std::filesystem::path& f) : buffer(f),begin(0),end(0),tray(NULL)
+Lexer::Lexer(const std::filesystem::path& f) : buffer(f), begin(0), end(0), tray(NULL)
 {
 }
 
 Lexer::~Lexer()
 {
-	
 }
 Lexer::Token* Lexer::build(Lexer::Token::Type type)
 {
-	Lexer::Token* tok = new Lexer::Token(buffer,begin,end,type);
-	end++;
-	begin = end;
-		
+	Lexer::Token* tok = new Lexer::Token(buffer,begin,end,type);	
+	begin = ++end;		
 	return tok;
 }
 Lexer::Token* Lexer::next()
@@ -103,68 +100,59 @@ Lexer::Token* Lexer::next()
 	//spacies
 	if(buffer[begin] == ' ')
 	{
-		while(buffer[end] == ' ' and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(buffer[end] == ' ' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating Space\n";
+		//std::cout << "Creating Space\n";
 		return build(Lexer::Token::Type::Space);
 	}
 	else if(buffer[begin] == '\n')
 	{
-		while(buffer[end] == '\n' and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(buffer[end] == '\n' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating NewLine\n";
+		//std::cout << "Creating NewLine\n";
 		return build(Lexer::Token::Type::NewLine);
 	}	
 	else if(buffer[begin] == '\t')
 	{
-		while(buffer[end] == '\t' and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(buffer[end] == '\t' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating Tabulador\n";
+		//std::cout << "Creating Tabulador\n";
 		return build(Lexer::Token::Type::Tabulator);
 	}
 
-	/*if(is_symbol(buffer[begin]) and begin == end)
+	//
+	if(is_symbol(buffer[begin]) and begin == end)
 	{
+		std::cout << "Creating Symbol\n";
 		return build(Lexer::Token::Type::Symbol);
-	}*/
+	}
 
 
 	//number
 	if(is_digit(buffer[begin]))
 	{
-		while(not is_blank_space(buffer[end]) and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(not is_blank_space(buffer[end]) and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating Number\n";
+		//std::cout << "Creating Number\n";
 		return build(Lexer::Token::Type::Number);
 	}
 	else if(is_base_prefix(buffer[begin]) and buffer[begin + 1] == 'x') //es numero con base especificada
 	{
-		while(not is_blank_space(buffer[end]) and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(not is_blank_space(buffer[end]) and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating Number\n";
+		//std::cout << "Creating Number\n";
 		return build(Lexer::Token::Type::Number);
 	}
 
 	//identifier
 	if(is_letter(buffer[begin]))
 	{
-		while((is_letter(buffer[end]) or is_digit(buffer[end])) and end < buffer.size()) end++;
-		//if(buffer[end] == 0) end--;		
+		while((is_letter(buffer[end]) or is_digit(buffer[end])) and end < buffer.size()) 
+		{
+			end++;
+			std::cout << "end = " << end << "\n";
+		}
+		if(buffer[end] == 0) end--;		
 		std::cout << "Creating Identifier\n";
 		return build(Lexer::Token::Type::Identifier);
 	}
@@ -172,12 +160,9 @@ Lexer::Token* Lexer::next()
 	//String
 	if(buffer[begin] == '"')
 	{
-		while(buffer[begin] != '"' and end < buffer.size()) 
-		{
-			end++;
-		}
+		while(buffer[begin] != '"' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating String\n";
+		//std::cout << "Creating String\n";
 		return build(Lexer::Token::Type::String);
 	}
 
@@ -187,6 +172,12 @@ Lexer::Token* Lexer::next()
 
 	//Desconocido
 	
+	if(buffer[begin] != 0)
+	{
+		while(buffer[end] != 0 and not is_blank_space(buffer[end]) and end < buffer.size()) end++;
+		if(buffer[end] == 0) end--;
+		return build(Lexer::Token::Type::Unknow);
+	}
 	
 	return NULL;
 }

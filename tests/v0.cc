@@ -32,13 +32,11 @@ void v0_developing()
 
 
 	Lexer lexer("../../tests/prg1.cc.asm");
-	Lexer::Token* token = NULL;
-	token = lexer.next();
+	Lexer::Token* token = lexer.next();
 	while(token)
 	{
 		std::cout << "Token : '" << token->get_text() << "'\n";
 		
 		token = lexer.next();
 	}
-	;
 }
