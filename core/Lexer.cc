@@ -61,7 +61,9 @@ void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax
 	text = new char[leng + 1];
 	for(std::uintmax_t i = 0; i < leng; i++)
 	{
-		text[i] = buffer[i];
+		std::cout << " i = " << i << "\n";
+		std::cout << " c = " << buffer[i] << "\n";
+		text[i] = buffer[begin + i];
 	}
 	text[leng] = 0;
 }
@@ -83,8 +85,18 @@ Lexer::~Lexer()
 }
 Lexer::Token* Lexer::build(Lexer::Token::Type type)
 {
+	std::cout << "Lexer::build() - 1\n";
+	std::cout << "\tbegin = " << begin << "\n";
+	std::cout << "\tend = " << end << "\n";
+	std::cout << "\tsize = " << buffer.size() << "\n";
+	
 	Lexer::Token* tok = new Lexer::Token(buffer,begin,end,type);	
-	begin = ++end;		
+	begin = ++end;
+	
+	std::cout << "Lexer::build() - 2\n";
+	std::cout << "\tbegin = " << begin << "\n";
+	std::cout << "\tend = " << end << "\n";
+	std::cout << "\tsize = " << buffer.size() << "\n";
 	return tok;
 }
 Lexer::Token* Lexer::next()
@@ -92,10 +104,11 @@ Lexer::Token* Lexer::next()
 	//if(begin != end) throw Exception(Exception::DESSYNCHRONIZATION_BUFEER_SENTINEL,__FILE__,__LINE__);
 	if(end >= buffer.size()) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 
-	std::cout << "Lexer::next()\n";
-	std::cout << "\tbegin = " << begin << "\n";
-	std::cout << "\tend = " << end << "\n";
-	std::cout << "\tsize = " << buffer.size() << "\n";
+	//std::cout << "Lexer::next()\n";
+	//std::cout << "\tbegin = " << begin << "\n";
+	//std::cout << "\tend = " << end << "\n";
+	//std::cout << "\tsize = " << buffer.size() << "\n";
+	//std::cout << "\tbuffer[begin] = " << buffer[begin] << "\n";
 	
 	//spacies
 	if(buffer[begin] == ' ')
@@ -123,7 +136,7 @@ Lexer::Token* Lexer::next()
 	//
 	if(is_symbol(buffer[begin]) and begin == end)
 	{
-		std::cout << "Creating Symbol\n";
+		//std::cout << "Creating Symbol\n";
 		return build(Lexer::Token::Type::Symbol);
 	}
 
@@ -150,7 +163,7 @@ Lexer::Token* Lexer::next()
 		while((is_letter(buffer[end]) or is_digit(buffer[end])) and end < buffer.size()) 
 		{
 			end++;
-			std::cout << "end = " << end << "\n";
+			//std::cout << "end = " << end << "\n";
 		}
 		if(buffer[end] == 0) end--;		
 		std::cout << "Creating Identifier\n";
@@ -168,10 +181,11 @@ Lexer::Token* Lexer::next()
 
 	//Comment
 	
+	
 	//Symbol
+	
 
 	//Desconocido
-	
 	if(buffer[begin] != 0)
 	{
 		while(buffer[end] != 0 and not is_blank_space(buffer[end]) and end < buffer.size()) end++;

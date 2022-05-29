@@ -1,8 +1,6 @@
 
-
 #ifndef OCTETOS_CC_LEXER_HH
 #define OCTETOS_CC_LEXER_HH
-
 
 /*
  * Lexer.hh
