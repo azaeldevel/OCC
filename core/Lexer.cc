@@ -205,11 +205,21 @@ Lexer::Token* Lexer::next()
 		return build(Lexer::Token::Type::String);
 	}
 
-	//Comment
-	
-	
-	//Symbol
-	
+	//Comment	
+	if(buffer[begin] == '/' and buffer[begin + 1] == '/')
+	{
+		while(buffer[end] != '\n' and end < buffer.size()) end++;
+		if(buffer[end] == 0) end--;
+		//std::cout << "Creating String\n";
+		return build(Lexer::Token::Type::Comment);
+	}
+	else if(buffer[begin] == '/' and buffer[begin + 1] == '*')
+	{
+		while(buffer[end] == '*' and buffer[end + 1] == '/' and  end < buffer.size()) end++;
+		if(buffer[end] == 0) end--;
+		//std::cout << "Creating String\n";
+		return build(Lexer::Token::Type::Comment);
+	}	
 	
 	//Desconocido
 	if(buffer[begin] != 0)
@@ -219,7 +229,7 @@ Lexer::Token* Lexer::next()
 		return build(Lexer::Token::Type::Unknow);
 	}
 	
-	return NULL;
+	if(begin != end) throw Exception(Exception::UNCLASIFIED,__FILE__,__LINE__);
 }
 bool Lexer::is_letter(char c)
 {

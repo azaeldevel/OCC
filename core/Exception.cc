@@ -54,6 +54,8 @@ const char* Exception::what () const throw ()
 		return "Secuencia negativa de caracteres";
 	case Errors::NULL_STRING:
 		return "Null string";
+	case Errors::UNCLASIFIED:
+		return "El token no se logro clasificar";
 	default:
 		return "Error desconocido.";
 	}
