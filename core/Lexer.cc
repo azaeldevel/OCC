@@ -137,7 +137,7 @@ Lexer::Token* Lexer::build(Lexer::Token::Type type)
 Lexer::Token* Lexer::next()
 {
 	//if(begin != end) throw Exception(Exception::DESSYNCHRONIZATION_BUFEER_SENTINEL,__FILE__,__LINE__);
-	if(end >= buffer.size()) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+	if(end >= buffer.size()) return NULL;
 
 	/*
 	std::cout << "Lexer::next()\n";
