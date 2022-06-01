@@ -152,7 +152,7 @@ Lexer::Token* Lexer::next()
 	{
 		while(buffer[end] == ' ' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		std::cout << "Creating Space\n";
+		//std::cout << "Creating Space\n";
 		return build(Lexer::Token::Type::Space);
 	}
 	else if(buffer[begin] == '\n')
@@ -171,7 +171,7 @@ Lexer::Token* Lexer::next()
 	}
 
 	//
-	if(is_symbol(buffer[begin]) and begin == end)
+	if(is_symbol(buffer[begin]) and end < buffer.size())
 	{
 		//std::cout << "Creating Symbol\n";
 		return build(Lexer::Token::Type::Symbol);
@@ -293,7 +293,6 @@ Lexer::~Lexer()
 Lexer::Token* Lexer::next()
 {
 	//
-	if(is_insts())
 	
 	//
 	if(buffer[begin] == '#' and is_base_prefix(buffer[begin + 1]) and buffer[begin + 2] == 'x') //es numero con base especificada
