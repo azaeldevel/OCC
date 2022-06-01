@@ -21,9 +21,9 @@
 #include "Exception.hh"
 #include "Lexer.hh"
 
-
+#include <string.h>
 #include <iostream>
-
+#include <algorithm>
 
 namespace oct::cc
 {
@@ -50,19 +50,48 @@ Lexer::Token::Type Lexer::Token::get_type() const
 {
 	return type;
 }
+const char * Lexer::Token::get_type_string()const
+{
+	switch(type)
+	{
+	case Type::Number:
+		return "Number";
+	case Type::Identifier:
+		return "Identifier";
+	case Type::Space:
+		return "Space";
+	case Type::NewLine:
+		return "NewLine";
+	case Type::Tabulator:
+		return "Tabulator";
+	case Type::keyword:
+		return "keyword";
+	case Type::String:
+		return "String";
+	case Type::Comment:
+		return "Comment";
+	case Type::Symbol:
+		return "Symbol";
+	default:
+		return "Unknow";
+	}
+
+	return "Unknow";
+}
 
 
 
 void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax_t end)
 {
 	if(end < begin) throw Exception(Exception::NEGATIVE_STRING,__FILE__,__LINE__);
+	if(end == begin) throw Exception(Exception::NULL_STRING,__FILE__,__LINE__);
 	
-	std::uintmax_t leng = (end == begin ? 1 : end - begin);
+	std::uintmax_t leng = end - begin;
 	text = new char[leng + 1];
 	for(std::uintmax_t i = 0; i < leng; i++)
 	{
-		std::cout << " i = " << i << "\n";
-		std::cout << " c = " << buffer[i] << "\n";
+		//|std::cout << " i = " << i << "\n";
+		//|std::cout << " c = " << buffer[i] << "\n";
 		text[i] = buffer[begin + i];
 	}
 	text[leng] = 0;
@@ -76,7 +105,7 @@ void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax
 
 
 
-Lexer::Lexer(const std::filesystem::path& f) : buffer(f), begin(0), end(0), tray(NULL)
+Lexer::Lexer(const std::filesystem::path& f,const Tray* t) : buffer(f), begin(0), end(1), tray(t)
 {
 }
 
@@ -85,18 +114,24 @@ Lexer::~Lexer()
 }
 Lexer::Token* Lexer::build(Lexer::Token::Type type)
 {
+	/*
 	std::cout << "Lexer::build() - 1\n";
 	std::cout << "\tbegin = " << begin << "\n";
 	std::cout << "\tend = " << end << "\n";
 	std::cout << "\tsize = " << buffer.size() << "\n";
+	*/
 	
 	Lexer::Token* tok = new Lexer::Token(buffer,begin,end,type);	
-	begin = ++end;
+	begin = end;
+	++end;
 	
+	/*
 	std::cout << "Lexer::build() - 2\n";
 	std::cout << "\tbegin = " << begin << "\n";
 	std::cout << "\tend = " << end << "\n";
 	std::cout << "\tsize = " << buffer.size() << "\n";
+	*/
+	
 	return tok;
 }
 Lexer::Token* Lexer::next()
@@ -104,18 +139,20 @@ Lexer::Token* Lexer::next()
 	//if(begin != end) throw Exception(Exception::DESSYNCHRONIZATION_BUFEER_SENTINEL,__FILE__,__LINE__);
 	if(end >= buffer.size()) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 
-	//std::cout << "Lexer::next()\n";
-	//std::cout << "\tbegin = " << begin << "\n";
-	//std::cout << "\tend = " << end << "\n";
-	//std::cout << "\tsize = " << buffer.size() << "\n";
-	//std::cout << "\tbuffer[begin] = " << buffer[begin] << "\n";
+	/*
+	std::cout << "Lexer::next()\n";
+	std::cout << "\tbegin = " << begin << "\n";
+	std::cout << "\tend = " << end << "\n";
+	std::cout << "\tsize = " << buffer.size() << "\n";
+	std::cout << "\tbuffer[begin] = " << buffer[begin] << "\n";
+	*/
 	
 	//spacies
 	if(buffer[begin] == ' ')
 	{
 		while(buffer[end] == ' ' and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
-		//std::cout << "Creating Space\n";
+		std::cout << "Creating Space\n";
 		return build(Lexer::Token::Type::Space);
 	}
 	else if(buffer[begin] == '\n')
@@ -144,31 +181,20 @@ Lexer::Token* Lexer::next()
 	//number
 	if(is_digit(buffer[begin]))
 	{
-		while(not is_blank_space(buffer[end]) and end < buffer.size()) end++;
-		if(buffer[end] == 0) end--;
-		//std::cout << "Creating Number\n";
-		return build(Lexer::Token::Type::Number);
-	}
-	else if(is_base_prefix(buffer[begin]) and buffer[begin + 1] == 'x') //es numero con base especificada
-	{
-		while(not is_blank_space(buffer[end]) and end < buffer.size()) end++;
+		while(is_digit(buffer[end]) and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
 		//std::cout << "Creating Number\n";
 		return build(Lexer::Token::Type::Number);
 	}
 
 	//identifier
-	if(is_letter(buffer[begin]))
+	/*if(is_letter(buffer[begin]))
 	{
-		while((is_letter(buffer[end]) or is_digit(buffer[end])) and end < buffer.size()) 
-		{
-			end++;
-			//std::cout << "end = " << end << "\n";
-		}
+		while((is_letter(buffer[end]) or is_digit(buffer[end])) and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;		
-		std::cout << "Creating Identifier\n";
+		//std::cout << "Creating Identifier\n";
 		return build(Lexer::Token::Type::Identifier);
-	}
+	}*/
 
 	//String
 	if(buffer[begin] == '"')
@@ -184,18 +210,17 @@ Lexer::Token* Lexer::next()
 	
 	//Symbol
 	
-
+	
 	//Desconocido
 	if(buffer[begin] != 0)
 	{
-		while(buffer[end] != 0 and not is_blank_space(buffer[end]) and end < buffer.size()) end++;
+		while(buffer[end] != 0 and not is_blank_space(buffer[end]) and not is_symbol (buffer[end]) and end < buffer.size()) end++;
 		if(buffer[end] == 0) end--;
 		return build(Lexer::Token::Type::Unknow);
 	}
 	
 	return NULL;
 }
-
 bool Lexer::is_letter(char c)
 {
 	if( c >= 65 and c <= 90) return true;//mayusculas
@@ -242,6 +267,9 @@ bool Lexer::is_symbol(char c)
 		case '@':
 		case '(':
 		case ')':
+		case ';':
+		case '&':
+		case ',':
 			return true;
 	}
 
@@ -249,4 +277,83 @@ bool Lexer::is_symbol(char c)
 }
 
 
+
+
+namespace A
+{
+
+	
+Lexer::Lexer(const std::filesystem::path& f,const Tray* t) : oct::cc::Lexer(f,t)
+{
+	
+}
+Lexer::~Lexer()
+{
+}
+Lexer::Token* Lexer::next()
+{
+	//
+	if(is_insts())
+	
+	//
+	if(buffer[begin] == '#' and is_base_prefix(buffer[begin + 1]) and buffer[begin + 2] == 'x') //es numero con base especificada
+	{
+		end += 3;
+		while(is_digit(buffer[end]) and end < buffer.size()) end++;
+		if(buffer[end] == 0) end--;
+		
+		return build(Lexer::Token::Type::Number);
+	}
+	
+	return oct::cc::Lexer::next();
+}
+
+
+Lexer::inst_pair::inst_pair(const char* s) : inst(s), code(0)
+{
+}
+Lexer::inst_pair::inst_pair() : inst(NULL), code(0)
+{
+}
+bool Lexer::inst_pair::operator == (const inst_pair& e) 
+{
+	return strcmp(inst, e.inst) == 0;
+}
+
+
+bool Lexer::is_insts(const char* str)
+{
+	inst_pair inst(str);
+	auto it = std::find(insts.begin(), insts.end(), inst);
+	return (it != insts.end());
+}
+
+
+bool Lexer::cmp(const Lexer::inst_pair& f, const Lexer::inst_pair& s) 
+{
+	unsigned int i = 0;
+	while(f.inst[i] == 0 or s.inst[i] == 0)
+	{
+		if(f.inst[i] < s.inst[i]) return true;
+		i++;
+	}
+
+	return false;
+}
+void Lexer::fill_insts()
+{
+	inst_pair inst;
+	inst.inst = "mov";
+	insts.push_back(inst);
+	inst.inst = "add";
+	insts.push_back(inst);
+	inst.inst = "adc";
+	insts.push_back(inst);
+	
+	std::sort(insts.begin(),insts.end(),cmp);
+	
+	insts.resize(3);
+}
+
+}
 }

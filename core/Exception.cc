@@ -52,6 +52,8 @@ const char* Exception::what () const throw ()
 		return "Los sentinelas del buffer no cumplem con el criterio de sincrinizacion";
 	case Errors::NEGATIVE_STRING:
 		return "Secuencia negativa de caracteres";
+	case Errors::NULL_STRING:
+		return "Null string";
 	default:
 		return "Error desconocido.";
 	}

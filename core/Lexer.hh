@@ -23,6 +23,7 @@
 #include "Buffer.hh"
 
 #include <string>
+#include <vector>
 
 
 namespace oct::cc
@@ -30,7 +31,14 @@ namespace oct::cc
 
 struct Tray
 {
-
+	enum Arch
+	{
+		None,
+		x86,		
+	};
+	
+	unsigned char word_size;
+	Arch arch;
 };
 
 class Lexer
@@ -61,6 +69,7 @@ public:
 		Identifier get_id()const;
 		const char* get_text()const;
 		Type get_type()const;
+		const char * get_type_string()const;
 	
 	private:
 		void copy(const Buffer&, std::uintmax_t begin, std::uintmax_t end);
@@ -72,10 +81,10 @@ public:
 
 	
 public:
-	Lexer(const std::filesystem::path& file);
+	Lexer(const std::filesystem::path& file,const Tray*);
 	~Lexer();
 
-	virtual Token* next();
+	virtual Token* next() = 0;
 	
 protected:
 	static bool is_letter(char);
@@ -85,12 +94,51 @@ protected:
 	static bool is_symbol(char);
 	
 	Token* build(Lexer::Token::Type type);
-private:
-	Buffer buffer;
+
 	std::uintmax_t begin,end;	
+	Buffer buffer;
 	const Tray* tray;
+private:
 };
 
+namespace A
+{
+
+typedef unsigned int Code;
+class Lexer : public oct::cc::Lexer
+{
+public:
+		
+public:
+	Lexer(const std::filesystem::path& file,const Tray*);
+	~Lexer();
+
+	void fill_insts();
+
+	virtual Token* next();
+	bool is_insts(const char*);
+	
+protected:
+
+private:
+	struct inst_pair
+	{
+		const char* inst;
+		Code code;
+		
+		inst_pair();
+		inst_pair(const char*);
+
+		bool operator==(const inst_pair&);
+
+	};
+	static bool cmp(const inst_pair& f, const inst_pair& s);
+
+	std::vector<inst_pair> insts;
+	
+};
+
+}
 
 }
 

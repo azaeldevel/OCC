@@ -30,12 +30,15 @@ void v0_developing()
 	//std::cout << "size:\n" << buffer1.size() << "\n";
 
 
-
-	Lexer lexer("../../tests/prg1.cc.asm");
+	
+	Tray tray;
+	tray.word_size = 8;
+	tray.arch = Tray::Arch::x86;
+	A::Lexer lexer("../../tests/prg1.cc.asm",&tray);
 	Lexer::Token* token = lexer.next();
 	while(token)
 	{
-		std::cout << "Token : '" << token->get_text() << "'\n";
+		std::cout << "Token : " << token->get_type_string() << " - '" << token->get_text() << "'\n";
 		
 		token = lexer.next();
 	}
