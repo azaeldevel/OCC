@@ -61,6 +61,8 @@ public:
 		const char* get_text()const;
 		Type get_type()const;
 		const char * get_type_string()const;
+
+		void up_type(Type);
 	
 	private:
 		void copy(const Buffer&, std::uintmax_t begin, std::uintmax_t end);
@@ -75,7 +77,10 @@ public:
 	Lexer(const std::filesystem::path& file,const Tray&);
 	~Lexer();
 
+	std::vector<Token*>& get_tokens();
+
 	virtual Token* next() = 0;
+	virtual bool load() = 0;
 	
 protected:
 	static bool is_letter(char);
@@ -89,6 +94,9 @@ protected:
 	std::uintmax_t begin,end;	
 	Buffer buffer;
 	const Tray* tray;
+	Identifier count_toks;
+	std::vector<Token*> tokens;
+
 private:
 };
 
@@ -107,6 +115,7 @@ public:
 	void fill_insts();
 
 	virtual Token* next();
+	virtual bool load();
 	bool is_insts(const char*);
 	
 protected:
@@ -120,7 +129,7 @@ private:
 		inst_pair();
 		inst_pair(const char*);
 
-		bool operator==(const inst_pair&);
+		bool operator == (const inst_pair&);
 
 	};
 	static bool cmp(const inst_pair& f, const inst_pair& s);

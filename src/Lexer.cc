@@ -78,7 +78,10 @@ const char * Lexer::Token::get_type_string()const
 
 	return "Unknow";
 }
-
+void Lexer::Token::up_type(Type t)
+{
+	type = t;
+}
 
 
 void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax_t end)
@@ -112,6 +115,13 @@ Lexer::Lexer(const std::filesystem::path& f,const Tray& t) : buffer(f), begin(0)
 Lexer::~Lexer()
 {
 }
+
+std::vector<Lexer::Token*>& Lexer::get_tokens()
+{
+	return tokens;
+}
+
+
 Lexer::Token* Lexer::build(Lexer::Token::Type type)
 {
 	/*
@@ -233,6 +243,7 @@ Lexer::Token* Lexer::next()
 
 	return NULL;
 }
+
 bool Lexer::is_letter(char c)
 {
 	if( c >= 65 and c <= 90) return true;//mayusculas
@@ -319,6 +330,22 @@ Lexer::Token* Lexer::next()
 	return oct::cc::Lexer::next();
 }
 
+bool Lexer::load()
+{
+	count_toks = 0;
+	Token* token = next();
+	while(token)
+	{
+		count_toks++;
+		tokens.push_back(token);
+		
+		token = next();
+	}
+
+	tokens.resize(count_toks);
+	
+	return true;
+}
 
 Lexer::inst_pair::inst_pair(const char* s) : inst(s), code(0)
 {

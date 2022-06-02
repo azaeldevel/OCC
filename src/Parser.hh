@@ -40,6 +40,7 @@ public:
 protected:
 	Lexer* lexer;
 	const Tray* tray;
+	std::size_t begin, end;
 };
 
 
