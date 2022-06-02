@@ -21,6 +21,8 @@
  */
 
 #include "Buffer.hh"
+#include "Tray.hh"
+
 
 #include <string>
 #include <vector>
@@ -29,17 +31,6 @@
 namespace oct::cc
 {
 
-struct Tray
-{
-	enum Arch
-	{
-		None,
-		x86,		
-	};
-	
-	unsigned char word_size;
-	Arch arch;
-};
 
 class Lexer
 {

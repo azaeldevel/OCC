@@ -37,8 +37,8 @@ fi
 
 AC_OUTPUT([
 Makefile
-core/Makefile
+src/Makefile
 po/Makefile.in
-core/octetos-cc.pc
+src/octetos-cc.pc
 tests/Makefile
 ])

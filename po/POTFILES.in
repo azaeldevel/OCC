@@ -1,4 +1,4 @@
 # List of source files containing translatable strings.
 
-core/Exception.hh
-core/Exception.cc
+src/Exception.hh
+src/Exception.cc
