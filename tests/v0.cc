@@ -36,10 +36,14 @@ void v0_developing()
 	tray.arch = Tray::Arch::x86;
 	A::Lexer lexer("../../tests/prg1.cc.asm",&tray);
 	Lexer::Token* token = lexer.next();
+	unsigned int count_toks = 0;
 	while(token)
 	{
-		std::cout << "Token : " << token->get_type_string() << " - '" << token->get_text() << "'\n";
-		
+		//std::cout << "Token : " << token->get_type_string() << " - '" << token->get_text() << "'\n";
+		count_toks++;
 		token = lexer.next();
 	}
+	//std::cout << "count_toks : " << count_toks << "\n";
+	CU_ASSERT(count_toks == 21);
+	
 }
