@@ -105,7 +105,7 @@ void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax
 
 
 
-Lexer::Lexer(const std::filesystem::path& f,const Tray* t) : buffer(f), begin(0), end(1), tray(t)
+Lexer::Lexer(const std::filesystem::path& f,const Tray& t) : buffer(f), begin(0), end(1), tray(&t)
 {
 }
 
@@ -230,6 +230,8 @@ Lexer::Token* Lexer::next()
 	}
 	
 	if(begin != end) throw Exception(Exception::UNCLASIFIED,__FILE__,__LINE__);
+
+	return NULL;
 }
 bool Lexer::is_letter(char c)
 {
@@ -293,7 +295,7 @@ namespace A
 {
 
 	
-Lexer::Lexer(const std::filesystem::path& f,const Tray* t) : oct::cc::Lexer(f,t)
+Lexer::Lexer(const std::filesystem::path& f,const Tray& t) : oct::cc::Lexer(f,t)
 {
 	
 }

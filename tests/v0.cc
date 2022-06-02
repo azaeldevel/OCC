@@ -34,7 +34,7 @@ void v0_developing()
 	Tray tray;
 	tray.word_size = 8;
 	tray.arch = Tray::Arch::x86;
-	A::Lexer lexer("../../tests/prg1.cc.asm",&tray);
+	A::Lexer lexer("../../tests/prg1.cc.asm",tray);
 	Lexer::Token* token = lexer.next();
 	unsigned int count_toks = 0;
 	while(token)

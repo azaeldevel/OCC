@@ -72,7 +72,7 @@ public:
 
 	
 public:
-	Lexer(const std::filesystem::path& file,const Tray*);
+	Lexer(const std::filesystem::path& file,const Tray&);
 	~Lexer();
 
 	virtual Token* next() = 0;
@@ -101,7 +101,7 @@ class Lexer : public oct::cc::Lexer
 public:
 		
 public:
-	Lexer(const std::filesystem::path& file,const Tray*);
+	Lexer(const std::filesystem::path& file,const Tray&);
 	~Lexer();
 
 	void fill_insts();
