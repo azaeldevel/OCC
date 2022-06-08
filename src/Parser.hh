@@ -24,6 +24,7 @@
 
 #include "Lexer.hh"
 
+#include <list>
 
 namespace oct::cc
 {
@@ -32,20 +33,20 @@ namespace oct::cc
 
 class Parser
 {
+protected:
 
 public:
 	Parser(Lexer&,const Tray&);
 	/**
 	*\return true si la compilacion es correcta, false si hubo algun error
 	*/
-	virtual bool run() = 0;
-
+	virtual bool next() = 0;
+	
 protected:
 	Lexer* lexer;
 	const Tray* tray;
 	std::size_t begin, end;
 
-	
 };
 
 
@@ -53,16 +54,20 @@ namespace A
 {
 	class Parser : public oct::cc::Parser
 	{
+	public:
+		enum class Type
+		{
+			Unknow,
+			Label,
+		};
 
 	public:
 		Parser(Lexer&,const Tray&);
-		bool run();
+		virtual bool next();
+		
 	private:
 
-		
-		void stmts();
-		void stmt_inst();
-		void stmt_label();
+		bool is_label();
 	};
 }
 

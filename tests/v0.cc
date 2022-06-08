@@ -1,5 +1,6 @@
 #include <Buffer.hh>
 #include <Lexer.hh>
+#include <Parser.hh>
 #include <CUnit/Basic.h>
 #include <iostream>
 
@@ -45,5 +46,10 @@ void v0_developing()
 	}
 	//std::cout << "count_toks : " << count_toks << "\n";
 	CU_ASSERT(count_toks == 21);
+
+	A::Lexer lexera("../../tests/prg1.cc.asm",tray);
+	A::Parser parsera(lexera,tray);
+
+	parsera.next();
 	
 }
