@@ -31,6 +31,13 @@
 namespace oct::cc
 {
 
+struct Message
+{
+	std::string file;
+	unsigned int line;
+	std::string message;
+	
+};
 
 class Lexer
 {

@@ -35,12 +35,17 @@ class Parser
 
 public:
 	Parser(Lexer&,const Tray&);
+	/**
+	*\return true si la compilacion es correcta, false si hubo algun error
+	*/
 	virtual bool run() = 0;
 
 protected:
 	Lexer* lexer;
 	const Tray* tray;
 	std::size_t begin, end;
+
+	
 };
 
 
@@ -53,8 +58,11 @@ namespace A
 		Parser(Lexer&,const Tray&);
 		bool run();
 	private:
-		bool stmt_inst();
-		bool stmt_label();
+
+		
+		void stmts();
+		void stmt_inst();
+		void stmt_label();
 	};
 }
 
