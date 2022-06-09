@@ -55,12 +55,7 @@ namespace A
 	class Parser : public oct::cc::Parser
 	{
 	public:
-		enum class Type
-		{
-			Unknow,
-			Label,
-		};
-
+		
 	public:
 		Parser(Lexer&,const Tray&);
 		virtual bool next();
@@ -68,6 +63,9 @@ namespace A
 	private:
 
 		bool is_label();
+		bool is_inst();
+
+		
 	};
 }
 

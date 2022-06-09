@@ -16,7 +16,14 @@ Parser::Parser(Lexer& l,const Tray& t) : oct::cc::Parser(l,t)
 
 bool Parser::next()
 {
-	is_label();
+	if(not is_label())
+	{
+
+	}
+	else if(not is_label())
+	{
+
+	}
 	
 	return true;
 }
@@ -34,7 +41,19 @@ bool Parser::is_label()
 
 	//std::cout << "Label : " << lexer->get_tokens()[b]->get_text() << "\n";
 
+	begin = e;
+	end = ++e;
+	
 	return true;
 }
+bool Parser::is_inst()
+{
+	std::size_t b = begin, e = end;
+	
 
+	begin = e;
+	end = ++e;
+	
+	return true;
+}
 }

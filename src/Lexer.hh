@@ -68,6 +68,7 @@ public:
 		const char* get_text()const;
 		Type get_type()const;
 		const char * get_type_string()const;
+		bool get_white_space()const;
 
 		void up_type(Type);
 	
@@ -77,6 +78,7 @@ public:
 		Identifier id;
 		char* text;
 		Type type;
+		bool white_space;
 	};
 
 	

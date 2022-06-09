@@ -31,6 +31,15 @@ namespace oct::cc
 Lexer::Token::Token(const Buffer& buffer, std::uintmax_t begin, std::uintmax_t end,Type t) : type(t), text(NULL)
 {
 	copy(buffer,begin,end);
+	switch(t)
+	{
+	case Type::Space:
+	case Type::NewLine:
+	case Type::Tabulator:
+		white_space = true;
+	default:
+		white_space = false;
+	}
 }
 Lexer::Token::~Token()
 {
@@ -82,7 +91,10 @@ void Lexer::Token::up_type(Type t)
 {
 	type = t;
 }
-
+bool Lexer::Token::get_white_space()const
+{
+	return white_space;
+}
 
 void Lexer::Token::copy(const Buffer& buffer, std::uintmax_t begin, std::uintmax_t end)
 {
@@ -308,7 +320,7 @@ namespace A
 	
 Lexer::Lexer(const std::filesystem::path& f,const Tray& t) : oct::cc::Lexer(f,t)
 {
-	
+	fill_insts();
 }
 Lexer::~Lexer()
 {
