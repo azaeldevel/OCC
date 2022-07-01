@@ -121,29 +121,12 @@ public:
 	Lexer(const std::filesystem::path& file,const Tray&);
 	~Lexer();
 
-	void fill_insts();
-
 	virtual Token* next();
 	virtual bool load();
-	bool is_insts(const char*);
 	
 protected:
 
 private:
-	struct inst_pair
-	{
-		const char* inst;
-		Code code;
-		
-		inst_pair();
-		inst_pair(const char*);
-
-		bool operator == (const inst_pair&);
-
-	};
-	static bool cmp(const inst_pair& f, const inst_pair& s);
-
-	std::vector<inst_pair> insts;
 	
 };
 

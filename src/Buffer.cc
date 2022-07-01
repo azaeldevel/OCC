@@ -33,7 +33,7 @@ Buffer::Buffer(const std::filesystem::path& file) : buffer(NULL)
 	_size = std::filesystem::file_size(file);
 	if(_size == 0) return;
 
-	buffer = new symbol[_size + 1];
+	buffer = new Char[_size + 1];
 
 	std::ifstream ifs(file, std::ifstream::binary);
 	pbuf = ifs.rdbuf();
@@ -48,11 +48,11 @@ Buffer::~Buffer()
 	if(buffer) delete[] buffer;
 }
 
-Buffer::operator const symbol*()const
+Buffer::operator const Char*()const
 {
 	return buffer;
 }
-symbol Buffer::operator[](unsigned int index)const
+Char Buffer::operator[](unsigned int index)const
 {
 #ifdef OCTETOS_CC_FULL_CHECK
 	if(index > _size) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);

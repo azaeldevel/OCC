@@ -65,6 +65,24 @@ namespace A
 		bool is_label();
 		bool is_inst();
 
+		bool is_insts(const char*);
+
+		void fill_insts();
+		
+		struct inst_pair
+		{
+			const char* inst;
+			Code code;
+			
+			inst_pair();
+			inst_pair(const char*);
+
+			bool operator == (const inst_pair&);
+
+		};
+		static bool cmp(const inst_pair& f, const inst_pair& s);
+
+		std::vector<inst_pair> insts;
 		
 	};
 }

@@ -23,7 +23,7 @@
 
 #include <string.h>
 #include <iostream>
-#include <algorithm>
+
 
 namespace oct::cc
 {
@@ -320,7 +320,7 @@ namespace A
 	
 Lexer::Lexer(const std::filesystem::path& f,const Tray& t) : oct::cc::Lexer(f,t)
 {
-	fill_insts();
+	
 }
 Lexer::~Lexer()
 {
@@ -359,51 +359,7 @@ bool Lexer::load()
 	return true;
 }
 
-Lexer::inst_pair::inst_pair(const char* s) : inst(s), code(0)
-{
-}
-Lexer::inst_pair::inst_pair() : inst(NULL), code(0)
-{
-}
-bool Lexer::inst_pair::operator == (const inst_pair& e) 
-{
-	return strcmp(inst, e.inst) == 0;
-}
 
-
-bool Lexer::is_insts(const char* str)
-{
-	inst_pair inst(str);
-	auto it = std::find(insts.begin(), insts.end(), inst);
-	return (it != insts.end());
-}
-
-
-bool Lexer::cmp(const Lexer::inst_pair& f, const Lexer::inst_pair& s) 
-{
-	unsigned int i = 0;
-	while(f.inst[i] == 0 or s.inst[i] == 0)
-	{
-		if(f.inst[i] < s.inst[i]) return true;
-		i++;
-	}
-
-	return false;
-}
-void Lexer::fill_insts()
-{
-	inst_pair inst;
-	inst.inst = "mov";
-	insts.push_back(inst);
-	inst.inst = "add";
-	insts.push_back(inst);
-	inst.inst = "adc";
-	insts.push_back(inst);
-	
-	std::sort(insts.begin(),insts.end(),cmp);
-	
-	insts.resize(3);
-}
 
 }
 }

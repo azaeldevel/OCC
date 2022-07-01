@@ -29,7 +29,7 @@
 namespace oct::cc
 {
 
-typedef char symbol;
+typedef char Char;
 /**
 *\brief
 *
@@ -40,13 +40,13 @@ public:
 	Buffer(const std::filesystem::path& file);
 	~Buffer();
 
-	explicit operator const symbol*()const;
+	explicit operator const Char*()const;
 	char operator[](unsigned int)const;
 
 	std::uintmax_t size() const;
 	
 private:
-	symbol* buffer;
+	Char* buffer;
 	std::uintmax_t _size;
 	std::ifstream sfile;
 	std::filebuf* pbuf;
