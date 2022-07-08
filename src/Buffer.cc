@@ -1,6 +1,5 @@
 
 /*
- * Buffer.cc
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
  * 
  * CC is free software: you can redistribute it and/or modify it

@@ -1,6 +1,5 @@
 
 /*
- * main.cc
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
  * 
  * CC is free software: you can redistribute it and/or modify it
@@ -17,11 +16,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#include "AF-A.hh"
 
-int main()
+
+
+namespace oct::cc::a
 {
-	std::cout << "Hello world!" << std::endl;
-	return 0;
-}
 
+
+
+}

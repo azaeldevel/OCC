@@ -1,6 +1,6 @@
 #include <Buffer.hh>
-#include <Lexer.hh>
-#include <Parser.hh>
+#include <AF.hh>
+
 #include <CUnit/Basic.h>
 #include <iostream>
 
@@ -21,35 +21,25 @@ void v0_developing()
 {
 	Buffer buffer1("../../tests/prg1.cc.asm");
 
-	CU_ASSERT(buffer1.size() == 46);
+	CU_ASSERT(buffer1.size() == 49);
 	CU_ASSERT(buffer1[2] == 'a');
 	CU_ASSERT(buffer1[5] == ':');
-	CU_ASSERT(buffer1[15] == '#');
+	CU_ASSERT(buffer1[15] == '5');
+	//std::cout << "Test : " << buffer1[15] << "\n";
 	
-	//std::cout << "-->>" << buffer1[15] << "<<--\n";
-	//std::cout << "file:\n" << (const char*)buffer1 << "\n";
-	//std::cout << "size:\n" << buffer1.size() << "\n";
-
-
-	
-	Tray tray;
-	tray.word_size = 8;
-	tray.arch = Tray::Arch::x86;
-	A::Lexer lexer("../../tests/prg1.cc.asm",tray);
-	Lexer::Token* token = lexer.next();
-	unsigned int count_toks = 0;
-	while(token)
+	Number af_number;
+	//std::cout << "Table size : " << af_number.get_table().size() << "\n";
+	/*
+	for(const Transition<Char>& t : af_number.get_table())
 	{
-		//std::cout << "Token : " << token->get_type_string() << " - '" << token->get_text() << "'\n";
-		count_toks++;
-		token = lexer.next();
+		t.print(std::cout);
 	}
-	//std::cout << "count_toks : " << count_toks << "\n";
-	CU_ASSERT(count_toks == 21);
+	*/
 
-	A::Lexer lexera("../../tests/prg1.cc.asm",tray);
-	A::Parser parsera(lexera,tray);
-
-	parsera.next();
-	
+	const Transition<Char>* trans1 = af_number.get_table().search(1,'8');
+	if(trans1)
+	{
+		std::cout << "Se encontro : ";
+		trans1->print(std::cout);
+	}	
 }
