@@ -116,29 +116,34 @@ const Transition<Char>* Table::search(Status current,Char input,size_t b, size_t
 /*AF::AF() : current(0),reset(0)
 {
 }*/	
-AF::AF(Status i,const Table& t) : current(i),reset(i),table(t)
+AFD::AFD(Status i,const Table& t) : current(i),reset(i),table(t)
 {
 }
 
-const Transition<Char>* AF::transition(Char symbol)
+const Transition<Char>* AFD::transition(Char symbol)
 {
+	//std::cout << "current : " << current << "\n";
+	//std::cout << "symbol : " << symbol << "\n";
 	const Transition<Char>* ret = table.search(current,symbol);
-
-	if(ret)
+	if(ret != NULL)
 	{
-		current = ret->current;
+		current = ret->next;
+		//std::cout << "current : " << current << "\n";
+		//std::cout << "symbol : " << symbol << "\n";
 		return ret;
 	}
 
 	return NULL;
 }
-bool AF::transition(const Char* string)
+bool AFD::transition(const Char* string)
 {
 	current = reset;
 	Word i = 0;
 	while(string[i])
 	{
+		//std::cout << string[i] << "\n";
 		if(not transition(string[i])) return false;
+		//std::cout << string[i] << "\n";
 		i++;
 	}
 	
@@ -149,48 +154,90 @@ bool AF::transition(const Char* string)
 {
 	return table;
 }*/
-const Table& AF::get_table() const
+const Table& AFD::get_table() const
 {
 	return table;
 }
 
 
-
-const Table Number::table {
-	{'0',false,0,1},
-	{'1',false,0,1},
-	{'2',false,0,1},
-	{'3',false,0,1},
-	{'4',false,0,1},
-	{'5',false,0,1},
-	{'6',false,0,1},
-	{'7',false,0,1},
-	{'8',false,0,1},
-	{'9',false,0,1},
-
-	{'0',false,1,1},
-	{'1',false,1,1},
-	{'2',false,1,1},
-	{'3',false,1,1},
-	{'4',false,1,1},
-	{'5',false,1,1},
-	{'6',false,1,1},
-	{'7',false,1,1},
-	{'8',false,1,1},
-	{'9',false,1,1},
-
-	{' ',true,1,2},
-	{'\n',true,1,2},
-	{'\t',true,1,2},
-	{NULL,true,1,2},
-	{EOF,true,1,2}
-};
-const Status Number::initial = 0;
-Number::Number() : cc::AF(Number::initial,Number::table)
+namespace afs
 {
+	
+	const Table Numberx10::table {
+		{0,'0',false,1},
+		
+		{0,'1',false,1},
+		{0,'2',false,1},
+		{0,'3',false,1},
+		{0,'4',false,1},
+		{0,'5',false,1},
+		{0,'6',false,1},
+		{0,'7',false,1},
+		{0,'8',false,1},
+		{0,'9',false,1},
+
+		{1,'0',false,1},
+		{1,'1',false,1},
+		{1,'2',false,1},
+		{1,'3',false,1},
+		{1,'4',false,1},
+		{1,'5',false,1},
+		{1,'6',false,1},
+		{1,'7',false,1},
+		{1,'8',false,1},
+		{1,'9',false,1},
+
+		{1,' ',true,2},
+		{1,'\n',true,2},
+		{1,'\t',true,2},
+		{1,NULL,true,2},
+	};
+	const Status Numberx10::initial = 0;
+	Numberx10::Numberx10() : cc::AFD(Numberx10::initial,Numberx10::table)
+	{
+	}
+
+
+
+
+	const Table Numberx16::table {
+		{0,'0',false,1},
+
+		{1,'x',false,2},
+
+		{2,'0',false,2},
+		{2,'1',false,2},
+		{2,'2',false,2},
+		{2,'3',false,2},
+		{2,'4',false,2},
+		{2,'5',false,2},
+		{2,'6',false,2},
+		{2,'7',false,2},
+		{2,'8',false,2},
+		{2,'9',false,2},
+		
+		{2,'a',false,2},
+		{2,'b',false,2},
+		{2,'c',false,2},
+		{2,'d',false,2},
+		{2,'e',false,2},
+		{2,'f',false,2},
+		{2,'A',false,2},
+		{2,'B',false,2},
+		{2,'C',false,2},
+		{2,'D',false,2},
+		{2,'E',false,2},
+		{2,'F',false,2},
+
+		{2,' ',true,3},
+		{2,'\n',true,3},
+		{2,'\t',true,3},
+		{2,NULL,true,3},
+	};
+	const Status Numberx16::initial = 0;
+	Numberx16::Numberx16() : cc::AFD(Numberx16::initial,Numberx16::table)
+	{
+	}
 }
-
-
-
 
 }

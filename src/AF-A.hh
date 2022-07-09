@@ -29,7 +29,7 @@
 namespace oct::cc::a
 {
 
-class AF : public cc::AF
+class AF : public cc::AFD
 {
 public:
 

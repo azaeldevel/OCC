@@ -36,9 +36,9 @@ typedef Word Status;
 template<typename T>
 struct Transition
 {
+	Status current;
 	T input;
 	bool accepted;
-	Status current;
 	Status next;
 
 	bool operator < (const Transition<Char>& obj) const
@@ -122,12 +122,12 @@ private:
 };
 
 
-class AF
+class AFD
 {
 
 public:
 	//AF();
-	AF(Status initial,const Table& table);
+	AFD(Status initial,const Table& table);
 	const Transition<Char>* transition(Char symbol);
 	bool transition(const Char* );
 	
@@ -140,17 +140,31 @@ protected:
 	const Status reset;
 };
 
-
-class Number : public AF
+namespace afs
 {
+	class Numberx10 : public AFD
+	{
 
-public:
-	Number();
+	public:
+		Numberx10();
 
-private:
-	static const Table table;
-	static const Status initial;
-};
+	private:
+		static const Table table;
+		static const Status initial;
+	};
+
+
+	class Numberx16 : public AFD
+	{
+
+	public:
+		Numberx16();
+
+	private:
+		static const Table table;
+		static const Status initial;
+	};
+}
 
 }
 
