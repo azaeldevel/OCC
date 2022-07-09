@@ -159,9 +159,13 @@ namespace afs
 
 	public:
 		Numberx16();
+		Numberx16(const Table&);
+
+
+		static const Table table;
+		static const Table table_beautifull;
 
 	private:
-		static const Table table;
 		static const Status initial;
 	};
 }

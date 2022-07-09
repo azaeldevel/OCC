@@ -63,4 +63,24 @@ void v0_developing()
 	}*/
 	CU_ASSERT(af_hex.transition("0x123F5A"));
 	CU_ASSERT(af_hex.transition("0x01"));
+	//reject
+	CU_ASSERT(not af_hex.transition("123456"));
+	CU_ASSERT(not af_hex.transition("!123456"));
+
+
+
+
+	afs::Numberx16 af_hex2(afs::Numberx16::table_beautifull);
+	const Transition<Char>* trans3 = af_hex2.get_table().search(1,'x');
+	CU_ASSERT(trans3 != NULL);
+	/*if(trans2)
+	{
+		std::cout << "Se encontro : ";
+		trans2->print(std::cout);
+	}*/
+	CU_ASSERT(af_hex2.transition("0X123F5A"));
+	CU_ASSERT(af_hex2.transition("0x01"));
+	//reject
+	CU_ASSERT(not af_hex2.transition("123456"));
+	CU_ASSERT(not af_hex2.transition("!123456"));
 }

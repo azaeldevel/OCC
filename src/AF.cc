@@ -204,6 +204,7 @@ namespace afs
 		{0,'0',false,1},
 
 		{1,'x',false,2},
+		{1,'X',false,2},
 
 		{2,'0',false,2},
 		{2,'1',false,2},
@@ -234,8 +235,60 @@ namespace afs
 		{2,'\t',true,3},
 		{2,NULL,true,3},
 	};
+	const Table Numberx16::table_beautifull {
+		{0,'0',false,1},
+
+		{1,'x',false,2},
+		{2,'0',false,2},
+		{2,'1',false,2},
+		{2,'2',false,2},
+		{2,'3',false,2},
+		{2,'4',false,2},
+		{2,'5',false,2},
+		{2,'6',false,2},
+		{2,'7',false,2},
+		{2,'8',false,2},
+		{2,'9',false,2},		
+		{2,'a',false,2},
+		{2,'b',false,2},
+		{2,'c',false,2},
+		{2,'d',false,2},
+		{2,'e',false,2},
+		{2,'f',false,2},
+		
+		{2,' ',true,5},
+		{2,'\n',true,5},
+		{2,'\t',true,5},
+		{2,NULL,true,5},
+		
+		{1,'X',false,4},
+		{4,'0',false,4},
+		{4,'1',false,4},
+		{4,'2',false,4},
+		{4,'3',false,4},
+		{4,'4',false,4},
+		{4,'5',false,4},
+		{4,'6',false,4},
+		{4,'7',false,4},
+		{4,'8',false,4},
+		{4,'9',false,4},
+		{4,'A',false,4},
+		{4,'B',false,4},
+		{4,'C',false,4},
+		{4,'D',false,4},
+		{4,'E',false,4},
+		{4,'F',false,4},
+		
+		{4,' ',true,5},
+		{4,'\n',true,5},
+		{4,'\t',true,5},
+		{4,NULL,true,5},
+	};
 	const Status Numberx16::initial = 0;
 	Numberx16::Numberx16() : cc::AFD(Numberx16::initial,Numberx16::table)
+	{
+	}
+	Numberx16::Numberx16(const Table& t) : cc::AFD(Numberx16::initial,t)
 	{
 	}
 }
