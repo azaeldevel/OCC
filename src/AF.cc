@@ -49,16 +49,15 @@ Transition<Char>* Table::search(Status current,Char input)
 }
 Transition<Char>* Table::search(Status current,Char input,size_t b, size_t e)
 {
-	//if(current > (*e).current) return NULL;//no existe el elemento
+	if(b > e) return NULL;
+	if(b - e == 1) return NULL;
 
-	size_t middle = b + (e - b)/ 2;
+	//std::cout << "b = " << b << "\n";
+	//std::cout << "e = " << e << "\n";
+	size_t middle = b + ((e - b)/ 2);
 	//std::cout << "middle = " << middle << "\n";
 
-	if(at(middle).equal(current,input))
-	{
-		return &at(middle);
-	}
-	else if(at(middle).less(current,input))
+	if(at(middle).less(current,input))
 	{
 		//std::cout << "\t --> " << value << "\n";
 		return search(current,input,middle + 1,e);
@@ -68,7 +67,11 @@ Transition<Char>* Table::search(Status current,Char input,size_t b, size_t e)
 		//std::cout << "\t --> " << value << "\n";
 		return search(current,input,b,middle - 1);
 	}
-	
+	else if(at(middle).equal(current,input))
+	{
+		return &at(middle);
+	}
+		
 	return NULL;		
 }
 
@@ -79,25 +82,36 @@ Transition<Char>* Table::search(Status current,Char input,size_t b, size_t e)
 
 
 
-	
-
+AF::AF() : current(0),reset(0)
+{
+}	
+AF::AF(Status initial) : current(initial),reset(initial)
+{
+}
 
 const Transition<Char>* AF::transition(Char symbol)
 {
-	
+	const Transition<Char>* ret = table.search(current,symbol);
+
+	if(ret)
+	{
+		current = ret->current;
+		return ret;
+	}
+
+	return NULL;
 }
-const Transition<Char>* AF::transition(const Char* string)
+bool AF::transition(const Char* string)
 {
+	current = reset;
 	Word i = 0;
-	const Transition<Char>* trans;
 	while(string[i])
 	{
-		trans = transition(string[i]);
-		if(trans->type == Type::Reject) return trans;
+		if(transition(string[i]) == NULL) return false;
 		i++;
 	}
 	
-	return trans;
+	return true;
 }
 
 Table& AF::get_table()
@@ -108,6 +122,14 @@ Table& AF::get_table()
 
 Number::Number()
 {	
+	init();	
+}
+Number::Number(Status initial) : cc::AF(initial)
+{	
+	init();
+}
+void Number::init()
+{
 	table.push_back({'0',Type::Incomplete,0,1});
 	table.push_back({'1',Type::Incomplete,0,1});
 	table.push_back({'2',Type::Incomplete,0,1});
@@ -119,22 +141,22 @@ Number::Number()
 	table.push_back({'8',Type::Incomplete,0,1});
 	table.push_back({'9',Type::Incomplete,0,1});
 
-	table.push_back({'0',Type::Incomplete,1,2});
-	table.push_back({'1',Type::Incomplete,1,2});
-	table.push_back({'2',Type::Incomplete,1,2});
-	table.push_back({'3',Type::Incomplete,1,2});
-	table.push_back({'4',Type::Incomplete,1,2});
-	table.push_back({'5',Type::Incomplete,1,2});
-	table.push_back({'6',Type::Incomplete,1,2});
-	table.push_back({'7',Type::Incomplete,1,2});
-	table.push_back({'8',Type::Incomplete,1,2});
-	table.push_back({'9',Type::Incomplete,1,2});
+	table.push_back({'0',Type::Incomplete,1,1});
+	table.push_back({'1',Type::Incomplete,1,1});
+	table.push_back({'2',Type::Incomplete,1,1});
+	table.push_back({'3',Type::Incomplete,1,1});
+	table.push_back({'4',Type::Incomplete,1,1});
+	table.push_back({'5',Type::Incomplete,1,1});
+	table.push_back({'6',Type::Incomplete,1,1});
+	table.push_back({'7',Type::Incomplete,1,1});
+	table.push_back({'8',Type::Incomplete,1,1});
+	table.push_back({'9',Type::Incomplete,1,1});
 
-	table.push_back({' ',Type::Ending,2,3});
-	table.push_back({'\n',Type::Ending,2,3});
-	table.push_back({'\t',Type::Ending,2,3});
-	table.push_back({NULL,Type::Ending,2,3});
-	table.push_back({EOF,Type::Ending,2,3});
+	table.push_back({' ',Type::Acepting,1,2});
+	table.push_back({'\n',Type::Acepting,1,2});
+	table.push_back({'\t',Type::Acepting,1,2});
+	table.push_back({NULL,Type::Acepting,1,2});
+	table.push_back({EOF,Type::Acepting,1,2});
 		
 
 		/*{'A',Type::Incomplete,0,1},
@@ -161,8 +183,6 @@ Number::Number()
 		{'h',Type::Incomplete,0,1},*/
 	table.sort();
 }
-
-
 
 
 

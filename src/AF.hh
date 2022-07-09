@@ -132,14 +132,17 @@ class AF
 {
 
 public:
-
+	AF();
+	AF(Status initial);
 	const Transition<Char>* transition(Char symbol);
-	const Transition<Char>* transition(const Char* );
+	bool transition(const Char* );
 	
 	Table& get_table();
 
 protected:
 	Table table;
+	Status current;
+	const Status reset;
 };
 
 
@@ -148,8 +151,10 @@ class Number : public AF
 
 public:
 	Number();
+	Number(Status initial);
 
 private:
+	void init();
 };
 
 }

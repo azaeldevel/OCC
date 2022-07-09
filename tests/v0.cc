@@ -35,11 +35,22 @@ void v0_developing()
 		t.print(std::cout);
 	}
 	*/
-
 	const Transition<Char>* trans1 = af_number.get_table().search(1,'8');
-	if(trans1)
+	CU_ASSERT(trans1 != NULL);
+	/*if(trans1)
 	{
 		std::cout << "Se encontro : ";
 		trans1->print(std::cout);
-	}	
+	}*/	
+
+	//pertenice al lenguaje
+	CU_ASSERT(af_number.transition("123456"));
+	CU_ASSERT(af_number.transition("0123456"));
+	//no pertenice al lenguaje
+	CU_ASSERT(not af_number.transition("A123456"));
+	CU_ASSERT(not af_number.transition("!123456"));	
+	CU_ASSERT(not af_number.transition("123456@"));	
+	CU_ASSERT(not af_number.transition("Juan"));
+	
+	
 }
