@@ -162,8 +162,9 @@ namespace afs
 		Numberx16(const Table&);
 
 
+
 		static const Table table;
-		static const Table table_beautifull;
+		static const Table table_beautifull;//se deve poner todo en mayusculas o todo en minusculas
 
 	private:
 		static const Status initial;
