@@ -32,20 +32,12 @@ namespace oct::cc
 typedef unsigned long long int Word;
 typedef Word Status;
 
-enum class Type : Word
-{
-	None,
-	Initial,
-	Ending,
-	Acepting,
-	Incomplete,
-	Reject,
-};
+
 template<typename T>
 struct Transition
 {
 	T input;
-	Type type;
+	bool accepted;
 	Status current;
 	Status next;
 
@@ -121,7 +113,9 @@ public:
 	void sort();
 
 	Transition<Char>* search(Status current,Char input);
+	const Transition<Char>* search(Status current,Char input) const;
 	Transition<Char>* search(Status current,Char input,size_t begin, size_t end);
+	const Transition<Char>* search(Status current,Char input,size_t begin, size_t end)const;
 
 	
 private:
@@ -132,15 +126,16 @@ class AF
 {
 
 public:
-	AF();
-	AF(Status initial);
+	//AF();
+	AF(Status initial,const Table& table);
 	const Transition<Char>* transition(Char symbol);
 	bool transition(const Char* );
 	
-	Table& get_table();
+	//Table& get_table();
+	const Table& get_table()const;
 
 protected:
-	Table table;
+	const Table& table;
 	Status current;
 	const Status reset;
 };
@@ -151,10 +146,10 @@ class Number : public AF
 
 public:
 	Number();
-	Number(Status initial);
 
 private:
-	void init();
+	static const Table table;
+	static const Status initial;
 };
 
 }
