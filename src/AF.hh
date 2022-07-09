@@ -132,12 +132,13 @@ public:
 	bool transition(const Char* );
 	
 	//Table& get_table();
+	void load(Status initial,const Table& table);
 	const Table* get_table()const;
 
 protected:
 	const Table* table;
 	Status current;
-	const Status reset;
+	Status reset;
 };
 
 

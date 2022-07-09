@@ -158,7 +158,12 @@ const Table* AFD::get_table() const
 {
 	return table;
 }
-
+void AFD::load(Status initial,const Table& table)
+{
+	current = initial;
+	reset = initial;
+	this->table = &table;
+}
 
 	
 
