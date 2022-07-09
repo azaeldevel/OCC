@@ -126,50 +126,135 @@ class AFD
 {
 
 public:
-	//AF();
+	AFD();
 	AFD(Status initial,const Table& table);
 	const Transition<Char>* transition(Char symbol);
 	bool transition(const Char* );
 	
 	//Table& get_table();
-	const Table& get_table()const;
+	const Table* get_table()const;
 
 protected:
-	const Table& table;
+	const Table* table;
 	Status current;
 	const Status reset;
 };
 
-namespace afs
-{
-	class Numberx10 : public AFD
-	{
 
-	public:
-		Numberx10();
+static const Table table_number_10 {
+		{0,'0',false,1},
+		
+		{0,'1',false,1},
+		{0,'2',false,1},
+		{0,'3',false,1},
+		{0,'4',false,1},
+		{0,'5',false,1},
+		{0,'6',false,1},
+		{0,'7',false,1},
+		{0,'8',false,1},
+		{0,'9',false,1},
 
-	private:
-		static const Table table;
-		static const Status initial;
+		{1,'0',false,1},
+		{1,'1',false,1},
+		{1,'2',false,1},
+		{1,'3',false,1},
+		{1,'4',false,1},
+		{1,'5',false,1},
+		{1,'6',false,1},
+		{1,'7',false,1},
+		{1,'8',false,1},
+		{1,'9',false,1},
+
+		{1,' ',true,2},
+		{1,'\n',true,2},
+		{1,'\t',true,2},
+		{1,NULL,true,2}
 	};
 
+static const Table table_number_16 {
+		{0,'0',false,1},
 
-	class Numberx16 : public AFD
-	{
+		{1,'x',false,2},
+		{1,'X',false,2},
 
-	public:
-		Numberx16();
-		Numberx16(const Table&);
+		{2,'0',false,2},
+		{2,'1',false,2},
+		{2,'2',false,2},
+		{2,'3',false,2},
+		{2,'4',false,2},
+		{2,'5',false,2},
+		{2,'6',false,2},
+		{2,'7',false,2},
+		{2,'8',false,2},
+		{2,'9',false,2},
+		
+		{2,'a',false,2},
+		{2,'b',false,2},
+		{2,'c',false,2},
+		{2,'d',false,2},
+		{2,'e',false,2},
+		{2,'f',false,2},
+		{2,'A',false,2},
+		{2,'B',false,2},
+		{2,'C',false,2},
+		{2,'D',false,2},
+		{2,'E',false,2},
+		{2,'F',false,2},
 
-
-
-		static const Table table;
-		static const Table table_beautifull;//se deve poner todo en mayusculas o todo en minusculas
-
-	private:
-		static const Status initial;
+		{2,' ',true,3},
+		{2,'\n',true,3},
+		{2,'\t',true,3},
+		{2,NULL,true,3}
 	};
-}
+static const Table table_number_beautifull_16 {
+		{0,'0',false,1},
+
+		{1,'x',false,2},
+		{2,'0',false,2},
+		{2,'1',false,2},
+		{2,'2',false,2},
+		{2,'3',false,2},
+		{2,'4',false,2},
+		{2,'5',false,2},
+		{2,'6',false,2},
+		{2,'7',false,2},
+		{2,'8',false,2},
+		{2,'9',false,2},		
+		{2,'a',false,2},
+		{2,'b',false,2},
+		{2,'c',false,2},
+		{2,'d',false,2},
+		{2,'e',false,2},
+		{2,'f',false,2},
+		
+		{2,' ',true,5},
+		{2,'\n',true,5},
+		{2,'\t',true,5},
+		{2,NULL,true,5},
+		
+		{1,'X',false,4},
+		{4,'0',false,4},
+		{4,'1',false,4},
+		{4,'2',false,4},
+		{4,'3',false,4},
+		{4,'4',false,4},
+		{4,'5',false,4},
+		{4,'6',false,4},
+		{4,'7',false,4},
+		{4,'8',false,4},
+		{4,'9',false,4},
+		{4,'A',false,4},
+		{4,'B',false,4},
+		{4,'C',false,4},
+		{4,'D',false,4},
+		{4,'E',false,4},
+		{4,'F',false,4},
+		
+		{4,' ',true,5},
+		{4,'\n',true,5},
+		{4,'\t',true,5},
+		{4,NULL,true,5}
+	};
 
 }
 

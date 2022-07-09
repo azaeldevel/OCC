@@ -27,7 +27,7 @@ void v0_developing()
 	CU_ASSERT(buffer1[15] == '5');
 	//std::cout << "Test : " << buffer1[15] << "\n";
 	
-	afs::Numberx10 af_number;
+	AFD af_number(0,table_number_10);
 	//std::cout << "Table size : " << af_number.get_table().size() << "\n";
 	/*
 	for(const Transition<Char>& t : af_number.get_table())
@@ -35,7 +35,7 @@ void v0_developing()
 		t.print(std::cout);
 	}
 	*/
-	const Transition<Char>* trans1 = af_number.get_table().search(1,'8');
+	const Transition<Char>* trans1 = af_number.get_table()->search(1,'8');
 	CU_ASSERT(trans1 != NULL);
 	/*if(trans1)
 	{
@@ -53,8 +53,8 @@ void v0_developing()
 	CU_ASSERT(not af_number.transition("123456@"));	
 	CU_ASSERT(not af_number.transition("Juan"));
 	
-	afs::Numberx16 af_hex;
-	const Transition<Char>* trans2 = af_hex.get_table().search(1,'x');
+	AFD af_hex(0,table_number_16);
+	const Transition<Char>* trans2 = af_hex.get_table()->search(1,'x');
 	CU_ASSERT(trans2 != NULL);
 	/*if(trans2)
 	{
@@ -70,8 +70,8 @@ void v0_developing()
 
 
 
-	afs::Numberx16 af_hex2(afs::Numberx16::table_beautifull);
-	const Transition<Char>* trans3 = af_hex2.get_table().search(1,'x');
+	AFD af_hex2(0,table_number_beautifull_16);
+	const Transition<Char>* trans3 = af_hex2.get_table()->search(1,'x');
 	CU_ASSERT(trans3 != NULL);
 	/*if(trans2)
 	{
