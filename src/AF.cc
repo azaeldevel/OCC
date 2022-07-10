@@ -128,8 +128,9 @@ const Transition<Char>* AFD::transition(Char symbol)
 	//std::cout << "current : " << current << "\n";
 	//std::cout << "symbol : " << symbol << "\n";
 	const Transition<Char>* ret = table->search(current,symbol);
-	if(ret != NULL)
+	if(ret)
 	{
+		//ret->print(std::cout);
 		current = ret->next;
 		//std::cout << "current : " << current << "\n";
 		//std::cout << "symbol : " << symbol << "\n";
@@ -140,15 +141,21 @@ const Transition<Char>* AFD::transition(Char symbol)
 }
 bool AFD::transition(const Char* string)
 {
+	if(not string) return false;
+
+	
 	current = reset;
-	Word i = 0;
-	while(string[i])
+	Word i = 0;	
+	const Transition<Char>* ret;
+	do
 	{
 		//std::cout << string[i] << "\n";
-		if(not transition(string[i])) return false;
+		ret = transition(string[i]);
+		if(not ret) return false;
 		//std::cout << string[i] << "\n";
 		i++;
 	}
+	while(not ret->accepted);
 	
 	return true;
 }

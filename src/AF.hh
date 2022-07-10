@@ -171,6 +171,7 @@ static const Table table_number_10 {
 		{1,' ',true,2},
 		{1,'\n',true,2},
 		{1,'\t',true,2},
+		{1,'\0',true,2},
 	};
 
 static const Table table_number_16 {
@@ -206,6 +207,7 @@ static const Table table_number_16 {
 		{2,' ',true,3},
 		{2,'\n',true,3},
 		{2,'\t',true,3},
+		{2,'\0',true,3},
 	};
 static const Table table_number_beautifull_16 {
 		{0,'0',false,1},
@@ -231,6 +233,7 @@ static const Table table_number_beautifull_16 {
 		{2,' ',true,5},
 		{2,'\n',true,5},
 		{2,'\t',true,5},
+		{2,'\0',true,5},
 		
 		{1,'X',false,4},
 		{4,'0',false,4},
@@ -253,9 +256,10 @@ static const Table table_number_beautifull_16 {
 		{4,' ',true,5},
 		{4,'\n',true,5},
 		{4,'\t',true,5},
+		{4,'\0',true,5},
 	};
 
-static const unsigned char OP_MAX_ZISE= 9;
+static const unsigned char OP_MAX_ZISE= 12;
 //intel-80-210201-001.pdf
 static const Table i86 {
 
@@ -264,9 +268,9 @@ static const Table i86 {
 		{1,'a',false,2},
 		{2,'a',false,3},
 		
-		{0,'A',false,1},
-		{1,'A',false,2},
-		{2,'A',false,3},
+		{0,'A',false,4},
+		{4,'A',false,5},
+		{5,'A',false,6},
 
 
 		//
@@ -309,10 +313,26 @@ static const Table i86 {
 		{2,'C',false,3},
 
 
+		//
+		{0,'a',false,1},
+		{1,'d',false,2},
+		{2,'d',false,3},
+
+		{0,'A',false,1},
+		{1,'D',false,2},
+		{2,'D',false,3},
+
+
 		//acepting
 		{3,' ',true,OP_MAX_ZISE},
 		{3,'\n',true,OP_MAX_ZISE},
 		{3,'\t',true,OP_MAX_ZISE},
+		{3,'\0',true,OP_MAX_ZISE},
+
+		{6,' ',true,OP_MAX_ZISE},
+		{6,'\n',true,OP_MAX_ZISE},
+		{6,'\t',true,OP_MAX_ZISE},
+		{6,'\0',true,OP_MAX_ZISE},
 };
 }
 

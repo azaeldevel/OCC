@@ -85,16 +85,17 @@ void v0_developing()
 	CU_ASSERT(not af_hex2.transition("!123456"));
 
 
-	AFD af_inst_i86(tt::i86);
-	CU_ASSERT(af_inst_i86.transition("aaa"));
-	CU_ASSERT(af_inst_i86.transition("AAA"));
+	AFD instruction_set_i86(tt::i86);
+	CU_ASSERT(instruction_set_i86.transition("aaa"));
+	CU_ASSERT(instruction_set_i86.transition("aAa"));
+	/*CU_ASSERT(instruction_set_i86.transition("AAA"));
 	
-	CU_ASSERT(af_inst_i86.transition("aad"));
-	CU_ASSERT(af_inst_i86.transition("AAD"));
+	CU_ASSERT(instruction_set_i86.transition("aad"));
+	CU_ASSERT(instruction_set_i86.transition("AAD"));
 	
-	CU_ASSERT(af_inst_i86.transition("aam"));
-	CU_ASSERT(af_inst_i86.transition("AAM"));
+	CU_ASSERT(instruction_set_i86.transition("aam"));
+	CU_ASSERT(instruction_set_i86.transition("AAM"));
 	
-	CU_ASSERT(af_inst_i86.transition("adc"));
-	CU_ASSERT(af_inst_i86.transition("ADC"));
+	CU_ASSERT(instruction_set_i86.transition("adc"));
+	CU_ASSERT(instruction_set_i86.transition("ADC"));*/
 }
