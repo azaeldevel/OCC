@@ -116,6 +116,9 @@ const Transition<Char>* Table::search(Status current,Char input,size_t b, size_t
 AFD::AFD() : current(0),reset(0),table(NULL)
 {
 }
+AFD::AFD(const Table& t) : current(0),reset(0),table(&t)
+{
+}
 AFD::AFD(Status i,const Table& t) : current(i),reset(i),table(&t)
 {
 }
