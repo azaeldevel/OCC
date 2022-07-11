@@ -85,52 +85,9 @@ struct Transition
 		return false;
 	}
 
-	void print(std::ostream& out) const
-	{
-		if(input == '\n')
-		{
-			out << current << "--New line->" << next << "\n";
-		}
-		else if(input == '\t')
-		{
-			out << current << "--Tabulator->" << next << "\n";
-		}
-		else if(input == ' ')
-		{
-			out << current << "--Espace->" << next << "\n";
-		}
-		else if(input == '\0')
-		{
-			out << current << "--\\0->" << next << "\n";
-		}
-		else
-		{
-			out << current << "--" << input << "->" << next << "\n";
-		}
-	}
-	void print(std::wostream& out) const
-	{
-		if(input == '\n')
-		{
-			out << current << "--New line->" << next << "\n";
-		}
-		else if(input == '\t')
-		{
-			out << current << "--Tabulator->" << next << "\n";
-		}
-		else if(input == ' ')
-		{
-			out << current << "--Espace->" << next << "\n";
-		}
-		else if(input == '\0')
-		{
-			out << current << "--\\0->" << next << "\n";
-		}
-		else
-		{
-			out << current << "--" << input << "->" << next << "\n";
-		}
-	}
+	void print(std::ostream&) const;
+	void print(std::wostream&) const;
+	
 };
 
 template<typename T>
@@ -213,7 +170,8 @@ public:
 		return NULL;		
 	}
 
-	
+	void print(std::ostream&) const;
+	void print(std::wostream&) const;
 private:
 };
 
@@ -249,6 +207,7 @@ public:
 		//std::cout << "current : " << current << "\n";
 		//std::cout << "symbol : " << symbol << "\n";
 		const Transition<T>* ret = table->search(current,symbol);
+		//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
 		if(ret)
 		{
 			//ret->print(std::cout);

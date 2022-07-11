@@ -29,6 +29,52 @@ namespace oct::cc
 
 
 
+template<> void Transition<char>::print(std::ostream& out) const
+{
+		if(input == '\n')
+		{
+			out << current << "--New line->" << next << "\n";
+		}
+		else if(input == '\t')
+		{
+			out << current << "--Tabulator->" << next << "\n";
+		}
+		else if(input == ' ')
+		{
+			out << current << "--Espace->" << next << "\n";
+		}
+		else if(input == '\0')
+		{
+			out << current << "--\\0->" << next << "\n";
+		}
+		else
+		{
+			out << current << "--" << input << "->" << next << "\n";
+		}
+}
+template<> void Transition<wchar_t>::print(std::wostream& out) const
+{
+		if(input == '\n')
+		{
+			out << current << "--New line->" << next << "\n";
+		}
+		else if(input == '\t')
+		{
+			out << current << "--Tabulator->" << next << "\n";
+		}
+		else if(input == ' ')
+		{
+			out << current << "--Espace->" << next << "\n";
+		}
+		else if(input == '\0')
+		{
+			out << current << "--\\0->" << next << "\n";
+		}
+		else
+		{
+			out << current << "--" << input << "->" << next << "\n";
+		}
+}
 
 	 
 
@@ -38,7 +84,20 @@ namespace oct::cc
 
 
 
-
+template<> void Table<char>::print(std::ostream& out) const
+{
+	for(const Transition<char>& t : *this)
+	{
+		t.print(out);
+	}
+}
+template<> void Table<wchar_t>::print(std::wostream& out) const
+{
+	for(const Transition<wchar_t>& t : *this)
+	{
+		t.print(out);
+	}
+}
 
 
 

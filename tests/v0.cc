@@ -100,24 +100,14 @@ void v0_developing()
 		trans2L->print(std::wcout);
 	}*/
 
-
-
-
-
-
-
-
-
-
-
 	
 	AFA af_hex2(0,tt::table_number_beautifull_16);
-	const Transition<Char>* trans3 = af_hex2.get_table()->search(1,'x');
+	const Transition<char>* trans3 = af_hex2.get_table()->search(1,'x');
 	CU_ASSERT(trans3 != NULL);
-	/*if(trans2)
+	/*if(trans3)
 	{
 		std::cout << "Se encontro : ";
-		trans2->print(std::cout);
+		trans3->print(std::cout);
 	}*/
 	CU_ASSERT(af_hex2.transition("0X123F5A"));
 	CU_ASSERT(af_hex2.transition("0x01"));
@@ -128,10 +118,10 @@ void v0_developing()
 	AFA af_hex2L(0,tt::table_number_beautifull_16L);
 	const Transition<wchar_t>* trans3L = af_hex2L.get_table()->search(1,'x');
 	CU_ASSERT(trans3L != NULL);
-	/*if(trans2)
+	/*if(trans3L)
 	{
-		std::cout << "Se encontro : ";
-		trans2->print(std::cout);
+		std::wcout << "Se encontro : ";
+		trans3L->print(std::wcout);
 	}*/
 	CU_ASSERT(af_hex2L.transition(L"0X123F5A"));
 	CU_ASSERT(af_hex2L.transition(L"0x01"));
@@ -143,35 +133,42 @@ void v0_developing()
 
 	
 	//instruction set
-	AFA instruction_set_i86(tt::i86);
+	std::cout << "\n\nInstruciotn set\n";
+	AFA instruction_set_i86(tt::i86l);
+	instruction_set_i86.get_table()->print(std::cout);
 	CU_ASSERT(instruction_set_i86.transition("aaa"));
 	CU_ASSERT(not instruction_set_i86.transition("aAa"));
-	CU_ASSERT(instruction_set_i86.transition("AAA"));
+	CU_ASSERT(not instruction_set_i86.transition("AAA"));
+	CU_ASSERT(not instruction_set_i86.transition("ana"));
 	
 	CU_ASSERT(instruction_set_i86.transition("aad"));
-	CU_ASSERT(instruction_set_i86.transition("AAD"));
+	CU_ASSERT(not instruction_set_i86.transition("AAD"));
 	CU_ASSERT(not instruction_set_i86.transition("AAd"));
 	
 	CU_ASSERT(instruction_set_i86.transition("aam"));
-	CU_ASSERT(instruction_set_i86.transition("AAM"));
+	CU_ASSERT(not instruction_set_i86.transition("AAM"));
 	CU_ASSERT(not instruction_set_i86.transition("AaM"));
 	
 	CU_ASSERT(instruction_set_i86.transition("adc"));
-	CU_ASSERT(instruction_set_i86.transition("ADC"));
+	CU_ASSERT(not instruction_set_i86.transition("ADC"));
 	CU_ASSERT(not instruction_set_i86.transition("aDc"));
 	
 	CU_ASSERT(instruction_set_i86.transition("add"));
-	CU_ASSERT(instruction_set_i86.transition("ADD"));
+	CU_ASSERT(not instruction_set_i86.transition("ADD"));
 	CU_ASSERT(not instruction_set_i86.transition("aDd"));
 	
 	CU_ASSERT(instruction_set_i86.transition("and"));
-	CU_ASSERT(instruction_set_i86.transition("AND"));
+	CU_ASSERT(not instruction_set_i86.transition("AND"));
 	CU_ASSERT(not instruction_set_i86.transition("aNd"));
 	
 	CU_ASSERT(instruction_set_i86.transition("call"));
-	CU_ASSERT(instruction_set_i86.transition("CALL"));
+	CU_ASSERT(not instruction_set_i86.transition("CALL"));
 	CU_ASSERT(not instruction_set_i86.transition("Call"));
 	CU_ASSERT(not instruction_set_i86.transition("CaLL"));
+	
+	CU_ASSERT(instruction_set_i86.transition("and"));
+	CU_ASSERT(not instruction_set_i86.transition("AND"));
+	CU_ASSERT(not instruction_set_i86.transition("aNd"));
 
 	
 	
