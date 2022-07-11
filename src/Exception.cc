@@ -56,6 +56,8 @@ const char* Exception::what () const throw ()
 		return "Null string";
 	case Errors::UNCLASIFIED:
 		return "El token no se logro clasificar";
+	case Errors::Q0_NOT_ACCEPTABLE:
+		return "El esta de inicio  no puede ser un estado de acpetacion.";
 	default:
 		return "Error desconocido.";
 	}

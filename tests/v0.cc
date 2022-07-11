@@ -27,7 +27,7 @@ void v0_developing()
 	CU_ASSERT(buffer1[15] == '5');
 	//std::cout << "Test : " << buffer1[15] << "\n";
 	
-	AFD af_number(0,tt::table_number_10);
+	Automata af_number(0,tt::table_number_10);
 	//std::cout << "Table size : " << af_number.get_table().size() << "\n";
 	/*
 	for(const Transition<Char>& t : af_number.get_table())
@@ -53,7 +53,7 @@ void v0_developing()
 	CU_ASSERT(not af_number.transition("123456@"));	
 	CU_ASSERT(not af_number.transition("Juan"));
 	
-	AFD af_hex(0,tt::table_number_16);
+	Automata af_hex(0,tt::table_number_16);
 	const Transition<Char>* trans2 = af_hex.get_table()->search(1,'x');
 	CU_ASSERT(trans2 != NULL);
 	/*if(trans2)
@@ -70,7 +70,7 @@ void v0_developing()
 
 
 
-	AFD af_hex2(0,tt::table_number_beautifull_16);
+	Automata af_hex2(0,tt::table_number_beautifull_16);
 	const Transition<Char>* trans3 = af_hex2.get_table()->search(1,'x');
 	CU_ASSERT(trans3 != NULL);
 	/*if(trans2)
@@ -85,17 +85,20 @@ void v0_developing()
 	CU_ASSERT(not af_hex2.transition("!123456"));
 
 
-	AFD instruction_set_i86(tt::i86);
+
+	//instruction set
+	Automata instruction_set_i86(tt::i86);
 	CU_ASSERT(instruction_set_i86.transition("aaa"));
-	CU_ASSERT(instruction_set_i86.transition("aAa"));
-	/*CU_ASSERT(instruction_set_i86.transition("AAA"));
+	CU_ASSERT(not instruction_set_i86.transition("aAa"));
+	CU_ASSERT(instruction_set_i86.transition("AAA"));
 	
 	CU_ASSERT(instruction_set_i86.transition("aad"));
 	CU_ASSERT(instruction_set_i86.transition("AAD"));
+	CU_ASSERT(not instruction_set_i86.transition("AAd"));
 	
 	CU_ASSERT(instruction_set_i86.transition("aam"));
 	CU_ASSERT(instruction_set_i86.transition("AAM"));
 	
 	CU_ASSERT(instruction_set_i86.transition("adc"));
-	CU_ASSERT(instruction_set_i86.transition("ADC"));*/
+	CU_ASSERT(instruction_set_i86.transition("ADC"));
 }

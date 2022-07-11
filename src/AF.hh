@@ -32,13 +32,19 @@ namespace oct::cc
 typedef unsigned long long int Word;
 typedef Word Status;
 
-
+enum class Indicator : unsigned char
+{
+	None,
+	Accept,
+	Reject,
+	End
+};
 template<typename T>
 struct Transition
 {
 	Status current;
 	T input;
-	bool accepted;
+	Indicator indicator;
 	Status next;
 
 	bool operator < (const Transition<Char>& obj) const
@@ -92,11 +98,7 @@ struct Transition
 		}
 		else if(input == '\0')
 		{
-			out << current << "--\0->" << next << "\n";
-		}
-		else if(input == EOF)
-		{
-			out << current << "--EOF->" << next << "\n";
+			out << current << "--\\0->" << next << "\n";
 		}
 		else
 		{
@@ -121,21 +123,26 @@ public:
 private:
 };
 
-
-class AFD
+/**
+*\brief Es una implemetacion de AFD sin embargo, con la exception de que el estado inicial no deve ser un estado de aceptacion
+*
+*/
+class Automata
 {
 
 public:
-	AFD();
-	AFD(const Table& table);
-	AFD(Status initial,const Table& table);
+	Automata();
+	Automata(const Table& table);
+	Automata(Status initial,const Table& table);
 	const Transition<Char>* transition(Char symbol);
 	bool transition(const Char* );
 	
 	//Table& get_table();
 	void load(Status initial,const Table& table);
 	const Table* get_table()const;
-
+private:
+	bool check(const Table& table);
+	
 protected:
 	const Table* table;
 	Status current;
@@ -145,194 +152,193 @@ protected:
 namespace tt//transition tables
 {
 static const Table table_number_10 {
-		{0,'0',false,1},
+		{0,'0',Indicator::None,1},
 		
-		{0,'1',false,1},
-		{0,'2',false,1},
-		{0,'3',false,1},
-		{0,'4',false,1},
-		{0,'5',false,1},
-		{0,'6',false,1},
-		{0,'7',false,1},
-		{0,'8',false,1},
-		{0,'9',false,1},
+		{0,'1',Indicator::None,1},
+		{0,'2',Indicator::None,1},
+		{0,'3',Indicator::None,1},
+		{0,'4',Indicator::None,1},
+		{0,'5',Indicator::None,1},
+		{0,'6',Indicator::None,1},
+		{0,'7',Indicator::None,1},
+		{0,'8',Indicator::None,1},
+		{0,'9',Indicator::None,1},
 
-		{1,'0',false,1},
-		{1,'1',false,1},
-		{1,'2',false,1},
-		{1,'3',false,1},
-		{1,'4',false,1},
-		{1,'5',false,1},
-		{1,'6',false,1},
-		{1,'7',false,1},
-		{1,'8',false,1},
-		{1,'9',false,1},
+		{1,'0',Indicator::None,1},
+		{1,'1',Indicator::None,1},
+		{1,'2',Indicator::None,1},
+		{1,'3',Indicator::None,1},
+		{1,'4',Indicator::None,1},
+		{1,'5',Indicator::None,1},
+		{1,'6',Indicator::None,1},
+		{1,'7',Indicator::None,1},
+		{1,'8',Indicator::None,1},
+		{1,'9',Indicator::None,1},
 
-		{1,' ',true,2},
-		{1,'\n',true,2},
-		{1,'\t',true,2},
-		{1,'\0',true,2},
+		{1,' ',Indicator::Accept,2},
+		{1,'\n',Indicator::Accept,2},
+		{1,'\t',Indicator::Accept,2},
+		{1,'\0',Indicator::Accept,2},
 	};
 
 static const Table table_number_16 {
-		{0,'0',false,1},
+		{0,'0',Indicator::None,1},
 
-		{1,'x',false,2},
-		{1,'X',false,2},
+		{1,'x',Indicator::None,2},
+		{1,'X',Indicator::None,2},
 
-		{2,'0',false,2},
-		{2,'1',false,2},
-		{2,'2',false,2},
-		{2,'3',false,2},
-		{2,'4',false,2},
-		{2,'5',false,2},
-		{2,'6',false,2},
-		{2,'7',false,2},
-		{2,'8',false,2},
-		{2,'9',false,2},
+		{2,'0',Indicator::None,2},
+		{2,'1',Indicator::None,2},
+		{2,'2',Indicator::None,2},
+		{2,'3',Indicator::None,2},
+		{2,'4',Indicator::None,2},
+		{2,'5',Indicator::None,2},
+		{2,'6',Indicator::None,2},
+		{2,'7',Indicator::None,2},
+		{2,'8',Indicator::None,2},
+		{2,'9',Indicator::None,2},
 		
-		{2,'a',false,2},
-		{2,'b',false,2},
-		{2,'c',false,2},
-		{2,'d',false,2},
-		{2,'e',false,2},
-		{2,'f',false,2},
-		{2,'A',false,2},
-		{2,'B',false,2},
-		{2,'C',false,2},
-		{2,'D',false,2},
-		{2,'E',false,2},
-		{2,'F',false,2},
+		{2,'a',Indicator::None,2},
+		{2,'b',Indicator::None,2},
+		{2,'c',Indicator::None,2},
+		{2,'d',Indicator::None,2},
+		{2,'e',Indicator::None,2},
+		{2,'f',Indicator::None,2},
+		{2,'A',Indicator::None,2},
+		{2,'B',Indicator::None,2},
+		{2,'C',Indicator::None,2},
+		{2,'D',Indicator::None,2},
+		{2,'E',Indicator::None,2},
+		{2,'F',Indicator::None,2},
 
-		{2,' ',true,3},
-		{2,'\n',true,3},
-		{2,'\t',true,3},
-		{2,'\0',true,3},
+		{2,' ',Indicator::Accept,3},
+		{2,'\n',Indicator::Accept,3},
+		{2,'\t',Indicator::Accept,3},
+		{2,'\0',Indicator::Accept,3},
 	};
 static const Table table_number_beautifull_16 {
-		{0,'0',false,1},
+		{0,'0',Indicator::None,1},
 
-		{1,'x',false,2},
-		{2,'0',false,2},
-		{2,'1',false,2},
-		{2,'2',false,2},
-		{2,'3',false,2},
-		{2,'4',false,2},
-		{2,'5',false,2},
-		{2,'6',false,2},
-		{2,'7',false,2},
-		{2,'8',false,2},
-		{2,'9',false,2},		
-		{2,'a',false,2},
-		{2,'b',false,2},
-		{2,'c',false,2},
-		{2,'d',false,2},
-		{2,'e',false,2},
-		{2,'f',false,2},
+		{1,'x',Indicator::None,2},
+		{2,'0',Indicator::None,2},
+		{2,'1',Indicator::None,2},
+		{2,'2',Indicator::None,2},
+		{2,'3',Indicator::None,2},
+		{2,'4',Indicator::None,2},
+		{2,'5',Indicator::None,2},
+		{2,'6',Indicator::None,2},
+		{2,'7',Indicator::None,2},
+		{2,'8',Indicator::None,2},
+		{2,'9',Indicator::None,2},		
+		{2,'a',Indicator::None,2},
+		{2,'b',Indicator::None,2},
+		{2,'c',Indicator::None,2},
+		{2,'d',Indicator::None,2},
+		{2,'e',Indicator::None,2},
+		{2,'f',Indicator::None,2},
 		
-		{2,' ',true,5},
-		{2,'\n',true,5},
-		{2,'\t',true,5},
-		{2,'\0',true,5},
+		{2,' ',Indicator::Accept,5},
+		{2,'\n',Indicator::Accept,5},
+		{2,'\t',Indicator::Accept,5},
+		{2,'\0',Indicator::Accept,5},
 		
-		{1,'X',false,4},
-		{4,'0',false,4},
-		{4,'1',false,4},
-		{4,'2',false,4},
-		{4,'3',false,4},
-		{4,'4',false,4},
-		{4,'5',false,4},
-		{4,'6',false,4},
-		{4,'7',false,4},
-		{4,'8',false,4},
-		{4,'9',false,4},
-		{4,'A',false,4},
-		{4,'B',false,4},
-		{4,'C',false,4},
-		{4,'D',false,4},
-		{4,'E',false,4},
-		{4,'F',false,4},
+		{1,'X',Indicator::None,3},
+		{3,'0',Indicator::None,3},
+		{3,'1',Indicator::None,3},
+		{3,'2',Indicator::None,3},
+		{3,'3',Indicator::None,3},
+		{3,'4',Indicator::None,3},
+		{3,'5',Indicator::None,3},
+		{3,'6',Indicator::None,3},
+		{3,'7',Indicator::None,3},
+		{3,'8',Indicator::None,3},
+		{3,'9',Indicator::None,3},
+		{3,'A',Indicator::None,3},
+		{3,'B',Indicator::None,3},
+		{3,'C',Indicator::None,3},
+		{3,'D',Indicator::None,3},
+		{3,'E',Indicator::None,3},
+		{3,'F',Indicator::None,3},
 		
-		{4,' ',true,5},
-		{4,'\n',true,5},
-		{4,'\t',true,5},
-		{4,'\0',true,5},
+		{3,' ',Indicator::Accept,5},
+		{3,'\n',Indicator::Accept,5},
+		{3,'\t',Indicator::Accept,5},
+		{3,'\0',Indicator::Accept,5},
 	};
 
-static const unsigned char OP_MAX_ZISE= 12;
+static const unsigned char OP_MAX_ZISE = 12;//es el numero de estado mas lejano
 //intel-80-210201-001.pdf
 static const Table i86 {
-
 		//
-		{0,'a',false,1},
-		{1,'a',false,2},
-		{2,'a',false,3},
+		{0,'a',Indicator::None,1},
+		{1,'a',Indicator::None,2},
+		{2,'a',Indicator::None,3},
 		
-		{0,'A',false,4},
-		{4,'A',false,5},
-		{5,'A',false,6},
+		{0,'A',Indicator::None,4},
+		{4,'A',Indicator::None,5},
+		{5,'A',Indicator::None,6},
 
 
 		//
-		{0,'a',false,1},
-		{1,'a',false,2},
-		{2,'d',false,3},
+		{0,'a',Indicator::None,1},
+		{1,'a',Indicator::None,2},
+		{2,'d',Indicator::None,3},
 
-		{0,'A',false,1},
-		{1,'A',false,2},
-		{2,'D',false,3},
-
-
-		//
-		{0,'a',false,1},
-		{1,'a',false,2},
-		{2,'m',false,3},
-
-		{0,'A',false,1},
-		{1,'A',false,2},
-		{2,'M',false,3},
+		{0,'A',Indicator::None,4},
+		{4,'A',Indicator::None,5},
+		{5,'D',Indicator::None,6},
 
 
 		//
-		{0,'a',false,1},
-		{1,'a',false,2},
-		{2,'s',false,3},
+		{0,'a',Indicator::None,1},
+		{1,'a',Indicator::None,2},
+		{2,'m',Indicator::None,3},
 
-		{0,'A',false,1},
-		{1,'A',false,2},
-		{2,'S',false,3},
-
-
-		//
-		{0,'a',false,1},
-		{1,'d',false,2},
-		{2,'c',false,3},
-
-		{0,'A',false,1},
-		{1,'D',false,2},
-		{2,'C',false,3},
+		{0,'A',Indicator::None,4},
+		{4,'A',Indicator::None,5},
+		{5,'M',Indicator::None,6},
 
 
 		//
-		{0,'a',false,1},
-		{1,'d',false,2},
-		{2,'d',false,3},
+		{0,'a',Indicator::None,1},
+		{1,'a',Indicator::None,2},
+		{2,'s',Indicator::None,3},
 
-		{0,'A',false,1},
-		{1,'D',false,2},
-		{2,'D',false,3},
+		{0,'A',Indicator::None,4},
+		{4,'A',Indicator::None,5},
+		{5,'S',Indicator::None,6},
+
+
+		//
+		{0,'a',Indicator::None,1},
+		{1,'d',Indicator::None,2},
+		{2,'c',Indicator::None,3},
+
+		{0,'A',Indicator::None,4},
+		{4,'D',Indicator::None,5},
+		{5,'C',Indicator::None,6},
+
+
+		//
+		{0,'a',Indicator::None,1},
+		{1,'d',Indicator::None,2},
+		{2,'d',Indicator::None,3},
+
+		{0,'A',Indicator::None,4},
+		{4,'D',Indicator::None,5},
+		{5,'D',Indicator::None,6},
 
 
 		//acepting
-		{3,' ',true,OP_MAX_ZISE},
-		{3,'\n',true,OP_MAX_ZISE},
-		{3,'\t',true,OP_MAX_ZISE},
-		{3,'\0',true,OP_MAX_ZISE},
+		{3,' ',Indicator::Accept,OP_MAX_ZISE},
+		{3,'\n',Indicator::Accept,OP_MAX_ZISE},
+		{3,'\t',Indicator::Accept,OP_MAX_ZISE},
+		{3,'\0',Indicator::Accept,OP_MAX_ZISE},
 
-		{6,' ',true,OP_MAX_ZISE},
-		{6,'\n',true,OP_MAX_ZISE},
-		{6,'\t',true,OP_MAX_ZISE},
-		{6,'\0',true,OP_MAX_ZISE},
+		{6,' ',Indicator::Accept,OP_MAX_ZISE},
+		{6,'\n',Indicator::Accept,OP_MAX_ZISE},
+		{6,'\t',Indicator::Accept,OP_MAX_ZISE},
+		{6,'\0',Indicator::Accept,OP_MAX_ZISE},
 };
 }
 

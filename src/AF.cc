@@ -20,6 +20,7 @@
 
 
 #include "AF.hh"
+#include "Exception.hh"
 
 
 
@@ -113,24 +114,26 @@ const Transition<Char>* Table::search(Status current,Char input,size_t b, size_t
 
 
 
-AFD::AFD() : current(0),reset(0),table(NULL)
+Automata::Automata() : current(0),reset(0),table(NULL)
 {
 }
-AFD::AFD(const Table& t) : current(0),reset(0),table(&t)
+Automata::Automata(const Table& t) : current(0),reset(0),table(&t)
 {
+	if(not check(t)) throw Exception(Exception::Q0_NOT_ACCEPTABLE,__FILE__,__LINE__);
 }
-AFD::AFD(Status i,const Table& t) : current(i),reset(i),table(&t)
+Automata::Automata(Status i,const Table& t) : current(i),reset(i),table(&t)
 {
+	if(not check(t)) throw Exception(Exception::Q0_NOT_ACCEPTABLE,__FILE__,__LINE__);
 }
 
-const Transition<Char>* AFD::transition(Char symbol)
+const Transition<Char>* Automata::transition(Char symbol)
 {
-	//std::cout << "current : " << current << "\n";
-	//std::cout << "symbol : " << symbol << "\n";
+	std::cout << "current : " << current << "\n";
+	std::cout << "symbol : " << symbol << "\n";
 	const Transition<Char>* ret = table->search(current,symbol);
 	if(ret)
 	{
-		//ret->print(std::cout);
+		ret->print(std::cout);
 		current = ret->next;
 		//std::cout << "current : " << current << "\n";
 		//std::cout << "symbol : " << symbol << "\n";
@@ -139,10 +142,9 @@ const Transition<Char>* AFD::transition(Char symbol)
 
 	return NULL;
 }
-bool AFD::transition(const Char* string)
+bool Automata::transition(const Char* string)
 {
 	if(not string) return false;
-
 	
 	current = reset;
 	Word i = 0;	
@@ -151,30 +153,42 @@ bool AFD::transition(const Char* string)
 	{
 		//std::cout << string[i] << "\n";
 		ret = transition(string[i]);
-		if(not ret) return false;
+		if(not ret) return false;//si no se encontrontro transiscion
+		if(ret->indicator == Indicator::Reject) return false;//si no pertenece al lenguaje
+		if(ret->indicator == Indicator::Accept) return true;
+		if(string[i] == '\0') return false;
 		//std::cout << string[i] << "\n";
 		i++;
 	}
-	while(not ret->accepted);
+	while(ret->indicator == Indicator::None);
 	
-	return true;
+	return false;
 }
 
 /*Table& AF::get_table()
 {
 	return table;
 }*/
-const Table* AFD::get_table() const
+const Table* Automata::get_table() const
 {
 	return table;
 }
-void AFD::load(Status initial,const Table& table)
+void Automata::load(Status initial,const Table& table)
 {
 	current = initial;
 	reset = initial;
 	this->table = &table;
 }
+bool Automata::check(const Table& t)
+{
+	//std::cout << "reset :" << reset << "\n";
+	for(const Transition<Char>& t : t)
+	{
+		if(t.next == reset) return false;
+	}
 
+	return true;
+}
 	
 
 
