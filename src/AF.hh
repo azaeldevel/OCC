@@ -90,7 +90,7 @@ struct Transition
 		{
 			if(this->input < input) return true;
 			else if(this->input > input) return false;
-			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+			else return false;
 		}
 
 		return false;
@@ -103,7 +103,7 @@ struct Transition
 		{
 			if(this->input > input) return true;
 			else if(this->input < input) return false;
-			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+			else return false;
 		}
 
 		return false;
