@@ -23,8 +23,11 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
 
 #include "Buffer.hh"
+#include "Exception.hh"
 
 namespace oct::cc
 {
@@ -107,51 +110,188 @@ struct Transition
 	}
 };
 
-class Table : public std::vector<Transition<Char>>
+template<typename T>
+class Table : public std::vector<Transition<T>>
 {
 public:
-	Table();
-	Table(std::initializer_list<Transition<Char>>);
-	void sort();
+	Table(std::initializer_list<Transition<T>>t) : std::vector<Transition<T>>(t)
+	{
+		sort();
+	}
+	Table() 
+	{
+	}
 
-	Transition<Char>* search(Status current,Char input);
-	const Transition<Char>* search(Status current,Char input) const;
-	Transition<Char>* search(Status current,Char input,size_t begin, size_t end);
-	const Transition<Char>* search(Status current,Char input,size_t begin, size_t end)const;
+	void sort()
+	{
+		std::sort(std::vector<Transition<T>>::begin(),std::vector<Transition<T>>::end());
+	}
+
+	Transition<T>* search(Status current,T input)
+	{
+		return search(current,input, 0,std::vector<Transition<T>>::size() - 1);
+	}
+	const Transition<T>* search(Status current,Char input) const
+	{
+		return search(current,input, 0,std::vector<Transition<T>>::size() - 1);
+	}
+	Transition<T>* search(Status current,T input,size_t b, size_t e)
+	{
+		if(b > e) return NULL;
+		if(b - e == 1) return NULL;
+
+		//std::cout << "b = " << b << "\n";
+		//std::cout << "e = " << e << "\n";
+		size_t middle = b + ((e - b)/ 2);
+		//std::cout << "middle = " << middle << "\n";
+
+		if(std::vector<Transition<T>>::at(middle).less(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,middle + 1,e);
+		}
+		else if(std::vector<Transition<T>>::at(middle).great(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,b,middle - 1);
+		}
+		else if(std::vector<Transition<T>>::at(middle).equal(current,input))
+		{
+			return &std::vector<Transition<T>>::at(middle);
+		}
+			
+		return NULL;		
+	}
+	const Transition<T>* search(Status current,T input,size_t b, size_t e) const
+	{
+		if(b > e) return NULL;
+		if(b - e == 1) return NULL;
+
+		//std::cout << "b = " << b << "\n";
+		//std::cout << "e = " << e << "\n";
+		size_t middle = b + ((e - b)/ 2);
+		//std::cout << "middle = " << middle << "\n";
+
+		if(std::vector<Transition<T>>::at(middle).less(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,middle + 1,e);
+		}
+		else if(std::vector<Transition<T>>::at(middle).great(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,b,middle - 1);
+		}
+		else if(std::vector<Transition<T>>::at(middle).equal(current,input))
+		{
+			return &std::vector<Transition<T>>::at(middle);
+		}
+			
+		return NULL;		
+	}
 
 	
 private:
 };
 
 /**
-*\brief Es una implemetacion de AFD sin embargo, con la exception de que el estado inicial no deve ser un estado de aceptacion
+*\brief Una AF-A(Automata finita Tipo A), es una 5-tupla (Q, Σ, q0, δ, F) donde :\n
+*	\tQ es un conjunto finityos de estados
+*	\tΣ es un albate finito
+*	\tq0 no pertenece a Q
+*	\tδ: Q x Σ -> Q
+*	\tF incluido en Q
+*	\thttps://es.wikipedia.org/wiki/Aut%C3%B3mata_finito
 *
 */
-class Automata
+template<typename T>
+class AFA
 {
 
 public:
-	Automata();
-	Automata(const Table& table);
-	Automata(Status initial,const Table& table);
-	const Transition<Char>* transition(Char symbol);
-	bool transition(const Char* );
-	
-	//Table& get_table();
-	void load(Status initial,const Table& table);
-	const Table* get_table()const;
+	AFA() : current(0),reset(0),table(NULL)
+	{
+	}
+	AFA(const Table<T>& t) : current(0),reset(0),table(&t)
+	{
+		if(not check(t)) throw Exception(Exception::Q0_NOT_ACCEPTABLE,__FILE__,__LINE__);
+	}
+	AFA(Status i,const Table<T>& t) : current(i),reset(i),table(&t)
+	{
+		if(not check(t)) throw Exception(Exception::Q0_NOT_ACCEPTABLE,__FILE__,__LINE__);
+	}
+
+	const Transition<T>* transition(T symbol)
+	{
+		//std::cout << "current : " << current << "\n";
+		//std::cout << "symbol : " << symbol << "\n";
+		const Transition<T>* ret = table->search(current,symbol);
+		if(ret)
+		{
+			//ret->print(std::cout);
+			current = ret->next;
+			//std::cout << "current : " << current << "\n";
+			//std::cout << "symbol : " << symbol << "\n";
+			return ret;
+		}
+
+		return NULL;
+	}
+	bool transition(const T* string)
+	{
+		if(not string) return false;
+		
+		current = reset;
+		Word i = 0;	
+		const Transition<T>* ret;
+		do
+		{
+			//std::cout << string[i] << "\n";
+			ret = transition(string[i]);
+			if(not ret) return false;//si no se encontrontro transiscion
+			if(ret->indicator == Indicator::Reject) return false;//si no pertenece al lenguaje
+			if(ret->indicator == Indicator::Accept) return true;
+			if(string[i] == '\0') return false;
+			//std::cout << string[i] << "\n";
+			i++;
+		}
+		while(ret->indicator == Indicator::None);
+		
+		return false;
+	}
+
+
+	const Table<T>* get_table() const
+	{
+		return table;
+	}
+	void load(Status initial,const Table<T>& table)
+	{
+		current = initial;
+		reset = initial;
+		this->table = &table;
+	}
 private:
-	bool check(const Table& table);
+	bool check(const Table<T>& tb)
+	{
+		//std::cout << "reset :" << reset << "\n";
+		for(const Transition<Char>& t : tb)
+		{
+			if(t.next == reset) return false;
+		}
+
+		return true;
+	}
 	
 protected:
-	const Table* table;
+	const Table<T>* table;
 	Status current;
 	Status reset;
 };
 
 namespace tt//transition tables
 {
-static const Table table_number_10 {
+static const Table<char> table_number_10 {
 		{0,'0',Indicator::None,1},
 		
 		{0,'1',Indicator::None,1},
@@ -180,8 +320,37 @@ static const Table table_number_10 {
 		{1,'\t',Indicator::Accept,2},
 		{1,'\0',Indicator::Accept,2},
 	};
+/*static const Table<wchar_t> table_number_10L {
+		{0,L'0',Indicator::None,1},
+		
+		{0,L'1',Indicator::None,1},
+		{0,L'2',Indicator::None,1},
+		{0,L'3',Indicator::None,1},
+		{0,L'4',Indicator::None,1},
+		{0,L'5',Indicator::None,1},
+		{0,L'6',Indicator::None,1},
+		{0,L'7',Indicator::None,1},
+		{0,L'8',Indicator::None,1},
+		{0,L'9',Indicator::None,1},
 
-static const Table table_number_16 {
+		{1,L'0',Indicator::None,1},
+		{1,L'1',Indicator::None,1},
+		{1,L'2',Indicator::None,1},
+		{1,L'3',Indicator::None,1},
+		{1,L'4',Indicator::None,1},
+		{1,L'5',Indicator::None,1},
+		{1,L'6',Indicator::None,1},
+		{1,L'7',Indicator::None,1},
+		{1,L'8',Indicator::None,1},
+		{1,L'9',Indicator::None,1},
+
+		{1,L' ',Indicator::Accept,2},
+		{1,L'\n',Indicator::Accept,2},
+		{1,L'\t',Indicator::Accept,2},
+		{1,L'\0',Indicator::Accept,2},
+	};*/
+
+static const Table<char> table_number_16 {
 		{0,'0',Indicator::None,1},
 
 		{1,'x',Indicator::None,2},
@@ -216,7 +385,7 @@ static const Table table_number_16 {
 		{2,'\t',Indicator::Accept,3},
 		{2,'\0',Indicator::Accept,3},
 	};
-static const Table table_number_beautifull_16 {
+static const Table<char> table_number_beautifull_16 {
 		{0,'0',Indicator::None,1},
 
 		{1,'x',Indicator::None,2},
@@ -268,7 +437,7 @@ static const Table table_number_beautifull_16 {
 
 static const unsigned char OP_MAX_ZISE = 12;//es el numero de estado mas lejano
 //intel-80-210201-001.pdf
-static const Table i86 {
+static const Table<char> i86 {
 		//
 		{0,'a',Indicator::None,1},
 		{1,'a',Indicator::None,2},

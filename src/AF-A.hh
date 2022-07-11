@@ -29,13 +29,7 @@
 namespace oct::cc::a
 {
 
-class AF : public cc::Automata
-{
-public:
 
-private:
-
-};
 
 }
 
