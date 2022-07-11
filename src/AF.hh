@@ -108,6 +108,29 @@ struct Transition
 			out << current << "--" << input << "->" << next << "\n";
 		}
 	}
+	void print(std::wostream& out) const
+	{
+		if(input == '\n')
+		{
+			out << current << "--New line->" << next << "\n";
+		}
+		else if(input == '\t')
+		{
+			out << current << "--Tabulator->" << next << "\n";
+		}
+		else if(input == ' ')
+		{
+			out << current << "--Espace->" << next << "\n";
+		}
+		else if(input == '\0')
+		{
+			out << current << "--\\0->" << next << "\n";
+		}
+		else
+		{
+			out << current << "--" << input << "->" << next << "\n";
+		}
+	}
 };
 
 template<typename T>

@@ -61,7 +61,7 @@ void v0_developing()
 	/*if(trans1L)
 	{
 		std::cout << "Se encontro : ";
-		trans1L->print(std::cout);
+		trans1L->print(std::wcout);
 	}*/
 	
 	//pertenice al lenguaje
@@ -97,7 +97,7 @@ void v0_developing()
 	/*if(trans2L)
 	{
 		std::cout << "Se encontro : ";
-		trans2L->print(std::cout);
+		trans2L->print(std::wcout);
 	}*/
 
 
@@ -163,6 +163,15 @@ void v0_developing()
 	CU_ASSERT(instruction_set_i86.transition("add"));
 	CU_ASSERT(instruction_set_i86.transition("ADD"));
 	CU_ASSERT(not instruction_set_i86.transition("aDd"));
+	
+	CU_ASSERT(instruction_set_i86.transition("and"));
+	CU_ASSERT(instruction_set_i86.transition("AND"));
+	CU_ASSERT(not instruction_set_i86.transition("aNd"));
+	
+	CU_ASSERT(instruction_set_i86.transition("call"));
+	CU_ASSERT(instruction_set_i86.transition("CALL"));
+	CU_ASSERT(not instruction_set_i86.transition("Call"));
+	CU_ASSERT(not instruction_set_i86.transition("CaLL"));
 
 	
 	

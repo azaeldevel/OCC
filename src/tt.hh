@@ -259,7 +259,7 @@ static const Table<wchar_t> table_number_beautifull_16L {
 		{3,'\0',Indicator::Accept,5},
 	};
 
-static const unsigned char OP_MAX_ZISE = 12;//es el numero de estado mas lejano
+static const unsigned char OP_MAX_ZISE = 8;//es el numero de estado mas lejano
 //intel-80-210201-001.pdf
 static const Table<char> i86 {
 		//
@@ -322,6 +322,28 @@ static const Table<char> i86 {
 		{5,'D',Indicator::None,6},
 
 
+		//
+		{0,'a',Indicator::None,1},
+		{1,'n',Indicator::None,2},
+		{2,'d',Indicator::None,3},
+
+		{0,'A',Indicator::None,4},
+		{4,'N',Indicator::None,5},
+		{5,'D',Indicator::None,6},
+
+
+		//
+		{0,'c',Indicator::None,1},
+		{1,'a',Indicator::None,2},
+		{2,'l',Indicator::None,3},
+		{3,'l',Indicator::None,4},
+
+		{0,'C',Indicator::None,4},
+		{4,'A',Indicator::None,5},
+		{5,'L',Indicator::None,6},
+		{6,'L',Indicator::None,7},
+
+
 		//acepting
 		{3,' ',Indicator::Accept,OP_MAX_ZISE},
 		{3,'\n',Indicator::Accept,OP_MAX_ZISE},
@@ -332,6 +354,16 @@ static const Table<char> i86 {
 		{6,'\n',Indicator::Accept,OP_MAX_ZISE},
 		{6,'\t',Indicator::Accept,OP_MAX_ZISE},
 		{6,'\0',Indicator::Accept,OP_MAX_ZISE},
+		
+		{4,' ',Indicator::Accept,OP_MAX_ZISE},
+		{4,'\n',Indicator::Accept,OP_MAX_ZISE},
+		{4,'\t',Indicator::Accept,OP_MAX_ZISE},
+		{4,'\0',Indicator::Accept,OP_MAX_ZISE},
+
+		{7,' ',Indicator::Accept,OP_MAX_ZISE},
+		{7,'\n',Indicator::Accept,OP_MAX_ZISE},
+		{7,'\t',Indicator::Accept,OP_MAX_ZISE},
+		{7,'\0',Indicator::Accept,OP_MAX_ZISE},
 };
 
 
