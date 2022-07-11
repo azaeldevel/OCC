@@ -133,9 +133,9 @@ void v0_developing()
 
 	
 	//instruction set
-	std::cout << "\n\nInstruciotn set\n";
+	//std::cout << "\n\nInstruciotn set\n";
 	AFA instruction_set_i86(tt::i86l);
-	instruction_set_i86.get_table()->print(std::cout);
+	//instruction_set_i86.get_table()->print(std::cout);
 	CU_ASSERT(instruction_set_i86.transition("aaa"));
 	CU_ASSERT(not instruction_set_i86.transition("aAa"));
 	CU_ASSERT(not instruction_set_i86.transition("AAA"));
@@ -166,9 +166,13 @@ void v0_developing()
 	CU_ASSERT(not instruction_set_i86.transition("Call"));
 	CU_ASSERT(not instruction_set_i86.transition("CaLL"));
 	
-	CU_ASSERT(instruction_set_i86.transition("and"));
-	CU_ASSERT(not instruction_set_i86.transition("AND"));
-	CU_ASSERT(not instruction_set_i86.transition("aNd"));
+	CU_ASSERT(instruction_set_i86.transition("cbw"));
+	CU_ASSERT(not instruction_set_i86.transition("CBW"));
+	CU_ASSERT(not instruction_set_i86.transition("cBW"));
+	
+	CU_ASSERT(instruction_set_i86.transition("clc"));
+	CU_ASSERT(not instruction_set_i86.transition("cLc"));
+	CU_ASSERT(not instruction_set_i86.transition("CLC"));
 
 	
 	

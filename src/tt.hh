@@ -259,7 +259,7 @@ static const Table<wchar_t> table_number_beautifull_16L {
 		{3,'\0',Indicator::Accept,5},
 	};
 
-static const unsigned char i86l_accept = 10;//es el numero de estado mas lejano
+
 //intel-80-210201-001.pdf
 static const Table<char> i86l {//instruction set lowwer case
 		//aaa
@@ -314,33 +314,42 @@ static const Table<char> i86l {//instruction set lowwer case
 		{14,'\0',Indicator::Accept,15},
 
 		//and
-		{1,'n',Indicator::None,17},
-		{17,'d',Indicator::None,18},
+		{1,'n',Indicator::None,16},
+		{16,'d',Indicator::None,17},
 		//accept
-		{18,' ',Indicator::Accept,19},
-		{18,'\n',Indicator::Accept,19},
-		{18,'\t',Indicator::Accept,19},
-		{18,'\0',Indicator::Accept,19},
+		{17,' ',Indicator::Accept,18},
+		{17,'\n',Indicator::Accept,18},
+		{17,'\t',Indicator::Accept,18},
+		{17,'\0',Indicator::Accept,18},
 
 		//call
-		{0,'c',Indicator::None,20},
-		{20,'a',Indicator::None,21},
+		{0,'c',Indicator::None,19},
+		{19,'a',Indicator::None,20},
+		{20,'l',Indicator::None,21},
 		{21,'l',Indicator::None,22},
-		{22,'l',Indicator::None,23},
 		//accept
-		{23,' ',Indicator::Accept,24},
-		{23,'\n',Indicator::Accept,24},
-		{23,'\t',Indicator::Accept,24},
-		{23,'\0',Indicator::Accept,24},
+		{22,' ',Indicator::Accept,23},
+		{22,'\n',Indicator::Accept,23},
+		{22,'\t',Indicator::Accept,23},
+		{22,'\0',Indicator::Accept,23},
 
 		//cbw
-		{1,'b',Indicator::None,25},
-		{25,'w',Indicator::None,26},
+		{19,'b',Indicator::None,24},
+		{24,'w',Indicator::None,25},
 		//accept
-		{26,' ',Indicator::Accept,27},
-		{26,'\n',Indicator::Accept,27},
-		{26,'\t',Indicator::Accept,27},
-		{26,'\0',Indicator::Accept,27},
+		{25,' ',Indicator::Accept,26},
+		{25,'\n',Indicator::Accept,26},
+		{25,'\t',Indicator::Accept,26},
+		{25,'\0',Indicator::Accept,26},
+
+		//clc
+		{19,'l',Indicator::None,27},
+		{27,'c',Indicator::None,28},
+		//accept
+		{28,' ',Indicator::Accept,29},
+		{28,'\n',Indicator::Accept,29},
+		{28,'\t',Indicator::Accept,29},
+		{28,'\0',Indicator::Accept,29},
 		
 };
 static const Table<char> i86u {//instruction set upper case
