@@ -350,6 +350,31 @@ static const Table<char> i86l {//instruction set lowwer case
 		{28,'\n',Indicator::Accept,29},
 		{28,'\t',Indicator::Accept,29},
 		{28,'\0',Indicator::Accept,29},
+
+		//cld
+		{27,'d',Indicator::None,30},
+		//accept
+		{30,' ',Indicator::Accept,31},
+		{30,'\n',Indicator::Accept,31},
+		{30,'\t',Indicator::Accept,31},
+		{30,'\0',Indicator::Accept,31},
+
+		//cli
+		{27,'i',Indicator::None,32},
+		//accept
+		{32,' ',Indicator::Accept,33},
+		{32,'\n',Indicator::Accept,33},
+		{32,'\t',Indicator::Accept,33},
+		{32,'\0',Indicator::Accept,33},
+
+		//cmc
+		{19,'m',Indicator::None,34},
+		{34,'c',Indicator::None,35},
+		//accept
+		{35,' ',Indicator::Accept,36},
+		{35,'\n',Indicator::Accept,36},
+		{35,'\t',Indicator::Accept,36},
+		{35,'\0',Indicator::Accept,36},
 		
 };
 static const Table<char> i86u {//instruction set upper case

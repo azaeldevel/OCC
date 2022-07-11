@@ -173,6 +173,19 @@ void v0_developing()
 	CU_ASSERT(instruction_set_i86.transition("clc"));
 	CU_ASSERT(not instruction_set_i86.transition("cLc"));
 	CU_ASSERT(not instruction_set_i86.transition("CLC"));
+	
+	CU_ASSERT(instruction_set_i86.transition("cld"));
+	CU_ASSERT(not instruction_set_i86.transition("cLd"));
+	CU_ASSERT(not instruction_set_i86.transition("CLD"));
+	
+	CU_ASSERT(instruction_set_i86.transition("cli"));
+	CU_ASSERT(not instruction_set_i86.transition("cLi"));
+	CU_ASSERT(not instruction_set_i86.transition("CLI"));
+	
+	CU_ASSERT(instruction_set_i86.transition("cmc"));
+	CU_ASSERT(not instruction_set_i86.transition("cmC"));
+	CU_ASSERT(not instruction_set_i86.transition("CMC"));
+
 
 	
 	
