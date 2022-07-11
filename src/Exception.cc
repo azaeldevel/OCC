@@ -58,6 +58,8 @@ const char* Exception::what () const throw ()
 		return "El token no se logro clasificar";
 	case Errors::Q0_NOT_ACCEPTABLE:
 		return "El esta de inicio  no puede ser un estado de acpetacion.";
+	case Errors::NOT_UNIQUE:
+		return "Restriccion de llave unica(current,symbol) no cumplicada";
 	default:
 		return "Error desconocido.";
 	}

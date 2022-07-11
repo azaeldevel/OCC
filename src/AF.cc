@@ -52,6 +52,9 @@ template<> void Transition<char>::print(std::ostream& out) const
 			out << current << "--" << input << "->" << next << "\n";
 		}
 }
+template<> void Transition<wchar_t>::print(std::ostream& out) const
+{
+}
 template<> void Transition<wchar_t>::print(std::wostream& out) const
 {
 		if(input == '\n')
@@ -75,7 +78,9 @@ template<> void Transition<wchar_t>::print(std::wostream& out) const
 			out << current << "--" << input << "->" << next << "\n";
 		}
 }
-
+template<> void Transition<char>::print(std::wostream& out) const
+{
+}
 	 
 
 

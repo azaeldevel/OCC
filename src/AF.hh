@@ -53,14 +53,26 @@ struct Transition
 	bool operator < (const Transition<T>& obj) const
 	{
 		if(current < obj.current) return true;
-		else if(current == obj.current)  return input < obj.input;
+		else if(current > obj.current) return false;
+		else 
+		{
+			if(input < obj.input) return true;
+			else if(input > obj.input) return false;
+			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+		}
 
 		return false;
 	}
 	bool operator > (const Transition<T>& obj) const
 	{
 		if(current > obj.current) return true;
-		else if(current == obj.current)  return input > obj.input;
+		else if(current < obj.current) return false;
+		else 
+		{
+			if(input > obj.input) return true;
+			else if(input < obj.input) return false;
+			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+		}
 
 		return false;
 	}
@@ -73,14 +85,26 @@ struct Transition
 	bool less(Status current,T input)const
 	{
 		if(this->current < current) return true;
-		else if(this->current == current)  return this->input < input;
+		else if(this->current > current) return false;
+		else 
+		{
+			if(this->input < input) return true;
+			else if(this->input > input) return false;
+			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+		}
 
 		return false;
 	}
 	bool great(Status current,T input)const
 	{
 		if(this->current > current) return true;
-		else if(this->current == current)  return this->input > input;
+		else if(this->current < current) return false;
+		else 
+		{
+			if(this->input > input) return true;
+			else if(this->input < input) return false;
+			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+		}
 
 		return false;
 	}

@@ -29,6 +29,7 @@ void v0_developing()
 	//std::cout << "Test : " << buffer1[15] << "\n";
 	
 	AFA af_number(0,tt::table_number_10);
+	af_number.get_table()->print(std::cout);
 	//std::cout << "Table size : " << af_number.get_table().size() << "\n";
 	/*
 	for(const Transition<Char>& t : af_number.get_table())
@@ -136,7 +137,7 @@ void v0_developing()
 	//std::cout << "\n\nInstruciotn set\n";
 	AFA instruction_set_i86(tt::i86l);
 	//instruction_set_i86.get_table()->print(std::cout);
-	CU_ASSERT(instruction_set_i86.transition("aaa"));
+	/*CU_ASSERT(instruction_set_i86.transition("aaa"));
 	CU_ASSERT(not instruction_set_i86.transition("aAa"));
 	CU_ASSERT(not instruction_set_i86.transition("AAA"));
 	CU_ASSERT(not instruction_set_i86.transition("ana"));
@@ -185,6 +186,10 @@ void v0_developing()
 	CU_ASSERT(instruction_set_i86.transition("cmc"));
 	CU_ASSERT(not instruction_set_i86.transition("cmC"));
 	CU_ASSERT(not instruction_set_i86.transition("CMC"));
+	
+	CU_ASSERT(instruction_set_i86.transition("cmp"));
+	CU_ASSERT(not instruction_set_i86.transition("cmP"));
+	CU_ASSERT(not instruction_set_i86.transition("CMP"));*/
 
 
 	

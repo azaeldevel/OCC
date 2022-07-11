@@ -261,7 +261,7 @@ static const Table<wchar_t> table_number_beautifull_16L {
 
 
 //intel-80-210201-001.pdf
-static const Table<char> i86l {//instruction set lowwer case
+static const Table<char> i86l {//instruction set, lowwer case
 		//aaa
 		{0,'a',Indicator::None,1},
 		{1,'a',Indicator::None,2},
@@ -375,6 +375,14 @@ static const Table<char> i86l {//instruction set lowwer case
 		{35,'\n',Indicator::Accept,36},
 		{35,'\t',Indicator::Accept,36},
 		{35,'\0',Indicator::Accept,36},
+
+		//cmp
+		{34,'p',Indicator::None,37},
+		//accept
+		{37,' ',Indicator::Accept,38},
+		{37,'\n',Indicator::Accept,38},
+		{37,'\t',Indicator::Accept,38},
+		{37,'\0',Indicator::Accept,38},
 		
 };
 static const Table<char> i86u {//instruction set upper case

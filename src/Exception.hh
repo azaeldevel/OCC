@@ -59,6 +59,7 @@ public:
 		NULL_STRING,
 		UNCLASIFIED,
 		Q0_NOT_ACCEPTABLE,
+		NOT_UNIQUE,
 	};
 
 public:
