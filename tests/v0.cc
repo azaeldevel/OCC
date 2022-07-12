@@ -270,4 +270,27 @@ void v0_developing()
 	CU_ASSERT(regs_i86.transition("dx"));
 	CU_ASSERT(regs_i86.transition("dh"));
 	CU_ASSERT(regs_i86.transition("dl"));
+
+	AFA AF_id(tt::Identifier);
+	CU_ASSERT(AF_id.transition("ax"));
+	CU_ASSERT(AF_id.transition("ah"));
+	CU_ASSERT(AF_id.transition("al"));
+	CU_ASSERT(AF_id.transition("bx"));
+	CU_ASSERT(AF_id.transition("bh"));
+	CU_ASSERT(AF_id.transition("bl"));
+	CU_ASSERT(AF_id.transition("cx"));
+	CU_ASSERT(AF_id.transition("ch"));
+	CU_ASSERT(AF_id.transition("cl"));
+	CU_ASSERT(AF_id.transition("dx"));
+	CU_ASSERT(AF_id.transition("dh"));
+	CU_ASSERT(AF_id.transition("dl"));
+	
+	CU_ASSERT(AF_id.transition("JUAN"));
+	CU_ASSERT(AF_id.transition("Carro"));
+	CU_ASSERT(AF_id.transition("_Test12"));
+	CU_ASSERT(AF_id.transition("_Avion_"));
+	CU_ASSERT(AF_id.transition("Aeropueto"));
+	CU_ASSERT(AF_id.transition("REF_00256"));
+	CU_ASSERT(AF_id.transition("REF_08956"));
+	CU_ASSERT(AF_id.transition("Romero1"));
 }
