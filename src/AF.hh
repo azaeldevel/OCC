@@ -135,7 +135,7 @@ public:
 	{
 		return search(current,input, 0,std::vector<Transition<T>>::size() - 1);
 	}
-	const Transition<T>* search(Status current,Char input) const
+	const Transition<T>* search(Status current,T input) const
 	{
 		return search(current,input, 0,std::vector<Transition<T>>::size() - 1);
 	}

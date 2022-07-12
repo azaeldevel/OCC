@@ -20,7 +20,7 @@ int v0_clean(void)
 
 void v0_developing()
 {
-	Buffer buffer1("../../tests/prg1.cc.asm");
+	Buffer<char> buffer1("../../tests/prg1.cc.asm");
 
 	CU_ASSERT(buffer1.size() == 49);
 	CU_ASSERT(buffer1[2] == 'a');
@@ -37,7 +37,7 @@ void v0_developing()
 		t.print(std::cout);
 	}
 	*/
-	const Transition<Char>* trans1 = af_number.get_table()->search(1,'8');
+	const Transition<char>* trans1 = af_number.get_table()->search(1,'8');
 	CU_ASSERT(trans1 != NULL);
 	/*if(trans1)
 	{
@@ -80,7 +80,7 @@ void v0_developing()
 	
 	
 	AFA af_hex(0,tt::table_number_16);
-	const Transition<Char>* trans2 = af_hex.get_table()->search(1,'x');
+	const Transition<char>* trans2 = af_hex.get_table()->search(1,'x');
 	CU_ASSERT(trans2 != NULL);
 	/*if(trans2)
 	{
