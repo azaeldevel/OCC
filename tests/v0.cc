@@ -136,7 +136,7 @@ void v0_developing()
 	
 	//instruction set
 	//std::cout << "\n\nInstruciotn set\n";
-	AFA instruction_set_i86(tt::i86l);
+	AFA instruction_set_i86(tt::i86_instset_l);
 	//instruction_set_i86.get_table()->print(std::cout);
 	CU_ASSERT(instruction_set_i86.transition("aaa"));
 	CU_ASSERT(not instruction_set_i86.transition("aAa"));
@@ -252,5 +252,22 @@ void v0_developing()
 	CU_ASSERT(not instruction_set_i86.transition("iNto"));
 	CU_ASSERT(not instruction_set_i86.transition("INto"));
 	
+	CU_ASSERT(instruction_set_i86.transition("iret"));
+	CU_ASSERT(not instruction_set_i86.transition("IRET"));
+	CU_ASSERT(not instruction_set_i86.transition("Iret"));
 	
+
+	AFA regs_i86(tt::i86_regs_l);
+	CU_ASSERT(regs_i86.transition("ax"));
+	CU_ASSERT(regs_i86.transition("ah"));
+	CU_ASSERT(regs_i86.transition("al"));
+	CU_ASSERT(regs_i86.transition("bx"));
+	CU_ASSERT(regs_i86.transition("bh"));
+	CU_ASSERT(regs_i86.transition("bl"));
+	CU_ASSERT(regs_i86.transition("cx"));
+	CU_ASSERT(regs_i86.transition("ch"));
+	CU_ASSERT(regs_i86.transition("cl"));
+	CU_ASSERT(regs_i86.transition("dx"));
+	CU_ASSERT(regs_i86.transition("dh"));
+	CU_ASSERT(regs_i86.transition("dl"));
 }

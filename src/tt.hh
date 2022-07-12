@@ -261,7 +261,7 @@ static const Table<wchar_t> table_number_beautifull_16L {
 
 
 //intel-80-210201-001.pdf
-static const Table<char> i86l {//instruction set, lowwer case
+static const Table<char> i86_instset_l {//instruction set, lowwer case
 		//aaa
 		{0,'a',Indicator::None,1},
 		{1,'a',Indicator::None,2},
@@ -517,9 +517,120 @@ static const Table<char> i86l {//instruction set, lowwer case
 		{80,'\n',Indicator::Accept,81},
 		{80,'\t',Indicator::Accept,81},
 		{80,'\0',Indicator::Accept,81},
+
+		//iret
+		{64,'r',Indicator::None,82},
+		{82,'e',Indicator::None,83},
+		{83,'t',Indicator::None,84},
+		//accept
+		{84,' ',Indicator::Accept,85},
+		{84,'\n',Indicator::Accept,85},
+		{84,'\t',Indicator::Accept,85},
+		{84,'\0',Indicator::Accept,85},
 };
 
+static const Table<char> i86_regs_l {//instruction set, lowwer case
+		//ah
+		{0,'a',Indicator::None,1},
+		{1,'h',Indicator::None,2},
+		//accept
+		{2,' ',Indicator::Accept,3},
+		{2,'\n',Indicator::Accept,3},
+		{2,'\t',Indicator::Accept,3},
+		{2,'\0',Indicator::Accept,3},
+		
+		//al
+		{1,'l',Indicator::None,4},
+		//accept
+		{4,' ',Indicator::Accept,5},
+		{4,'\n',Indicator::Accept,5},
+		{4,'\t',Indicator::Accept,5},
+		{4,'\0',Indicator::Accept,5},
+		
+		//ax
+		{1,'x',Indicator::None,6},
+		//accept
+		{6,' ',Indicator::Accept,7},
+		{6,'\n',Indicator::Accept,7},
+		{6,'\t',Indicator::Accept,7},
+		{6,'\0',Indicator::Accept,7},
 
+		//bh
+		{0,'b',Indicator::None,8},
+		{8,'h',Indicator::None,9},
+		//accept
+		{9,' ',Indicator::Accept,10},
+		{9,'\n',Indicator::Accept,10},
+		{9,'\t',Indicator::Accept,10},
+		{9,'\0',Indicator::Accept,10},
+
+		//bl
+		{8,'l',Indicator::None,11},
+		//accept
+		{11,' ',Indicator::Accept,12},
+		{11,'\n',Indicator::Accept,12},
+		{11,'\t',Indicator::Accept,12},
+		{11,'\0',Indicator::Accept,12},
+
+		//bx
+		{8,'x',Indicator::None,13},
+		//accept
+		{13,' ',Indicator::Accept,14},
+		{13,'\n',Indicator::Accept,14},
+		{13,'\t',Indicator::Accept,14},
+		{13,'\0',Indicator::Accept,14},
+
+		//ch
+		{0,'c',Indicator::None,15},
+		{15,'h',Indicator::None,16},
+		//accept
+		{16,' ',Indicator::Accept,17},
+		{16,'\n',Indicator::Accept,17},
+		{16,'\t',Indicator::Accept,17},
+		{16,'\0',Indicator::Accept,17},
+
+		//cl
+		{15,'l',Indicator::None,18},
+		//accept
+		{18,' ',Indicator::Accept,19},
+		{18,'\n',Indicator::Accept,19},
+		{18,'\t',Indicator::Accept,19},
+		{18,'\0',Indicator::Accept,19},
+
+		//cx
+		{15,'x',Indicator::None,20},
+		//accept
+		{20,' ',Indicator::Accept,21},
+		{20,'\n',Indicator::Accept,21},
+		{20,'\t',Indicator::Accept,21},
+		{20,'\0',Indicator::Accept,21},
+
+		//ch
+		{0,'d',Indicator::None,22},
+		{22,'h',Indicator::None,23},
+		//accept
+		{23,' ',Indicator::Accept,24},
+		{23,'\n',Indicator::Accept,24},
+		{23,'\t',Indicator::Accept,24},
+		{23,'\0',Indicator::Accept,24},
+
+		//cl
+		{22,'l',Indicator::None,25},
+		//accept
+		{25,' ',Indicator::Accept,26},
+		{25,'\n',Indicator::Accept,26},
+		{25,'\t',Indicator::Accept,26},
+		{25,'\0',Indicator::Accept,26},
+
+		//cx
+		{22,'x',Indicator::None,27},
+		//accept
+		{27,' ',Indicator::Accept,28},
+		{27,'\n',Indicator::Accept,28},
+		{27,'\t',Indicator::Accept,28},
+		{27,'\0',Indicator::Accept,28},
+
+};
 }
 
 #endif
