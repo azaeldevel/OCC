@@ -293,4 +293,22 @@ void v0_developing()
 	CU_ASSERT(AF_id.transition("REF_00256"));
 	CU_ASSERT(AF_id.transition("REF_08956"));
 	CU_ASSERT(AF_id.transition("Romero1"));
+
+	CU_ASSERT(not AF_id.transition("Romero1!"));
+	CU_ASSERT(not AF_id.transition("1Romero1"));
+
+
+	AFA AF_segs(tt::i86_segs_l);
+	CU_ASSERT(AF_segs.transition("es"));
+	CU_ASSERT(AF_segs.transition("ss"));
+	CU_ASSERT(AF_segs.transition("ds"));
+	CU_ASSERT(AF_segs.transition("cs"));
+	
+	CU_ASSERT(AF_segs.transition("sp"));
+	CU_ASSERT(AF_segs.transition("bp"));
+	CU_ASSERT(AF_segs.transition("si"));
+	CU_ASSERT(AF_segs.transition("di"));
+	CU_ASSERT(AF_segs.transition("ip"));
+
+	
 }

@@ -760,6 +760,87 @@ static const Table<char> i86_regs_l {//instruction set, lowwer case
 		{27,'\0',Indicator::Accept,28},
 
 };
+
+static const Table<char> i86_segs_l {//instruction set, lowwer case
+		//bp
+		{0,'b',Indicator::None,1},
+		{1,'p',Indicator::None,2},
+		//accept
+		{2,' ',Indicator::Accept,3},
+		{2,'\n',Indicator::Accept,3},
+		{2,'\t',Indicator::Accept,3},
+		{2,'\0',Indicator::Accept,3},
+
+		//cs
+		{0,'c',Indicator::None,4},
+		{4,'s',Indicator::None,5},
+		//accept
+		{5,' ',Indicator::Accept,6},
+		{5,'\n',Indicator::Accept,6},
+		{5,'\t',Indicator::Accept,6},
+		{5,'\0',Indicator::Accept,6},
+
+		//di
+		{0,'d',Indicator::None,7},
+		{7,'i',Indicator::None,8},
+		//accept
+		{8,' ',Indicator::Accept,9},
+		{8,'\n',Indicator::Accept,9},
+		{8,'\t',Indicator::Accept,9},
+		{8,'\0',Indicator::Accept,9},
+		
+		//ds
+		{7,'s',Indicator::None,10},
+		//accept
+		{10,' ',Indicator::Accept,11},
+		{10,'\n',Indicator::Accept,11},
+		{10,'\t',Indicator::Accept,11},
+		{10,'\0',Indicator::Accept,11},
+		
+		//es
+		{0,'e',Indicator::None,12},
+		{12,'s',Indicator::None,13},
+		//accept
+		{13,' ',Indicator::Accept,14},
+		{13,'\n',Indicator::Accept,14},
+		{13,'\t',Indicator::Accept,14},
+		{13,'\0',Indicator::Accept,14},
+		
+		//ip
+		{0,'i',Indicator::None,15},
+		{15,'p',Indicator::None,16},
+		//accept
+		{16,' ',Indicator::Accept,17},
+		{16,'\n',Indicator::Accept,17},
+		{16,'\t',Indicator::Accept,17},
+		{16,'\0',Indicator::Accept,17},
+		
+		//si
+		{0,'s',Indicator::None,18},
+		{18,'i',Indicator::None,19},
+		//accept
+		{19,' ',Indicator::Accept,20},
+		{19,'\n',Indicator::Accept,20},
+		{19,'\t',Indicator::Accept,20},
+		{19,'\0',Indicator::Accept,20},
+		
+		//sp
+		{18,'p',Indicator::None,21},
+		//accept
+		{21,' ',Indicator::Accept,22},
+		{21,'\n',Indicator::Accept,22},
+		{21,'\t',Indicator::Accept,22},
+		{21,'\0',Indicator::Accept,22},
+		
+		//ss
+		{18,'s',Indicator::None,23},
+		//accept
+		{23,' ',Indicator::Accept,24},
+		{23,'\n',Indicator::Accept,24},
+		{23,'\t',Indicator::Accept,24},
+		{23,'\0',Indicator::Accept,24},
+};
+
 }
 
 #endif
