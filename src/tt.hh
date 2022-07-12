@@ -466,7 +466,7 @@ static const Table<char> i86l {//instruction set, lowwer case
 		{67,' ',Indicator::Accept,68},
 		{67,'\n',Indicator::Accept,68},
 		{67,'\t',Indicator::Accept,68},
-		{67,'\0',Indicator::Accept,68},		
+		{67,'\0',Indicator::Accept,68},
 
 		//imul
 		{64,'m',Indicator::None,69},
@@ -477,6 +477,46 @@ static const Table<char> i86l {//instruction set, lowwer case
 		{71,'\n',Indicator::Accept,72},
 		{71,'\t',Indicator::Accept,72},
 		{71,'\0',Indicator::Accept,72},
+
+		//in
+		{64,'n',Indicator::None,73},
+		//accept
+		{73,' ',Indicator::Accept,74},
+		{73,'\n',Indicator::Accept,74},
+		{73,'\t',Indicator::Accept,74},
+		{73,'\0',Indicator::Accept,74},
+
+		//inc
+		{73,'c',Indicator::None,74},
+		//accept
+		{74,' ',Indicator::Accept,75},
+		{74,'\n',Indicator::Accept,75},
+		{74,'\t',Indicator::Accept,75},
+		{74,'\0',Indicator::Accept,75},
+
+		//int
+		{73,'t',Indicator::None,76},
+		//accept
+		{76,' ',Indicator::Accept,77},
+		{76,'\n',Indicator::Accept,77},
+		{76,'\t',Indicator::Accept,77},
+		{76,'\0',Indicator::Accept,77},
+
+		//intr
+		{76,'r',Indicator::None,78},
+		//accept
+		{78,' ',Indicator::Accept,79},
+		{78,'\n',Indicator::Accept,79},
+		{78,'\t',Indicator::Accept,79},
+		{78,'\0',Indicator::Accept,79},
+
+		//into
+		{76,'o',Indicator::None,80},
+		//accept
+		{80,' ',Indicator::Accept,81},
+		{80,'\n',Indicator::Accept,81},
+		{80,'\t',Indicator::Accept,81},
+		{80,'\0',Indicator::Accept,81},
 };
 
 

@@ -232,5 +232,25 @@ void v0_developing()
 	CU_ASSERT(not instruction_set_i86.transition("iMul"));
 	CU_ASSERT(not instruction_set_i86.transition("IMUL"));
 	
+	CU_ASSERT(instruction_set_i86.transition("in"));
+	CU_ASSERT(not instruction_set_i86.transition("iN"));
+	CU_ASSERT(not instruction_set_i86.transition("IN"));
+	
+	CU_ASSERT(instruction_set_i86.transition("inc"));
+	CU_ASSERT(not instruction_set_i86.transition("iNc"));
+	CU_ASSERT(not instruction_set_i86.transition("INc"));
+	
+	CU_ASSERT(instruction_set_i86.transition("int"));
+	CU_ASSERT(not instruction_set_i86.transition("iNt"));
+	CU_ASSERT(not instruction_set_i86.transition("INt"));
+	
+	CU_ASSERT(instruction_set_i86.transition("intr"));
+	CU_ASSERT(not instruction_set_i86.transition("iNtr"));
+	CU_ASSERT(not instruction_set_i86.transition("INtr"));
+	
+	CU_ASSERT(instruction_set_i86.transition("into"));
+	CU_ASSERT(not instruction_set_i86.transition("iNto"));
+	CU_ASSERT(not instruction_set_i86.transition("INto"));
+	
 	
 }
