@@ -199,7 +199,38 @@ void v0_developing()
 	CU_ASSERT(instruction_set_i86.transition("cwd"));
 	CU_ASSERT(not instruction_set_i86.transition("CWw"));
 	CU_ASSERT(not instruction_set_i86.transition("CWD"));
-
+	
+	CU_ASSERT(instruction_set_i86.transition("daa"));
+	CU_ASSERT(not instruction_set_i86.transition("DAA"));
+	CU_ASSERT(not instruction_set_i86.transition("DaA"));
+	
+	CU_ASSERT(instruction_set_i86.transition("das"));
+	CU_ASSERT(not instruction_set_i86.transition("DAs"));
+	CU_ASSERT(not instruction_set_i86.transition("DaS"));
+	
+	CU_ASSERT(instruction_set_i86.transition("dec"));
+	CU_ASSERT(not instruction_set_i86.transition("DeC"));
+	CU_ASSERT(not instruction_set_i86.transition("Dec"));
+	
+	CU_ASSERT(instruction_set_i86.transition("div"));
+	CU_ASSERT(not instruction_set_i86.transition("Div"));
+	CU_ASSERT(not instruction_set_i86.transition("diV"));
+	
+	CU_ASSERT(instruction_set_i86.transition("esc"));
+	CU_ASSERT(not instruction_set_i86.transition("ESC"));
+	CU_ASSERT(not instruction_set_i86.transition("Esc"));
+	
+	CU_ASSERT(instruction_set_i86.transition("hlt"));
+	CU_ASSERT(not instruction_set_i86.transition("Hlt"));
+	CU_ASSERT(not instruction_set_i86.transition("HLT"));
+	
+	CU_ASSERT(instruction_set_i86.transition("idiv"));
+	CU_ASSERT(not instruction_set_i86.transition("iDiv"));
+	CU_ASSERT(not instruction_set_i86.transition("idiV"));
+	
+	CU_ASSERT(instruction_set_i86.transition("imul"));
+	CU_ASSERT(not instruction_set_i86.transition("iMul"));
+	CU_ASSERT(not instruction_set_i86.transition("IMUL"));
 	
 	
 }

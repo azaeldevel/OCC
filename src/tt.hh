@@ -7,12 +7,12 @@
 /*
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
  * 
- * CC is free software: you can redistribute it and/or modify it
+ * octetos-CC is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * CC is distributed in the hope that it will be useful, but
+ * octetos-CC is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -400,7 +400,83 @@ static const Table<char> i86l {//instruction set, lowwer case
 		{42,'\n',Indicator::Accept,43},
 		{42,'\t',Indicator::Accept,43},
 		{42,'\0',Indicator::Accept,43},
-		
+
+		//daa
+		{0,'d',Indicator::None,44},
+		{44,'a',Indicator::None,45},
+		{45,'a',Indicator::None,46},
+		//accept
+		{46,' ',Indicator::Accept,47},
+		{46,'\n',Indicator::Accept,47},
+		{46,'\t',Indicator::Accept,47},
+		{46,'\0',Indicator::Accept,47},
+
+		//das
+		{45,'s',Indicator::None,48},
+		//accept
+		{48,' ',Indicator::Accept,49},
+		{48,'\n',Indicator::Accept,49},
+		{48,'\t',Indicator::Accept,49},
+		{48,'\0',Indicator::Accept,49},
+
+		//dec
+		{44,'e',Indicator::None,50},
+		{50,'c',Indicator::None,51},
+		//accept
+		{51,' ',Indicator::Accept,52},
+		{51,'\n',Indicator::Accept,52},
+		{51,'\t',Indicator::Accept,52},
+		{51,'\0',Indicator::Accept,52},
+
+		//div
+		{44,'i',Indicator::None,53},
+		{53,'v',Indicator::None,54},
+		//accept
+		{54,' ',Indicator::Accept,55},
+		{54,'\n',Indicator::Accept,55},
+		{54,'\t',Indicator::Accept,55},
+		{54,'\0',Indicator::Accept,55},
+
+		//esc
+		{0,'e',Indicator::None,56},
+		{56,'s',Indicator::None,57},
+		{57,'c',Indicator::None,58},
+		//accept
+		{58,' ',Indicator::Accept,59},
+		{58,'\n',Indicator::Accept,59},
+		{58,'\t',Indicator::Accept,59},
+		{58,'\0',Indicator::Accept,59},
+
+		//hlt
+		{0,'h',Indicator::None,60},
+		{60,'l',Indicator::None,61},
+		{61,'t',Indicator::None,62},
+		//accept
+		{62,' ',Indicator::Accept,63},
+		{62,'\n',Indicator::Accept,63},
+		{62,'\t',Indicator::Accept,63},
+		{62,'\0',Indicator::Accept,63},
+
+		//idiv
+		{0,'i',Indicator::None,64},
+		{64,'d',Indicator::None,65},
+		{65,'i',Indicator::None,66},
+		{66,'v',Indicator::None,67},
+		//accept
+		{67,' ',Indicator::Accept,68},
+		{67,'\n',Indicator::Accept,68},
+		{67,'\t',Indicator::Accept,68},
+		{67,'\0',Indicator::Accept,68},		
+
+		//imul
+		{64,'m',Indicator::None,69},
+		{69,'u',Indicator::None,70},
+		{70,'l',Indicator::None,71},
+		//accept
+		{71,' ',Indicator::Accept,72},
+		{71,'\n',Indicator::Accept,72},
+		{71,'\t',Indicator::Accept,72},
+		{71,'\0',Indicator::Accept,72},
 };
 
 
