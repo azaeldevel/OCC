@@ -245,14 +245,14 @@ public:
 	}
 	/**
 	*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
-	*\return 
+	*\return la cantidad de caracteres acpetados par el lenguaje
 	*/
-	unsigned int transition(const T* string)
+	unsigned short transition(const T* string)
 	{
 		if(not string) return false;
 		
 		current = reset;
-		Word i = 0;	
+		unsigned short  i = 0;	
 		const Transition<T> *prev = NULL, *actual;
 		do
 		{
@@ -260,7 +260,7 @@ public:
 			actual = transition(string[i]);
 			if(not actual) 
 			{
-				if(prev) if(prev->indicator == Indicator::Accept) return i;
+				if(prev) if(prev->indicator == Indicator::Accept) return i;//i es 0-base index
 				return 0;//si no se encontrontro transiscion
 			}
 			else if(actual->indicator == Indicator::Reject)
