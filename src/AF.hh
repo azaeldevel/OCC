@@ -260,18 +260,18 @@ public:
 			actual = transition(string[i]);
 			if(not actual) 
 			{
-				if(prev) if(prev->indicator == Indicator::Accept) return i - 1;
+				if(prev) if(prev->indicator == Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
 			else if(actual->indicator == Indicator::Reject)
 			{
-				if(prev) if(prev->indicator == Indicator::Accept) return i - 1;
+				if(prev) if(prev->indicator == Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
 			else if(string[i] == '\0')
 			{
 				if(i == 0) return 0;
-				else if(prev) if(prev->indicator == Indicator::Accept) return i -1;
+				else if(prev) if(prev->indicator == Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
 			prev = actual;
