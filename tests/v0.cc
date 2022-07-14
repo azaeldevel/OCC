@@ -37,23 +37,24 @@ void v0_developing()
 		t.print(std::cout);
 	}
 	*/
-	const Transition<char>* trans1 = af_number.get_table()->search(1,'8');
+	/*const Transition<char>* trans1 = af_number.get_table()->search(1,'8');
 	CU_ASSERT(trans1 != NULL);
-	/*if(trans1)
+	if(trans1)
 	{
 		std::cout << "Se encontro : ";
 		trans1->print(std::cout);
 	}*/	
 	
 	//pertenice al lenguaje
-	CU_ASSERT(af_number.transition("123456"));
-	CU_ASSERT(af_number.transition("0123456"));
+	//std::cout << "Length : " << af_number.transition("123456") << "\n";
+	CU_ASSERT(af_number.transition("123456") == 5);
+	CU_ASSERT(af_number.transition("0123456") == 6);
 	//no pertenice al lenguaje
-	CU_ASSERT(not af_number.transition("A123456"));
-	CU_ASSERT(not af_number.transition("0x123456"));
-	CU_ASSERT(not af_number.transition("!123456"));	
-	CU_ASSERT(not af_number.transition("123456@"));	
-	CU_ASSERT(not af_number.transition("Juan"));
+	CU_ASSERT(af_number.transition("A123456") == 0);
+	CU_ASSERT(af_number.transition("0x123456") == 0);
+	CU_ASSERT(af_number.transition("!123456") == 0);	
+	CU_ASSERT(af_number.transition("123456@") == 5);	
+	CU_ASSERT(af_number.transition("Juan") == 0);
 
 
 	AFA af_numberL(0,tt::table_number_10L);
@@ -67,14 +68,13 @@ void v0_developing()
 	}*/
 	
 	//pertenice al lenguaje
-	CU_ASSERT(af_numberL.transition(L"123456"));
-	CU_ASSERT(af_numberL.transition(L"0123456"));
-	//no pertenice al lenguaje
-	CU_ASSERT(not af_numberL.transition(L"A123456"));
-	CU_ASSERT(not af_numberL.transition(L"0x123456"));
-	CU_ASSERT(not af_numberL.transition(L"!123456"));	
-	CU_ASSERT(not af_numberL.transition(L"123456@"));	
-	CU_ASSERT(not af_numberL.transition(L"Juan"));
+	CU_ASSERT(af_numberL.transition(L"123456") == 5);
+	CU_ASSERT(af_numberL.transition(L"0123456") == 6);
+	CU_ASSERT(af_numberL.transition(L"A123456") == 0);
+	CU_ASSERT(af_numberL.transition(L"0x123456") == 0);
+	CU_ASSERT(af_numberL.transition(L"!123456") == 0);	
+	CU_ASSERT(af_numberL.transition(L"123456@") == 5);	
+	CU_ASSERT( af_numberL.transition(L"Juan") == 0);
 
 
 	
@@ -87,11 +87,11 @@ void v0_developing()
 		std::cout << "Se encontro : ";
 		trans2->print(std::cout);
 	}*/
-	CU_ASSERT(af_hex.transition("0x123F5A"));
-	CU_ASSERT(af_hex.transition("0x01"));
+	CU_ASSERT(af_hex.transition("0x123F5A") == 7);
+	CU_ASSERT(af_hex.transition("0x01") == 3);
 	//reject
-	CU_ASSERT(not af_hex.transition("123456"));
-	CU_ASSERT(not af_hex.transition("!123456"));
+	CU_ASSERT(af_hex.transition("123456") == 0);
+	CU_ASSERT(af_hex.transition("!123456") == 0);
 	
 	AFA af_hexL(0,tt::table_number_16L);
 	const Transition<wchar_t>* trans2L = af_hexL.get_table()->search(1,'x');
@@ -111,11 +111,11 @@ void v0_developing()
 		std::cout << "Se encontro : ";
 		trans3->print(std::cout);
 	}*/
-	CU_ASSERT(af_hex2.transition("0X123F5A"));
-	CU_ASSERT(af_hex2.transition("0x01"));
+	CU_ASSERT(af_hex2.transition("0X123F5A")  == 7);
+	CU_ASSERT(af_hex2.transition("0x01") == 3);
 	//reject
-	CU_ASSERT(not af_hex2.transition("123456"));
-	CU_ASSERT(not af_hex2.transition("!123456"));
+	CU_ASSERT(af_hex2.transition("123456") == 0);
+	CU_ASSERT(af_hex2.transition("!123456") == 0);
 
 	AFA af_hex2L(0,tt::table_number_beautifull_16L);
 	const Transition<wchar_t>* trans3L = af_hex2L.get_table()->search(1,'x');
@@ -125,11 +125,11 @@ void v0_developing()
 		std::wcout << "Se encontro : ";
 		trans3L->print(std::wcout);
 	}*/
-	CU_ASSERT(af_hex2L.transition(L"0X123F5A"));
-	CU_ASSERT(af_hex2L.transition(L"0x01"));
+	CU_ASSERT(af_hex2L.transition(L"0X123F5A") == 7);
+	CU_ASSERT(af_hex2L.transition(L"0x01") == 3);
 	//reject
-	CU_ASSERT(not af_hex2L.transition(L"123456"));
-	CU_ASSERT(not af_hex2L.transition(L"!123456"));
+	CU_ASSERT(af_hex2L.transition(L"123456") == 0);
+	CU_ASSERT(af_hex2L.transition(L"!123456") == 0);
 
 
 
@@ -138,177 +138,177 @@ void v0_developing()
 	//std::cout << "\n\nInstruciotn set\n";
 	AFA instruction_set_i86(tt::i86_instset_l);
 	//instruction_set_i86.get_table()->print(std::cout);
-	CU_ASSERT(instruction_set_i86.transition("aaa"));
-	CU_ASSERT(not instruction_set_i86.transition("aAa"));
-	CU_ASSERT(not instruction_set_i86.transition("AAA"));
-	CU_ASSERT(not instruction_set_i86.transition("ana"));
+	//std::cout << "Length : " << instruction_set_i86.transition("aaa") << "\n";
+	CU_ASSERT(instruction_set_i86.transition("aaa") == 2);
+	CU_ASSERT(instruction_set_i86.transition("aAa") == 0);
+	CU_ASSERT(instruction_set_i86.transition("AAA") == 0);
+	CU_ASSERT(instruction_set_i86.transition("ana") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("aad"));
-	CU_ASSERT(not instruction_set_i86.transition("AAD"));
-	CU_ASSERT(not instruction_set_i86.transition("AAd"));
+	CU_ASSERT(instruction_set_i86.transition("aad") == 2);
+	CU_ASSERT(instruction_set_i86.transition("AAD") == 0);
+	CU_ASSERT(instruction_set_i86.transition("AAd") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("aam"));
-	CU_ASSERT(not instruction_set_i86.transition("AAM"));
-	CU_ASSERT(not instruction_set_i86.transition("AaM"));
+	CU_ASSERT(instruction_set_i86.transition("aam") == 2);
+	CU_ASSERT(instruction_set_i86.transition("AAM") == 0);
+	CU_ASSERT(instruction_set_i86.transition("AaM") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("adc"));
-	CU_ASSERT(not instruction_set_i86.transition("ADC"));
-	CU_ASSERT(not instruction_set_i86.transition("aDc"));
+	CU_ASSERT(instruction_set_i86.transition("adc") == 2);
+	CU_ASSERT(instruction_set_i86.transition("ADC") == 0);
+	CU_ASSERT(instruction_set_i86.transition("aDc") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("add"));
-	CU_ASSERT(not instruction_set_i86.transition("ADD"));
-	CU_ASSERT(not instruction_set_i86.transition("aDd"));
+	CU_ASSERT(instruction_set_i86.transition("add") == 2);
+	CU_ASSERT(instruction_set_i86.transition("ADD") == 0);
+	CU_ASSERT(instruction_set_i86.transition("aDd") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("and"));
-	CU_ASSERT(not instruction_set_i86.transition("AND"));
-	CU_ASSERT(not instruction_set_i86.transition("aNd"));
+	CU_ASSERT(instruction_set_i86.transition("and") == 2);
+	CU_ASSERT(instruction_set_i86.transition("AND") == 0);
+	CU_ASSERT(instruction_set_i86.transition("aNd") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("call"));
-	CU_ASSERT(not instruction_set_i86.transition("CALL"));
-	CU_ASSERT(not instruction_set_i86.transition("Call"));
-	CU_ASSERT(not instruction_set_i86.transition("CaLL"));
+	CU_ASSERT(instruction_set_i86.transition("call") == 3);
+	CU_ASSERT(instruction_set_i86.transition("CALL") == 0);
+	CU_ASSERT(instruction_set_i86.transition("Call") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CaLL") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cbw"));
-	CU_ASSERT(not instruction_set_i86.transition("CBW"));
-	CU_ASSERT(not instruction_set_i86.transition("cBW"));
+	CU_ASSERT(instruction_set_i86.transition("cbw") == 2);
+	CU_ASSERT(instruction_set_i86.transition("CBW") == 0);
+	CU_ASSERT(instruction_set_i86.transition("cBW") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("clc"));
-	CU_ASSERT(not instruction_set_i86.transition("cLc"));
-	CU_ASSERT(not instruction_set_i86.transition("CLC"));
+	CU_ASSERT(instruction_set_i86.transition("clc") == 2);
+	CU_ASSERT(instruction_set_i86.transition("cLc") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CLC") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cld"));
-	CU_ASSERT(not instruction_set_i86.transition("cLd"));
-	CU_ASSERT(not instruction_set_i86.transition("CLD"));
+	CU_ASSERT(instruction_set_i86.transition("cld") == 2);
+	CU_ASSERT(instruction_set_i86.transition("cLd") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CLD") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cli"));
-	CU_ASSERT(not instruction_set_i86.transition("cLi"));
-	CU_ASSERT(not instruction_set_i86.transition("CLI"));
+	CU_ASSERT(instruction_set_i86.transition("cli") == 2);
+	CU_ASSERT(instruction_set_i86.transition("cLi") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CLI") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cmc"));
-	CU_ASSERT(not instruction_set_i86.transition("cmC"));
-	CU_ASSERT(not instruction_set_i86.transition("CMC"));
+	CU_ASSERT(instruction_set_i86.transition("cmc") == 2);
+	CU_ASSERT(instruction_set_i86.transition("cmC") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CMC") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cmp"));
-	CU_ASSERT(not instruction_set_i86.transition("cmP"));
-	CU_ASSERT(not instruction_set_i86.transition("CMP"));
+	CU_ASSERT(instruction_set_i86.transition("cmp") == 2);
+	CU_ASSERT(instruction_set_i86.transition("cmP") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CMP") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cmps"));
-	CU_ASSERT(not instruction_set_i86.transition("cmPs"));
-	CU_ASSERT(not instruction_set_i86.transition("CMPS"));
+	CU_ASSERT(instruction_set_i86.transition("cmps") == 3);
+	CU_ASSERT(instruction_set_i86.transition("cmPs") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CMPS") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("cwd"));
-	CU_ASSERT(not instruction_set_i86.transition("CWw"));
-	CU_ASSERT(not instruction_set_i86.transition("CWD"));
+	CU_ASSERT(instruction_set_i86.transition("cwd") == 2);
+	CU_ASSERT(instruction_set_i86.transition("CWw") == 0);
+	CU_ASSERT(instruction_set_i86.transition("CWD") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("daa"));
-	CU_ASSERT(not instruction_set_i86.transition("DAA"));
-	CU_ASSERT(not instruction_set_i86.transition("DaA"));
+	CU_ASSERT(instruction_set_i86.transition("daa") == 2);
+	CU_ASSERT(instruction_set_i86.transition("DAA") == 0);
+	CU_ASSERT(instruction_set_i86.transition("DaA") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("das"));
-	CU_ASSERT(not instruction_set_i86.transition("DAs"));
-	CU_ASSERT(not instruction_set_i86.transition("DaS"));
+	CU_ASSERT(instruction_set_i86.transition("das") == 2);
+	CU_ASSERT(instruction_set_i86.transition("DAs") == 0);
+	CU_ASSERT(instruction_set_i86.transition("DaS") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("dec"));
-	CU_ASSERT(not instruction_set_i86.transition("DeC"));
-	CU_ASSERT(not instruction_set_i86.transition("Dec"));
+	CU_ASSERT(instruction_set_i86.transition("dec") == 2);
+	CU_ASSERT(instruction_set_i86.transition("DeC") == 0);
+	CU_ASSERT(instruction_set_i86.transition("Dec") == 0);
 	
 	CU_ASSERT(instruction_set_i86.transition("div"));
-	CU_ASSERT(not instruction_set_i86.transition("Div"));
-	CU_ASSERT(not instruction_set_i86.transition("diV"));
+	CU_ASSERT(instruction_set_i86.transition("Div") == 0);
+	CU_ASSERT(instruction_set_i86.transition("diV") == 0);
 	
 	CU_ASSERT(instruction_set_i86.transition("esc"));
-	CU_ASSERT(not instruction_set_i86.transition("ESC"));
-	CU_ASSERT(not instruction_set_i86.transition("Esc"));
+	CU_ASSERT(instruction_set_i86.transition("ESC") == 0);
+	CU_ASSERT(instruction_set_i86.transition("Esc") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("hlt"));
-	CU_ASSERT(not instruction_set_i86.transition("Hlt"));
-	CU_ASSERT(not instruction_set_i86.transition("HLT"));
+	CU_ASSERT(instruction_set_i86.transition("hlt") == 2);
+	CU_ASSERT(instruction_set_i86.transition("Hlt") == 0);
+	CU_ASSERT(instruction_set_i86.transition("HLT") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("idiv"));
-	CU_ASSERT(not instruction_set_i86.transition("iDiv"));
-	CU_ASSERT(not instruction_set_i86.transition("idiV"));
+	CU_ASSERT(instruction_set_i86.transition("idiv") == 3);
+	CU_ASSERT(instruction_set_i86.transition("iDiv") == 0);
+	CU_ASSERT(instruction_set_i86.transition("idiV") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("imul"));
-	CU_ASSERT(not instruction_set_i86.transition("iMul"));
-	CU_ASSERT(not instruction_set_i86.transition("IMUL"));
+	CU_ASSERT(instruction_set_i86.transition("imul") == 3);
+	CU_ASSERT(instruction_set_i86.transition("iMul") == 0);
+	CU_ASSERT(instruction_set_i86.transition("IMUL") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("in"));
-	CU_ASSERT(not instruction_set_i86.transition("iN"));
-	CU_ASSERT(not instruction_set_i86.transition("IN"));
+	CU_ASSERT(instruction_set_i86.transition("in") == 1);
+	CU_ASSERT(instruction_set_i86.transition("iN") == 0);
+	CU_ASSERT(instruction_set_i86.transition("IN") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("inc"));
-	CU_ASSERT(not instruction_set_i86.transition("iNc"));
-	CU_ASSERT(not instruction_set_i86.transition("INc"));
+	CU_ASSERT(instruction_set_i86.transition("inc") == 2);
+	CU_ASSERT(instruction_set_i86.transition("iNc") == 0);
+	CU_ASSERT(instruction_set_i86.transition("INc") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("int"));
-	CU_ASSERT(not instruction_set_i86.transition("iNt"));
-	CU_ASSERT(not instruction_set_i86.transition("INt"));
+	CU_ASSERT(instruction_set_i86.transition("int") == 2);
+	CU_ASSERT(instruction_set_i86.transition("iNt") == 0);
+	CU_ASSERT(instruction_set_i86.transition("INt") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("intr"));
-	CU_ASSERT(not instruction_set_i86.transition("iNtr"));
-	CU_ASSERT(not instruction_set_i86.transition("INtr"));
+	CU_ASSERT(instruction_set_i86.transition("intr") == 3);
+	CU_ASSERT(instruction_set_i86.transition("iNtr") == 0);
+	CU_ASSERT(instruction_set_i86.transition("INtr") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("into"));
-	CU_ASSERT(not instruction_set_i86.transition("iNto"));
-	CU_ASSERT(not instruction_set_i86.transition("INto"));
+	CU_ASSERT(instruction_set_i86.transition("into") == 3);
+	CU_ASSERT(instruction_set_i86.transition("iNto") == 0);
+	CU_ASSERT(instruction_set_i86.transition("INto") == 0);
 	
-	CU_ASSERT(instruction_set_i86.transition("iret"));
-	CU_ASSERT(not instruction_set_i86.transition("IRET"));
-	CU_ASSERT(not instruction_set_i86.transition("Iret"));
+	CU_ASSERT(instruction_set_i86.transition("iret") == 3);
+	CU_ASSERT(instruction_set_i86.transition("IRET") == 0);
+	CU_ASSERT(instruction_set_i86.transition("Iret") == 0);
 	
 
 	AFA regs_i86(tt::i86_regs_l);
-	CU_ASSERT(regs_i86.transition("ax"));
-	CU_ASSERT(regs_i86.transition("ah"));
-	CU_ASSERT(regs_i86.transition("al"));
-	CU_ASSERT(regs_i86.transition("bx"));
-	CU_ASSERT(regs_i86.transition("bh"));
-	CU_ASSERT(regs_i86.transition("bl"));
-	CU_ASSERT(regs_i86.transition("cx"));
-	CU_ASSERT(regs_i86.transition("ch"));
-	CU_ASSERT(regs_i86.transition("cl"));
-	CU_ASSERT(regs_i86.transition("dx"));
-	CU_ASSERT(regs_i86.transition("dh"));
-	CU_ASSERT(regs_i86.transition("dl"));
+	CU_ASSERT(regs_i86.transition("ax") == 1);
+	CU_ASSERT(regs_i86.transition("ah") == 1);
+	CU_ASSERT(regs_i86.transition("al") == 1);
+	CU_ASSERT(regs_i86.transition("bx") == 1);
+	CU_ASSERT(regs_i86.transition("bh") == 1);
+	CU_ASSERT(regs_i86.transition("bl") == 1);
+	CU_ASSERT(regs_i86.transition("cx") == 1);
+	CU_ASSERT(regs_i86.transition("ch") == 1);
+	CU_ASSERT(regs_i86.transition("cl") == 1);
+	CU_ASSERT(regs_i86.transition("dx") == 1);
+	CU_ASSERT(regs_i86.transition("dh") == 1);
+	CU_ASSERT(regs_i86.transition("dl") == 1);
 
 	AFA AF_id(tt::Identifier);
-	CU_ASSERT(AF_id.transition("ax"));
-	CU_ASSERT(AF_id.transition("ah"));
-	CU_ASSERT(AF_id.transition("al"));
-	CU_ASSERT(AF_id.transition("bx"));
-	CU_ASSERT(AF_id.transition("bh"));
-	CU_ASSERT(AF_id.transition("bl"));
-	CU_ASSERT(AF_id.transition("cx"));
-	CU_ASSERT(AF_id.transition("ch"));
-	CU_ASSERT(AF_id.transition("cl"));
-	CU_ASSERT(AF_id.transition("dx"));
-	CU_ASSERT(AF_id.transition("dh"));
-	CU_ASSERT(AF_id.transition("dl"));
+	CU_ASSERT(AF_id.transition("ax") == 1);
+	CU_ASSERT(AF_id.transition("ah") == 1);
+	CU_ASSERT(AF_id.transition("al") == 1);
+	CU_ASSERT(AF_id.transition("bx") == 1);
+	CU_ASSERT(AF_id.transition("bh") == 1);
+	CU_ASSERT(AF_id.transition("bl") == 1);
+	CU_ASSERT(AF_id.transition("cx") == 1);
+	CU_ASSERT(AF_id.transition("ch") == 1);
+	CU_ASSERT(AF_id.transition("cl") == 1);
+	CU_ASSERT(AF_id.transition("dx") == 1);
+	CU_ASSERT(AF_id.transition("dh") == 1);
+	CU_ASSERT(AF_id.transition("dl") == 1);
 	
-	CU_ASSERT(AF_id.transition("JUAN"));
-	CU_ASSERT(AF_id.transition("Carro"));
-	CU_ASSERT(AF_id.transition("_Test12"));
-	CU_ASSERT(AF_id.transition("_Avion_"));
-	CU_ASSERT(AF_id.transition("Aeropueto"));
-	CU_ASSERT(AF_id.transition("REF_00256"));
-	CU_ASSERT(AF_id.transition("REF_08956"));
-	CU_ASSERT(AF_id.transition("Romero1"));
-
-	CU_ASSERT(not AF_id.transition("Romero1!"));
-	CU_ASSERT(not AF_id.transition("1Romero1"));
+	CU_ASSERT(AF_id.transition("JUAN") == 3);
+	CU_ASSERT(AF_id.transition("Carro") == 4);
+	CU_ASSERT(AF_id.transition("_Test12") == 6);
+	CU_ASSERT(AF_id.transition("_Avion_") == 6);
+	CU_ASSERT(AF_id.transition("Aeropueto") == 8);
+	CU_ASSERT(AF_id.transition("REF_00256") == 8);
+	CU_ASSERT(AF_id.transition("REF_08956") == 8);
+	CU_ASSERT(AF_id.transition("Romero1") == 6);
+	CU_ASSERT(AF_id.transition("Romero1!") == 6);
+	CU_ASSERT(AF_id.transition("1Romero1") == 0);
 
 
 	AFA AF_segs(tt::i86_segs_l);
-	CU_ASSERT(AF_segs.transition("es"));
-	CU_ASSERT(AF_segs.transition("ss"));
-	CU_ASSERT(AF_segs.transition("ds"));
-	CU_ASSERT(AF_segs.transition("cs"));
+	CU_ASSERT(AF_segs.transition("es") == 1);
+	CU_ASSERT(AF_segs.transition("ss") == 1);
+	CU_ASSERT(AF_segs.transition("ds") == 1);
+	CU_ASSERT(AF_segs.transition("cs") == 1);
 	
-	CU_ASSERT(AF_segs.transition("sp"));
-	CU_ASSERT(AF_segs.transition("bp"));
-	CU_ASSERT(AF_segs.transition("si"));
-	CU_ASSERT(AF_segs.transition("di"));
-	CU_ASSERT(AF_segs.transition("ip"));
+	CU_ASSERT(AF_segs.transition("sp") == 1);
+	CU_ASSERT(AF_segs.transition("bp") == 1);
+	CU_ASSERT(AF_segs.transition("si") == 1);
+	CU_ASSERT(AF_segs.transition("di") == 1);
+	CU_ASSERT(AF_segs.transition("ip") == 1);
 
 	
 }

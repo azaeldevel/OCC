@@ -243,27 +243,45 @@ public:
 
 		return NULL;
 	}
-	bool transition(const T* string)
+	/**
+	*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
+	*\return 
+	*/
+	unsigned int transition(const T* string)
 	{
 		if(not string) return false;
 		
 		current = reset;
 		Word i = 0;	
-		const Transition<T>* ret;
+		const Transition<T> *prev = NULL, *actual;
 		do
 		{
 			//std::cout << string[i] << "\n";
-			ret = transition(string[i]);
-			if(not ret) return false;//si no se encontrontro transiscion
-			if(ret->indicator == Indicator::Reject) return false;//si no pertenece al lenguaje
-			if(ret->indicator == Indicator::Accept) return true;
-			if(string[i] == '\0') return false;
-			//std::cout << string[i] << "\n";
+			actual = transition(string[i]);
+			if(not actual) 
+			{
+				if(prev) if(prev->indicator == Indicator::Accept) return i - 1;
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(actual->indicator == Indicator::Reject)
+			{
+				if(prev) if(prev->indicator == Indicator::Accept) return i - 1;
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(string[i] == '\0')
+			{
+				if(i == 0) return 0;
+				else if(prev) if(prev->indicator == Indicator::Accept) return i -1;
+				return 0;//si no se encontrontro transiscion
+			}
+			prev = actual;
 			i++;
 		}
-		while(ret->indicator == Indicator::None);
+		while(actual);
+
 		
-		return false;
+		
+		return i;
 	}
 
 
