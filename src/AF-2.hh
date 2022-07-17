@@ -35,14 +35,52 @@ namespace oct::cc
 *\brief 
 *
 */
+template<typename T>
 class AFD
 {
 
 public:
-	AFD(const tt::Transition** table);
+	AFD(const tt::Transition* t,size_t l) : table(t), current(0), reset(0),length(l)
+	{
+		
+	}
 
+
+	unsigned short transition(const T* string)
+	{
+		if(not string) return 0;
+		
+		current = reset;
+		unsigned short  i = 0;	
+		const tt::Transition *prev = NULL, *actual;
+		do
+		{
+			//std::cout << string[i] << "\n";
+			actual = &table[current][(unsigned char)string[i]];
+			if(actual->indicator == tt::Indicator::Reject)
+			{
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(string[i] == '\0')
+			{
+				if(i == 0) return 0;
+				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			prev = actual;
+			i++;
+		}
+		while(actual);
+
+		return i;
+	}
+	
 private:
-	const tt::Transition** table;  
+	const tt::Transition* table;  
+	size_t length;
+	tt::Status current;
+	tt::Status reset;
 };
 
 }

@@ -1,7 +1,6 @@
 #include <Buffer.hh>
 #include <AF.hh>
 #include <tt.hh>
-#include <tt-2.hh>
 
 #include <CUnit/Basic.h>
 #include <iostream>
@@ -310,6 +309,5 @@ void v0_developing()
 	CU_ASSERT(AF_segs.transition("si") == 2);
 	CU_ASSERT(AF_segs.transition("di") == 2);
 	CU_ASSERT(AF_segs.transition("ip") == 2);
-
 	
 }

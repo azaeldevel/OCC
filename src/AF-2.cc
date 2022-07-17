@@ -27,11 +27,9 @@ namespace oct::cc
 {
 
 
-AFD::AFD(const tt::Transition** t) : table(t)
-{
-}
 
-	
+
+
 
 
 }
