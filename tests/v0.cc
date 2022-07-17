@@ -1,6 +1,7 @@
 #include <Buffer.hh>
 #include <AF.hh>
 #include <tt.hh>
+#include <tt-2.hh>
 
 #include <CUnit/Basic.h>
 #include <iostream>

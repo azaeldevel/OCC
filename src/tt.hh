@@ -30,6 +30,14 @@
 
 namespace oct::cc::tt
 {
+
+template<typename T>
+struct Transition
+{
+	Indicator indicator;
+};
+
+
 static const Table<char> Identifier {
 		{0,'a',Indicator::Accept,1},
 		{0,'b',Indicator::Accept,1},
@@ -155,6 +163,7 @@ static const Table<char> Identifier {
 		{1,'_',Indicator::Accept,1},
 
 	};
+
 
 static const Table<char> table_number_10 {
 		{0,'0',Indicator::Accept,1},
