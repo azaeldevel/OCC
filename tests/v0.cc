@@ -313,7 +313,7 @@ void v0_developing()
 	CU_ASSERT(AF_segs.transition("di") == 2);
 	CU_ASSERT(AF_segs.transition("ip") == 2);
 
-	auto begin = high_resolution_clock::now();
+	/*auto begin = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
 		CU_ASSERT(AF_id.transition("1gnu") == 0);
@@ -323,6 +323,6 @@ void v0_developing()
 	}
 	auto end = high_resolution_clock::now();
 	auto duration = duration_cast<milliseconds>(end - begin);
-	std::cout << "v0 : " << duration.count() << "\n";
+	std::cout << "v0 : " << duration.count() << "\n";*/
 	
 }
