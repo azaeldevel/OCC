@@ -2,6 +2,7 @@
 
 #ifdef OCTETOS_CC_V0
 	#include "v0.hh"
+	#include "v0-2.hh"
 #endif
 
 
@@ -19,6 +20,12 @@ int main(int argc, char *argv[])
 	}	
 
 	if ((NULL == CU_add_test(pSuite_v0, "Developing..", v0_developing)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	
+	if ((NULL == CU_add_test(pSuite_v0, "Developing 2..", v02_developing)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

@@ -27,6 +27,8 @@
 #include "Exception.hh"
 #include "tt-2.hh"
 
+#include <iostream>
+
 namespace oct::cc
 {
 
@@ -40,7 +42,7 @@ class AFD
 {
 
 public:
-	AFD(const tt::Transition* t,size_t l) : table(t), current(0), reset(0),length(l)
+	AFD(const tt::Transition t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
 	{
 		
 	}
@@ -55,19 +57,28 @@ public:
 		const tt::Transition *prev = NULL, *actual;
 		do
 		{
-			//std::cout << string[i] << "\n";
+			std::cout << string[i] << "\n";
+			std::cout << "current : " << current << "\n";
+			std::cout << "symbol : " << string[i] << "\n";
+			std::cout << "symbol : " << (unsigned short)string[i] << "\n";
+			std::cout << "length : " << length << "\n";
+			if(current >= length) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 			actual = &table[current][(unsigned char)string[i]];
 			if(actual->indicator == tt::Indicator::Reject)
 			{
+				std::cout << "Reject \n";
 				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
 			else if(string[i] == '\0')
 			{
+				std::cout << "terminador char \n";
 				if(i == 0) return 0;
 				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
+			std::cout << string[i] << "\n";
+			current = actual->next;
 			prev = actual;
 			i++;
 		}
@@ -77,7 +88,7 @@ public:
 	}
 	
 private:
-	const tt::Transition* table;  
+	const tt::Transition (*table)[tt::MAX_SIMBOLS];  
 	size_t length;
 	tt::Status current;
 	tt::Status reset;

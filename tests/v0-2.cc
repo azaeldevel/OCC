@@ -8,19 +8,31 @@
 using namespace oct::cc;
 
 
-int v0_init(void)
+int v02_init(void)
 {
 	return 0;
 }
-int v0_clean(void)
+int v02_clean(void)
 {
 	return 0;
 }
 
 
-void v0_developing()
+void v02_developing()
 {
-	AFD<char> idC(tt::Identifier_C,sizeof(tt::Identifier_C));
-	CU_ASSERT(idC.transition("gnu") == 3);
+	AFD<char> idC(tt::Identifier_C,sizeof (tt::Identifier_C) / sizeof (tt::Identifier_C[0]));
+	try
+	{
+		CU_ASSERT(idC.transition("gnu") == 3);
+	}
+	catch(const oct::core::v3::Exception& ex)
+	{
+		std::cout << ex.describe() << "\n";
+	}
+	catch(const std::exception& ex)
+	{
+		std::cout << ex.what() << "\n";
+	}
+
 	
 }

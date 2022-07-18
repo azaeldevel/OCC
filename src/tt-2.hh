@@ -26,7 +26,7 @@ namespace oct::cc::tt
 
 typedef unsigned long long int Word;
 typedef Word Status;
-constexpr static const unsigned char MAX_SIMBOLS = 127;
+constexpr static const unsigned char MAX_SIMBOLS = 128;
 
 enum class Indicator : unsigned char
 {
@@ -111,6 +111,7 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
+			{Indicator::Accept,1},//A
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
@@ -135,14 +136,14 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
-			{Indicator::Accept,1},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//Z
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//_
 			{Indicator::Reject,0},
+			{Indicator::Accept,1},//a
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
@@ -167,8 +168,8 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
-			{Indicator::Accept,1},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//z
+			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -241,6 +242,7 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
+			{Indicator::Accept,1},//A
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
@@ -265,14 +267,14 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
-			{Indicator::Accept,1},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//Z
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//_
 			{Indicator::Reject,0},
+			{Indicator::Accept,1},//a
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
@@ -297,8 +299,8 @@ constexpr static const Transition Identifier_C[][MAX_SIMBOLS] = {
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
 			{Indicator::Accept,1},
-			{Indicator::Accept,1},
-			{Indicator::Accept,1},
+			{Indicator::Accept,1},//z
+			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
