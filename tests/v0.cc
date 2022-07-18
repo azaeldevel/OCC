@@ -4,8 +4,11 @@
 
 #include <CUnit/Basic.h>
 #include <iostream>
+#include <chrono>
+
 
 using namespace oct::cc;
+using namespace std::chrono;
 
 
 int v0_init(void)
@@ -309,5 +312,17 @@ void v0_developing()
 	CU_ASSERT(AF_segs.transition("si") == 2);
 	CU_ASSERT(AF_segs.transition("di") == 2);
 	CU_ASSERT(AF_segs.transition("ip") == 2);
+
+	auto begin = high_resolution_clock::now();
+	for(unsigned int i = 0; i < 1000000; i++)
+	{
+		CU_ASSERT(AF_id.transition("1gnu") == 0);
+		CU_ASSERT(AF_id.transition("azael") == 5);
+		CU_ASSERT(AF_id.transition("zip1") == 4);
+		CU_ASSERT(AF_id.transition("azip1") == 5);
+	}
+	auto end = high_resolution_clock::now();
+	auto duration = duration_cast<milliseconds>(end - begin);
+	std::cout << "v0 : " << duration.count() << "\n";
 	
 }
