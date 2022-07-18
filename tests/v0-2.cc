@@ -34,5 +34,9 @@ void v02_developing()
 		std::cout << ex.what() << "\n";
 	}
 
+	CU_ASSERT(idC.transition("1gnu") == 0);
+	CU_ASSERT(idC.transition("azael") == 5);
+	CU_ASSERT(idC.transition("zip1") == 4);
+	CU_ASSERT(idC.transition("azip1") == 5);
 	
 }
