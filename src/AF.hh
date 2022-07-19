@@ -68,7 +68,7 @@ public:
 				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
-			else if(actual->indicator == tt::Indicator::Reject)
+			else if(actual->indicator == tt::Indicator::Reject)//preanalisis solo para 1
 			{
 				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;

@@ -90,13 +90,16 @@ void v0_developing()
 	//std::cout << "count : " << i8080_regs.transition("ax") << "\n";
 	CU_ASSERT(i8080_regs.transition("all") == 2);
 	CU_ASSERT(i8080_regs.transition("al()") == 2);
-	/*CU_ASSERT(i8080_regs.transition("bx") == 2);
+	CU_ASSERT(i8080_regs.transition("bx") == 2);
 	CU_ASSERT(i8080_regs.transition("bh") == 2);
 	CU_ASSERT(i8080_regs.transition("bl") == 2);
+	CU_ASSERT(i8080_regs.transition("bl.") == 2);
+	CU_ASSERT(i8080_regs.transition("bl-") == 2);
 	CU_ASSERT(i8080_regs.transition("cx") == 2);
 	CU_ASSERT(i8080_regs.transition("ch") == 2);
 	CU_ASSERT(i8080_regs.transition("cl") == 2);
 	CU_ASSERT(i8080_regs.transition("dx") == 2);
 	CU_ASSERT(i8080_regs.transition("dh") == 2);
-	CU_ASSERT(i8080_regs.transition("dl") == 2);*/
+	CU_ASSERT(i8080_regs.transition("dl") == 2);
+	CU_ASSERT(i8080_regs.transition("dl[]") == 2);
 }
