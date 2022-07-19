@@ -1,7 +1,5 @@
-
-
-#ifndef OCTETOS_CC_AF2_HH
-#define OCTETOS_CC_AF2_HH
+#ifndef OCTETOS_CC_AF_HH
+#define OCTETOS_CC_AF_HH
 
 
 /*
@@ -23,9 +21,9 @@
 
 
 
-#include "Buffer.hh"
+
 #include "Exception.hh"
-#include "tt-2.hh"
+#include "tt.hh"
 
 #include <iostream>
 
@@ -60,29 +58,27 @@ public:
 			//std::cout << string[i] << "\n";
 			//std::cout << "current : " << current << "\n";
 			//std::cout << "symbol : " << string[i] << "\n";
-			//std::cout << "symbol : " << (unsigned short)string[i] << "\n";
+			//std::cout << "symbol : " << (unsigned short) string[i] << "\n";
 			//std::cout << "length : " << length << "\n";
-			if(current >= length) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+			if(current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 			actual = &table[current][(unsigned char)string[i]];
-			if(actual->indicator == tt::Indicator::Reject)
+			if(string[i] == '\0')
 			{
-				//std::cout << "Reject \n";
-				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
-				return 0;//si no se encontrontro transiscion
-			}
-			else if(string[i] == '\0')
-			{
-				//std::cout << "terminador char \n";
 				if(i == 0) return 0;
 				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
-			//std::cout << string[i] << "\n";
+			else if(actual->indicator == tt::Indicator::Reject)
+			{
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;
+			}
+			
 			current = actual->next;
 			prev = actual;
 			i++;
 		}
-		while(actual);
+		while(true);
 
 		return i;
 	}
