@@ -281,7 +281,7 @@ constexpr static const TA Identifier[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},
+			{Indicator::Prefix,0},//' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -542,7 +542,7 @@ constexpr static const TA Interger[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},
+			{Indicator::Prefix,0},// ' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -782,7 +782,8 @@ constexpr static const TB<char> Integer_B[]  {
 		{0,'6',Indicator::Accept,1},
 		{0,'7',Indicator::Accept,1},
 		{0,'8',Indicator::Accept,1},
-		{0,'9',Indicator::Accept,1},		
+		{0,'9',Indicator::Accept,1},
+		{0,' ',Indicator::Prefix,1},		
 		
 		{1,'0',Indicator::Accept,1},
 		{1,'1',Indicator::Accept,1},
@@ -793,7 +794,8 @@ constexpr static const TB<char> Integer_B[]  {
 		{1,'6',Indicator::Accept,1},
 		{1,'7',Indicator::Accept,1},
 		{1,'8',Indicator::Accept,1},
-		{1,'9',Indicator::Accept,1},		
+		{1,'9',Indicator::Accept,1},
+		{1,' ',Indicator::Prefix,1},		
 	};
 }
 

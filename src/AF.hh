@@ -175,27 +175,35 @@ public:
 		do
 		{
 			//std::cout << string[i] << "\n";
-			actual = transition(string[i]);
-			if(not actual) 
-			{
-				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
-				return 0;//si no se encontrontro transiscion
-			}
-			else if(actual->indicator == tt::Indicator::Reject)
-			{
-				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
-				return 0;//si no se encontrontro transiscion
-			}
-			else if(string[i] == '\0')
+			if(string[i] == '\0')
 			{
 				if(i == 0) return 0;
 				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
+
+			actual = transition(string[i]);
+
+			if(not actual) 
+			{
+				//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(actual->indicator == tt::Indicator::Reject)
+			{
+				//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(actual->indicator == tt::Indicator::Prefix)
+			{
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			 
 			prev = actual;
 			i++;
 		}
-		while(actual);
+		while(actual->indicator != tt::Indicator::Reject);
 
 		
 		
