@@ -22,6 +22,7 @@
  */
 
 #define LENGTH_TT(TABLE) sizeof (TABLE) / sizeof (TABLE[0])
+#define TABLE(T) T,sizeof (T) / sizeof (T[0])
 
 namespace oct::cc::tt
 {
