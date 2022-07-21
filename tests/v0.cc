@@ -24,20 +24,8 @@ void v0_developing()
 {
 	CU_ASSERT(LENGTH_TT(tt::Identifier) == 2);
 	AFD<char> idC(tt::Identifier,LENGTH_TT(tt::Identifier));
-	try
-	{
-		CU_ASSERT(idC.transition("gnu") == 3);
-	}
-	catch(const oct::core::v3::Exception& ex)
-	{
-		::std::cout << ex.describe() << "\n";
-	}
-	catch(const ::std::exception& ex)
-	{
-		::std::cout << ex.what() << "\n";
-	}
-
-	/*auto begin = high_resolution_clock::now();
+	/*
+	auto begin = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
 		CU_ASSERT(idC.transition("1gnu") == 0);
@@ -47,7 +35,9 @@ void v0_developing()
 	}
 	auto end = high_resolution_clock::now();
 	auto duration = duration_cast<milliseconds>(end - begin);
-	std::cout << "v0-2 : " << duration.count() << "\n";*/
+	std::cout << "v0-2 : " << duration.count() << "\n";
+	*/
+	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("1gnu") == 0);
 	CU_ASSERT(idC.transition("azael") == 5);
 	CU_ASSERT(idC.transition("zip1") == 4);
@@ -63,6 +53,13 @@ void v0_developing()
 
 
 
+	AFDB<char> idCB(tt::IdentifierB,LENGTH_TT(tt::IdentifierB));
+	CU_ASSERT(idCB.transition("gnu") == 3);
+	CU_ASSERT(idCB.transition("1gnu") == 0);
+	CU_ASSERT(idCB.transition("azael") == 5);
+	CU_ASSERT(idCB.transition("zip1") == 4);
+	CU_ASSERT(idCB.transition("azip1") == 5);
+	CU_ASSERT(idCB.transition("az3p1") == 5);
 
 
 

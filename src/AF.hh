@@ -26,6 +26,8 @@
 #include "tt.hh"
 
 #include <iostream>
+#include <algorithm>
+
 
 namespace oct::cc
 {
@@ -40,7 +42,7 @@ class AFD
 {
 
 public:
-	AFD(const tt::Transition t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
+	AFD(const tt::TA t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
 	{
 		
 	}
@@ -52,7 +54,7 @@ public:
 		
 		current = reset;
 		unsigned short  i = 0;	
-		const tt::Transition *prev = NULL, *actual;
+		const tt::TA *prev = NULL, *actual;
 		do
 		{
 			//std::cout << string[i] << "\n";
@@ -84,10 +86,132 @@ public:
 	}
 	
 private:
-	const tt::Transition (*table)[tt::MAX_SIMBOLS];  
+	const tt::TA (*table)[tt::MAX_SIMBOLS];  
 	size_t length;
 	tt::Status current;
 	tt::Status reset;
+};
+
+template<typename T>
+class AFDB
+{
+
+public:
+	AFDB() : current(0),reset(0),table(NULL),length(0)
+	{
+	}
+	AFDB(const tt::TB<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
+	{		 
+	}
+
+	const tt::TB<T>* search(tt::Status current,T input)
+	{
+		return search(current,input,0,length - 1);
+	}
+	const tt::TB<T>* search(tt::Status current,T input,size_t b, size_t e)
+	{
+		if(b > e) return NULL;
+		if(b - e == 1) return NULL;
+
+		//std::cout << "b = " << b << "\n";
+		//std::cout << "e = " << e << "\n";
+		size_t middle = b + ((e - b)/ 2);
+		//std::cout << "middle = " << middle << "\n";
+
+		if(table[middle].less(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,middle + 1,e);
+		}
+		else if(table[middle].great(current,input))
+		{
+			//std::cout << "\t --> " << value << "\n";
+			return search(current,input,b,middle - 1);
+		}
+		else if(table[middle].equal(current,input))
+		{
+			return &table[middle];
+		}
+			
+		return NULL;		
+	}
+	const tt::TB<T>* transition(T symbol)
+	{
+		//std::cout << "current : " << current << "\n";
+		//std::cout << "symbol : " << symbol << "\n";
+		const tt::TB<T>* ret = search(current,symbol);
+		//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
+		if(ret)
+		{
+			//ret->print(std::cout);
+			current = ret->next;
+			//std::cout << "current : " << current << "\n";
+			//std::cout << "symbol : " << symbol << "\n";
+			return ret;
+		}
+
+		return NULL;
+	}
+	/**
+	*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
+	*\return la cantidad de caracteres acpetados par el lenguaje
+	*/
+	unsigned short transition(const T* string)
+	{
+		if(not string) return false;
+		
+		current = reset;
+		unsigned short  i = 0;	
+		const tt::TB<T> *prev = NULL, *actual;
+		do
+		{
+			//std::cout << string[i] << "\n";
+			actual = transition(string[i]);
+			if(not actual) 
+			{
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(actual->indicator == tt::Indicator::Reject)
+			{
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			else if(string[i] == '\0')
+			{
+				if(i == 0) return 0;
+				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;//si no se encontrontro transiscion
+			}
+			prev = actual;
+			i++;
+		}
+		while(actual);
+
+		
+		
+		return i;
+	}
+
+
+	const tt::TB<T>* get_table() const
+	{
+		return table;
+	}
+	void load(tt::Status initial,const tt::TB<T> t[])
+	{
+		current = initial;
+		reset = initial;
+		this->table = t;
+	}
+private:
+
+	
+protected:
+	const tt::TB<T>* table;
+	tt::Status current;
+	tt::Status reset;
+	const size_t length;
 };
 
 }

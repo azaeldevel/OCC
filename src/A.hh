@@ -162,7 +162,7 @@ constexpr static const tt::Transition [][tt::MAX_SIMBOLS] = {
 	};
 */
 
-constexpr static const tt::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
+constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{tt::Indicator::Reject,0},
@@ -1348,7 +1348,7 @@ constexpr static const tt::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 	};
 
 
-constexpr static const tt::Transition i8086_segs[][tt::MAX_SIMBOLS] = {
+constexpr static const tt::TA i8086_segs[][tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{tt::Indicator::Reject,0},
