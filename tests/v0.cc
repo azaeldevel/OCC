@@ -5,10 +5,12 @@
 
 
 #include <iostream>
+#include <chrono>
 
 #include "v0.hh"
 
 using namespace oct::cc;
+using namespace std::chrono;
 
 int v0_init(void)
 {
@@ -23,36 +25,14 @@ int v0_clean(void)
 void v0_developing()
 {
 	CU_ASSERT(LENGTH_TT(tt::Identifier) == 2);
-	AFD<char> idC(tt::Identifier,LENGTH_TT(tt::Identifier));
-	/*
-	auto begin = high_resolution_clock::now();
-	for(unsigned int i = 0; i < 1000000; i++)
-	{
-		CU_ASSERT(idC.transition("1gnu") == 0);
-		CU_ASSERT(idC.transition("azael") == 5);
-		CU_ASSERT(idC.transition("zip1") == 4);
-		CU_ASSERT(idC.transition("azip1") == 5);
-	}
-	auto end = high_resolution_clock::now();
-	auto duration = duration_cast<milliseconds>(end - begin);
-	std::cout << "v0-2 : " << duration.count() << "\n";
-	*/
+	AFDA<char> idC(tt::Identifier,LENGTH_TT(tt::Identifier));
 	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("1gnu") == 0);
 	CU_ASSERT(idC.transition("azael") == 5);
 	CU_ASSERT(idC.transition("zip1") == 4);
 	CU_ASSERT(idC.transition("azip1") == 5);
 	CU_ASSERT(idC.transition("az3p1") == 5);
-
-	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
-	AFD<char> intC(tt::Interger,LENGTH_TT(tt::Interger));
-	CU_ASSERT(intC.transition("1236589") == 7);
-	CU_ASSERT(intC.transition("00065") == 5);
-	CU_ASSERT(intC.transition("00A65") == 2);
-	//std::cout << "counbt : " << intC.transition("00A65") << "\n";
-
-
-
+		
 	AFDB<char> idCB(tt::IdentifierB,LENGTH_TT(tt::IdentifierB));
 	CU_ASSERT(idCB.transition("gnu") == 3);
 	CU_ASSERT(idCB.transition("1gnu") == 0);
@@ -61,12 +41,52 @@ void v0_developing()
 	CU_ASSERT(idCB.transition("azip1") == 5);
 	CU_ASSERT(idCB.transition("az3p1") == 5);
 
+	/*auto begin_a = high_resolution_clock::now();
+	for(unsigned int i = 0; i < 1000000; i++)
+	{
+		CU_ASSERT(idC.transition("1gnu") == 0);
+		CU_ASSERT(idC.transition("azael") == 5);
+		CU_ASSERT(idC.transition("zip1") == 4);
+		CU_ASSERT(idC.transition("azip1") == 5);
+	}
+	auto end_a = high_resolution_clock::now();
+	auto duration_a = duration_cast<milliseconds>(end_a - begin_a);
+	std::cout << "AFD(A) : " << duration_a.count() << "\n";
+	
+	auto begin_b = high_resolution_clock::now();
+	for(unsigned int i = 0; i < 1000000; i++)
+	{
+		CU_ASSERT(idCB.transition("1gnu") == 0);
+		CU_ASSERT(idCB.transition("azael") == 5);
+		CU_ASSERT(idCB.transition("zip1") == 4);
+		CU_ASSERT(idCB.transition("azip1") == 5);
+	}
+	auto end_b = high_resolution_clock::now();
+	auto duration_b = duration_cast<milliseconds>(end_b - begin_b);
+	std::cout << "AFD(B) : " << duration_b.count() << "\n";*/
+
+	
+	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
+	AFDA<char> intC(tt::Interger,LENGTH_TT(tt::Interger));
+	CU_ASSERT(intC.transition("1236589") == 7);
+	CU_ASSERT(intC.transition("00065") == 5);
+	CU_ASSERT(intC.transition("00A65") == 2);
+	//std::cout << "counbt : " << intC.transition("00A65") << "\n";
+
+
+
+	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
+	AFDB<char> intCB(tt::Integer_B,LENGTH_TT(tt::Integer_B));
+	CU_ASSERT(intCB.transition("1236589") == 7);
+	CU_ASSERT(intCB.transition("00065") == 5);
+	CU_ASSERT(intCB.transition("00A65") == 2);
+	//std::cout << "counbt : " << intC.transition("00A65") << "\n";
 
 
 
 
 	//Assembler A
-	AFD<char> i8080_regs(a::i8086_regs,LENGTH_TT(a::i8086_regs));
+	AFDA<char> i8080_regs(a::i8086_regs,LENGTH_TT(a::i8086_regs));
 	try
 	{
 		CU_ASSERT(i8080_regs.transition("alg") == 2);

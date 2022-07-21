@@ -381,7 +381,7 @@ constexpr static const TA Identifier[][MAX_SIMBOLS] = {
 };
 
 
-static const TB<char> IdentifierB[] = {
+constexpr static const TB<char> IdentifierB[] = {
 
 		{0,'A',Indicator::Accept,1},
 		{0,'B',Indicator::Accept,1},
@@ -772,7 +772,29 @@ constexpr static const TA Interger[][MAX_SIMBOLS] = {
 		}
 	};
 
-
+constexpr static const TB<char> Integer_B[]  {
+		{0,'0',Indicator::Accept,1},
+		{0,'1',Indicator::Accept,1},
+		{0,'2',Indicator::Accept,1},
+		{0,'3',Indicator::Accept,1},
+		{0,'4',Indicator::Accept,1},
+		{0,'5',Indicator::Accept,1},
+		{0,'6',Indicator::Accept,1},
+		{0,'7',Indicator::Accept,1},
+		{0,'8',Indicator::Accept,1},
+		{0,'9',Indicator::Accept,1},		
+		
+		{1,'0',Indicator::Accept,1},
+		{1,'1',Indicator::Accept,1},
+		{1,'2',Indicator::Accept,1},
+		{1,'3',Indicator::Accept,1},
+		{1,'4',Indicator::Accept,1},
+		{1,'5',Indicator::Accept,1},
+		{1,'6',Indicator::Accept,1},
+		{1,'7',Indicator::Accept,1},
+		{1,'8',Indicator::Accept,1},
+		{1,'9',Indicator::Accept,1},		
+	};
 }
 
 #endif

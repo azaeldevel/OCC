@@ -38,11 +38,11 @@ namespace oct::cc
 *
 */
 template<typename T>
-class AFD
+class AFDA
 {
 
 public:
-	AFD(const tt::TA t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
+	AFDA(const tt::TA t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
 	{
 		
 	}
