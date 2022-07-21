@@ -425,7 +425,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-	//2 : a?
+	//2 : a? - prefix
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -436,7 +436,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -459,6 +459,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -470,8 +471,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -699,7 +699,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -722,6 +722,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -733,8 +734,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -819,7 +819,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-	//b?
+	//c?
 	//5
 		{
 			{tt::Indicator::Reject,0},
@@ -962,7 +962,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -985,6 +985,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -996,8 +997,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1082,7 +1082,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-	//c?
+	//d?
 	//7
 		{
 			{tt::Indicator::Reject,0},
@@ -1225,7 +1225,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1248,6 +1248,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1259,8 +1260,7 @@ constexpr static const tt::TA i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},

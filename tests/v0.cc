@@ -40,7 +40,8 @@ void v0_developing()
 	CU_ASSERT(idCB.transition("zip1") == 4);
 	CU_ASSERT(idCB.transition("azip1") == 5);
 	CU_ASSERT(idCB.transition("az3p1") == 5);
-
+	//std::cout << "EOF : " << EOF << "\n";
+	
 	/*
 	auto begin_a = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
@@ -68,14 +69,14 @@ void v0_developing()
 	*/
 	
 	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
-	AFDA<char> intC(tt::Interger,LENGTH_TT(tt::Interger));
+	AFDA<char> intC(TABLE(tt::Interger));
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
-	CU_ASSERT(intC.transition("00A65") == 2);
+	CU_ASSERT(intC.transition("00A65") == 0);
 	//std::cout << "counbt : " << intC.transition("00A65") << "\n";
 	
 	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
-	AFDB<char> intCB(tt::Integer_B,LENGTH_TT(tt::Integer_B));
+	AFDB<char> intCB(TABLE(tt::Integer_B));
 	CU_ASSERT(intCB.transition("1236589") == 7);
 	CU_ASSERT(intCB.transition("00065") == 5);
 	CU_ASSERT(intCB.transition("00A65") == 2);
@@ -85,7 +86,7 @@ void v0_developing()
 	AFDA<char> i8080_regs(a::i8086_regs,LENGTH_TT(a::i8086_regs));
 	try
 	{
-		CU_ASSERT(i8080_regs.transition("alg") == 2);
+		CU_ASSERT(i8080_regs.transition("alg") == 0);
 	}
 	catch(const oct::core::v3::Exception& ex)
 	{
@@ -96,23 +97,33 @@ void v0_developing()
 		std::cout << ex.what() << "\n";
 	}
 	CU_ASSERT(i8080_regs.transition("ax") == 2);
+	CU_ASSERT(i8080_regs.transition("ax,") == 2);
+	CU_ASSERT(i8080_regs.transition("ax ") == 2);
 	CU_ASSERT(i8080_regs.transition("ah") == 2);
 	CU_ASSERT(i8080_regs.transition("al") == 2);
 	CU_ASSERT(i8080_regs.transition("az") == 0);
 	CU_ASSERT(i8080_regs.transition("am") == 0);
 	//std::cout << "count : " << i8080_regs.transition("ax") << "\n";
-	CU_ASSERT(i8080_regs.transition("all") == 2);
-	CU_ASSERT(i8080_regs.transition("al()") == 2);
+	CU_ASSERT(i8080_regs.transition("all") == 0);
+	CU_ASSERT(i8080_regs.transition("al()") == 0);
 	CU_ASSERT(i8080_regs.transition("bx") == 2);
 	CU_ASSERT(i8080_regs.transition("bh") == 2);
+	CU_ASSERT(i8080_regs.transition("bh,") == 2);
 	CU_ASSERT(i8080_regs.transition("bl") == 2);
-	CU_ASSERT(i8080_regs.transition("bl.") == 2);
-	CU_ASSERT(i8080_regs.transition("bl-") == 2);
+	CU_ASSERT(i8080_regs.transition("bl  ") == 2);
+	CU_ASSERT(i8080_regs.transition("bl.") == 0);
+	CU_ASSERT(i8080_regs.transition("bl-") == 0);
 	CU_ASSERT(i8080_regs.transition("cx") == 2);
+	CU_ASSERT(i8080_regs.transition("cx,") == 2);
 	CU_ASSERT(i8080_regs.transition("ch") == 2);
 	CU_ASSERT(i8080_regs.transition("cl") == 2);
+	CU_ASSERT(i8080_regs.transition("cl ") == 2);
 	CU_ASSERT(i8080_regs.transition("dx") == 2);
+	CU_ASSERT(i8080_regs.transition("dx,") == 2);
+	CU_ASSERT(i8080_regs.transition("dx  ") == 2);
+	//CU_ASSERT(i8080_regs.transition("dx ") == 2);
 	CU_ASSERT(i8080_regs.transition("dh") == 2);
 	CU_ASSERT(i8080_regs.transition("dl") == 2);
-	CU_ASSERT(i8080_regs.transition("dl[]") == 2);
+	CU_ASSERT(i8080_regs.transition("dl[]") == 0);
+	CU_ASSERT(i8080_regs.transition("dl  ") == 2);
 }

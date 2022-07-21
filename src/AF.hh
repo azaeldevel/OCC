@@ -57,22 +57,31 @@ public:
 		const tt::TA *prev = NULL, *actual;
 		do
 		{
-			//std::cout << string[i] << "\n";
+			//std::cout << "'" << string[i]  << "'" << "\n";
 			//std::cout << "current : " << current << "\n";
 			//std::cout << "symbol : " << string[i] << "\n";
 			//std::cout << "symbol : " << (unsigned short) string[i] << "\n";
 			//std::cout << "length : " << length << "\n";
-			if(current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-			actual = &table[current][(unsigned char)string[i]];
 			if(string[i] == '\0')
 			{
 				if(i == 0) return 0;
 				else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;//si no se encontrontro transiscion
 			}
+			
+			if(current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+			actual = &table[current][(unsigned char)string[i]];
+			
+			if(actual->indicator == tt::Indicator::Prefix)
+			{
+				//std::cout << "'" << string[i]  << "'" << "\n";
+				//std::cout << " i : " << i  << "\n";
+				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				return 0;
+			}
 			else if(actual->indicator == tt::Indicator::Reject)//preanalisis solo para 1
 			{
-				if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+				//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 				return 0;
 			}
 			
@@ -80,9 +89,9 @@ public:
 			prev = actual;
 			i++;
 		}
-		while(true);
+		while(actual->indicator != tt::Indicator::Reject);
 
-		return i;
+		return 0;
 	}
 	
 private:
@@ -213,6 +222,7 @@ protected:
 	tt::Status reset;
 	const size_t length;
 };
+
 
 }
 

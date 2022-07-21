@@ -1,5 +1,4 @@
 
-
 #ifndef OCTETOS_CC_TT_HH
 #define OCTETOS_CC_TT_HH
 
@@ -36,7 +35,7 @@ enum class Indicator : unsigned char
 	None,
 	Accept,
 	Reject,
-	End
+	Prefix,
 };
 
 
