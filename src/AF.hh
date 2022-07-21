@@ -42,7 +42,7 @@ class AFDA
 {
 
 public:
-	AFDA(const tt::TA t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
+	AFDA(const tt::a::Transition t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
 	{
 		
 	}
@@ -54,7 +54,7 @@ public:
 		
 		current = reset;
 		unsigned short  i = 0;	
-		const tt::TA *prev = NULL, *actual;
+		const tt::a::Transition *prev = NULL, *actual;
 		do
 		{
 			//std::cout << "'" << string[i]  << "'" << "\n";
@@ -95,7 +95,7 @@ public:
 	}
 	
 private:
-	const tt::TA (*table)[tt::MAX_SIMBOLS];  
+	const tt::a::Transition (*table)[tt::MAX_SIMBOLS];  
 	size_t length;
 	tt::Status current;
 	tt::Status reset;
@@ -109,15 +109,15 @@ public:
 	AFDB() : current(0),reset(0),table(NULL),length(0)
 	{
 	}
-	AFDB(const tt::TB<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
+	AFDB(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
 	{		 
 	}
 
-	const tt::TB<T>* search(tt::Status current,T input)
+	const tt::b::Transition<T>* search(tt::Status current,T input)
 	{
 		return search(current,input,0,length - 1);
 	}
-	const tt::TB<T>* search(tt::Status current,T input,size_t b, size_t e)
+	const tt::b::Transition<T>* search(tt::Status current,T input,size_t b, size_t e)
 	{
 		if(b > e) return NULL;
 		if(b - e == 1) return NULL;
@@ -144,11 +144,11 @@ public:
 			
 		return NULL;		
 	}
-	const tt::TB<T>* transition(T symbol)
+	const tt::b::Transition<T>* transition(T symbol)
 	{
 		//std::cout << "current : " << current << "\n";
 		//std::cout << "symbol : " << symbol << "\n";
-		const tt::TB<T>* ret = search(current,symbol);
+		const tt::b::Transition<T>* ret = search(current,symbol);
 		//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
 		if(ret)
 		{
@@ -161,6 +161,7 @@ public:
 
 		return NULL;
 	}
+	
 	/**
 	*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
 	*\return la cantidad de caracteres acpetados par el lenguaje
@@ -171,7 +172,7 @@ public:
 		
 		current = reset;
 		unsigned short  i = 0;	
-		const tt::TB<T> *prev = NULL, *actual;
+		const tt::b::Transition<T> *prev = NULL, *actual;
 		do
 		{
 			//std::cout << string[i] << "\n";
@@ -211,11 +212,11 @@ public:
 	}
 
 
-	const tt::TB<T>* get_table() const
+	const tt::b::Transition<T>* get_table() const
 	{
 		return table;
 	}
-	void load(tt::Status initial,const tt::TB<T> t[])
+	void load(tt::Status initial,const tt::b::Transition<T> t[])
 	{
 		current = initial;
 		reset = initial;
@@ -225,7 +226,7 @@ private:
 
 	
 protected:
-	const tt::TB<T>* table;
+	const tt::b::Transition<T>* table;
 	tt::Status current;
 	tt::Status reset;
 	const size_t length;

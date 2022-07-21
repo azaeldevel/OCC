@@ -38,84 +38,91 @@ enum class Indicator : unsigned char
 	Prefix,
 };
 
-
-struct TA
+namespace a
 {
-	Indicator indicator;
-	Status next;
-};
-
-template<typename T>
-struct TB //transition B
+	struct Transition
+	{
+		Indicator indicator;
+		Status next;
+	};
+}
+namespace b
 {
-	Status current;
-	T input;
-	Indicator indicator;
-	Status next;
-
-	bool operator < (const TB<T>& obj) const
+	template<typename T>
+	struct Transition //transition B
 	{
-		if(current < obj.current) return true;
-		else if(current > obj.current) return false;
-		else 
+		Status current;
+		T input;
+		Indicator indicator;
+		Status next;
+
+		bool operator < (const Transition<T>& obj) const
 		{
-			if(input < obj.input) return true;
-			else if(input > obj.input) return false;
-			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+			if(current < obj.current) return true;
+			else if(current > obj.current) return false;
+			else 
+			{
+				if(input < obj.input) return true;
+				else if(input > obj.input) return false;
+				else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+			}
+
+			return false;
+		}
+		bool operator > (const Transition<T>& obj) const
+		{
+			if(current > obj.current) return true;
+			else if(current < obj.current) return false;
+			else 
+			{
+				if(input > obj.input) return true;
+				else if(input < obj.input) return false;
+				else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
+			}
+
+			return false;
+		}
+		bool equal(Status current,T input)const
+		{
+			if(this->current == current and this->input == input) return true;
+
+			return false;
+		}
+		bool less(Status current,T input)const
+		{
+			if(this->current < current) return true;
+			else if(this->current > current) return false;
+			else 
+			{
+				if(this->input < input) return true;
+				else if(this->input > input) return false;
+				else return false;
+			}
+
+			return false;
+		}
+		bool great(Status current,T input)const
+		{
+			if(this->current > current) return true;
+			else if(this->current < current) return false;
+			else 
+			{
+				if(this->input > input) return true;
+				else if(this->input < input) return false;
+				else return false;
+			}
+
+			return false;
 		}
 
-		return false;
-	}
-	bool operator > (const TB<T>& obj) const
-	{
-		if(current > obj.current) return true;
-		else if(current < obj.current) return false;
-		else 
-		{
-			if(input > obj.input) return true;
-			else if(input < obj.input) return false;
-			else throw Exception(Exception::NOT_UNIQUE,__FILE__,__LINE__);
-		}
+		void print(std::ostream&) const;
+		void print(std::wostream&) const;
+	};
+}
 
-		return false;
-	}
-	bool equal(Status current,T input)const
-	{
-		if(this->current == current and this->input == input) return true;
 
-		return false;
-	}
-	bool less(Status current,T input)const
-	{
-		if(this->current < current) return true;
-		else if(this->current > current) return false;
-		else 
-		{
-			if(this->input < input) return true;
-			else if(this->input > input) return false;
-			else return false;
-		}
 
-		return false;
-	}
-	bool great(Status current,T input)const
-	{
-		if(this->current > current) return true;
-		else if(this->current < current) return false;
-		else 
-		{
-			if(this->input > input) return true;
-			else if(this->input < input) return false;
-			else return false;
-		}
-
-		return false;
-	}
-
-	void print(std::ostream&) const;
-	void print(std::wostream&) const;
-};
-constexpr static const TA Identifier[][MAX_SIMBOLS] = {
+constexpr static const a::Transition Identifier[][MAX_SIMBOLS] = {
 	//0
 		{
 			{Indicator::Reject,0},
@@ -381,7 +388,7 @@ constexpr static const TA Identifier[][MAX_SIMBOLS] = {
 };
 
 
-constexpr static const TB<char> IdentifierB[] = {
+constexpr static const b::Transition<char> IdentifierB[] = {
 
 		{0,'A',Indicator::Accept,1},
 		{0,'B',Indicator::Accept,1},
@@ -507,7 +514,7 @@ constexpr static const TB<char> IdentifierB[] = {
 		{1,'z',Indicator::Accept,1},
 	};
 
-constexpr static const TA Interger[][MAX_SIMBOLS] = {
+constexpr static const a::Transition Interger[][MAX_SIMBOLS] = {
 	//0
 		{
 			{Indicator::Reject,0},
@@ -772,7 +779,7 @@ constexpr static const TA Interger[][MAX_SIMBOLS] = {
 		}
 	};
 
-constexpr static const TB<char> Integer_B[]  {
+constexpr static const b::Transition<char> Integer_B[]  {
 		{0,'0',Indicator::Accept,1},
 		{0,'1',Indicator::Accept,1},
 		{0,'2',Indicator::Accept,1},
