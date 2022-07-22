@@ -107,10 +107,21 @@ void v0_AFD_B()
 	//CU_ASSERT(intCB.transition("00065	") == 5);
 	//std::cout << "counbt : " << intCB.transition("00A65") << "\n";
 }
+void v0_AFD_C()
+{
+	a::AFD_Identifier<char> id;
+	//std::cout << "count : " << id.transition("1gnu") << "\n";
+	CU_ASSERT(id.transition("gnu") == 3);
+	CU_ASSERT(id.transition("1gnu") == 0);
+	CU_ASSERT(id.transition("azael") == 5);
+	CU_ASSERT(id.transition("zip1") == 4);
+	CU_ASSERT(id.transition("azip1") == 5);
+	CU_ASSERT(id.transition("az3p1") == 5);
+}
 void v0_developing()
 {
 	
-	/*
+	AFDA<char> idC(TABLE(tt::Identifier));
 	auto begin_a = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -122,7 +133,8 @@ void v0_developing()
 	auto end_a = high_resolution_clock::now();
 	auto duration_a = duration_cast<milliseconds>(end_a - begin_a);
 	std::cout << "AFD(A) : " << duration_a.count() << "\n";
-	
+
+	AFDB<char> idCB(TABLE(tt::IdentifierB));
 	auto begin_b = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -134,7 +146,20 @@ void v0_developing()
 	auto end_b = high_resolution_clock::now();
 	auto duration_b = duration_cast<milliseconds>(end_b - begin_b);
 	std::cout << "AFD(B) : " << duration_b.count() << "\n";
-	*/
+
+	a::AFD_Identifier<char> id;
+	auto begin_c = high_resolution_clock::now();
+	for(unsigned int i = 0; i < 1000000; i++)
+	{
+		CU_ASSERT(id.transition("1gnu") == 0);
+		CU_ASSERT(id.transition("azael") == 5);
+		CU_ASSERT(id.transition("zip1") == 4);
+		CU_ASSERT(id.transition("azip1") == 5);
+	}
+	auto end_c = high_resolution_clock::now();
+	auto duration_c = duration_cast<milliseconds>(end_c - begin_c);
+	std::cout << "AFD(C) : " << duration_c.count() << "\n";
+	
 	
 	
 

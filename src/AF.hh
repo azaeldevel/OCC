@@ -230,6 +230,25 @@ protected:
 	const size_t length;
 };
 
+typedef unsigned short offset;
+template<typename C>
+class AFDC
+{
+
+public:
+	AFDC() : current(0), i(0)
+	{
+	}
+	AFDC(unsigned short c) : current(c), i(0)
+	{
+	}
+	
+	virtual unsigned short transition(const C* string) = 0;
+
+protected:
+	offset i;
+	tt::Status current;
+};
 
 }
 

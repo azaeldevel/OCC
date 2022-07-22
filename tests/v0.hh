@@ -10,6 +10,7 @@ int v0_clean(void);
 void v0_developing();
 void v0_AFD_A();
 void v0_AFD_B();
+void v0_AFD_C();
 
 
 #endif

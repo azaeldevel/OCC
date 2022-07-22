@@ -29,6 +29,12 @@ int main(int argc, char *argv[])
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	
+	if ((NULL == CU_add_test(pSuite_v0, "AFD C..", v0_AFD_C)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 
 	if ((NULL == CU_add_test(pSuite_v0, "Developing..", v0_developing)))
 	{
