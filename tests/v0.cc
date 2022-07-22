@@ -21,7 +21,7 @@ int v0_clean(void)
 	return 0;
 }
 
-void v0_lexer_A()
+void v0_AFD_A()
 {
 	CU_ASSERT(LENGTH_TT(tt::Identifier) == 2);
 	AFDA<char> idC(TABLE(tt::Identifier));
@@ -86,7 +86,7 @@ void v0_lexer_A()
 	CU_ASSERT(i8080_regs.transition("dl  ") == 2);
 	CU_ASSERT(i8080_regs.transition("dl	") == 2);
 }
-void v0_lexer_B()
+void v0_AFD_B()
 {
 	AFDB<char> idCB(TABLE(tt::IdentifierB));
 	CU_ASSERT(idCB.transition("gnu") == 3);

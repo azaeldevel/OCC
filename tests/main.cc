@@ -18,13 +18,13 @@ int main(int argc, char *argv[])
 		return CU_get_error();
 	}
 	
-	if ((NULL == CU_add_test(pSuite_v0, "Lexer A..", v0_lexer_A)))
+	if ((NULL == CU_add_test(pSuite_v0, "AFD A..", v0_AFD_A)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	
-	if ((NULL == CU_add_test(pSuite_v0, "Lexer B..", v0_lexer_B)))
+	if ((NULL == CU_add_test(pSuite_v0, "AFD B..", v0_AFD_B)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

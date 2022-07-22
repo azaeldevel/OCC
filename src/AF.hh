@@ -42,12 +42,10 @@ class AFDA
 {
 
 public:
-	AFDA(const tt::a::Transition t[][tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0),length(l)
+	AFDA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0), length(l)
 	{
-		
 	}
-
-
+	
 	unsigned short transition(const T* string)
 	{
 		if(not string) return 0;
