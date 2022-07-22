@@ -1483,60 +1483,6 @@ constexpr static const tt::a::Transition i8086_segs[][tt::MAX_SIMBOLS] = {
 		},
 	};
 
-template<typename C,typename S = tt::Status>
-class AFD_Identifier : public AFDC<C>
-{
-private:
-	enum class Status : tt::Status
-	{
-		initial,
-		identifier,
-		reject,
-	};
-public:
-	AFD_Identifier() : AFDC<C>((S)Status::initial)
-	{		
-	}
-	
-	virtual offset transition(const C* string)
-	{
-		AFDC<C>::current = (S)Status::initial;
-		AFDC<C>::i = 0;
-		while(AFDC<C>::current != (S)Status::reject)
-		{
-			if(string[AFDC<C>::i] == '\0')
-			{
-				if(AFDC<C>::current == (S)Status::identifier) return AFDC<C>::i;
-				else return 0;
-			}
-
-			switch(AFDC<C>::current)
-			{
-			case (S)Status::initial:
-				if(isalpha(string[AFDC<C>::i])) AFDC<C>::current = (S)Status::identifier;
-				else return 0;
-				AFDC<C>::i++;
-				break;
-			case (S)Status::identifier:
-				if(not isalnum(string[AFDC<C>::i])) AFDC<C>::current = (S)Status::reject;
-				else if(isblank(string[AFDC<C>::i])) return AFDC<C>::i;
-				AFDC<C>::i++;
-				break;
-			case (S)Status::reject:	
-				AFDC<C>::i = 0;
-				break;	
-			};
-		}
-
-		return AFDC<C>::i;
-	}
-
-protected:
-};
-
-
-
-
 
 }
 

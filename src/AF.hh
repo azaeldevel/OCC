@@ -230,25 +230,85 @@ protected:
 	const size_t length;
 };
 
-typedef unsigned short offset;
-template<typename C>
-class AFDC
+namespace c
 {
-
-public:
-	AFDC() : current(0), i(0)
-	{
-	}
-	AFDC(unsigned short c) : current(c), i(0)
-	{
-	}
 	
-	virtual unsigned short transition(const C* string) = 0;
+	template<typename C,typename S,typename O>
+	class AFDC
+	{
 
-protected:
-	offset i;
-	tt::Status current;
-};
+	public:
+		AFDC() : current(0), i(0)
+		{
+		}
+		AFDC(S s) : current(s), i(0)
+		{
+		}
+		
+		virtual O transition(const C* string) = 0;
+
+	protected:
+		O i;
+		S current;
+	};
+	
+	
+	template<typename C,typename S = unsigned char,typename O = unsigned short>
+	class AFD_Identifier : public AFDC<C,S,O>
+	{
+	private:
+		enum class Status : S
+		{
+			initial,
+			identifier,
+			reject,
+		};
+	public:
+		AFD_Identifier() : AFDC<C,S,O>((S)Status::initial)
+		{		
+		}
+		
+		virtual O transition(const C* string)
+		{
+			AFDC<C,S,O>::current = (S)Status::initial;
+			AFDC<C,S,O>::i = 0;
+			C c;
+			
+			do
+			{
+				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
+				c = string[AFDC<C,S,O>::i];
+				if(c == '\0')
+				{
+					if(AFDC<C,S,O>::current == (S)Status::identifier) return AFDC<C,S,O>::i;
+					else return 0;
+				}
+
+				switch(AFDC<C,S,O>::current)
+				{
+				case (S)Status::initial:
+					if(isalpha(c)) AFDC<C,S,O>::current = (S)Status::identifier;
+					else if(c == '_') AFDC<C,S,O>::current = (S)Status::identifier;
+					else return 0;
+					AFDC<C,S,O>::i++;
+					break;
+				case (S)Status::identifier:
+					if(isalnum(c)) ; //se mantiene en el mismo estado
+					else if(c == '_') ; //se mantiene en el mismo estado
+					else if(isblank(c)) return AFDC<C,S,O>::i;
+					AFDC<C,S,O>::i++;
+					break;
+				};
+			}
+			while(true);
+
+			return 0;
+		}
+
+	protected:
+	};
+}
+
 
 }
 

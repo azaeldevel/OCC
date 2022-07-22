@@ -109,7 +109,7 @@ void v0_AFD_B()
 }
 void v0_AFD_C()
 {
-	a::AFD_Identifier<char> id;
+	c::AFD_Identifier<char> id;
 	//std::cout << "count : " << id.transition("1gnu") << "\n";
 	CU_ASSERT(id.transition("gnu") == 3);
 	CU_ASSERT(id.transition("1gnu") == 0);
@@ -117,6 +117,7 @@ void v0_AFD_C()
 	CU_ASSERT(id.transition("zip1") == 4);
 	CU_ASSERT(id.transition("azip1") == 5);
 	CU_ASSERT(id.transition("az3p1") == 5);
+	CU_ASSERT(id.transition("_gnu") == 4);
 }
 void v0_developing()
 {
@@ -125,6 +126,7 @@ void v0_developing()
 	auto begin_a = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
+		//CU_ASSERT(idC.transition("gnu") == 0);
 		CU_ASSERT(idC.transition("1gnu") == 0);
 		CU_ASSERT(idC.transition("azael") == 5);
 		CU_ASSERT(idC.transition("zip1") == 4);
@@ -138,6 +140,7 @@ void v0_developing()
 	auto begin_b = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
+		//CU_ASSERT(idCB.transition("gnu") == 0);
 		CU_ASSERT(idCB.transition("1gnu") == 0);
 		CU_ASSERT(idCB.transition("azael") == 5);
 		CU_ASSERT(idCB.transition("zip1") == 4);
@@ -147,10 +150,11 @@ void v0_developing()
 	auto duration_b = duration_cast<milliseconds>(end_b - begin_b);
 	std::cout << "AFD(B) : " << duration_b.count() << "\n";
 
-	a::AFD_Identifier<char> id;
+	c::AFD_Identifier<char> id;
 	auto begin_c = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
+		//CU_ASSERT(id.transition("gnu") == 0);
 		CU_ASSERT(id.transition("1gnu") == 0);
 		CU_ASSERT(id.transition("azael") == 5);
 		CU_ASSERT(id.transition("zip1") == 4);
