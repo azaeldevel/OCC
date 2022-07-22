@@ -48,9 +48,15 @@ public:
 		
 	virtual O transition(const C* string) = 0;
 
+	inline bool is_whitespace(C c)
+	{
+		return c == ' ' or c == '\t' or c == '\n';
+	}
+
 protected:
 	O i;
 	S current;
+	C c;
 };
 	
 
@@ -278,13 +284,12 @@ namespace c
 		{
 			DFA<C,S,O>::current = (S)Status::initial;
 			DFA<C,S,O>::i = 0;
-			C c;
 			
 			do
 			{
 				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
-				c = string[DFA<C,S,O>::i];
-				if(c == '\0')
+				DFA<C,S,O>::c = string[DFA<C,S,O>::i];
+				if(DFA<C,S,O>::c == '\0')
 				{
 					if(DFA<C,S,O>::current == (S)Status::identifier) return DFA<C,S,O>::i;
 					else return 0;
@@ -293,15 +298,67 @@ namespace c
 				switch(DFA<C,S,O>::current)
 				{
 				case (S)Status::initial:
-					if(isalpha(c)) DFA<C,S,O>::current = (S)Status::identifier;
-					else if(c == '_') DFA<C,S,O>::current = (S)Status::identifier;
+					if(isalpha(DFA<C,S,O>::c)) DFA<C,S,O>::current = (S)Status::identifier;
+					else if(DFA<C,S,O>::c == '_') DFA<C,S,O>::current = (S)Status::identifier;
 					else return 0;
 					DFA<C,S,O>::i++;
 					break;
 				case (S)Status::identifier:
-					if(isalnum(c)) ; //se mantiene en el mismo estado
-					else if(c == '_') ; //se mantiene en el mismo estado
-					else if(isblank(c)) return DFA<C,S,O>::i;
+					if(isalnum(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
+					else if(DFA<C,S,O>::c == '_') ; //se mantiene en el mismo estado
+					else if(DFA<C,S,O>::is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
+					DFA<C,S,O>::i++;
+					break;
+				};
+			}
+			while(true);
+
+			return 0;
+		}
+
+	protected:
+	};
+
+	template<typename C,typename S = Word,typename O = Word>
+	class Integer : public DFA<C,S,O>
+	{
+	private:
+		enum class Status : S
+		{
+			initial,
+			integer,
+		};
+	public:
+		Integer() : DFA<C,S,O>((S)Status::initial)
+		{		
+		}
+		
+		virtual O transition(const C* string)
+		{
+			DFA<C,S,O>::current = (S)Status::initial;
+			DFA<C,S,O>::i = 0;			
+			
+			do
+			{
+				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
+				DFA<C,S,O>::c = string[DFA<C,S,O>::i];
+				if(DFA<C,S,O>::c == '\0')
+				{
+					if(DFA<C,S,O>::current == (S)Status::integer) return DFA<C,S,O>::i;
+					else return 0;
+				}
+
+				switch(DFA<C,S,O>::current)
+				{
+				case (S)Status::initial:
+					if(isdigit(DFA<C,S,O>::c)) DFA<C,S,O>::current = (S)Status::integer;
+					else return 0;
+					DFA<C,S,O>::i++;
+					break;
+				case (S)Status::integer:
+					if(isdigit(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
+					else if(DFA<C,S,O>::is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
+					else if(isalpha(DFA<C,S,O>::c)) return 0;
 					DFA<C,S,O>::i++;
 					break;
 				};

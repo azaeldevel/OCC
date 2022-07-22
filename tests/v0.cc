@@ -118,6 +118,11 @@ void v0_AFD_C()
 	CU_ASSERT(id.transition("azip1") == 5);
 	CU_ASSERT(id.transition("az3p1") == 5);
 	CU_ASSERT(id.transition("_gnu") == 4);
+	
+	c::Integer<char> integer;
+	CU_ASSERT(integer.transition("1236589") == 7);
+	CU_ASSERT(integer.transition("00065") == 5);
+	CU_ASSERT(integer.transition("00A65") == 0);
 }
 void v0_performance()
 {
