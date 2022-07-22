@@ -26,8 +26,11 @@ void v0_AFD_A()
 	CU_ASSERT(LENGTH_TT(tt::Identifier) == 2);
 	a::DFA<char> idC(TABLE(tt::Identifier));
 	CU_ASSERT(idC.transition("gnu") == 3);
+	CU_ASSERT(idC.transition("_gnu_") == 5);
 	CU_ASSERT(idC.transition("1gnu") == 0);
 	CU_ASSERT(idC.transition("azael") == 5);
+	CU_ASSERT(idC.transition("azael ") == 5);
+	CU_ASSERT(idC.transition("azael	") == 5);
 	CU_ASSERT(idC.transition("zip1") == 4);
 	CU_ASSERT(idC.transition("azip1") == 5);
 	CU_ASSERT(idC.transition("az3p1") == 5);

@@ -35,7 +35,7 @@ enum class Indicator : Status
 	None,
 	Accept,
 	Reject,
-	Prefix,
+	Prefix_Accept,
 };
 
 namespace a
@@ -265,7 +265,7 @@ constexpr static const a::Transition Identifier[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},
+			{Indicator::Prefix_Accept,0},//tab
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -288,7 +288,7 @@ constexpr static const a::Transition Identifier[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Prefix,0},//' '
+			{Indicator::Prefix_Accept,0},//' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -549,7 +549,7 @@ constexpr static const a::Transition Interger[][MAX_SIMBOLS] = {
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Prefix,0},// ' '
+			{Indicator::Prefix_Accept,0},// ' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -790,7 +790,7 @@ constexpr static const b::Transition<char> Integer_B[]  {
 		{0,'7',Indicator::Accept,1},
 		{0,'8',Indicator::Accept,1},
 		{0,'9',Indicator::Accept,1},
-		{0,' ',Indicator::Prefix,1},		
+		{0,' ',Indicator::Prefix_Accept,1},		
 		
 		{1,'0',Indicator::Accept,1},
 		{1,'1',Indicator::Accept,1},
@@ -802,7 +802,7 @@ constexpr static const b::Transition<char> Integer_B[]  {
 		{1,'7',Indicator::Accept,1},
 		{1,'8',Indicator::Accept,1},
 		{1,'9',Indicator::Accept,1},
-		{1,' ',Indicator::Prefix,1},		
+		{1,' ',Indicator::Prefix_Accept,1},		
 	};
 }
 

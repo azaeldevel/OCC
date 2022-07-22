@@ -99,7 +99,7 @@ namespace a
 				if(current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 				actual = &table[current][(unsigned char)string[i]];
 				
-				if(actual->indicator == tt::Indicator::Prefix)
+				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 					//std::cout << "'" << string[i]  << "'" << "\n";
 					//std::cout << " i : " << i  << "\n";
@@ -226,7 +226,7 @@ namespace b
 					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 					return 0;//si no se encontrontro transiscion
 				}
-				else if(actual->indicator == tt::Indicator::Prefix)
+				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 					if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 					return 0;//si no se encontrontro transiscion

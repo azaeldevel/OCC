@@ -437,7 +437,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//tab
+			{tt::Indicator::Prefix_Accept,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -460,7 +460,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//' '
+			{tt::Indicator::Prefix_Accept,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -472,7 +472,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//,
+			{tt::Indicator::Prefix_Accept,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -700,7 +700,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//tab
+			{tt::Indicator::Prefix_Accept,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -723,7 +723,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//' '
+			{tt::Indicator::Prefix_Accept,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -735,7 +735,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//,
+			{tt::Indicator::Prefix_Accept,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -963,7 +963,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//tab
+			{tt::Indicator::Prefix_Accept,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -986,7 +986,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//' '
+			{tt::Indicator::Prefix_Accept,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -998,7 +998,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//,
+			{tt::Indicator::Prefix_Accept,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1226,7 +1226,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//tab
+			{tt::Indicator::Prefix_Accept,0},//tab
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1249,7 +1249,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//' '
+			{tt::Indicator::Prefix_Accept,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -1261,7 +1261,7 @@ constexpr static const tt::a::Transition i8086_regs[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix,0},//,
+			{tt::Indicator::Prefix_Accept,0},//,
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
