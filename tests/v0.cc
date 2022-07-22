@@ -25,6 +25,7 @@ void v0_AFD_A()
 {
 	CU_ASSERT(LENGTH_TT(tt::Identifier) == 2);
 	a::DFA<char> idC(TABLE(tt::Identifier));
+	//std::cout << "count : " << idC.transition("gnu") << "\n";
 	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("_gnu_") == 5);
 	CU_ASSERT(idC.transition("1gnu") == 0);
@@ -40,7 +41,6 @@ void v0_AFD_A()
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
 	CU_ASSERT(intC.transition("00A65") == 0);
-	//std::cout << "count : " << intC.transition("1236589") << "\n";
 
 	//Assembler A
 	a::DFA<char> i8080_regs(TABLE(a::i8086_regs));

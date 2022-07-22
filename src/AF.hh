@@ -67,43 +67,44 @@ namespace a
 	*
 	*/
 	template<typename T>
-	class DFA
+	class DFA : public cc::DFA<T,Word,Word>
 	{
 
 	public:
-		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0), length(l)
+		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : cc::DFA<T,Word,Word>(0), table(t), reset(0), length(l)
 		{
 		}
 		
-		unsigned short transition(const T* string)
+		Word transition(const T* string)
 		{
 			if(not string) return 0;
 			
-			current = reset;
-			unsigned short  i = 0;	
+			cc::DFA<T,Word,Word>::current = reset;
+			cc::DFA<T,Word,Word>::i = 0;	
 			const tt::a::Transition *prev = NULL, *actual;
 			do
 			{
-				//std::cout << "'" << string[i]  << "'" << "\n";
-				//std::cout << "current : " << current << "\n";
+				cc::DFA<T,Word,Word>::c = string[cc::DFA<T,Word,Word>::i];
+				//std::cout << "'" << cc::DFA<T,Word,Word>::c  << "'" << "\n";
+				//std::cout << "current : " << cc::DFA<T,Word,Word>::current << "\n";
 				//std::cout << "symbol : " << string[i] << "\n";
 				//std::cout << "symbol : " << (unsigned short) string[i] << "\n";
 				//std::cout << "length : " << length << "\n";
-				if(string[i] == '\0')
+				if(cc::DFA<T,Word,Word>::c == '\0')
 				{
-					if(i == 0) return 0;
-					else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+					if(cc::DFA<T,Word,Word>::i == 0) return 0;
+					else if(prev) if(prev->indicator == tt::Indicator::Accept) return cc::DFA<T,Word,Word>::i;
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				if(current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-				actual = &table[current][(unsigned char)string[i]];
+				if(cc::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+				actual = &table[cc::DFA<T,Word,Word>::current][(unsigned char)cc::DFA<T,Word,Word>::c];
 				
 				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 					//std::cout << "'" << string[i]  << "'" << "\n";
 					//std::cout << " i : " << i  << "\n";
-					if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+					if(prev) if(prev->indicator == tt::Indicator::Accept) return cc::DFA<T,Word,Word>::i;
 					return 0;
 				}
 				else if(actual->indicator == tt::Indicator::Reject)//preanalisis solo para 1
@@ -112,9 +113,9 @@ namespace a
 					return 0;
 				}
 				
-				current = actual->next;
+				cc::DFA<T,Word,Word>::current = actual->next;
 				prev = actual;
-				i++;
+				cc::DFA<T,Word,Word>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
@@ -124,8 +125,8 @@ namespace a
 	private:
 		const tt::a::Transition (*table)[tt::MAX_SIMBOLS];  
 		size_t length;
-		tt::Status current;
-		tt::Status reset;
+		//tt::Status current;
+		Word reset;
 	};
 }
 
