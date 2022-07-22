@@ -39,11 +39,11 @@ namespace a
 	*
 	*/
 	template<typename T>
-	class AFD
+	class DFA
 	{
 
 	public:
-		AFD(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0), length(l)
+		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : table(t), current(0), reset(0), length(l)
 		{
 		}
 		
@@ -105,14 +105,14 @@ namespace a
 namespace b
 {
 	template<typename T>
-	class AFDB
+	class DFA
 	{
 
 	public:
-		AFDB() : current(0),reset(0),table(NULL),length(0)
+		DFA() : current(0),reset(0),table(NULL),length(0)
 		{
 		}
-		AFDB(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
+		DFA(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
 		{		 
 		}
 
@@ -239,15 +239,15 @@ namespace b
 namespace c
 {
 	
-	template<typename C,typename S,typename O>
-	class AFDC
+	template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
+	class DFA
 	{
 
 	public:
-		AFDC() : current(0), i(0)
+		DFA() : current(0), i(0)
 		{
 		}
-		AFDC(S s) : current(s), i(0)
+		DFA(S s) : current(s), i(0)
 		{
 		}
 		
@@ -259,50 +259,49 @@ namespace c
 	};
 	
 	
-	template<typename C,typename S = unsigned char,typename O = unsigned short>
-	class AFD_Identifier : public AFDC<C,S,O>
+	template<typename C,typename S = Word,typename O = Word>
+	class Identifier : public DFA<C,S,O>
 	{
 	private:
 		enum class Status : S
 		{
 			initial,
 			identifier,
-			reject,
 		};
 	public:
-		AFD_Identifier() : AFDC<C,S,O>((S)Status::initial)
+		Identifier() : DFA<C,S,O>((S)Status::initial)
 		{		
 		}
 		
 		virtual O transition(const C* string)
 		{
-			AFDC<C,S,O>::current = (S)Status::initial;
-			AFDC<C,S,O>::i = 0;
+			DFA<C,S,O>::current = (S)Status::initial;
+			DFA<C,S,O>::i = 0;
 			C c;
 			
 			do
 			{
 				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
-				c = string[AFDC<C,S,O>::i];
+				c = string[DFA<C,S,O>::i];
 				if(c == '\0')
 				{
-					if(AFDC<C,S,O>::current == (S)Status::identifier) return AFDC<C,S,O>::i;
+					if(DFA<C,S,O>::current == (S)Status::identifier) return DFA<C,S,O>::i;
 					else return 0;
 				}
 
-				switch(AFDC<C,S,O>::current)
+				switch(DFA<C,S,O>::current)
 				{
 				case (S)Status::initial:
-					if(isalpha(c)) AFDC<C,S,O>::current = (S)Status::identifier;
-					else if(c == '_') AFDC<C,S,O>::current = (S)Status::identifier;
+					if(isalpha(c)) DFA<C,S,O>::current = (S)Status::identifier;
+					else if(c == '_') DFA<C,S,O>::current = (S)Status::identifier;
 					else return 0;
-					AFDC<C,S,O>::i++;
+					DFA<C,S,O>::i++;
 					break;
 				case (S)Status::identifier:
 					if(isalnum(c)) ; //se mantiene en el mismo estado
 					else if(c == '_') ; //se mantiene en el mismo estado
-					else if(isblank(c)) return AFDC<C,S,O>::i;
-					AFDC<C,S,O>::i++;
+					else if(isblank(c)) return DFA<C,S,O>::i;
+					DFA<C,S,O>::i++;
 					break;
 				};
 			}
