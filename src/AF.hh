@@ -32,6 +32,28 @@
 namespace oct::cc
 {
 
+
+	
+template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
+class DFA
+{
+
+public:
+	DFA() : current(0), i(0)
+	{
+	}
+	DFA(S s) : current(s), i(0)
+	{
+	}
+		
+	virtual O transition(const C* string) = 0;
+
+protected:
+	O i;
+	S current;
+};
+	
+
 namespace a
 {
 	/**
@@ -237,28 +259,7 @@ namespace b
 }
 
 namespace c
-{
-	
-	template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
-	class DFA
-	{
-
-	public:
-		DFA() : current(0), i(0)
-		{
-		}
-		DFA(S s) : current(s), i(0)
-		{
-		}
-		
-		virtual O transition(const C* string) = 0;
-
-	protected:
-		O i;
-		S current;
-	};
-	
-	
+{	
 	template<typename C,typename S = Word,typename O = Word>
 	class Identifier : public DFA<C,S,O>
 	{
