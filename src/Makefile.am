@@ -6,7 +6,8 @@ AM_CPPFLAGS = \
 	
 lib_LTLIBRARIES = liboctetos-cc.la
 
-liboctetos_cc_la_CXXFLAGS = $(OCTETOS_CC_CFLGAS)  -DOCTETOS_CC_FULL_CHECK
+
+liboctetos_cc_la_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true
 liboctetos_cc_la_LIBADD = $(OCTETOS_CC_LIBS)
 liboctetos_cc_la_SOURCES = Exception.cc Buffer.cc AF.cc AF-A.cc
 

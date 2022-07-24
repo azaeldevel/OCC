@@ -43,10 +43,10 @@ void v0_AFD_A()
 	CU_ASSERT(intC.transition("00A65") == 0);
 
 	//Assembler A
-	a::DFA<char> i8080_regs(TABLE(a::i8086_regs));
+	a::DFA<char> i8086_regs(TABLE(a::i8086_regs));
 	try
 	{
-		CU_ASSERT(i8080_regs.transition("alg") == 0);
+		CU_ASSERT(i8086_regs.transition("alg") == 0);
 	}
 	catch(const oct::core::v3::Exception& ex)
 	{
@@ -56,38 +56,50 @@ void v0_AFD_A()
 	{
 		std::cout << ex.what() << "\n";
 	}
-	CU_ASSERT(i8080_regs.transition("ax") == 2);
-	CU_ASSERT(i8080_regs.transition("ax,") == 2);
-	CU_ASSERT(i8080_regs.transition("ax ") == 2);
-	CU_ASSERT(i8080_regs.transition("ax	") == 2);
-	CU_ASSERT(i8080_regs.transition("ah") == 2);
-	CU_ASSERT(i8080_regs.transition("al") == 2);
-	CU_ASSERT(i8080_regs.transition("az") == 0);
-	CU_ASSERT(i8080_regs.transition("am") == 0);
+	CU_ASSERT(i8086_regs.transition("ax") == 2);
+	CU_ASSERT(i8086_regs.transition("ax,") == 2);
+	CU_ASSERT(i8086_regs.transition("ax ") == 2);
+	CU_ASSERT(i8086_regs.transition("ax	") == 2);
+	CU_ASSERT(i8086_regs.transition("ah") == 2);
+	CU_ASSERT(i8086_regs.transition("al") == 2);
+	CU_ASSERT(i8086_regs.transition("az") == 0);
+	CU_ASSERT(i8086_regs.transition("am") == 0);
 	//std::cout << "count : " << i8080_regs.transition("ax") << "\n";
-	CU_ASSERT(i8080_regs.transition("all") == 0);
-	CU_ASSERT(i8080_regs.transition("al()") == 0);
-	CU_ASSERT(i8080_regs.transition("bx") == 2);
-	CU_ASSERT(i8080_regs.transition("bh") == 2);
-	CU_ASSERT(i8080_regs.transition("bh,") == 2);
-	CU_ASSERT(i8080_regs.transition("bl") == 2);
-	CU_ASSERT(i8080_regs.transition("bl  ") == 2);
-	CU_ASSERT(i8080_regs.transition("bl.") == 0);
-	CU_ASSERT(i8080_regs.transition("bl-") == 0);
-	CU_ASSERT(i8080_regs.transition("cx") == 2);
-	CU_ASSERT(i8080_regs.transition("cx,") == 2);
-	CU_ASSERT(i8080_regs.transition("ch") == 2);
-	CU_ASSERT(i8080_regs.transition("cl") == 2);
-	CU_ASSERT(i8080_regs.transition("cl ") == 2);
-	CU_ASSERT(i8080_regs.transition("dx") == 2);
-	CU_ASSERT(i8080_regs.transition("dx,") == 2);
-	CU_ASSERT(i8080_regs.transition("dx  ") == 2);
+	CU_ASSERT(i8086_regs.transition("all") == 0);
+	CU_ASSERT(i8086_regs.transition("al()") == 0);
+	CU_ASSERT(i8086_regs.transition("bx") == 2);
+	CU_ASSERT(i8086_regs.transition("bh") == 2);
+	CU_ASSERT(i8086_regs.transition("bh,") == 2);
+	CU_ASSERT(i8086_regs.transition("bl") == 2);
+	CU_ASSERT(i8086_regs.transition("bl  ") == 2);
+	CU_ASSERT(i8086_regs.transition("bl.") == 0);
+	CU_ASSERT(i8086_regs.transition("bl-") == 0);
+	CU_ASSERT(i8086_regs.transition("cx") == 2);
+	CU_ASSERT(i8086_regs.transition("cx,") == 2);
+	CU_ASSERT(i8086_regs.transition("ch") == 2);
+	CU_ASSERT(i8086_regs.transition("cl") == 2);
+	CU_ASSERT(i8086_regs.transition("cl ") == 2);
+	CU_ASSERT(i8086_regs.transition("dx") == 2);
+	CU_ASSERT(i8086_regs.transition("dx,") == 2);
+	CU_ASSERT(i8086_regs.transition("dx  ") == 2);
 	//CU_ASSERT(i8080_regs.transition("dx ") == 2);
-	CU_ASSERT(i8080_regs.transition("dh") == 2);
-	CU_ASSERT(i8080_regs.transition("dl") == 2);
-	CU_ASSERT(i8080_regs.transition("dl[]") == 0);
-	CU_ASSERT(i8080_regs.transition("dl  ") == 2);
-	CU_ASSERT(i8080_regs.transition("dl	") == 2);
+	CU_ASSERT(i8086_regs.transition("dh") == 2);
+	CU_ASSERT(i8086_regs.transition("dl") == 2);
+	CU_ASSERT(i8086_regs.transition("dl[]") == 0);
+	CU_ASSERT(i8086_regs.transition("dl  ") == 2);
+	CU_ASSERT(i8086_regs.transition("dl	") == 2);
+
+
+	a::DFA<char> i8086_segs(TABLE(a::i8086_segs));
+	CU_ASSERT(i8086_segs.transition("bp") == 2);
+	CU_ASSERT(i8086_segs.transition("cs") == 2);
+	CU_ASSERT(i8086_segs.transition("di") == 2);
+	i8086_segs.enable_echo(true);
+	//std::cout << "count : " << i8086_segs.transition("ds") << "\n";
+	i8086_segs.transition("ds");
+	i8086_segs.enable_echo(false);
+	CU_ASSERT(i8086_segs.transition("ds") == 2);
+	CU_ASSERT(i8086_segs.transition("es") == 2);
 }
 void v0_AFD_B()
 {
