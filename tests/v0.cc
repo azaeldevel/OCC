@@ -23,7 +23,7 @@ int v0_clean(void)
 
 void v0_AFD_A()
 {
-	CU_ASSERT(LENGTH_TT(tt::a::Identifier) == 2);
+	//CU_ASSERT(LENGTH_TT(tt::a::Identifier) == 2);
 	a::DFA<char> idC(TABLE(tt::a::Identifier));
 	//std::cout << "count : " << idC.transition("gnu") << "\n";
 	CU_ASSERT(idC.transition("gnu") == 3);
@@ -105,6 +105,21 @@ void v0_AFD_A()
 	*/
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
+
+	a::DFA<char> i8086_insts(TABLE(a::i8086_insts));
+	CU_ASSERT(i8086_insts.transition("int") == 3);
+
+
+	CU_ASSERT(length("section") == 7);
+	//std::cout << "count : " << length<char>("section") << "\n";
+	CU_ASSERT(length("code") == 4);
+
+	CU_ASSERT(equal("section","section"));
+	CU_ASSERT(not equal("section","code"));
+	CU_ASSERT(equal("code","code"));
+	CU_ASSERT(not equal("code","section"));
+
+	
 }
 void v0_AFD_B()
 {

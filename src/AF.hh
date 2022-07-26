@@ -32,6 +32,35 @@
 namespace oct::cc
 {
 
+template<typename C> 
+size_t length(const C* str)
+{
+	size_t i = 0;
+	while(str[i] != '\0')
+	{
+		i++;
+	}
+	return i;
+}
+
+template<typename C> 
+bool equal(const C* initial, const C* target)
+{
+	size_t lengInitial = length(initial);
+	if(lengInitial == 0) return false;
+
+	size_t lengTarget = length(target);
+	if(lengTarget == 0) return false;
+
+	if(lengInitial != lengTarget) return false;
+
+	for(size_t i = 0; i < lengInitial; i++)
+	{
+		if(initial[i] != target[i]) return false;		
+	}
+	
+	return true;
+}
 
 
 template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
@@ -204,6 +233,11 @@ namespace a
 			while(actual->indicator != tt::Indicator::Reject);
 
 			return 0;
+		}
+
+		const tt::a::Transition** get_table() const
+		{
+			return (const tt::a::Transition**)table;
 		}
 		
 	private:

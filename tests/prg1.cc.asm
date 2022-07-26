@@ -1,4 +1,0 @@
-start:
-	mov 0x15, @ah;
-	mov 0xA1, @al;
-	int	0x10;
