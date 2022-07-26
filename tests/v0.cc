@@ -94,12 +94,17 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("bp") == 2);
 	CU_ASSERT(i8086_segs.transition("cs") == 2);
 	CU_ASSERT(i8086_segs.transition("di") == 2);
-	i8086_segs.enable_echo(true);
-	//std::cout << "count : " << i8086_segs.transition("ds") << "\n";
-	i8086_segs.transition("ds");
-	i8086_segs.enable_echo(false);
 	CU_ASSERT(i8086_segs.transition("ds") == 2);
 	CU_ASSERT(i8086_segs.transition("es") == 2);
+	CU_ASSERT(i8086_segs.transition("ip") == 2);
+	CU_ASSERT(i8086_segs.transition("si") == 2);
+	/*
+	i8086_segs.enable_echo(true);
+	std::cout << "count : " << i8086_segs.transition("si") << "\n";
+	i8086_segs.enable_echo(false);
+	*/
+	CU_ASSERT(i8086_segs.transition("sp") == 2);
+	CU_ASSERT(i8086_segs.transition("ss") == 2);
 }
 void v0_AFD_B()
 {
