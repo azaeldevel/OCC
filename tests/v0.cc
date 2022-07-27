@@ -140,9 +140,13 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("das") == 3);
 	CU_ASSERT(i8086_insts.transition("das1") == 0);
 	CU_ASSERT(i8086_insts.transition("dec") == 3);
-	CU_ASSERT(i8086_insts.transition("div") == 3);	
+	CU_ASSERT(i8086_insts.transition("div") == 3);
+	CU_ASSERT(i8086_insts.transition("esc") == 3);	
+	CU_ASSERT(i8086_insts.transition("hlt") == 3);
+	CU_ASSERT(i8086_insts.transition("idiv") == 4);
+	CU_ASSERT(i8086_insts.transition("imul") == 4);
 	i8086_insts.enable_echo(true);
-	auto i8086_insts_count1 = i8086_insts.transition("div");
+	auto i8086_insts_count1 = i8086_insts.transition("imul");
 	i8086_insts.enable_echo(false);
 	std::cout << "count : " << i8086_insts_count1 << "\n";
 	
