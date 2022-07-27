@@ -122,11 +122,16 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("add") == 3);
 	CU_ASSERT(i8086_insts.transition("and") == 3);
 	CU_ASSERT(i8086_insts.transition("call") == 4);
+	CU_ASSERT(i8086_insts.transition("calling") == 0);
+	CU_ASSERT(i8086_insts.transition("cbw") == 3);
+	CU_ASSERT(i8086_insts.transition("cbwl") == 0);
 	/*i8086_insts.enable_echo(true);
-	auto i8086_insts_count1 = i8086_insts.transition("call");
+	auto i8086_insts_count1 = i8086_insts.transition("cbw");
 	i8086_insts.enable_echo(false);
 	std::cout << "count : " << i8086_insts_count1 << "\n";*/
-	CU_ASSERT(i8086_insts.transition("calling") == 0);
+	CU_ASSERT(i8086_insts.transition("clc") == 3);
+	CU_ASSERT(i8086_insts.transition("cld") == 3);
+	CU_ASSERT(i8086_insts.transition("cli") == 3);
 	//CU_ASSERT(i8086_insts.transition("int") == 3);
 
 
