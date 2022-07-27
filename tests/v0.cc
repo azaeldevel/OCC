@@ -143,7 +143,7 @@ void v0_AFD_A()
 	CU_ASSERT(copy(temp_string_1,length(temp_string_1),&temp_string_2) == length(temp_string_1));
 	CU_ASSERT(equal(temp_string_1,temp_string_2));
 
-	std::filesystem::path booting_file = "../../tests/booting.occ.asm";
+	std::filesystem::path booting_file = "../../tests/booting.1.occ.asm";
 	Buffer<char> buff2(booting_file);
 	//std::cout << "text : " << (const char*)buff2 << "\n";
 	CU_ASSERT(buff2.walk("section") != NULL);
