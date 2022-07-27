@@ -196,6 +196,16 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("ints") == 0);	
 	CU_ASSERT(i8086_insts.transition("iret") == 4);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::iret);
+	CU_ASSERT(i8086_insts.transition("ja") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::ja);
+	CU_ASSERT(i8086_insts.transition("jae") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jae);
+	CU_ASSERT(i8086_insts.transition("jb") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jb);
+	i8086_insts.enable_echo(true);
+	CU_ASSERT(i8086_insts.transition("jbe") == 3);
+	i8086_insts.enable_echo(false);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jbe);
 	/*i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("iret");
 	i8086_insts.enable_echo(false);

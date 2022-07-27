@@ -53,7 +53,6 @@ public:
 		if(sfile.is_open()) sfile.close();
 		if(buffer) delete[] buffer;
 	}
-
 	explicit operator const T*()const
 	{
 		return buffer;

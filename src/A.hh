@@ -27,35 +27,7 @@
 namespace oct::cc::a
 {
 
-enum class Tokens: Word
-{
-	None,
-	Register,
-	Segment,
-	Instruction,
-};
-
-template<typename T> T token(const tt::a::Transition** t)
-{
-	switch(t)
-	{
-	case (void*)i8086_regs:
-		return Tokens::Register;
-	case (void*)i8086_segs:
-		return Tokens::Segment;
-	case (void*)i8086_insts:
-		return Tokens::Instruction;
-	default:
-		return T(0);
-	}
-
-	return T(0);
-}
-
-
-
-template<typename C>
-class BuildUnit : public a::DFA<C>
+template<typename C> class BuildUnit : public a::DFA<C>
 {
 
 public:
