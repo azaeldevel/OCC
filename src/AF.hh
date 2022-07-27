@@ -22,45 +22,18 @@
 
 
 
-#include "Exception.hh"
-#include "tt.hh"
+
 
 #include <iostream>
 #include <algorithm>
 
+#include "Exception.hh"
+#include "tt.hh"
+#include "base.hh"
 
 namespace oct::cc
 {
 
-template<typename C> 
-size_t length(const C* str)
-{
-	size_t i = 0;
-	while(str[i] != '\0')
-	{
-		i++;
-	}
-	return i;
-}
-
-template<typename C> 
-bool equal(const C* initial, const C* target)
-{
-	size_t lengInitial = length(initial);
-	if(lengInitial == 0) return false;
-
-	size_t lengTarget = length(target);
-	if(lengTarget == 0) return false;
-
-	if(lengInitial != lengTarget) return false;
-
-	for(size_t i = 0; i < lengInitial; i++)
-	{
-		if(initial[i] != target[i]) return false;		
-	}
-	
-	return true;
-}
 
 
 template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
@@ -82,11 +55,7 @@ public:
 	}
 		
 	virtual O transition(const C* string) = 0;
-
-	inline bool is_whitespace(C c)
-	{
-		return c == ' ' or c == '\t' or c == '\n';
-	}
+		
 #if OCTETOS_CC_DEGUB
 	void enable_echo(bool e)
 	{
@@ -385,6 +354,7 @@ namespace b
 
 namespace c
 {	
+	
 	template<typename C,typename S = Word,typename O = Word>
 	class Identifier : public DFA<C,S,O>
 	{
@@ -425,7 +395,7 @@ namespace c
 				case (S)Status::identifier:
 					if(isalnum(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
 					else if(DFA<C,S,O>::c == '_') ; //se mantiene en el mismo estado
-					else if(DFA<C,S,O>::is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
+					else if(is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
 					DFA<C,S,O>::i++;
 					break;
 				};
@@ -476,7 +446,7 @@ namespace c
 					break;
 				case (S)Status::integer:
 					if(isdigit(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
-					else if(DFA<C,S,O>::is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
+					else if(is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
 					else if(isalpha(DFA<C,S,O>::c)) return 0;
 					DFA<C,S,O>::i++;
 					break;

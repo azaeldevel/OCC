@@ -2,6 +2,7 @@
 #include <AF.hh>
 #include <tt.hh>
 #include <A.hh>
+#include <Buffer.hh>
 
 
 #include <iostream>
@@ -119,7 +120,22 @@ void v0_AFD_A()
 	CU_ASSERT(equal("code","code"));
 	CU_ASSERT(not equal("code","section"));
 
-	
+	Buffer buff1("section code  		{   \n}");
+	CU_ASSERT(buff1.walk("section") != NULL);
+	CU_ASSERT(buff1.get_base() == 7);
+	CU_ASSERT(buff1.get_actual() == ' ');
+	//std::cout << "count : " << buff1.eat_whites() << "\n";
+	CU_ASSERT(buff1.consume_whites() == 1);
+	//std::cout << "count : " << buff1.get_actual() << "\n";
+	CU_ASSERT(buff1.get_actual() == 'c');
+	//std::cout << "String : " << buff1.walk("code") << "\n";
+	CU_ASSERT(buff1.walk("code") != NULL);
+	//std::cout << "count : " << buff1.get_actual() << "\n";
+	CU_ASSERT(buff1.consume_whites() == 4);
+	//std::cout << "count : " << buff1.eat_whites() << "\n";
+	CU_ASSERT(buff1.walk('{') != NULL);
+	CU_ASSERT(buff1.consume_whites() == 4);
+	CU_ASSERT(buff1.walk('}') != NULL);
 }
 void v0_AFD_B()
 {

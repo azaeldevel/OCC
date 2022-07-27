@@ -65,7 +65,7 @@ public:
 
 	Word transition(const C* string)
 	{
-
+		
 		
 	}
 	
