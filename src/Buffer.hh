@@ -112,6 +112,10 @@ public:
 
 		++base;	
 		return &buffer[base];
+	} 
+	void walk(size_t i)
+	{
+		base += i;
 	}
 	std::uintmax_t consume_whites()
 	{

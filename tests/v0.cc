@@ -42,7 +42,13 @@ void v0_AFD_A()
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
 	CU_ASSERT(intC.transition("00A65") == 0);
+	
+	a::DFA<char> intC_0x(TABLE(tt::a::Integer_0x));
+	CU_ASSERT(intC_0x.transition("0x23ae47") == 8);
+	CU_ASSERT(intC_0x.transition("0x00065") == 7);
+	CU_ASSERT(intC_0x.transition("0x00A65") == 7);
 
+	
 	//Assembler A
 	a::DFA<char> i8086_regs(TABLE(a::i8086_regs));
 	try
@@ -156,6 +162,18 @@ void v0_AFD_A()
 	CU_ASSERT(buff2.walk('{') != NULL);
 	CU_ASSERT(buff2.consume_whites() == 4);
 	CU_ASSERT(buff2.walk('}') != NULL);
+	
+	std::filesystem::path booting_file3 = "../../tests/booting.2.occ.asm";
+	Buffer<char> buff3(booting_file3);
+	CU_ASSERT(buff3.consume_whites() == 3);
+	CU_ASSERT(buff3.walk("section") != NULL);
+	CU_ASSERT(buff3.consume_whites() == 1);
+	//std::cout << "count : " << buff3.consume_whites() << "\n";
+	CU_ASSERT(buff3.walk("code") != NULL);
+	CU_ASSERT(buff3.consume_whites() == 7);
+	CU_ASSERT(buff3.walk('{') != NULL);
+	CU_ASSERT(buff3.consume_whites() == 2);
+	
 }
 void v0_AFD_B()
 {

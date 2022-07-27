@@ -56,7 +56,7 @@ public:
 	}
 		
 	virtual O transition(const C* string) = 0;
-	//virtual O transition(Buffer<C>&) = 0;
+	virtual O transition(Buffer<C>&) = 0;
 		
 #if OCTETOS_CC_DEGUB
 	void enable_echo(bool e)
@@ -239,7 +239,14 @@ namespace a
 					}
 #endif
 					if(cc::DFA<T,Word,Word>::i == 0) return 0;
-					else if(prev) if(prev->indicator == tt::Indicator::Accept) return cc::DFA<T,Word,Word>::i;
+					else if(prev) if(prev->indicator == tt::Indicator::Accept)
+					{
+						if(prev->indicator == tt::Indicator::Accept) 
+						{
+							buff.walk((size_t)cc::DFA<T,Word,Word>::i);
+							return cc::DFA<T,Word,Word>::i;
+						}
+					}
 					return 0;//si no se encontrontro transiscion
 				}
 				
@@ -257,7 +264,14 @@ namespace a
 				{
 					//std::cout << "'" << string[i]  << "'" << "\n";
 					//std::cout << " i : " << i  << "\n";
-					if(prev) if(prev->indicator == tt::Indicator::Accept) return cc::DFA<T,Word,Word>::i;
+					if(prev) if(prev->indicator == tt::Indicator::Accept) 					
+					{
+						if(prev->indicator == tt::Indicator::Accept) 
+						{
+							buff.walk((size_t)cc::DFA<T,Word,Word>::i);
+							return cc::DFA<T,Word,Word>::i;
+						}
+					}
 					return 0;
 				}
 				else if(actual->indicator == tt::Indicator::Reject)//preanalisis solo para 1
@@ -475,6 +489,47 @@ namespace c
 
 			return 0;
 		}
+		virtual O transition(Buffer<C>& buff)
+		{
+			DFA<C,S,O>::current = (S)Status::initial;
+			DFA<C,S,O>::i = 0;
+			
+			do
+			{
+				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
+				DFA<C,S,O>::c = buff[DFA<C,S,O>::i];
+				if(DFA<C,S,O>::c == '\0')
+				{
+					if(DFA<C,S,O>::current == (S)Status::identifier) return DFA<C,S,O>::i;
+					else return 0;
+				}
+
+				switch(DFA<C,S,O>::current)
+				{
+				case (S)Status::initial:
+					if(isalpha(DFA<C,S,O>::c)) DFA<C,S,O>::current = (S)Status::identifier;
+					else if(DFA<C,S,O>::c == '_') DFA<C,S,O>::current = (S)Status::identifier;
+					else return 0;
+					DFA<C,S,O>::i++;
+					buff.walk((size_t)DFA<C,S,O>::i);
+					break;
+				case (S)Status::identifier:
+					if(isalnum(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
+					else if(DFA<C,S,O>::c == '_') ; //se mantiene en el mismo estado
+					else if(is_whitespace(DFA<C,S,O>::c)) 
+					{
+						buff.walk((size_t)DFA<C,S,O>::i);
+						return DFA<C,S,O>::i;
+					}
+					DFA<C,S,O>::i++;
+					buff.walk((size_t)DFA<C,S,O>::i);
+					break;
+				};
+			}
+			while(true);
+
+			return 0;
+		}
 
 	protected:
 	};
@@ -527,7 +582,42 @@ namespace c
 
 			return 0;
 		}
+		virtual O transition(Buffer<C>& buff)
+		{
+			DFA<C,S,O>::current = (S)Status::initial;
+			DFA<C,S,O>::i = 0;			
+			
+			do
+			{
+				//std::cout << "Step " << AFDC<C,S,O>::i << "\n";
+				DFA<C,S,O>::c = buff[DFA<C,S,O>::i];
+				if(DFA<C,S,O>::c == '\0')
+				{
+					if(DFA<C,S,O>::current == (S)Status::integer) return DFA<C,S,O>::i;
+					else return 0;
+				}
 
+				switch(DFA<C,S,O>::current)
+				{
+				case (S)Status::initial:
+					if(isdigit(DFA<C,S,O>::c)) DFA<C,S,O>::current = (S)Status::integer;
+					else return 0;
+					DFA<C,S,O>::i++;
+					buff.walk((size_t)DFA<C,S,O>::i);
+					break;
+				case (S)Status::integer:
+					if(isdigit(DFA<C,S,O>::c)) ; //se mantiene en el mismo estado
+					else if(is_whitespace(DFA<C,S,O>::c)) return DFA<C,S,O>::i;
+					else if(isalpha(DFA<C,S,O>::c)) return 0;
+					DFA<C,S,O>::i++;	
+					buff.walk((size_t)DFA<C,S,O>::i);
+					break;
+				};
+			}
+			while(true);
+
+			return 0;
+		}
 	protected:
 	};
 }
