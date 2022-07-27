@@ -136,6 +136,26 @@ void v0_AFD_A()
 	CU_ASSERT(buff1.walk('{') != NULL);
 	CU_ASSERT(buff1.consume_whites() == 4);
 	CU_ASSERT(buff1.walk('}') != NULL);
+
+
+	const char* temp_string_1 = "prueba1..";
+	char* temp_string_2= new char[length(temp_string_1) + 1];
+	CU_ASSERT(copy(temp_string_1,length(temp_string_1),&temp_string_2) == length(temp_string_1));
+	CU_ASSERT(equal(temp_string_1,temp_string_2));
+
+	std::filesystem::path booting_file = "../../tests/booting.occ.asm";
+	Buffer<char> buff2(booting_file);
+	//std::cout << "text : " << (const char*)buff2 << "\n";
+	CU_ASSERT(buff2.walk("section") != NULL);
+	CU_ASSERT(buff2.get_base() == 7);
+	CU_ASSERT(buff2.get_actual() == ' ');	
+	CU_ASSERT(buff2.consume_whites() == 1);
+	CU_ASSERT(buff2.get_actual() == 'c');
+	CU_ASSERT(buff2.walk("code") != NULL);
+	CU_ASSERT(buff2.consume_whites() == 4);
+	CU_ASSERT(buff2.walk('{') != NULL);
+	CU_ASSERT(buff2.consume_whites() == 4);
+	CU_ASSERT(buff2.walk('}') != NULL);
 }
 void v0_AFD_B()
 {

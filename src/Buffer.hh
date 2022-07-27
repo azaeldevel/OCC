@@ -29,7 +29,7 @@ template<typename T>
 class Buffer
 {
 public:
-	Buffer(const std::filesystem::path& file) : buffer(NULL),base(0),auto_delete_buffer(0)
+	Buffer(const std::filesystem::path& file) : base(0)
 	{
 		if(not std::filesystem::exists(file)) throw Exception(Exception::FILE_TERGET_NOT_FOUND,__FILE__,__LINE__);
 
@@ -42,13 +42,16 @@ public:
 		pbuf = ifs.rdbuf();
 		pbuf->sgetn (buffer,_size);
 	}
-	Buffer(const T* string) : buffer(string),base(0),auto_delete_buffer(0)
+	Buffer(const T* string) : base(0)
 	{
+		size_t leng = length(string);
+		buffer = new T[leng + 1];
+		copy(string,leng,&buffer);
 	}
 	~Buffer()
 	{
 		if(sfile.is_open()) sfile.close();
-		if(auto_delete_buffer)if(buffer) delete[] buffer;
+		if(buffer) delete[] buffer;
 	}
 
 	explicit operator const T*()const
@@ -61,7 +64,7 @@ public:
 		if(index > _size) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
 	#endif
 		
-		return buffer[index];
+		return buffer[base + index];
 	}
 
 	std::uintmax_t size() const
@@ -135,12 +138,11 @@ public:
 		return buffer[base];
 	}
 private:
-	const T* buffer;
+	T* buffer;
 	std::uintmax_t _size;
 	std::ifstream sfile;
 	std::filebuf* pbuf;
 	std::uintmax_t base;
-	bool auto_delete_buffer;
 };
 
 
