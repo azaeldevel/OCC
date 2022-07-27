@@ -192,6 +192,8 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::idiv);
 	CU_ASSERT(i8086_insts.transition("imul") == 4);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::imul);
+	CU_ASSERT(i8086_insts.transition("in") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::in);
 	CU_ASSERT(i8086_insts.transition("inc") == 3);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::inc);
 	CU_ASSERT(i8086_insts.transition("int") == 3);
