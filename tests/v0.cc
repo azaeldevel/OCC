@@ -132,6 +132,9 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("clc") == 3);
 	CU_ASSERT(i8086_insts.transition("cld") == 3);
 	CU_ASSERT(i8086_insts.transition("cli") == 3);
+	CU_ASSERT(i8086_insts.transition("cmc") == 3);
+	CU_ASSERT(i8086_insts.transition("cmp") == 3);
+	CU_ASSERT(i8086_insts.transition("cmps") == 4);
 	//CU_ASSERT(i8086_insts.transition("int") == 3);
 
 
