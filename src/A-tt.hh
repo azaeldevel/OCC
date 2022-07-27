@@ -89,13 +89,13 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//7
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//:
+			{tt::Indicator::Reject,0},//;
+			{tt::Indicator::Reject,0},//<
+			{tt::Indicator::Reject,0},//=
+			{tt::Indicator::Reject,0},//>
+			{tt::Indicator::Reject,0},//?
+			{tt::Indicator::Reject,0},//@
 			{tt::Indicator::Reject,0},//A
 			{tt::Indicator::Reject,0},//B
 			{tt::Indicator::Reject,0},//C
@@ -3057,7 +3057,41 @@ constexpr static const tt::a::Transition i8086_segs[][tt::MAX_SIMBOLS] = {
 
 
 
+enum class i8086_insts_token
+{
+	none,
+	aaa,
+	aad,
+	aam,
+	aas,
+	adc,
+	add,
+	and_token,
+	call,
+	cbw,
+	clc,
+	cld,
+	cli,
+	cmc,
+	cmp,
+	cmps,
+	cwd,
+	daa,
+	das,
+	dec,
+	div,
+	esc,
+	hlt,
+	idiv,
+	imul,
+	in,
+	inc,
+	int_token,
+	intr,
+	into,
+	iret,
 
+};
 constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 	//0
 		{
@@ -3190,7 +3224,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		// 1 : a??
+		// 1 : a(a?)
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -3321,7 +3355,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		// 2 : aa?	
+		// 2 : aa(a?)	
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -3420,10 +3454,10 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//_
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Accept,3},//a
+			{tt::Indicator::Accept,3,(Word)i8086_insts_token::aaa},//a
 			{tt::Indicator::Reject,0},//b
 			{tt::Indicator::Reject,0},//c
-			{tt::Indicator::Accept,3},//d
+			{tt::Indicator::Accept,3,(Word)i8086_insts_token::aad},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
 			{tt::Indicator::Reject,0},//g
@@ -3432,13 +3466,13 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//j
 			{tt::Indicator::Reject,0},//k
 			{tt::Indicator::Reject,0},//l
-			{tt::Indicator::Accept,3},//m
+			{tt::Indicator::Accept,3,(Word)i8086_insts_token::aam},//m
 			{tt::Indicator::Reject,0},//n
 			{tt::Indicator::Reject,0},//o
 			{tt::Indicator::Reject,0},//p
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
-			{tt::Indicator::Accept,3},//s
+			{tt::Indicator::Accept,3,(Word)i8086_insts_token::aas},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
@@ -3513,7 +3547,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -3583,7 +3617,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		// 4 : ad?
+		// 4 : ad(d)?
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -3684,8 +3718,8 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Accept,5},//c
-			{tt::Indicator::Accept,5},//d
+			{tt::Indicator::Accept,5,(Word)i8086_insts_token::adc},//c
+			{tt::Indicator::Accept,5,(Word)i8086_insts_token::add},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
 			{tt::Indicator::Reject,0},//g
@@ -3775,7 +3809,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -3947,7 +3981,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
 			{tt::Indicator::Reject,0},//c
-			{tt::Indicator::Accept,7},//d
+			{tt::Indicator::Accept,7,(Word)i8086_insts_token::and_token},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
 			{tt::Indicator::Reject,0},//g
@@ -4037,7 +4071,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -4480,7 +4514,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//i
 			{tt::Indicator::Reject,0},//j
 			{tt::Indicator::Reject,0},//k
-			{tt::Indicator::Accept,11},//l
+			{tt::Indicator::Accept,11,(Word)i8086_insts_token::call},//l
 			{tt::Indicator::Reject,0},//m
 			{tt::Indicator::Reject,0},//n
 			{tt::Indicator::Reject,0},//o
@@ -4562,7 +4596,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -4753,7 +4787,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
-			{tt::Indicator::Accept,13},//w
+			{tt::Indicator::Accept,13,(Word)i8086_insts_token::cbw},//w
 			{tt::Indicator::Reject,0},//x
 			{tt::Indicator::Reject,0},//y
 			{tt::Indicator::Reject,0},//z
@@ -4824,7 +4858,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -4995,13 +5029,13 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Accept,15},//c
-			{tt::Indicator::Accept,15},//d
+			{tt::Indicator::Accept,15,(Word)i8086_insts_token::clc},//c
+			{tt::Indicator::Accept,15,(Word)i8086_insts_token::cld},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
 			{tt::Indicator::Reject,0},//g
 			{tt::Indicator::Reject,0},//h
-			{tt::Indicator::Accept,15},//i
+			{tt::Indicator::Accept,15,(Word)i8086_insts_token::cli},//i
 			{tt::Indicator::Reject,0},//j
 			{tt::Indicator::Reject,0},//k
 			{tt::Indicator::Reject,0},//l
@@ -5086,7 +5120,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -5257,7 +5291,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Accept,17},//c
+			{tt::Indicator::Accept,17,(Word)i8086_insts_token::cmc},//c
 			{tt::Indicator::Reject,0},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
@@ -5270,7 +5304,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//m
 			{tt::Indicator::Reject,0},//n
 			{tt::Indicator::Reject,0},//o
-			{tt::Indicator::Accept,17},//p
+			{tt::Indicator::Accept,17,(Word)i8086_insts_token::cmp},//p
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
 			{tt::Indicator::Reject,0},//s
@@ -5348,7 +5382,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -5404,7 +5438,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//p
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
-			{tt::Indicator::Accept,18},//s
+			{tt::Indicator::Accept,18,(Word)i8086_insts_token::cmps},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
@@ -5479,7 +5513,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -5651,7 +5685,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
 			{tt::Indicator::Reject,0},//c
-			{tt::Indicator::Accept,20},//d
+			{tt::Indicator::Accept,20,(Word)i8086_insts_token::cwd},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
 			{tt::Indicator::Reject,0},//g
@@ -5741,7 +5775,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -5811,7 +5845,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		// 21 : d(?)
+		// 21 : d(a?)
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -5942,7 +5976,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		// 22 : da?
+		// 22 : da(a?)
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -6041,7 +6075,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//_
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Accept,23},//a
+			{tt::Indicator::Accept,23,(Word)i8086_insts_token::daa},//a
 			{tt::Indicator::Reject,0},//b
 			{tt::Indicator::Reject,0},//c
 			{tt::Indicator::Reject,0},//d
@@ -6059,7 +6093,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//p
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
-			{tt::Indicator::Accept,23},//s
+			{tt::Indicator::Accept,23,(Word)i8086_insts_token::das},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
@@ -6134,7 +6168,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -6305,7 +6339,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Accept,25},//c
+			{tt::Indicator::Accept,25,(Word)i8086_insts_token::dec},//c
 			{tt::Indicator::Reject,0},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
@@ -6396,7 +6430,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -6586,7 +6620,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
-			{tt::Indicator::Accept,25},//v
+			{tt::Indicator::Accept,25,(Word)i8086_insts_token::div},//v
 			{tt::Indicator::Reject,0},//w
 			{tt::Indicator::Reject,0},//x
 			{tt::Indicator::Reject,0},//y
@@ -6658,7 +6692,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -6960,7 +6994,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},//a
 			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Accept,30},//c
+			{tt::Indicator::Accept,30,(Word)i8086_insts_token::esc},//c
 			{tt::Indicator::Reject,0},//d
 			{tt::Indicator::Reject,0},//e
 			{tt::Indicator::Reject,0},//f
@@ -7051,7 +7085,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -7370,7 +7404,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
 			{tt::Indicator::Reject,0},//s
-			{tt::Indicator::Accept,33},//t
+			{tt::Indicator::Accept,33,(Word)i8086_insts_token::hlt},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
 			{tt::Indicator::Reject,0},//w
@@ -7444,7 +7478,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -7515,7 +7549,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 		},
 
-		//>>>>>i
+		//>>>i
 		//34 : i(?)
 		{
 			{tt::Indicator::Reject,0},
@@ -7628,11 +7662,11 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//k
 			{tt::Indicator::Reject,0},//l
 			{tt::Indicator::None,38},//m
-			{tt::Indicator::None,35},//n
+			{tt::Indicator::Accept,41,(Word)i8086_insts_token::in},//n
 			{tt::Indicator::Reject,0},//o
 			{tt::Indicator::Reject,0},//p
 			{tt::Indicator::Reject,0},//q
-			{tt::Indicator::None,35},//r
+			{tt::Indicator::None,44},//r
 			{tt::Indicator::Reject,0},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
@@ -7898,7 +7932,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
-			{tt::Indicator::Accept,37},//v
+			{tt::Indicator::Accept,37,(Word)i8086_insts_token::idiv},//v
 			{tt::Indicator::Reject,0},//w
 			{tt::Indicator::Reject,0},//x
 			{tt::Indicator::Reject,0},//y
@@ -7970,7 +8004,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -8281,7 +8315,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//i
 			{tt::Indicator::Reject,0},//j
 			{tt::Indicator::Reject,0},//k
-			{tt::Indicator::Accept,40},//l
+			{tt::Indicator::Accept,40,(Word)i8086_insts_token::imul},//l
 			{tt::Indicator::Reject,0},//m
 			{tt::Indicator::Reject,0},//n
 			{tt::Indicator::Reject,0},//o
@@ -8363,7 +8397,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//8
 			{tt::Indicator::Reject,0},//9
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -8433,270 +8467,7 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 		},
-		/*
-		// 1 : int
-		{
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//tab
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},	
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//' '
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//0
-			{tt::Indicator::Reject,0},//1
-			{tt::Indicator::Reject,0},//2
-			{tt::Indicator::Reject,0},//3
-			{tt::Indicator::Reject,0},//4
-			{tt::Indicator::Reject,0},//5
-			{tt::Indicator::Reject,0},//6
-			{tt::Indicator::Reject,0},//7
-			{tt::Indicator::Reject,0},//8
-			{tt::Indicator::Reject,0},//9
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//A
-			{tt::Indicator::Reject,0},//B
-			{tt::Indicator::Reject,0},//C
-			{tt::Indicator::Reject,0},//D
-			{tt::Indicator::Reject,0},//E
-			{tt::Indicator::Reject,0},//F
-			{tt::Indicator::Reject,0},//G
-			{tt::Indicator::Reject,0},//H
-			{tt::Indicator::Reject,0},//I
-			{tt::Indicator::Reject,0},//J
-			{tt::Indicator::Reject,0},//K
-			{tt::Indicator::Reject,0},//L
-			{tt::Indicator::Reject,0},//M
-			{tt::Indicator::Reject,0},//N
-			{tt::Indicator::Reject,0},//O
-			{tt::Indicator::Reject,0},//P
-			{tt::Indicator::Reject,0},//Q
-			{tt::Indicator::Reject,0},//R
-			{tt::Indicator::Reject,0},//S
-			{tt::Indicator::Reject,0},//T
-			{tt::Indicator::Reject,0},//U
-			{tt::Indicator::Reject,0},//V
-			{tt::Indicator::Reject,0},//W
-			{tt::Indicator::Reject,0},//X
-			{tt::Indicator::Reject,0},//Y
-			{tt::Indicator::Reject,0},//Z
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//_
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//a
-			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Reject,0},//c
-			{tt::Indicator::Reject,0},//d
-			{tt::Indicator::Reject,0},//e
-			{tt::Indicator::Reject,0},//f
-			{tt::Indicator::Reject,0},//g
-			{tt::Indicator::Reject,0},//h
-			{tt::Indicator::Reject,0},//i
-			{tt::Indicator::Reject,0},//j
-			{tt::Indicator::Reject,0},//k
-			{tt::Indicator::Reject,0},//l
-			{tt::Indicator::Reject,0},//m
-			{tt::Indicator::None,2},//n
-			{tt::Indicator::Reject,0},//o
-			{tt::Indicator::Reject,0},//p
-			{tt::Indicator::Reject,0},//q
-			{tt::Indicator::Reject,0},//r
-			{tt::Indicator::Reject,0},//s
-			{tt::Indicator::Reject,0},//t
-			{tt::Indicator::Reject,0},//u
-			{tt::Indicator::Reject,0},//v
-			{tt::Indicator::Reject,0},//w
-			{tt::Indicator::Reject,0},//x
-			{tt::Indicator::Reject,0},//y
-			{tt::Indicator::Reject,0},//z
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-		},
-		// 2 : int
-		{
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//tab
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},	
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//' '
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//0
-			{tt::Indicator::Reject,0},//1
-			{tt::Indicator::Reject,0},//2
-			{tt::Indicator::Reject,0},//3
-			{tt::Indicator::Reject,0},//4
-			{tt::Indicator::Reject,0},//5
-			{tt::Indicator::Reject,0},//6
-			{tt::Indicator::Reject,0},//7
-			{tt::Indicator::Reject,0},//8
-			{tt::Indicator::Reject,0},//9
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//A
-			{tt::Indicator::Reject,0},//B
-			{tt::Indicator::Reject,0},//C
-			{tt::Indicator::Reject,0},//D
-			{tt::Indicator::Reject,0},//E
-			{tt::Indicator::Reject,0},//F
-			{tt::Indicator::Reject,0},//G
-			{tt::Indicator::Reject,0},//H
-			{tt::Indicator::Reject,0},//I
-			{tt::Indicator::Reject,0},//J
-			{tt::Indicator::Reject,0},//K
-			{tt::Indicator::Reject,0},//L
-			{tt::Indicator::Reject,0},//M
-			{tt::Indicator::Reject,0},//N
-			{tt::Indicator::Reject,0},//O
-			{tt::Indicator::Reject,0},//P
-			{tt::Indicator::Reject,0},//Q
-			{tt::Indicator::Reject,0},//R
-			{tt::Indicator::Reject,0},//S
-			{tt::Indicator::Reject,0},//T
-			{tt::Indicator::Reject,0},//U
-			{tt::Indicator::Reject,0},//V
-			{tt::Indicator::Reject,0},//W
-			{tt::Indicator::Reject,0},//X
-			{tt::Indicator::Reject,0},//Y
-			{tt::Indicator::Reject,0},//Z
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//_
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},//a
-			{tt::Indicator::Reject,0},//b
-			{tt::Indicator::Reject,0},//c
-			{tt::Indicator::Reject,0},//d
-			{tt::Indicator::Reject,0},//e
-			{tt::Indicator::Reject,0},//f
-			{tt::Indicator::Reject,0},//g
-			{tt::Indicator::Reject,0},//h
-			{tt::Indicator::Reject,0},//i
-			{tt::Indicator::Reject,0},//j
-			{tt::Indicator::Reject,0},//k
-			{tt::Indicator::Reject,0},//l
-			{tt::Indicator::Reject,0},//m
-			{tt::Indicator::Reject,0},//n
-			{tt::Indicator::Reject,0},//o
-			{tt::Indicator::Reject,0},//p
-			{tt::Indicator::Reject,0},//q
-			{tt::Indicator::Reject,0},//r
-			{tt::Indicator::Reject,0},//s
-			{tt::Indicator::Accept,3},//t
-			{tt::Indicator::Reject,0},//u
-			{tt::Indicator::Reject,0},//v
-			{tt::Indicator::Reject,0},//w
-			{tt::Indicator::Reject,0},//x
-			{tt::Indicator::Reject,0},//y
-			{tt::Indicator::Reject,0},//z
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-			{tt::Indicator::Reject,0},
-		},
-		//3 : prefix
+		//41 : in(|<--),in(?)	
 		{
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -8730,7 +8501,531 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-			{tt::Indicator::Prefix_Accept,0},//' ' 
+			{tt::Indicator::Prefix_Accept,0},//' '
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//0
+			{tt::Indicator::Reject,0},//1
+			{tt::Indicator::Reject,0},//2
+			{tt::Indicator::Reject,0},//3
+			{tt::Indicator::Reject,0},//4
+			{tt::Indicator::Reject,0},//5
+			{tt::Indicator::Reject,0},//6
+			{tt::Indicator::Reject,0},//7
+			{tt::Indicator::Reject,0},//8
+			{tt::Indicator::Reject,0},//9
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//A
+			{tt::Indicator::Reject,0},//B
+			{tt::Indicator::Reject,0},//C
+			{tt::Indicator::Reject,0},//D
+			{tt::Indicator::Reject,0},//E
+			{tt::Indicator::Reject,0},//F
+			{tt::Indicator::Reject,0},//G
+			{tt::Indicator::Reject,0},//H
+			{tt::Indicator::Reject,0},//I
+			{tt::Indicator::Reject,0},//J
+			{tt::Indicator::Reject,0},//K
+			{tt::Indicator::Reject,0},//L
+			{tt::Indicator::Reject,0},//M
+			{tt::Indicator::Reject,0},//N
+			{tt::Indicator::Reject,0},//O
+			{tt::Indicator::Reject,0},//P
+			{tt::Indicator::Reject,0},//Q
+			{tt::Indicator::Reject,0},//R
+			{tt::Indicator::Reject,0},//S
+			{tt::Indicator::Reject,0},//T
+			{tt::Indicator::Reject,0},//U
+			{tt::Indicator::Reject,0},//V
+			{tt::Indicator::Reject,0},//W
+			{tt::Indicator::Reject,0},//X
+			{tt::Indicator::Reject,0},//Y
+			{tt::Indicator::Reject,0},//Z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//_
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//a
+			{tt::Indicator::Reject,0},//b
+			{tt::Indicator::Accept,42,(Word)i8086_insts_token::inc},//c
+			{tt::Indicator::Reject,0},//d
+			{tt::Indicator::Reject,0},//e
+			{tt::Indicator::Reject,0},//f
+			{tt::Indicator::Reject,0},//g
+			{tt::Indicator::Reject,0},//h
+			{tt::Indicator::Reject,0},//i
+			{tt::Indicator::Reject,0},//j
+			{tt::Indicator::Reject,0},//k
+			{tt::Indicator::Reject,0},//l
+			{tt::Indicator::Reject,0},//m
+			{tt::Indicator::Reject,0},//n
+			{tt::Indicator::Reject,0},//o
+			{tt::Indicator::Reject,0},//p
+			{tt::Indicator::Reject,0},//q
+			{tt::Indicator::Reject,0},//r
+			{tt::Indicator::Reject,0},//s
+			{tt::Indicator::Accept,42,(Word)i8086_insts_token::int_token},//t
+			{tt::Indicator::Reject,0},//u
+			{tt::Indicator::Reject,0},//v
+			{tt::Indicator::Reject,0},//w
+			{tt::Indicator::Reject,0},//x
+			{tt::Indicator::Reject,0},//y
+			{tt::Indicator::Reject,0},//z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+		},
+		//42 : inc(|<--)?,int(|<--)?,int(?)
+		{
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//tab
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},	
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//' '
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//0
+			{tt::Indicator::Reject,0},//1
+			{tt::Indicator::Reject,0},//2
+			{tt::Indicator::Reject,0},//3
+			{tt::Indicator::Reject,0},//4
+			{tt::Indicator::Reject,0},//5
+			{tt::Indicator::Reject,0},//6
+			{tt::Indicator::Reject,0},//7
+			{tt::Indicator::Reject,0},//8
+			{tt::Indicator::Reject,0},//9
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//A
+			{tt::Indicator::Reject,0},//B
+			{tt::Indicator::Reject,0},//C
+			{tt::Indicator::Reject,0},//D
+			{tt::Indicator::Reject,0},//E
+			{tt::Indicator::Reject,0},//F
+			{tt::Indicator::Reject,0},//G
+			{tt::Indicator::Reject,0},//H
+			{tt::Indicator::Reject,0},//I
+			{tt::Indicator::Reject,0},//J
+			{tt::Indicator::Reject,0},//K
+			{tt::Indicator::Reject,0},//L
+			{tt::Indicator::Reject,0},//M
+			{tt::Indicator::Reject,0},//N
+			{tt::Indicator::Reject,0},//O
+			{tt::Indicator::Reject,0},//P
+			{tt::Indicator::Reject,0},//Q
+			{tt::Indicator::Reject,0},//R
+			{tt::Indicator::Reject,0},//S
+			{tt::Indicator::Reject,0},//T
+			{tt::Indicator::Reject,0},//U
+			{tt::Indicator::Reject,0},//V
+			{tt::Indicator::Reject,0},//W
+			{tt::Indicator::Reject,0},//X
+			{tt::Indicator::Reject,0},//Y
+			{tt::Indicator::Reject,0},//Z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//_
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//a
+			{tt::Indicator::Reject,0},//b
+			{tt::Indicator::Reject,0},//c
+			{tt::Indicator::Reject,0},//d
+			{tt::Indicator::Reject,0},//e
+			{tt::Indicator::Reject,0},//f
+			{tt::Indicator::Reject,0},//g
+			{tt::Indicator::Reject,0},//h
+			{tt::Indicator::Reject,0},//i
+			{tt::Indicator::Reject,0},//j
+			{tt::Indicator::Reject,0},//k
+			{tt::Indicator::Reject,0},//l
+			{tt::Indicator::Reject,0},//m
+			{tt::Indicator::Reject,0},//n
+			{tt::Indicator::Accept,43,(Word)i8086_insts_token::into},//o
+			{tt::Indicator::Reject,0},//p
+			{tt::Indicator::Reject,0},//q
+			{tt::Indicator::Accept,43,(Word)i8086_insts_token::intr},//r
+			{tt::Indicator::Reject,0},//s
+			{tt::Indicator::Reject,0},//t
+			{tt::Indicator::Reject,0},//u
+			{tt::Indicator::Reject,0},//v
+			{tt::Indicator::Reject,0},//w
+			{tt::Indicator::Reject,0},//x
+			{tt::Indicator::Reject,0},//y
+			{tt::Indicator::Reject,0},//z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+		},
+		//43 : intr(|<--)?,into(|<--)?
+		{
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//tab
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},	
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//' '
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//0
+			{tt::Indicator::Reject,0},//1
+			{tt::Indicator::Reject,0},//2
+			{tt::Indicator::Reject,0},//3
+			{tt::Indicator::Reject,0},//4
+			{tt::Indicator::Reject,0},//5
+			{tt::Indicator::Reject,0},//6
+			{tt::Indicator::Reject,0},//7
+			{tt::Indicator::Reject,0},//8
+			{tt::Indicator::Reject,0},//9
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//A
+			{tt::Indicator::Reject,0},//B
+			{tt::Indicator::Reject,0},//C
+			{tt::Indicator::Reject,0},//D
+			{tt::Indicator::Reject,0},//E
+			{tt::Indicator::Reject,0},//F
+			{tt::Indicator::Reject,0},//G
+			{tt::Indicator::Reject,0},//H
+			{tt::Indicator::Reject,0},//I
+			{tt::Indicator::Reject,0},//J
+			{tt::Indicator::Reject,0},//K
+			{tt::Indicator::Reject,0},//L
+			{tt::Indicator::Reject,0},//M
+			{tt::Indicator::Reject,0},//N
+			{tt::Indicator::Reject,0},//O
+			{tt::Indicator::Reject,0},//P
+			{tt::Indicator::Reject,0},//Q
+			{tt::Indicator::Reject,0},//R
+			{tt::Indicator::Reject,0},//S
+			{tt::Indicator::Reject,0},//T
+			{tt::Indicator::Reject,0},//U
+			{tt::Indicator::Reject,0},//V
+			{tt::Indicator::Reject,0},//W
+			{tt::Indicator::Reject,0},//X
+			{tt::Indicator::Reject,0},//Y
+			{tt::Indicator::Reject,0},//Z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//_
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//a
+			{tt::Indicator::Reject,0},//b
+			{tt::Indicator::Reject,0},//c
+			{tt::Indicator::Reject,0},//d
+			{tt::Indicator::Reject,0},//e
+			{tt::Indicator::Reject,0},//f
+			{tt::Indicator::Reject,0},//g
+			{tt::Indicator::Reject,0},//h
+			{tt::Indicator::Reject,0},//i
+			{tt::Indicator::Reject,0},//j
+			{tt::Indicator::Reject,0},//k
+			{tt::Indicator::Reject,0},//l
+			{tt::Indicator::Reject,0},//m
+			{tt::Indicator::Reject,0},//n
+			{tt::Indicator::Reject,0},//o
+			{tt::Indicator::Reject,0},//p
+			{tt::Indicator::Reject,0},//q
+			{tt::Indicator::Reject,0},//r
+			{tt::Indicator::Reject,0},//s
+			{tt::Indicator::Reject,0},//t
+			{tt::Indicator::Reject,0},//u
+			{tt::Indicator::Reject,0},//v
+			{tt::Indicator::Reject,0},//w
+			{tt::Indicator::Reject,0},//x
+			{tt::Indicator::Reject,0},//y
+			{tt::Indicator::Reject,0},//z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+		},
+		//44 : ir(e?)
+		{
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//tab
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},	
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//' '
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//0
+			{tt::Indicator::Reject,0},//1
+			{tt::Indicator::Reject,0},//2
+			{tt::Indicator::Reject,0},//3
+			{tt::Indicator::Reject,0},//4
+			{tt::Indicator::Reject,0},//5
+			{tt::Indicator::Reject,0},//6
+			{tt::Indicator::Reject,0},//7
+			{tt::Indicator::Reject,0},//8
+			{tt::Indicator::Reject,0},//9
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//A
+			{tt::Indicator::Reject,0},//B
+			{tt::Indicator::Reject,0},//C
+			{tt::Indicator::Reject,0},//D
+			{tt::Indicator::Reject,0},//E
+			{tt::Indicator::Reject,0},//F
+			{tt::Indicator::Reject,0},//G
+			{tt::Indicator::Reject,0},//H
+			{tt::Indicator::Reject,0},//I
+			{tt::Indicator::Reject,0},//J
+			{tt::Indicator::Reject,0},//K
+			{tt::Indicator::Reject,0},//L
+			{tt::Indicator::Reject,0},//M
+			{tt::Indicator::Reject,0},//N
+			{tt::Indicator::Reject,0},//O
+			{tt::Indicator::Reject,0},//P
+			{tt::Indicator::Reject,0},//Q
+			{tt::Indicator::Reject,0},//R
+			{tt::Indicator::Reject,0},//S
+			{tt::Indicator::Reject,0},//T
+			{tt::Indicator::Reject,0},//U
+			{tt::Indicator::Reject,0},//V
+			{tt::Indicator::Reject,0},//W
+			{tt::Indicator::Reject,0},//X
+			{tt::Indicator::Reject,0},//Y
+			{tt::Indicator::Reject,0},//Z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//_
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//a
+			{tt::Indicator::Reject,0},//b
+			{tt::Indicator::Reject,0},//c
+			{tt::Indicator::Reject,0},//d
+			{tt::Indicator::None,45},//e
+			{tt::Indicator::Reject,0},//f
+			{tt::Indicator::Reject,0},//g
+			{tt::Indicator::Reject,0},//h
+			{tt::Indicator::Reject,0},//i
+			{tt::Indicator::Reject,0},//j
+			{tt::Indicator::Reject,0},//k
+			{tt::Indicator::Reject,0},//l
+			{tt::Indicator::Reject,0},//m
+			{tt::Indicator::Reject,0},//n
+			{tt::Indicator::Reject,0},//o
+			{tt::Indicator::Reject,0},//p
+			{tt::Indicator::Reject,0},//q
+			{tt::Indicator::Reject,0},//r
+			{tt::Indicator::Reject,0},//s
+			{tt::Indicator::Reject,0},//t
+			{tt::Indicator::Reject,0},//u
+			{tt::Indicator::Reject,0},//v
+			{tt::Indicator::Reject,0},//w
+			{tt::Indicator::Reject,0},//x
+			{tt::Indicator::Reject,0},//y
+			{tt::Indicator::Reject,0},//z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+		},
+		//45 :ire(t?)
+		{
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//tab
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},	
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//' '
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
@@ -8814,6 +9109,137 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},//q
 			{tt::Indicator::Reject,0},//r
 			{tt::Indicator::Reject,0},//s
+			{tt::Indicator::Accept,46,(Word)i8086_insts_token::iret},//t
+			{tt::Indicator::Reject,0},//u
+			{tt::Indicator::Reject,0},//v
+			{tt::Indicator::Reject,0},//w
+			{tt::Indicator::Reject,0},//x
+			{tt::Indicator::Reject,0},//y
+			{tt::Indicator::Reject,0},//z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+		},
+		//46 : iret(|<--)
+		{
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//tab
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},	
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//' '
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//0
+			{tt::Indicator::Reject,0},//1
+			{tt::Indicator::Reject,0},//2
+			{tt::Indicator::Reject,0},//3
+			{tt::Indicator::Reject,0},//4
+			{tt::Indicator::Reject,0},//5
+			{tt::Indicator::Reject,0},//6
+			{tt::Indicator::Reject,0},//7
+			{tt::Indicator::Reject,0},//8
+			{tt::Indicator::Reject,0},//9
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Prefix_Accept,0},//;
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//A
+			{tt::Indicator::Reject,0},//B
+			{tt::Indicator::Reject,0},//C
+			{tt::Indicator::Reject,0},//D
+			{tt::Indicator::Reject,0},//E
+			{tt::Indicator::Reject,0},//F
+			{tt::Indicator::Reject,0},//G
+			{tt::Indicator::Reject,0},//H
+			{tt::Indicator::Reject,0},//I
+			{tt::Indicator::Reject,0},//J
+			{tt::Indicator::Reject,0},//K
+			{tt::Indicator::Reject,0},//L
+			{tt::Indicator::Reject,0},//M
+			{tt::Indicator::Reject,0},//N
+			{tt::Indicator::Reject,0},//O
+			{tt::Indicator::Reject,0},//P
+			{tt::Indicator::Reject,0},//Q
+			{tt::Indicator::Reject,0},//R
+			{tt::Indicator::Reject,0},//S
+			{tt::Indicator::Reject,0},//T
+			{tt::Indicator::Reject,0},//U
+			{tt::Indicator::Reject,0},//V
+			{tt::Indicator::Reject,0},//W
+			{tt::Indicator::Reject,0},//X
+			{tt::Indicator::Reject,0},//Y
+			{tt::Indicator::Reject,0},//Z
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//_
+			{tt::Indicator::Reject,0},
+			{tt::Indicator::Reject,0},//a
+			{tt::Indicator::Reject,0},//b
+			{tt::Indicator::Reject,0},//c
+			{tt::Indicator::Reject,0},//d
+			{tt::Indicator::Reject,0},//e
+			{tt::Indicator::Reject,0},//f
+			{tt::Indicator::Reject,0},//g
+			{tt::Indicator::Reject,0},//h
+			{tt::Indicator::Reject,0},//i
+			{tt::Indicator::Reject,0},//j
+			{tt::Indicator::Reject,0},//k
+			{tt::Indicator::Reject,0},//l
+			{tt::Indicator::Reject,0},//m
+			{tt::Indicator::Reject,0},//n
+			{tt::Indicator::Reject,0},//o
+			{tt::Indicator::Reject,0},//p
+			{tt::Indicator::Reject,0},//q
+			{tt::Indicator::Reject,0},//r
+			{tt::Indicator::Reject,0},//s
 			{tt::Indicator::Reject,0},//t
 			{tt::Indicator::Reject,0},//u
 			{tt::Indicator::Reject,0},//v
@@ -8826,8 +9252,9 @@ constexpr static const tt::a::Transition i8086_insts[][tt::MAX_SIMBOLS] = {
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
 			{tt::Indicator::Reject,0},
-		},*/
+		},
 	};
+  
 }
 
 

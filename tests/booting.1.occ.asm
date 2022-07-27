@@ -1,2 +1,3 @@
 section code  		{   
+	hlt;
 }

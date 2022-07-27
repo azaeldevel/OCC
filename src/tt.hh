@@ -44,6 +44,7 @@ namespace a
 	{
 		Indicator indicator;
 		Status next;
+		Word token;
 	};
 
 /*
