@@ -114,7 +114,20 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
 
 	a::DFA<char> i8086_insts(TABLE(a::i8086_insts));
-	CU_ASSERT(i8086_insts.transition("int") == 3);
+	CU_ASSERT(i8086_insts.transition("aaa") == 3);
+	CU_ASSERT(i8086_insts.transition("aad") == 3);
+	CU_ASSERT(i8086_insts.transition("aam") == 3);
+	CU_ASSERT(i8086_insts.transition("aas") == 3);
+	CU_ASSERT(i8086_insts.transition("adc") == 3);
+	CU_ASSERT(i8086_insts.transition("add") == 3);
+	CU_ASSERT(i8086_insts.transition("and") == 3);
+	CU_ASSERT(i8086_insts.transition("call") == 4);
+	/*i8086_insts.enable_echo(true);
+	auto i8086_insts_count1 = i8086_insts.transition("call");
+	i8086_insts.enable_echo(false);
+	std::cout << "count : " << i8086_insts_count1 << "\n";*/
+	CU_ASSERT(i8086_insts.transition("calling") == 0);
+	//CU_ASSERT(i8086_insts.transition("int") == 3);
 
 
 	CU_ASSERT(length("section") == 7);
