@@ -124,11 +124,7 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("call") == 4);
 	CU_ASSERT(i8086_insts.transition("calling") == 0);
 	CU_ASSERT(i8086_insts.transition("cbw") == 3);
-	CU_ASSERT(i8086_insts.transition("cbwl") == 0);
-	/*i8086_insts.enable_echo(true);
-	auto i8086_insts_count1 = i8086_insts.transition("cbw");
-	i8086_insts.enable_echo(false);
-	std::cout << "count : " << i8086_insts_count1 << "\n";*/
+	CU_ASSERT(i8086_insts.transition("cbwl") == 0);	
 	CU_ASSERT(i8086_insts.transition("clc") == 3);
 	CU_ASSERT(i8086_insts.transition("cld") == 3);
 	CU_ASSERT(i8086_insts.transition("cli") == 3);
@@ -138,6 +134,18 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("cwd") == 3);
 	CU_ASSERT(i8086_insts.transition("cw5") == 0);	
 	CU_ASSERT(i8086_insts.transition("cwdd") == 0);
+	CU_ASSERT(i8086_insts.transition("daa") == 3);
+	CU_ASSERT(i8086_insts.transition("da1") == 0);
+	CU_ASSERT(i8086_insts.transition("daaa") == 0);
+	CU_ASSERT(i8086_insts.transition("das") == 3);
+	CU_ASSERT(i8086_insts.transition("das1") == 0);
+	CU_ASSERT(i8086_insts.transition("dec") == 3);
+	CU_ASSERT(i8086_insts.transition("div") == 3);	
+	i8086_insts.enable_echo(true);
+	auto i8086_insts_count1 = i8086_insts.transition("div");
+	i8086_insts.enable_echo(false);
+	std::cout << "count : " << i8086_insts_count1 << "\n";
+	
 	//CU_ASSERT(i8086_insts.transition("int") == 3);
 
 
