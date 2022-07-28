@@ -222,16 +222,17 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("jcxz") == 4);
 	//i8086_insts.enable_echo(false);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jcxz);
-	i8086_insts.enable_echo(true);
+	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("je") == 2);
-	i8086_insts.enable_echo(false);
+	//i8086_insts.enable_echo(false);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::je);
-	/*i8086_insts.enable_echo(true);
+	/*
+	i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("iret");
 	i8086_insts.enable_echo(false);
-	std::cout << "count : " << i8086_insts_count1 << "\n";*/
-
-
+	std::cout << "count : " << i8086_insts_count1 << "\n";
+	*/
+	
 	CU_ASSERT(length("section") == 7);
 	//std::cout << "count : " << length<char>("section") << "\n";
 	CU_ASSERT(length("code") == 4);
