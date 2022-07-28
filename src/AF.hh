@@ -65,53 +65,7 @@ public:
 	}
 #endif
 
-	void print(std::ostream& out,S next) const
-	{
-			if(c == '\n')
-			{
-				out << current << "--New line->" << next << "\n";
-			}
-			else if(c == '\t')
-			{
-				out << current << "--Tabulator->" << next << "\n";
-			}
-			else if(c == ' ')
-			{
-				out << current << "--Espace->" << next << "\n";
-			}
-			else if(c == '\0')
-			{
-				out << current << "--\\0->" << next << "\n";
-			}
-			else
-			{
-				out << current << "--" << c << "->" << next << "\n";
-			}
-	}
-	void print(std::wostream& out,S next) const
-	{
-			if(c == '\n')
-			{
-				out << current << "--New line->" << next << "\n";
-			}
-			else if(c == '\t')
-			{
-				out << current << "--Tabulator->" << next << "\n";
-			}
-			else if(c == ' ')
-			{
-				out << current << "--Espace->" << next << "\n";
-			}
-			else if(c == '\0')
-			{
-				out << current << "--\\0->" << next << "\n";
-			}
-			else
-			{
-				out << current << "--" << c << "->" << next << "\n";
-			}
-	}
-
+	
 protected:
 	O i;
 	S current;
@@ -146,6 +100,53 @@ namespace a
 		inline const tt::a::Transition * get_accepted()const
 		{
 			return accepted;
+		}
+
+		void print(std::ostream& out) const
+		{
+				if(cc::DFA<T,Word,Word>::c == '\n')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--New line->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == '\t')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--Tabulator->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == ' ')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--Espace->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == '\0')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--\\0->" << actual->next << "\n";
+				}
+				else
+				{
+					out << cc::DFA<T,Word,Word>::i << "--" << cc::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+				}
+		}
+		void print(std::wostream& out) const
+		{
+				if(cc::DFA<T,Word,Word>::c == '\n')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--New line->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == '\t')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--Tabulator->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == ' ')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--Espace->" << actual->next << "\n";
+				}
+				else if(cc::DFA<T,Word,Word>::c == '\0')
+				{
+					out << cc::DFA<T,Word,Word>::i << "--\\0->" << actual->next << "\n";
+				}
+				else
+				{
+					out << cc::DFA<T,Word,Word>::i << "--" << cc::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+				}
 		}
 
 		Word transition(const T* string)
@@ -201,7 +202,7 @@ namespace a
 #if OCTETOS_CC_DEGUB
 				if(cc::DFA<T,Word,Word>::echo)
 				{
-					cc::DFA<T,Word,Word>::print(std::cout,actual->next);
+					print(std::cout);
 				}
 #endif
 
@@ -289,7 +290,7 @@ namespace a
 #if OCTETOS_CC_DEGUB
 				if(cc::DFA<T,Word,Word>::echo)
 				{
-					cc::DFA<T,Word,Word>::print(std::cout,actual->next);
+					print(std::cout);
 				}
 #endif
 
