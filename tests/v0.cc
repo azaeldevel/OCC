@@ -25,7 +25,7 @@ int v0_clean(void)
 void v0_AFD_A()
 {
 	//CU_ASSERT(LENGTH_TT(tt::a::Identifier) == 2);
-	a::DFA<char> idC(TABLE(tt::a::Identifier));
+	dfa::a::DFA<char> idC(TABLE(tt::a::Identifier));
 	//std::cout << "count : " << idC.transition("gnu") << "\n";
 	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("_gnu_") == 5);
@@ -38,19 +38,19 @@ void v0_AFD_A()
 	CU_ASSERT(idC.transition("az3p1") == 5);
 
 	CU_ASSERT(LENGTH_TT(tt::a::Interger) == 2);
-	a::DFA<char> intC(TABLE(tt::a::Interger));
+	dfa::a::DFA<char> intC(TABLE(tt::a::Interger));
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
 	CU_ASSERT(intC.transition("00A65") == 0);
 	
-	a::DFA<char> intC_0x(TABLE(tt::a::Integer_0x));
+	dfa::a::DFA<char> intC_0x(TABLE(tt::a::Integer_0x));
 	CU_ASSERT(intC_0x.transition("0x23ae47") == 8);
 	CU_ASSERT(intC_0x.transition("0x00065") == 7);
 	CU_ASSERT(intC_0x.transition("0x00A65") == 7);
 
 	
 	//Assembler A
-	a::DFA<char> i8086_regs(TABLE(a::i8086_regs));
+	dfa::a::DFA<char> i8086_regs(TABLE(a::i8086_regs));
 	try
 	{
 		CU_ASSERT(i8086_regs.transition("alg") == 0);
@@ -97,7 +97,7 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_regs.transition("dl	") == 2);
 
 
-	a::DFA<char> i8086_segs(TABLE(a::i8086_segs));
+	dfa::a::DFA<char> i8086_segs(TABLE(a::i8086_segs));
 	CU_ASSERT(i8086_segs.transition("bp") == 2);
 	CU_ASSERT(i8086_segs.transition("cs") == 2);
 	CU_ASSERT(i8086_segs.transition("di") == 2);
@@ -113,7 +113,7 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
 
-	a::DFA<char> i8086_insts(TABLE(a::i8086_insts));
+	dfa::a::DFA<char> i8086_insts(TABLE(a::i8086_insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
 	const tt::a::Transition* accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
@@ -226,6 +226,14 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("je") == 2);
 	//i8086_insts.enable_echo(false);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::je);
+	CU_ASSERT(i8086_insts.transition("jg") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jg);
+	i8086_insts.enable_echo(true);
+	CU_ASSERT(i8086_insts.transition("jge") == 3);
+	i8086_insts.enable_echo(false);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jge);
+	//CU_ASSERT(i8086_insts.transition("jl") == 2);
+	//CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jl);
 	/*
 	i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("iret");
@@ -302,7 +310,7 @@ void v0_AFD_A()
 }
 void v0_AFD_B()
 {
-	b::DFA<char> idCB(TABLE(tt::b::Identifier));
+	dfa::b::DFA<char> idCB(TABLE(tt::b::Identifier));
 	CU_ASSERT(idCB.transition("gnu") == 3);
 	CU_ASSERT(idCB.transition("1gnu") == 0);
 	CU_ASSERT(idCB.transition("azael") == 5);
@@ -312,7 +320,7 @@ void v0_AFD_B()
 	//std::cout << "EOF : " << EOF << "\n";
 
 	//CU_ASSERT(LENGTH_TT(tt::b::Integer) == 2);
-	b::DFA<char> intCB(TABLE(tt::b::Integer));
+	dfa::b::DFA<char> intCB(TABLE(tt::b::Integer));
 	//CU_ASSERT(intCB.transition("1236589") == 7);
 	//CU_ASSERT(intCB.transition("00065") == 5);
 	CU_ASSERT(intCB.transition("00A65") == 0);
@@ -323,7 +331,7 @@ void v0_AFD_B()
 }
 void v0_AFD_C()
 {
-	c::Identifier<char> id;
+	dfa::c::Identifier<char> id;
 	//std::cout << "count : " << id.transition("1gnu") << "\n";
 	CU_ASSERT(id.transition("gnu") == 3);
 	CU_ASSERT(id.transition("1gnu") == 0);
@@ -333,7 +341,7 @@ void v0_AFD_C()
 	CU_ASSERT(id.transition("az3p1") == 5);
 	CU_ASSERT(id.transition("_gnu") == 4);
 	
-	c::Integer<char> integer;
+	dfa::c::Integer<char> integer;
 	CU_ASSERT(integer.transition("1236589") == 7);
 	CU_ASSERT(integer.transition("00065") == 5);
 	CU_ASSERT(integer.transition("00A65") == 0);
@@ -341,7 +349,7 @@ void v0_AFD_C()
 void v0_performance()
 {
 	
-	a::DFA<char> idC(TABLE(tt::a::Identifier));
+	dfa::a::DFA<char> idC(TABLE(tt::a::Identifier));
 	auto begin_a = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -355,7 +363,7 @@ void v0_performance()
 	auto duration_a = duration_cast<milliseconds>(end_a - begin_a);
 	std::cout << "AFD(A) : " << duration_a.count() << "\n";
 
-	b::DFA<char> idCB(TABLE(tt::b::Identifier));
+	dfa::b::DFA<char> idCB(TABLE(tt::b::Identifier));
 	auto begin_b = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -369,7 +377,7 @@ void v0_performance()
 	auto duration_b = duration_cast<milliseconds>(end_b - begin_b);
 	std::cout << "AFD(B) : " << duration_b.count() << "\n";
 
-	c::Identifier<char> id;
+	dfa::c::Identifier<char> id;
 	auto begin_c = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{

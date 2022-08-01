@@ -32,7 +32,7 @@
 #include "base.hh"
 #include "Buffer.hh"
 
-namespace oct::cc
+namespace oct::cc::dfa
 {
 
 
@@ -83,11 +83,11 @@ namespace a
 	*
 	*/
 	template<typename T>
-	class DFA : public cc::DFA<T,Word,Word>
+	class DFA : public dfa::DFA<T,Word,Word>
 	{
 
 	public:
-		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : cc::DFA<T,Word,Word>(0), table(t), reset(0), length(l),prev(NULL),actual(NULL),accepted(NULL)
+		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), reset(0), length(l),prev(NULL),actual(NULL),accepted(NULL)
 		{
 		}
 		
@@ -104,48 +104,48 @@ namespace a
 
 		void print(std::ostream& out) const
 		{
-				if(cc::DFA<T,Word,Word>::c == '\n')
+				if(dfa::DFA<T,Word,Word>::c == '\n')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--New line->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--New line->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == '\t')
+				else if(dfa::DFA<T,Word,Word>::c == '\t')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--Tabulator->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--Tabulator->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == ' ')
+				else if(dfa::DFA<T,Word,Word>::c == ' ')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--Espace->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--Espace->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == '\0')
+				else if(dfa::DFA<T,Word,Word>::c == '\0')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--\\0->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--\\0->" << actual->next << "\n";
 				}
 				else
 				{
-					out << cc::DFA<T,Word,Word>::i << "--" << cc::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--" << dfa::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
 				}
 		}
 		void print(std::wostream& out) const
 		{
-				if(cc::DFA<T,Word,Word>::c == '\n')
+				if(dfa::DFA<T,Word,Word>::c == '\n')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--New line->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--New line->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == '\t')
+				else if(dfa::DFA<T,Word,Word>::c == '\t')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--Tabulator->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--Tabulator->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == ' ')
+				else if(dfa::DFA<T,Word,Word>::c == ' ')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--Espace->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--Espace->" << actual->next << "\n";
 				}
-				else if(cc::DFA<T,Word,Word>::c == '\0')
+				else if(dfa::DFA<T,Word,Word>::c == '\0')
 				{
-					out << cc::DFA<T,Word,Word>::i << "--\\0->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--\\0->" << actual->next << "\n";
 				}
 				else
 				{
-					out << cc::DFA<T,Word,Word>::i << "--" << cc::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+					out << dfa::DFA<T,Word,Word>::current << "--" << dfa::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
 				}
 		}
 
@@ -153,15 +153,15 @@ namespace a
 		{
 			if(not string) return 0;
 			
-			cc::DFA<T,Word,Word>::current = reset;
-			cc::DFA<T,Word,Word>::i = 0;	
+			dfa::DFA<T,Word,Word>::current = reset;
+			dfa::DFA<T,Word,Word>::i = 0;	
 			accepted = NULL;
 
 			do
 			{
-				cc::DFA<T,Word,Word>::c = string[cc::DFA<T,Word,Word>::i];
+				dfa::DFA<T,Word,Word>::c = string[dfa::DFA<T,Word,Word>::i];
 #if OCTETOS_CC_DEGUB
-				if(cc::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,Word,Word>::echo)
 				{
 					//std::cout << "current : " << cc::DFA<T,Word,Word>::current << "\n";
 					//std::cout << "c : '" << cc::DFA<T,Word,Word>::c  << "'\n";
@@ -169,10 +169,10 @@ namespace a
 					//std::cout << "length : " << length << "\n";
 				}
 #endif
-				if(cc::DFA<T,Word,Word>::c == '\0')
+				if(dfa::DFA<T,Word,Word>::c == '\0')
 				{
 #if OCTETOS_CC_DEGUB
-					if(cc::DFA<T,Word,Word>::echo)
+					if(dfa::DFA<T,Word,Word>::echo)
 					{
 						if(prev) 
 						{
@@ -183,24 +183,24 @@ namespace a
 						//std::cout << "i = " << cc::DFA<T,Word,Word>::i << "..\n";
 					}
 #endif
-					if(cc::DFA<T,Word,Word>::i == 0) return 0;
+					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
 					else if(prev) if(prev->indicator == tt::Indicator::Accept)
 					{
 #if OCTETOS_CC_DEGUB
 						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						return cc::DFA<T,Word,Word>::i;
+						return dfa::DFA<T,Word,Word>::i;
 					}
 
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				if(cc::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-				actual = &table[cc::DFA<T,Word,Word>::current][(unsigned char)cc::DFA<T,Word,Word>::c];
+				if(dfa::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+				actual = &table[dfa::DFA<T,Word,Word>::current][(unsigned char)dfa::DFA<T,Word,Word>::c];
 				
 #if OCTETOS_CC_DEGUB
-				if(cc::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,Word,Word>::echo)
 				{
 					print(std::cout);
 				}
@@ -209,16 +209,16 @@ namespace a
 				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 					//std::cout << " i : " << i  << "\n";
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
 					{
 #if OCTETOS_CC_DEGUB
-						if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << string[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						return cc::DFA<T,Word,Word>::i;
+						return dfa::DFA<T,Word,Word>::i;
 					}
 					return 0;
 				}
@@ -228,9 +228,9 @@ namespace a
 					return 0;
 				}
 				
-				cc::DFA<T,Word,Word>::current = actual->next;
+				dfa::DFA<T,Word,Word>::current = actual->next;
 				prev = actual;
-				cc::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,Word,Word>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
@@ -240,15 +240,15 @@ namespace a
 		{
 			if(buff.size() == 0) return 0;
 			
-			cc::DFA<T,Word,Word>::current = reset;
-			cc::DFA<T,Word,Word>::i = 0;	
+			dfa::DFA<T,Word,Word>::current = reset;
+			dfa::DFA<T,Word,Word>::i = 0;	
 			accepted = NULL;
 
 			do
 			{
-				cc::DFA<T,Word,Word>::c = buff[cc::DFA<T,Word,Word>::i];
+				dfa::DFA<T,Word,Word>::c = buff[dfa::DFA<T,Word,Word>::i];
 #if OCTETOS_CC_DEGUB
-				if(cc::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,Word,Word>::echo)
 				{
 					//std::cout << "current : " << cc::DFA<T,Word,Word>::current << "\n";
 					//std::cout << "c : '" << cc::DFA<T,Word,Word>::c  << "'\n";
@@ -256,10 +256,10 @@ namespace a
 					//std::cout << "length : " << length << "\n";
 				}
 #endif
-				if(cc::DFA<T,Word,Word>::c == '\0')
+				if(dfa::DFA<T,Word,Word>::c == '\0')
 				{
 #if OCTETOS_CC_DEGUB
-					if(cc::DFA<T,Word,Word>::echo)
+					if(dfa::DFA<T,Word,Word>::echo)
 					{
 						if(prev) 
 						{
@@ -270,25 +270,25 @@ namespace a
 						//std::cout << "i = " << cc::DFA<T,Word,Word>::i << "..\n";
 					}
 #endif
-					if(cc::DFA<T,Word,Word>::i == 0) return 0;
+					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
 					else if(prev) if(prev->indicator == tt::Indicator::Accept)
 					{
 #if OCTETOS_CC_DEGUB
 						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						buff.walk((size_t)cc::DFA<T,Word,Word>::i);
-						return cc::DFA<T,Word,Word>::i;
+						buff.walk((size_t)dfa::DFA<T,Word,Word>::i);
+						return dfa::DFA<T,Word,Word>::i;
 					}
 
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				if(cc::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-				actual = &table[cc::DFA<T,Word,Word>::current][(unsigned char)cc::DFA<T,Word,Word>::c];
+				if(dfa::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+				actual = &table[dfa::DFA<T,Word,Word>::current][(unsigned char)dfa::DFA<T,Word,Word>::c];
 				
 #if OCTETOS_CC_DEGUB
-				if(cc::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,Word,Word>::echo)
 				{
 					print(std::cout);
 				}
@@ -297,17 +297,17 @@ namespace a
 				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << buff[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+					if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << buff[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 					//std::cout << " i : " << i  << "\n";
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
 					{
 #if OCTETOS_CC_DEGUB
-						if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << buff[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << buff[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						buff.walk((size_t)cc::DFA<T,Word,Word>::i);
-						return cc::DFA<T,Word,Word>::i;
+						buff.walk((size_t)dfa::DFA<T,Word,Word>::i);
+						return dfa::DFA<T,Word,Word>::i;
 					}
 					return 0;
 				}
@@ -317,9 +317,9 @@ namespace a
 					return 0;
 				}
 				
-				cc::DFA<T,Word,Word>::current = actual->next;
+				dfa::DFA<T,Word,Word>::current = actual->next;
 				prev = actual;
-				cc::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,Word,Word>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
