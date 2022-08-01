@@ -255,14 +255,12 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jp);
 	CU_ASSERT(i8086_insts.transition("js") == 2);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_js);
+	CU_ASSERT(i8086_insts.transition("lahf") == 4);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lahf);
+	CU_ASSERT(i8086_insts.transition("lds") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lds);
 	
-	/*
-	i8086_insts.enable_echo(true);
-	auto i8086_insts_count1 = i8086_insts.transition("iret");
-	i8086_insts.enable_echo(false);
-	std::cout << "count : " << i8086_insts_count1 << "\n";
-	*/
-	
+		
 	CU_ASSERT(length("section") == 7);
 	//std::cout << "count : " << length<char>("section") << "\n";
 	CU_ASSERT(length("code") == 4);
