@@ -76,18 +76,16 @@ protected:
 };
 	
 
-namespace a
-{
 	/**
 	*\brief 
 	*
 	*/
 	template<typename T>
-	class DFA : public dfa::DFA<T,Word,Word>
+	class A : public dfa::DFA<T,Word,Word>
 	{
 
 	public:
-		DFA(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), reset(0), length(l),prev(NULL),actual(NULL),accepted(NULL)
+		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), reset(0), length(l),prev(NULL),actual(NULL),accepted(NULL)
 		{
 		}
 		
@@ -340,20 +338,18 @@ namespace a
 		const tt::a::Transition *actual;
 		const tt::a::Transition *accepted;
 	};
-}
 
 
-namespace b
-{
+
 	template<typename T>
-	class DFA
+	class B
 	{
 
 	public:
-		DFA() : current(0),reset(0),table(NULL),length(0)
+		B() : current(0),reset(0),table(NULL),length(0)
 		{
 		}
-		DFA(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
+		B(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
 		{		 
 		}
 
@@ -475,13 +471,12 @@ namespace b
 		tt::Status reset;
 		const size_t length;
 	};
-}
 
-namespace c
-{	
+
+	
 	
 	template<typename C,typename S = Word,typename O = Word>
-	class Identifier : public DFA<C,S,O>
+	class C_Identifier : public DFA<C,S,O>
 	{
 	private:
 		enum class Status : S
@@ -490,7 +485,7 @@ namespace c
 			identifier,
 		};
 	public:
-		Identifier() : DFA<C,S,O>((S)Status::initial)
+		C_Identifier() : DFA<C,S,O>((S)Status::initial)
 		{		
 		}
 		
@@ -575,7 +570,7 @@ namespace c
 	};
 
 	template<typename C,typename S = Word,typename O = Word>
-	class Integer : public DFA<C,S,O>
+	class C_Integer : public DFA<C,S,O>
 	{
 	private:
 		enum class Status : S
@@ -584,7 +579,7 @@ namespace c
 			integer,
 		};
 	public:
-		Integer() : DFA<C,S,O>((S)Status::initial)
+		C_Integer() : DFA<C,S,O>((S)Status::initial)
 		{		
 		}
 		
@@ -660,7 +655,7 @@ namespace c
 		}
 	protected:
 	};
-}
+
 
 
 }

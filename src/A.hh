@@ -27,18 +27,16 @@
 namespace oct::cc::a
 {
 
-template<typename C> class BuildUnit : public dfa::a::DFA<C>
+template<typename C> class BuildUnit : public dfa::A<C>
 {
 
 public:
-	BuildUnit(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::a::DFA<C>(t,l)
+	BuildUnit(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
 	{		
 	}
 
 	Word transition(const C* string)
-	{
-		
-		
+	{		
 	}
 	
 	
