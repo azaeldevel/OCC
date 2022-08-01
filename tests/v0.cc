@@ -233,8 +233,10 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("jge") == 3);
 	//i8086_insts.enable_echo(false);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jge);
-	//CU_ASSERT(i8086_insts.transition("jl") == 2);
-	//CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jl);
+	CU_ASSERT(i8086_insts.transition("jl") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jl);
+	CU_ASSERT(i8086_insts.transition("jle") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jle);
 	
 	/*
 	i8086_insts.enable_echo(true);

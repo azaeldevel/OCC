@@ -38,7 +38,7 @@ namespace oct::cc::dfa
 
 
 template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
-class DFA
+class DFA 
 {
 
 public:
@@ -77,7 +77,7 @@ protected:
 	
 
 	/**
-	*\brief 
+	*\brief DFA type A
 	*
 	*/
 	template<typename T>
@@ -340,7 +340,7 @@ protected:
 	};
 
 
-
+	
 	template<typename T>
 	class B
 	{
