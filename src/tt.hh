@@ -28,6 +28,7 @@ namespace oct::cc::tt
 
 //typedef unsigned long long int Word;
 typedef Word Status;
+typedef Word Token;
 constexpr static const unsigned char MAX_SIMBOLS = 128;
 
 enum class Indicator : Status

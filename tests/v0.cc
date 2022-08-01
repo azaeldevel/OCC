@@ -1,6 +1,7 @@
 
 #include <AF.hh>
 #include <tt.hh>
+#include <A-tt.hh>
 #include <A.hh>
 #include <Buffer.hh>
 
@@ -25,7 +26,7 @@ int v0_clean(void)
 void v0_AFD_A()
 {
 	//CU_ASSERT(LENGTH_TT(tt::a::Identifier) == 2);
-	dfa::A<char> idC(TABLE(tt::a::Identifier));
+	dfa::A<char> idC(TABLE(a::tt::Identifier));
 	//std::cout << "count : " << idC.transition("gnu") << "\n";
 	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("_gnu_") == 5);
@@ -37,20 +38,20 @@ void v0_AFD_A()
 	CU_ASSERT(idC.transition("azip1") == 5);
 	CU_ASSERT(idC.transition("az3p1") == 5);
 
-	CU_ASSERT(LENGTH_TT(tt::a::Interger) == 2);
+	CU_ASSERT(LENGTH_TT(a::tt::Interger) == 2);
 	dfa::A<char> intC(TABLE(tt::a::Interger));
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
 	CU_ASSERT(intC.transition("00A65") == 0);
 	
-	dfa::A<char> intC_0x(TABLE(tt::a::Integer_0x));
+	dfa::A<char> intC_0x(TABLE(a::tt::Integer_0x));
 	CU_ASSERT(intC_0x.transition("0x23ae47") == 8);
 	CU_ASSERT(intC_0x.transition("0x00065") == 7);
 	CU_ASSERT(intC_0x.transition("0x00A65") == 7);
 
 	
 	//Assembler A
-	dfa::A<char> i8086_regs(TABLE(a::i8086_regs));
+	dfa::A<char> i8086_regs(TABLE(a::tt::i8086_regs));
 	try
 	{
 		CU_ASSERT(i8086_regs.transition("alg") == 0);
@@ -97,7 +98,7 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_regs.transition("dl	") == 2);
 
 
-	dfa::A<char> i8086_segs(TABLE(a::i8086_segs));
+	dfa::A<char> i8086_segs(TABLE(a::tt::i8086_segs));
 	CU_ASSERT(i8086_segs.transition("bp") == 2);
 	CU_ASSERT(i8086_segs.transition("cs") == 2);
 	CU_ASSERT(i8086_segs.transition("di") == 2);
@@ -113,19 +114,19 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
 
-	dfa::A<char> i8086_insts(TABLE(a::i8086_insts));
+	dfa::A<char> i8086_insts(TABLE(a::tt::i8086_insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
 	const tt::a::Transition* accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aaa);
+	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aaa);
 	CU_ASSERT(i8086_insts.transition("aaa;") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aaa);
+	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aaa);
 	CU_ASSERT(i8086_insts.transition("aaa ") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aaa);
+	if(accepted) CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aaa);
 	/*i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("aaa;");
 	i8086_insts.enable_echo(false);
@@ -134,106 +135,107 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.transition("aad") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aad);
+	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aad);
 	CU_ASSERT(i8086_insts.transition("aam") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aam);
+	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aam);
 	CU_ASSERT(i8086_insts.transition("aas") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::aas);
+	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_aas);
 	CU_ASSERT(i8086_insts.transition("adc") == 3);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::adc);
+	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_adc);
 	CU_ASSERT(i8086_insts.transition("add") == 3);	
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::add);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_add);
 	CU_ASSERT(i8086_insts.transition("and") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::and_token);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_and_token);
 	CU_ASSERT(i8086_insts.transition("call") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::call);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_call);
 	CU_ASSERT(i8086_insts.transition("calling") == 0);
 	CU_ASSERT(i8086_insts.transition("cbw") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cbw);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cbw);
 	CU_ASSERT(i8086_insts.transition("cbwl") == 0);	
 	CU_ASSERT(i8086_insts.transition("clc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::clc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_clc);
 	CU_ASSERT(i8086_insts.transition("cld") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cld);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cld);
 	CU_ASSERT(i8086_insts.transition("cli") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cli);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cli);
 	CU_ASSERT(i8086_insts.transition("cmc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cmc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmc);
 	CU_ASSERT(i8086_insts.transition("cmp") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cmp);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmp);
 	CU_ASSERT(i8086_insts.transition("cmps") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cmps);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmps);
 	CU_ASSERT(i8086_insts.transition("cwd") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::cwd);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cwd);
 	CU_ASSERT(i8086_insts.transition("cw5") == 0);	
 	CU_ASSERT(i8086_insts.transition("cwdd") == 0);
 	CU_ASSERT(i8086_insts.transition("daa") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::daa);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_daa);
 	CU_ASSERT(i8086_insts.transition("da1") == 0);
 	CU_ASSERT(i8086_insts.transition("daaa") == 0);
 	CU_ASSERT(i8086_insts.transition("das") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::das);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_das);
 	CU_ASSERT(i8086_insts.transition("das1") == 0);
 	CU_ASSERT(i8086_insts.transition("dec") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::dec);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_dec);
 	CU_ASSERT(i8086_insts.transition("div") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::div);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_div);
 	CU_ASSERT(i8086_insts.transition("esc") == 3);	
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::esc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_esc);
 	CU_ASSERT(i8086_insts.transition("hlt") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::hlt);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_hlt);
 	CU_ASSERT(i8086_insts.transition("idiv") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::idiv);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_idiv);
 	CU_ASSERT(i8086_insts.transition("imul") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::imul);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_imul);
 	CU_ASSERT(i8086_insts.transition("in") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::in);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_in);
 	CU_ASSERT(i8086_insts.transition("inc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::inc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_inc);
 	CU_ASSERT(i8086_insts.transition("int") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::int_token);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_int_token);
 	CU_ASSERT(i8086_insts.transition("intr") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::intr);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_intr);
 	CU_ASSERT(i8086_insts.transition("into") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::into);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_into);
 	CU_ASSERT(i8086_insts.transition("intt") == 0);	
 	CU_ASSERT(i8086_insts.transition("ints") == 0);	
 	CU_ASSERT(i8086_insts.transition("iret") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::iret);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_iret);
 	CU_ASSERT(i8086_insts.transition("ja") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::ja);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_ja);
 	CU_ASSERT(i8086_insts.transition("jae") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jae);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jae);
 	CU_ASSERT(i8086_insts.transition("jb") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jb);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jb);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jbe") == 3);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jbe);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jbe);
 	CU_ASSERT(i8086_insts.transition("jc") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jc);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jcxz") == 4);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jcxz);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jcxz);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("je") == 2);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::je);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_je);
 	CU_ASSERT(i8086_insts.transition("jg") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jg);
-	i8086_insts.enable_echo(true);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jg);
+	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jge") == 3);
-	i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jge);
+	//i8086_insts.enable_echo(false);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jge);
 	//CU_ASSERT(i8086_insts.transition("jl") == 2);
 	//CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::i8086_insts_token::jl);
+	
 	/*
 	i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("iret");
@@ -291,7 +293,7 @@ void v0_AFD_A()
 	//i8086_insts.enable_echo(false);
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
-	CU_ASSERT(accepted->token == (oct::Word)a::i8086_insts_token::hlt);
+	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_hlt);
 	CU_ASSERT(buff2.walk(';') != NULL);
 	CU_ASSERT(buff2.consume_whites() == 1);
 	CU_ASSERT(buff2.walk('}') != NULL);

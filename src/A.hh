@@ -31,7 +31,7 @@ template<typename C> class BuildUnit : public dfa::A<C>
 {
 
 public:
-	BuildUnit(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
+	BuildUnit(const cc::tt::a::Transition (*t)[cc::tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
 	{		
 	}
 
