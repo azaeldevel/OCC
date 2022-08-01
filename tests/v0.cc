@@ -237,6 +237,24 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jl);
 	CU_ASSERT(i8086_insts.transition("jle") == 3);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jle);
+	CU_ASSERT(i8086_insts.transition("jmp") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jmp);
+	CU_ASSERT(i8086_insts.transition("jnc") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jnc);
+	CU_ASSERT(i8086_insts.transition("jne") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jne);
+	CU_ASSERT(i8086_insts.transition("jno") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jno);
+	CU_ASSERT(i8086_insts.transition("jnp") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jnp);
+	CU_ASSERT(i8086_insts.transition("jns") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jns);
+	CU_ASSERT(i8086_insts.transition("jo") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jo);
+	CU_ASSERT(i8086_insts.transition("jp") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jp);
+	CU_ASSERT(i8086_insts.transition("js") == 2);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_js);
 	
 	/*
 	i8086_insts.enable_echo(true);
