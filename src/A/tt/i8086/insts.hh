@@ -164,7 +164,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 	};
 */
 
-constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] = {
+constexpr static const cc::tt::a::Transition insts[][cc::tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},

@@ -129,7 +129,7 @@ void v0_AFD_A()
 
 	std::vector<tt::a::Selector> select;
 	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
-	tt::a::check(a::tt::i8086::i8086_insts,LENGTH_TT(a::tt::i8086::i8086_insts),select);
+	tt::a::check(a::tt::i8086::insts,LENGTH_TT(a::tt::i8086::insts),select);
 	CU_ASSERT(select.size() == 0);
 	if(select.size() > 0)
 	{
@@ -139,7 +139,7 @@ void v0_AFD_A()
 		}
 	}
 	
-	dfa::A<char> i8086_insts(TABLE(a::tt::i8086::i8086_insts));
+	dfa::A<char> i8086_insts(TABLE(a::tt::i8086::insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
 	const tt::a::Transition* accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
