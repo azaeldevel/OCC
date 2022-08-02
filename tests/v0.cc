@@ -1,9 +1,10 @@
 
 #include <AF.hh>
 #include <tt.hh>
-#include <A-tt.hh>
+#include <A/tt.hh>
 #include <A.hh>
 #include <Buffer.hh>
+#include <A/tt/gram.hh>
 
 
 #include <iostream>
@@ -128,7 +129,7 @@ void v0_AFD_A()
 
 	std::vector<tt::a::Selector> select;
 	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
-	tt::a::check(a::tt::i8086_insts,LENGTH_TT(a::tt::i8086_insts),select);
+	tt::a::check(a::tt::i8086::i8086_insts,LENGTH_TT(a::tt::i8086::i8086_insts),select);
 	CU_ASSERT(select.size() == 0);
 	if(select.size() > 0)
 	{
@@ -138,7 +139,7 @@ void v0_AFD_A()
 		}
 	}
 	
-	dfa::A<char> i8086_insts(TABLE(a::tt::i8086_insts));
+	dfa::A<char> i8086_insts(TABLE(a::tt::i8086::i8086_insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
 	const tt::a::Transition* accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
@@ -351,8 +352,8 @@ void v0_AFD_A()
 	accepted = i8086_insts.get_accepted();
 	CU_ASSERT(accepted != NULL);
 	CU_ASSERT(accepted->token == (oct::Word)a::tt::Tokens::i8086_hlt);
-	std::cout << "buff2.walk : " << buff2.walk(';') << "\n";
-	//CU_ASSERT(buff2.walk(';') == ';');
+	//std::cout << "buff2.walk : " << buff2.walk(';') << "\n";
+	CU_ASSERT(buff2.walk(';') == ';');
 	CU_ASSERT(buff2.consume_whites() == 1);
 	CU_ASSERT(buff2.walk('}') == '}');
 	
@@ -372,9 +373,10 @@ void v0_AFD_B()
 {
 	dfa::B<char> idCB(TABLE(tt::b::Identifier));
 	CU_ASSERT(idCB.transition("gnu") == 3);
-	idCB.enable_echo(true);
+	//idCB.enable_echo(true);
+	//std::cout << "idCB.transition(\"1gnu\") : " << idCB.transition("1gnu") << "\n";
 	CU_ASSERT(idCB.transition("1gnu") == 0);
-	idCB.enable_echo(false);
+	//idCB.enable_echo(false);
 	CU_ASSERT(idCB.transition("azael") == 5);
 	CU_ASSERT(idCB.transition("zip1") == 4);
 	CU_ASSERT(idCB.transition("azip1") == 5);
@@ -390,6 +392,10 @@ void v0_AFD_B()
 	//std::cout << "count : " << intCB.transition("1236589") << "\n";
 	//CU_ASSERT(intCB.transition("00065	") == 5);
 	//std::cout << "counbt : " << intCB.transition("00A65") << "\n";
+
+	dfa::B<tt::Token> gram_insts(TABLE(a::gram::tt::i8086_insts));
+	//gram_insts.transition("mov al ah;");
+	
 }
 void v0_AFD_C()
 {

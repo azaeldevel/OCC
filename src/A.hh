@@ -21,8 +21,8 @@
  */
 
 #include <cctype>
-#include "A-tt.hh"
-#include "A-tt-i8086_insts.hh"
+#include "A/tt.hh"
+#include "A/tt/i8086/insts.hh"
 
 //assembler
 namespace oct::cc::a

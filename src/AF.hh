@@ -37,7 +37,7 @@ namespace oct::cc::dfa
 
 
 
-template<typename C/*char*/,typename S/*Status*/,typename O/*Offset*/>
+template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/>
 class DFA 
 {
 
@@ -61,8 +61,8 @@ public:
 #endif
 	}
 		
-	virtual O transition(const C* string) = 0;
-	virtual O transition(Buffer<C>&) = 0;
+	virtual O transition(const Symbol* string) = 0;
+	virtual O transition(Buffer<Symbol>&) = 0;
 		
 #if OCTETOS_CC_DEGUB
 	void enable_echo(bool e)
@@ -75,7 +75,7 @@ public:
 protected:
 	O i;
 	S current,reset;
-	C c;
+	Symbol c;
 #if OCTETOS_CC_DEGUB
 	bool echo;
 #endif
@@ -347,6 +347,7 @@ protected:
 
 
 	
+	
 	template<typename T>
 	class B : public dfa::DFA<T,Word,Word>
 	{
@@ -416,21 +417,28 @@ protected:
 		{
 			if(not string) return false;
 			
-			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
-			//unsigned short  i = 0;	
+			DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
+			DFA<T,Word,Word>::i = 0;	
 			const tt::b::Transition<T> *prev = NULL, *actual;
 			do
 			{
-				//std::cout << string[i] << "\n";
-				if(string[dfa::DFA<T,Word,Word>::i] == '\0')
+#if OCTETOS_CC_DEGUB
+				//std::cout << string[DFA<T,Word,Word>::i] << "\n";
+#endif				
+				if(string[DFA<T,Word,Word>::i] == '\0')
 				{
 					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
 					else if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,Word,Word>::i;
 					return 0;//si no se encontrontro transiscion
 				}
 
-				actual = transition(string[dfa::DFA<T,Word,Word>::i]);
-
+				actual = transition(string[dfa::DFA<T,Word,Word>::i]);				
+#if OCTETOS_CC_DEGUB
+				if(dfa::DFA<T,Word,Word>::echo and actual)
+				{
+					actual->print(std::cout);
+				}
+#endif
 				if(not actual) 
 				{
 					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
@@ -456,10 +464,9 @@ protected:
 			
 			return dfa::DFA<T,Word,Word>::i;
 		}
-
+		
 		virtual Word transition(Buffer<T>&)
 		{
-
 		}
 
 
@@ -483,7 +490,7 @@ protected:
 		const size_t length;
 	};
 
-
+	
 	
 	
 	template<typename C,typename S = Word,typename O = Word>
@@ -668,7 +675,7 @@ protected:
 	};
 
 
-
+	
 }
 
 #endif
