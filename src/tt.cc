@@ -18,63 +18,32 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
+
+#include "tt.hh"
+
 
 namespace oct::cc::tt
 {
 
-	 
+namespace a
+{
+	bool check(const Transition (*t)[MAX_SIMBOLS],Word length, std::vector<Selector>& errors)
+	{
+		for(unsigned int i = 0; i < length; i++)
+		{
+			for(unsigned short j = 0; j < 128; j++)
+			{
+				//std::cout << "cheking (" << i << "," << j << ")\n";
+				if(t[i][j].indicator ==  Indicator::Reject and t[i][j].next == 0 and t[i][j].token == base_token) continue;
+				if(t[i][j].indicator ==  Indicator::None and t[i][j].next > 0 and t[i][j].token == base_token) continue;
+				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == base_token) continue;
+				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != 0) continue;
+				errors.push_back({i,j});
+			}
+		}
+	}
+ }
 
 
-template<> void TB<char>::print(std::ostream& out) const
-{
-		if(input == '\n')
-		{
-			out << current << "--New line->" << next << "\n";
-		}
-		else if(input == '\t')
-		{
-			out << current << "--Tabulator->" << next << "\n";
-		}
-		else if(input == ' ')
-		{
-			out << current << "--Espace->" << next << "\n";
-		}
-		else if(input == '\0')
-		{
-			out << current << "--\\0->" << next << "\n";
-		}
-		else
-		{
-			out << current << "--" << input << "->" << next << "\n";
-		}
-}
-template<> void TB<wchar_t>::print(std::ostream& out) const
-{
-}
-template<> void TB<wchar_t>::print(std::wostream& out) const
-{
-		if(input == '\n')
-		{
-			out << current << "--New line->" << next << "\n";
-		}
-		else if(input == '\t')
-		{
-			out << current << "--Tabulator->" << next << "\n";
-		}
-		else if(input == ' ')
-		{
-			out << current << "--Espace->" << next << "\n";
-		}
-		else if(input == '\0')
-		{
-			out << current << "--\\0->" << next << "\n";
-		}
-		else
-		{
-			out << current << "--" << input << "->" << next << "\n";
-		}
-}
-template<> void TB<char>::print(std::wostream& out) const
-{
-}
 }

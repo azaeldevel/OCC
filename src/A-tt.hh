@@ -166,7 +166,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 
 enum class Tokens : cc::tt::Token
 {
-	none = 129,
+	none = cc::tt::a::base_token,
 	
 	i8086_aaa,
 	i8086_aad,
@@ -379,7 +379,7 @@ constexpr static const cc::tt::a::Transition Identifier[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -402,7 +402,7 @@ constexpr static const cc::tt::a::Transition Identifier[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -536,7 +536,7 @@ constexpr static const cc::tt::a::Transition Interger[][cc::tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},// ' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},// ' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1040,7 +1040,7 @@ constexpr static const cc::tt::a::Transition Integer_0x[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1063,7 +1063,7 @@ constexpr static const cc::tt::a::Transition Integer_0x[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1438,7 +1438,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1461,7 +1461,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1473,7 +1473,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//,
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//,
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1701,7 +1701,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1724,7 +1724,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1736,7 +1736,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//,
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//,
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1964,7 +1964,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1987,7 +1987,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1999,7 +1999,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//,
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//,
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2227,7 +2227,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2250,7 +2250,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2262,7 +2262,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//,
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//,
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2624,7 +2624,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2647,7 +2647,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2886,7 +2886,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2909,7 +2909,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3148,7 +3148,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3171,7 +3171,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3410,7 +3410,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3433,7 +3433,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3672,7 +3672,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3695,7 +3695,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3934,7 +3934,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3957,7 +3957,7 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' ' 
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' ' 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4290,10 +4290,10 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//_
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,2},//a
+			{cc::tt::Indicator::None,2,(Word)Tokens::none},//a
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
-			{cc::tt::Indicator::Accept,4},//d
+			{cc::tt::Indicator::None,4,(Word)Tokens::none},//d
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//e
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
@@ -4303,7 +4303,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//m
-			{cc::tt::Indicator::Accept,6},//n
+			{cc::tt::Indicator::None,6,(Word)Tokens::none},//n
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//o
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//p
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//q
@@ -4464,7 +4464,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4487,7 +4487,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4514,7 +4514,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4726,7 +4726,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4749,7 +4749,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4776,7 +4776,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4988,7 +4988,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5011,7 +5011,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5038,7 +5038,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5208,8 +5208,8 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//_
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,9},//a
-			{cc::tt::Indicator::Accept,12},//b
+			{cc::tt::Indicator::None,9,(Word)Tokens::none},//a
+			{cc::tt::Indicator::None,12,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//d
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//e
@@ -5219,8 +5219,8 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//i
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
-			{cc::tt::Indicator::Accept,14},//l
-			{cc::tt::Indicator::Accept,16},//m
+			{cc::tt::Indicator::None,14,(Word)Tokens::none},//l
+			{cc::tt::Indicator::None,16,(Word)Tokens::none},//m
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//n
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//o
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//p
@@ -5230,7 +5230,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//t
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//u
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//v
-			{cc::tt::Indicator::Accept,19},//w
+			{cc::tt::Indicator::None,19,(Word)Tokens::none},//w
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//y
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
@@ -5350,7 +5350,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//i
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
-			{cc::tt::Indicator::Accept,10},//l
+			{cc::tt::Indicator::None,10,(Word)Tokens::none},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//m
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//n
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//o
@@ -5513,7 +5513,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5536,7 +5536,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5563,7 +5563,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5775,7 +5775,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5798,7 +5798,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -5825,7 +5825,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6037,7 +6037,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6060,7 +6060,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6087,7 +6087,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6299,7 +6299,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6322,7 +6322,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6349,7 +6349,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6430,7 +6430,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6453,7 +6453,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6480,7 +6480,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6692,7 +6692,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6715,7 +6715,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6742,7 +6742,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -6911,15 +6911,15 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//_
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,22},//a
+			{cc::tt::Indicator::None,22,(Word)Tokens::none},//a
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//d
-			{cc::tt::Indicator::Accept,24},//e
+			{cc::tt::Indicator::None,24,(Word)Tokens::none},//e
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//h
-			{cc::tt::Indicator::Accept,26},//i
+			{cc::tt::Indicator::None,26,(Word)Tokens::none},//i
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//l
@@ -7085,7 +7085,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7108,7 +7108,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7135,7 +7135,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7347,7 +7347,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7370,7 +7370,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7397,7 +7397,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7609,7 +7609,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7632,7 +7632,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7659,7 +7659,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -7846,7 +7846,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//p
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//q
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//r
-			{cc::tt::Indicator::Accept,29},//s
+			{cc::tt::Indicator::None,29,(Word)Tokens::none},//s
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//t
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//u
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//v
@@ -8002,7 +8002,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8025,7 +8025,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8052,7 +8052,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8232,7 +8232,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//i
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
-			{cc::tt::Indicator::Accept,32},//l
+			{cc::tt::Indicator::None,32,(Word)Tokens::none},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//m
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//n
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//o
@@ -8395,7 +8395,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8418,7 +8418,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8445,7 +8445,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8619,7 +8619,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//a
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
-			{cc::tt::Indicator::Accept,35},//d
+			{cc::tt::Indicator::None,35,(Word)Tokens::none},//d
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//e
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
@@ -8628,12 +8628,12 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//l
-			{cc::tt::Indicator::Accept,38},//m
+			{cc::tt::Indicator::None,38,(Word)Tokens::none},//m
 			{cc::tt::Indicator::Accept,41,(Word)Tokens::i8086_in},//n
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//o
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//p
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//q
-			{cc::tt::Indicator::Accept,44},//r
+			{cc::tt::Indicator::None,44,(Word)Tokens::none},//r
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//s
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//t
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//u
@@ -8755,7 +8755,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//h
-			{cc::tt::Indicator::Accept,36},//i
+			{cc::tt::Indicator::None,36,(Word)Tokens::none},//i
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//j
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//k
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//l
@@ -8921,7 +8921,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8944,7 +8944,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -8971,7 +8971,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9160,7 +9160,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//r
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//s
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//t
-			{cc::tt::Indicator::Accept,39},//u
+			{cc::tt::Indicator::None,39,(Word)Tokens::none},//u
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//v
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//w
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//x
@@ -9314,7 +9314,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9337,7 +9337,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9364,7 +9364,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9445,7 +9445,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9468,7 +9468,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9495,7 +9495,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9576,7 +9576,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9599,7 +9599,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9626,7 +9626,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9707,7 +9707,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9730,7 +9730,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9757,7 +9757,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -9930,7 +9930,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//d
-			{cc::tt::Indicator::Accept,45},//e
+			{cc::tt::Indicator::None,45,(Word)Tokens::none},//e
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//h
@@ -10100,7 +10100,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10123,7 +10123,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10150,7 +10150,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10364,7 +10364,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10387,7 +10387,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10414,7 +10414,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -10495,7 +10495,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10518,7 +10518,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10545,7 +10545,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10626,7 +10626,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10649,7 +10649,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10676,7 +10676,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -10757,7 +10757,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10780,7 +10780,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10807,7 +10807,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10888,7 +10888,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10911,7 +10911,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -10938,7 +10938,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -10999,7 +10999,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//u
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//v
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//w
-			{cc::tt::Indicator::Accept,53},//x
+			{cc::tt::Indicator::Accept,53,(Word)Tokens::none},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//y
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11150,7 +11150,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11173,7 +11173,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11200,7 +11200,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -11281,7 +11281,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11304,7 +11304,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11331,7 +11331,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -11412,7 +11412,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11435,7 +11435,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11462,7 +11462,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -11543,7 +11543,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11566,7 +11566,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,0},//' '
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -11593,7 +11593,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//8
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//:
-			{cc::tt::Indicator::Prefix_Accept,0},//;
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//<
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//=
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//>
@@ -11674,7 +11674,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Prefix_Accept,2,(Word)Tokens::none},//tab
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//tab
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -12946,7 +12946,7 @@ constexpr static const cc::tt::a::Transition i8086_insts[][cc::tt::MAX_SIMBOLS] 
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//b
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//c
 			{cc::tt::Indicator::None,71,(Word)Tokens::none},//d
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//e
+			{cc::tt::Indicator::None,73,(Word)Tokens::none},//e
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//f
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//g
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//h

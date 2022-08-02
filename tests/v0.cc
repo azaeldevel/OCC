@@ -50,7 +50,7 @@ void v0_AFD_A()
 	CU_ASSERT(intC_0x.transition("0x00A65") == 7);
 
 	
-	//Assembler A
+	//Assembler A	
 	dfa::A<char> i8086_regs(TABLE(a::tt::i8086_regs));
 	try
 	{
@@ -114,6 +114,18 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
 
+	std::vector<tt::a::Selector> select;
+	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
+	tt::a::check(a::tt::i8086_insts,LENGTH_TT(a::tt::i8086_insts),select);
+	CU_ASSERT(select.size() == 0);
+	if(select.size() > 0)
+	{
+		for(unsigned int i = 0; i < select.size(); i++)
+		{
+			std::cout << "check failure on a::tt::i8086_insts(" << select[i].i << "," << select[i].j << ")\n";
+		}
+	}
+	
 	dfa::A<char> i8086_insts(TABLE(a::tt::i8086_insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
 	const tt::a::Transition* accepted = i8086_insts.get_accepted();

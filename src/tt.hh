@@ -23,12 +23,20 @@
 #define LENGTH_TT(TABLE) sizeof (TABLE) / sizeof (TABLE[0])
 #define TABLE(T) T,sizeof (T) / sizeof (T[0])
 
+
+#include <vector>
+#include <octetos/core/core.hh>
+
+
+#include "Exception.hh"
+
 namespace oct::cc::tt
 {
 
 //typedef unsigned long long int Word;
 typedef Word Status;
 typedef Word Token;
+
 constexpr static const unsigned char MAX_SIMBOLS = 128;
 
 enum class Indicator : Status
@@ -47,7 +55,17 @@ namespace a
 		Status next;
 		Word token;
 	};
+	
+	struct Selector
+	{
+		unsigned int i;
+		unsigned short j;
+	};
 
+	static const Token base_token = 1024;
+	
+	bool check(const Transition (*t)[MAX_SIMBOLS],Word s, std::vector<Selector>& errors);
+	
 /*
 constexpr static const Transition [][tt::MAX_SIMBOLS] = {
 	//0
