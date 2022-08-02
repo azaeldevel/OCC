@@ -21,11 +21,11 @@
  */
 
 
-#include "A-tt.hh"
+#include "A/tt.hh"
 
 
 //transition table
-namespace oct::cc::a::tt
+namespace oct::cc::a::tt::i8086
 {
 
 /*

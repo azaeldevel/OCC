@@ -28,22 +28,22 @@
 namespace oct::cc::a::gram::tt
 {
 
-constexpr static const cc::b::Transition<cc::tt::Token> i8086_insts[] = {
+constexpr static const cc::tt::b::Transition<cc::tt::Token> i8086_insts[] = {
 
 		//mov
-		{0,cc::a::tt::Tokens::i8086_mov,Indicator::None,1},
-		{1,cc::a::tt::Tokens::Integer_0x,Indicator::None,2},
-		{2,cc::a::tt::Tokens::i8086_reg_al,Indicator::Accept,3},
-		{3,';',Indicator::Prefix_Accept,0},
-		{3,' ',Indicator::Prefix_Accept,0},
-		{3,'\n',Indicator::Prefix_Accept,0},
+		{0,(Word)cc::a::tt::Tokens::i8086_mov,cc::tt::Indicator::None,1},
+		{1,(Word)cc::a::tt::Tokens::Integer_0x,cc::tt::Indicator::None,2},
+		{2,(Word)cc::a::tt::Tokens::i8086_reg_al,cc::tt::Indicator::Accept,3},
+		{3,';',cc::tt::Indicator::Prefix_Accept,0},
+		{3,' ',cc::tt::Indicator::Prefix_Accept,0},
+		{3,'\n',cc::tt::Indicator::Prefix_Accept,0},
 
 		//int
-		{0,cc::a::tt::Tokens::i8086_int,Indicator::None,6},
-		{7,cc::a::tt::Tokens::Integer_0x,Indicator::None,8},
-		{8,';',Indicator::Prefix_Accept,0},
-		{8,' ',Indicator::Prefix_Accept,0},
-		{8,'\n',Indicator::Prefix_Accept,0},
+		{0,(Word)cc::a::tt::Tokens::i8086_int_token,cc::tt::Indicator::None,6},
+		{7,(Word)cc::a::tt::Tokens::Integer_0x,cc::tt::Indicator::None,8},
+		{8,';',cc::tt::Indicator::Prefix_Accept,0},
+		{8,' ',cc::tt::Indicator::Prefix_Accept,0},
+		{8,'\n',cc::tt::Indicator::Prefix_Accept,0},
 	};
 
 
