@@ -271,7 +271,22 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lahf);
 	CU_ASSERT(i8086_insts.transition("lds") == 3);
 	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lds);
-	
+	CU_ASSERT(i8086_insts.transition("lea") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lea);
+	CU_ASSERT(i8086_insts.transition("les") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_les);
+	CU_ASSERT(i8086_insts.transition("lock") == 4);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lock);
+	CU_ASSERT(i8086_insts.transition("lods") == 4);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lods);
+	CU_ASSERT(i8086_insts.transition("loop") == 4);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_loop);
+	CU_ASSERT(i8086_insts.transition("loope") == 5);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_loope);	
+	CU_ASSERT(i8086_insts.transition("nmi") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_nmi);
+	CU_ASSERT(i8086_insts.transition("mov") == 3);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_mov);
 		
 	CU_ASSERT(length("section") == 7);
 	//std::cout << "count : " << length<char>("section") << "\n";
