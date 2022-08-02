@@ -230,6 +230,19 @@ enum class Tokens : cc::tt::Token
 	i8086_loopne,
 	i8086_nmi,
 	i8086_mov,
+
+	i8086_reg_al,
+	i8086_reg_ah,
+	i8086_reg_ax,
+	i8086_reg_bl,
+	i8086_reg_bh,
+	i8086_reg_bx,
+	i8086_reg_cl,
+	i8086_reg_ch,
+	i8086_reg_cx,
+	i8086_reg_dl,
+	i8086_reg_dh,
+	i8086_reg_dx,
 	
 	Identifier,
 	Integer,
@@ -1265,10 +1278,10 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//_
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,1},//a
-			{cc::tt::Indicator::Accept,3},//b
-			{cc::tt::Indicator::Accept,5},//c
-			{cc::tt::Indicator::Accept,7},//d
+			{cc::tt::Indicator::None,1,(Word)Tokens::none},//a
+			{cc::tt::Indicator::None,3,(Word)Tokens::none},//b
+			{cc::tt::Indicator::None,5,(Word)Tokens::none},//c
+			{cc::tt::Indicator::None,7,(Word)Tokens::none},//d
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1403,15 +1416,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,2},//h
+			{cc::tt::Indicator::Accept,2,(Word)Tokens::i8086_reg_ah},//h
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,2},//l
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,2,(Word)Tokens::i8086_reg_al},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1419,7 +1428,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,2},//x
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,2,(Word)Tokens::i8086_reg_ax},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1666,15 +1679,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,4},//h
+			{cc::tt::Indicator::Accept,4,(Word)Tokens::i8086_reg_bh},//h
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,4},//l
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,4,(Word)Tokens::i8086_reg_bl},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1682,7 +1691,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,4},//x
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,4,(Word)Tokens::i8086_reg_bx},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1929,15 +1942,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,6},//h
+			{cc::tt::Indicator::Accept,6,(Word)Tokens::i8086_reg_ch},//h
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,6},//l
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,6,(Word)Tokens::i8086_reg_cl},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -1945,7 +1954,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,6},//x
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,6,(Word)Tokens::i8086_reg_cx},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2192,15 +2205,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,8},//h
+			{cc::tt::Indicator::Accept,8,(Word)Tokens::i8086_reg_dh},//h
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,8},//l
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,8,(Word)Tokens::i8086_reg_dl},//l
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2208,7 +2217,11 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Accept,8},//x
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Accept,8,(Word)Tokens::i8086_reg_dx},//x
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//z
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},

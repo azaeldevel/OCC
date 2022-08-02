@@ -44,9 +44,9 @@ public:
 	}
 	Buffer(const T* string) : base(0)
 	{
-		size_t leng = length(string);
-		buffer = new T[leng + 1];
-		copy(string,leng,&buffer);
+		_size = length(string);
+		buffer = new T[_size + 1];
+		copy(string,_size,&buffer);
 	}
 	~Buffer()
 	{
@@ -86,6 +86,10 @@ public:
 		return true;
 	}*/
 
+	/**
+	*\brief Si la string indicada es existe coinside con el continedo del buffer el apuntador avanza al final de dicha string
+	*
+	*/
 	const T* walk(const T* string)
 	{
 		std::uintmax_t lengString = length(string);
@@ -101,16 +105,16 @@ public:
 		if(i < lengString) return NULL;
 
 		base += i;	
-		return &buffer[base];
+		return string;
 	}
-	const T* walk(T c)
+	T walk(T c)
 	{
 		
-		if(buffer[base] == '\0') return NULL;//se llego al final sin fallar la verificacion
-		if(buffer[base] != c) return NULL;		
+		if(buffer[base] == '\0') return '\0';//se llego al final sin fallar la verificacion
+		if(buffer[base] != c) return buffer[base];		
 
 		++base;	
-		return &buffer[base];
+		return c;
 	} 
 	void walk(size_t i)
 	{
@@ -139,6 +143,11 @@ public:
 	T get_actual()const
 	{
 		return buffer[base];
+	}
+
+	bool empty()const
+	{
+		return (base < _size);
 	}
 private:
 	T* buffer;

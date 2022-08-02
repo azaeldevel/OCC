@@ -42,13 +42,19 @@ class DFA
 {
 
 public:
-	DFA() : current(0), i(0)
+	DFA() : current(0), i(0),reset(0)
 	{
 #if OCTETOS_CC_DEGUB
 		echo = false;
 #endif
 	}
-	DFA(S s) : current(s), i(0)
+	DFA(S s) : current(s), i(0),reset(0)
+	{
+#if OCTETOS_CC_DEGUB
+		echo = false;
+#endif
+	}
+	DFA(S s,S r) : current(s),reset(r), i(0)
 	{
 #if OCTETOS_CC_DEGUB
 		echo = false;
@@ -68,7 +74,7 @@ public:
 	
 protected:
 	O i;
-	S current;
+	S current,reset;
 	C c;
 #if OCTETOS_CC_DEGUB
 	bool echo;
@@ -85,7 +91,7 @@ protected:
 	{
 
 	public:
-		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), reset(0), length(l),prev(NULL),actual(NULL),accepted(NULL)
+		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), length(l),prev(NULL),actual(NULL),accepted(NULL)
 		{
 		}
 		
@@ -151,7 +157,7 @@ protected:
 		{
 			if(not string) return 0;
 			
-			dfa::DFA<T,Word,Word>::current = reset;
+			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
 			dfa::DFA<T,Word,Word>::i = 0;	
 			accepted = NULL;
 
@@ -236,9 +242,9 @@ protected:
 		}
 		virtual Word transition(Buffer<T>& buff)
 		{
-			if(buff.size() == 0) return 0;
+			if(not buff.empty()) return 0;
 			
-			dfa::DFA<T,Word,Word>::current = reset;
+			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
 			dfa::DFA<T,Word,Word>::i = 0;	
 			accepted = NULL;
 
@@ -275,7 +281,7 @@ protected:
 						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						buff.walk((size_t)dfa::DFA<T,Word,Word>::i);
+						buff.walk((size_t)DFA<T,Word,Word>::i);
 						return dfa::DFA<T,Word,Word>::i;
 					}
 
@@ -295,7 +301,7 @@ protected:
 				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << buff[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
+					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 					//std::cout << " i : " << i  << "\n";
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
@@ -304,7 +310,7 @@ protected:
 						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << buff[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
 						accepted = prev;
-						buff.walk((size_t)dfa::DFA<T,Word,Word>::i);
+						buff.walk((size_t)DFA<T,Word,Word>::i);
 						return dfa::DFA<T,Word,Word>::i;
 					}
 					return 0;
@@ -333,7 +339,7 @@ protected:
 		const tt::a::Transition (*table)[tt::MAX_SIMBOLS];  
 		size_t length;
 		//tt::Status current;
-		Word reset;
+		//Word reset;
 		const tt::a::Transition *prev;
 		const tt::a::Transition *actual;
 		const tt::a::Transition *accepted;
@@ -342,14 +348,14 @@ protected:
 
 	
 	template<typename T>
-	class B
+	class B : public dfa::DFA<T,Word,Word>
 	{
 
 	public:
-		B() : current(0),reset(0),table(NULL),length(0)
+		B() : table(NULL),length(0)
 		{
 		}
-		B(const tt::b::Transition<T> t[], size_t l) : current(0),reset(0),table(t),length(l)
+		B(const tt::b::Transition<T> t[], size_t l) : table(t),length(l)
 		{		 
 		}
 
@@ -388,12 +394,12 @@ protected:
 		{
 			//std::cout << "current : " << current << "\n";
 			//std::cout << "symbol : " << symbol << "\n";
-			const tt::b::Transition<T>* ret = search(current,symbol);
+			const tt::b::Transition<T>* ret = search(dfa::DFA<T,Word,Word>::current,symbol);
 			//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
 			if(ret)
 			{
 				//ret->print(std::cout);
-				current = ret->next;
+				dfa::DFA<T,Word,Word>::current = ret->next;
 				//std::cout << "current : " << current << "\n";
 				//std::cout << "symbol : " << symbol << "\n";
 				return ret;
@@ -406,28 +412,33 @@ protected:
 		*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
 		*\return la cantidad de caracteres acpetados par el lenguaje
 		*/
-		unsigned short transition(const T* string)
+		Word transition(const T* string)
 		{
 			if(not string) return false;
 			
-			current = reset;
-			unsigned short  i = 0;	
+			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
+			//unsigned short  i = 0;	
 			const tt::b::Transition<T> *prev = NULL, *actual;
 			do
 			{
 				//std::cout << string[i] << "\n";
-				if(string[i] == '\0')
+				if(string[dfa::DFA<T,Word,Word>::i] == '\0')
 				{
-					if(i == 0) return 0;
-					else if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
+					else if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,Word,Word>::i;
 					return 0;//si no se encontrontro transiscion
 				}
 
-				actual = transition(string[i]);
+				actual = transition(string[dfa::DFA<T,Word,Word>::i]);
 
 				if(not actual) 
 				{
 					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
+					return 0;//si no se encontrontro transiscion
+				}
+				else if(actual->indicator == tt::Indicator::Prefix_Accept)
+				{
+					if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,Word,Word>::i;
 					return 0;//si no se encontrontro transiscion
 				}
 				else if(actual->indicator == tt::Indicator::Reject)
@@ -435,20 +446,20 @@ protected:
 					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
 					return 0;//si no se encontrontro transiscion
 				}
-				else if(actual->indicator == tt::Indicator::Prefix_Accept)
-				{
-					if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
-					return 0;//si no se encontrontro transiscion
-				}
 				 
 				prev = actual;
-				i++;
+				dfa::DFA<T,Word,Word>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
 			
 			
-			return i;
+			return dfa::DFA<T,Word,Word>::i;
+		}
+
+		virtual Word transition(Buffer<T>&)
+		{
+
 		}
 
 
@@ -458,8 +469,8 @@ protected:
 		}
 		void load(tt::Status initial,const tt::b::Transition<T> t[])
 		{
-			current = initial;
-			reset = initial;
+			dfa::DFA<T,Word,Word>::current = initial;
+			dfa::DFA<T,Word,Word>::reset = initial;
 			this->table = t;
 		}
 	private:
@@ -467,7 +478,7 @@ protected:
 		
 	protected:
 		const tt::b::Transition<T>* table;
-		tt::Status current;
+		//tt::Status current;
 		tt::Status reset;
 		const size_t length;
 	};

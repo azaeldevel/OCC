@@ -28,11 +28,11 @@
 namespace oct::cc::a
 {
 
-template<typename C> class BuildUnit : public dfa::A<C>
+template<typename C> class Instruction : public dfa::A<C>
 {
 
 public:
-	BuildUnit(const cc::tt::a::Transition (*t)[cc::tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
+	Instruction(const cc::tt::a::Transition (*t)[cc::tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
 	{		
 	}
 
