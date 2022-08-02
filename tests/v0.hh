@@ -12,6 +12,7 @@ void v0_performance();
 void v0_AFD_A();
 void v0_AFD_B();
 void v0_AFD_C();
+void v0_Grammar_A();
 
 
 #endif

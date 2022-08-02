@@ -86,13 +86,22 @@ protected:
 	*\brief DFA type A
 	*
 	*/
-	template<typename T>
-	class A : public dfa::DFA<T,Word,Word>
+	template<typename T/*char*/,typename S = Word/*Status*/,typename O = Word/*Offset*/>
+	class A : public dfa::DFA<T,S,O>
 	{
 
 	public:
+		A() : dfa::DFA<T,Word,Word>(0), table(NULL), length(0),prev(NULL),actual(NULL),accepted(NULL)
+		{
+		}
 		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), length(l),prev(NULL),actual(NULL),accepted(NULL)
 		{
+		}
+
+		void load(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l)
+		{
+			table = t;
+			length = l;
 		}
 		
 
@@ -348,8 +357,8 @@ protected:
 
 	
 	
-	template<typename T>
-	class B : public dfa::DFA<T,Word,Word>
+	template<typename T/*char*/,typename S = Word/*Status*/,typename O = Word/*Offset*/>
+	class B : public dfa::DFA<T,S,O>
 	{
 
 	public:
@@ -675,6 +684,20 @@ protected:
 	};
 
 
+	template<typename C/*char*/,typename Symbol,typename S/*Status*/,typename O/*Offset*/>
+	class Grammar
+	{
+	public:
+		Grammar()
+		{			
+		}
+		
+		virtual O parsing(Buffer<C>& buff) = 0;
+		
+	protected:
+		A<C,S,O> lexer;
+		B<Symbol,S,O> parser;
+	};
 	
 }
 

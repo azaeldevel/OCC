@@ -1502,7 +1502,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},

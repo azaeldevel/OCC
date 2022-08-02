@@ -3,6 +3,7 @@
 #include <tt.hh>
 #include <A/tt.hh>
 #include <A.hh>
+#include <A.hh>
 #include <Buffer.hh>
 #include <A/tt/gram.hh>
 
@@ -394,7 +395,6 @@ void v0_AFD_B()
 	//std::cout << "counbt : " << intCB.transition("00A65") << "\n";
 
 	dfa::B<tt::Token> gram_insts(TABLE(a::gram::tt::i8086_insts));
-	//gram_insts.transition("mov al ah;");
 	
 }
 void v0_AFD_C()
@@ -458,6 +458,19 @@ void v0_performance()
 	auto end_c = high_resolution_clock::now();
 	auto duration_c = duration_cast<milliseconds>(end_c - begin_c);
 	std::cout << "AFD(C) : " << duration_c.count() << "\n";
+}
+
+
+void v0_Grammar_A()
+{
+	a::Grammar<char> grammar_a;
+	Buffer<char> buff1("mov al ah;");
+	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_mov);
+	CU_ASSERT(buff1.consume_whites() == 1);
+	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_al);
+	CU_ASSERT(buff1.consume_whites() == 1);
+	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_ah);
+	
 }
 void v0_developing()
 {	

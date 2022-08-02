@@ -23,27 +23,63 @@
 #include <cctype>
 #include "A/tt.hh"
 #include "A/tt/i8086/insts.hh"
+#include "AF.hh"
 
 //assembler
 namespace oct::cc::a
 {
 
-template<typename C> class Instruction : public dfa::A<C>
-{
+	template<typename C/*char*/,typename Symbol = cc::tt::Token,typename S = cc::tt::Status/*Status*/,typename O = Word/*Offset*/>
+	class Grammar : public dfa::Grammar<C,Symbol,S,O>
+	{
+	public:
+		Grammar()
+		{
+			
+		}
+		
+		Symbol lexing(Buffer<C>& buff)
+		{
+			dfa::Grammar<C,Symbol,S,O>::lexer.load(TABLE(a::tt::i8086::insts));
+			if(dfa::Grammar<C,Symbol,S,O>::lexer.transition(buff) > 0) 
+			{
+				if(dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted() != NULL) 
+				{
+					return dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted()->token;
+				}
+			}
+				
+			dfa::Grammar<C,Symbol,S,O>::lexer.load(TABLE(a::tt::i8086_regs));
+			if(dfa::Grammar<C,Symbol,S,O>::lexer.transition(buff) > 0) 
+			{
+				if(dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted() != NULL) 
+				{
+					return dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted()->token;
+				}
+			}
+			
+			dfa::Grammar<C,Symbol,S,O>::lexer.load(TABLE(a::tt::Identifier));
+			if(dfa::Grammar<C,Symbol,S,O>::lexer.transition(buff) > 0) 
+			{
+				if(dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted() != NULL) 
+				{
+					return dfa::Grammar<C,Symbol,S,O>::lexer.get_accepted()->token;
+				}
+			}
 
-public:
-	Instruction(const cc::tt::a::Transition (*t)[cc::tt::MAX_SIMBOLS],size_t l) : dfa::A<C>(t,l)
-	{		
-	}
+			
+			return (Symbol)a::tt::Tokens::none;
+		}
 
-	Word transition(const C* string)
-	{		
-	}
-	
-	
-private:
-	
-};
+		O parsing(Buffer<C>& buff)
+		{
+			
+			
+			
+		}
+		
+	private:
+	};
 
 }
 
