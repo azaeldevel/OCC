@@ -251,7 +251,7 @@ protected:
 		}
 		virtual Word transition(Buffer<T>& buff)
 		{
-			if(not buff.empty()) return 0;
+			if(buff.empty()) return 0;
 			
 			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
 			dfa::DFA<T,Word,Word>::i = 0;	
@@ -692,7 +692,7 @@ protected:
 		{			
 		}
 		
-		virtual O parsing(Buffer<C>& buff) = 0;
+		virtual O lexing(Buffer<C>& buff) = 0;
 		
 	protected:
 		A<C,S,O> lexer;

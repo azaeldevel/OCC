@@ -470,6 +470,7 @@ void v0_Grammar_A()
 	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_al);
 	CU_ASSERT(buff1.consume_whites() == 1);
 	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_ah);
+	CU_ASSERT(grammar_a.lexing(buff1) == ';');
 	
 }
 void v0_developing()

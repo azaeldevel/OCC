@@ -108,8 +108,7 @@ public:
 		return string;
 	}
 	T walk(T c)
-	{
-		
+	{		
 		if(buffer[base] == '\0') return '\0';//se llego al final sin fallar la verificacion
 		if(buffer[base] != c) return buffer[base];		
 
@@ -119,6 +118,12 @@ public:
 	void walk(size_t i)
 	{
 		base += i;
+	}
+	T next_char()
+	{		
+		if(buffer[base] == '\0') return '\0';//se llego al final sin fallar la verificacion
+		
+		return buffer[base++];
 	}
 	std::uintmax_t consume_whites()
 	{
@@ -147,7 +152,7 @@ public:
 
 	bool empty()const
 	{
-		return (base < _size);
+		return (base >= _size);
 	}
 private:
 	T* buffer;
