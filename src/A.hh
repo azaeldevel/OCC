@@ -22,7 +22,7 @@
 
 #include <cctype>
 #include "A-tt.hh"
-
+#include "A-tt-i8086_insts.hh"
 
 //assembler
 namespace oct::cc::a
