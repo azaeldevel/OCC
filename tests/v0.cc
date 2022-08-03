@@ -372,7 +372,7 @@ void v0_AFD_A()
 }
 void v0_AFD_B()
 {
-	dfa::B<char> idCB(TABLE(tt::b::Identifier));
+	dfa::B idCB(tt::b::Identifier);
 	CU_ASSERT(idCB.transition("gnu") == 3);
 	//idCB.enable_echo(true);
 	//std::cout << "idCB.transition(\"1gnu\") : " << idCB.transition("1gnu") << "\n";
@@ -385,7 +385,7 @@ void v0_AFD_B()
 	//std::cout << "EOF : " << EOF << "\n";
 
 	//CU_ASSERT(LENGTH_TT(tt::b::Integer) == 2);
-	dfa::B<char> intCB(TABLE(tt::b::Integer));
+	dfa::B intCB(tt::b::Integer);
 	//CU_ASSERT(intCB.transition("1236589") == 7);
 	//CU_ASSERT(intCB.transition("00065") == 5);
 	CU_ASSERT(intCB.transition("00A65") == 0);
@@ -394,8 +394,27 @@ void v0_AFD_B()
 	//CU_ASSERT(intCB.transition("00065	") == 5);
 	//std::cout << "counbt : " << intCB.transition("00A65") << "\n";
 
-	dfa::B<tt::Token> gram_insts(TABLE(a::gram::tt::i8086_insts));
-	
+	//dfa::B<tt::Token> gram_insts(TABLE(a::gram::tt::i8086_insts));
+
+	//std::cout << "\\n : " << (unsigned int)'\n' << "\n";
+	Buffer buff2("gnu gnu2 \ntest");
+	//std::cout << "base : " << buff2.get_base_string() << "\n";
+	dfa::B id_B(tt::b::Identifier);
+	//id_B.print(std::cout);
+	//std::cout << "\n";
+	CU_ASSERT(id_B.transition(buff2) == 3);
+	CU_ASSERT(buff2.consume_whites() == 1);
+	//std::cout << "base : " << buff2.get_base_string() << "\n";
+	//id_B.enable_echo(true);
+	//std::cout << "id_B : " << id_B.transition(buff2) << "\n";
+	//std::cout << "str : " << buff2[1] << "\n";
+	//id_B.transition(buff2);
+	//id_B.enable_echo(false);
+	CU_ASSERT(id_B.transition(buff2) == 4);
+	//CU_ASSERT(buff2.consume_whites() == 2);
+	/*id_B.enable_echo(true);
+	std::cout << "id_B : " << id_B.transition(buff2) << "\n";
+	id_B.enable_echo(false);*/
 }
 void v0_AFD_C()
 {
@@ -431,7 +450,7 @@ void v0_performance()
 	auto duration_a = duration_cast<milliseconds>(end_a - begin_a);
 	std::cout << "AFD(A) : " << duration_a.count() << "\n";
 
-	dfa::B<char> idCB(TABLE(tt::b::Identifier));
+	dfa::B idCB(tt::b::Identifier);
 	auto begin_b = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -463,15 +482,20 @@ void v0_performance()
 
 void v0_Grammar_A()
 {
-	a::Grammar<char> grammar_a;
+	
+	/*a::Instruction<char> grammar_a;
 	Buffer<char> buff1("mov al ah;");
 	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_mov);
 	CU_ASSERT(buff1.consume_whites() == 1);
 	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_al);
 	CU_ASSERT(buff1.consume_whites() == 1);
 	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_ah);
-	CU_ASSERT(grammar_a.lexing(buff1) == ';');
+	CU_ASSERT(grammar_a.lexing(buff1) == ';');*/
+
 	
+	//Buffer<a::tt::Tokens> buff({a::tt::Tokens::i8086_mov,a::tt::Tokens::i8086_reg_al,a::tt::Tokens::i8086_reg_ah});
+	//dfa::B<a::tt::Tokens> parser(a::gram::tt::i8086_insts);
+	//CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_mov);
 }
 void v0_developing()
 {	

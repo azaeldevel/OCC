@@ -28,51 +28,59 @@
 //assembler
 namespace oct::cc::a
 {
-
-	template<typename C/*char*/,typename Symbol = cc::tt::Token,typename Status = cc::tt::Status/*Status*/,typename O = Word/*Offset*/>
-	class Grammar : public dfa::Grammar<C,Symbol,Status,O>
+	
+	template<typename Char,typename Symbol = cc::tt::Token,typename Status = cc::tt::Status,typename Index = Word>
+	class Instruction : public dfa::Grammar<Char,Symbol,Status,Index>
 	{
 	public:
-		Grammar()
+		Instruction()
 		{
 			
 		}
 		
-		Symbol lexing(Buffer<C>& buff)
+		Symbol lexing(Buffer<Char>& buff)
 		{
 			if(buff.empty()) return (Symbol)a::tt::Tokens::none;
 
-			dfa::Grammar<C,Symbol,Status,O>::lexer.load(TABLE(a::tt::i8086::insts));
-			if(dfa::Grammar<C,Symbol,Status,O>::lexer.transition(buff) > 0) 
+			buff.consume_whites();
+			
+			dfa::Grammar<Char,Symbol,Status,Index>::lexer.load(TABLE(a::tt::i8086::insts));
+			if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.transition(buff) > 0) 
 			{
-				if(dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted() != NULL) 
+				if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted() != NULL) 
 				{
-					return dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted()->token;
+					return dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted()->token;
 				}
 			}
 				
-			dfa::Grammar<C,Symbol,Status,O>::lexer.load(TABLE(a::tt::i8086_regs));
-			if(dfa::Grammar<C,Symbol,Status,O>::lexer.transition(buff) > 0) 
+			dfa::Grammar<Char,Symbol,Status,Index>::lexer.load(TABLE(a::tt::i8086_regs));
+			if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.transition(buff) > 0) 
 			{
-				if(dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted() != NULL) 
+				if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted() != NULL) 
 				{
-					return dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted()->token;
+					return dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted()->token;
 				}
 			}
 			
-			dfa::Grammar<C,Symbol,Status,O>::lexer.load(TABLE(a::tt::Identifier));
-			if(dfa::Grammar<C,Symbol,Status,O>::lexer.transition(buff) > 0) 
+			dfa::Grammar<Char,Symbol,Status,Index>::lexer.load(TABLE(a::tt::Identifier));
+			if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.transition(buff) > 0) 
 			{
-				if(dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted() != NULL) 
+				if(dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted() != NULL) 
 				{
-					return dfa::Grammar<C,Symbol,Status,O>::lexer.get_accepted()->token;
+					return dfa::Grammar<Char,Symbol,Status,Index>::lexer.get_accepted()->token;
 				}
 			}
 
 			
 			return (Symbol)buff.next_char();
 		}
-				
+			
+		Symbol parsing(Buffer<Char>& buff)
+		{
+			
+		}
+		
+		
 	private:
 	};
 

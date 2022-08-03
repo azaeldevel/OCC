@@ -57,6 +57,10 @@ public:
 	{
 		return buffer;
 	}
+	const T* get_base_string()const
+	{
+		return &buffer[base];
+	}
 	T operator[](unsigned int index)const
 	{
 	#ifdef OCTETOS_CC_FULL_CHECK

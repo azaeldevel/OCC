@@ -247,6 +247,10 @@ enum class Tokens : cc::tt::Token
 	Identifier,
 	Integer,
 	Integer_0x,
+
+	grammar,
+	gram_inst_mov,
+	gram_inst_int,
 };
 
 

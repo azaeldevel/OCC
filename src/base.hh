@@ -3,7 +3,7 @@
 #define OCTETOS_CC_BASE
 
 #include <cstddef>
-
+//#include <iostream>
 
 namespace oct::cc
 {
@@ -11,7 +11,16 @@ namespace oct::cc
 template<typename C>
 inline bool is_whitespace(C c)
 {
-	return c == ' ' or c == '\t' or c == '\n';
+	switch(c)
+	{
+		case ' ':
+		case '\t':
+		case '\n':
+			return true;
+		default :
+			return false;	
+	}
+	return false;
 }
 
 template<typename C> 
@@ -57,6 +66,7 @@ template<typename C> size_t copy(const C* origin, size_t leng,C** dest)
 	for(;i < leng; i++)
 	{
 		(*dest)[i] = origin[i];
+		//std::cout << "C : " << (*dest)[i] << "\n";
 	}
 	(*dest)[leng] = '\0';
 

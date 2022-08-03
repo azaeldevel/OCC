@@ -26,7 +26,7 @@
 
 #include <vector>
 #include <octetos/core/core.hh>
-
+#include <initializer_list>
 
 #include "Exception.hh"
 
@@ -1132,15 +1132,16 @@ constexpr static const tt::a::Transition Integer_0x[][tt::MAX_SIMBOLS] = {
 }
 namespace b
 {
-	template<typename T>
+	template<typename T,typename Token>
 	struct Transition //transition B
 	{
 		Status current;
 		T input;
 		Indicator indicator;
 		Status next;
+		Token token;
 
-		bool operator < (const Transition<T>& obj) const
+		bool operator < (const Transition<T,Token>& obj) const
 		{
 			if(current < obj.current) return true;
 			else if(current > obj.current) return false;
@@ -1153,7 +1154,7 @@ namespace b
 
 			return false;
 		}
-		bool operator > (const Transition<T>& obj) const
+		bool operator > (const Transition<T,Token>& obj) const
 		{
 			if(current > obj.current) return true;
 			else if(current < obj.current) return false;
@@ -1255,135 +1256,249 @@ namespace b
 		}
 	};
 
-constexpr static const Transition<char> Identifier[] = {
+enum class Tokens : cc::tt::Token
+{
+	None,
+	
+	Identifier,
 
-		{0,'A',Indicator::Accept,1},
-		{0,'B',Indicator::Accept,1},
-		{0,'C',Indicator::Accept,1},
-		{0,'D',Indicator::Accept,1},
-		{0,'E',Indicator::Accept,1},
-		{0,'F',Indicator::Accept,1},
-		{0,'G',Indicator::Accept,1},
-		{0,'H',Indicator::Accept,1},
-		{0,'I',Indicator::Accept,1},
-		{0,'J',Indicator::Accept,1},
-		{0,'K',Indicator::Accept,1},
-		{0,'L',Indicator::Accept,1},
-		{0,'M',Indicator::Accept,1},
-		{0,'N',Indicator::Accept,1},
-		{0,'O',Indicator::Accept,1},
-		{0,'P',Indicator::Accept,1},
-		{0,'Q',Indicator::Accept,1},
-		{0,'R',Indicator::Accept,1},
-		{0,'S',Indicator::Accept,1},
-		{0,'T',Indicator::Accept,1},
-		{0,'U',Indicator::Accept,1},
-		{0,'V',Indicator::Accept,1},
-		{0,'W',Indicator::Accept,1},
-		{0,'X',Indicator::Accept,1},
-		{0,'Y',Indicator::Accept,1},
-		{0,'Z',Indicator::Accept,1},
+	botton,
+};
 
-		{0,'_',Indicator::Accept,1},
+template<typename T,typename Token,typename I = size_t> class TT
+{
+public:
+	//
+	TT(std::initializer_list<Transition<T,Token>> d) : _size(d.size())
+	{
+		table = new Transition<T,Token>[d.size()];
+		unsigned int i = 0;
+		for(const Transition<T,Token>& t : d)
+		{
+			table[i] = t;
+			i++;
+		}
+		sort(table,d.size());
+	}
+	~TT() 
+	{	
+		delete[] table;
+	}
 
-		{0,'a',Indicator::Accept,1},
-		{0,'b',Indicator::Accept,1},
-		{0,'c',Indicator::Accept,1},
-		{0,'d',Indicator::Accept,1},
-		{0,'e',Indicator::Accept,1},
-		{0,'f',Indicator::Accept,1},
-		{0,'g',Indicator::Accept,1},
-		{0,'h',Indicator::Accept,1},
-		{0,'i',Indicator::Accept,1},
-		{0,'j',Indicator::Accept,1},
-		{0,'k',Indicator::Accept,1},
-		{0,'l',Indicator::Accept,1},
-		{0,'m',Indicator::Accept,1},
-		{0,'n',Indicator::Accept,1},
-		{0,'o',Indicator::Accept,1},
-		{0,'p',Indicator::Accept,1},
-		{0,'q',Indicator::Accept,1},
-		{0,'r',Indicator::Accept,1},
-		{0,'s',Indicator::Accept,1},
-		{0,'t',Indicator::Accept,1},
-		{0,'u',Indicator::Accept,1},
-		{0,'v',Indicator::Accept,1},
-		{0,'w',Indicator::Accept,1},
-		{0,'x',Indicator::Accept,1},
-		{0,'y',Indicator::Accept,1},
-		{0,'z',Indicator::Accept,1},
+	Transition<T,Token>& operator [](size_t index) const
+	{
+		return table[index];
+	}
+	
+	inline size_t size() const
+	{
+		return _size;
+	}
+private:
+	Transition<T,Token>* table;	
+	size_t _size;
 
-		{1,'0',Indicator::Accept,1},
-		{1,'1',Indicator::Accept,1},
-		{1,'2',Indicator::Accept,1},
-		{1,'3',Indicator::Accept,1},
-		{1,'4',Indicator::Accept,1},
-		{1,'5',Indicator::Accept,1},
-		{1,'6',Indicator::Accept,1},
-		{1,'7',Indicator::Accept,1},
-		{1,'8',Indicator::Accept,1},
-		{1,'9',Indicator::Accept,1},
+	void copy(I begin, I end,Transition<T,Token>* in, Transition<T,Token>* out)
+	{
+		for(I i = begin; i < end; i++)
+		{
+			out[i] = in[i];
+		}
+	}
+	void merge(Transition<T,Token>* in,I begin, I middle, I end,Transition<T,Token>* out)
+	{
+		I i = begin;
+		I j = middle;
+		I k = begin;
 
-		{1,'A',Indicator::Accept,1},
-		{1,'B',Indicator::Accept,1},
-		{1,'C',Indicator::Accept,1},
-		{1,'D',Indicator::Accept,1},
-		{1,'E',Indicator::Accept,1},
-		{1,'F',Indicator::Accept,1},
-		{1,'G',Indicator::Accept,1},
-		{1,'H',Indicator::Accept,1},
-		{1,'I',Indicator::Accept,1},
-		{1,'J',Indicator::Accept,1},
-		{1,'K',Indicator::Accept,1},
-		{1,'L',Indicator::Accept,1},
-		{1,'M',Indicator::Accept,1},
-		{1,'N',Indicator::Accept,1},
-		{1,'O',Indicator::Accept,1},
-		{1,'P',Indicator::Accept,1},
-		{1,'Q',Indicator::Accept,1},
-		{1,'R',Indicator::Accept,1},
-		{1,'S',Indicator::Accept,1},
-		{1,'T',Indicator::Accept,1},
-		{1,'U',Indicator::Accept,1},
-		{1,'V',Indicator::Accept,1},
-		{1,'W',Indicator::Accept,1},
-		{1,'X',Indicator::Accept,1},
-		{1,'Y',Indicator::Accept,1},
-		{1,'Z',Indicator::Accept,1},
+		while(i < middle && j <= end)
+		{
+			if (in[i] < in[j])
+			{
+					//std::cout << " : Cierto\n";
+					out[k] = in[i];
+					i++;
+			}
+			else
+			{
+					//std::cout << " : Falso\n";
+					out[k] = in[j];
+					j++;
+			}
+			k++;
+		}
+		while(i < middle )
+		{
+				//std::cout << "\tvaciando " << in[i]->index << "\n";
+				out[k] = in[i];
+				i++;
+				k++;
+		}
+		while(j <= end )
+		{
+				//std::cout << "\tvaciando " << in[j]->index << "\n";
+				out[k] = in[j];
+				j++;
+				k++;
+		}
+	}
+	void split(Transition<T,Token>* out,I begin, I end,Transition<T,Token>* in)
+	{
+		if (end - begin < 1) return;
+			
+		I middle = begin + (end - begin) / 2;
 
-		{1,'_',Indicator::Accept,1},
+		split(in,begin,middle,out);
+		split(in,middle + 1,end,out);
 
-		{1,'a',Indicator::Accept,1},
-		{1,'b',Indicator::Accept,1},
-		{1,'c',Indicator::Accept,1},
-		{1,'d',Indicator::Accept,1},
-		{1,'e',Indicator::Accept,1},
-		{1,'f',Indicator::Accept,1},
-		{1,'g',Indicator::Accept,1},
-		{1,'h',Indicator::Accept,1},
-		{1,'i',Indicator::Accept,1},
-		{1,'j',Indicator::Accept,1},
-		{1,'k',Indicator::Accept,1},
-		{1,'l',Indicator::Accept,1},
-		{1,'m',Indicator::Accept,1},
-		{1,'n',Indicator::Accept,1},
-		{1,'o',Indicator::Accept,1},
-		{1,'p',Indicator::Accept,1},
-		{1,'q',Indicator::Accept,1},
-		{1,'r',Indicator::Accept,1},
-		{1,'s',Indicator::Accept,1},
-		{1,'t',Indicator::Accept,1},
-		{1,'u',Indicator::Accept,1},
-		{1,'v',Indicator::Accept,1},
-		{1,'w',Indicator::Accept,1},
-		{1,'x',Indicator::Accept,1},
-		{1,'y',Indicator::Accept,1},
-		{1,'z',Indicator::Accept,1},
+		merge(out,begin,middle+1,end,in);
+	}
+	void sort(Transition<T,Token>* data, size_t length)
+	{
+		Transition<T,Token> work[length];	
+
+		copy(0,length,data,work);
+		split(work,0,length - 1,data);
+	}
+};
+
+
+static const TT<char,Tokens> Identifier{
+		
+		{0,'A',Indicator::Accept,1,Tokens::Identifier},
+		{0,'B',Indicator::Accept,1,Tokens::Identifier},
+		{0,'C',Indicator::Accept,1,Tokens::Identifier},
+		{0,'D',Indicator::Accept,1,Tokens::Identifier},
+		{0,'E',Indicator::Accept,1,Tokens::Identifier},
+		{0,'F',Indicator::Accept,1,Tokens::Identifier},
+		{0,'G',Indicator::Accept,1,Tokens::Identifier},
+		{0,'H',Indicator::Accept,1,Tokens::Identifier},
+		{0,'I',Indicator::Accept,1,Tokens::Identifier},
+		{0,'J',Indicator::Accept,1,Tokens::Identifier},
+		{0,'K',Indicator::Accept,1,Tokens::Identifier},
+		{0,'L',Indicator::Accept,1,Tokens::Identifier},
+		{0,'M',Indicator::Accept,1,Tokens::Identifier},
+		{0,'N',Indicator::Accept,1,Tokens::Identifier},
+		{0,'O',Indicator::Accept,1,Tokens::Identifier},
+		{0,'P',Indicator::Accept,1,Tokens::Identifier},
+		{0,'Q',Indicator::Accept,1,Tokens::Identifier},
+		{0,'R',Indicator::Accept,1,Tokens::Identifier},
+		{0,'S',Indicator::Accept,1,Tokens::Identifier},
+		{0,'T',Indicator::Accept,1,Tokens::Identifier},
+		{0,'U',Indicator::Accept,1,Tokens::Identifier},
+		{0,'V',Indicator::Accept,1,Tokens::Identifier},
+		{0,'W',Indicator::Accept,1,Tokens::Identifier},
+		{0,'X',Indicator::Accept,1,Tokens::Identifier},
+		{0,'Y',Indicator::Accept,1,Tokens::Identifier},
+		{0,'Z',Indicator::Accept,1,Tokens::Identifier},
+
+		{0,'_',Indicator::Accept,1,Tokens::Identifier},
+
+		{0,'a',Indicator::Accept,1,Tokens::Identifier},
+		{0,'b',Indicator::Accept,1,Tokens::Identifier},
+		{0,'c',Indicator::Accept,1,Tokens::Identifier},
+		{0,'d',Indicator::Accept,1,Tokens::Identifier},
+		{0,'e',Indicator::Accept,1,Tokens::Identifier},
+		{0,'f',Indicator::Accept,1,Tokens::Identifier},
+		{0,'g',Indicator::Accept,1,Tokens::Identifier},
+		{0,'h',Indicator::Accept,1,Tokens::Identifier},
+		{0,'i',Indicator::Accept,1,Tokens::Identifier},
+		{0,'j',Indicator::Accept,1,Tokens::Identifier},
+		{0,'k',Indicator::Accept,1,Tokens::Identifier},
+		{0,'l',Indicator::Accept,1,Tokens::Identifier},
+		{0,'m',Indicator::Accept,1,Tokens::Identifier},
+		{0,'n',Indicator::Accept,1,Tokens::Identifier},
+		{0,'o',Indicator::Accept,1,Tokens::Identifier},
+		{0,'p',Indicator::Accept,1,Tokens::Identifier},
+		{0,'q',Indicator::Accept,1,Tokens::Identifier},
+		{0,'r',Indicator::Accept,1,Tokens::Identifier},
+		{0,'s',Indicator::Accept,1,Tokens::Identifier},
+		{0,'t',Indicator::Accept,1,Tokens::Identifier},
+		{0,'u',Indicator::Accept,1,Tokens::Identifier},
+		{0,'v',Indicator::Accept,1,Tokens::Identifier},
+		{0,'w',Indicator::Accept,1,Tokens::Identifier},
+		{0,'x',Indicator::Accept,1,Tokens::Identifier},
+		{0,'y',Indicator::Accept,1,Tokens::Identifier},
+		{0,'z',Indicator::Accept,1,Tokens::Identifier},
+
+		{0,' ',Indicator::Prefix_Accept,0,Tokens::None},
+		{0,'\t',Indicator::Prefix_Accept,0,Tokens::None},
+		{0,'\n',Indicator::Prefix_Accept,0,Tokens::None},
+
+		{1,'0',Indicator::Accept,1,Tokens::Identifier},
+		{1,'1',Indicator::Accept,1,Tokens::Identifier},
+		{1,'2',Indicator::Accept,1,Tokens::Identifier},
+		{1,'3',Indicator::Accept,1,Tokens::Identifier},
+		{1,'4',Indicator::Accept,1,Tokens::Identifier},
+		{1,'5',Indicator::Accept,1,Tokens::Identifier},
+		{1,'6',Indicator::Accept,1,Tokens::Identifier},
+		{1,'7',Indicator::Accept,1,Tokens::Identifier},
+		{1,'8',Indicator::Accept,1,Tokens::Identifier},
+		{1,'9',Indicator::Accept,1,Tokens::Identifier},
+
+		{1,'A',Indicator::Accept,1,Tokens::Identifier},
+		{1,'B',Indicator::Accept,1,Tokens::Identifier},
+		{1,'C',Indicator::Accept,1,Tokens::Identifier},
+		{1,'D',Indicator::Accept,1,Tokens::Identifier},
+		{1,'E',Indicator::Accept,1,Tokens::Identifier},
+		{1,'F',Indicator::Accept,1,Tokens::Identifier},
+		{1,'G',Indicator::Accept,1,Tokens::Identifier},
+		{1,'H',Indicator::Accept,1,Tokens::Identifier},
+		{1,'I',Indicator::Accept,1,Tokens::Identifier},
+		{1,'J',Indicator::Accept,1,Tokens::Identifier},
+		{1,'K',Indicator::Accept,1,Tokens::Identifier},
+		{1,'L',Indicator::Accept,1,Tokens::Identifier},
+		{1,'M',Indicator::Accept,1,Tokens::Identifier},
+		{1,'N',Indicator::Accept,1,Tokens::Identifier},
+		{1,'O',Indicator::Accept,1,Tokens::Identifier},
+		{1,'P',Indicator::Accept,1,Tokens::Identifier},
+		{1,'Q',Indicator::Accept,1,Tokens::Identifier},
+		{1,'R',Indicator::Accept,1,Tokens::Identifier},
+		{1,'S',Indicator::Accept,1,Tokens::Identifier},
+		{1,'T',Indicator::Accept,1,Tokens::Identifier},
+		{1,'U',Indicator::Accept,1,Tokens::Identifier},
+		{1,'V',Indicator::Accept,1,Tokens::Identifier},
+		{1,'W',Indicator::Accept,1,Tokens::Identifier},
+		{1,'X',Indicator::Accept,1,Tokens::Identifier},
+		{1,'Y',Indicator::Accept,1,Tokens::Identifier},
+		{1,'Z',Indicator::Accept,1,Tokens::Identifier},
+
+		{1,'_',Indicator::Accept,1,Tokens::Identifier},
+
+		{1,'a',Indicator::Accept,1,Tokens::Identifier},
+		{1,'b',Indicator::Accept,1,Tokens::Identifier},
+		{1,'c',Indicator::Accept,1,Tokens::Identifier},
+		{1,'d',Indicator::Accept,1,Tokens::Identifier},
+		{1,'e',Indicator::Accept,1,Tokens::Identifier},
+		{1,'f',Indicator::Accept,1,Tokens::Identifier},
+		{1,'g',Indicator::Accept,1,Tokens::Identifier},
+		{1,'h',Indicator::Accept,1,Tokens::Identifier},
+		{1,'i',Indicator::Accept,1,Tokens::Identifier},
+		{1,'j',Indicator::Accept,1,Tokens::Identifier},
+		{1,'k',Indicator::Accept,1,Tokens::Identifier},
+		{1,'l',Indicator::Accept,1,Tokens::Identifier},
+		{1,'m',Indicator::Accept,1,Tokens::Identifier},
+		{1,'n',Indicator::Accept,1,Tokens::Identifier},
+		{1,'o',Indicator::Accept,1,Tokens::Identifier},
+		{1,'p',Indicator::Accept,1,Tokens::Identifier},
+		{1,'q',Indicator::Accept,1,Tokens::Identifier},
+		{1,'r',Indicator::Accept,1,Tokens::Identifier},
+		{1,'s',Indicator::Accept,1,Tokens::Identifier},
+		{1,'t',Indicator::Accept,1,Tokens::Identifier},
+		{1,'u',Indicator::Accept,1,Tokens::Identifier},
+		{1,'v',Indicator::Accept,1,Tokens::Identifier},
+		{1,'w',Indicator::Accept,1,Tokens::Identifier},
+		{1,'x',Indicator::Accept,1,Tokens::Identifier},
+		{1,'y',Indicator::Accept,1,Tokens::Identifier},
+		{1,'z',Indicator::Accept,1,Tokens::Identifier},
+
+		{1,' ',Indicator::Prefix_Accept,0,Tokens::None},
+		{1,'\t',Indicator::Prefix_Accept,0,Tokens::None},
+		{1,'\n',Indicator::Prefix_Accept,0,Tokens::None},
 	};
 
 
-
-constexpr static const Transition<char> Integer[]  {
+static const TT<char,Tokens> Integer  {
 		{0,'0',Indicator::Accept,1},
 		{0,'1',Indicator::Accept,1},
 		{0,'2',Indicator::Accept,1},
