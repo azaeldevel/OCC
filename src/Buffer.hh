@@ -102,7 +102,7 @@ public:
 		std::uintmax_t i = 0;
 		for(; i < lengString; i++)
 		{	
-			if(buffer[base + i] == '\0') break;//se llego al final sin fallar la verificacion
+			if(buffer[base + i] == 0) break;//se llego al final sin fallar la verificacion
 			if(buffer[base + i] != string[i]) break;		
 		}
 
@@ -113,7 +113,7 @@ public:
 	}
 	T walk(T c)
 	{		
-		if(buffer[base] == '\0') return '\0';//se llego al final sin fallar la verificacion
+		if(buffer[base] == 0) return 0;//se llego al final sin fallar la verificacion
 		if(buffer[base] != c) return buffer[base];		
 
 		++base;	
@@ -125,7 +125,7 @@ public:
 	}
 	T next_char()
 	{		
-		if(buffer[base] == '\0') return '\0';//se llego al final sin fallar la verificacion
+		if(buffer[base] == 0) return 0;//se llego al final sin fallar la verificacion
 		
 		return buffer[base++];
 	}
@@ -134,7 +134,7 @@ public:
 		std::uintmax_t i = 0;
 		do
 		{
-			if(buffer[base + i] == '\0') break;
+			if(buffer[base + i] == 0) break;
 			else if(is_whitespace(buffer[base + i])) i++;
 			else break;
 		}

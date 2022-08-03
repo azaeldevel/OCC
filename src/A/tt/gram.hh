@@ -28,25 +28,52 @@
 namespace oct::cc::a::gram::tt
 {
 
-/*
+
 static const cc::tt::b::TT<cc::a::tt::Tokens,cc::a::tt::Tokens> i8086_insts{
 
 		//mov
 		{0,cc::a::tt::Tokens::i8086_mov,cc::tt::Indicator::None,1,a::tt::Tokens::none},
-		{1,cc::a::tt::Tokens::Integer_0x,cc::tt::Indicator::None,2,a::tt::Tokens::none},
-		{2,cc::a::tt::Tokens::i8086_reg_al,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
-		{3,';',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
-		{3,' ',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
-		{3,'\n',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+			//memory,accumulator
+			{1,cc::a::tt::Tokens::Identifier,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+				//memory, al
+				{2,cc::a::tt::Tokens::i8086_reg_al,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//memory, ax
+				{2,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+
+			//accumulator,memory
+			{1,cc::a::tt::Tokens::i8086_reg_al,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+			{1,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+			{2,cc::a::tt::Tokens::Identifier,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+
+			//register, register
+			//-->repeat{1,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+				{2,cc::a::tt::Tokens::i8086_reg_bx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				{2,cc::a::tt::Tokens::i8086_reg_cx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				{2,cc::a::tt::Tokens::i8086_reg_dx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+			{1,cc::a::tt::Tokens::i8086_reg_bx,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_cx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_dx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+			{1,cc::a::tt::Tokens::i8086_reg_cx,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_bx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_dx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},			
+			{1,cc::a::tt::Tokens::i8086_reg_dx,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_ax,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_bx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+				//-->repeat{2,cc::a::tt::Tokens::i8086_reg_cx,cc::tt::Indicator::Accept,3,a::tt::Tokens::gram_inst_mov},
+			{3,(cc::a::tt::Tokens)';',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+			{3,(cc::a::tt::Tokens)' ',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+			{3,(cc::a::tt::Tokens)'\n',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
 
 		//int
 		{0,cc::a::tt::Tokens::i8086_int_token,cc::tt::Indicator::None,6},
 		{7,cc::a::tt::Tokens::Integer_0x,cc::tt::Indicator::Accept,8,a::tt::Tokens::gram_inst_int},
-		{8,';',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
-		{8,' ',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
-		{8,'\n',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+		{8,(cc::a::tt::Tokens)';',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+		{8,(cc::a::tt::Tokens)' ',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
+		{8,(cc::a::tt::Tokens)'\n',cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
 	};
-*/
+
 
 
 }

@@ -362,17 +362,17 @@ protected:
 	{
 
 	public:
-		B() : table(NULL)
+		B() : table(NULL),accepted(NULL)
 		{
 		}
-		B(const tt::b::TT<T,Token>& t) : table(&t)
+		B(const tt::b::TT<T,Token>& t) : table(&t),accepted(NULL)
 		{
 		}
-
+		/*
 		void load(const tt::b::TT<T,Token>& t)
 		{
 			table = &t;
-		}
+		}*/
 
 		const tt::b::Transition<T,Token>* search(tt::Status current,T input)
 		{
@@ -488,6 +488,7 @@ protected:
 			DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
 			DFA<T,S,O>::i = 0;	
 			const tt::b::Transition<T,Token> *prev = NULL, *actual;
+			accepted = NULL;
 			do
 			{
 #if OCTETOS_CC_DEGUB
@@ -495,11 +496,11 @@ protected:
 				{
 					std::cout << "current : '"<<  dfa::DFA<T,Word,Word>::current << "'\n";
 					std::cout << "i : '"<<  DFA<T,Word,Word>::i << "'\n";
-					std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
+					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
 					std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
 				}
 #endif				
-				if(buff[DFA<T,S,O>::i] == '\0')
+				if(buff[DFA<T,S,O>::i] == T(0))
 				{
 					if(dfa::DFA<T,S,O>::i == 0) return 0;
 					else 
@@ -509,6 +510,7 @@ protected:
 							if(prev->indicator == tt::Indicator::Accept) 
 							{
 								buff.walk((size_t)dfa::DFA<T,S,O>::i);
+								accepted = actual;
 								return DFA<T,Word,Word>::i;
 							}
 						}
@@ -545,6 +547,7 @@ protected:
 #if OCTETOS_CC_DEGUB
 							//std::cout << "prev exist acepted\n";
 #endif
+							accepted = actual;
 							buff.walk((size_t)dfa::DFA<T,S,O>::i);
 							return DFA<T,S,O>::i;
 						}
@@ -581,11 +584,17 @@ protected:
 				(*table)[i].print(out);
 			}
 		}
+
+		const tt::b::Transition<T,Token>* get_accepted()const
+		{
+			return accepted;
+		}
 		
 	private:
 
 	protected:
 		const tt::b::TT<T,Token>* table;
+		const tt::b::Transition<T,Token>* accepted;
 		//tt::Status current;
 		//tt::Status reset;
 		//const size_t length;

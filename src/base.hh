@@ -27,7 +27,7 @@ template<typename C>
 size_t length(const C* str)
 {
 	size_t i = 0;
-	while(str[i] != '\0')
+	while(str[i] != (C)0)
 	{
 		i++;
 	}
@@ -58,7 +58,7 @@ bool equal(const C* initial, const C* target)
 
 template<typename C> size_t copy(const C* origin, size_t leng,C** dest)
 {
-	if(origin[leng] != '\0') return 0;
+	if(origin[leng] != (C)0) return 0;
 	if(not origin) return 0;
 	if(not dest) return 0;
 		
@@ -68,7 +68,7 @@ template<typename C> size_t copy(const C* origin, size_t leng,C** dest)
 		(*dest)[i] = origin[i];
 		//std::cout << "C : " << (*dest)[i] << "\n";
 	}
-	(*dest)[leng] = '\0';
+	(*dest)[leng] = (C)0;
 
 	return leng;
 }
