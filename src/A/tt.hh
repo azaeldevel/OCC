@@ -23,10 +23,97 @@
 
 #include "tt.hh"
 
-
-//transition table
 namespace oct::cc::a::tt
 {
+	enum class Tokens : cc::tt::Token
+	{
+		none = cc::tt::a::base_token,
+		
+		i8086_aaa,
+		i8086_aad,
+		i8086_aam,
+		i8086_aas,
+		i8086_adc,
+		i8086_add,
+		i8086_and_token,
+		i8086_call,
+		i8086_cbw,
+		i8086_clc,
+		i8086_cld,
+		i8086_cli,
+		i8086_cmc,
+		i8086_cmp,
+		i8086_cmps,
+		i8086_cwd,
+		i8086_daa,
+		i8086_das,
+		i8086_dec,
+		i8086_div,
+		i8086_esc,
+		i8086_hlt,
+		i8086_idiv,
+		i8086_imul,
+		i8086_in,
+		i8086_inc,
+		i8086_int_token,
+		i8086_intr,
+		i8086_into,
+		i8086_iret,
+		i8086_ja,
+		i8086_jae,
+		i8086_jb,
+		i8086_jbe,
+		i8086_jc,
+		i8086_jcxz,
+		i8086_je,
+		i8086_jz,
+		i8086_jg,
+		i8086_jge,
+		i8086_jl,
+		i8086_jle,
+		i8086_jmp,
+		i8086_jnc,
+		i8086_jne,
+		i8086_jno,
+		i8086_jnp,
+		i8086_jns,
+		i8086_jo,
+		i8086_jp,
+		i8086_js,
+		i8086_lahf,
+		i8086_lds,
+		i8086_lea,
+		i8086_les,
+		i8086_lock,
+		i8086_lods,
+		i8086_loop,
+		i8086_loope,
+		i8086_loopne,
+		i8086_nmi,
+		i8086_mov,
+
+		i8086_reg_al,
+		i8086_reg_ah,
+		i8086_reg_ax,
+		i8086_reg_bl,
+		i8086_reg_bh,
+		i8086_reg_bx,
+		i8086_reg_cl,
+		i8086_reg_ch,
+		i8086_reg_cx,
+		i8086_reg_dl,
+		i8086_reg_dh,
+		i8086_reg_dx,
+		
+		Identifier,
+		Integer,
+		Integer_0x,
+
+		grammar,
+		gram_inst_mov,
+		gram_inst_int,
+	};
+
 
 /*
 constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
@@ -164,94 +251,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 	};
 */
 
-enum class Tokens : cc::tt::Token
-{
-	none = cc::tt::a::base_token,
-	
-	i8086_aaa,
-	i8086_aad,
-	i8086_aam,
-	i8086_aas,
-	i8086_adc,
-	i8086_add,
-	i8086_and_token,
-	i8086_call,
-	i8086_cbw,
-	i8086_clc,
-	i8086_cld,
-	i8086_cli,
-	i8086_cmc,
-	i8086_cmp,
-	i8086_cmps,
-	i8086_cwd,
-	i8086_daa,
-	i8086_das,
-	i8086_dec,
-	i8086_div,
-	i8086_esc,
-	i8086_hlt,
-	i8086_idiv,
-	i8086_imul,
-	i8086_in,
-	i8086_inc,
-	i8086_int_token,
-	i8086_intr,
-	i8086_into,
-	i8086_iret,
-	i8086_ja,
-	i8086_jae,
-	i8086_jb,
-	i8086_jbe,
-	i8086_jc,
-	i8086_jcxz,
-	i8086_je,
-	i8086_jz,
-	i8086_jg,
-	i8086_jge,
-	i8086_jl,
-	i8086_jle,
-	i8086_jmp,
-	i8086_jnc,
-	i8086_jne,
-	i8086_jno,
-	i8086_jnp,
-	i8086_jns,
-	i8086_jo,
-	i8086_jp,
-	i8086_js,
-	i8086_lahf,
-	i8086_lds,
-	i8086_lea,
-	i8086_les,
-	i8086_lock,
-	i8086_lods,
-	i8086_loop,
-	i8086_loope,
-	i8086_loopne,
-	i8086_nmi,
-	i8086_mov,
 
-	i8086_reg_al,
-	i8086_reg_ah,
-	i8086_reg_ax,
-	i8086_reg_bl,
-	i8086_reg_bh,
-	i8086_reg_bx,
-	i8086_reg_cl,
-	i8086_reg_ch,
-	i8086_reg_cx,
-	i8086_reg_dl,
-	i8086_reg_dh,
-	i8086_reg_dx,
-	
-	Identifier,
-	Integer,
-	Integer_0x,
-
-	grammar,
-	gram_inst_mov,
-	gram_inst_int,
-};
 
 
 constexpr static const cc::tt::a::Transition Identifier[][cc::tt::MAX_SIMBOLS] = {
@@ -1180,9 +1180,16 @@ constexpr static const cc::tt::a::Transition Integer_0x[][cc::tt::MAX_SIMBOLS] =
 		},
 	};
 
+}
 
 
-constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] = {
+//transition table
+namespace oct::cc::a::tt::i8086
+{
+
+
+
+constexpr static const cc::tt::a::Transition regs[][cc::tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2032,7 +2039,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//9
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Prefix_Accept,0,(Word)Tokens::none},//;
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -2368,7 +2375,7 @@ constexpr static const cc::tt::a::Transition i8086_regs[][cc::tt::MAX_SIMBOLS] =
 	};
 
 
-constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] = {
+constexpr static const cc::tt::a::Transition segs[][cc::tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -4073,7 +4080,6 @@ constexpr static const cc::tt::a::Transition i8086_segs[][cc::tt::MAX_SIMBOLS] =
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 		},
 	};
-
 
 }
 

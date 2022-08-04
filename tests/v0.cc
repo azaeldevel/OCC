@@ -1,11 +1,8 @@
 
 #include <AF.hh>
 #include <tt.hh>
-#include <A/tt.hh>
-#include <A/A.hh>
 #include <A/A.hh>
 #include <Buffer.hh>
-#include <A/tt/gram.hh>
 
 
 #include <iostream>
@@ -53,7 +50,7 @@ void v0_AFD_A()
 
 	
 	//Assembler A	
-	dfa::A<char> i8086_regs(TABLE(a::tt::i8086_regs));
+	dfa::A<char> i8086_regs(TABLE(a::tt::i8086::regs));
 	try
 	{
 		CU_ASSERT(i8086_regs.transition("alg") == 0);
@@ -98,6 +95,8 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_regs.transition("cl") == 2);
 	CU_ASSERT(i8086_regs.transition("cl ") == 2);
 	CU_ASSERT(i8086_regs.get_accepted()->token == (oct::Word)a::tt::Tokens::i8086_reg_cl);
+	CU_ASSERT(i8086_regs.transition("cx;") == 2);
+	CU_ASSERT(i8086_regs.get_accepted()->token == (oct::Word)a::tt::Tokens::i8086_reg_cx);
 	CU_ASSERT(i8086_regs.transition("dx") == 2);
 	CU_ASSERT(i8086_regs.get_accepted()->token == (oct::Word)a::tt::Tokens::i8086_reg_dx);
 	CU_ASSERT(i8086_regs.transition("dx,") == 2);
@@ -112,7 +111,7 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_regs.transition("dl	") == 2);
 
 
-	dfa::A<char> i8086_segs(TABLE(a::tt::i8086_segs));
+	dfa::A<char> i8086_segs(TABLE(a::tt::i8086::segs));
 	CU_ASSERT(i8086_segs.transition("bp") == 2);
 	CU_ASSERT(i8086_segs.transition("cs") == 2);
 	CU_ASSERT(i8086_segs.transition("di") == 2);
@@ -127,6 +126,11 @@ void v0_AFD_A()
 	*/
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
+
+	Buffer buff_insts("cx;");
+	dfa::A<char> i8086_regs_buff(TABLE(a::tt::i8086::regs));
+	CU_ASSERT(i8086_regs_buff.transition(buff_insts) == 2);
+	CU_ASSERT(buff_insts[0] == ';');
 
 	std::vector<tt::a::Selector> select;
 	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
@@ -499,6 +503,13 @@ void v0_Grammar_A()
 
 	const char* str1 = "mov ax cx;";
 	Buffer buff3(str1);
+	oct::cc::a::Compiler<char> compiler;
+	
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_mov);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_reg_ax);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_reg_cx);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)';');
+
 	
 }
 void v0_developing()

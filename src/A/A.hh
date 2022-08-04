@@ -21,15 +21,85 @@
  */
 
 #include <cctype>
+
+#include "AF.hh"
 #include "A/tt.hh"
 #include "A/tt/i8086/insts.hh"
-#include "AF.hh"
+#include "A/tt/gram.hh"
+
 
 //assembler
 namespace oct::cc::a
 {
 	
+template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class Compiler
+{
+public:
+	Compiler() : i(0)
+	{
+	}
 	
+	Token lexing(Buffer<C>& buff)
+	{
+		if(buff.empty()) return 0;		
+	
+		//std::cout << "\nStep 1\n";
+		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
+		
+		buff.consume_whites();
+	
+		//>>>>keyword
+		lex.load(TABLE(a::tt::i8086::insts));
+		i = lex.transition(buff);
+		if(i > 0) return lex.get_accepted()->token;	
+	
+		//std::cout << "Step 2\n";	
+		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
+
+		lex.load(TABLE(a::tt::i8086::regs));
+		i = lex.transition(buff);
+		//std::cout << "i : " << i << "\n";
+		if(i > 0) return lex.get_accepted()->token;
+	
+		//std::cout << "Step 3\n";
+		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
+
+		lex.load(TABLE(a::tt::i8086::segs));
+		i = lex.transition(buff);
+		if(i > 0) return lex.get_accepted()->token;
+	
+		//std::cout << "Step 4\n";
+		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
+
+
+		//>>>>
+		lex.load(TABLE(a::tt::Identifier));
+		i = lex.transition(buff);
+		if(i > 0) return lex.get_accepted()->token;
+
+		lex.load(TABLE(a::tt::Interger));
+		i = lex.transition(buff);
+		if(i > 0) return lex.get_accepted()->token;
+
+		lex.load(TABLE(a::tt::Integer_0x));
+		i = lex.transition(buff);
+		if(i > 0) return lex.get_accepted()->token;
+
+		//std::cout << "Step 5\n";
+		//std::cout << "char : '" << buff[0] << "'\n";
+		if((Token)buff[0] > 0 and (Token)buff[0] < 129) 
+		{			
+			return buff.next_char();
+		} 
+		
+		return Token(0);
+	}
+
+private:
+	dfa::A<C,S,O> lex;
+	O i;
+	
+};
 
 }
 
