@@ -2,8 +2,8 @@
 #include <AF.hh>
 #include <tt.hh>
 #include <A/tt.hh>
-#include <A.hh>
-#include <A.hh>
+#include <A/A.hh>
+#include <A/A.hh>
 #include <Buffer.hh>
 #include <A/tt/gram.hh>
 
@@ -482,30 +482,24 @@ void v0_performance()
 
 void v0_Grammar_A()
 {
-	
-	/*a::Instruction<char> grammar_a;
-	Buffer<char> buff1("mov al ah;");
-	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_mov);
-	CU_ASSERT(buff1.consume_whites() == 1);
-	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_al);
-	CU_ASSERT(buff1.consume_whites() == 1);
-	CU_ASSERT(grammar_a.lexing(buff1) == (oct::Word)a::tt::Tokens::i8086_reg_ah);
-	CU_ASSERT(grammar_a.lexing(buff1) == ';');*/
-
-	const a::tt::Tokens tok_str[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::Identifier,a::tt::Tokens::i8086_reg_al,(a::tt::Tokens)0};
+	const a::tt::Tokens tok_str[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::Identifier,a::tt::Tokens::i8086_reg_al,(a::tt::Tokens)';',(a::tt::Tokens)0};
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
 	Buffer<a::tt::Tokens> buff(tok_str);
-	dfa::B parser(a::gram::tt::i8086_insts);
+	dfa::B parser(a::gram::tt::i8086::insts);
 	/*parser.enable_echo(true);
 	std::cout << "parser : " << parser.transition(buff) << "\n";
 	parser.enable_echo(true);*/	
-	CU_ASSERT(parser.transition(buff) == 3);
+	CU_ASSERT(parser.transition(buff) == 4);
 	CU_ASSERT(parser.get_accepted()->token == a::tt::Tokens::gram_inst_mov);
 
-	const a::tt::Tokens tok_str2[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::i8086_reg_ax,a::tt::Tokens::i8086_reg_cx,(a::tt::Tokens)0};
+	const a::tt::Tokens tok_str2[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::i8086_reg_ax,a::tt::Tokens::i8086_reg_cx,(a::tt::Tokens)';',(a::tt::Tokens)0};
 	Buffer<a::tt::Tokens> buff2(tok_str2);
-	CU_ASSERT(parser.transition(buff2) == 3);
+	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == a::tt::Tokens::gram_inst_mov);
+
+	const char* str1 = "mov ax cx;";
+	Buffer buff3(str1);
+	
 }
 void v0_developing()
 {	

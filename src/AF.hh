@@ -378,52 +378,6 @@ protected:
 		{
 			return search(current,input,0,table->size() - 1);
 		}
-		const tt::b::Transition<T,Token>* search(tt::Status current,T input,size_t b, size_t e)
-		{
-			if(b > e) return NULL;
-			if(b - e == 1) return NULL;
-
-			//std::cout << "b = " << b << "\n";
-			//std::cout << "e = " << e << "\n";
-			size_t middle = b + ((e - b)/ 2);
-			//std::cout << "middle = " << middle << "\n";
-
-			if((*table)[middle].less(current,input))
-			{
-				//std::cout << "\t --> " << value << "\n";
-				return search(current,input,middle + 1,e);
-			}
-			else if((*table)[middle].great(current,input))
-			{
-				//std::cout << "\t --> " << value << "\n";
-				return search(current,input,b,middle - 1);
-			}
-			else if((*table)[middle].equal(current,input))
-			{
-				return &(*table)[middle];
-			}
-				
-			return NULL;		
-		}
-		const tt::b::Transition<T,Token>* transition(T symbol)
-		{
-			//std::cout << "current : " << current << "\n";
-			//std::cout << "symbol : " << symbol << "\n";
-			const tt::b::Transition<T,Token>* ret = search(dfa::DFA<T,S,O>::current,symbol);
-			//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
-			if(ret)
-			{
-#if OCTETOS_CC_DEGUB
-				//if(dfa::DFA<T,S,O>::echo) ret->print(std::cout);
-#endif
-				dfa::DFA<T,S,O>::current = ret->next;
-				//std::cout << "current : " << current << "\n";
-				//std::cout << "symbol : " << symbol << "\n";
-				return ret;
-			}
-
-			return NULL;
-		}
 		
 		/**
 		*\brief determina hasta donde la string indicada pertence al lenguaje del automata indicado
@@ -431,11 +385,12 @@ protected:
 		*/
 		O transition(const T* string)
 		{
-			if(not string) return false;
+			if(not string) return 0;
 			
 			DFA<T,S,O>::current = dfa::DFA<T,Word,Word>::reset;
 			DFA<T,S,O>::i = 0;	
-			const tt::b::Transition<T,Token> *prev = NULL, *actual;
+			prev = NULL;
+
 			do
 			{
 #if OCTETOS_CC_DEGUB
@@ -448,7 +403,7 @@ protected:
 					return 0;//si no se encontrontro transiscion
 				}
 
-				actual = transition(string[dfa::DFA<T,Word,Word>::i]);				
+				actual = next(string[dfa::DFA<T,Word,Word>::i]);				
 #if OCTETOS_CC_DEGUB
 				if(dfa::DFA<T,S,O>::echo and actual)
 				{
@@ -479,15 +434,14 @@ protected:
 			
 			
 			return dfa::DFA<T,Word,Word>::i;
-		}
-		
+		}		
 		O transition(Buffer<T>& buff)
 		{
 			if(buff.empty()) return 0;
 			
 			DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
 			DFA<T,S,O>::i = 0;	
-			const tt::b::Transition<T,Token> *prev = NULL, *actual;
+			prev = NULL;
 			accepted = NULL;
 			do
 			{
@@ -518,7 +472,7 @@ protected:
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				actual = transition(buff[dfa::DFA<T,S,O>::i]);
+				actual = next(buff[dfa::DFA<T,S,O>::i]);
 				
 				if(not actual) 
 				{
@@ -570,7 +524,51 @@ protected:
 			
 			return dfa::DFA<T,Word,Word>::i;
 		}
+		O transition(T element)
+		{
+			if(not element) return 0;
+			
 
+#if OCTETOS_CC_DEGUB
+			//std::cout << string[DFA<T,Word,Word>::i] << "\n";
+#endif				
+			if(element == 0)
+			{
+				if(dfa::DFA<T,S,O>::i == 0) return 0;
+				else if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,S,O>::i;
+				return 0;//si no se encontrontro transiscion
+			}
+
+			actual = next(element);
+				
+#if OCTETOS_CC_DEGUB
+				if(dfa::DFA<T,S,O>::echo and actual)
+				{
+					actual->print(std::cout);
+				}
+#endif
+				if(not actual) 
+				{
+					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
+					return 0;//si no se encontrontro transiscion
+				}
+				else if(actual->indicator == tt::Indicator::Prefix_Accept)
+				{
+					if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,S,O>::i;
+					return 0;//si no se encontrontro transiscion
+				}
+				else if(actual->indicator == tt::Indicator::Reject)
+				{
+					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
+					return 0;//si no se encontrontro transiscion
+				}
+				 
+				prev = actual;
+				dfa::DFA<T,Word,Word>::i++;
+			
+			
+			return dfa::DFA<T,Word,Word>::i;
+		}
 
 		const tt::b::TT<T,Token>& get_table() const
 		{
@@ -591,10 +589,58 @@ protected:
 		}
 		
 	private:
+		
+		const tt::b::Transition<T,Token>* next(T symbol)
+		{
+			//std::cout << "current : " << current << "\n";
+			//std::cout << "symbol : " << symbol << "\n";
+			const tt::b::Transition<T,Token>* ret = search(dfa::DFA<T,S,O>::current,symbol);
+			//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
+			if(ret)
+			{
+#if OCTETOS_CC_DEGUB
+				//if(dfa::DFA<T,S,O>::echo) ret->print(std::cout);
+#endif
+				dfa::DFA<T,S,O>::current = ret->next;
+				//std::cout << "current : " << current << "\n";
+				//std::cout << "symbol : " << symbol << "\n";
+				return ret;
+			}
 
+			return NULL;
+		}
+
+		const tt::b::Transition<T,Token>* search(tt::Status current,T input,size_t b, size_t e)
+		{
+			if(b > e) return NULL;
+			if(b - e == 1) return NULL;
+
+			//std::cout << "b = " << b << "\n";
+			//std::cout << "e = " << e << "\n";
+			size_t middle = b + ((e - b)/ 2);
+			//std::cout << "middle = " << middle << "\n";
+
+			if((*table)[middle].less(current,input))
+			{
+				//std::cout << "\t --> " << value << "\n";
+				return search(current,input,middle + 1,e);
+			}
+			else if((*table)[middle].great(current,input))
+			{
+				//std::cout << "\t --> " << value << "\n";
+				return search(current,input,b,middle - 1);
+			}
+			else if((*table)[middle].equal(current,input))
+			{
+				return &(*table)[middle];
+			}
+				
+			return NULL;		
+		}
 	protected:
 		const tt::b::TT<T,Token>* table;
-		const tt::b::Transition<T,Token>* accepted;
+		const tt::b::Transition<T,Token>* accepted,*prev, *actual;
+		
 		//tt::Status current;
 		//tt::Status reset;
 		//const size_t length;
@@ -785,36 +831,16 @@ protected:
 	};
 
 
-	template<typename Char,typename Symbol,typename Status,typename Index>
-	class Grammar
-	{
-	public:
-		Grammar()
-		{			
-		}
-		
-		virtual Index lexing(Buffer<Char>& buff) = 0;
-		virtual Index parsing(Buffer<Char>& buff) = 0;
-		
-	protected:
-		A<Char,Status,Index> lexer;
-		B<Symbol,Status,Index> parser;
-	};
-
-	template<typename Char,typename Symbol,typename Status,typename Index>
-	class Parser : public B<Symbol,Status,Index>
-	{
-	public:
-		Parser()
-		{			
-		}
-		
-		
-		
-	protected:
-		A<Char,Status,Index> lexer;
-	};
 	
+}
+namespace oct::cc::pda
+{
+template<typename C,typename Symbol,typename Status = Word,typename O = Word> class A
+{
+
+private:
+		
+};
 }
 
 #endif
