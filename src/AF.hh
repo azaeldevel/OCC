@@ -307,7 +307,12 @@ protected:
 				}
 #endif
 
-				if(actual->indicator == tt::Indicator::Prefix_Accept)
+				if(actual->indicator == tt::Indicator::Eat)
+				{
+					buff.next_char();
+					continue;
+				}
+				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
 					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
@@ -490,7 +495,15 @@ protected:
 				//actual->print(std::cout);				
 #endif
 
-				if(actual->indicator == tt::Indicator::Prefix_Accept)
+				if(actual->indicator == tt::Indicator::Eat)
+				{
+					if(actual->input == buff[DFA<T,S,O>::i])
+					{
+						dfa::DFA<T,Word,Word>::i++;
+						continue;
+					}
+				}
+				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{	
 #if OCTETOS_CC_DEGUB
 					//std::cout << "Prefix_Accept\n";

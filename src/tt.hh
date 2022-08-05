@@ -45,6 +45,7 @@ enum class Indicator : Status
 	Accept,
 	Reject,
 	Prefix_Accept,
+	Eat,
 };
 
 namespace a

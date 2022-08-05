@@ -365,16 +365,16 @@ void v0_AFD_A()
 	{
 		for(unsigned int i = 0; i < select_check_2.size(); i++)
 		{
-			std::cout << "check failure on a::tt::i8086_insts(" << select[i].i << "," << select[i].j << ")\n";
+			//std::cout << "check failure on a::tt::i8086_insts(" << select[i].i << "," << select[i].j << ")\n";
 		}
 	}
-	Buffer file_buff("section code{");
+	Buffer file_buff("   \n \t  section code{");
 	dfa::A<char> file_dfa(TABLE(a::tt::file));
 	//file_dfa.enable_echo(true);
 	CU_ASSERT(file_dfa.transition(file_buff) == 7);
 	//file_dfa.enable_echo(false);
 	CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_section);
-	file_buff.consume_whites ();
+	//file_buff.consume_whites ();
 	//file_dfa.enable_echo(true);
 	CU_ASSERT(file_dfa.transition(file_buff) == 4);
 	//file_dfa.enable_echo(false);
@@ -516,7 +516,14 @@ void v0_Grammar_A()
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_reg_cx);
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)';');
 
-	
+	std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
+	Buffer<char> buff4(booting_file);
+	dfa::B parser2(a::gram::tt::i8086::file);
+	oct::cc::a::File<char> file_compiler;
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_section);
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_code);
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)'{');
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_list_instructions);
 }
 void v0_developing()
 {	

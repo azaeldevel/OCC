@@ -35,7 +35,7 @@ namespace oct::cc::a
 template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
 {
 public:
-	File() : i(0)
+	File() : i(0), lexer(TABLE(tt::file))
 	{
 	}
 	
@@ -43,62 +43,17 @@ public:
 	{
 		if(buff.empty()) return 0;		
 	
-		//std::cout << "\nStep 1\n";
-		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
 		
-		buff.consume_whites();
-	
-		//>>>>keyword
-		lexer.load(TABLE(a::tt::i8086::insts));
-		i = lexer.transition(buff);
-		if(i > 0) return lexer.get_accepted()->token;	
-	
-		//std::cout << "Step 2\n";	
-		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
-
-		lexer.load(TABLE(a::tt::i8086::regs));
-		i = lexer.transition(buff);
-		//std::cout << "i : " << i << "\n";
-		if(i > 0) return lexer.get_accepted()->token;
-	
-		//std::cout << "Step 3\n";
-		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
-
-		lexer.load(TABLE(a::tt::i8086::segs));
-		i = lexer.transition(buff);
-		if(i > 0) return lexer.get_accepted()->token;
-	
-		//std::cout << "Step 4\n";
-		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
-
-
-		//>>>>
-		lexer.load(TABLE(a::tt::Identifier));
-		i = lexer.transition(buff);
-		if(i > 0) return lexer.get_accepted()->token;
-
-		lexer.load(TABLE(a::tt::Interger));
-		i = lexer.transition(buff);
-		if(i > 0) return lexer.get_accepted()->token;
-
-		lexer.load(TABLE(a::tt::Integer_0x));
-		i = lexer.transition(buff);
-		if(i > 0) return lexer.get_accepted()->token;
-
-		//std::cout << "Step 5\n";
-		//std::cout << "char : '" << buff[0] << "'\n";
-		if((Token)buff[0] > 0 and (Token)buff[0] < 129) 
-		{			
-			return buff.next_char();
-		}
-		
-		return Token(0);
+		i = lexer.transition(buff);	
+		if(i > 0) return lexer.get_actual()->token;	
+			
+		return buff.next_char();
 	}
 
 	Token parsing(Buffer<C>& buff)
 	{
 
-		return Token(0);
+		return Token(a::tt::Tokens::error);
 	}
 
 private:

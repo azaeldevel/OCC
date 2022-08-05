@@ -29,9 +29,12 @@ namespace oct::cc::a::tt
 	{
 		none = cc::tt::a::base_token,
 
+		error,
+
 		file,
 		file_section,
 		file_code,
+		file_list_instructions,
 		
 		i8086,
 		i8086_aaa,
@@ -273,8 +276,8 @@ static const cc::tt::a::Transition file[][cc::tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//tab
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//new line
+			{cc::tt::Indicator::Eat,0,(Word)Tokens::none},//tab
+			{cc::tt::Indicator::Eat,0,(Word)Tokens::none},//new line
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -296,7 +299,7 @@ static const cc::tt::a::Transition file[][cc::tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//' '
+			{cc::tt::Indicator::Eat,0,(Word)Tokens::none},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},

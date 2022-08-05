@@ -29,7 +29,13 @@ namespace oct::cc::a::gram::tt::i8086
 {
 
 static const cc::tt::b::TT<cc::a::tt::Tokens,cc::a::tt::Tokens> file{
-	{0,cc::a::tt::Tokens::none,cc::tt::Indicator::None,1,a::tt::Tokens::none},
+	
+	{0,cc::a::tt::Tokens::file_section,cc::tt::Indicator::None,1,a::tt::Tokens::none},
+	{1,cc::a::tt::Tokens::file_code,cc::tt::Indicator::None,2,a::tt::Tokens::none},
+	{2,(cc::a::tt::Tokens)'{',cc::tt::Indicator::None,3,a::tt::Tokens::none},
+	{3,cc::a::tt::Tokens::file_list_instructions,cc::tt::Indicator::None,4,a::tt::Tokens::none},
+	{4,(cc::a::tt::Tokens)'}',cc::tt::Indicator::Accept,5,a::tt::Tokens::none},
+	{5,(cc::a::tt::Tokens)0,cc::tt::Indicator::Prefix_Accept,0,a::tt::Tokens::none},
 };
 
 

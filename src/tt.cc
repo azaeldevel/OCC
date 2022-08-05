@@ -39,6 +39,7 @@ namespace a
 				if(t[i][j].indicator ==  Indicator::None and t[i][j].next > 0 and t[i][j].token == base_token) continue;
 				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == base_token) continue;
 				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != 0) continue;
+				if(t[i][j].indicator ==  Indicator::Eat and t[i][j].token == base_token) continue;
 				errors.push_back({i,j});
 			}
 		}
