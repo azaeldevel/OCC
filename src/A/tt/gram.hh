@@ -28,6 +28,10 @@
 namespace oct::cc::a::gram::tt::i8086
 {
 
+static const cc::tt::b::TT<cc::a::tt::Tokens,cc::a::tt::Tokens> file{
+	{0,cc::a::tt::Tokens::none,cc::tt::Indicator::None,1,a::tt::Tokens::none},
+};
+
 
 static const cc::tt::b::TT<cc::a::tt::Tokens,cc::a::tt::Tokens> insts{
 

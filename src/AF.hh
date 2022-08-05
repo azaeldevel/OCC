@@ -91,10 +91,10 @@ protected:
 	{
 
 	public:
-		A() : dfa::DFA<T,Word,Word>(0), table(NULL), length(0),prev(NULL),actual(NULL),accepted(NULL)
+		A() : dfa::DFA<T,Word,Word>(0), table(NULL), length(0),prev(NULL),actual(NULL)
 		{
 		}
-		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), length(l),prev(NULL),actual(NULL),accepted(NULL)
+		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), length(l),prev(NULL),actual(NULL)
 		{
 		}
 
@@ -110,10 +110,10 @@ protected:
 			return actual;
 		}
 		
-		inline const tt::a::Transition * get_accepted()const
+		/*inline const tt::a::Transition * get_accepted()const
 		{
 			return accepted;
-		}
+		}*/
 
 		void print(std::ostream& out) const
 		{
@@ -168,7 +168,7 @@ protected:
 			
 			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
 			dfa::DFA<T,Word,Word>::i = 0;	
-			accepted = NULL;
+			//accepted = NULL;
 
 			do
 			{
@@ -202,7 +202,7 @@ protected:
 #if OCTETOS_CC_DEGUB
 						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
-						accepted = prev;
+						actual = prev;
 						return dfa::DFA<T,Word,Word>::i;
 					}
 
@@ -230,7 +230,7 @@ protected:
 #if OCTETOS_CC_DEGUB
 						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << string[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
-						accepted = prev;
+						actual = prev;
 						return dfa::DFA<T,Word,Word>::i;
 					}
 					return 0;
@@ -255,7 +255,7 @@ protected:
 			
 			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
 			dfa::DFA<T,Word,Word>::i = 0;	
-			accepted = NULL;
+			//accepted = NULL;
 
 			do
 			{
@@ -289,7 +289,7 @@ protected:
 #if OCTETOS_CC_DEGUB
 						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
-						accepted = prev;
+						actual = prev;
 						buff.walk((size_t)DFA<T,Word,Word>::i);
 						return dfa::DFA<T,Word,Word>::i;
 					}
@@ -312,13 +312,17 @@ protected:
 #if OCTETOS_CC_DEGUB
 					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
 #endif
-					//std::cout << " i : " << i  << "\n";
+					
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
 					{
 #if OCTETOS_CC_DEGUB
-						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << buff[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
+						if(dfa::DFA<T,Word,Word>::echo) 
+						{
+							std::cout << (unsigned int) buff[dfa::DFA<T,Word,Word>::i] << "\n";
+							std::cout << " i : " << dfa::DFA<T,Word,Word>::i  << "\n";
+						}
 #endif
-						accepted = prev;
+						actual = prev;
 						buff.walk((size_t)DFA<T,Word,Word>::i);
 						return dfa::DFA<T,Word,Word>::i;
 					}
@@ -351,7 +355,7 @@ protected:
 		//Word reset;
 		const tt::a::Transition *prev;
 		const tt::a::Transition *actual;
-		const tt::a::Transition *accepted;
+		//const tt::a::Transition *accepted;
 	};
 
 
