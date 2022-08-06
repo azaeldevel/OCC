@@ -20,7 +20,6 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cctype>
 
 #include "AF.hh"
 #include "A/tt.hh"
@@ -31,37 +30,6 @@
 //assembler
 namespace oct::cc::a
 {
-
-template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
-{
-public:
-	File() : i(0), lexer(TABLE(tt::file))
-	{
-	}
-	
-	Token lexing(Buffer<C>& buff)
-	{
-		if(buff.empty()) return 0;		
-	
-		
-		i = lexer.transition(buff);	
-		if(i > 0) return lexer.get_actual()->token;	
-			
-		return buff.next_char();
-	}
-
-	Token parsing(Buffer<C>& buff)
-	{
-
-		return Token(a::tt::Tokens::error);
-	}
-
-private:
-	dfa::A<C,S,O> lexer;
-	dfa::B<Token,S,O> parser;
-	O i;
-	
-};
 
 template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class Code
 {
@@ -136,6 +104,39 @@ public:
 private:
 	dfa::A<C,S,O> lexer;
 	//dfa::B<Token,S,O> parser;
+	O i;
+	
+};
+
+
+
+template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
+{
+public:
+	File() : i(0), lexer(TABLE(tt::file))
+	{
+	}
+	
+	Token lexing(Buffer<C>& buff)
+	{
+		if(buff.empty()) return 0;		
+	
+		
+		i = lexer.transition(buff);	
+		if(i > 0) return lexer.get_actual()->token;	
+			
+		return buff.next_char();
+	}
+
+	Token parsing(Buffer<C>& buff)
+	{
+
+		return Token(a::tt::Tokens::error);
+	}
+
+private:
+	dfa::A<C,S,O> lexer;
+	dfa::B<Token,S,O> parser;
 	O i;
 	
 };

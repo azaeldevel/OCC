@@ -26,6 +26,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <stack>
 
 #include "Exception.hh"
 #include "tt.hh"
@@ -852,12 +853,33 @@ protected:
 }
 namespace oct::cc::pda
 {
-template<typename C,typename Symbol,typename Status = Word,typename O = Word> class A
-{
 
+/*template <typename C,typename Token,typename Status = Word,typename O = Word> class B : public dfa::B1<C,Token,Status,O>
+{
+public:
+	B1()
+	{
+	}
+	B1(const tt::b::TT<C,Token>& t) 
+	{
+	}
 private:
-		
+	std::stack<Token> stack;
 };
+
+
+template<typename C,typename Token,typename Status = Word,typename O = Word> class D : protected dfa::B<C,Token,Status,O>
+{
+public:
+	D()
+	{
+	}
+	D(const tt::b::TT<C,Token>& language,const tt::a::Transition (*lexer)[tt::MAX_SIMBOLS],size_t lexer_size) 
+	{
+	}
+private:
+	dfa::A<C,Token,Status,O>
+};*/
 }
 
 #endif
