@@ -1,7 +1,6 @@
 
 #include <AF.hh>
-#include <tt.hh>
-#include <A/A.hh>
+#include <A.hh>
 #include <Buffer.hh>
 
 
@@ -25,7 +24,7 @@ int v0_clean(void)
 void v0_AFD_A()
 {
 	//CU_ASSERT(LENGTH_TT(tt::a::Identifier) == 2);
-	dfa::A<char> idC(TABLE(a::tt::Identifier));
+	dfa::A<char> idC(TABLE(tt::Identifier));
 	//std::cout << "count : " << idC.transition("gnu") << "\n";
 	CU_ASSERT(idC.transition("gnu") == 3);
 	CU_ASSERT(idC.transition("_gnu_") == 5);
@@ -37,20 +36,20 @@ void v0_AFD_A()
 	CU_ASSERT(idC.transition("azip1") == 5);
 	CU_ASSERT(idC.transition("az3p1") == 5);
 
-	CU_ASSERT(LENGTH_TT(a::tt::Interger) == 2);
-	dfa::A<char> intC(TABLE(tt::a::Interger));
+	CU_ASSERT(LENGTH_TT(tt::Interger) == 2);
+	dfa::A<char> intC(TABLE(tt::Interger));
 	CU_ASSERT(intC.transition("1236589") == 7);
 	CU_ASSERT(intC.transition("00065") == 5);
 	CU_ASSERT(intC.transition("00A65") == 0);
 	
-	dfa::A<char> intC_0x(TABLE(a::tt::Integer_0x));
+	dfa::A<char> intC_0x(TABLE(tt::Integer_0x));
 	CU_ASSERT(intC_0x.transition("0x23ae47") == 8);
 	CU_ASSERT(intC_0x.transition("0x00065") == 7);
 	CU_ASSERT(intC_0x.transition("0x00A65") == 7);
 
 	
 	//Assembler A	
-	dfa::A<char> i8086_regs(TABLE(a::tt::i8086::regs));
+	dfa::A<char> i8086_regs(TABLE(tt::i808x::regs));
 	try
 	{
 		CU_ASSERT(i8086_regs.transition("alg") == 0);
@@ -64,54 +63,53 @@ void v0_AFD_A()
 		std::cout << ex.what() << "\n";
 	}
 	CU_ASSERT(i8086_regs.transition("ax") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_ax);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_ax);
 	CU_ASSERT(i8086_regs.transition("ax,") == 2);
 	CU_ASSERT(i8086_regs.transition("ax ") == 2);
 	CU_ASSERT(i8086_regs.transition("ax	") == 2);
 	CU_ASSERT(i8086_regs.transition("ah") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_ah);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_ah);
 	CU_ASSERT(i8086_regs.transition("al") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_al);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_al);
 	CU_ASSERT(i8086_regs.transition("az") == 0);
 	CU_ASSERT(i8086_regs.transition("am") == 0);
 	//std::cout << "count : " << i8080_regs.transition("ax") << "\n";
 	CU_ASSERT(i8086_regs.transition("all") == 0);
 	CU_ASSERT(i8086_regs.transition("al()") == 0);
 	CU_ASSERT(i8086_regs.transition("bx") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_bx);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_bx);
 	CU_ASSERT(i8086_regs.transition("bh") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_bh);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_bh);
 	CU_ASSERT(i8086_regs.transition("bh,") == 2);
 	CU_ASSERT(i8086_regs.transition("bl") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_bl);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_bl);
 	CU_ASSERT(i8086_regs.transition("bl  ") == 2);
 	CU_ASSERT(i8086_regs.transition("bl.") == 0);
 	CU_ASSERT(i8086_regs.transition("bl-") == 0);
 	CU_ASSERT(i8086_regs.transition("cx") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_cx);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_cx);
 	CU_ASSERT(i8086_regs.transition("cx,") == 2);
 	CU_ASSERT(i8086_regs.transition("ch") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_ch);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_ch);
 	CU_ASSERT(i8086_regs.transition("cl") == 2);
 	CU_ASSERT(i8086_regs.transition("cl ") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_cl);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_cl);
 	CU_ASSERT(i8086_regs.transition("cx;") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_cx);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_cx);
 	CU_ASSERT(i8086_regs.transition("dx") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_dx);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_dx);
 	CU_ASSERT(i8086_regs.transition("dx,") == 2);
 	CU_ASSERT(i8086_regs.transition("dx  ") == 2);
 	//CU_ASSERT(i8080_regs.transition("dx ") == 2);
 	CU_ASSERT(i8086_regs.transition("dh") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_dh);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_dh);
 	CU_ASSERT(i8086_regs.transition("dl") == 2);
 	CU_ASSERT(i8086_regs.transition("dl[]") == 0);
 	CU_ASSERT(i8086_regs.transition("dl  ") == 2);
-	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_reg_dl);
+	CU_ASSERT(i8086_regs.get_actual()->token == (oct::Word)tt::Tokens::i8086_reg_dl);
 	CU_ASSERT(i8086_regs.transition("dl	") == 2);
-
-
-	dfa::A<char> i8086_segs(TABLE(a::tt::i8086::segs));
+		
+	dfa::A<char> i8086_segs(TABLE(tt::i808x::segs));
 	CU_ASSERT(i8086_segs.transition("bp") == 2);
 	CU_ASSERT(i8086_segs.transition("cs") == 2);
 	CU_ASSERT(i8086_segs.transition("di") == 2);
@@ -127,14 +125,15 @@ void v0_AFD_A()
 	CU_ASSERT(i8086_segs.transition("sp") == 2);
 	CU_ASSERT(i8086_segs.transition("ss") == 2);
 
+	
 	Buffer buff_insts("cx;");
-	dfa::A<char> i8086_regs_buff(TABLE(a::tt::i8086::regs));
+	dfa::A<char> i8086_regs_buff(TABLE(tt::i808x::regs));
 	CU_ASSERT(i8086_regs_buff.transition(buff_insts) == 2);
 	CU_ASSERT(buff_insts[0] == ';');
 
 	std::vector<tt::a::Selector> select;
 	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
-	tt::a::check(a::tt::i8086::insts,LENGTH_TT(a::tt::i8086::insts),select);
+	tt::a::check(tt::i808x::insts,LENGTH_TT(tt::i808x::insts),select);
 	CU_ASSERT(select.size() == 0);
 	if(select.size() > 0)
 	{
@@ -143,154 +142,155 @@ void v0_AFD_A()
 			std::cout << "check failure on a::tt::i8086_insts(" << select[i].i << "," << select[i].j << ")\n";
 		}
 	}
+
 	
-	dfa::A<char> i8086_insts(TABLE(a::tt::i8086::insts));
+	dfa::A<char> i8086_insts(TABLE(tt::i808x::insts));
 	CU_ASSERT(i8086_insts.transition("aaa") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aaa);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aaa);
 	CU_ASSERT(i8086_insts.transition("aaa;") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aaa);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aaa);
 	CU_ASSERT(i8086_insts.transition("aaa ") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aaa);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aaa);
 	/*i8086_insts.enable_echo(true);
 	auto i8086_insts_count1 = i8086_insts.transition("aaa;");
 	i8086_insts.enable_echo(false);
 	std::cout << "count : " << i8086_insts_count1 << "\n";
 	if(i8086_insts.get_accepted()) std::cout << "0-->(" << i8086_insts.get_accepted()->next << ")\n";*/
 	CU_ASSERT(i8086_insts.transition("aad") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aad);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aad);
 	CU_ASSERT(i8086_insts.transition("aam") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aam);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aam);
 	CU_ASSERT(i8086_insts.transition("aas") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_aas);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_aas);
 	CU_ASSERT(i8086_insts.transition("adc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_adc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_adc);
 	CU_ASSERT(i8086_insts.transition("add") == 3);	
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_add);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_add);
 	CU_ASSERT(i8086_insts.transition("and") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_and_token);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_and_token);
 	CU_ASSERT(i8086_insts.transition("call") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_call);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_call);
 	CU_ASSERT(i8086_insts.transition("calling") == 0);
 	CU_ASSERT(i8086_insts.transition("cbw") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cbw);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cbw);
 	CU_ASSERT(i8086_insts.transition("cbwl") == 0);	
 	CU_ASSERT(i8086_insts.transition("clc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_clc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_clc);
 	CU_ASSERT(i8086_insts.transition("cld") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cld);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cld);
 	CU_ASSERT(i8086_insts.transition("cli") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cli);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cli);
 	CU_ASSERT(i8086_insts.transition("cmc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cmc);
 	CU_ASSERT(i8086_insts.transition("cmp") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmp);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cmp);
 	CU_ASSERT(i8086_insts.transition("cmps") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cmps);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cmps);
 	CU_ASSERT(i8086_insts.transition("cwd") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_cwd);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_cwd);
 	CU_ASSERT(i8086_insts.transition("cw5") == 0);	
 	CU_ASSERT(i8086_insts.transition("cwdd") == 0);
 	CU_ASSERT(i8086_insts.transition("daa") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_daa);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_daa);
 	CU_ASSERT(i8086_insts.transition("da1") == 0);
 	CU_ASSERT(i8086_insts.transition("daaa") == 0);
 	CU_ASSERT(i8086_insts.transition("das") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_das);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_das);
 	CU_ASSERT(i8086_insts.transition("das1") == 0);
 	CU_ASSERT(i8086_insts.transition("dec") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_dec);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_dec);
 	CU_ASSERT(i8086_insts.transition("div") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_div);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_div);
 	CU_ASSERT(i8086_insts.transition("esc") == 3);	
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_esc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_esc);
 	CU_ASSERT(i8086_insts.transition("hlt") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_hlt);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_hlt);
 	CU_ASSERT(i8086_insts.transition("idiv") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_idiv);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_idiv);
 	CU_ASSERT(i8086_insts.transition("imul") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_imul);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_imul);
 	CU_ASSERT(i8086_insts.transition("in") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_in);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_in);
 	CU_ASSERT(i8086_insts.transition("inc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_inc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_inc);
 	CU_ASSERT(i8086_insts.transition("int") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_int_token);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_int_token);
 	CU_ASSERT(i8086_insts.transition("intr") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_intr);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_intr);
 	CU_ASSERT(i8086_insts.transition("into") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_into);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_into);
 	CU_ASSERT(i8086_insts.transition("intt") == 0);	
 	CU_ASSERT(i8086_insts.transition("ints") == 0);	
 	CU_ASSERT(i8086_insts.transition("iret") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_iret);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_iret);
 	CU_ASSERT(i8086_insts.transition("ja") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_ja);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_ja);
 	CU_ASSERT(i8086_insts.transition("jae") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jae);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jae);
 	CU_ASSERT(i8086_insts.transition("jb") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jb);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jb);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jbe") == 3);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jbe);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jbe);
 	CU_ASSERT(i8086_insts.transition("jc") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jc);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jcxz") == 4);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jcxz);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jcxz);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("je") == 2);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_je);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_je);
 	CU_ASSERT(i8086_insts.transition("jg") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jg);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jg);
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition("jge") == 3);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jge);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jge);
 	CU_ASSERT(i8086_insts.transition("jl") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jl);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jl);
 	CU_ASSERT(i8086_insts.transition("jle") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jle);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jle);
 	CU_ASSERT(i8086_insts.transition("jmp") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jmp);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jmp);
 	CU_ASSERT(i8086_insts.transition("jnc") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jnc);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jnc);
 	CU_ASSERT(i8086_insts.transition("jne") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jne);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jne);
 	CU_ASSERT(i8086_insts.transition("jno") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jno);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jno);
 	CU_ASSERT(i8086_insts.transition("jnp") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jnp);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jnp);
 	CU_ASSERT(i8086_insts.transition("jns") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jns);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jns);
 	CU_ASSERT(i8086_insts.transition("jo") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jo);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jo);
 	CU_ASSERT(i8086_insts.transition("jp") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_jp);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_jp);
 	CU_ASSERT(i8086_insts.transition("js") == 2);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_js);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_js);
 	CU_ASSERT(i8086_insts.transition("lahf") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lahf);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_lahf);
 	CU_ASSERT(i8086_insts.transition("lds") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lds);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_lds);
 	CU_ASSERT(i8086_insts.transition("lea") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lea);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_lea);
 	CU_ASSERT(i8086_insts.transition("les") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_les);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_les);
 	CU_ASSERT(i8086_insts.transition("lock") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lock);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_lock);
 	CU_ASSERT(i8086_insts.transition("lods") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_lods);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_lods);
 	CU_ASSERT(i8086_insts.transition("loop") == 4);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_loop);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_loop);
 	CU_ASSERT(i8086_insts.transition("loope") == 5);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_loope);	
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_loope);	
 	CU_ASSERT(i8086_insts.transition("nmi") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_nmi);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_nmi);
 	CU_ASSERT(i8086_insts.transition("mov") == 3);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_mov);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_mov);
 		
 	CU_ASSERT(length("section") == 7);
 	//std::cout << "count : " << length<char>("section") << "\n";
@@ -319,12 +319,12 @@ void v0_AFD_A()
 	i8086_insts.transition(buff1);
 	CU_ASSERT(buff1.walk('}') == '}');
 
-
+	
 	const char* temp_string_1 = "prueba1..";
 	char* temp_string_2= new char[length(temp_string_1) + 1];
 	CU_ASSERT(copy(temp_string_1,length(temp_string_1),&temp_string_2) == length(temp_string_1));
 	CU_ASSERT(equal(temp_string_1,temp_string_2));
-
+	
 	std::filesystem::path booting_file = "../../tests/booting.1.occ.asm";
 	Buffer<char> buff2(booting_file);
 	//std::cout << "text : " << (const char*)buff2 << "\n";
@@ -340,7 +340,7 @@ void v0_AFD_A()
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition(buff2) == 3);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)a::tt::Tokens::i8086_hlt);
+	CU_ASSERT(i8086_insts.get_actual()->token == (oct::Word)tt::Tokens::i8086_hlt);
 	//std::cout << "buff2.walk : " << buff2.walk(';') << "\n";
 	CU_ASSERT(buff2.walk(';') == ';');
 	CU_ASSERT(buff2.consume_whites() == 1);
@@ -359,7 +359,7 @@ void v0_AFD_A()
 
 	std::vector<tt::a::Selector> select_check_2;
 	//std::cout << "sizeof(a::tt::i8086_insts) : " << LENGTH_TT(a::tt::i8086_insts) << "\n";
-	tt::a::check(TABLE(a::tt::file),select_check_2);
+	/*tt::a::check(TABLE(tt::a::file),select_check_2);
 	CU_ASSERT(select_check_2.size() == 0);
 	if(select_check_2.size() > 0)
 	{
@@ -367,21 +367,22 @@ void v0_AFD_A()
 		{
 			//std::cout << "check failure on a::tt::i8086_insts(" << select[i].i << "," << select[i].j << ")\n";
 		}
-	}
+	}*/
 	Buffer file_buff("   \n \t  section code{");
-	dfa::A<char> file_dfa(TABLE(a::tt::file));
+	dfa::B file_dfa(tt::a::file);
 	//file_dfa.enable_echo(true);
-	CU_ASSERT(file_dfa.transition(file_buff) == 7);
+	//CU_ASSERT(file_dfa.transition(file_buff) == 7);
 	//file_dfa.enable_echo(false);
-	CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_section);
+	//CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_section);
 	//file_buff.consume_whites ();
 	//file_dfa.enable_echo(true);
-	CU_ASSERT(file_dfa.transition(file_buff) == 4);
+	//CU_ASSERT(file_dfa.transition(file_buff) == 4);
 	//file_dfa.enable_echo(false);
-	CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_code);
+	//CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_code);
 }
 void v0_AFD_B()
 {
+	
 	dfa::B idCB(tt::b::Identifier);
 	CU_ASSERT(idCB.transition("gnu") == 3);
 	//idCB.enable_echo(true);
@@ -425,6 +426,7 @@ void v0_AFD_B()
 	/*id_B.enable_echo(true);
 	std::cout << "id_B : " << id_B.transition(buff2) << "\n";
 	id_B.enable_echo(false);*/
+	
 }
 void v0_AFD_C()
 {
@@ -444,9 +446,8 @@ void v0_AFD_C()
 	CU_ASSERT(integer.transition("00A65") == 0);
 }
 void v0_performance()
-{
-	
-	dfa::A<char> idC(TABLE(tt::a::Identifier));
+{	
+	dfa::A<char> idC(TABLE(tt::Identifier));
 	auto begin_a = high_resolution_clock::now();
 	for(unsigned int i = 0; i < 1000000; i++)
 	{
@@ -492,38 +493,38 @@ void v0_performance()
 
 void v0_Grammar_A()
 {
-	const a::tt::Tokens tok_str[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::Identifier,a::tt::Tokens::i8086_reg_al,(a::tt::Tokens)';',(a::tt::Tokens)0};
+	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
-	Buffer<a::tt::Tokens> buff(tok_str);
-	dfa::B parser(a::gram::tt::i8086::insts);
+	Buffer<tt::Tokens> buff(tok_str);
+	dfa::B parser(tt::a::insts);
 	/*parser.enable_echo(true);
 	std::cout << "parser : " << parser.transition(buff) << "\n";
 	parser.enable_echo(true);*/	
 	CU_ASSERT(parser.transition(buff) == 4);
-	CU_ASSERT(parser.get_accepted()->token == a::tt::Tokens::gram_inst_mov);
+	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const a::tt::Tokens tok_str2[] =  {a::tt::Tokens::i8086_mov,a::tt::Tokens::i8086_reg_ax,a::tt::Tokens::i8086_reg_cx,(a::tt::Tokens)';',(a::tt::Tokens)0};
-	Buffer<a::tt::Tokens> buff2(tok_str2);
+	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::i8086_reg_ax,tt::Tokens::i8086_reg_cx,(tt::Tokens)';',(tt::Tokens)0};
+	Buffer<tt::Tokens> buff2(tok_str2);
 	CU_ASSERT(parser.transition(buff2) == 4);
-	CU_ASSERT(parser.get_accepted()->token == a::tt::Tokens::gram_inst_mov);
+	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
 	const char* str1 = "mov ax cx;";
 	Buffer buff3(str1);
 	oct::cc::a::Code<char> compiler;
 	
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_mov);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_reg_ax);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)a::tt::Tokens::i8086_reg_cx);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_mov);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_reg_ax);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_reg_cx);
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)';');
 
 	std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
 	Buffer<char> buff4(booting_file);
-	dfa::B parser2(a::gram::tt::i8086::file);
-	oct::cc::a::File<char> file_compiler;
-	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_section);
-	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_code);
+	dfa::B parser2(tt::a::file);
+	/*oct::cc::a::File<char> file_compiler;
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_section);
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_code);
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)'{');
-	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)a::tt::Tokens::file_list_instructions);
+	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_list_instructions);*/
 }
 void v0_developing()
 {	

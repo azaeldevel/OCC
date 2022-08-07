@@ -22,9 +22,12 @@
 
 
 #include "AF.hh"
-#include "A/tt.hh"
-#include "A/tt/i8086/insts.hh"
-#include "A/tt/gram.hh"
+#include "tt.hh"
+#include "tt/i808x.hh"
+#include "tt/A/gram.hh"
+#include "tt/identifier.hh"
+#include "tt/numbers.hh"
+
 
 
 //assembler
@@ -48,14 +51,14 @@ public:
 		buff.consume_whites();
 	
 		//>>>>keyword
-		lexer.load(TABLE(a::tt::i8086::insts));
+		lexer.load(TABLE(tt::i808x::insts));
 		i = lexer.transition(buff);
 		if(i > 0) return lexer.get_actual()->token;	
 	
 		//std::cout << "Step 2\n";	
 		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
 
-		lexer.load(TABLE(a::tt::i8086::regs));
+		lexer.load(TABLE(tt::i808x::regs));
 		i = lexer.transition(buff);
 		//std::cout << "i : " << i << "\n";
 		if(i > 0) return lexer.get_actual()->token;
@@ -63,7 +66,7 @@ public:
 		//std::cout << "Step 3\n";
 		//std::cout << "base : \"" << buff.get_base_string() << "\"\n";
 
-		lexer.load(TABLE(a::tt::i8086::segs));
+		lexer.load(TABLE(tt::i808x::segs));
 		i = lexer.transition(buff);
 		if(i > 0) return lexer.get_actual()->token;
 	
@@ -72,22 +75,22 @@ public:
 
 
 		//>>>>
-		lexer.load(TABLE(a::tt::Identifier));
+		lexer.load(TABLE(tt::Identifier));
 		i = lexer.transition(buff);
 		if(i > 0) return lexer.get_actual()->token;
 
-		lexer.load(TABLE(a::tt::Interger));
+		lexer.load(TABLE(tt::Interger));
 		i = lexer.transition(buff);
 		if(i > 0) return lexer.get_actual()->token;
 
-		lexer.load(TABLE(a::tt::Integer_0x));
+		lexer.load(TABLE(tt::Integer_0x));
 		i = lexer.transition(buff);
 		if(i > 0) return lexer.get_actual()->token;
 
 		//std::cout << "Step 5\n";
 		//std::cout << "char : '" << buff[0] << "'\n";
 		if((Token)buff[0] > 0 and (Token)buff[0] < 129) 
-		{			
+		{
 			return buff.next_char();
 		}
 		
@@ -96,7 +99,7 @@ public:
 
 	Token parsing(Buffer<C>& buff)
 	{
-		dfa::B<Token,S,O> parser(gram::tt::i8086::file);
+		//dfa::B<Token,S,O> parser(gram::tt::i8086::file);
 
 		return Token(0);
 	}
@@ -110,10 +113,10 @@ private:
 
 
 
-template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
+/*template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
 {
 public:
-	File() : i(0), lexer(TABLE(tt::file))
+	File() : i(0), lexer(TABLE(tt::a::file))
 	{
 	}
 	
@@ -139,7 +142,7 @@ private:
 	dfa::B<Token,S,O> parser;
 	O i;
 	
-};
+};*/
 
 }
 
