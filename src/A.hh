@@ -25,6 +25,7 @@
 #include "tt.hh"
 #include "tt/i808x.hh"
 #include "tt/A/gram.hh"
+#include "tt/A/lex.hh"
 #include "tt/identifier.hh"
 #include "tt/numbers.hh"
 
@@ -113,10 +114,10 @@ private:
 
 
 
-/*template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
+template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class File
 {
 public:
-	File() : i(0), lexer(TABLE(tt::a::file))
+	File() : i(0), lexer(TABLE(tt::a::lex::file))
 	{
 	}
 	
@@ -134,7 +135,7 @@ public:
 	Token parsing(Buffer<C>& buff)
 	{
 
-		return Token(a::tt::Tokens::error);
+		return Token(tt::Tokens::error);
 	}
 
 private:
@@ -142,7 +143,7 @@ private:
 	dfa::B<Token,S,O> parser;
 	O i;
 	
-};*/
+};
 
 }
 

@@ -83,9 +83,7 @@ static const cc::tt::b::TT<cc::tt::Tokens,cc::tt::Tokens> insts{
 		{8,(cc::tt::Tokens)' ',cc::tt::Indicator::Prefix_Accept,0,cc::tt::Tokens::none},
 		{8,(cc::tt::Tokens)'\n',cc::tt::Indicator::Prefix_Accept,0,cc::tt::Tokens::none},
 	};
-
-
-
+	
 }
 
 

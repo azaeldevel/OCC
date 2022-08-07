@@ -520,11 +520,11 @@ void v0_Grammar_A()
 	std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
 	Buffer<char> buff4(booting_file);
 	dfa::B parser2(tt::a::file);
-	/*oct::cc::a::File<char> file_compiler;
+	oct::cc::a::File<char> file_compiler;
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_section);
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_code);
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)'{');
-	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_list_instructions);*/
+	//CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_list_instructions);
 }
 void v0_developing()
 {	
