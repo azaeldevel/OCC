@@ -90,7 +90,7 @@ protected:
 	template<typename T/*char*/,typename S = Word/*Status*/,typename O = Word/*Offset*/>
 	class A : public dfa::DFA<T,S,O>
 	{
-
+	
 	public:
 		A() : dfa::DFA<T,Word,Word>(0), table(NULL), length(0),prev(NULL),actual(NULL)
 		{
@@ -103,18 +103,19 @@ protected:
 		{
 			table = t;
 			length = l;
-		}
-		
+		}		
 
-		inline const tt::a::Transition * get_actual()const
+		inline const tt::a::Transition* get_actual()const
 		{
 			return actual;
 		}
 		
-		/*inline const tt::a::Transition * get_accepted()const
+		/*
+		inline const tt::a::Transition * get_accepted()const
 		{
 			return accepted;
-		}*/
+		}
+		*/
 
 		void print(std::ostream& out) const
 		{
@@ -162,7 +163,6 @@ protected:
 					out << dfa::DFA<T,Word,Word>::current << "--" << dfa::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
 				}
 		}
-
 		Word transition(const T* string)
 		{
 			if(not string) return 0;
@@ -348,7 +348,6 @@ protected:
 
 			return 0;
 		}
-
 		const tt::a::Transition** get_table() const
 		{
 			return (const tt::a::Transition**)table;
@@ -458,10 +457,10 @@ protected:
 #if OCTETOS_CC_DEGUB
 				if(DFA<T,Word,Word>::echo)
 				{
-					std::cout << "current : '"<<  dfa::DFA<T,Word,Word>::current << "'\n";
-					std::cout << "i : '"<<  DFA<T,Word,Word>::i << "'\n";
+					//std::cout << "current : '"<<  dfa::DFA<T,Word,Word>::current << "'\n";
+					//std::cout << "i : '"<<  DFA<T,Word,Word>::i << "'\n";
 					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
-					std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
 				}
 #endif				
 				if(buff[DFA<T,S,O>::i] == T(0))
@@ -493,10 +492,16 @@ protected:
 				}
 				
 #if OCTETOS_CC_DEGUB
-				//actual->print(std::cout);				
+				actual->print(std::cout);				
 #endif
 
-				if(actual->indicator == tt::Indicator::Eat)
+				if(actual->indicator == tt::Indicator::Accept_Inmediatly)
+				{
+					accepted = actual;
+					buff.walk((size_t)dfa::DFA<T,S,O>::i);
+					return ++DFA<T,S,O>::i;
+				}
+				else if(actual->indicator == tt::Indicator::Eat)
 				{
 					if(actual->input == buff[DFA<T,S,O>::i])
 					{

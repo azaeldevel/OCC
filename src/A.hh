@@ -35,10 +35,10 @@
 namespace oct::cc::a
 {
 
-template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class Code
+template<typename C ,typename Token = cc::tt::Token,typename S = Word,typename O = Word> class List_Instructions
 {
 public:
-	Code() : i(0)
+	List_Instructions() : i(0)
 	{
 	}
 	
@@ -123,11 +123,10 @@ public:
 	
 	Token lexing(Buffer<C>& buff)
 	{
-		if(buff.empty()) return 0;		
-	
+		if(buff.empty()) return 0;	
 		
 		i = lexer.transition(buff);	
-		if(i > 0) return lexer.get_actual()->token;	
+		if(i > 0) return lexer.get_actual()->token;		
 			
 		return buff.next_char();
 	}
@@ -142,6 +141,7 @@ private:
 	dfa::A<C,S,O> lexer;
 	dfa::B<Token,S,O> parser;
 	O i;
+	List_Instructions<C,S,O> list_insts;
 	
 };
 

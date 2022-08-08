@@ -369,7 +369,7 @@ void v0_AFD_A()
 		}
 	}*/
 	Buffer file_buff("   \n \t  section code{");
-	dfa::B file_dfa(tt::a::file);
+	dfa::B file_dfa(tt::a::gram::file);
 	//file_dfa.enable_echo(true);
 	//CU_ASSERT(file_dfa.transition(file_buff) == 7);
 	//file_dfa.enable_echo(false);
@@ -496,21 +496,26 @@ void v0_Grammar_A()
 	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
 	Buffer<tt::Tokens> buff(tok_str);
-	dfa::B parser(tt::a::insts);
-	/*parser.enable_echo(true);
+	dfa::B parser(tt::a::gram::insts);
+	/*
+	parser.enable_echo(true);
 	std::cout << "parser : " << parser.transition(buff) << "\n";
-	parser.enable_echo(true);*/	
+	parser.enable_echo(true);
+	*/
+	CU_ASSERT(parser.get_accepted() == NULL);
 	CU_ASSERT(parser.transition(buff) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::i8086_reg_ax,tt::Tokens::i8086_reg_cx,(tt::Tokens)';',(tt::Tokens)0};
+	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
 	Buffer<tt::Tokens> buff2(tok_str2);
+	//std::cout << "parser : " << parser.transition(buff) << "\n";
+	CU_ASSERT(parser.get_accepted() != NULL);
 	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
 	const char* str1 = "mov ax cx;";
 	Buffer buff3(str1);
-	oct::cc::a::Code<char> compiler;
+	a::List_Instructions<char> compiler;
 	
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_mov);
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_reg_ax);
@@ -519,12 +524,20 @@ void v0_Grammar_A()
 
 	std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
 	Buffer<char> buff4(booting_file);
-	dfa::B parser2(tt::a::file);
-	oct::cc::a::File<char> file_compiler;
+	dfa::B parser2(tt::a::gram::file);
+	a::File<char> file_compiler;
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_section);
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_code);
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)'{');
 	//CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_list_instructions);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_mov);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_ax);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_cx);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)';');
+
+	
+	
+	
 }
 void v0_developing()
 {	

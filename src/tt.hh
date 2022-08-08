@@ -47,6 +47,7 @@ namespace oct::cc::tt
 		Reject,
 		Prefix_Accept,
 		Eat,
+		Accept_Inmediatly
 	};
 
 	enum class Tokens : Token
@@ -377,61 +378,12 @@ namespace b
 
 			return false;
 		}
-
-		void print(std::ostream& out) const
-		{
-			if(input == '\n')
-			{
-				out << current << "--New line->" << next << "\n";
-			}
-			else if(input == '\t')
-			{
-				out << current << "--Tabulator->" << next << "\n";
-			}
-			else if(input == ' ')
-			{
-				out << current << "--Espace->" << next << "\n";
-			}
-			else if(input == '\0')
-			{
-				out << current << "--\\0->" << next << "\n";
-			}
-			else if((Status) input > 128)
-			{
-				out << current << "--" << (unsigned int)input << "->" << next << "\n";
-			}
-			else
-			{
-				out << current << "--" << input << "->" << next << "\n";
-			}
-		}
-		void print(std::wostream& out) const
-		{
-			if(input == '\n')
-			{
-				out << current << "--New line->" << next << "\n";
-			}
-			else if(input == '\t')
-			{
-				out << current << "--Tabulator->" << next << "\n";
-			}
-			else if(input == ' ')
-			{
-				out << current << "--Espace->" << next << "\n";
-			}
-			else if(input == '\0')
-			{
-				out << current << "--\\0->" << next << "\n";
-			}
-			else if((Status) input > 128)
-			{
-				out << current << "--" << (unsigned int)input << "->" << next << "\n";
-			}
-			else
-			{
-				out << current << "--" << input << "->" << next << "\n";
-			}
-		}
+	
+#if OCTETOS_CC_DEGUB
+		void print(std::ostream& out) const;
+		void print(std::wostream& out) const;
+#endif
+	
 	};
 
 	template<typename T,typename Token,typename I = size_t> class TT

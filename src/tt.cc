@@ -43,8 +43,89 @@ namespace a
 				errors.push_back({i,j});
 			}
 		}
+
+		return true;
 	}
  }
+
+
+namespace b
+{
+#if OCTETOS_CC_DEGUB
+	template<> void  Transition<char,Tokens>::print(std::ostream& out) const
+	{
+		if(input == '\n')
+		{
+			out << current << "--New line->" << next << "\n";
+		}
+		else if(input == '\t')
+		{
+			out << current << "--Tabulator->" << next << "\n";
+		}
+		else if(input == ' ')
+		{
+			out << current << "--Espace->" << next << "\n";
+		}
+		else if(input == '\0')
+		{
+			out << current << "--\\0->" << next << "\n";
+		}
+		else if((Status) input > 128)
+		{
+			out << current << "--" << (unsigned int)input << "->" << next << "\n";
+		}
+		else
+		{
+			out << current << "--" << input << "->" << next << "\n";
+		}
+	}
+	template<> void  Transition<char,Tokens>::print(std::wostream& out) const
+	{
+	}
+
+	
+	template<> void  Transition<wchar_t,Tokens>::print(std::ostream& out) const
+	{
+	}
+	template<> void  Transition<wchar_t,Tokens>::print(std::wostream& out) const
+	{
+		if(input == '\n')
+		{
+				out << current << "--New line->" << next << "\n";
+		}
+		else if(input == '\t')
+		{
+				out << current << "--Tabulator->" << next << "\n";
+		}
+		else if(input == ' ')
+		{
+				out << current << "--Espace->" << next << "\n";
+		}
+		else if(input == '\0')
+		{
+				out << current << "--\\0->" << next << "\n";
+		}
+		else if((Status) input > 128)
+		{
+			out << current << "--" << (unsigned int)input << "->" << next << "\n";
+		}
+		else
+		{
+			out << current << "--" << input << "->" << next << "\n";
+		}
+	}
+
+
+
+	template<> void  Transition<Tokens,Tokens>::print(std::ostream& out) const
+	{
+	}	
+	template<> void  Transition<Tokens,Tokens>::print(std::wostream& out) const
+	{		
+	}
+	
+#endif
+}
 
 
 }
