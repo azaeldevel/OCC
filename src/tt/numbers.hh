@@ -41,8 +41,8 @@ namespace oct::cc::tt
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},
-			{Indicator::Reject,0},
+			{Indicator::Eat,0,'\t'},//tab
+			{Indicator::Eat,0,'\n'},//new line
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -64,7 +64,7 @@ namespace oct::cc::tt
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Prefix_Accept,0},// ' '
+			{Indicator::Eat,0,' '},// ' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -306,8 +306,8 @@ namespace oct::cc::tt
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},//tab
-			{Indicator::Reject,0},
+			{Indicator::Eat,0,'\t'},//tab
+			{Indicator::Eat,0,'\n'},//new line
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
@@ -329,7 +329,7 @@ namespace oct::cc::tt
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
-			{Indicator::Reject,0},//' '
+			{Indicator::Eat,0,' '},//' '
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},
 			{Indicator::Reject,0},

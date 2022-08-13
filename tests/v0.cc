@@ -496,7 +496,7 @@ void v0_Grammar_A()
 	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
 	Buffer<tt::Tokens> buff(tok_str);
-	dfa::B parser(tt::a::gram::insts);
+	dfa::B parser(tt::a::gram::list_insts);
 	/*
 	parser.enable_echo(true);
 	std::cout << "parser : " << parser.transition(buff) << "\n";
@@ -528,8 +528,9 @@ void v0_Grammar_A()
 			{tt::i808x::insts,(size_t)LENGTH_TT(tt::i808x::insts)},
 			{tt::i808x::regs,(size_t)LENGTH_TT(tt::i808x::regs)},
 			{tt::i808x::segs,(size_t)LENGTH_TT(tt::i808x::segs)},
+			{tt::Integer_0x,(size_t)LENGTH_TT(tt::Integer_0x)},
 		};
-	pda::D<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::file);
+	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::list_insts);
 	gram_list_instructions.enable_echo(true);
 	//CU_ASSERT(gram_list_instructions.transition(buff4) == 1);
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
