@@ -174,8 +174,8 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Eat,0,(Word)'\t'},//tab
+			{cc::tt::Indicator::Eat,0,(Word)'\n'},//new line
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -197,7 +197,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{cc::tt::Indicator::Eat,0,(Word)' '},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3066,8 +3066,8 @@ static const cc::tt::a::Transition insts[][cc::tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//tab
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
+			{tt::Indicator::Eat,0,(Word)'\t'},//tab
+			{tt::Indicator::Eat,0,(Word)'\n'},//new line
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
@@ -3089,7 +3089,7 @@ static const cc::tt::a::Transition insts[][cc::tt::MAX_SIMBOLS] = {
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
-			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},//' '
+			{tt::Indicator::Eat,0,(Word)' '},//' '
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
 			{cc::tt::Indicator::Reject,0,(Word)Tokens::none},
