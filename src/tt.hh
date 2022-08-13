@@ -146,11 +146,14 @@ namespace oct::cc::tt
 		grammar,
 		
 		gram_file,
-		
+		gram_list_insts,
+		gram_inst,
 		gram_inst_mov,
 		gram_inst_int,
 	};
 
+	const char* token_str(Tokens tok);
+	
 namespace a
 {
 	struct Transition
@@ -166,9 +169,15 @@ namespace a
 		unsigned short j;
 	};
 
-	static const Token base_token = 1024;
+	//static const Token base_token = 1024;
 	
-	bool check(const Transition (*t)[MAX_SIMBOLS],Word s, std::vector<Selector>& errors);
+	bool check(const Transition (*t)[MAX_SIMBOLS],size_t s, std::vector<Selector>& errors);
+
+	struct tt_element
+	{
+		const Transition (*tt)[MAX_SIMBOLS];
+		size_t length;
+	};
 	
 /*
 	static const Transition [][tt::MAX_SIMBOLS] = {

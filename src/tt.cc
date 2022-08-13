@@ -26,9 +26,19 @@
 namespace oct::cc::tt
 {
 
+	const char* token_str(Tokens tok)
+	{
+		switch(tok)
+		{
+		case Tokens::i8086_mov: return "i808x-mov";
+		}
+		
+		return NULL;
+	}
+	 
 namespace a
 {
-	bool check(const Transition (*t)[MAX_SIMBOLS],Word length, std::vector<Selector>& errors)
+	bool check(const Transition (*t)[MAX_SIMBOLS],size_t length, std::vector<Selector>& errors)
 	{
 		for(unsigned int i = 0; i < length; i++)
 		{
@@ -40,6 +50,7 @@ namespace a
 				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == base_token) continue;
 				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != 0) continue;
 				if(t[i][j].indicator ==  Indicator::Eat and t[i][j].token == base_token) continue;
+				if(t[i][j].indicator ==  Indicator::Eat and t[i][j].token < base_token) continue;
 				errors.push_back({i,j});
 			}
 		}

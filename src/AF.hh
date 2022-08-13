@@ -77,6 +77,7 @@ protected:
 	O i;
 	S current,reset;
 	Symbol c;
+	unsigned short tab_size = 4;
 #if OCTETOS_CC_DEGUB
 	bool echo;
 #endif
@@ -92,10 +93,10 @@ protected:
 	{
 	
 	public:
-		A() : dfa::DFA<T,Word,Word>(0), table(NULL), length(0),prev(NULL),actual(NULL)
+		A() : table(NULL), length(0), prev(NULL), actual(NULL), line(0), column(0)
 		{
 		}
-		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,Word,Word>(0), table(t), length(l),prev(NULL),actual(NULL)
+		A(const tt::a::Transition (*t)[tt::MAX_SIMBOLS],size_t l) : dfa::DFA<T,S,O>(0), table(t), length(l),prev(NULL),actual(NULL)
 		{
 		}
 
@@ -119,74 +120,74 @@ protected:
 
 		void print(std::ostream& out) const
 		{
-				if(dfa::DFA<T,Word,Word>::c == '\n')
+				if(dfa::DFA<T,S,O>::c == '\n')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--New line->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == '\t')
+				else if(dfa::DFA<T,S,O>::c == '\t')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--Tabulator->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == ' ')
+				else if(dfa::DFA<T,S,O>::c == ' ')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--Espace->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == '\0')
+				else if(dfa::DFA<T,S,O>::c == '\0')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--\\0->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << "\n";
 				}
 				else
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--" << dfa::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << "\n";
 				}
 		}
 		void print(std::wostream& out) const
 		{
-				if(dfa::DFA<T,Word,Word>::c == '\n')
+				if(dfa::DFA<T,S,O>::c == '\n')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--New line->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == '\t')
+				else if(dfa::DFA<T,S,O>::c == '\t')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--Tabulator->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == ' ')
+				else if(dfa::DFA<T,S,O>::c == ' ')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--Espace->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << "\n";
 				}
-				else if(dfa::DFA<T,Word,Word>::c == '\0')
+				else if(dfa::DFA<T,S,O>::c == '\0')
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--\\0->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << "\n";
 				}
 				else
 				{
-					out << dfa::DFA<T,Word,Word>::current << "--" << dfa::DFA<T,Word,Word>::c << "->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << "\n";
 				}
 		}
 		Word transition(const T* string)
 		{
 			if(not string) return 0;
 			
-			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
-			dfa::DFA<T,Word,Word>::i = 0;	
+			dfa::DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
+			dfa::DFA<T,S,O>::i = 0;	
 			//accepted = NULL;
 
 			do
 			{
-				dfa::DFA<T,Word,Word>::c = string[dfa::DFA<T,Word,Word>::i];
+				dfa::DFA<T,S,O>::c = string[dfa::DFA<T,S,O>::i];
 #if OCTETOS_CC_DEGUB
-				if(dfa::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,S,O>::echo)
 				{
-					//std::cout << "current : " << cc::DFA<T,Word,Word>::current << "\n";
-					//std::cout << "c : '" << cc::DFA<T,Word,Word>::c  << "'\n";
-					//std::cout << "symbol : " << (unsigned short) cc::DFA<T,Word,Word>::c << "\n";
+					//std::cout << "current : " << cc::DFA<T,S,O>::current << "\n";
+					//std::cout << "c : '" << cc::DFA<T,S,O>::c  << "'\n";
+					//std::cout << "symbol : " << (unsigned short) cc::DFA<T,S,O>::c << "\n";
 					//std::cout << "length : " << length << "\n";
 				}
 #endif
-				if(dfa::DFA<T,Word,Word>::c == '\0')
+				if(dfa::DFA<T,S,O>::c == '\0')
 				{
 #if OCTETOS_CC_DEGUB
-					if(dfa::DFA<T,Word,Word>::echo)
+					if(dfa::DFA<T,S,O>::echo)
 					{
 						if(prev) 
 						{
@@ -194,27 +195,27 @@ protected:
 							if(prev->indicator == tt::Indicator::Accept) std::cout << "prev Accetable..\n";
 						}
 						//std::cout << "endign..\n";
-						//std::cout << "i = " << cc::DFA<T,Word,Word>::i << "..\n";
+						//std::cout << "i = " << cc::DFA<T,S,O>::i << "..\n";
 					}
 #endif
-					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
+					if(dfa::DFA<T,S,O>::i == 0) return 0;
 					else if(prev) if(prev->indicator == tt::Indicator::Accept)
 					{
 #if OCTETOS_CC_DEGUB
-						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+						//if(cc::DFA<T,S,O>::echo) std::cout << "'" << string[cc::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
 						actual = prev;
-						return dfa::DFA<T,Word,Word>::i;
+						return dfa::DFA<T,S,O>::i;
 					}
 
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				if(dfa::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-				actual = &table[dfa::DFA<T,Word,Word>::current][(unsigned char)dfa::DFA<T,Word,Word>::c];
+				if(dfa::DFA<T,S,O>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+				actual = &table[dfa::DFA<T,S,O>::current][(unsigned char)dfa::DFA<T,S,O>::c];
 				
 #if OCTETOS_CC_DEGUB
-				if(dfa::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,S,O>::echo)
 				{
 					print(std::cout);
 				}
@@ -223,16 +224,16 @@ protected:
 				if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+					//if(cc::DFA<T,S,O>::echo) std::cout << "'" << string[cc::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
 					//std::cout << " i : " << i  << "\n";
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
 					{
 #if OCTETOS_CC_DEGUB
-						if(dfa::DFA<T,Word,Word>::echo) std::cout << "'" << string[dfa::DFA<T,Word,Word>::i]  << "'" << "\n";
+						if(dfa::DFA<T,S,O>::echo) std::cout << "'" << string[dfa::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
 						actual = prev;
-						return dfa::DFA<T,Word,Word>::i;
+						return dfa::DFA<T,S,O>::i;
 					}
 					return 0;
 				}
@@ -242,9 +243,9 @@ protected:
 					return 0;
 				}
 				
-				dfa::DFA<T,Word,Word>::current = actual->next;
+				dfa::DFA<T,S,O>::current = actual->next;
 				prev = actual;
-				dfa::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,S,O>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
@@ -254,26 +255,26 @@ protected:
 		{
 			if(buff.empty()) return 0;
 			
-			dfa::DFA<T,Word,Word>::current = dfa::DFA<T,Word,Word>::reset;
-			dfa::DFA<T,Word,Word>::i = 0;	
+			dfa::DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
+			dfa::DFA<T,S,O>::i = 0;	
 			//accepted = NULL;
 
 			do
 			{
-				dfa::DFA<T,Word,Word>::c = buff[dfa::DFA<T,Word,Word>::i];
+				dfa::DFA<T,S,O>::c = buff[dfa::DFA<T,S,O>::i];
 #if OCTETOS_CC_DEGUB
-				if(dfa::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,S,O>::echo)
 				{
-					//std::cout << "current : " << cc::DFA<T,Word,Word>::current << "\n";
-					//std::cout << "c : '" << cc::DFA<T,Word,Word>::c  << "'\n";
-					//std::cout << "symbol : " << (unsigned short) cc::DFA<T,Word,Word>::c << "\n";
+					//std::cout << "current : " << cc::DFA<T,S,O>::current << "\n";
+					//std::cout << "c : '" << cc::DFA<T,S,O>::c  << "'\n";
+					//std::cout << "symbol : " << (unsigned short) DFA<T,S,O>::c << "\n";
 					//std::cout << "length : " << length << "\n";
 				}
 #endif
-				if(dfa::DFA<T,Word,Word>::c == '\0')
+				if(dfa::DFA<T,S,O>::c == '\0')
 				{
 #if OCTETOS_CC_DEGUB
-					if(dfa::DFA<T,Word,Word>::echo)
+					if(dfa::DFA<T,S,O>::echo)
 					{
 						if(prev) 
 						{
@@ -281,56 +282,79 @@ protected:
 							if(prev->indicator == tt::Indicator::Accept) std::cout << "prev Accetable..\n";
 						}
 						//std::cout << "endign..\n";
-						//std::cout << "i = " << cc::DFA<T,Word,Word>::i << "..\n";
+						//std::cout << "i = " << cc::DFA<T,S,O>::i << "..\n";
 					}
 #endif
-					if(dfa::DFA<T,Word,Word>::i == 0) return 0;
+					if(dfa::DFA<T,S,O>::i == 0) return 0;
 					else if(prev) if(prev->indicator == tt::Indicator::Accept)
 					{
 #if OCTETOS_CC_DEGUB
-						//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+						//if(cc::DFA<T,S,O>::echo) std::cout << "'" << string[cc::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
 						actual = prev;
-						buff.walk((size_t)DFA<T,Word,Word>::i);
-						return dfa::DFA<T,Word,Word>::i;
+						buff.walk((size_t)DFA<T,S,O>::i);
+						return dfa::DFA<T,S,O>::i;
 					}
 
 					return 0;//si no se encontrontro transiscion
 				}
 				
-				if(dfa::DFA<T,Word,Word>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
-				actual = &table[dfa::DFA<T,Word,Word>::current][(unsigned char)dfa::DFA<T,Word,Word>::c];
+				if(dfa::DFA<T,S,O>::current > length - 1) throw Exception(Exception::INDEX_OUT_OF_RANGE,__FILE__,__LINE__);
+				actual = &table[dfa::DFA<T,S,O>::current][(unsigned char)dfa::DFA<T,S,O>::c];
 				
 #if OCTETOS_CC_DEGUB
-				if(dfa::DFA<T,Word,Word>::echo)
+				if(dfa::DFA<T,S,O>::echo)
 				{
 					print(std::cout);
 				}
 #endif
 
+				if(actual->token == (O)'\n')
+				{
+					line++;
+				}
+				else if(actual->token == (O)' ')
+				{
+					column++;
+				}
+				else if(actual->token == (O)'\t')
+				{
+					column += dfa::DFA<T,S,O>::tab_size;
+				}
+
 				if(actual->indicator == tt::Indicator::Eat)
 				{
+					dfa::DFA<T,S,O>::i = 0;
+					dfa::DFA<T,S,O>::current = actual->next;
+					prev = actual;
 					buff.next_char();
+					//std::cout << "Eating\n";
 					continue;
+				}
+				else if(actual->indicator == tt::Indicator::Accept_Inmediatly)
+				{
+					//accepted = actual;
+					buff.walk((size_t)dfa::DFA<T,S,O>::i);
+					return ++dfa::DFA<T,S,O>::i;
 				}
 				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					//if(cc::DFA<T,Word,Word>::echo) std::cout << "'" << string[cc::DFA<T,Word,Word>::i]  << "'" << "\n";
+					//if(cc::DFA<T,S,O>::echo) std::cout << "'" << string[cc::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
 					
 					if(prev) if(prev->indicator == tt::Indicator::Accept) 
 					{
 #if OCTETOS_CC_DEGUB
-						if(dfa::DFA<T,Word,Word>::echo) 
+						if(dfa::DFA<T,S,O>::echo) 
 						{
-							std::cout << (unsigned int) buff[dfa::DFA<T,Word,Word>::i] << "\n";
-							std::cout << " i : " << dfa::DFA<T,Word,Word>::i  << "\n";
+							//std::cout << (unsigned int) buff[dfa::DFA<T,S,O>::i] << "\n";
+							//std::cout << " i : " << dfa::DFA<T,S,O>::i  << "\n";
 						}
 #endif
 						actual = prev;
-						buff.walk((size_t)DFA<T,Word,Word>::i);
-						return dfa::DFA<T,Word,Word>::i;
+						buff.walk((size_t)DFA<T,S,O>::i);
+						return dfa::DFA<T,S,O>::i;
 					}
 					return 0;
 				}
@@ -340,12 +364,12 @@ protected:
 					return 0;
 				}
 				
-				dfa::DFA<T,Word,Word>::current = actual->next;
+				dfa::DFA<T,S,O>::current = actual->next;
 				prev = actual;
-				dfa::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,S,O>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
-
+			
 			return 0;
 		}
 		const tt::a::Transition** get_table() const
@@ -356,10 +380,11 @@ protected:
 	private:
 		const tt::a::Transition (*table)[tt::MAX_SIMBOLS];  
 		size_t length;
-		//tt::Status current;
-		//Word reset;
 		const tt::a::Transition *prev;
 		const tt::a::Transition *actual;
+		unsigned short line, column;
+		//tt::Status current;
+		//Word reset;
 		//const tt::a::Transition *accepted;
 	};
 
@@ -371,12 +396,13 @@ protected:
 	{
 
 	public:
-		B() : table(NULL),accepted(NULL)
+		B() : table(NULL),accepted(NULL),line(0),column(0)
 		{
 		}
-		B(const tt::b::TT<T,Token>& t) : table(&t),accepted(NULL)
+		B(const tt::b::TT<T,Token>& t) : table(&t),accepted(NULL),line(0),column(0)
 		{
 		}
+		
 		/*
 		void load(const tt::b::TT<T,Token>& t)
 		{
@@ -396,14 +422,14 @@ protected:
 		{
 			if(not string) return 0;
 			
-			DFA<T,S,O>::current = dfa::DFA<T,Word,Word>::reset;
+			DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
 			DFA<T,S,O>::i = 0;	
 			prev = NULL;
 
 			do
 			{
 #if OCTETOS_CC_DEGUB
-				//std::cout << string[DFA<T,Word,Word>::i] << "\n";
+				//std::cout << string[DFA<T,S,O>::i] << "\n";
 #endif				
 				if(string[DFA<T,S,O>::i] == '\0')
 				{
@@ -412,11 +438,11 @@ protected:
 					return 0;//si no se encontrontro transiscion
 				}
 
-				actual = next(string[dfa::DFA<T,Word,Word>::i]);				
+				actual = next(string[dfa::DFA<T,S,O>::i]);				
 #if OCTETOS_CC_DEGUB
 				if(dfa::DFA<T,S,O>::echo and actual)
 				{
-					actual->print(std::cout);
+					//actual->print(std::cout);
 				}
 #endif
 				if(not actual) 
@@ -436,14 +462,14 @@ protected:
 				}
 				 
 				prev = actual;
-				dfa::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,S,O>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);
 
 			
 			
-			return dfa::DFA<T,Word,Word>::i;
-		}		
+			return dfa::DFA<T,S,O>::i;
+		}
 		O transition(Buffer<T>& buff)
 		{
 			if(buff.empty()) return 0;
@@ -455,10 +481,10 @@ protected:
 			do
 			{
 #if OCTETOS_CC_DEGUB
-				if(DFA<T,Word,Word>::echo)
+				if(DFA<T,S,O>::echo)
 				{
-					//std::cout << "current : '"<<  dfa::DFA<T,Word,Word>::current << "'\n";
-					//std::cout << "i : '"<<  DFA<T,Word,Word>::i << "'\n";
+					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
+					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
 					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
 					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
 				}
@@ -474,7 +500,7 @@ protected:
 							{
 								buff.walk((size_t)dfa::DFA<T,S,O>::i);
 								accepted = actual;
-								return DFA<T,Word,Word>::i;
+								return DFA<T,S,O>::i;
 							}
 						}
 					}
@@ -486,14 +512,27 @@ protected:
 				if(not actual) 
 				{
 #if OCTETOS_CC_DEGUB
-					//if(DFA<T,Word,Word>::echo) std::cout << "not actual\n";
+					//if(DFA<T,S,O>::echo) std::cout << "not actual\n";
 #endif	
 					return 0;//si no se encontrontro transiscion
 				}
 				
 #if OCTETOS_CC_DEGUB
-				actual->print(std::cout);				
+				//actual->print(std::cout);				
 #endif
+
+				if(actual->token == (tt::Tokens)'\n')
+				{
+					line++;
+				}
+				else if(actual->token == (tt::Tokens)' ')
+				{
+					column++;
+				}
+				else if(actual->token == (tt::Tokens)'\t')
+				{
+					column += DFA<T,S,O>::tab_size;
+				}
 
 				if(actual->indicator == tt::Indicator::Accept_Inmediatly)
 				{
@@ -505,7 +544,7 @@ protected:
 				{
 					if(actual->input == buff[DFA<T,S,O>::i])
 					{
-						dfa::DFA<T,Word,Word>::i++;
+						dfa::DFA<T,S,O>::i++;
 						continue;
 					}
 				}
@@ -539,60 +578,15 @@ protected:
 					return 0;//si no se encontrontro transiscion
 				}
 				 
-				//dfa::DFA<T,Word,Word>::current = actual->next;
+				//dfa::DFA<T,S,O>::current = actual->next;
 				prev = actual;
-				dfa::DFA<T,Word,Word>::i++;
+				dfa::DFA<T,S,O>::i++;
 			}
 			while(actual->indicator != tt::Indicator::Reject);			
 			
-			return dfa::DFA<T,Word,Word>::i;
+			return dfa::DFA<T,S,O>::i;
 		}
-		O transition(T element)
-		{
-			if(not element) return 0;
-			
-
-#if OCTETOS_CC_DEGUB
-			//std::cout << string[DFA<T,Word,Word>::i] << "\n";
-#endif				
-			if(element == 0)
-			{
-				if(dfa::DFA<T,S,O>::i == 0) return 0;
-				else if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,S,O>::i;
-				return 0;//si no se encontrontro transiscion
-			}
-
-			actual = next(element);
-				
-#if OCTETOS_CC_DEGUB
-				if(dfa::DFA<T,S,O>::echo and actual)
-				{
-					actual->print(std::cout);
-				}
-#endif
-				if(not actual) 
-				{
-					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;//i es 0-base index
-					return 0;//si no se encontrontro transiscion
-				}
-				else if(actual->indicator == tt::Indicator::Prefix_Accept)
-				{
-					if(prev) if(prev->indicator == tt::Indicator::Accept) return DFA<T,S,O>::i;
-					return 0;//si no se encontrontro transiscion
-				}
-				else if(actual->indicator == tt::Indicator::Reject)
-				{
-					//if(prev) if(prev->indicator == tt::Indicator::Accept) return i;
-					return 0;//si no se encontrontro transiscion
-				}
-				 
-				prev = actual;
-				dfa::DFA<T,Word,Word>::i++;
-			
-			
-			return dfa::DFA<T,Word,Word>::i;
-		}
-
+		
 		const tt::b::TT<T,Token>& get_table() const
 		{
 			return *table;
@@ -611,8 +605,7 @@ protected:
 			return accepted;
 		}
 		
-	private:
-		
+	protected:
 		const tt::b::Transition<T,Token>* next(T symbol)
 		{
 			//std::cout << "current : " << current << "\n";
@@ -632,7 +625,7 @@ protected:
 
 			return NULL;
 		}
-
+	private:	
 		const tt::b::Transition<T,Token>* search(tt::Status current,T input,size_t b, size_t e)
 		{
 			if(b > e) return NULL;
@@ -663,7 +656,8 @@ protected:
 	protected:
 		const tt::b::TT<T,Token>* table;
 		const tt::b::Transition<T,Token>* accepted,*prev, *actual;
-		
+		unsigned short line;
+		unsigned short column;
 		//tt::Status current;
 		//tt::Status reset;
 		//const size_t length;
@@ -859,7 +853,8 @@ protected:
 namespace oct::cc::pda
 {
 
-/*template <typename C,typename Token,typename Status = Word,typename O = Word> class B : public dfa::B1<C,Token,Status,O>
+/*
+template <typename C,typename Token,typename Status = Word,typename O = Word> class B : public dfa::B1<C,Token,Status,O>
 {
 public:
 	B1()
@@ -871,20 +866,138 @@ public:
 private:
 	std::stack<Token> stack;
 };
+*/
 
-
-template<typename C,typename Token,typename Status = Word,typename O = Word> class D : protected dfa::B<C,Token,Status,O>
+template<typename C, typename Token, typename S = Word, typename O = Word> class D : public dfa::B<Token,Token,S,O>
 {
 public:
-	D()
+	D(const tt::a::tt_element* lextt, size_t lexl, const tt::b::TT<Token,Token>& t) : dfa::B<Token,Token,S,O>(t), lex_tt(lextt), lex_length(lexl)
 	{
+		lexer.enable_echo(true);
 	}
-	D(const tt::b::TT<C,Token>& language,const tt::a::Transition (*lexer)[tt::MAX_SIMBOLS],size_t lexer_size) 
+	
+
+	O transition(Buffer<C>& buff)
 	{
+		for(size_t ilex = 0; ilex < lex_length; ilex++)	
+		{
+			if(buff.empty()) return 0;
+			
+			dfa::B<Token,Token,S,O>::current = dfa::B<Token,Token,S,O>::reset;
+			dfa::B<Token,Token,S,O>::i = 0;
+			O i_lex = 0;	
+			dfa::B<Token,Token,S,O>::prev = NULL;
+			dfa::B<Token,Token,S,O>::accepted = NULL;
+
+			std::cout << "Step 1\n";
+			lexer.load(lex_tt[ilex].tt,lex_tt[ilex].length);
+
+			do
+			{
+#if OCTETOS_CC_DEGUB
+				if(dfa::B<Token,Token,S,O>::echo)
+				{
+					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
+					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
+					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
+					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+				}
+#endif
+				std::cout << "Step 2\n";
+								
+				std::cout << "Step 3\n";
+				lexer.transition(buff);
+				std::cout << "Step 4\n";
+				if(lexer.get_actual() == NULL) return 0;
+				std::cout << "Step 5\n";
+#if OCTETOS_CC_DEGUB
+				if(dfa::B<Token,Token,S,O>::echo) 
+				{
+					std::cout << "Step : " << lexer.get_actual()->token << "\n";
+					const char* str =  tt::token_str((Token)lexer.get_actual()->token);
+					if(str) std::cout << "Step str : " << str << "\n";
+				}
+#endif
+				dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((Token)lexer.get_actual()->token);
+				std::cout << "Step 6\n";
+				
+				if(not dfa::B<Token,Token,S,O>::actual) 
+				{
+#if OCTETOS_CC_DEGUB
+					if(dfa::B<Token,Token,S,O>::echo) std::cout << "not actual\n";
+#endif
+					return 0;//si no se encontrontro transiscion
+				}
+				
+				
+#if OCTETOS_CC_DEGUB
+				//actual->print(std::cout);				
+#endif
+
+				std::cout << "Step 7\n";
+
+				if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Accept_Inmediatly)
+				{
+					dfa::B<Token,Token,S,O>::accepted = dfa::B<Token,Token,S,O>::actual;
+					return ++dfa::B<Token,Token,S,O>::i;
+				}
+				else if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Eat)
+				{
+					if(dfa::B<Token,Token,S,O>::actual->input == (Token)lexer.get_actual()->token)
+					{
+						dfa::B<Token,Token,S,O>::i++;
+						continue;
+					}
+				}
+				else if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Prefix_Accept)
+				{	
+#if OCTETOS_CC_DEGUB
+					//std::cout << "Prefix_Accept\n";
+#endif				
+					if(dfa::B<Token,Token,S,O>::prev) 
+					{
+#if OCTETOS_CC_DEGUB
+						//std::cout << "prev exist\n";
+#endif
+						if(dfa::B<Token,Token,S,O>::prev->indicator == tt::Indicator::Accept) 
+						{
+#if OCTETOS_CC_DEGUB
+							//std::cout << "prev exist acepted\n";
+#endif
+							dfa::B<Token,Token,S,O>::accepted = dfa::B<Token,Token,S,O>::actual;
+							//buff.walk((size_t)dfa::DFA<C,S,O>i);
+							return dfa::B<Token,Token,S,O>::i;
+						}
+					}
+					return 0;//si no se encontrontro transiscion
+				}
+				else if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Reject)
+				{
+#if OCTETOS_CC_DEGUB
+					//std::cout << "Rejected\n";
+#endif
+					return 0;//si no se encontrontro transiscion
+				}
+				 
+				//dfa::DFA<C,S,O>current = actual->next;
+				dfa::B<Token,Token,S,O>::prev = dfa::B<Token,Token,S,O>::actual;
+				dfa::B<Token,Token,S,O>::i++;
+			}
+			while(dfa::B<Token,Token,S,O>::actual->indicator != tt::Indicator::Reject);		
+
+			std::cout << "Step 8\n";
+
+		}	
+			
+		return dfa::B<Token,Token,S,O>::i;
 	}
+	
 private:
-	dfa::A<C,Token,Status,O>
-};*/
+	dfa::A<C,S,O> lexer;
+	const tt::a::tt_element* lex_tt;
+	size_t lex_length;
+};
+
 }
 
 #endif

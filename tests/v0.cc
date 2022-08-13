@@ -513,16 +513,31 @@ void v0_Grammar_A()
 	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const char* str1 = "mov ax cx;";
-	Buffer buff3(str1);
-	a::List_Instructions<char> compiler;
+	const char* str1 = " \t mov 0x0e al;\n  mov 'B', al;";
+	/*Buffer buff3(str1);
+	a::List_Instructions<char,tt::Tokens> compiler;
 	
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_mov);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_reg_ax);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)tt::Tokens::i8086_reg_cx);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Token)';');
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_mov);
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::Integer_0x);
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_reg_al);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Tokens)';');*/
 
-	std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
+	Buffer buff4(str1);
+	
+	const tt::a::tt_element lexs_list_inst[] {
+			{tt::i808x::insts,(size_t)LENGTH_TT(tt::i808x::insts)},
+			{tt::i808x::regs,(size_t)LENGTH_TT(tt::i808x::regs)},
+			{tt::i808x::segs,(size_t)LENGTH_TT(tt::i808x::segs)},
+		};
+	pda::D<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::file);
+	gram_list_instructions.enable_echo(true);
+	//CU_ASSERT(gram_list_instructions.transition(buff4) == 1);
+	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
+	gram_list_instructions.enable_echo(false);
+	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
+	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
+
+	/*std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
 	Buffer<char> buff4(booting_file);
 	dfa::B parser2(tt::a::gram::file);
 	a::File<char> file_compiler;
@@ -531,10 +546,10 @@ void v0_Grammar_A()
 	CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)'{');
 	//CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::file_list_instructions);
 		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_mov);
-		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_ax);
-		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_cx);
-		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)';');
-
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_al);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)tt::Tokens::i8086_reg_ah);
+		CU_ASSERT(file_compiler.lexing(buff4) == (tt::Token)';');*/
+	
 	
 	
 	

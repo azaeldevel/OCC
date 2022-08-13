@@ -26,42 +26,55 @@
 namespace oct::cc::tt::a::gram
 {
 
-static const cc::tt::b::TT<cc::tt::Tokens,cc::tt::Tokens> file{
-	
-	{0,cc::tt::Tokens::file_section,cc::tt::Indicator::None,1,cc::tt::Tokens::none},
-	{1,cc::tt::Tokens::file_code,cc::tt::Indicator::None,2,cc::tt::Tokens::none},
-	{2,(cc::tt::Tokens)'{',cc::tt::Indicator::None,3,cc::tt::Tokens::none},
-	{3,cc::tt::Tokens::file_list_instructions,cc::tt::Indicator::None,4,cc::tt::Tokens::none},
-	{4,(cc::tt::Tokens)'}',cc::tt::Indicator::Accept,5,cc::tt::Tokens::none},
-	{5,(cc::tt::Tokens)0,cc::tt::Indicator::Prefix_Accept,0,cc::tt::Tokens::none},
-};
-
-
-static const cc::tt::b::TT<tt::Tokens,tt::Tokens> insts{
+	static const cc::tt::b::TT<tt::Tokens,tt::Tokens> file{
 		
-		{0,(Tokens)' ',tt::Indicator::Eat,0,tt::Tokens::none},
-		{0,(Tokens)'\t',tt::Indicator::Eat,0,tt::Tokens::none},
-		{0,(Tokens)'\n',tt::Indicator::Eat,0,tt::Tokens::none},
-		{0,(Tokens)';',tt::Indicator::Eat,0,tt::Tokens::none},
+		{0,tt::Tokens::file_section,Indicator::None,1,Tokens::none},
+		{1,tt::Tokens::file_code,Indicator::None,2,Tokens::none},
+		{2,tt::Tokens::gram_list_insts,Indicator::Prefix_Accept,3,Tokens::none},
+		{3,(tt::Tokens)0,Indicator::Prefix_Accept,0,Tokens::none},
+	};
+
+	static const cc::tt::b::TT<Tokens,Tokens> file_list_insts{
+		
+		{0,(tt::Tokens)'{',Indicator::None,1,Tokens::none},
+		
+		{1,tt::Tokens::gram_inst_mov,Indicator::Accept,1,Tokens::gram_inst_mov},
+		{1,tt::Tokens::gram_inst_int,Indicator::Accept,1,Tokens::gram_inst_int},
+
+		{1,(tt::Tokens)'}',cc::tt::Indicator::Accept_Inmediatly,0,Tokens::gram_list_insts},
+
+	};
+
+	static const cc::tt::b::TT<tt::Tokens,tt::Tokens> insts{
+		
+		{0,(Tokens)' ',tt::Indicator::Eat,0,(Tokens)' '},
+		{0,(Tokens)'\t',tt::Indicator::Eat,0,(Tokens)'\t'},
+		{0,(Tokens)'\n',tt::Indicator::Eat,0,(Tokens)'\n'},
+		
+		//{0,(Tokens)';',tt::Indicator::Eat,0,tt::Tokens::none},
 		
 		//mov
 		{0,tt::Tokens::i8086_mov,tt::Indicator::None,1,tt::Tokens::none},
 			
-			{1,(Tokens)' ',tt::Indicator::None,1,tt::Tokens::none},
-			{1,(Tokens)'\t',tt::Indicator::None,1,tt::Tokens::none},
-			{1,(Tokens)'\n',tt::Indicator::None,1,tt::Tokens::none},
+			{1,(Tokens)' ',tt::Indicator::None,1,(Tokens)' '},
+			{1,(Tokens)'\t',tt::Indicator::None,1,(Tokens)'\t'},
+			{1,(Tokens)'\n',tt::Indicator::None,1,(Tokens)'\n'},
 			
-			{2,(Tokens)' ',tt::Indicator::Eat,2,tt::Tokens::none},
-			{2,(Tokens)'\n',tt::Indicator::Eat,2,tt::Tokens::none},
-			{2,(Tokens)'\t',tt::Indicator::Eat,2,tt::Tokens::none},
+			{2,(Tokens)' ',tt::Indicator::Eat,2,(Tokens)' '},
+			{2,(Tokens)'\n',tt::Indicator::Eat,2,(Tokens)'\t'},
+			{2,(Tokens)'\t',tt::Indicator::Eat,2,(Tokens)'\n'},
 			
-			{3,(Tokens)' ',tt::Indicator::Eat,3,tt::Tokens::none},
-			{3,(Tokens)'\n',tt::Indicator::Eat,3,tt::Tokens::none},
-			{3,(Tokens)'\t',tt::Indicator::Eat,3,tt::Tokens::none},
+			{3,(Tokens)' ',tt::Indicator::Eat,3,(Tokens)' '},
+			{3,(Tokens)'\n',tt::Indicator::Eat,3,(Tokens)'\t'},
+			{3,(Tokens)'\t',tt::Indicator::Eat,3,(Tokens)'\n'},
 			
 			//memory,accumulator
 			{1,tt::Tokens::Identifier,tt::Indicator::None,2,tt::Tokens::none},
-			{2,tt::Tokens::i8086_reg_al,tt::Indicator::Accept,3,tt::Tokens::none},			
+			{2,tt::Tokens::i8086_reg_al,tt::Indicator::Accept,3,tt::Tokens::none},
+
+			//memory,accumulator
+			{1,tt::Tokens::Integer_0x,tt::Indicator::None,2,tt::Tokens::none},
+			//{2,tt::Tokens::i8086_reg_al,tt::Indicator::Accept,3,tt::Tokens::none},				
 			
 			//memory,accumulator
 			{1,tt::Tokens::i8086_reg_ax,tt::Indicator::None,2,tt::Tokens::none},
