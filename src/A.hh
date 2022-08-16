@@ -34,12 +34,7 @@
 //assembler
 namespace oct::cc::a
 {
-
-
-
-
-
-
+	
 }
 
 

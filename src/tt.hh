@@ -46,7 +46,7 @@ namespace oct::cc::tt
 		Accept,
 		Reject,
 		Prefix_Accept,
-		Eat,
+		Prev_Eat,
 		Accept_Inmediatly
 	};
 
@@ -160,7 +160,7 @@ namespace a
 	{
 		Indicator indicator;
 		Status next;
-		Word token;
+		Tokens token;
 	};
 	
 	struct Selector

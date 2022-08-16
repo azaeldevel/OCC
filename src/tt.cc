@@ -31,6 +31,9 @@ namespace oct::cc::tt
 		switch(tok)
 		{
 		case Tokens::i8086_mov: return "i808x-mov";
+		case Tokens::Integer: return "Integer";
+		case Tokens::Integer_0x: return "Integer-0x";
+		case Tokens::i8086_reg_al: return "i808x-register-AL";
 		}
 		
 		return NULL;
@@ -45,12 +48,12 @@ namespace a
 			for(unsigned short j = 0; j < 128; j++)
 			{
 				//std::cout << "cheking (" << i << "," << j << ")\n";
-				if(t[i][j].indicator ==  Indicator::Reject and t[i][j].next == 0 and t[i][j].token == base_token) continue;
-				if(t[i][j].indicator ==  Indicator::None and t[i][j].next > 0 and t[i][j].token == base_token) continue;
-				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == base_token) continue;
-				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != 0) continue;
-				if(t[i][j].indicator ==  Indicator::Eat and t[i][j].token == base_token) continue;
-				if(t[i][j].indicator ==  Indicator::Eat and t[i][j].token < base_token) continue;
+				if(t[i][j].indicator ==  Indicator::Reject and t[i][j].next == 0 and t[i][j].token == Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::None and t[i][j].next > 0 and t[i][j].token == Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != (Tokens)0) continue;
+				if(t[i][j].indicator ==  Indicator::Prev_Eat and t[i][j].token == Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::Prev_Eat and t[i][j].token < Tokens::none) continue;
 				errors.push_back({i,j});
 			}
 		}

@@ -67,18 +67,18 @@ namespace oct::cc::tt::a::gram
 			{2,tt::Tokens::regs,tt::Indicator::Accept,3,tt::Tokens::none},	
 			
 			//			
-			{3,(Tokens)' ',tt::Indicator::Eat,3,(Tokens)' '},
-			{3,(Tokens)'\n',tt::Indicator::Eat,3,(Tokens)'\t'},
-			{3,(Tokens)'\t',tt::Indicator::Eat,3,(Tokens)'\n'},			
+			{3,(Tokens)' ',tt::Indicator::Prev_Eat,3,(Tokens)' '},
+			{3,(Tokens)'\n',tt::Indicator::Prev_Eat,3,(Tokens)'\t'},
+			{3,(Tokens)'\t',tt::Indicator::Prev_Eat,3,(Tokens)'\n'},			
 			{3,(Tokens)';',tt::Indicator::Accept_Inmediatly,0,tt::Tokens::gram_inst_mov},
 			
 			
 		//int
 		{0,tt::Tokens::i8086_int_token,cc::tt::Indicator::None,6},
 		{7,tt::Tokens::Integer_0x,cc::tt::Indicator::Accept,8,tt::Tokens::gram_inst_int},		
-		{8,(Tokens)' ',tt::Indicator::Eat,0,tt::Tokens::none},		
-		{8,(Tokens)'\t',tt::Indicator::Eat,0,tt::Tokens::none},
-		{8,(Tokens)'\n',tt::Indicator::Eat,0,tt::Tokens::none},
+		{8,(Tokens)' ',tt::Indicator::Prev_Eat,0,tt::Tokens::none},		
+		{8,(Tokens)'\t',tt::Indicator::Prev_Eat,0,tt::Tokens::none},
+		{8,(Tokens)'\n',tt::Indicator::Prev_Eat,0,tt::Tokens::none},
 		{8,(Tokens)';',tt::Indicator::Prefix_Accept,0,tt::Tokens::none},
 		
 	};

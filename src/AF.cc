@@ -26,6 +26,8 @@
 namespace oct::cc
 {
 
+	 //template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsigned short DFA<Symbol,S,O>::line = 0;
+	 //template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsigned short DFA<Symbol,S,O>::column = 0;
 
 
 }
