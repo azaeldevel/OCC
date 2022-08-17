@@ -64,7 +64,6 @@ void v0_AFD_A()
 	}
 	CU_ASSERT(i8086_regs.transition("ax") == 2);
 	CU_ASSERT(i8086_regs.get_actual()->token == tt::Tokens::i8086_reg_ax);
-	CU_ASSERT(i8086_regs.transition("ax,") == 2);
 	CU_ASSERT(i8086_regs.transition("ax ") == 2);
 	CU_ASSERT(i8086_regs.transition("ax	") == 2);
 	CU_ASSERT(i8086_regs.transition("ah") == 2);
@@ -497,13 +496,13 @@ void v0_Grammar_A()
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
 	Buffer<tt::Tokens> buff(tok_str);
 	dfa::B parser(tt::a::gram::list_insts);
+	CU_ASSERT(parser.transition(buff) == 4);
 	/*
 	parser.enable_echo(true);
 	std::cout << "parser : " << parser.transition(buff) << "\n";
 	parser.enable_echo(true);
 	*/
-	CU_ASSERT(parser.get_accepted() == NULL);
-	CU_ASSERT(parser.transition(buff) == 4);
+	CU_ASSERT(parser.get_accepted() != NULL);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
 	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};

@@ -19,6 +19,7 @@
  */
 
 #include <iostream>
+#include <cctype>
 
 #include "tt.hh"
 
@@ -30,10 +31,14 @@ namespace oct::cc::tt
 	{
 		switch(tok)
 		{
+		case (Tokens)'e': return "e";
+		case (Tokens)';': return ";";
+		case Tokens::none: return "none";
 		case Tokens::i8086_mov: return "i808x-mov";
 		case Tokens::Integer: return "Integer";
 		case Tokens::Integer_0x: return "Integer-0x";
 		case Tokens::i8086_reg_al: return "i808x-register-AL";
+		case Tokens::gram_inst_mov: return "gram-inst-mov";
 		}
 		
 		return NULL;
@@ -133,6 +138,37 @@ namespace b
 
 	template<> void  Transition<Tokens,Tokens>::print(std::ostream& out) const
 	{
+		if(input < (Tokens)tt::MAX_SIMBOLS)
+		{
+			if(isalpha((char)input) or isdigit((char)input) or ispunct((char)input))
+			{
+				out << current << "--" << (char)input << "->" << next << "\n";
+			}
+			else if(input == (Tokens)'\n')
+			{
+				out << current << "--New line->" << next << "\n";
+			}
+			else if(input == (Tokens)'\t')
+			{
+				out << current << "--Tabulator->" << next << "\n";
+			}
+			else if(input == (Tokens)' ')
+			{
+				out << current << "--Espace->" << next << "\n";
+			}
+			else if(input == (Tokens)'\0')
+			{
+				out << current << "--\\0->" << next << "\n";
+			}
+			else 
+			{
+				out << current << "--" << (char)input << "->" << next << "\n";
+			}
+		}
+		else if(input >= (Tokens)tt::MAX_SIMBOLS)
+		{
+			out << current << "--" << token_str(input) << "->" << next << "\n";
+		}
 	}	
 	template<> void  Transition<Tokens,Tokens>::print(std::wostream& out) const
 	{		

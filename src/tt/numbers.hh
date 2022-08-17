@@ -607,29 +607,29 @@ namespace oct::cc::tt
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Accept,2,(Tokens)'0'},//0
-			{Indicator::Accept,2,(Tokens)'1'},//1
-			{Indicator::Accept,2,(Tokens)'2'},//2
-			{Indicator::Accept,2,(Tokens)'3'},//3
-			{Indicator::Accept,2,(Tokens)'4'},//4
-			{Indicator::Accept,2,(Tokens)'5'},//5
-			{Indicator::Accept,2,(Tokens)'6'},//6
-			{Indicator::Accept,2,(Tokens)'7'},//7
-			{Indicator::Accept,2,(Tokens)'8'},//8
-			{Indicator::Accept,2,(Tokens)'9'},//9
+			{Indicator::Accept,2,Tokens::Integer_0x},//0
+			{Indicator::Accept,2,Tokens::Integer_0x},//1
+			{Indicator::Accept,2,Tokens::Integer_0x},//2
+			{Indicator::Accept,2,Tokens::Integer_0x},//3
+			{Indicator::Accept,2,Tokens::Integer_0x},//4
+			{Indicator::Accept,2,Tokens::Integer_0x},//5
+			{Indicator::Accept,2,Tokens::Integer_0x},//6
+			{Indicator::Accept,2,Tokens::Integer_0x},//7
+			{Indicator::Accept,2,Tokens::Integer_0x},//8
+			{Indicator::Accept,2,Tokens::Integer_0x},//9
+			{Indicator::Reject,0,Tokens::none},//:
+			{Indicator::Prefix_Accept,0,(Tokens)';'},//;
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Accept,2,(Tokens)'A'},//A
-			{Indicator::Accept,2,(Tokens)'B'},//B
-			{Indicator::Accept,2,(Tokens)'C'},//C
-			{Indicator::Accept,2,(Tokens)'D'},//D
-			{Indicator::Accept,2,(Tokens)'E'},//E
-			{Indicator::Accept,2,(Tokens)'F'},//F
+			{Indicator::Accept,2,Tokens::Integer_0x},//A
+			{Indicator::Accept,2,Tokens::Integer_0x},//B
+			{Indicator::Accept,2,Tokens::Integer_0x},//C
+			{Indicator::Accept,2,Tokens::Integer_0x},//D
+			{Indicator::Accept,2,Tokens::Integer_0x},//E
+			{Indicator::Accept,2,Tokens::Integer_0x},//F
 			{Indicator::Reject,0,Tokens::none},//G
 			{Indicator::Reject,0,Tokens::none},//H
 			{Indicator::Reject,0,Tokens::none},//I
@@ -656,12 +656,12 @@ namespace oct::cc::tt
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},//_
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Accept,2,(Tokens)'a'},//a
-			{Indicator::Accept,2,(Tokens)'b'},//b
-			{Indicator::Accept,2,(Tokens)'c'},//c
-			{Indicator::Accept,2,(Tokens)'d'},//d
-			{Indicator::Accept,2,(Tokens)'e'},//e
-			{Indicator::Accept,2,(Tokens)'f'},//f
+			{Indicator::Accept,2,Tokens::Integer_0x},//a
+			{Indicator::Accept,2,Tokens::Integer_0x},//b
+			{Indicator::Accept,2,Tokens::Integer_0x},//c
+			{Indicator::Accept,2,Tokens::Integer_0x},//d
+			{Indicator::Accept,2,Tokens::Integer_0x},//e
+			{Indicator::Accept,2,Tokens::Integer_0x},//f
 			{Indicator::Reject,0,Tokens::none},//g
 			{Indicator::Reject,0,Tokens::none},//h
 			{Indicator::Reject,0,Tokens::none},//i
