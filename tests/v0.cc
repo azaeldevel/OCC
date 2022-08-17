@@ -380,8 +380,7 @@ void v0_AFD_A()
 	//CU_ASSERT(file_dfa.get_actual()->token == (oct::Word)a::tt::Tokens::file_code);
 }
 void v0_AFD_B()
-{
-	
+{	
 	dfa::B idCB(tt::b::Identifier);
 	CU_ASSERT(idCB.transition("gnu") == 3);
 	//idCB.enable_echo(true);
@@ -412,16 +411,29 @@ void v0_AFD_B()
 	dfa::B id_B(tt::b::Identifier);
 	//id_B.print(std::cout);
 	//std::cout << "\n";
+	/*idCB.enable_echo(true);
+	std::cout << "count : " << id_B.transition(buff2) << "\n";
+	idCB.enable_echo(false);*/
+	//id_B.enable_echo(true);
+	//std::cout << "char 1: '" << buff2[0] << "'\n";
+	//std::cout << "length 1: '" << buff2.get_base() << "'\n";
 	CU_ASSERT(id_B.transition(buff2) == 3);
 	CU_ASSERT(buff2.consume_whites() == 1);
+	//std::cout << "char : '" << buff2[0] << "'\n";
+	//std::cout << "length : '" << buff2.get_base() << "'\n";
+	//std::cout << "count : " << buff2.consume_whites() << "\n";
+	//id_B.enable_echo(false);
 	//std::cout << "base : " << buff2.get_base_string() << "\n";
 	//id_B.enable_echo(true);
 	//std::cout << "id_B : " << id_B.transition(buff2) << "\n";
 	//std::cout << "str : " << buff2[1] << "\n";
 	//id_B.transition(buff2);
 	//id_B.enable_echo(false);
-	CU_ASSERT(id_B.transition(buff2) == 4);
-	//CU_ASSERT(buff2.consume_whites() == 2);
+	CU_ASSERT(id_B.transition(buff2) == 4);	
+	/*idCB.enable_echo(true);
+	std::cout << "count : " << id_B.transition(buff2) << "\n";
+	idCB.enable_echo(false);*/
+	CU_ASSERT(buff2.consume_whites() == 2);
 	/*id_B.enable_echo(true);
 	std::cout << "id_B : " << id_B.transition(buff2) << "\n";
 	id_B.enable_echo(false);*/
@@ -512,7 +524,7 @@ void v0_Grammar_A()
 	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const char* str1 = " \t mov 0x0e al;\n  mov 'B', al;";
+	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c, ax;";
 	/*Buffer buff3(str1);
 	a::List_Instructions<char,tt::Tokens> compiler;
 	

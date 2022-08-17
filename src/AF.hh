@@ -460,7 +460,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 #if OCTETOS_CC_DEGUB
 				if(dfa::DFA<T,S,O>::echo and actual)
 				{
-					//actual->print(std::cout);
+					actual->print(std::cout);
 				}
 #endif
 				if(not actual) 
@@ -496,6 +496,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 			DFA<T,S,O>::i = 0;	
 			prev = NULL;
 			accepted = NULL;
+			dfa::DFA<T,S,O>::eating = 0;
 			
 			do
 			{
@@ -505,7 +506,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
 					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
 					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
-					std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
 				}
 #endif				
 				if(Token(buff[DFA<T,S,O>::i]) == Token(0))
@@ -534,7 +535,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				}
 				
 #if OCTETOS_CC_DEGUB
-				//actual->print(std::cout);				
+				if(DFA<T,S,O>::echo) actual->print(std::cout);				
 #endif
 
 				if(actual->token == (tt::Tokens)'\n')

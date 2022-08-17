@@ -13,6 +13,7 @@
 #include <filesystem>
 #include <list>
 #include <fstream>
+#include <iostream>
 
 #include "Exception.hh"
 #include "base.hh"
@@ -124,7 +125,7 @@ public:
 		base += i;
 	}
 	T next_char()
-	{		
+	{
 		if(buffer[base] == 0) return 0;//se llego al final sin fallar la verificacion
 		
 		return buffer[base++];
@@ -134,9 +135,11 @@ public:
 		std::uintmax_t i = 0;
 		do
 		{
-			if(buffer[base + i] == 0) break;
+			if(buffer[base + i] == T(0)) break;
 			else if(is_whitespace(buffer[base + i])) i++;
 			else break;
+			//std::cout << "Buffer base = " << base << "\n";
+			//std::cout << "Buffer i = " << i << "\n";
 		}
 		while(true);
 

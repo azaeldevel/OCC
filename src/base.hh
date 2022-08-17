@@ -9,7 +9,7 @@ namespace oct::cc
 {
 
 template<typename C>
-inline bool is_whitespace(C c)
+bool is_whitespace(C c)
 {
 	switch(c)
 	{
@@ -61,7 +61,7 @@ template<typename C> size_t copy(const C* origin, size_t leng,C** dest)
 	if(origin[leng] != (C)0) return 0;
 	if(not origin) return 0;
 	if(not dest) return 0;
-		
+	
 	size_t i = 0;
 	for(;i < leng; i++)
 	{
