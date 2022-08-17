@@ -50,27 +50,17 @@ namespace oct::cc::tt::a::gram
 		//mov
 		{0,Tokens::i8086_mov,Indicator::None,1,Tokens::none},
 			
-			//memory , accumulator
+			//memory,accumulator
+			{1,Tokens::Integer_0x,Indicator::None,2,Tokens::none},
 			{1,Tokens::Identifier,Indicator::None,2,Tokens::none},
 			{2,Tokens::i8086_reg_al,Indicator::Accept,3,Tokens::none},
-
-			//memory , accumulator
-			{1,Tokens::Integer_0x,Indicator::None,2,Tokens::none},
-			//{2,tt::Tokens::i8086_reg_al,tt::Indicator::Accept,3,tt::Tokens::none},				
-			
-			//memory ,accumulator
-			{1,Tokens::i8086_reg_ax,Indicator::None,2,Tokens::none},
-			{2,Tokens::Identifier,Indicator::Accept,3,Tokens::none},
-			
-			//registro , registro
-			{1,Tokens::regs,Indicator::None,2,Tokens::none},
-			{2,Tokens::regs,Indicator::Accept,3,Tokens::none},	
-			
-			//
+			{2,Tokens::i8086_reg_ah,Indicator::Accept,3,Tokens::none},
+			{2,Tokens::i8086_reg_ax,Indicator::Accept,3,Tokens::none},
 			{3,(Tokens)' ',Indicator::Prev_Eat,3,(Tokens)' '},
 			{3,(Tokens)'\n',Indicator::Prev_Eat,3,(Tokens)'\t'},
 			{3,(Tokens)'\t',Indicator::Prev_Eat,3,(Tokens)'\n'},
-			{3,(Tokens)';',Indicator::Accept_Inmediatly,0,Tokens::gram_inst_mov},
+			{3,(Tokens)';',Indicator::Accept_Inmediatly,0,Tokens::gram_inst_mov},				
+			
 			
 		//int
 		{0,Tokens::i8086_int_token,Indicator::None,6},

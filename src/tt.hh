@@ -394,7 +394,7 @@ namespace b
 #endif
 	
 	};
-
+	
 	template<typename T,typename Token,typename I = size_t> class TT
 	{
 	public:
@@ -491,8 +491,8 @@ namespace b
 			split(work,0,length - 1,data);
 		}
 	};
-
-
+	
+	
 	static const TT<char,Tokens> Identifier{
 		
 		{0,'A',Indicator::Accept,1,Tokens::Identifier},

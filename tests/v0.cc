@@ -534,20 +534,21 @@ void v0_Grammar_A()
 	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_reg_al);
 	CU_ASSERT(compiler.lexing(buff3) == (tt::Tokens)';');*/
 
-	Buffer buff4(str1);
-	
+	Buffer buff4(str1);	
 	const tt::a::tt_element lexs_list_inst[] {
 			{tt::i808x::insts,(size_t)LENGTH_TT(tt::i808x::insts)},
 			{tt::i808x::regs,(size_t)LENGTH_TT(tt::i808x::regs)},
 			{tt::i808x::segs,(size_t)LENGTH_TT(tt::i808x::segs)},
 			{tt::Integer_0x,(size_t)LENGTH_TT(tt::Integer_0x)},
+			{tt::Identifier,(size_t)LENGTH_TT(tt::Identifier)},
 		};
 	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::list_insts);
-	gram_list_instructions.enable_echo(true);
-	//CU_ASSERT(gram_list_instructions.transition(buff4) == 1);
+	/*gram_list_instructions.enable_echo(true);
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
-	gram_list_instructions.enable_echo(false);
+	gram_list_instructions.enable_echo(false);*/
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	//gram_list_instructions.print(std::cout);
 	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
 	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
