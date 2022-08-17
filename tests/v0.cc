@@ -437,6 +437,7 @@ void v0_AFD_B()
 	/*id_B.enable_echo(true);
 	std::cout << "id_B : " << id_B.transition(buff2) << "\n";
 	id_B.enable_echo(false);*/
+	CU_ASSERT(id_B.transition(buff2) == 4);
 	
 }
 void v0_AFD_C()
@@ -524,7 +525,7 @@ void v0_Grammar_A()
 	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c, ax;";
+	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c ax;";
 	/*Buffer buff3(str1);
 	a::List_Instructions<char,tt::Tokens> compiler;
 	
@@ -545,7 +546,9 @@ void v0_Grammar_A()
 	gram_list_instructions.enable_echo(true);
 	//CU_ASSERT(gram_list_instructions.transition(buff4) == 1);
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
+	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
 	gram_list_instructions.enable_echo(false);
+	//gram_list_instructions.print(std::cout);
 	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
 	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
 

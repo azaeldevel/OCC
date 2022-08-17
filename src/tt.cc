@@ -38,6 +38,7 @@ namespace oct::cc::tt
 		case Tokens::Integer: return "Integer";
 		case Tokens::Integer_0x: return "Integer-0x";
 		case Tokens::i8086_reg_al: return "i808x-register-AL";
+		case Tokens::i8086_reg_ax: return "i808x-register-AX";
 		case Tokens::gram_inst_mov: return "gram-inst-mov";
 		}
 		
@@ -167,7 +168,8 @@ namespace b
 		}
 		else if(input >= (Tokens)tt::MAX_SIMBOLS)
 		{
-			out << current << "--" << token_str(input) << "->" << next << "\n";
+			//out << current << "--" << token_str(input) << "->" << next << "\n";
+			out << current << "--" << (int)input << "->" << next << "\n";
 		}
 	}	
 	template<> void  Transition<Tokens,Tokens>::print(std::wostream& out) const

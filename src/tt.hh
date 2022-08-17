@@ -420,7 +420,7 @@ namespace b
 			return table[index];
 		}
 		
-		inline size_t size() const
+		size_t size() const
 		{
 			return _size;
 		}

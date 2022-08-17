@@ -594,8 +594,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 #endif
 					return 0;//si no se encontrontro transiscion
 				}
-				 
-				dfa::DFA<T,S,O>::current = actual->next;
+				
 				prev = actual;
 				dfa::DFA<T,S,O>::i++;
 			}
@@ -611,8 +610,10 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				
 		void print(std::ostream& out) const
 		{
-			for(unsigned int i = 0; i < table->size(); i++)
-			{
+			std::cout << "size : " << table->size() << "\n";
+			for(size_t i = 0; i < table->size(); i++)
+			{	
+				std::cout << "Transition : ";
 				(*table)[i].print(out);
 			}
 		}
@@ -625,8 +626,14 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 	protected:
 		const tt::b::Transition<T,Token>* next(T symbol)
 		{
-			//std::cout << "current : " << current << "\n";
-			//std::cout << "symbol : " << symbol << "\n";
+#if OCTETOS_CC_DEGUB
+			/*if(DFA<T,S,O>::echo)
+			{
+				std::cout << "current : " << dfa::DFA<T,S,O>::current << "\n";
+				std::cout << "symbol : " << (int)symbol << "\n";
+				//std::cout << "char : " << (char)symbol << "\n";
+			}*/
+#endif
 			const tt::b::Transition<T,Token>* ret = search(dfa::DFA<T,S,O>::current,symbol);
 			//ret? std::cout << "Found\n" : std::cout << "Not Fount\n" ;
 			if(ret)
@@ -892,12 +899,14 @@ public:
 	}
 	
 
+	
 	O transition(Buffer<C>& buff)
 	{
 		if(buff.empty()) return 0;
 			
 			dfa::B<Token,Token,S,O>::current = dfa::B<Token,Token,S,O>::reset;
 			dfa::B<Token,Token,S,O>::i = 0;
+			j = 0;
 			dfa::B<Token,Token,S,O>::prev = NULL;
 			dfa::B<Token,Token,S,O>::accepted = NULL;
 			dfa::DFA<Token,S,O>::eating = 0;
@@ -930,9 +939,14 @@ public:
 				}
 				else
 				{
-					std::cout << "Grammar analyzer\n";
-					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[dfa::B<Token,Token,S,O>::i]);
-					if(not dfa::B<Token,Token,S,O>::accepted) return 0;
+					std::cout << "Grammar analyzer : " << buff[dfa::B<Token,Token,S,O>::i] << "\n";
+					std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
+					std::cout << "Grammar analyzer Buffer j: " << j << "\n";
+					//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
+					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[j]);
+					if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
+					if(not dfa::B<Token,Token,S,O>::actual) return 0;
+					j++;
 				}
 				
 				std::cout << "Step 5\n";
@@ -990,15 +1004,16 @@ public:
 				else if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Accept_Inmediatly)
 				{
 #if OCTETOS_CC_DEGUB
-					std::cout << "Accept_Inmediatly\n";
+					//std::cout << "Accept_Inmediatly\n";
 #endif	
 					dfa::B<Token,Token,S,O>::accepted = dfa::B<Token,Token,S,O>::actual;
+					buff.walk((size_t) j);
 					return ++dfa::B<Token,Token,S,O>::i;
 				}
 				else if(dfa::B<Token,Token,S,O>::actual->indicator == tt::Indicator::Prefix_Accept)
 				{
 #if OCTETOS_CC_DEGUB
-					std::cout << "Prefix_Accept\n";
+					//std::cout << "Prefix_Accept\n";
 #endif				
 					if(dfa::B<Token,Token,S,O>::prev) 
 					{
@@ -1011,7 +1026,7 @@ public:
 							//std::cout << "prev exist acepted\n";
 #endif
 							dfa::B<Token,Token,S,O>::accepted = dfa::B<Token,Token,S,O>::actual;
-							//buff.walk((size_t)dfa::DFA<C,S,O>i);
+							buff.walk((size_t)j);
 							return dfa::B<Token,Token,S,O>::i;
 						}
 					}
@@ -1026,8 +1041,7 @@ public:
 				dfa::B<Token,Token,S,O>::i++;
 				std::cout << "Step 9\n";
 			}
-			while(dfa::B<Token,Token,S,O>::actual->indicator != tt::Indicator::Reject);		
-
+			while(dfa::B<Token,Token,S,O>::actual->indicator != tt::Indicator::Reject);
 			
 		return 0;
 	}
@@ -1036,6 +1050,7 @@ private:
 	dfa::A<C,S,O> lexer;
 	const tt::a::tt_element* lex_tt;
 	size_t lex_length;
+	unsigned short j;
 };
 
 }
