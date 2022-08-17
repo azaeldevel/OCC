@@ -223,8 +223,8 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},//9
-			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Reject,0,Tokens::none},
+			{Indicator::Reject,0,Tokens::none},//:
+			{Indicator::Reject,0,Tokens::none},//;
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -425,7 +425,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 		},
-	//2 : a? - prefix
+	//2 : registar a - prefix
 		{
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -436,8 +436,8 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prefix_Accept,0,Tokens::none},//tab
-			{Indicator::Reject,0,Tokens::none},
+			{Indicator::Prefix_Accept,0,(Tokens)'\t'},//tab
+			{Indicator::Prefix_Accept,0,(Tokens)'\n'},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -471,7 +471,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prefix_Accept,0,Tokens::none},//,
+			{Indicator::Reject,0,Tokens::none},//,
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -486,7 +486,7 @@ constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},//9
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prefix_Accept,0,Tokens::none},
+			{Indicator::Prefix_Accept,0,(Tokens)';'},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
