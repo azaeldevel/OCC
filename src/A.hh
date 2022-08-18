@@ -28,6 +28,7 @@
 #include "tt/A/lex.hh"
 #include "tt/identifier.hh"
 #include "tt/numbers.hh"
+#include "tt/chars.hh"
 
 
 

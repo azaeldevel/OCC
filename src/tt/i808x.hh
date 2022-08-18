@@ -27,7 +27,7 @@ namespace oct::cc::tt::i808x
 
 
 /*
-constexpr static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
+static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 	//0
 		{
 			{Indicator::Reject,0,Tokens::none},

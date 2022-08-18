@@ -132,50 +132,61 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 		}
 		*/
 
+		const char* indicator_string() const
+		{			
+			
+			if(actual->indicator == tt::Indicator::None) return "None";
+			else if(actual->indicator == tt::Indicator::Accept_Inmediatly) return "Aceppt Inmediatly";
+			else if(actual->indicator == tt::Indicator::Accept) return "Aceppted";
+			else if(actual->indicator == tt::Indicator::Accept) return "None";
+			else if(actual->indicator == tt::Indicator::Prev_Eat) return "Left Eating";
+			else if(actual->indicator == tt::Indicator::Reject) return "Reject";
+			else return "Desconocido";
+		}
 		void print(std::ostream& out) const
 		{
 			if(dfa::DFA<T,S,O>::c == '\n')
 			{
-				out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << "\n";
+				out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << " : " << indicator_string() << "\n";
 			}
 			else if(dfa::DFA<T,S,O>::c == '\t')
 			{
-				out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << "\n";
+				out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << " : "  << indicator_string()  << "\n";
 			}
 			else if(dfa::DFA<T,S,O>::c == ' ')
 			{
-				out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << "\n";
+				out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << " : "  << indicator_string()  << "\n";
 			}
 			else if(dfa::DFA<T,S,O>::c == '\0')
 			{
-				out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << "\n";
+				out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << " : "  << indicator_string()  << "\n";
 			}
 			else
 			{
-				out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << "\n";
+				out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << " : "  << indicator_string()  << "\n";
 			}
 		}
 		void print(std::wostream& out) const
 		{
 				if(dfa::DFA<T,S,O>::c == '\n')
 				{
-					out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--New line->" << actual->next << " : "  << indicator_string()  << "\n";
 				}
 				else if(dfa::DFA<T,S,O>::c == '\t')
 				{
-					out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Tabulator->" << actual->next << " : "  << indicator_string()  << "\n";
 				}
 				else if(dfa::DFA<T,S,O>::c == ' ')
 				{
-					out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--Espace->" << actual->next << " : "  << indicator_string()  << "\n";
 				}
 				else if(dfa::DFA<T,S,O>::c == '\0')
 				{
-					out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--\\0->" << actual->next << " : "  << indicator_string()  << "\n";
 				}
 				else
 				{
-					out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << "\n";
+					out << dfa::DFA<T,S,O>::current << "--" << dfa::DFA<T,S,O>::c << "->" << actual->next << " : " << indicator_string()  << "\n";
 				}
 		}
 		Word transition(const T* string)
@@ -276,8 +287,10 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 			
 			do
 			{
+				
 				dfa::DFA<T,S,O>::c = buff[dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i];
 #if OCTETOS_CC_DEGUB
+				//if(dfa::DFA<T,S,O>::echo) std::cout << "Step : " << dfa::DFA<T,S,O>::i << "\n";
 				if(dfa::DFA<T,S,O>::echo)
 				{
 					//std::cout << "current : " << cc::DFA<T,S,O>::current << "\n";
@@ -321,7 +334,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 #if OCTETOS_CC_DEGUB
 				if(dfa::DFA<T,S,O>::echo)
 				{
-					//print(std::cout);
+					print(std::cout);
 				}
 #endif
 
@@ -343,13 +356,13 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 					dfa::DFA<T,S,O>::i = 0;
 					dfa::DFA<T,S,O>::current = actual->next;
 					prev = actual;
-					//buff.next_char();
 					//std::cout << "Eating\n";
 					dfa::DFA<T,S,O>::eating++;
 					continue;
 				}
 				else if(actual->indicator == tt::Indicator::Accept_Inmediatly)
-				{
+				{					
+					dfa::DFA<T,S,O>::i++;
 					buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
 					return ++dfa::DFA<T,S,O>::i;
 				}
@@ -456,7 +469,8 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 					return 0;//si no se encontrontro transiscion
 				}
 
-				actual = next(string[dfa::DFA<T,S,O>::i]);				
+				actual = next(string[dfa::DFA<T,S,O>::i]);
+				
 #if OCTETOS_CC_DEGUB
 				if(dfa::DFA<T,S,O>::echo and actual)
 				{
