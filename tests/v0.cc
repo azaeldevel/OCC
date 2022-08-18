@@ -337,7 +337,7 @@ void v0_AFD_A()
 	//i8086_insts.enable_echo(true);
 	CU_ASSERT(i8086_insts.transition(buff2) == 3);
 	//i8086_insts.enable_echo(false);
-	CU_ASSERT(i8086_insts.get_actual()->token == tt::Tokens::i8086_hlt);
+	CU_ASSERT(i8086_insts.get_accepted()->token == tt::Tokens::i8086_hlt);
 	//std::cout << "buff2.walk : " << buff2.walk(';') << "\n";
 	CU_ASSERT(buff2.walk(';') == ';');
 	CU_ASSERT(buff2.consume_whites() == 1);
@@ -382,11 +382,21 @@ void v0_AFD_A()
 	Buffer buff_chars("  'A' 'z' \t 'a' \n'e'   'l' ");
 	dfa::A<char> lex_chars_literal(TABLE(tt::char_literal));
 	//lex_chars_literal.print(std::cout);
-	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 4);
-	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 4);
-	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 4);
-	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 4);
-	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 4);
+	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
+	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
+	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
+	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
+	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
+	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
 	
 	
 }
@@ -516,54 +526,7 @@ void v0_performance()
 
 void v0_Grammar_A()
 {
-	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
-	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
-	Buffer<tt::Tokens> buff(tok_str);
-	dfa::B parser(tt::a::gram::list_insts);
-	CU_ASSERT(parser.transition(buff) == 4);
-	/*
-	parser.enable_echo(true);
-	std::cout << "parser : " << parser.transition(buff) << "\n";
-	parser.enable_echo(true);
-	*/
-	CU_ASSERT(parser.get_accepted() != NULL);
-	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
-
-	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
-	Buffer<tt::Tokens> buff2(tok_str2);
-	//std::cout << "parser : " << parser.transition(buff) << "\n";
-	CU_ASSERT(parser.get_accepted() != NULL);
-	CU_ASSERT(parser.transition(buff2) == 4);
-	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
-
-	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c ax ; mov 'B' ah;";
-	/*Buffer buff3(str1);
-	a::List_Instructions<char,tt::Tokens> compiler;
 	
-	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_mov);
-	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::Integer_0x);
-	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_reg_al);
-	CU_ASSERT(compiler.lexing(buff3) == (tt::Tokens)';');*/
-
-	Buffer buff4(str1);	
-	const tt::a::tt_element lexs_list_inst[] {
-			{tt::i808x::insts,(size_t)LENGTH_TT(tt::i808x::insts)},
-			{tt::i808x::regs,(size_t)LENGTH_TT(tt::i808x::regs)},
-			{tt::i808x::segs,(size_t)LENGTH_TT(tt::i808x::segs)},
-			{tt::Integer_0x,(size_t)LENGTH_TT(tt::Integer_0x)},
-			{tt::Identifier,(size_t)LENGTH_TT(tt::Identifier)},
-	};
-	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::list_insts);
-	/*gram_list_instructions.enable_echo(true);
-	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
-	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
-	gram_list_instructions.enable_echo(false);*/
-	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	//gram_list_instructions.print(std::cout);
-	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
-	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
-
 
 	const char* str2 = "ah bl cl dh";
 	Buffer buff5(str2);
@@ -586,6 +549,59 @@ void v0_Grammar_A()
 	CU_ASSERT(gram_regs_16.transition(buff6) == 1);
 	CU_ASSERT(gram_regs_16.transition(buff6) == 1);
 	CU_ASSERT(gram_regs_16.transition(buff6) == 1);
+	
+	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
+	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
+	Buffer<tt::Tokens> buff(tok_str);
+	dfa::B parser(tt::a::gram::list_insts);
+	CU_ASSERT(parser.transition(buff) == 4);
+	/*
+	parser.enable_echo(true);
+	std::cout << "parser : " << parser.transition(buff) << "\n";
+	parser.enable_echo(true);
+	*/
+	CU_ASSERT(parser.get_accepted() != NULL);
+	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
+
+	const tt::Tokens tok_str2[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
+	Buffer<tt::Tokens> buff2(tok_str2);
+	//std::cout << "parser : " << parser.transition(buff) << "\n";
+	CU_ASSERT(parser.get_accepted() != NULL);
+	CU_ASSERT(parser.transition(buff2) == 4);
+	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
+
+	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c ax ; mov ah  'B';";
+	/*Buffer buff3(str1);
+	a::List_Instructions<char,tt::Tokens> compiler;
+	
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_mov);
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::Integer_0x);
+	CU_ASSERT(compiler.lexing(buff3) == tt::Tokens::i8086_reg_al);
+	CU_ASSERT(compiler.lexing(buff3) == (tt::Tokens)';');*/
+
+	Buffer buff4(str1);	
+	const tt::a::tt_element lexs_list_inst[] {
+		{tt::i808x::insts,(size_t)LENGTH_TT(tt::i808x::insts)},
+		{tt::i808x::regs,(size_t)LENGTH_TT(tt::i808x::regs)},
+		{tt::i808x::segs,(size_t)LENGTH_TT(tt::i808x::segs)},
+		{tt::Integer_0x,(size_t)LENGTH_TT(tt::Integer_0x)},
+		{tt::Identifier,(size_t)LENGTH_TT(tt::Identifier)},
+		{tt::char_literal,(size_t)LENGTH_TT(tt::char_literal)},
+	};
+	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::list_insts);
+	/*gram_list_instructions.enable_echo(true);
+	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
+	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
+	gram_list_instructions.enable_echo(false);*/
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
+	gram_list_instructions.enable_echo(true);
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
+	gram_list_instructions.enable_echo(false);
+	//gram_list_instructions.print(std::cout);
+	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
+	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
+
 	
 	/*std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
 	Buffer<char> buff4(booting_file);

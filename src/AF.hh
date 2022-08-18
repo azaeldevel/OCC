@@ -138,7 +138,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 			if(actual->indicator == tt::Indicator::None) return "None";
 			else if(actual->indicator == tt::Indicator::Accept_Inmediatly) return "Aceppt Inmediatly";
 			else if(actual->indicator == tt::Indicator::Accept) return "Aceppted";
-			else if(actual->indicator == tt::Indicator::Accept) return "None";
+			else if(actual->indicator == tt::Indicator::Prefix_Accept) return "Prefijo de acceptacion";
 			else if(actual->indicator == tt::Indicator::Prev_Eat) return "Left Eating";
 			else if(actual->indicator == tt::Indicator::Reject) return "Reject";
 			else return "Desconocido";
@@ -287,7 +287,6 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 			
 			do
 			{
-				
 				dfa::DFA<T,S,O>::c = buff[dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i];
 #if OCTETOS_CC_DEGUB
 				//if(dfa::DFA<T,S,O>::echo) std::cout << "Step : " << dfa::DFA<T,S,O>::i << "\n";
@@ -319,7 +318,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 #if OCTETOS_CC_DEGUB
 						//if(cc::DFA<T,S,O>::echo) std::cout << "'" << string[cc::DFA<T,S,O>::i]  << "'" << "\n";
 #endif
-						actual = prev;
+						//actual = prev;
 						accepted = prev;
 						buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
 						return dfa::DFA<T,S,O>::i;
@@ -364,7 +363,8 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				{					
 					dfa::DFA<T,S,O>::i++;
 					buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
-					return ++dfa::DFA<T,S,O>::i;
+					accepted = actual;
+					return dfa::DFA<T,S,O>::i;
 				}
 				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{
@@ -381,7 +381,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 							//std::cout << " i : " << dfa::DFA<T,S,O>::i  << "\n";
 						}
 #endif
-						actual = prev;
+						//actual = prev;
 						accepted = prev;
 						buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
 						return dfa::DFA<T,S,O>::i;
@@ -924,13 +924,15 @@ public:
 			dfa::B<Token,Token,S,O>::prev = NULL;
 			dfa::B<Token,Token,S,O>::accepted = NULL;
 			dfa::DFA<Token,S,O>::eating = 0;
-			
+
 			do
 			{
-				//std::cout << "\nStep 1\n";
 #if OCTETOS_CC_DEGUB
+				lexer.enable_echo(dfa::B<Token,Token,S,O>::echo);
 				if(dfa::B<Token,Token,S,O>::echo)
 				{
+					std::cout << "\n";
+					//std::cout << "\nStep 1\n";
 					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
 					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
 					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
@@ -941,23 +943,43 @@ public:
 				//std::cout << "Step 3\n";
 				for(size_t ilex = 0; ilex < lex_length; ilex++)	
 				{
-					//std::cout << "Lex rule : " << ilex << "\n";
+					std::cout << "Lex rule : " << ilex << "\n";
 					lexer.load(lex_tt[ilex].tt,lex_tt[ilex].length);
 					if(lexer.transition(buff) > 0) break;
 				}
 				//std::cout << "Step 4\n";				
 				if(lexer.get_accepted()) 
 				{
-					//std::cout << "Lexer analyzer\n";
+#if OCTETOS_CC_DEGUB
+					std::cout << "Finding next token.\n";
+					if(lexer.get_echo()) 
+					{
+						std::cout << "Lexer analyzer\n";
+						std::cout << "Token : " << (int)lexer.get_accepted()->token << "\n";
+						const char* str =  tt::token_str((Token)lexer.get_accepted()->token);
+						if(str)
+						{
+							std::cout << "Step str : " << str;
+							if(lexer.get_accepted()->indicator == tt::Indicator::Accept or lexer.get_accepted()->indicator == tt::Indicator::Accept_Inmediatly) std::cout << " : Acceptado.";
+							std::cout << "\n";
+						}
+					}
+#endif
 					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((Token)lexer.get_accepted()->token);
 					if(not dfa::B<Token,Token,S,O>::actual) return 0;
+					if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
 				}
 				else
 				{
-					//std::cout << "Grammar analyzer : " << buff[dfa::B<Token,Token,S,O>::i] << "\n";
-					//std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
-					//std::cout << "Grammar analyzer Buffer j: " << j << "\n";
-					//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
+#if OCTETOS_CC_DEGUB
+					if(dfa::B<Token,Token,S,O>::echo)
+					{
+						std::cout << "Grammar analyzer : " << buff[dfa::B<Token,Token,S,O>::i] << "\n";
+						//std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
+						//std::cout << "Grammar analyzer Buffer j: " << j << "\n";
+						//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
+					}
+#endif
 					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[j]);
 					//if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
 					if(not dfa::B<Token,Token,S,O>::actual) return 0;
@@ -968,22 +990,11 @@ public:
 				//std::cout << "Step 6\n";
 				
 #if OCTETOS_CC_DEGUB
-				if(lexer.get_echo()) 
-				{
-					//std::cout << "Token : " << (int)lexer.get_actual()->token << "\n";
-					const char* str =  tt::token_str((Token)lexer.get_actual()->token);
-					if(str)
-					{
-						//std::cout << "Step str : " << str;
-						if(lexer.get_actual()->indicator == tt::Indicator::Accept) std::cout << " : Acceptado.";
-						std::cout << "\n";
-					}
-				}
 				if(dfa::B<Token,Token,S,O>::echo) 
 				{
-					//std::cout << "Gram : " << (int)dfa::B<Token,Token,S,O>::actual->token << "\n";
+					std::cout << "Gram : " << (int)dfa::B<Token,Token,S,O>::actual->token << "\n";
 					const char* str =  tt::token_str(dfa::B<Token,Token,S,O>::actual->token);
-					//std::cout << "Gram : ";
+					std::cout << "Gram : ";
 					if(str) std::cout << str << "\n";
 					dfa::B<Token,Token,S,O>::actual->print(std::cout);
 				}
@@ -1051,7 +1062,6 @@ public:
 #if OCTETOS_CC_DEGUB
 				//std::cout << "Next token\n";
 #endif		
-				//dfa::DFA<C,S,O>current = actual->next;
 				dfa::B<Token,Token,S,O>::prev = dfa::B<Token,Token,S,O>::actual;
 				dfa::B<Token,Token,S,O>::i++;
 				//std::cout << "Step 9\n";

@@ -38,8 +38,19 @@ namespace oct::cc::tt
 		case Tokens::Integer: return "Integer";
 		case Tokens::Integer_0x: return "Integer-0x";
 		case Tokens::i8086_reg_al: return "i808x-register-AL";
+		case Tokens::i8086_reg_ah: return "i808x-register-AH";
+		case Tokens::i8086_reg_bl: return "i808x-register-BL";
+		case Tokens::i8086_reg_bh: return "i808x-register-BH";
+		case Tokens::i8086_reg_cl: return "i808x-register-CL";
+		case Tokens::i8086_reg_ch: return "i808x-register-CH";
+		case Tokens::i8086_reg_dl: return "i808x-register-DL";
+		case Tokens::i8086_reg_dh: return "i808x-register-DH";
 		case Tokens::i8086_reg_ax: return "i808x-register-AX";
+		case Tokens::i8086_reg_bx: return "i808x-register-BX";
+		case Tokens::i8086_reg_cx: return "i808x-register-BX";
+		case Tokens::i8086_reg_dx: return "i808x-register-BX";
 		case Tokens::gram_inst_mov: return "gram-inst-mov";
+		case Tokens::char_literal: return "char lireal";
 		}
 		
 		return NULL;

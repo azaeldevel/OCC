@@ -56,7 +56,11 @@ namespace oct::cc::tt
 
 	
 		none = base_token,
+
+		Identifier,
 		char_literal,
+		Integer,
+		Integer_0x,
 
 		error,
 
@@ -143,9 +147,6 @@ namespace oct::cc::tt
 		i8086_reg_cx,
 		i8086_reg_dx,
 				
-		Identifier,
-		Integer,
-		Integer_0x,
 
 		grammar,
 		
