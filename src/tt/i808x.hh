@@ -174,8 +174,8 @@ static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,(Tokens)'\t'},//tab
-			{Indicator::Prev_Eat,0,(Tokens)'\n'},//new line
+			{Indicator::Left_Eat,0,(Tokens)'\t'},//tab
+			{Indicator::Left_Eat,0,(Tokens)'\n'},//new line
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -197,7 +197,7 @@ static const tt::a::Transition [][tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,(Tokens)' '},
+			{Indicator::Left_Eat,0,(Tokens)' '},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -3066,8 +3066,8 @@ static const cc::tt::a::Transition insts[][cc::tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,(Tokens)'\t'},//tab
-			{Indicator::Prev_Eat,0,(Tokens)'\n'},//new line
+			{Indicator::Left_Eat,0,(Tokens)'\t'},//tab
+			{Indicator::Left_Eat,0,(Tokens)'\n'},//new line
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -3089,7 +3089,7 @@ static const cc::tt::a::Transition insts[][cc::tt::MAX_SIMBOLS] = {
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,(Tokens)' '},//' '
+			{Indicator::Left_Eat,0,(Tokens)' '},//' '
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
