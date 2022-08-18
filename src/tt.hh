@@ -46,7 +46,7 @@ namespace oct::cc::tt
 		Accept,
 		Reject,
 		Prefix_Accept,
-		Prev_Eat,
+		Left_Eat,
 		Accept_Inmediatly
 	};
 

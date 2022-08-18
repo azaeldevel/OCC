@@ -56,9 +56,9 @@ namespace oct::cc::tt::a::gram
 			{2,Tokens::i8086_reg_al,Indicator::Accept,3,Tokens::none},
 			{2,Tokens::i8086_reg_ah,Indicator::Accept,3,Tokens::none},
 			{2,Tokens::i8086_reg_ax,Indicator::Accept,3,Tokens::none},
-			{3,(Tokens)' ',Indicator::Prev_Eat,3,(Tokens)' '},
-			{3,(Tokens)'\n',Indicator::Prev_Eat,3,(Tokens)'\t'},
-			{3,(Tokens)'\t',Indicator::Prev_Eat,3,(Tokens)'\n'},
+			{3,(Tokens)' ',Indicator::Left_Eat,3,(Tokens)' '},
+			{3,(Tokens)'\n',Indicator::Left_Eat,3,(Tokens)'\t'},
+			{3,(Tokens)'\t',Indicator::Left_Eat,3,(Tokens)'\n'},
 			{3,(Tokens)';',Indicator::Accept_Inmediatly,0,Tokens::gram_inst_mov},
 						
 			//register,inmendiate
@@ -77,17 +77,17 @@ namespace oct::cc::tt::a::gram
 			{4,Tokens::Integer_0x,Indicator::Accept,5,Tokens::none},
 			{4,Tokens::Integer,Indicator::Accept,5,Tokens::none},
 			{4,Tokens::char_literal,Indicator::Accept,5,Tokens::none},
-			{5,(Tokens)' ',Indicator::Prev_Eat,5,(Tokens)' '},
-			{5,(Tokens)'\n',Indicator::Prev_Eat,5,(Tokens)'\t'},
-			{5,(Tokens)'\t',Indicator::Prev_Eat,5,(Tokens)'\n'},
+			{5,(Tokens)' ',Indicator::Left_Eat,5,(Tokens)' '},
+			{5,(Tokens)'\n',Indicator::Left_Eat,5,(Tokens)'\t'},
+			{5,(Tokens)'\t',Indicator::Left_Eat,5,(Tokens)'\n'},
 			{5,(Tokens)';',Indicator::Accept_Inmediatly,0,Tokens::gram_inst_mov},
 			
 		//int
 		{0,Tokens::i8086_int_token,Indicator::None,6},
 		{7,Tokens::Integer_0x,Indicator::Accept,8,Tokens::gram_inst_int},		
-		{8,(Tokens)' ',Indicator::Prev_Eat,0,Tokens::none},		
-		{8,(Tokens)'\t',Indicator::Prev_Eat,0,Tokens::none},
-		{8,(Tokens)'\n',Indicator::Prev_Eat,0,Tokens::none},
+		{8,(Tokens)' ',Indicator::Left_Eat,0,Tokens::none},		
+		{8,(Tokens)'\t',Indicator::Left_Eat,0,Tokens::none},
+		{8,(Tokens)'\n',Indicator::Left_Eat,0,Tokens::none},
 		{8,(Tokens)';',Indicator::Prefix_Accept,0,Tokens::none},
 		
 	};

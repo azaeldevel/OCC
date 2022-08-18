@@ -69,8 +69,8 @@ namespace a
 				if(t[i][j].indicator ==  Indicator::None and t[i][j].next > 0 and t[i][j].token == Tokens::none) continue;
 				if(t[i][j].indicator ==  Indicator::Prefix_Accept and t[i][j].next == 0 and t[i][j].token == Tokens::none) continue;
 				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != (Tokens)0) continue;
-				if(t[i][j].indicator ==  Indicator::Prev_Eat and t[i][j].token == Tokens::none) continue;
-				if(t[i][j].indicator ==  Indicator::Prev_Eat and t[i][j].token < Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::Left_Eat and t[i][j].token == Tokens::none) continue;
+				if(t[i][j].indicator ==  Indicator::Left_Eat and t[i][j].token < Tokens::none) continue;
 				errors.push_back({i,j});
 			}
 		}

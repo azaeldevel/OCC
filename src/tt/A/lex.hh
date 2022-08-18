@@ -38,8 +38,8 @@ namespace oct::cc::tt::a::lex
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,Tokens::none},//tab
-			{Indicator::Prev_Eat,0,Tokens::none},//new line
+			{Indicator::Left_Eat,0,Tokens::none},//tab
+			{Indicator::Left_Eat,0,Tokens::none},//new line
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
@@ -61,7 +61,7 @@ namespace oct::cc::tt::a::lex
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Prev_Eat,0,Tokens::none},//' '
+			{Indicator::Left_Eat,0,Tokens::none},//' '
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},

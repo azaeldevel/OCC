@@ -384,19 +384,20 @@ void v0_AFD_A()
 	//lex_chars_literal.print(std::cout);
 	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
 	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
-	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token == tt::Tokens::char_literal);
+	//std::cout << "TOken : " << tt::token_str(lex_chars_literal.get_accepted()->token) << "\n";
 	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
 	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
-	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token == tt::Tokens::char_literal);
 	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
 	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
-	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token == tt::Tokens::char_literal);
 	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
 	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
-	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token == tt::Tokens::char_literal);
 	CU_ASSERT(lex_chars_literal.transition(buff_chars) == 3);
 	CU_ASSERT(lex_chars_literal.get_accepted() != NULL);
-	CU_ASSERT(lex_chars_literal.get_accepted()->token != tt::Tokens::char_literal);
+	CU_ASSERT(lex_chars_literal.get_accepted()->token == tt::Tokens::char_literal);
 	
 	
 }
@@ -595,9 +596,9 @@ void v0_Grammar_A()
 	gram_list_instructions.enable_echo(false);*/
 	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	gram_list_instructions.enable_echo(true);
+	//gram_list_instructions.enable_echo(true);
 	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	gram_list_instructions.enable_echo(false);
+	//gram_list_instructions.enable_echo(false);
 	//gram_list_instructions.print(std::cout);
 	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
 	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
