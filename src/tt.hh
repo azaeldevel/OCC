@@ -25,6 +25,7 @@
 
 
 #include <vector>
+#include <map>
 #include <octetos/core/core.hh>
 #include <initializer_list>
 
@@ -158,6 +159,7 @@ namespace oct::cc::tt
 
 		regs_8,
 		regs_16,
+		Memory,
 	};
 
 	const char* token_str(Tokens tok);
@@ -496,6 +498,11 @@ namespace b
 			copy(0,length,data,work);
 			split(work,0,length - 1,data);
 		}
+	};
+	
+	template<typename C,typename Tokens,typename I = size_t>
+	struct grammars : public std::map<Tokens,const TT<C,Tokens,I>*> 
+	{
 	};
 	
 	

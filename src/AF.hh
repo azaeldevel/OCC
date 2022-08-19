@@ -433,12 +433,11 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 		B(const tt::b::TT<T,Token>& t) : table(&t), accepted(NULL)
 		{
 		}
-		
-		/*
+				
 		void load(const tt::b::TT<T,Token>& t)
 		{
 			table = &t;
-		}*/
+		}
 
 		const tt::b::Transition<T,Token>* search(tt::Status current,T input)
 		{
@@ -909,95 +908,105 @@ template<typename C, typename Token, typename S = Word, typename O = Word> class
 public:
 	BA(const tt::a::tt_element* lextt, size_t lexl, const tt::b::TT<Token,Token>& t) : dfa::B<Token,Token,S,O>(t), lex_tt(lextt), lex_length(lexl)
 	{
-		//lexer.enable_echo(true);
 	}
-	
-
+	/*
+	BA(const tt::a::tt_element* lextt, size_t lexl, const tt::b::grammars<Token,Token>& gs) : lex_tt(lextt), lex_length(lexl), grams(&gs)
+	{
+		//lexer.enable_echo(true);
+		typename tt::b::grammars<Token,Token>::const_iterator it = gs.begin();
+		if(it != gs.end()) dfa::B<Token,Token,S,O>::load(*(it->second));
+	}
+	*/
 	
 	O transition(Buffer<C>& buff)
 	{
 		if(buff.empty()) return 0;
 			
-			dfa::B<Token,Token,S,O>::current = dfa::B<Token,Token,S,O>::reset;
-			dfa::B<Token,Token,S,O>::i = 0;
-			j = 0;
-			dfa::B<Token,Token,S,O>::prev = NULL;
-			dfa::B<Token,Token,S,O>::accepted = NULL;
-			dfa::DFA<Token,S,O>::eating = 0;
+		dfa::B<Token,Token,S,O>::current = dfa::B<Token,Token,S,O>::reset;
+		dfa::B<Token,Token,S,O>::i = 0;
+		j = 0;
+		dfa::B<Token,Token,S,O>::prev = NULL;
+		dfa::B<Token,Token,S,O>::accepted = NULL;
+		dfa::DFA<Token,S,O>::eating = 0;
 
-			do
+		do
+		{
+#if OCTETOS_CC_DEGUB
+			lexer.enable_echo(dfa::B<Token,Token,S,O>::echo);
+			if(dfa::B<Token,Token,S,O>::echo)
+			{
+				std::cout << "\n";
+				//std::cout << "\nStep 1\n";
+				//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
+				//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
+				//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
+				//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+			}
+#endif
+			//std::cout << "Step 2\n";				
+			//std::cout << "Step 3\n";
+			for(size_t ilex = 0; ilex < lex_length; ilex++)	
+			{
+				std::cout << "Lex rule : " << ilex << "\n";
+				lexer.load(lex_tt[ilex].tt,lex_tt[ilex].length);
+				if(lexer.transition(buff) > 0) break;
+			}
+			//std::cout << "Step 4\n";				
+			if(lexer.get_accepted()) 
 			{
 #if OCTETOS_CC_DEGUB
-				lexer.enable_echo(dfa::B<Token,Token,S,O>::echo);
+				std::cout << "Finding next token.\n";
+				if(lexer.get_echo()) 
+				{
+					std::cout << "Lexer analyzer\n";
+					std::cout << "Token : " << (int)lexer.get_accepted()->token << "\n";
+					const char* str =  tt::token_str((Token)lexer.get_accepted()->token);
+					if(str)
+					{
+						std::cout << "Step str : " << str;
+						if(lexer.get_accepted()->indicator == tt::Indicator::Accept or lexer.get_accepted()->indicator == tt::Indicator::Accept_Inmediatly) std::cout << " : Acceptado.";
+						//std::cout << "\n";
+					}
+				}
+#endif
+				dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((Token)lexer.get_accepted()->token);
+				if(not dfa::B<Token,Token,S,O>::actual) return 0;
+				//if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
+			}
+			else
+			{
+#if OCTETOS_CC_DEGUB
 				if(dfa::B<Token,Token,S,O>::echo)
 				{
-					//std::cout << "\n";
-					//std::cout << "\nStep 1\n";
-					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
-					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
-					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
-					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+					std::cout << "Grammar analyzer : " << buff[j] << "\n";
+					//std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
+					//std::cout << "Grammar analyzer Buffer j: " << j << "\n";
+					//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
 				}
 #endif
-				//std::cout << "Step 2\n";				
-				//std::cout << "Step 3\n";
-				for(size_t ilex = 0; ilex < lex_length; ilex++)	
-				{
-					//std::cout << "Lex rule : " << ilex << "\n";
-					lexer.load(lex_tt[ilex].tt,lex_tt[ilex].length);
-					if(lexer.transition(buff) > 0) break;
-				}
-				//std::cout << "Step 4\n";				
-				if(lexer.get_accepted()) 
-				{
-#if OCTETOS_CC_DEGUB
-					//std::cout << "Finding next token.\n";
-					if(lexer.get_echo()) 
-					{
-						//std::cout << "Lexer analyzer\n";
-						//std::cout << "Token : " << (int)lexer.get_accepted()->token << "\n";
-						const char* str =  tt::token_str((Token)lexer.get_accepted()->token);
-						if(str)
-						{
-							//std::cout << "Step str : " << str;
-							if(lexer.get_accepted()->indicator == tt::Indicator::Accept or lexer.get_accepted()->indicator == tt::Indicator::Accept_Inmediatly) std::cout << " : Acceptado.";
-							//std::cout << "\n";
-						}
-					}
-#endif
-					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((Token)lexer.get_accepted()->token);
-					if(not dfa::B<Token,Token,S,O>::actual) return 0;
-					//if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
-				}
-				else
-				{
-#if OCTETOS_CC_DEGUB
-					if(dfa::B<Token,Token,S,O>::echo)
-					{
-						//std::cout << "Grammar analyzer : " << buff[dfa::B<Token,Token,S,O>::i] << "\n";
-						//std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
-						//std::cout << "Grammar analyzer Buffer j: " << j << "\n";
-						//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
-					}
-#endif
-					dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[j]);
-					//if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
-					if(not dfa::B<Token,Token,S,O>::actual) return 0;
-					j++;
-				}
+				//es un caracter de la gramatica?
+				dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[j]);
+				if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
+			
+				//es un no terminal dela gramatica?
+								
 				
-				//std::cout << "Step 5\n";
-				//std::cout << "Step 6\n";
+				if(not dfa::B<Token,Token,S,O>::actual) return 0;
+				j++;
+			}
+				
+			//std::cout << "Step 5\n";
+			//std::cout << "Step 6\n";
 				
 #if OCTETOS_CC_DEGUB
-				if(dfa::B<Token,Token,S,O>::echo) 
-				{
-					//std::cout << "Gram : " << (int)dfa::B<Token,Token,S,O>::actual->token << "\n";
-					const char* str =  tt::token_str(dfa::B<Token,Token,S,O>::actual->token);
-					//std::cout << "Gram : ";
-					//if(str) std::cout << str << "\n";
-					//dfa::B<Token,Token,S,O>::actual->print(std::cout);
-				}
+			if(dfa::B<Token,Token,S,O>::echo) 
+			{
+				std::cout << "Gram : " << (int)dfa::B<Token,Token,S,O>::actual->token << "\n";
+				const char* str =  tt::token_str(dfa::B<Token,Token,S,O>::actual->token);
+				std::cout << "Gram : ";
+				if(str) std::cout << str << "\n";
+				dfa::B<Token,Token,S,O>::actual->print(std::cout);
+			}
 #endif
 
 				//std::cout << "Step 7\n";
@@ -1062,11 +1071,11 @@ public:
 #if OCTETOS_CC_DEGUB
 				//std::cout << "Next token\n";
 #endif		
-				dfa::B<Token,Token,S,O>::prev = dfa::B<Token,Token,S,O>::actual;
-				dfa::B<Token,Token,S,O>::i++;
-				//std::cout << "Step 9\n";
-			}
-			while(dfa::B<Token,Token,S,O>::actual->indicator != tt::Indicator::Reject);
+			dfa::B<Token,Token,S,O>::prev = dfa::B<Token,Token,S,O>::actual;
+			dfa::B<Token,Token,S,O>::i++;
+			//std::cout << "Step 9\n";
+		}
+		while(dfa::B<Token,Token,S,O>::actual->indicator != tt::Indicator::Reject);
 			
 		return 0;
 	}
@@ -1076,6 +1085,8 @@ private:
 	const tt::a::tt_element* lex_tt;
 	size_t lex_length;
 	unsigned short j;
+	//const tt::b::grammars<Token,Token>* grams;
+	//const tt::b::TT<Token,Token>* table;
 };
 
 }

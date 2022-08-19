@@ -36,6 +36,26 @@
 namespace oct::cc::a
 {
 	
+	template<typename C, typename Token, typename S = Word, typename O = Word> class Parser : public pda::BA<C,Token,S,O>
+	{
+	public:
+		virtual bool parse(Buffer<C>& ) = 0;
+	};
+
+
+	/*template<typename C, typename Token, typename S = Word, typename O = Word>
+	class Parser : protected Parser<C,Token,S,O>
+	{
+	public:
+		virtual bool parse(Buffer<C>& buff)
+		{
+			
+			
+			return true;
+		}
+	private:
+		
+	};*/
 }
 
 
