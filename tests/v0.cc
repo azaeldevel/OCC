@@ -527,6 +527,17 @@ void v0_performance()
 
 void v0_Grammar_A()
 {
+	const char* str7 = "[0x34ac] [0xe4a5]";
+	Buffer buff7(str7);	
+	const tt::a::tt_element lexs_Integer_0x[] {
+		{tt::Integer_0x,(size_t)LENGTH_TT(tt::Integer_0x)},
+	};
+	pda::BA<char,tt::Tokens> gram_Integer_0x (TABLE(lexs_Integer_0x),tt::a::gram::Memory);
+	//gram_Integer_0x.enable_echo(true);
+	CU_ASSERT(gram_Integer_0x.transition(buff7) == 3);
+	//gram_Integer_0x.enable_echo(false);
+	CU_ASSERT(gram_Integer_0x.transition(buff7) == 3);
+	
 	const char* str2 = "ah bl cl dh";
 	Buffer buff5(str2);
 	const tt::a::tt_element lexs_regs8[] {
@@ -594,9 +605,9 @@ void v0_Grammar_A()
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
 	gram_list_instructions.enable_echo(false);
 	*/
-	gram_list_instructions.enable_echo(true);
+	//gram_list_instructions.enable_echo(true);
 	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	gram_list_instructions.enable_echo(false);
+	//gram_list_instructions.enable_echo(false);
 	//CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	//CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	//gram_list_instructions.enable_echo(false);

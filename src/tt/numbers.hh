@@ -650,9 +650,9 @@ namespace oct::cc::tt
 			{Indicator::Reject,0,Tokens::none},//X
 			{Indicator::Reject,0,Tokens::none},//Y
 			{Indicator::Reject,0,Tokens::none},//Z
+			{Indicator::Reject,0,Tokens::none},//[
 			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Reject,0,Tokens::none},
-			{Indicator::Reject,0,Tokens::none},
+			{Indicator::Prefix_Accept,0,(Tokens)']'},//]
 			{Indicator::Reject,0,Tokens::none},
 			{Indicator::Reject,0,Tokens::none},//_
 			{Indicator::Reject,0,Tokens::none},

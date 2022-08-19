@@ -635,6 +635,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 		{
 			return accepted;
 		}
+
 		
 	protected:
 		const tt::b::Transition<T,Token>* next(T symbol)
@@ -947,15 +948,26 @@ public:
 			//std::cout << "Step 3\n";
 			for(size_t ilex = 0; ilex < lex_length; ilex++)	
 			{
-				std::cout << "Lex rule : " << ilex << "\n";
+#if OCTETOS_CC_DEGUB
+				if(lexer.get_echo()) 
+				{
+					std::cout << "Lex rule : " << ilex << "\n";
+				}
+#endif
 				lexer.load(lex_tt[ilex].tt,lex_tt[ilex].length);
 				if(lexer.transition(buff) > 0) break;
 			}
-			//std::cout << "Step 4\n";				
+#if OCTETOS_CC_DEGUB
+				if(lexer.get_echo()) 
+				{
+					std::cout << "\n";
+				}
+#endif
+							
 			if(lexer.get_accepted()) 
 			{
 #if OCTETOS_CC_DEGUB
-				std::cout << "Finding next token.\n";
+				//std::cout << "Finding next token.\n";
 				if(lexer.get_echo()) 
 				{
 					std::cout << "Lexer analyzer\n";
@@ -980,19 +992,19 @@ public:
 				{
 					std::cout << "Grammar analyzer : " << buff[j] << "\n";
 					//std::cout << "Grammar analyzer Buffer base: " << buff.get_base() << "\n";
-					//std::cout << "Grammar analyzer Buffer j: " << j << "\n";
+					std::cout << "Grammar analyzer Buffer j: " << j << "\n";
 					//std::cout << "Grammar analyzer Buffer base: \"" << buff.get_base_string() << "\"\n";
 				}
 #endif
+				
 				//es un caracter de la gramatica?
 				dfa::B<Token,Token,S,O>::actual = dfa::B<Token,Token,S,O>::next((tt::Tokens)buff[j]);
-				if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
+				//if(dfa::B<Token,Token,S,O>::actual != NULL) std::cout << "running..\n";
 			
-				//es un no terminal dela gramatica?
-								
+				//es un no terminal dela gramatica?				
 				
 				if(not dfa::B<Token,Token,S,O>::actual) return 0;
-				j++;
+				buff.next_char();
 			}
 				
 			//std::cout << "Step 5\n";
@@ -1009,7 +1021,7 @@ public:
 			}
 #endif
 
-				//std::cout << "Step 7\n";
+			//std::cout << "Step 7\n";
 								
 				if(dfa::B<Token,Token,S,O>::actual->token == (tt::Tokens)'\n')
 				{

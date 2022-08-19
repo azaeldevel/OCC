@@ -87,15 +87,15 @@ namespace b
 	{
 		if(input == '\n')
 		{
-			out << current << "--New line->" << next << "\n";
+			out << current << "--New line->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == '\t')
 		{
-			out << current << "--Tabulator->" << next << "\n";
+			out << current << "--Tabulator->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == ' ')
 		{
-			out << current << "--Espace->" << next << "\n";
+			out << current << "--Espace->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == '\0')
 		{
@@ -103,11 +103,11 @@ namespace b
 		}
 		else if((Status) input > 128)
 		{
-			out << current << "--" << (unsigned int)input << "->" << next << "\n";
+			out << current << "--" << (unsigned int)input << "->" << next  << " : " << indicator_string() << "\n";
 		}
 		else
 		{
-			out << current << "--" << input << "->" << next << "\n";
+			out << current << "--" << input << "->" << next  << " : " << indicator_string() << "\n";
 		}
 	}
 	template<> void  Transition<char,Tokens>::print(std::wostream& out) const
@@ -122,27 +122,27 @@ namespace b
 	{
 		if(input == '\n')
 		{
-				out << current << "--New line->" << next << "\n";
+				out << current << "--New line->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == '\t')
 		{
-				out << current << "--Tabulator->" << next << "\n";
+				out << current << "--Tabulator->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == ' ')
 		{
-				out << current << "--Espace->" << next << "\n";
+				out << current << "--Espace->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if(input == '\0')
 		{
-				out << current << "--\\0->" << next << "\n";
+				out << current << "--\\0->" << next  << " : " << indicator_string() << "\n";
 		}
 		else if((Status) input > 128)
 		{
-			out << current << "--" << (unsigned int)input << "->" << next << "\n";
+			out << current << "--" << (unsigned int)input << "->" << next  << " : " << indicator_string() << "\n";
 		}
 		else
 		{
-			out << current << "--" << input << "->" << next << "\n";
+			out << current << "--" << input << "->" << next  << " : " << indicator_string() << "\n";
 		}
 	}
 
@@ -154,33 +154,33 @@ namespace b
 		{
 			if(isalpha((char)input) or isdigit((char)input) or ispunct((char)input))
 			{
-				out << current << "--" << (char)input << "->" << next << "\n";
+				out << current << "--" << (char)input << "->" << next  << " : " << indicator_string() << "\n";
 			}
 			else if(input == (Tokens)'\n')
 			{
-				out << current << "--New line->" << next << "\n";
+				out << current << "--New line->" << next  << " : " << indicator_string() << "\n";
 			}
 			else if(input == (Tokens)'\t')
 			{
-				out << current << "--Tabulator->" << next << "\n";
+				out << current << "--Tabulator->" << next  << " : " << indicator_string() << "\n";
 			}
 			else if(input == (Tokens)' ')
 			{
-				out << current << "--Espace->" << next << "\n";
+				out << current << "--Espace->" << next  << " : " << indicator_string() << "\n";
 			}
 			else if(input == (Tokens)'\0')
 			{
-				out << current << "--\\0->" << next << "\n";
+				out << current << "--\\0->" << next  << " : " << indicator_string() << "\n";
 			}
 			else 
 			{
-				out << current << "--" << (char)input << "->" << next << "\n";
+				out << current << "--" << (char)input << "->" << next  << " : " << indicator_string() << "\n";
 			}
 		}
 		else if(input >= (Tokens)tt::MAX_SIMBOLS)
 		{
 			//out << current << "--" << token_str(input) << "->" << next << "\n";
-			out << current << "--" << (int)input << "->" << next << "\n";
+			out << current << "--" << (int)input << "->" << next  << " : " << indicator_string() << "\n";
 		}
 	}	
 	template<> void  Transition<Tokens,Tokens>::print(std::wostream& out) const

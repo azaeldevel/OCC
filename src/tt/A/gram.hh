@@ -95,8 +95,22 @@ namespace oct::cc::tt::a::gram
 	
 	static const cc::tt::b::TT<tt::Tokens,tt::Tokens> Memory{
 
-		{0,(Tokens)'[',Indicator::Accept_Inmediatly,1,Tokens::none},
-		{1,Tokens::Integer_0x,Indicator::Accept_Inmediatly,2,Tokens::none},
+		{0,(Tokens)' ',Indicator::Left_Eat,0,(Tokens)' '},
+		{0,(Tokens)'\n',Indicator::Left_Eat,0,(Tokens)'\t'},
+		{0,(Tokens)'\t',Indicator::Left_Eat,0,(Tokens)'\n'},
+
+		{0,(Tokens)'[',Indicator::None,1,Tokens::none},
+
+		{1,(Tokens)' ',Indicator::Left_Eat,1,(Tokens)' '},
+		{1,(Tokens)'\n',Indicator::Left_Eat,1,(Tokens)'\t'},
+		{1,(Tokens)'\t',Indicator::Left_Eat,1,(Tokens)'\n'},
+
+		{1,Tokens::Integer_0x,Indicator::None,2,Tokens::none},
+
+		{2,(Tokens)' ',Indicator::Left_Eat,2,(Tokens)' '},
+		{2,(Tokens)'\n',Indicator::Left_Eat,2,(Tokens)'\t'},
+		{2,(Tokens)'\t',Indicator::Left_Eat,2,(Tokens)'\n'},
+
 		{2,(Tokens)']',Indicator::Accept_Inmediatly,0,Tokens::Memory},
 		
 	};

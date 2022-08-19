@@ -395,6 +395,18 @@ namespace b
 
 			return false;
 		}
+		
+		const char* indicator_string() const
+		{			
+			
+			if(indicator == tt::Indicator::None) return "None";
+			else if(indicator == tt::Indicator::Accept_Inmediatly) return "Aceppt Inmediatly";
+			else if(indicator == tt::Indicator::Accept) return "Aceppted";
+			else if(indicator == tt::Indicator::Prefix_Accept) return "Prefijo de acceptacion";
+			else if(indicator == tt::Indicator::Left_Eat) return "Left Eating";
+			else if(indicator == tt::Indicator::Reject) return "Reject";
+			else return "Desconocido";
+		}
 	
 #if OCTETOS_CC_DEGUB
 		void print(std::ostream& out) const;
