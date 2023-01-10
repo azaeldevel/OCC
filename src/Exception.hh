@@ -68,7 +68,7 @@ public:
 	Exception(unsigned int code,const char* subject);
 	Exception(unsigned int code,const char* filename, unsigned int line);
 	Exception(unsigned int code,const char* subject,const char* filename, unsigned int line);
-
+	~Exception();
 	virtual const char* what () const throw ();
 
 private:

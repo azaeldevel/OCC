@@ -186,6 +186,16 @@ namespace b
 	template<> void  Transition<Tokens,Tokens>::print(std::wostream& out) const
 	{		
 	}
+
+
+	
+	template<> void  Transition<int,int>::print(std::ostream& out) const
+	{
+		out << current << "--" << input << "->" << next  << " : " << indicator_string() << "\n";
+	}
+	template<> void  Transition<int,int>::print(std::wostream& out) const
+	{
+	}
 	
 #endif
 }

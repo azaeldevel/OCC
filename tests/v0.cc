@@ -563,7 +563,7 @@ void v0_Grammar_A()
 	const tt::Tokens tok_str[] =  {tt::Tokens::i8086_mov,tt::Tokens::Identifier,tt::Tokens::i8086_reg_al,(tt::Tokens)';',(tt::Tokens)0};
 	//std::cout << "tok_str : " << (unsigned int)tok_str[0] << "," << (unsigned int)tok_str[1] << "," << (unsigned int)tok_str[2]<< "," << (unsigned int)tok_str[3]  << "\n";
 	Buffer<tt::Tokens> buff(tok_str);
-	dfa::B parser(tt::a::gram::list_insts);
+	dfa::B parser(tt::a::gram::instructions);
 	CU_ASSERT(parser.transition(buff) == 4);
 	/*
 	parser.enable_echo(true);
@@ -580,7 +580,7 @@ void v0_Grammar_A()
 	CU_ASSERT(parser.transition(buff2) == 4);
 	CU_ASSERT(parser.get_accepted()->token == tt::Tokens::gram_inst_mov);
 
-	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c ax ; mov ah  'B';";
+	const char* str1 = " \t mov 0x0e al;\n  mov 0x0c ax ;";
 	/*Buffer buff3(str1);
 	a::List_Instructions<char,tt::Tokens> compiler;
 	
@@ -598,7 +598,7 @@ void v0_Grammar_A()
 		{tt::Identifier,(size_t)LENGTH_TT(tt::Identifier)},
 		{tt::char_literal,(size_t)LENGTH_TT(tt::char_literal)},
 	};
-	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::list_insts);
+	pda::BA<char,tt::Tokens> gram_list_instructions (TABLE(lexs_list_inst),tt::a::gram::instructions);
 	/*
 	gram_list_instructions.enable_echo(true);
 	std::cout << "gram_list_instructions : " << gram_list_instructions.transition(buff4) << "\n";
@@ -608,17 +608,14 @@ void v0_Grammar_A()
 	//gram_list_instructions.enable_echo(true);
 	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	//gram_list_instructions.enable_echo(false);
-	//CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
-	//CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
+	CU_ASSERT(gram_list_instructions.transition(buff4) == 4);
 	//gram_list_instructions.enable_echo(false);
 	//gram_list_instructions.print(std::cout);
 	//CU_ASSERT(compiler.transition(compiler,buff4) == tt::Tokens::gram_inst_mov);
 	//std::cout << "parser : " << compiler.transition(buff4) << "\n";
 
+	AI::instructions<char,tt::Tokens> inst_parser;
 	
-	/*std::filesystem::path booting_file = "../../tests/booting.2.occ.asm";
-	Buffer<char> buff4(booting_file);
-	pda::BA<char,tt::Tokens> gram_list_instructions2 (TABLE(lexs_list_inst),tt::a::gram::list_insts);*/
 	
 	
 	

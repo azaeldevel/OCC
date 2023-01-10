@@ -458,9 +458,9 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 
 			do
 			{
-#if OCTETOS_CC_DEGUB
-				//std::cout << string[DFA<T,S,O>::i] << "\n";
-#endif				
+#ifdef OCTETOS_CC_DEGUB
+				std::cout << string[DFA<T,S,O>::i] << "\n";
+#endif
 				if(string[DFA<T,S,O>::i] == '\0')
 				{
 					if(dfa::DFA<T,S,O>::i == 0) return 0;
@@ -503,7 +503,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 		}
 		O transition(Buffer<T>& buff)
 		{
-			if(buff.empty()) return 0;
+			//if(buff.empty()) return 0;
 			
 			DFA<T,S,O>::current = dfa::DFA<T,S,O>::reset;
 			DFA<T,S,O>::i = 0;	
@@ -516,16 +516,21 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 #if OCTETOS_CC_DEGUB
 				if(DFA<T,S,O>::echo)
 				{
-					//std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
-					//std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
-					//std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
-					//std::cout << "code : '"<< (unsigned int)buff[DFA<T,S,O>::i] << "'\n";		
+					std::cout << "current : '"<<  dfa::DFA<T,S,O>::current << "'\n";
+					std::cout << "i : '"<<  DFA<T,S,O>::i << "'\n";
+					std::cout << "c : '"<< buff[DFA<T,S,O>::i] << "'\n";
+					std::cout << "code : '"<< Token(buff[DFA<T,S,O>::i]) << "'\n";		
 				}
 #endif				
+				/*
 				if(Token(buff[DFA<T,S,O>::i]) == Token(0))
 				{
-					if(dfa::DFA<T,S,O>::i == 0) return 0;
-					else 
+					if(dfa::DFA<T,S,O>::i == 0) 
+					{
+						std::cout << "return 0\n";
+						return 0;
+					}
+					else
 					{
 						if(prev) if(prev->indicator == tt::Indicator::Accept) 
 						{
@@ -534,15 +539,17 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 							return DFA<T,S,O>::i;
 						}
 					}
+					std::cout << "return 0\n";
 					return 0;//si no se encontrontro transiscion
 				}
+				*/
 				
 				actual = next(buff[dfa::DFA<T,S,O>::i]);
 				
 				if(not actual) 
 				{
 #if OCTETOS_CC_DEGUB
-					//if(DFA<T,S,O>::echo) std::cout << "not actual\n";
+					if(DFA<T,S,O>::echo) std::cout << "not actual\n";
 #endif	
 					return 0;//si no se encontrontro transiscion
 				}
@@ -551,7 +558,7 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				if(DFA<T,S,O>::echo) actual->print(std::cout);				
 #endif
 
-				if(actual->token == (tt::Tokens)'\n')
+				/*if(actual->token == Token(0))
 				{
 					dfa::DFA<T,S,O>::line++;
 				}
@@ -562,12 +569,13 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				else if(actual->token == (tt::Tokens)'\t')
 				{
 					dfa::DFA<T,S,O>::column += DFA<T,S,O>::tab_size;
-				}
+				}*/
 
 				if(actual->indicator == tt::Indicator::Accept_Inmediatly)
 				{
 					accepted = actual;
 					buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
+					std::cout << "Accept_Inmediatly\n";
 					return ++DFA<T,S,O>::i;
 				}
 				else if(actual->indicator == tt::Indicator::Left_Eat)
@@ -581,17 +589,17 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				else if(actual->indicator == tt::Indicator::Prefix_Accept)
 				{	
 #if OCTETOS_CC_DEGUB
-					//std::cout << "Prefix_Accept\n";
-#endif				
+					std::cout << "Prefix_Accept\n";
+#endif
 					if(prev) 
 					{
 #if OCTETOS_CC_DEGUB
-						//std::cout << "prev exist\n";
+						std::cout << "prev exist\n";
 #endif
 						if(prev->indicator == tt::Indicator::Accept) 
 						{
 #if OCTETOS_CC_DEGUB
-							//std::cout << "prev exist acepted\n";
+							std::cout << "prev exist acepted\n";
 #endif
 							accepted = prev;
 							buff.walk((size_t)(dfa::DFA<T,S,O>::eating + dfa::DFA<T,S,O>::i));
@@ -603,13 +611,14 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 				else if(actual->indicator == tt::Indicator::Reject)
 				{
 #if OCTETOS_CC_DEGUB
-					//std::cout << "Rejected\n";
+					std::cout << "Rejected\n";
 #endif
 					return 0;//si no se encontrontro transiscion
 				}
 				
 				prev = actual;
 				dfa::DFA<T,S,O>::i++;
+				
 			}
 			while(actual->indicator != tt::Indicator::Reject);			
 			
@@ -665,6 +674,33 @@ template<typename Symbol/*char*/,typename S/*Status*/,typename O/*Offset*/> unsi
 		}
 	private:	
 		const tt::b::Transition<T,Token>* search(tt::Status current,T input,size_t b, size_t e)
+		{
+			if(b > e) return NULL;
+			if(b - e == 1) return NULL;
+
+			//std::cout << "b = " << b << "\n";
+			//std::cout << "e = " << e << "\n";
+			size_t middle = b + ((e - b)/ 2);
+			//std::cout << "middle = " << middle << "\n";
+
+			if((*table)[middle].less(current,input))
+			{
+				//std::cout << "\t --> " << value << "\n";
+				return search(current,input,middle + 1,e);
+			}
+			else if((*table)[middle].great(current,input))
+			{
+				//std::cout << "\t --> " << value << "\n";
+				return search(current,input,b,middle - 1);
+			}
+			else if((*table)[middle].equal(current,input))
+			{
+				return &(*table)[middle];
+			}
+				
+			return NULL;		
+		}
+		const tt::b::Transition<T,Token>* search(T input,size_t b, size_t e)
 		{
 			if(b > e) return NULL;
 			if(b - e == 1) return NULL;

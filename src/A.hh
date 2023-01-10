@@ -33,20 +33,30 @@
 
 
 //assembler
-namespace oct::cc::a
+namespace oct::cc::AI
 {
 	
-	template<typename C, typename Token, typename S = Word, typename O = Word> class Parser : public pda::BA<C,Token,S,O>
+	template<typename C, typename Token, typename S = Word, typename O = Word> 
+	class Parser : public pda::BA<C,Token,S,O>
 	{
 	public:
+		Parser(const tt::a::tt_element* lextt, size_t lexl, const tt::b::TT<Token,Token>& t) : pda::BA<C,Token,S,O>(lextt,lexl,t)
+		{
+		}
 		virtual bool parse(Buffer<C>& ) = 0;
 	};
 
 
-	/*template<typename C, typename Token, typename S = Word, typename O = Word>
-	class Parser : protected Parser<C,Token,S,O>
+	template<typename C, typename Token, typename S = Word, typename O = Word>
+	class instructions : protected Parser<C,Token,S,O>
 	{
 	public:
+		instructions() : Parser<C,Token,S,O>(NULL,0,tt::a::gram::instructions)
+		{
+			//lextt_insts[0].tt = tt::i808x::insts;
+			//lextt_insts[0].length = (size_t)LENGTH_TT(tt::i808x::insts);
+		}
+		
 		virtual bool parse(Buffer<C>& buff)
 		{
 			
@@ -54,8 +64,10 @@ namespace oct::cc::a
 			return true;
 		}
 	private:
-		
-	};*/
+		pda::BA<C,Token> gram_memory;
+		const tt::a::tt_element* lexs_Integer_0x;
+		tt::a::tt_element lextt_insts[6];
+	};
 }
 
 

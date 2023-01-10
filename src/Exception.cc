@@ -38,6 +38,10 @@ Exception::Exception(unsigned int c,const char* s,const char* f, unsigned int l)
 {
 }
 
+Exception::~Exception()
+{
+
+}
 const char* Exception::what () const throw ()
 {
 	switch(code())

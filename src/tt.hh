@@ -336,6 +336,7 @@ namespace b
 		Indicator indicator;
 		Status next;
 		Token token;
+		bool comming_not_terminal;
 
 		bool operator < (const Transition<T,Token>& obj) const
 		{
@@ -511,12 +512,7 @@ namespace b
 			split(work,0,length - 1,data);
 		}
 	};
-	
-	template<typename C,typename Tokens,typename I = size_t>
-	struct grammars : public std::map<Tokens,const TT<C,Tokens,I>*> 
-	{
-	};
-	
+		
 	
 	static const TT<char,Tokens> Identifier{
 		
@@ -681,6 +677,13 @@ namespace b
 }
 
 
+	template<typename C,typename Tokens,typename I = size_t>
+	struct gramset
+	{
+		const a::tt_element* lextt;
+		size_t lexl;
+		const b::TT<C,Tokens>* gram;
+	};
 
 }
 
