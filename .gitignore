@@ -31,3 +31,4 @@ bin/
 *.layout
 .objs
 
+.vs/
