@@ -239,10 +239,10 @@ constexpr LexC90 create_tt_c_90()
 	{
 		symbols.push_back(c);
 	}
-	for (char c : not_c)
+	/*for (char c : not_c)
 	{
 		symbols.push_back(c);
-	}
+	}*/
 	
 	//std::cout << "Size : " << symbols.size() << "\n";
 
@@ -289,12 +289,12 @@ int main()
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
-	/*std::cout << "\n";
+	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
 	if (Tokens_C90::space != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
-	}*/
+	}
 
 
 
