@@ -22,105 +22,233 @@
 #include <core/src/lexer.hh>
 
 namespace core_current = oct::core::v3;
-//namespace lex_current = oct::core::v3::lex;
 
-constexpr core_current::lex::TT<char, core_current::lex::Tokens, core_current::lex::Status> create_tt_c_90()
+enum class Tokens_C90 : int
+{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
+	none = -1,
+	//ASCII>>>
+	NUL = 0,
+	SOH,
+	STX,
+	ETX,
+	EOT,
+	ENQ,
+	ACK,
+	BEL,
+	BS,
+	TAB,
+	LF,
+	VT,
+	FF,
+	CR,
+	SO,
+	SI,
+	DLE,
+	DC1,
+	DC2,
+	DC3,
+	DC4,
+	NAK,
+	SYN,
+	ETB,
+	CAN,
+	EM,
+	SUB,
+	ESC,
+	FS,
+	GS,
+	RS,
+	US = 31,
+	space,
+	exclamation_mark,
+	double_quote,
+	symbol_numbers,
+	symbol_money,
+	percen,
+	ampersan,
+	single_quote,
+	parenthesis_open,
+	parenthesis_close,
+	asterisk,
+	plus,
+	minus,
+	dot,
+	symbol_diagonal,
+	digit_0 = 48,
+	digit_1,
+	digit_2,
+	digit_3,
+	digit_4,
+	digit_5,
+	digit_6,
+	digit_7,
+	digit_8,
+	digit_9,
+	symbol_column,
+	semicolumn,
+	less,
+	equal,
+	grater,
+	question,
+	arroba,
+	//>>upper case
+	char_A = 65,
+	char_B,
+	char_C,
+	char_D,
+	char_E,
+	char_F,
+	char_G,
+	char_H,
+	char_I,
+	char_J,
+	char_K,
+	char_L,
+	char_M,
+	char_N,
+	char_O,
+	char_P,
+	char_Q,
+	char_R,
+	char_S,
+	char_T,
+	char_U,
+	char_V,
+	char_W,
+	char_X,
+	char_Y,
+	char_Z,
+	//>>
+
+	//>>>
+	char_a = 97,
+	char_b,
+	char_c,
+	char_d,
+	char_e,
+	char_f,
+	char_g,
+	char_h,
+	char_i,
+	char_j,
+	char_k,
+	char_l,
+	char_m,
+	char_n,
+	char_o,
+	char_p,
+	char_q,
+	char_r,
+	char_s,
+	char_t,
+	char_u,
+	char_v,
+	char_w,
+	char_x,
+	char_y,
+	char_z,
+
+	EuroSign = 218,
+	//>>>Extended ASCII
+
+
+
+
+
+
+	y_Diaeresis = 255,//ÿ
+	//>>>UTF-8
+	a_Macron = 256,
+
+	s_Coptic = 999,
+	//Inicode >>>
+
+
+	//>>>Tokens
+	tokens = 0x110000,
+	keyword_int
+
+};
+constexpr size_t initial_lex_c_90 = 0;
+constexpr size_t keyword_i_c_90 = 1;
+constexpr size_t keyword_in_c_90 = 2;
+constexpr size_t keyword_int_prefix_c_90 = 3;
+constexpr size_t max_status_c_90 = 4;
+
+constexpr std::array digits {'0','1','2','3','4','5','6','7','8','9'};
+constexpr std::array lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z'};
+constexpr std::array upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','Y','Z'};
+constexpr std::array graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+constexpr std::array display = { '\a','\b','\f','\n','\r','\t','\v'};
+constexpr std::array not_c = {' '};
+
+typedef core_current::lex::TT<char, Tokens_C90, core_current::lex::Status> LexC90;
+constexpr bool create_tt_c_90_whitespaces(LexC90& tt)
 {
-	std::vector<char> symbols(91);
-	symbols[0] = '0';
-	symbols[1] = '1';
-	symbols[2] = '2';
-	symbols[3] = '3';
-	symbols[4] = '4';
-	symbols[5] = '5';
-	symbols[6] = '6';
-	symbols[7] = '7';
-	symbols[8] = '8';
-	symbols[9] = '9';
-	symbols[10] = 'a';
-	symbols[11] = 'b';
-	symbols[12] = 'c';
-	symbols[13] = 'd';
-	symbols[14] = 'e';
-	symbols[15] = 'f';
-	symbols[16] = 'g';
-	symbols[17] = 'h';
-	symbols[18] = 'i';
-	symbols[19] = 'j';
-	symbols[20] = 'k';
-	symbols[21] = 'l';
-	symbols[22] = 'm';
-	symbols[23] = 'n';
-	symbols[24] = 'o';
-	symbols[25] = 'p';
-	symbols[26] = 'q';
-	symbols[27] = 'r';
-	symbols[28] = 's';
-	symbols[29] = 't';
-	symbols[30] = 'u';
-	symbols[31] = 'v';
-	symbols[32] = 'w';
-	symbols[33] = 'x';
-	symbols[34] = 'y';
-	symbols[35] = 'z';
-	symbols[36] = 'A';
-	symbols[37] = 'B';
-	symbols[38] = 'C';
-	symbols[39] = 'D';
-	symbols[40] = 'E';
-	symbols[41] = 'F';
-	symbols[42] = 'G';
-	symbols[43] = 'H';
-	symbols[44] = 'I';
-	symbols[45] = 'J';
-	symbols[46] = 'K';
-	symbols[47] = 'L';
-	symbols[48] = 'M';
-	symbols[49] = 'N';
-	symbols[50] = 'O';
-	symbols[51] = 'P';
-	symbols[52] = 'Q';
-	symbols[53] = 'R';
-	symbols[54] = 'S';
-	symbols[55] = 'T';
-	symbols[56] = 'U';
-	symbols[57] = 'V';
-	symbols[58] = 'W';
-	symbols[59] = 'X';
-	symbols[60] = 'Y';
-	symbols[61] = 'Z';
-	symbols[62] = '!';
-	symbols[63] = '"';
-	symbols[64] = '#';
-	symbols[65] = '%';
-	symbols[66] = '&';
-	symbols[67] = '\'';
-	symbols[68] = '(';
-	symbols[69] = ')';
-	symbols[70] = '*';
-	symbols[71] = '+';
-	symbols[72] = ',';
-	symbols[73] = '-';
-	symbols[74] = '.';
-	symbols[75] = '/';
-	symbols[76] = ':';
-	symbols[77] = ';';
-	symbols[78] = '<';
-	symbols[79] = '=';
-	symbols[80] = '>';
-	symbols[81] = '?';
-	symbols[82] = '[';
-	symbols[83] = '\\';
-	symbols[84] = ']';
-	symbols[85] = '^';
-	symbols[86] = '_';
-	symbols[87] = '{';
-	symbols[88] = '|';
-	symbols[89] = '}';
-	symbols[90] = '~';
+	tt.symbol(initial_lex_c_90, Tokens_C90::space, initial_lex_c_90, ' ');
+	tt.symbol(initial_lex_c_90, Tokens_C90::CR, initial_lex_c_90, '\n');
 
-	core_current::lex::TT<char, core_current::lex::Tokens, core_current::lex::Status> c_90(3, symbols);
+	return true;
+}
+constexpr bool create_tt_c_90_keywords(LexC90& tt)
+{
+	tt.symbol(initial_lex_c_90, Tokens_C90::none, keyword_i_c_90, 'i');
+	tt.symbol(keyword_i_c_90, Tokens_C90::none, keyword_in_c_90, 'n');
+	auto t = tt.prefix(keyword_in_c_90, Tokens_C90::keyword_int, keyword_int_prefix_c_90, 't');
+	//>>>
+	for (char c : graphic)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}
+	//>>>
+	for (char c : display)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}
+	//>>> ' '
+	tt.at(keyword_int_prefix_c_90)[' '].next = initial_lex_c_90;
+	tt.at(keyword_int_prefix_c_90)[' '].token = Tokens_C90::none;
+	tt.at(keyword_int_prefix_c_90)[' '].indicator = core_current::lex::Indicator::accept;
+
+	return true;
+}
+constexpr LexC90 create_tt_c_90()
+{
+	std::vector<char> symbols;
+	for (char c : digits)
+	{
+		symbols.push_back(c);
+	}
+	for (char c : lower)
+	{
+		symbols.push_back(c);
+	}
+	for (char c : upper)
+	{
+		symbols.push_back(c);
+	}
+	for (char c : graphic)
+	{
+		symbols.push_back(c);
+	}
+	for (char c : display)
+	{
+		symbols.push_back(c);
+	}
+	for (char c : not_c)
+	{
+		symbols.push_back(c);
+	}
 	
+	//std::cout << "Size : " << symbols.size() << "\n";
+
+	LexC90 c_90(max_status_c_90, symbols);
+	create_tt_c_90_whitespaces(c_90);
+	create_tt_c_90_keywords(c_90);
 
 
 	return c_90;
@@ -132,319 +260,46 @@ int main()
 	core_current::Buffer<char> buff1_c_90(c_90_source_1);
 	auto tt_c_90 = create_tt_c_90();
 	core_current::lex::A lex_c_90(tt_c_90, buff1_c_90);
-	core_current::lex::Tokens tk_c_90;
+	Tokens_C90 tk_c_90;
 
+	std::cout << "\n";
+	if ((int)core_current::lex::Tokens::CR == 12)
+	{
+		std::cout << "Fallo Codigo de Token : " << int(Tokens_C90::CR) << " deveria ser 12" << "\n";
+	}
+
+	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
+	if (Tokens_C90::CR != tk_c_90)
 	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
+	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
+	if (Tokens_C90::CR != tk_c_90)
 	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
+	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
+	if (Tokens_C90::keyword_int != tk_c_90)
 	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
+	/*std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
+	if (Tokens_C90::space != tk_c_90)
 	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}*/
 
 
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
 
 
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
 
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
-
-	tk_c_90 = lex_c_90.next();
-	if (int(tk_c_90) < 128)
-	{
-		std::cout << (char)tk_c_90 << "\n";
-	}
-	else
-	{
-		std::cout << "Token : " << int(tk_c_90) << "\n";
-	}
 	return 0;
 }
 
