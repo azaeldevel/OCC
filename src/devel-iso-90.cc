@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+//#include <array>
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer.hh>
 
@@ -167,14 +168,43 @@ enum class Tokens_C90 : int
 	//>>>Tokens
 	tokens = 0x110000,
 	new_line,
+	keyword_auto,
+	keyword_break,
+	keyword_case,
+	keyword_char,
+	keyword_const,
+	keyword_continue,
+	keyword_default,
+	keyword_do,
+	keyword_double,
+	keyword_else,
+	keyword_enum,
+	keyword_extern,
+	keyword_float,
+	keyword_for,
+	keyword_goto,
+	keyword_if,
 	keyword_int,
+	keyword_long,
+	keyword_register,
+	keyword_return,
+	keyword_short,
+	keyword_signed,
+	keyword_sizeof,
+	keyword_static,
+	keyword_struct,
+	keyword_switch,
+	keyword_typedef,
+	keyword_union,
+	keyword_unsigned,
+	keyword_void,
+	keyword_volatil,
+	keyword_while,
 	identifier
+
 
 };
 constexpr size_t initial_lex_c_90 = 0;
-constexpr size_t Token_FF_c_90 = 1;
-constexpr size_t Token_CR_c_90 = 2;
-constexpr size_t Token_NL_c_90 = 3;
 constexpr size_t max_status_c_90 = 4;
 
 constexpr std::array digits {'0','1','2','3','4','5','6','7','8','9'};
@@ -183,6 +213,22 @@ constexpr std::array upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','
 constexpr std::array graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
 constexpr std::array display = { '\a','\b','\f','\n','\r','\t','\v'};
 constexpr std::array not_c = {' '};
+struct pair_keyword
+{
+	const char* string;
+	Tokens_C90 token;
+};
+constexpr pair_keyword keywords[] = {
+	{"auto",Tokens_C90::keyword_auto},
+	{"break",Tokens_C90::keyword_break},
+	{"case",Tokens_C90::keyword_case},
+	{"char",Tokens_C90::keyword_char},
+	{"const",Tokens_C90::keyword_const},
+	{"continue",Tokens_C90::keyword_continue},
+	{"default",Tokens_C90::keyword_default},
+	{"do",Tokens_C90::keyword_do},
+	{"double",Tokens_C90::keyword_double}
+};
 
 typedef core_current::lex::TT<char, Tokens_C90, core_current::lex::Status> LexC90;
 
@@ -224,75 +270,42 @@ constexpr void create_tt_c_90_end_token(LexC90& tt, size_t status)
 }
 constexpr bool create_tt_c_90_whitespaces(LexC90& tt)
 {
-	//>>>
 	tt.accept(initial_lex_c_90, Tokens_C90::FF, initial_lex_c_90, '\f');
 	tt.accept(initial_lex_c_90, Tokens_C90::NL, initial_lex_c_90, '\n');
 	tt.accept(initial_lex_c_90, Tokens_C90::CR, initial_lex_c_90, '\r');
-
-	//>>>
-	//create_tt_c_90_end_token(tt, Token_NL_c_90);
-
-	//>>>
-	//tt.symbol(initial_lex_c_90, Tokens_C90::space, initial_lex_c_90, ' ');
 
 	return true;
 }
 constexpr bool create_tt_c_90_words(LexC90& tt)
 {
-	/*
-	for (char c : lower)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = words_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
-	}
-	//>>>
-	for (char c : upper)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = words_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
-	}
-
-	//>>>keywords...
-	tt.symbol(initial_lex_c_90, Tokens_C90::none, keyword_i_c_90, 'i');
-	tt.symbol(keyword_i_c_90, Tokens_C90::none, keyword_in_c_90, 'n');
-	auto t = tt.prefix(keyword_in_c_90, Tokens_C90::keyword_int, keyword_int_prefix_c_90, 't');
-	//>>>
-	for (char c : display)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::acceptable;
-	}
-	//>>> ' '
-	tt.at(keyword_int_prefix_c_90)[' '].next = initial_lex_c_90;
-	tt.at(keyword_int_prefix_c_90)[' '].token = Tokens_C90::none;
-	tt.at(keyword_int_prefix_c_90)[' '].indicator = core_current::lex::Indicator::acceptable;
-
-	//>>>identifier...
-	//>>>
-	for (char c : lower)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
-	}
-	//>>>
-	for (char c : upper)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
-	}
-	for (char c : digits)
-	{
-		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
-		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
-	}*/
 
 	return true;
+}
+
+void fragmendlist(size_t length,size_t index_key, size_t index_str)
+{
+	/*
+	for (auto p : keywords)
+	{
+		std::cout << p.string << "\n";
+	}
+	*/
+	std::cout << "\n";
+	size_t sub_index_key = index_key + 1;
+	size_t sub_index_str = index_str + 1;
+	if (index_key < length and index_str < strlen(keywords[index_key].string))
+	{
+		if (sub_index_key < length and sub_index_str < strlen(keywords[sub_index_key].string))
+		{
+			do
+			{
+				//if (keywords[index_key].string[index_str] == keywords[sub_index_key].string[sub_index_str]) fragmendlist(length, sub_index_key + 1, sub_index_str + 1);
+
+				sub_index_key++;
+			}
+			while (sub_index_key < length);
+		}
+	}
 }
 constexpr LexC90 create_tt_c_90()
 {
@@ -405,7 +418,7 @@ int main()
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
-
+	//create_tt_c_90_words2();
 
 
 
