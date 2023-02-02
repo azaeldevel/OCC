@@ -37,7 +37,7 @@ enum class Tokens_C90 : int
 	BEL,
 	BS,
 	TAB,
-	LF,
+	NL,
 	VT,
 	FF,
 	CR,
@@ -166,13 +166,15 @@ enum class Tokens_C90 : int
 
 	//>>>Tokens
 	tokens = 0x110000,
-	keyword_int
+	new_line,
+	keyword_int,
+	identifier
 
 };
 constexpr size_t initial_lex_c_90 = 0;
-constexpr size_t keyword_i_c_90 = 1;
-constexpr size_t keyword_in_c_90 = 2;
-constexpr size_t keyword_int_prefix_c_90 = 3;
+constexpr size_t Token_FF_c_90 = 1;
+constexpr size_t Token_CR_c_90 = 2;
+constexpr size_t Token_NL_c_90 = 3;
 constexpr size_t max_status_c_90 = 4;
 
 constexpr std::array digits {'0','1','2','3','4','5','6','7','8','9'};
@@ -183,36 +185,112 @@ constexpr std::array display = { '\a','\b','\f','\n','\r','\t','\v'};
 constexpr std::array not_c = {' '};
 
 typedef core_current::lex::TT<char, Tokens_C90, core_current::lex::Status> LexC90;
+
+constexpr void create_tt_c_90_end_token(LexC90& tt, size_t status)
+{
+	for (char c : lower)
+	{
+		tt.at(status)[c].next = initial_lex_c_90;
+		tt.at(status)[c].token = Tokens_C90::none;
+		tt.at(status)[c].indicator = core_current::lex::Indicator::terminate;
+	}
+	for (char c : upper)
+	{
+		tt.at(status)[c].next = initial_lex_c_90;
+		tt.at(status)[c].token = Tokens_C90::none;
+		tt.at(status)[c].indicator = core_current::lex::Indicator::terminate;
+	}
+	for (char c : digits)
+	{
+		tt.at(status)[c].next = initial_lex_c_90;
+		tt.at(status)[c].token = Tokens_C90::none;
+		tt.at(status)[c].indicator = core_current::lex::Indicator::terminate;
+	}
+	for (char c : display)
+	{
+		tt.at(status)[c].next = initial_lex_c_90;
+		tt.at(status)[c].token = Tokens_C90::none;
+		tt.at(status)[c].indicator = core_current::lex::Indicator::terminate;
+	}
+	for (char c : graphic)
+	{
+		tt.at(status)[c].next = initial_lex_c_90;
+		tt.at(status)[c].token = Tokens_C90::none;
+		tt.at(status)[c].indicator = core_current::lex::Indicator::terminate;
+	}
+	tt.at(status)[' '].next = initial_lex_c_90;
+	tt.at(status)[' '].token = Tokens_C90::none;
+	tt.at(status)[' '].indicator = core_current::lex::Indicator::terminate;
+}
 constexpr bool create_tt_c_90_whitespaces(LexC90& tt)
 {
-	tt.symbol(initial_lex_c_90, Tokens_C90::space, initial_lex_c_90, ' ');
-	tt.symbol(initial_lex_c_90, Tokens_C90::CR, initial_lex_c_90, '\n');
+	//>>>
+	tt.accept(initial_lex_c_90, Tokens_C90::FF, Token_FF_c_90, '\f');
+
+	//>>>
+	create_tt_c_90_end_token(tt, Token_NL_c_90);
+	tt.acceptable(initial_lex_c_90, Tokens_C90::new_line, Token_NL_c_90, '\n');
+	tt.acceptable(initial_lex_c_90, Tokens_C90::new_line, Token_NL_c_90, '\r');
+
+	//>>>
+	//tt.symbol(initial_lex_c_90, Tokens_C90::space, initial_lex_c_90, ' ');
 
 	return true;
 }
-constexpr bool create_tt_c_90_keywords(LexC90& tt)
+constexpr bool create_tt_c_90_words(LexC90& tt)
 {
-	tt.symbol(initial_lex_c_90, Tokens_C90::none, keyword_i_c_90, 'i');
-	tt.symbol(keyword_i_c_90, Tokens_C90::none, keyword_in_c_90, 'n');
-	auto t = tt.prefix(keyword_in_c_90, Tokens_C90::keyword_int, keyword_int_prefix_c_90, 't');
-	//>>>
-	for (char c : graphic)
+	/*
+	for (char c : lower)
 	{
-		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].next = words_c_90;
 		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
 		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
 	}
+	//>>>
+	for (char c : upper)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = words_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}
+
+	//>>>keywords...
+	tt.symbol(initial_lex_c_90, Tokens_C90::none, keyword_i_c_90, 'i');
+	tt.symbol(keyword_i_c_90, Tokens_C90::none, keyword_in_c_90, 'n');
+	auto t = tt.prefix(keyword_in_c_90, Tokens_C90::keyword_int, keyword_int_prefix_c_90, 't');
 	//>>>
 	for (char c : display)
 	{
 		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
 		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
-		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::acceptable;
 	}
 	//>>> ' '
 	tt.at(keyword_int_prefix_c_90)[' '].next = initial_lex_c_90;
 	tt.at(keyword_int_prefix_c_90)[' '].token = Tokens_C90::none;
-	tt.at(keyword_int_prefix_c_90)[' '].indicator = core_current::lex::Indicator::accept;
+	tt.at(keyword_int_prefix_c_90)[' '].indicator = core_current::lex::Indicator::acceptable;
+
+	//>>>identifier...
+	//>>>
+	for (char c : lower)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}
+	//>>>
+	for (char c : upper)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}
+	for (char c : digits)
+	{
+		tt.at(keyword_int_prefix_c_90)[c].next = initial_lex_c_90;
+		tt.at(keyword_int_prefix_c_90)[c].token = Tokens_C90::none;
+		tt.at(keyword_int_prefix_c_90)[c].indicator = core_current::lex::Indicator::accept;
+	}*/
 
 	return true;
 }
@@ -239,17 +317,16 @@ constexpr LexC90 create_tt_c_90()
 	{
 		symbols.push_back(c);
 	}
-	/*for (char c : not_c)
+	for (char c : not_c)
 	{
 		symbols.push_back(c);
-	}*/
+	}
 	
 	//std::cout << "Size : " << symbols.size() << "\n";
 
 	LexC90 c_90(max_status_c_90, symbols);
 	create_tt_c_90_whitespaces(c_90);
-	create_tt_c_90_keywords(c_90);
-
+	create_tt_c_90_words(c_90);
 
 	return c_90;
 }
@@ -263,17 +340,17 @@ int main()
 	Tokens_C90 tk_c_90;
 
 	std::cout << "\n";
-	if ((int)core_current::lex::Tokens::CR == 12)
+	if ((int)Tokens_C90::CR == 12)
 	{
 		std::cout << "Fallo Codigo de Token : " << int(Tokens_C90::CR) << " deveria ser 12" << "\n";
 	}
 
-	std::cout << "\n";
+	/*std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (Tokens_C90::CR != tk_c_90)
+	if (Tokens_C90::FF != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
-	}
+	}*/
 
 	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
@@ -284,17 +361,24 @@ int main()
 
 	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
-	if (Tokens_C90::keyword_int != tk_c_90)
+	if (Tokens_C90::NL != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
-	std::cout << "\n";
+	/*std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
 	if (Tokens_C90::space != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
+
+	std::cout << "\n";
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::identifier != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}*/
 
 
 
