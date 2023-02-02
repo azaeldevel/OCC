@@ -225,12 +225,12 @@ constexpr void create_tt_c_90_end_token(LexC90& tt, size_t status)
 constexpr bool create_tt_c_90_whitespaces(LexC90& tt)
 {
 	//>>>
-	tt.accept(initial_lex_c_90, Tokens_C90::FF, Token_FF_c_90, '\f');
+	tt.accept(initial_lex_c_90, Tokens_C90::FF, initial_lex_c_90, '\f');
+	tt.accept(initial_lex_c_90, Tokens_C90::NL, initial_lex_c_90, '\n');
+	tt.accept(initial_lex_c_90, Tokens_C90::CR, initial_lex_c_90, '\r');
 
 	//>>>
-	create_tt_c_90_end_token(tt, Token_NL_c_90);
-	tt.acceptable(initial_lex_c_90, Tokens_C90::new_line, Token_NL_c_90, '\n');
-	tt.acceptable(initial_lex_c_90, Tokens_C90::new_line, Token_NL_c_90, '\r');
+	//create_tt_c_90_end_token(tt, Token_NL_c_90);
 
 	//>>>
 	//tt.symbol(initial_lex_c_90, Tokens_C90::space, initial_lex_c_90, ' ');
@@ -344,41 +344,67 @@ int main()
 	{
 		std::cout << "Fallo Codigo de Token : " << int(Tokens_C90::CR) << " deveria ser 12" << "\n";
 	}
-
-	/*std::cout << "\n";
-	tk_c_90 = lex_c_90.next();
-	if (Tokens_C90::FF != tk_c_90)
-	{
-		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
-	}*/
-
-	std::cout << "\n";
 	tk_c_90 = lex_c_90.next();
 	if (Tokens_C90::CR != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
-
-	std::cout << "\n";
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::NL != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::CR != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::NL != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::CR != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::NL != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::CR != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::NL != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::CR != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::NL != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
+	tk_c_90 = lex_c_90.next();
+	if (Tokens_C90::CR != tk_c_90)
+	{
+		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
+	}
 	tk_c_90 = lex_c_90.next();
 	if (Tokens_C90::NL != tk_c_90)
 	{
 		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
 	}
 
-	/*std::cout << "\n";
-	tk_c_90 = lex_c_90.next();
-	if (Tokens_C90::space != tk_c_90)
-	{
-		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
-	}
-
-	std::cout << "\n";
-	tk_c_90 = lex_c_90.next();
-	if (Tokens_C90::identifier != tk_c_90)
-	{
-		std::cout << "Fallo Token : " << int(tk_c_90) << "\n";
-	}*/
 
 
 
