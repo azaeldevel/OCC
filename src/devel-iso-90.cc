@@ -282,7 +282,7 @@ constexpr bool create_tt_c_90_words(LexC90& tt)
 	return true;
 }
 
-void fragmendlist(size_t length,size_t index_key, size_t index_str)
+size_t fragmendlist(size_t length,size_t index_key, size_t index_str)
 {
 	/*
 	for (auto p : keywords)
@@ -299,7 +299,15 @@ void fragmendlist(size_t length,size_t index_key, size_t index_str)
 		{
 			do
 			{
-				//if (keywords[index_key].string[index_str] == keywords[sub_index_key].string[sub_index_str]) fragmendlist(length, sub_index_key + 1, sub_index_str + 1);
+				if (keywords[index_key].string[index_str] == keywords[sub_index_key].string[sub_index_str])
+				{
+					size_t t = fragmendlist(length, sub_index_key, sub_index_str + 1);
+					return 
+				}
+				else
+				{
+					return t;
+				}
 
 				sub_index_key++;
 			}
