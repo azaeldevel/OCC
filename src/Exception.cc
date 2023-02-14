@@ -21,53 +21,6 @@
 namespace oct::cc
 {
 	
-Exception::Exception()
-{
 
-}
-Exception::Exception(unsigned int c) : core::v3::Exception(c)
-{
-}
-Exception::Exception(unsigned int c,const char* s) : core::v3::Exception(c,s)
-{
-}
-Exception::Exception(unsigned int c,const char* f, unsigned int l) : core::v3::Exception(c,f,l)
-{
-}
-Exception::Exception(unsigned int c,const char* s,const char* f, unsigned int l) : core::v3::Exception(c,s,f,l)
-{
-}
-
-Exception::~Exception()
-{
-
-}
-const char* Exception::what () const throw ()
-{
-	switch(code())
-	{
-	case Errors::NO_ERROR:
-		return "No error.";
-	case Errors::FILE_TERGET_NOT_FOUND:
-		return "Archivo objetivo no encontrado";
-	case Errors::INDEX_OUT_OF_RANGE:
-		return "Indice furea de rango";
-	case Errors::DESSYNCHRONIZATION_BUFEER_SENTINEL:
-		return "Los sentinelas del buffer no cumplem con el criterio de sincrinizacion";
-	case Errors::NEGATIVE_STRING:
-		return "Secuencia negativa de caracteres";
-	case Errors::NULL_STRING:
-		return "Null string";
-	case Errors::UNCLASIFIED:
-		return "El token no se logro clasificar";
-	case Errors::Q0_NOT_ACCEPTABLE:
-		return "El esta de inicio  no puede ser un estado de acpetacion.";
-	case Errors::NOT_UNIQUE:
-		return "Restriccion de llave unica(current,symbol) no cumplicada";
-	default:
-		return "Error desconocido.";
-	}
-	return "Error desconocido.";
-}
 	
 }

@@ -9,7 +9,7 @@ noinst_PROGRAMS = develop_lexer_c90
 
 
 octetos_cc_includedir = $(includedir)/octetos/cc
-octetos_cc_include_HEADERS = Buffer.hh
+octetos_cc_include_HEADERS = 
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = octetos-cc.pc
