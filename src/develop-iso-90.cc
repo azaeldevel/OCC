@@ -200,19 +200,55 @@ enum class Tokens_C90 : int
 	keyword_void,
 	keyword_volatil,
 	keyword_while,
-	identifier
-
+	identifier,
+	integer,
 
 };
+std::string to_string(Tokens_C90 t)
+{
+	if (t <= Tokens_C90::US)
+	{
+		return "control char";
+	}
+	else if (t >= Tokens_C90::digit_0 or t <= Tokens_C90::digit_9)
+	{
+		return "Digito";
+	}
+	else if (t >= Tokens_C90::char_A or t <= Tokens_C90::char_Z)
+	{
+		return "Letra Mayuscula";
+	}
+	else if (t >= Tokens_C90::char_A or t <= Tokens_C90::char_Z)
+	{
+		return "Letra Minuscula";
+	}
+	else if (t > Tokens_C90::tokens)
+	{
+		if (t > Tokens_C90::keyword_auto)
+		{
+			return "keyword auto";
+		}
+		else if (t > Tokens_C90::keyword_break)
+		{
+			return "keyword break";
+		}
+		else if (t > Tokens_C90::keyword_case)
+		{
+			return "keyword case";
+		}
+	}
+
+	return std::to_string((int)t);
+}
 constexpr size_t initial_lex_c_90 = 0;
 constexpr size_t max_status_c_90 = 4;
 
-constexpr std::array digits {'0','1','2','3','4','5','6','7','8','9'};
-constexpr std::array lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z'};
-constexpr std::array upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','Y','Z'};
-constexpr std::array graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
-constexpr std::array display = { '\a','\b','\f','\n','\r','\t','\v'};
-constexpr std::array not_c = {' '};
+const std::vector<char> digits {'0','1','2','3','4','5','6','7','8','9'};
+const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z'};
+const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','Y','Z'};
+const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
+const std::vector<char> not_c = {' '};
 
 const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"auto",Tokens_C90::keyword_auto},
@@ -223,7 +259,30 @@ const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"continue",Tokens_C90::keyword_continue},
 	{"default",Tokens_C90::keyword_default},
 	{"do",Tokens_C90::keyword_do},
-	{"double",Tokens_C90::keyword_double}
+	{"double",Tokens_C90::keyword_double},
+	{"else",Tokens_C90::keyword_else},
+	{"enum",Tokens_C90::keyword_enum},
+	{"extern",Tokens_C90::keyword_extern},
+	{"float",Tokens_C90::keyword_float},
+	{"for",Tokens_C90::keyword_for},
+	{"goto",Tokens_C90::keyword_goto},
+	{"if",Tokens_C90::keyword_if},
+	{"int",Tokens_C90::keyword_int},
+	{"long",Tokens_C90::keyword_long},
+	{"register",Tokens_C90::keyword_register},
+	{"return",Tokens_C90::keyword_return},
+	{"short",Tokens_C90::keyword_short},
+	{"signed",Tokens_C90::keyword_signed},
+	{"sizeof",Tokens_C90::keyword_sizeof},
+	{"static",Tokens_C90::keyword_static},
+	{"struct",Tokens_C90::keyword_struct},
+	{"switch",Tokens_C90::keyword_switch},
+	{"typedef",Tokens_C90::keyword_typedef},
+	{"union",Tokens_C90::keyword_union},
+	{"unsigned",Tokens_C90::keyword_unsigned},
+	{"void",Tokens_C90::keyword_void},
+	{"volatil",Tokens_C90::keyword_volatil},
+	{"while",Tokens_C90::keyword_while}
 };
 
 typedef core_next::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
@@ -280,18 +339,23 @@ constexpr LexC90 create_tt_c90()
 	{
 		c90.word(p.string,p.token, symbols_end_words);
 	}	
-	//c90.word(keywords[0].string, keywords[0].token, symbols_end_words);
+	if (c90.almost_one(digits, Tokens_C90::integer, symbols_end_words) == LexC90::USED)
+	{
+
+	}
+
 	return c90;
 }
 
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break";
+	const char* str_c90 = "auto char break switch volatil void int 123456789";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	auto tt_c90 = create_tt_c90();
-	std::cout << "TT listing...\n";
-	tt_c90.print(std::cout);
+	//sstd::cout << "TT listing...\n";
+	//tt_c90.print(std::cout);
+	//tt_c90.check(std::cout);
 	std::cout << "\n";
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 
@@ -303,15 +367,112 @@ int main()
 	*/
 	if(tt_c90.simbols().size() != 97) std::cout << "La cantidad de simbolo es : " << tt_c90.simbols().size() << ", sin embargo, deve ser 97\n";
 
+
 	std::cout << "\n\n";
 	Tokens_C90 tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_auto)
+	{
+		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 	std::cout << "\n";
 	//std::cout << "TT size : " << tt_c90.size() << "\n";
 
 	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 	std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_char)
+	{
+		std::cout << "Fallo, se espera keywod char, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_break)
+	{
+		std::cout << "Fallo, se espera keywod break, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_switch)
+	{
+		std::cout << "Fallo, se espera keywod switch, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_volatil)
+	{
+		std::cout << "Fallo, se espera keywod volatil, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_void)
+	{
+		std::cout << "Fallo, se espera keywod void, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::keyword_int)
+	{
+		std::cout << "Fallo, se espera keywod int, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 	std::cout << "\n";
 
 	return EXIT_SUCCESS;
