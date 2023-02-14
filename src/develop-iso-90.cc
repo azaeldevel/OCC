@@ -26,7 +26,9 @@
 
 enum class Tokens_C90 : int
 {//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
-	none = -1,
+	command = -100,
+	eoi,//end of input
+	none,
 	//ASCII>>>
 	NUL = 0,
 	SOH,
@@ -350,10 +352,10 @@ constexpr LexC90 create_tt_c90()
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break switch volatil void int 123456789";
+	const char* str_c90 = "auto char break switch volatil void int 123456789 5";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	auto tt_c90 = create_tt_c90();
-	//sstd::cout << "TT listing...\n";
+	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
@@ -472,6 +474,13 @@ int main()
 	if (tk_c90 != Tokens_C90::integer)
 	{
 		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 	std::cout << "\n";
 
