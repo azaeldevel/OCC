@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <array>
+#include <vector>
 
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer-v3.hh>
@@ -481,6 +482,13 @@ int main()
 	if (tk_c90 != Tokens_C90::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 	std::cout << "\n";
 

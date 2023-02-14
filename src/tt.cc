@@ -71,7 +71,7 @@ namespace a
 				if(t[i][j].indicator ==  Indicator::Accept and t[i][j].token != (Tokens)0) continue;
 				if(t[i][j].indicator ==  Indicator::Left_Eat and t[i][j].token == Tokens::none) continue;
 				if(t[i][j].indicator ==  Indicator::Left_Eat and t[i][j].token < Tokens::none) continue;
-				errors.push_back({i,j});
+				//errors.push_back({i,j});
 			}
 		}
 
