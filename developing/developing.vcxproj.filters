@@ -15,8 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\devel-iso-90.cc">
+    <ClCompile Include="..\..\core\src\Buffer-v3.cc">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\develop-iso-90.cc">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\src\Buffer-v3.hh">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\lexer-v3.hh">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

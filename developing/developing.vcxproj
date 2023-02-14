@@ -18,6 +18,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\core\src\Buffer-v3.cc" />
+    <ClCompile Include="..\src\develop-iso-90.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\src\Buffer-v3.hh" />
+    <ClInclude Include="..\..\core\src\lexer-v3.hh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -146,9 +154,6 @@
       <Command>xcopy /y /d "C:\Users\Azael\Documents\develop\octetos\core\octetos-core\$(Platform)\$(Configuration)\octetos-core.dll" "$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\devel-iso-90.cc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
