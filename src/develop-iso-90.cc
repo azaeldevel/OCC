@@ -293,18 +293,26 @@ int main()
 	std::cout << "TT listing...\n";
 	tt_c90.print(std::cout);
 	std::cout << "\n";
-	//core_next::lex::A lex_c90(tt_c90, buff1_c90);
+	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 
-	/*for (char c : tt_c90.simbols())
+	/*
+	for (char c : tt_c90.simbols())
 	{
 		std::cout << c << "\n";
-	}*/
-
+	}
+	*/
 	if(tt_c90.simbols().size() != 97) std::cout << "La cantidad de simbolo es : " << tt_c90.simbols().size() << ", sin embargo, deve ser 97\n";
 
-	//Tokens_C90 tk_c90 = lex_c90.next();
-	std::cout << "TT size : " << tt_c90.size() << "\n";
+	std::cout << "\n\n";
+	Tokens_C90 tk_c90 = lex_c90.next();
+	std::cout << "\n";
+	//std::cout << "TT size : " << tt_c90.size() << "\n";
 
+	tk_c90 = lex_c90.next();
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	std::cout << "\n";
 
 	return EXIT_SUCCESS;
 }
