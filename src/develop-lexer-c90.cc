@@ -207,35 +207,25 @@ enum class Tokens_C90 : int
 	integer,
 
 };
-std::string to_string(Tokens_C90 t)
+template<typename Token> std::string to_string(Token t)
 {
-	if (t <= Tokens_C90::US)
+	std::string str;
+
+	if (t < Token::tokens)
 	{
-		return "control char";
+		return core_next::lex::to_string(t);
 	}
-	else if (t >= Tokens_C90::digit_0 or t <= Tokens_C90::digit_9)
+	else if (t > Token::tokens)
 	{
-		return "Digito";
-	}
-	else if (t >= Tokens_C90::char_A or t <= Tokens_C90::char_Z)
-	{
-		return "Letra Mayuscula";
-	}
-	else if (t >= Tokens_C90::char_A or t <= Tokens_C90::char_Z)
-	{
-		return "Letra Minuscula";
-	}
-	else if (t > Tokens_C90::tokens)
-	{
-		if (t > Tokens_C90::keyword_auto)
+		if (t > Token::keyword_auto)
 		{
 			return "keyword auto";
 		}
-		else if (t > Tokens_C90::keyword_break)
+		else if (t > Token::keyword_break)
 		{
 			return "keyword break";
 		}
-		else if (t > Tokens_C90::keyword_case)
+		else if (t > Token::keyword_case)
 		{
 			return "keyword case";
 		}
