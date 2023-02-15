@@ -323,6 +323,18 @@ constexpr LexC90 create_tt_c90()
 	{
 		symbols_end_words.push_back(c);
 	}
+
+	std::vector<char> symbols_identifier_begin(lower.size() + upper.size() + 1);
+	for (char c : lower)
+	{
+		symbols_identifier_begin.push_back(c);
+	}
+	for (char c : upper)
+	{
+		symbols_identifier_begin.push_back(c);
+	}
+	symbols_identifier_begin.push_back('_');
+	
 	
 	//static_assert(symbols.size() == simbols_amount,"La cantidad de sumbolos en el lenguaje no es correcta");
 
@@ -331,11 +343,12 @@ constexpr LexC90 create_tt_c90()
 	for (const auto& p : keywords)
 	{
 		c90.word(p.string,p.token, symbols_end_words);
-	}	
+	}
 	if (c90.almost_one(digits, Tokens_C90::integer, symbols_end_words) == LexC90::USED)
 	{
 
 	}
+	
 
 	return c90;
 }
@@ -343,7 +356,7 @@ constexpr LexC90 create_tt_c90()
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break switch volatil void int 123456789 5";
+	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j juan contianer09 _09containuer ";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	auto tt_c90 = create_tt_c90();
 	//std::cout << "TT listing...\n";
@@ -479,6 +492,20 @@ int main()
 	if (tk_c90 != Tokens_C90::integer)
 	{
 		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	std::cout << "\n";
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != Tokens_C90::identifier)
+	{
+		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 	std::cout << "\n";
 
