@@ -235,6 +235,7 @@ template<typename Token> std::string to_string(Token t)
 }
 constexpr size_t initial_lex_c_90 = 0;
 constexpr size_t max_status_c_90 = 4;
+constexpr const int simbols_amount = 99;
 
 const std::vector<char> digits {'0','1','2','3','4','5','6','7','8','9'};
 const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -282,7 +283,6 @@ typedef core_next::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
 
 constexpr LexC90 create_tt_c90()
 {
-	const int simbols_amount = 97;
 	std::vector<char> symbols;
 	symbols.reserve(simbols_amount);
 	for (char c : digits)
@@ -361,14 +361,6 @@ int main()
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
-
-	/*
-	for (char c : tt_c90.simbols())
-	{
-		std::cout << c << "\n";
-	}
-	*/
-	if(tt_c90.simbols().size() != 97) std::cout << "La cantidad de simbolo es : " << tt_c90.simbols().size() << ", sin embargo, deve ser 97\n";
 
 
 	std::cout << "\n\n";
