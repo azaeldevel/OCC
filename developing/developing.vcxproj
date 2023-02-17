@@ -25,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\core\src\Buffer-v3.hh" />
     <ClInclude Include="..\..\core\src\lexer-v3.hh" />
+    <ClInclude Include="..\src\C90.hh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
