@@ -24,9 +24,10 @@
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer-v3.hh>
 
+
+namespace core_here = oct::core::v3;
 namespace oct::cc::v0::c90
 {
-	namespace core_here = oct::core::v3;
 	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
 		command = -100,
@@ -213,11 +214,11 @@ namespace oct::cc::v0::c90
 	{
 		std::string str;
 
-		if (t < Token::tokens)
+		if (t < Token::base)
 		{
 			return core_next::lex::to_string(t);
 		}
-		else if (t > Token::tokens)
+		else if (t > Token::base)
 		{
 			if (t > Token::keyword_auto)
 			{

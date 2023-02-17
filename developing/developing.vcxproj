@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\core\src\Buffer-v3.cc" />
-    <ClCompile Include="..\src\develop-lexer-c90.cc" />
+    <ClCompile Include="..\src\main-c90.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\core\src\Buffer-v3.hh" />
