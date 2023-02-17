@@ -284,12 +284,84 @@ const std::vector<core_here::lex::pair_keyword<char,Tokens_C90>> keywords = {
 
 typedef core_here::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
 
-template<typename Symbol /*Input*/,typename Token,typename State/*Status*/>
-class TT_C90 : public core_here::lex::TT<char, Tokens_C90, core_next::lex::State>
+typedef core_here::lex::TT<char, Tokens_C90, core_next::lex::State> TT_CC;
+class TT_C90 : public TT_CC
 {
+private:
+    const std::vector<char> digits = {'0','1','2','3','4','5','6','7','8','9'};
+    const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+    const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+    const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
+    const std::vector<char> not_c = {' '};
+    const int simbols_amount = 99;
+
 public:
     constexpr TT_C90()
     {
+        make();
+        create();
+    }
+
+    constexpr void make()
+    {
+        _simbols.reserve(simbols_amount);
+        for (char c : digits)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : lower)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : upper)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : graphic)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : display)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : not_c)
+        {
+            _simbols.push_back(c);
+        }
+        sort_symbols();
+
+        std::vector<char> symbols_end_words(37);
+        for (char c : graphic)
+        {
+            symbols_end_words.push_back(c);
+        }
+        for (char c : display)
+        {
+            symbols_end_words.push_back(c);
+        }
+        for (char c : not_c)
+        {
+            symbols_end_words.push_back(c);
+        }
+
+        std::vector<char> symbols_identifier_begin(lower.size() + upper.size() + 1);
+        for (char c : lower)
+        {
+            symbols_identifier_begin.push_back(c);
+        }
+        for (char c : upper)
+        {
+            symbols_identifier_begin.push_back(c);
+        }
+        symbols_identifier_begin.push_back('_');
+
+        for (const auto& p : keywords)
+        {
+            word(p.string,p.token, symbols_end_words);
+        }
+        almost_one(digits, Tokens_C90::integer, symbols_end_words);
 
     }
 
