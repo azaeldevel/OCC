@@ -376,7 +376,6 @@ namespace oct::cc::v0::c90
 
 			std::vector<char> symbols_identifier_begin;
 			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
-			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
 			for (char c : lower)
 			{
 				symbols_identifier_begin.push_back(c);
