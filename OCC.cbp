@@ -47,6 +47,9 @@
 		<Unit filename="../core/src/lexer-v3.hh">
 			<Option target="developing" />
 		</Unit>
+		<Unit filename="src/C90-v0.hh">
+			<Option target="developing" />
+		</Unit>
 		<Unit filename="src/develop-lexer-c90.cc">
 			<Option target="developing" />
 		</Unit>
