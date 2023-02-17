@@ -30,7 +30,7 @@ int main()
 	occ_here::c90::TT tt_c90;
 	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
-	tt_c90.check(std::cout);
+	//tt_c90.check(std::cout);
 	std::cout << "\n";
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 
