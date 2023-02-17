@@ -29,7 +29,7 @@
     <ClInclude Include="..\..\core\src\lexer-v3.hh">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\C90.hh">
+    <ClInclude Include="..\src\C90-v0.hh">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
