@@ -299,8 +299,8 @@ private:
 public:
     constexpr TT_C90()
     {
+		create();
         make();
-        create();
     }
 
     constexpr void make()
@@ -445,7 +445,8 @@ int main()
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j juan contianer09 _09containuer ";
 	core_next::Buffer<char> buff1_c90(str_c90);
-	auto tt_c90 = create_tt_c90();
+	//auto tt_c90 = create_tt_c90();
+	TT_C90 tt_c90;
 	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
 	tt_c90.check(std::cout);
