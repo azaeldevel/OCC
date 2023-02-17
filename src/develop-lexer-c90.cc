@@ -2,17 +2,17 @@
 /*
  * main.cc
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
- * 
+ *
  * CC is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * CC is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,7 @@
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer-v3.hh>
 
+namespace core_here = oct::core::v3;
 
 enum class Tokens_C90 : int
 {//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
@@ -235,15 +236,18 @@ template<typename Token> std::string to_string(Token t)
 }
 constexpr size_t initial_lex_c_90 = 0;
 constexpr size_t max_status_c_90 = 4;
+constexpr int simbols_amount = 99;
 
 const std::vector<char> digits {'0','1','2','3','4','5','6','7','8','9'};
-const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z'};
-const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','Y','Z'};
+const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
 const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
 const std::vector<char> not_c = {' '};
 
-const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
+//constexpr std::vector<char> _digits {'0','1','2','3','4','5','6','7','8','9'};
+
+const std::vector<core_here::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"auto",Tokens_C90::keyword_auto},
 	{"break",Tokens_C90::keyword_break},
 	{"case",Tokens_C90::keyword_case},
@@ -278,11 +282,25 @@ const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"while",Tokens_C90::keyword_while}
 };
 
-typedef core_next::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
+typedef core_here::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
+
+template<typename Symbol /*Input*/,typename Token,typename State/*Status*/>
+class TT_C90 : public core_here::lex::TT<char, Tokens_C90, core_next::lex::State>
+{
+public:
+    constexpr TT_C90()
+    {
+
+    }
+
+private:
+
+};
+
+
 
 constexpr LexC90 create_tt_c90()
 {
-	const int simbols_amount = 97;
 	std::vector<char> symbols;
 	symbols.reserve(simbols_amount);
 	for (char c : digits)
@@ -334,21 +352,18 @@ constexpr LexC90 create_tt_c90()
 		symbols_identifier_begin.push_back(c);
 	}
 	symbols_identifier_begin.push_back('_');
-	
-	
-	//static_assert(symbols.size() == simbols_amount,"La cantidad de sumbolos en el lenguaje no es correcta");
 
+
+	//static_assert(symbols.size() == simbols_amount,"La cantidad de sumbolos en el lenguaje no es correcta");
+    if(simbols_amount != symbols.size()) throw core_next::exception("La cantidad de simbolos del lenguaje no es la esperada");
 	LexC90 c90(symbols);
-	
+
 	for (const auto& p : keywords)
 	{
 		c90.word(p.string,p.token, symbols_end_words);
 	}
-	if (c90.almost_one(digits, Tokens_C90::integer, symbols_end_words) == LexC90::USED)
-	{
+	c90.almost_one(digits, Tokens_C90::integer, symbols_end_words);
 
-	}
-	
 
 	return c90;
 }
@@ -359,19 +374,20 @@ int main()
 	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j juan contianer09 _09containuer ";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	auto tt_c90 = create_tt_c90();
-	//std::cout << "TT listing...\n";
-	//tt_c90.print(std::cout);
+	std::cout << "TT listing...\n";
+	tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 
-	/*
+    /*
 	for (char c : tt_c90.simbols())
 	{
 		std::cout << c << "\n";
 	}
-	*/
-	if(tt_c90.simbols().size() != 97) std::cout << "La cantidad de simbolo es : " << tt_c90.simbols().size() << ", sin embargo, deve ser 97\n";
+    */
+
+	//if(tt_c90.simbols().size() != 97) std::cout << "La cantidad de simbolo es : " << tt_c90.simbols().size() << ", sin embargo, deve ser 97\n";
 
 
 	std::cout << "\n\n";
