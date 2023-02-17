@@ -37,7 +37,7 @@ bool lexing(T& lex)
 
 int main()
 {
-	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
+	//std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90 = "struct auto char break switch volatil void int 923456789 5";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	occ_here::c90::TT tt_c90;	
