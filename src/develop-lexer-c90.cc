@@ -2,17 +2,17 @@
 /*
  * main.cc
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
- * 
+ *
  * CC is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * CC is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,7 @@
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer-v3.hh>
 
+namespace core_here = oct::core::v3;
 
 enum class Tokens_C90 : int
 {//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
@@ -244,7 +245,9 @@ const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',','
 const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
 const std::vector<char> not_c = {' '};
 
-const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
+//constexpr std::vector<char> _digits {'0','1','2','3','4','5','6','7','8','9'};
+
+const std::vector<core_here::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"auto",Tokens_C90::keyword_auto},
 	{"break",Tokens_C90::keyword_break},
 	{"case",Tokens_C90::keyword_case},
@@ -279,7 +282,94 @@ const std::vector<core_next::lex::pair_keyword<char,Tokens_C90>> keywords = {
 	{"while",Tokens_C90::keyword_while}
 };
 
-typedef core_next::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
+typedef core_here::lex::TT<char, Tokens_C90, core_next::lex::State> LexC90;
+
+typedef core_here::lex::TT<char, Tokens_C90, core_next::lex::State> TT_CC;
+class TT_C90 : public TT_CC
+{
+private:
+    const std::vector<char> digits = {'0','1','2','3','4','5','6','7','8','9'};
+    const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+    const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+    const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
+    const std::vector<char> not_c = {' '};
+    const int simbols_amount = 99;
+
+public:
+    constexpr TT_C90()
+    {
+        make();
+        create();
+    }
+
+    constexpr void make()
+    {
+        _simbols.reserve(simbols_amount);
+        for (char c : digits)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : lower)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : upper)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : graphic)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : display)
+        {
+            _simbols.push_back(c);
+        }
+        for (char c : not_c)
+        {
+            _simbols.push_back(c);
+        }
+        sort_symbols();
+
+        std::vector<char> symbols_end_words(37);
+        for (char c : graphic)
+        {
+            symbols_end_words.push_back(c);
+        }
+        for (char c : display)
+        {
+            symbols_end_words.push_back(c);
+        }
+        for (char c : not_c)
+        {
+            symbols_end_words.push_back(c);
+        }
+
+        std::vector<char> symbols_identifier_begin(lower.size() + upper.size() + 1);
+        for (char c : lower)
+        {
+            symbols_identifier_begin.push_back(c);
+        }
+        for (char c : upper)
+        {
+            symbols_identifier_begin.push_back(c);
+        }
+        symbols_identifier_begin.push_back('_');
+
+        for (const auto& p : keywords)
+        {
+            word(p.string,p.token, symbols_end_words);
+        }
+        almost_one(digits, Tokens_C90::integer, symbols_end_words);
+
+    }
+
+private:
+
+};
+
+
 
 constexpr LexC90 create_tt_c90()
 {
@@ -334,18 +424,18 @@ constexpr LexC90 create_tt_c90()
 		symbols_identifier_begin.push_back(c);
 	}
 	symbols_identifier_begin.push_back('_');
-	
-	
-	//static_assert(symbols.size() == simbols_amount,"La cantidad de sumbolos en el lenguaje no es correcta");
 
+
+	//static_assert(symbols.size() == simbols_amount,"La cantidad de sumbolos en el lenguaje no es correcta");
+    if(simbols_amount != symbols.size()) throw core_next::exception("La cantidad de simbolos del lenguaje no es la esperada");
 	LexC90 c90(symbols);
-	
+
 	for (const auto& p : keywords)
 	{
 		c90.word(p.string,p.token, symbols_end_words);
 	}
 	c90.almost_one(digits, Tokens_C90::integer, symbols_end_words);
-	
+
 
 	return c90;
 }
@@ -361,7 +451,6 @@ int main()
 	tt_c90.check(std::cout);
 	std::cout << "\n";
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
-
 
 	std::cout << "\n\n";
 	Tokens_C90 tk_c90 = lex_c90.next();
