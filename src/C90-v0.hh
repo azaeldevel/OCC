@@ -171,7 +171,7 @@ namespace oct::cc::v0::c90
 
 
 		//>>>Tokens
-		tokens = 0x110000,
+		base = 0x110000,
 		new_line,
 		keyword_auto,
 		keyword_break,
