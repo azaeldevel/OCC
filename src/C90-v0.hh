@@ -236,6 +236,37 @@ namespace oct::cc::v0::c90
 
 		return std::to_string((int)t);
 	}
+	template<typename Token> std::string category(Token t)
+	{
+		std::string str;
+
+		if (t <= Token::US)
+		{
+			return "Carater de control";
+		}
+		else if (t >= Token::digit_0 and t <= Token::digit_9)
+		{
+			return "Digito";
+		}
+		else if (t >= Token::char_a and t <= Token::char_z)
+		{
+			return "Letra minuscula";
+		}
+		else if (t >= Token::char_A and t <= Token::char_Z)
+		{
+			return "Letra mayuscusla";
+		}
+		else if (t >= Token::keyword_auto and t <= Token::keyword_while)
+		{
+			return "Palabra reservada";
+		}
+		else if (t == Token::integer)
+		{
+			return "Numero Entero";
+		}
+
+		return str;
+	}
 
 
 	const std::vector<core_here::lex::pair_keyword<char, Tokens>> keywords = {

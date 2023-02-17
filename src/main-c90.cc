@@ -25,9 +25,11 @@ template<typename T>
 bool lexing(T& lex)
 {
 	core_here::lex::Tokenized<char, occ_here::c90::Tokens> actual;
+	std::string strcat;
 	while (lex.next(actual) != occ_here::c90::Tokens::none)
 	{
-		std::cout << "Token : \"" << (std::string)actual << "\"\n";
+		strcat = occ_here::c90::category(actual.token);
+		if(not strcat.empty()) std::cout << occ_here::c90::category(actual.token) << " --> \"" << (std::string)actual << "\"\n";
 	}
 
 	return true;
@@ -36,7 +38,7 @@ bool lexing(T& lex)
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break switch volatil void int 923456789 5";
+	const char* str_c90 = "struct auto char break switch volatil void int 923456789 5";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	occ_here::c90::TT tt_c90;	
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
