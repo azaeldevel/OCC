@@ -163,7 +163,7 @@ namespace oct::cc::v0::c90
 
 
 
-		y_Diaeresis = 255,//ÿ
+		y_Diaeresis = 255,//Ã¿
 		//>>>UTF-8
 		a_Macron = 256,
 
@@ -366,7 +366,17 @@ namespace oct::cc::v0::c90
 				symbols_end_words.push_back(c);
 			}
 
-			std::vector<char> symbols_identifier_begin(lower.size() + upper.size() + 1);
+
+			for (const auto& p : keywords)
+			{
+				word(p.string,p.token, symbols_end_words);
+			}
+			almost_one(digits, Tokens::integer, symbols_end_words);
+
+
+			std::vector<char> symbols_identifier_begin;
+			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
+			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
 			for (char c : lower)
 			{
 				symbols_identifier_begin.push_back(c);
@@ -376,13 +386,7 @@ namespace oct::cc::v0::c90
 				symbols_identifier_begin.push_back(c);
 			}
 			symbols_identifier_begin.push_back('_');
-
-			for (const auto& p : keywords)
-			{
-				word(p.string,p.token, symbols_end_words);
-			}
-			almost_one(digits, Tokens::integer, symbols_end_words);
-
+			one(symbols_identifier_begin, Tokens::identifier, symbols_end_words);
 		}
 
 	private:
