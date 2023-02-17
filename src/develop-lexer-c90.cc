@@ -21,22 +21,6 @@
 
 namespace occ_here = oct::cc::v0;
 
-
-template<typename T>
-bool lexing(T& lex)
-{
-	core_here::lex::TokenDefinition<char> c;
-	std::string strtk;
-	while (lex.next(actual) != occ_here::c90::Tokens::none)
-	{
-		strtk.clear();
-		strtk.load(strtk);
-		std::cout << "Token : " << strtk << "\n";
-	}
-	
-	return true;
-}
-
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
