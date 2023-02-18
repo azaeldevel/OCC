@@ -385,7 +385,7 @@ namespace oct::cc::v0::c90
 				symbols_identifier_begin.push_back(c);
 			}
 			symbols_identifier_begin.push_back('_');
-			core_next::lex::State state_identifiers = one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
+			one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
 			std::vector<char> symbols_identifier;
 			symbols_identifier.reserve(lower.size() + upper.size() + digits.size() + 1);
 			for (char c : lower)
