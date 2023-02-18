@@ -369,9 +369,9 @@ namespace oct::cc::v0::c90
 
 			for (const auto& p : keywords)
 			{
-				word(p.string,p.token, symbols_end_words);
+				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
 			}
-			almost_one(digits, Tokens::integer, symbols_end_words);
+			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
 
 
 			std::vector<char> symbols_identifier_begin;
@@ -385,7 +385,23 @@ namespace oct::cc::v0::c90
 				symbols_identifier_begin.push_back(c);
 			}
 			symbols_identifier_begin.push_back('_');
-			one(symbols_identifier_begin, Tokens::identifier, symbols_end_words);
+			core_next::lex::State state_identifiers = one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
+			std::vector<char> symbols_identifier;
+			symbols_identifier.reserve(lower.size() + upper.size() + digits.size() + 1);
+			for (char c : lower)
+			{
+				symbols_identifier.push_back(c);
+			}
+			for (char c : upper)
+			{
+				symbols_identifier.push_back(c);
+			}
+			for (char c : digits)
+			{
+				symbols_identifier.push_back(c);
+			}
+			symbols_identifier.push_back('_');
+			//some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same);
 		}
 
 	private:
