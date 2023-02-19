@@ -24,7 +24,7 @@ namespace occ_here = oct::cc::v0;
 int main()
 {
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j juan contianer09 _09containuer ";
+	const char* str_c90 = "auto char break switch volatil void int 923456789 5 juan contianer09 _09containuer ";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	//auto tt_c90 = create_tt_c90();
 	occ_here::c90::TT tt_c90;
@@ -144,12 +144,12 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-	/*tk_c90 = lex_c90.next();
+	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";*/
+	std::cout << "\n";
 
 	return EXIT_SUCCESS;
 }
