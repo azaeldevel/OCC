@@ -401,8 +401,8 @@ namespace oct::cc::v0::c90
 				symbols_identifier.push_back(c);
 			}
 			symbols_identifier.push_back('_');
-			one(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
-			//some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::);
+			core_next::lex::State state_identifier = one(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
+			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
 		}
 
 	private:
