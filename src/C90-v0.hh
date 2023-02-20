@@ -311,7 +311,7 @@ namespace oct::cc::v0::c90
 		const std::vector<char> digits = {'0','1','2','3','4','5','6','7','8','9'};
 		const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 		const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-		const std::vector<char> graphic = { '!','"','#','%','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+		const std::vector<char> graphic = { '!','"','#','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
 		const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
 		const std::vector<char> not_c = {' '};
 		const int simbols_amount = 99;
@@ -367,11 +367,13 @@ namespace oct::cc::v0::c90
 				symbols_end_words.push_back(c);
 			}
 
-
 			for (const auto& p : keywords)
 			{
 				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
 			}
+
+
+
 			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
 
 
@@ -403,6 +405,12 @@ namespace oct::cc::v0::c90
 			}
 			symbols_identifier.push_back('_');
 			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
+
+			for (char c : graphic)
+			{
+				if(c == '_') continue;
+				one(c, (Tokens)c,symbols_end_words,core_here::lex::Flag::error);
+			}
 		}
 
 	private:
