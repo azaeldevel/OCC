@@ -32,6 +32,7 @@ AM_CONDITIONAL(WITH_TESTS, test x"$with_tests" = "xyes")
 AC_ARG_WITH([tests], AS_HELP_STRING([--with-tests], [Compilando con soporte para Tests]))
 if test "x$with_tests" = "xyes"; then 
 	PKG_CHECK_MODULES(CUNIT,cunit)
+	AC_PROG_LEX
 fi
 
 AC_ARG_ENABLE(debug,
