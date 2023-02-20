@@ -5,7 +5,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" 
 	
 
-noinst_PROGRAMS = develop_lexer_c90
+noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90
 
 
 octetos_cc_includedir = $(includedir)/octetos/cc
@@ -15,6 +15,11 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = octetos-cc.pc
 
 
-develop_lexer_c90_SOURCES = develop-lexer-c90.cc
-develop_lexer_c90_LDADD = 
-develop_lexer_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
+develop_lexer_occ_c90_SOURCES = develop-lexer-occ-c90.cc
+develop_lexer_occ_c90_LDADD = 
+develop_lexer_occ_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
+
+
+develop_lexer_flex_c90_SOURCES = develop-lexer-flex-c90.cc
+develop_lexer_flex_c90_LDADD = 
+develop_lexer_flex_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
