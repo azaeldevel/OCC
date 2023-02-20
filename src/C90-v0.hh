@@ -355,6 +355,7 @@ namespace oct::cc::v0::c90
 			std::vector<char> symbols_end_words(37);
 			for (char c : graphic)
 			{
+				if(c == '_') continue;
 				symbols_end_words.push_back(c);
 			}
 			for (char c : display)
@@ -385,7 +386,7 @@ namespace oct::cc::v0::c90
 				symbols_identifier_begin.push_back(c);
 			}
 			symbols_identifier_begin.push_back('_');
-			one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
+			core_next::lex::State state_identifier = one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
 			std::vector<char> symbols_identifier;
 			symbols_identifier.reserve(lower.size() + upper.size() + digits.size() + 1);
 			for (char c : lower)
@@ -401,7 +402,6 @@ namespace oct::cc::v0::c90
 				symbols_identifier.push_back(c);
 			}
 			symbols_identifier.push_back('_');
-			core_next::lex::State state_identifier = one(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
 			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
 		}
 
