@@ -149,7 +149,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -162,7 +162,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -175,7 +175,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -188,7 +188,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -201,7 +201,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -214,7 +214,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -227,7 +227,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -240,7 +240,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -253,7 +253,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 
 	return EXIT_SUCCESS;
 }
