@@ -20,16 +20,18 @@
 #include "C90-v0.hh"
 
 namespace occ_here = oct::cc::v0;
+static int counter = 0;
 
 template<typename T>
 bool lexing(T& lex)
 {
 	core_here::lex::Tokenized<char, occ_here::c90::Tokens> actual;
-	std::string strcat;
+	//std::string strcat;
 	while (lex.next(actual) != occ_here::c90::Tokens::none)
 	{
-		strcat = occ_here::c90::category(actual.token);
-		if(not strcat.empty()) std::cout << strcat << " " << (std::string)actual << "\n";
+		/*strcat = occ_here::c90::category(actual.token);
+		if(not strcat.empty()) std::cout << strcat << " " << (std::string)actual << "\n";*/
+		counter++;
 	}
 
 	return true;
@@ -38,12 +40,12 @@ bool lexing(T& lex)
 int main(int argc, char* argv[])
 {
 	//std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	if(argc < 2) throw oct::core::v3::exception("Agrege arcgivo fuente.");
+	if(argc < 2) throw oct::core::v3::exception("Agrege archivo fuente.");
 	std::filesystem::path file1_c90 = argv[1];
 	//const char* str_c90 = "struct auto char break switch volatil void int 923456789 5";
 	core_next::Buffer<char> buff1_c90(file1_c90);
 	//const occ_here::c90::TT tt_c90;
-	occ_here::c90::TT tt_c90 = occ_here::c90::create_lexer();
+	const occ_here::c90::TT tt_c90 = occ_here::c90::create_lexer();
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 		
 	//std::cout << "Compilation... \n";
@@ -55,7 +57,7 @@ int main(int argc, char* argv[])
 	{
 		//std::cout << "... fail\n";
 	}
-
+	
 	return EXIT_SUCCESS;
 }
 

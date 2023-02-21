@@ -412,12 +412,9 @@ namespace oct::cc::v0::c90
 			{
 				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
 			}
-
-
-
+			
 			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
-
-
+			
 			std::vector<char> symbols_identifier_begin;
 			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
 			for (char c : lower)
@@ -450,16 +447,16 @@ namespace oct::cc::v0::c90
 			for (char c : graphic)
 			{
 				if(c == '_') continue;
-				one(c, (Tokens)c,symbols_end_words,core_here::lex::Flag::error);
+				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
 			}
 			
 			for (char c : display)
 			{
-				one(c, (Tokens)c,symbols_end_words,core_here::lex::Flag::error);
+				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
 			}
 		}
-
-
+		
+		
 	private:
 
 	};

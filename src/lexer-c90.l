@@ -13,6 +13,7 @@
  */
 
 	int num_lines = 0, num_chars = 0;
+	static int counter = 0;
 DIGIT [0-9]
 LETTER [a-zA-Z]
 INT {DIGIT}+
@@ -20,43 +21,43 @@ INT {DIGIT}+
 ID [a-zA-Z_][a-zA-Z0-9_]*
 
 %%
-"auto"					{printf("Keyword auto\n");}
-"break"					{printf("Keyword break\n");}
-"case"					{printf("Keyword case\n");}
-"char"					{printf("Keyword char\n");}
-"const"					{printf("Keyword const\n");}
-"continue"				{printf("Keyword continue\n");}
-"default"				{printf("Keyword default\n");}
-"do"					{printf("Keyword do\n");}
-"double"				{printf("Keyword double\n");}
-"else"					{printf("Keyword enum\n");}
-"enum"					{printf("Keyword auto\n");}
-"extern"				{printf("Keyword extern\n");}
-"float"					{printf("Keyword float\n");}
-"for"					{printf("Keyword for\n");}
-"goto"					{printf("Keyword goto\n");}
-"if"					{printf("Keyword if\n");}
-"int"					{printf("Keyword int\n");}
-"long"					{printf("Keyword long\n");}
-"register"				{printf("Keyword register\n");}
-"return"				{printf("Keyword return\n");}
-"short"					{printf("Keyword short\n");}
-"signed"				{printf("Keyword signed\n");}
-"sizeof"				{printf("Keyword sizeof\n");}
-"static"				{printf("Keyword static\n");}
-"struct"				{printf("Keyword struct\n");}
-"switch"				{printf("Keyword switch\n");}
-"typedef"				{printf("Keyword typedef\n");}
-"union"					{printf("Keyword union\n");}
-"unsigned"				{printf("Keyword unsigned\n");}
-"void"					{printf("Keyword void\n");}
-"volatil"				{printf("Keyword volatil\n");}
-"while"					{printf("Keyword while\n");}
+"auto"					{counter++;};//{printf("Keyword auto\n");}
+"break"					{counter++;};//{printf("Keyword break\n");}
+"case"					{counter++;};//{printf("Keyword case\n");}
+"char"					{counter++;};//{printf("Keyword char\n");}
+"const"					{counter++;};//{printf("Keyword const\n");}
+"continue"				{counter++;};//{printf("Keyword continue\n");}
+"default"				{counter++;};//{printf("Keyword default\n");}
+"do"					{counter++;};//{printf("Keyword do\n");}
+"double"				{counter++;};//{printf("Keyword double\n");}
+"else"					{counter++;};//{printf("Keyword enum\n");}
+"enum"					{counter++;};//{printf("Keyword auto\n");}
+"extern"				{counter++;};//{printf("Keyword extern\n");}
+"float"					{counter++;};//{printf("Keyword float\n");}
+"for"					{counter++;};//{printf("Keyword for\n");}
+"goto"					{counter++;};//{printf("Keyword goto\n");}
+"if"					{counter++;};//{printf("Keyword if\n");}
+"int"					{counter++;};//{printf("Keyword int\n");}
+"long"					{counter++;};//{printf("Keyword long\n");}
+"register"				{counter++;};//{printf("Keyword register\n");}
+"return"				{counter++;};//{printf("Keyword return\n");}
+"short"					{counter++;};//{printf("Keyword short\n");}
+"signed"				{counter++;};//{printf("Keyword signed\n");}
+"sizeof"				{counter++;};//{printf("Keyword sizeof\n");}
+"static"				{counter++;};//{printf("Keyword static\n");}
+"struct"				{counter++;};//{printf("Keyword struct\n");}
+"switch"				{counter++;};//{printf("Keyword switch\n");}
+"typedef"				{counter++;};//{printf("Keyword typedef\n");}
+"union"					{counter++;};//{printf("Keyword union\n");}
+"unsigned"				{counter++;};//{printf("Keyword unsigned\n");}
+"void"					{counter++;};//{printf("Keyword void\n");}
+"volatil"				{counter++;};//{printf("Keyword volatil\n");}
+"while"					{counter++;};//{printf("Keyword while\n");}
 
-{INT}					{printf("Entero %s\n",yytext);}
-{ID}					{printf("Identificador %s\n",yytext);}
+{INT}					{counter++;};//{printf("Entero %s\n",yytext);}
+{ID}					{counter++;};//{printf("Identificador %s\n",yytext);}
 
-[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]						{printf("Simbolo %s\n",yytext);}
+[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]						{counter++;};//{printf("Simbolo %s\n",yytext);}
 
 [.\n\t ]				;
 
