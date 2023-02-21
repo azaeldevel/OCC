@@ -126,7 +126,11 @@ namespace oct::cc::v0::c90
 		char_Y,
 		char_Z,
 		//>>
-
+		brackets_open,
+		diagonal_inverted,
+		brackets_close,
+		hat,
+		guion_down,
 		//>>>
 		char_a = 97,
 		char_b,
@@ -154,7 +158,10 @@ namespace oct::cc::v0::c90
 		char_x,
 		char_y,
 		char_z,
-
+		curly_brackets_open,
+		bar,
+		curly_brackets_close,
+		umlaut,
 		EuroSign = 218,
 		//>>>Extended ASCII
 
@@ -242,7 +249,7 @@ namespace oct::cc::v0::c90
 
 		if (t <= Token::US)
 		{
-			return "Carater de control";
+			
 		}
 		else if (t >= Token::digit_0 and t <= Token::digit_9)
 		{
@@ -250,19 +257,47 @@ namespace oct::cc::v0::c90
 		}
 		else if (t >= Token::char_a and t <= Token::char_z)
 		{
-			return "Letra minuscula";
+			return "Minuscula";
 		}
 		else if (t >= Token::char_A and t <= Token::char_Z)
 		{
-			return "Letra mayuscusla";
+			return "Mayuscusla";
 		}
 		else if (t >= Token::keyword_auto and t <= Token::keyword_while)
 		{
-			return "Palabra reservada";
+			return "keyword";
 		}
 		else if (t == Token::integer)
 		{
-			return "Numero Entero";
+			return "Entero";
+		}
+		else if (t == Token::identifier)
+		{
+			return "Identificador";
+		}
+		else if (t >= Token::exclamation_mark and t <= Token::symbol_diagonal)
+		{
+			//char msg[] = {'?','\0'};
+			//msg[0] = (char) t;
+			return "Simbolo";
+		}
+		else if (t >= Token::symbol_column and t <= Token::arroba)
+		{
+			//char msg[] = {'?','\0'};
+			//msg[0] = (char) t;
+			return "Simbolo";
+		}
+		else if (t >= Token::curly_brackets_open and t <= Token::umlaut)
+		{
+			//char msg[] = {'?','\0'};
+			//msg[0] = (char) t;
+			return "Simbolo";
+		}
+		else if (t >= Token::brackets_open and t <= Token::guion_down)
+		{
+			//char msg[] = {'?','\0'};
+			//msg[0] = (char) t;
+			return "Simbolo";
 		}
 
 		return str;
