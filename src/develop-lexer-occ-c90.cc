@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <chrono>
+
 
 #include "C90-v0.hh"
 
@@ -40,7 +42,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "TT size : " << tt_c90.size() << "\n";
+	std::cout << "TT size : " << tt_c90.size() << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -294,6 +296,21 @@ int main()
 	}
 	//std::cout << "\n";
 
+	
+	auto begin1 = std::chrono::high_resolution_clock::now();
+	occ_here::c90::TT tt_c90test[177];
+	auto end1 = std::chrono::high_resolution_clock::now();
+	auto elapsed1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - begin1);
+	std::cout << "Tiempo : " << elapsed1 << "\n";
+
+	
+	auto begin2 = std::chrono::high_resolution_clock::now();	
+	std::vector<std::vector<core_here::lex::Transition<occ_here::c90::Tokens, core_here::lex::State>>> tts[177];
+	auto end2 = std::chrono::high_resolution_clock::now();	
+	auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+	std::cout << "Tiempo : " << elapsed2 << "\n";
+	
+	
 	return EXIT_SUCCESS;
 }
 
