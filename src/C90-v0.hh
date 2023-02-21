@@ -411,6 +411,11 @@ namespace oct::cc::v0::c90
 				if(c == '_') continue;
 				one(c, (Tokens)c,symbols_end_words,core_here::lex::Flag::error);
 			}
+			
+			for (char c : display)
+			{
+				one(c, (Tokens)c,symbols_end_words,core_here::lex::Flag::error);
+			}
 		}
 
 	private:
