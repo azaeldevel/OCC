@@ -42,7 +42,8 @@ int main(int argc, char* argv[])
 	std::filesystem::path file1_c90 = argv[1];
 	//const char* str_c90 = "struct auto char break switch volatil void int 923456789 5";
 	core_next::Buffer<char> buff1_c90(file1_c90);
-	occ_here::c90::TT tt_c90;	
+	//const occ_here::c90::TT tt_c90;
+	occ_here::c90::TT tt_c90 = occ_here::c90::create_lexer();
 	core_next::lex::A lex_c90(tt_c90, buff1_c90);
 		
 	//std::cout << "Compilation... \n";

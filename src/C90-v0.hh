@@ -357,6 +357,12 @@ namespace oct::cc::v0::c90
 			create();
 			make();
 		}
+		constexpr TT(const TT& obj) : TT_CC(obj)
+		{			
+		}
+		constexpr TT(const TT&& obj) : TT_CC(obj)
+		{			
+		}
 
 		constexpr void make()
 		{
@@ -453,7 +459,13 @@ namespace oct::cc::v0::c90
 			}
 		}
 
+
 	private:
 
 	};
+
+	constexpr auto create_lexer()
+	{
+		return TT();
+	}
 }
