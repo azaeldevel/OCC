@@ -469,12 +469,12 @@ namespace oct::cc::v0::c90
 	}
 
 
-	constexpr size_t amoung_symbols = 99;
-	constexpr size_t amoung_transitions = 128;
-	constexpr size_t amoung_states = 150;
-	constexpr size_t amoung_end_word = 37;
-	constexpr size_t amoung_keywords = 32;
-	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_transitions,amoung_symbols>
+	constexpr size_t amount_symbols = 99;
+	constexpr size_t amount_transitions = 128;
+	constexpr size_t amount_states = 150;
+	constexpr size_t amount_end_word = 37;
+	constexpr size_t amount_keywords = 32;
+	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amount_states,amount_transitions,amount_symbols>
 	{
 	public:
 		constexpr static core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
@@ -605,16 +605,16 @@ namespace oct::cc::v0::c90
 				error = core_here::lex::errors::fail_create_firts_estate;
 				return;
 			}
-			for (size_t i = 0 ; i < amoung_keywords; i++)
+			for (size_t i = 0 ; i < amount_keywords; i++)
 			{
-				state_last = word(keywords[i].string,keywords[i].token, symbols_end_words,amoung_end_word,core_here::lex::Flag::error);
+				state_last = word(keywords[i].string,keywords[i].token, symbols_end_words,amount_end_word,core_here::lex::Flag::error);
                 if(state_last < 0) return;
 			}
 		}
 
 
 	private:
-		char symbols_end_words[amoung_end_word];
+		char symbols_end_words[amount_end_word];
         core_here::lex::State state_last;
 	};
 
