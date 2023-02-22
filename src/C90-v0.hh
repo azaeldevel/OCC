@@ -470,8 +470,9 @@ namespace oct::cc::v0::c90
 
 
 	constexpr size_t amoung_symbols = 99;
+	constexpr size_t amoung_transitions = 1;
 	constexpr size_t amoung_states = 1;
-	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_symbols>
+	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_transitions,amoung_symbols>
 	{
 	public:
 		core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
@@ -531,7 +532,7 @@ namespace oct::cc::v0::c90
 				symbols[i] = 32 + i;
 			}
 
-			for(size_t i = 0; i < 15; i++)
+			/*for(size_t i = 0; i < 15; i++)
 			{
 				symbols_end_words[i] = 32 + i;
 			}
@@ -546,12 +547,12 @@ namespace oct::cc::v0::c90
 			for(size_t i = 0; i < 4; i++)
 			{
 				symbols_end_words[i] = 123 + i;
-			}
+			}*/
 		}
 		constexpr void make_transitions()
 		{
 			core_here::lex::State initial = create();
-			for(size_t i = 0; i < 128; i++)
+			for(size_t i = 0; i < amoung_transitions; i++)
 			{
 				get(initial,i)->next = 1;
 				get(initial,i)->token = Tokens::digit_0;
@@ -564,7 +565,7 @@ namespace oct::cc::v0::c90
 		}
 
 	private:
-		char symbols_end_words[31];
+		//char symbols_end_words[31];
 	};
 	//constexpr std::array symbols = {'0','1','2','3','4','5','6','7','8','9'};
 	constexpr auto create_lexer_b()
