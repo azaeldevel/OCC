@@ -472,6 +472,7 @@ namespace oct::cc::v0::c90
 	constexpr size_t amoung_symbols = 99;
 	constexpr size_t amoung_transitions = 1;
 	constexpr size_t amoung_states = 1;
+	constexpr size_t amoung_end_word = 37;
 	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_transitions,amoung_symbols>
 	{
 	public:
@@ -527,27 +528,70 @@ namespace oct::cc::v0::c90
 			symbols[4] = '\r';
 			symbols[5] = '\t';
 			symbols[6] = '\v';
-			for(size_t i = 7; i < 99; i++)
+			size_t position = 7;
+			for(size_t i = ' '; i < '$'; i++,position++)
 			{
-				symbols[i] = 32 + i;
+				symbols[position] = i;
+			}
+			for(size_t i = '%'; i < '0'; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			//digitos
+			for(size_t i = '0'; i < ':'; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			for(size_t i = ':'; i < '@'; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			for(size_t i = 'A'; i < '['; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			for(size_t i = '['; i < 96; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			for(size_t i = 'a'; i < '{'; i++,position++)
+			{
+				symbols[position] = i;
+			}
+			for(size_t i = '{'; i < 127; i++,position++)
+			{
+				symbols[position] = i;
 			}
 
-			/*for(size_t i = 0; i < 15; i++)
+			symbols_end_words[0] = '\a';
+			symbols_end_words[1] = '\b';
+			symbols_end_words[2] = '\f';
+			symbols_end_words[3] = '\n';
+			symbols_end_words[4] = '\r';
+			symbols_end_words[5] = '\t';
+			symbols_end_words[6] = '\v';
+			position = 7;
+			for(size_t i = ' '; i < '$'; i++,position++)
 			{
-				symbols_end_words[i] = 32 + i;
+				symbols_end_words[position] = i;
 			}
-			for(size_t i = 0; i < 6; i++)
+			for(size_t i = '%'; i < '0'; i++,position++)
 			{
-				symbols_end_words[i] = 58 + i;
+				symbols_end_words[position] = i;
 			}
-			for(size_t i = 0; i < 6; i++)
+			//digitos
+			for(size_t i = ':'; i < '@'; i++,position++)
 			{
-				symbols_end_words[i] = 91 + i;
+				symbols_end_words[position] = i;
 			}
-			for(size_t i = 0; i < 4; i++)
+			for(size_t i = '['; i < 96; i++,position++)
 			{
-				symbols_end_words[i] = 123 + i;
-			}*/
+				symbols_end_words[position] = i;
+			}
+			for(size_t i = '{'; i < 127; i++,position++)
+			{
+				symbols_end_words[position] = i;
+			}
 		}
 		constexpr void make_transitions()
 		{
@@ -565,7 +609,7 @@ namespace oct::cc::v0::c90
 		}
 
 	private:
-		//char symbols_end_words[31];
+		char symbols_end_words[amoung_end_word];
 	};
 	//constexpr std::array symbols = {'0','1','2','3','4','5','6','7','8','9'};
 	constexpr auto create_lexer_b()
