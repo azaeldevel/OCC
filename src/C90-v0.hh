@@ -339,7 +339,7 @@ namespace oct::cc::v0::c90
 		{"while",Tokens::keyword_while}
 	};
 
-	typedef core_here::lex::TT<char, Tokens, core_here::lex::State> TT_CC;
+	typedef core_here::lex::TTA<char, Tokens, core_here::lex::State> TT_CC;
 	class TT : public TT_CC
 	{
 	private:
@@ -407,6 +407,7 @@ namespace oct::cc::v0::c90
 			{
 				symbols_end_words.push_back(c);
 			}
+			//symbols_end_words.push_back('\0');
 
 			for (const auto& p : keywords)
 			{

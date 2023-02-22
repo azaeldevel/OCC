@@ -25,8 +25,12 @@ namespace occ_here = oct::cc::v0;
 
 int main()
 {
+
+	std::cout << "///>>>A section\n\n\n";
+	///>>>A
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
+	//const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
+	const char* str_c90 = "auto char break switch volatil void int";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TT tt_c90;
@@ -115,7 +119,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera keywod int, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-
+/*
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
@@ -293,7 +297,7 @@ int main()
 	if (tk_c90 != (occ_here::c90::Tokens)'#')
 	{
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
+	}*/
 	//std::cout << "\n";
 
 
@@ -312,15 +316,19 @@ int main()
 
 	constexpr const std::vector<char> symbols {'a','b'};*/
 
+
+	std::cout << "///>>>B section\n\n\n";
+	///>>>B
+
 	constexpr auto ttb = occ_here::c90::create_lexer_b();
 	//constexpr const occ_here::c90::TTB ttb;
-	for(size_t i = 0; i < 99; i++)
+	/*for(size_t i = 0; i < 99; i++)
 	{
 		std::cout << ttb.get_symbols()[i] << "\n";
-	}
+	}*/
 	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
 	std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
-	ttb.print(std::cout);
+	//ttb.print(std::cout);
 	/*for(size_t i = 0; i < ttb.get_amoun_states(); i++)
 	{
 		for(size_t j = 0; j < ttb.get_amoun_transitions(); j++)
@@ -334,7 +342,96 @@ int main()
 			}
 		}
 	}*/
+	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
+	const char* str_c90b = "auto char break switch volatil void int";
+	core_next::Buffer<char> buff1_c90b(str_c90b);
+	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
+	occ_here::c90::TTB tt_c90b;
+	//std::cout << "TT listing...\n";
+	//tt_c90.print(std::cout);
+	//tt_c90.check(std::cout);
+	std::cout << "\n";
+	core_next::lex::B lex_c90b(tt_c90b, buff1_c90b);
 
+	//std::cout << "\n\n";
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_auto)
+	{
+		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	//std::cout << "TT size : " << tt_c90.size() << "\n";
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_char)
+	{
+		std::cout << "Fallo, se espera keywod char, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_break)
+	{
+		std::cout << "Fallo, se espera keywod break, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_switch)
+	{
+		std::cout << "Fallo, se espera keywod switch, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_volatil)
+	{
+		std::cout << "Fallo, se espera keywod volatil, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_void)
+	{
+		std::cout << "Fallo, se espera keywod void, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::keyword_int)
+	{
+		std::cout << "Fallo, se espera keywod int, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 
 
 
