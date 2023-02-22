@@ -584,7 +584,6 @@ namespace oct::cc::v0::c90
 			{
 				symbols_end_words[position] = i;
 			}
-			//digitos
 			for(size_t i = ':'; i < '@'; i++,position++)
 			{
 				symbols_end_words[position] = i;
