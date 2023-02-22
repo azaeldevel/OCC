@@ -249,7 +249,7 @@ namespace oct::cc::v0::c90
 
 		if (t <= Token::US)
 		{
-			
+
 		}
 		else if (t >= Token::digit_0 and t <= Token::digit_9)
 		{
@@ -339,7 +339,7 @@ namespace oct::cc::v0::c90
 		{"while",Tokens::keyword_while}
 	};
 
-	typedef core_here::lex::TT<char, Tokens, core_next::lex::State> TT_CC;
+	typedef core_here::lex::TT<char, Tokens, core_here::lex::State> TT_CC;
 	class TT : public TT_CC
 	{
 	private:
@@ -358,10 +358,10 @@ namespace oct::cc::v0::c90
 			make();
 		}
 		constexpr TT(const TT& obj) : TT_CC(obj)
-		{			
+		{
 		}
 		constexpr TT(const TT&& obj) : TT_CC(obj)
-		{			
+		{
 		}
 
 		constexpr void make()
@@ -412,9 +412,9 @@ namespace oct::cc::v0::c90
 			{
 				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
 			}
-			
+
 			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
-			
+
 			std::vector<char> symbols_identifier_begin;
 			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
 			for (char c : lower)
@@ -449,20 +449,125 @@ namespace oct::cc::v0::c90
 				if(c == '_') continue;
 				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
 			}
-			
+
 			for (char c : display)
 			{
 				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
 			}
 		}
-		
-		
+
+
 	private:
 
 	};
 
-	constexpr auto create_lexer()
+
+	constexpr auto create_lexer_a()
 	{
-		return TT();
+		TT tt;
+		return tt;
 	}
+
+
+	constexpr size_t amoung_symbols = 99;
+	constexpr size_t amoung_states = 1;
+	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_symbols>
+	{
+	public:
+		core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
+		{"auto",Tokens::keyword_auto},
+		{"break",Tokens::keyword_break},
+		{"case",Tokens::keyword_case},
+		{"char",Tokens::keyword_char},
+		{"const",Tokens::keyword_const},
+		{"continue",Tokens::keyword_continue},
+		{"default",Tokens::keyword_default},
+		{"do",Tokens::keyword_do},
+		{"double",Tokens::keyword_double},
+		{"else",Tokens::keyword_else},
+		{"enum",Tokens::keyword_enum},
+		{"extern",Tokens::keyword_extern},
+		{"float",Tokens::keyword_float},
+		{"for",Tokens::keyword_for},
+		{"goto",Tokens::keyword_goto},
+		{"if",Tokens::keyword_if},
+		{"int",Tokens::keyword_int},
+		{"long",Tokens::keyword_long},
+		{"register",Tokens::keyword_register},
+		{"return",Tokens::keyword_return},
+		{"short",Tokens::keyword_short},
+		{"signed",Tokens::keyword_signed},
+		{"sizeof",Tokens::keyword_sizeof},
+		{"static",Tokens::keyword_static},
+		{"struct",Tokens::keyword_struct},
+		{"switch",Tokens::keyword_switch},
+		{"typedef",Tokens::keyword_typedef},
+		{"union",Tokens::keyword_union},
+		{"unsigned",Tokens::keyword_unsigned},
+		{"void",Tokens::keyword_void},
+		{"volatil",Tokens::keyword_volatil},
+		{"while",Tokens::keyword_while}
+	};
+
+	public:
+		constexpr TTB()
+		{
+			make_symbols();
+			make_transitions();
+		}
+
+	private:
+		constexpr void make_symbols()
+		{
+			symbols[0] = '\a';
+			symbols[1] = '\b';
+			symbols[2] = '\f';
+			symbols[3] = '\n';
+			symbols[4] = '\r';
+			symbols[5] = '\t';
+			symbols[6] = '\v';
+			for(size_t i = 7; i < 99; i++)
+			{
+				symbols[i] = 32 + i;
+			}
+
+			/*for(size_t i = 0; i < 15; i++)
+			{
+				symbols_end_words[i] = 32 + i;
+			}
+			for(size_t i = 0; i < 6; i++)
+			{
+				symbols_end_words[i] = 58 + i;
+			}
+			for(size_t i = 0; i < 6; i++)
+			{
+				symbols_end_words[i] = 91 + i;
+			}
+			for(size_t i = 0; i < 4; i++)
+			{
+				symbols_end_words[i] = 123 + i;
+			}*/
+		}
+		constexpr void make_transitions()
+		{
+			get(0,1)->next = 1;
+			get(0,1)->token = Tokens::digit_0;
+			get(0,1)->indicator = core_here::lex::Indicator::accept;
+			/*for (size_t i = 0 ; i < 31; i++)
+			{
+				word(keywords[i].string,keywords[i].token, symbols_end_words,31,core_here::lex::Flag::error);
+			}*/
+		}
+
+	private:
+		//char symbols_end_words[31];
+	};
+	//constexpr std::array symbols = {'0','1','2','3','4','5','6','7','8','9'};
+	constexpr auto create_lexer_b()
+	{
+		TTB ttb;
+
+		return ttb;
+	}
+
 }

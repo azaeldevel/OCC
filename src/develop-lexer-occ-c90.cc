@@ -28,7 +28,7 @@ int main()
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
 	core_next::Buffer<char> buff1_c90(str_c90);
-	//auto tt_c90 = create_tt_c90();
+	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TT tt_c90;
 	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
@@ -296,21 +296,33 @@ int main()
 	}
 	//std::cout << "\n";
 
-	
-	auto begin1 = std::chrono::high_resolution_clock::now();
+
+	/*auto begin1 = std::chrono::high_resolution_clock::now();
 	occ_here::c90::TT tt_c90test[177];
 	auto end1 = std::chrono::high_resolution_clock::now();
 	auto elapsed1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - begin1);
 	std::cout << "Tiempo : " << elapsed1 << "\n";
 
-	
-	auto begin2 = std::chrono::high_resolution_clock::now();	
+
+	auto begin2 = std::chrono::high_resolution_clock::now();
 	std::vector<std::vector<core_here::lex::Transition<occ_here::c90::Tokens, core_here::lex::State>>> tts[177];
-	auto end2 = std::chrono::high_resolution_clock::now();	
+	auto end2 = std::chrono::high_resolution_clock::now();
 	auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
 	std::cout << "Tiempo : " << elapsed2 << "\n";
-	
-	
+
+	constexpr const std::vector<char> symbols {'a','b'};*/
+
+	constexpr auto ttb = occ_here::c90::create_lexer_b();
+	constexpr const occ_here::c90::TTB ttb1;
+	/*for(size_t i = 0; i < 99; i++)
+	{
+		std::cout << ttb.get_symbols()[i] << "\n";
+	}*/
+	ttb.print(std::cout);
+
+
+
+
 	return EXIT_SUCCESS;
 }
 

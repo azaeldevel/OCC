@@ -50,7 +50,7 @@
 		<Unit filename="src/C90-v0.hh">
 			<Option target="developing" />
 		</Unit>
-		<Unit filename="src/develop-lexer-c90.cc">
+		<Unit filename="src/develop-lexer-occ-c90.cc">
 			<Option target="developing" />
 		</Unit>
 		<Extensions>
