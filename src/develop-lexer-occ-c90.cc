@@ -318,7 +318,7 @@ int main()
 	{
 		std::cout << ttb.get_symbols()[i] << "\n";
 	}*/
-	ttb.print(std::cout);
+	//ttb.print(std::cout);
 
 
 

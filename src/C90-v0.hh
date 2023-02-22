@@ -531,7 +531,7 @@ namespace oct::cc::v0::c90
 				symbols[i] = 32 + i;
 			}
 
-			/*for(size_t i = 0; i < 15; i++)
+			for(size_t i = 0; i < 15; i++)
 			{
 				symbols_end_words[i] = 32 + i;
 			}
@@ -546,13 +546,17 @@ namespace oct::cc::v0::c90
 			for(size_t i = 0; i < 4; i++)
 			{
 				symbols_end_words[i] = 123 + i;
-			}*/
+			}
 		}
 		constexpr void make_transitions()
 		{
-			get(0,1)->next = 1;
-			get(0,1)->token = Tokens::digit_0;
-			get(0,1)->indicator = core_here::lex::Indicator::accept;
+			core_here::lex::State initial = create();
+			for(size_t i = 0; i < 128; i++)
+			{
+				get(initial,i)->next = 1;
+				get(initial,i)->token = Tokens::digit_0;
+				get(initial,i)->indicator = core_here::lex::Indicator::accept;
+			}
 			/*for (size_t i = 0 ; i < 31; i++)
 			{
 				word(keywords[i].string,keywords[i].token, symbols_end_words,31,core_here::lex::Flag::error);
@@ -560,7 +564,7 @@ namespace oct::cc::v0::c90
 		}
 
 	private:
-		//char symbols_end_words[31];
+		char symbols_end_words[31];
 	};
 	//constexpr std::array symbols = {'0','1','2','3','4','5','6','7','8','9'};
 	constexpr auto create_lexer_b()
