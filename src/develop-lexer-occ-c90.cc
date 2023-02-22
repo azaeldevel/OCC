@@ -42,7 +42,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	std::cout << "TT size : " << tt_c90.size() << "\n";
+	//std::cout << "TT size : " << tt_c90.size() << "\n";
 
 	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -313,12 +313,26 @@ int main()
 	constexpr const std::vector<char> symbols {'a','b'};*/
 
 	constexpr auto ttb = occ_here::c90::create_lexer_b();
-	constexpr const occ_here::c90::TTB ttb1;
+	//constexpr const occ_here::c90::TTB ttb;
 	/*for(size_t i = 0; i < 99; i++)
 	{
 		std::cout << ttb.get_symbols()[i] << "\n";
 	}*/
+	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
 	ttb.print(std::cout);
+	/*for(size_t i = 0; i < ttb.get_amoun_states(); i++)
+	{
+		for(size_t j = 0; j < ttb.get_amoun_transitions(); j++)
+		{
+			if(ttb.get(i,j)->next < 0)
+			{
+			}
+			else
+			{
+				std::cout << i << "--" << j << "-->" << ttb.get(i,j)->next << "\n";
+			}
+		}
+	}*/
 
 
 

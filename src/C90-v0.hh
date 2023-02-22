@@ -470,13 +470,14 @@ namespace oct::cc::v0::c90
 
 
 	constexpr size_t amoung_symbols = 99;
-	constexpr size_t amoung_transitions = 1;
-	constexpr size_t amoung_states = 1;
+	constexpr size_t amoung_transitions = 128;
+	constexpr size_t amoung_states = 150;
 	constexpr size_t amoung_end_word = 37;
+	constexpr size_t amoung_keywords = 32;
 	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amoung_states,amoung_transitions,amoung_symbols>
 	{
 	public:
-		core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
+		constexpr static core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
 		{"auto",Tokens::keyword_auto},
 		{"break",Tokens::keyword_break},
 		{"case",Tokens::keyword_case},
@@ -595,23 +596,22 @@ namespace oct::cc::v0::c90
 		}
 		constexpr void make_transitions()
 		{
-			core_here::lex::State initial = create();
-			for(size_t i = 0; i < amoung_transitions; i++)
+			core_here::lex::State actual = create();
+			if(actual != 0)
 			{
-				get(initial,i)->next = 1;
-				get(initial,i)->token = Tokens::digit_0;
-				get(initial,i)->indicator = core_here::lex::Indicator::accept;
+				error = core_here::lex::errors::fail_create_firts_estate;
+				return;
 			}
-			/*for (size_t i = 0 ; i < 31; i++)
+			for (size_t i = 0 ; i < amoung_keywords; i++)
 			{
-				word(keywords[i].string,keywords[i].token, symbols_end_words,31,core_here::lex::Flag::error);
-			}*/
+				if(word(keywords[i].string,keywords[i].token, symbols_end_words,amoung_end_word,core_here::lex::Flag::error) < 0) return;
+			}
 		}
 
 	private:
 		char symbols_end_words[amoung_end_word];
 	};
-	//constexpr std::array symbols = {'0','1','2','3','4','5','6','7','8','9'};
+
 	constexpr auto create_lexer_b()
 	{
 		TTB ttb;
