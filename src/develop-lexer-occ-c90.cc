@@ -38,7 +38,7 @@ int main()
 	//tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
-	core_next::lex::A lex_c90(tt_c90, buff1_c90);
+	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTA<char,occ_here::c90::Tokens, core_here::lex::State>> lex_c90(tt_c90, buff1_c90);
 
 	std::cout << "\n\n";
 	occ_here::c90::Tokens tk_c90 = lex_c90.next();
@@ -351,7 +351,7 @@ int main()
 	//tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
-	core_next::lex::B lex_c90b(tt_c90b, buff1_c90b);
+	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90b(tt_c90b, buff1_c90b);
 
 	//std::cout << "\n\n";
 	tk_c90 = lex_c90b.next();
