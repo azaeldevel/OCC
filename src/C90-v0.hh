@@ -519,6 +519,10 @@ namespace oct::cc::v0::c90
 			make_transitions();
 		}
 
+		core_here::lex::State get_state_last()const
+		{
+            return state_last;
+		}
 	private:
 		constexpr void make_symbols()
 		{
@@ -596,20 +600,23 @@ namespace oct::cc::v0::c90
 		}
 		constexpr void make_transitions()
 		{
-			core_here::lex::State actual = create();
-			if(actual != 0)
+			state_last = create();
+			if(state_last != 0)
 			{
 				error = core_here::lex::errors::fail_create_firts_estate;
 				return;
 			}
 			for (size_t i = 0 ; i < amoung_keywords; i++)
 			{
-				if(word(keywords[i].string,keywords[i].token, symbols_end_words,amoung_end_word,core_here::lex::Flag::error) < 0) return;
+				state_last = word(keywords[i].string,keywords[i].token, symbols_end_words,amoung_end_word,core_here::lex::Flag::error);
+                if(state_last < 0) return;
 			}
 		}
 
+
 	private:
 		char symbols_end_words[amoung_end_word];
+        core_here::lex::State state_last;
 	};
 
 	constexpr auto create_lexer_b()

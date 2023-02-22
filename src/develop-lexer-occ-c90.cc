@@ -319,6 +319,7 @@ int main()
 		std::cout << ttb.get_symbols()[i] << "\n";
 	}*/
 	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
+	std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
 	ttb.print(std::cout);
 	/*for(size_t i = 0; i < ttb.get_amoun_states(); i++)
 	{
