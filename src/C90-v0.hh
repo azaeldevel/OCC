@@ -413,7 +413,7 @@ namespace oct::cc::v0::c90
 			{
 				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
 			}
-
+			/*
 			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
 
 			std::vector<char> symbols_identifier_begin;
@@ -444,6 +444,7 @@ namespace oct::cc::v0::c90
 			}
 			symbols_identifier.push_back('_');
 			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
+			*/
 
 			for (char c : graphic)
 			{
@@ -660,6 +661,8 @@ namespace oct::cc::v0::c90
                 if(state_last < 0) return;
 			}
 
+
+
 			for (size_t i = 0 ; i < amount_graphic; i++)
 			{
 				if(symbols_graphic[i] == '_') continue;
@@ -667,11 +670,11 @@ namespace oct::cc::v0::c90
 				if(state_last < 0) return;
 			}
 
-			/*for (size_t i = 0 ; i < amount_display; i++)
+			for (size_t i = 0 ; i < amount_display; i++)
 			{
 				if(symbols_display[i] == '_') continue;
 				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_display, core_here::lex::Flag::error);
-			}*/
+			}
 		}
 
 
