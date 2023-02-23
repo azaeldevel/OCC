@@ -472,7 +472,7 @@ namespace oct::cc::v0::c90
 
 	constexpr size_t amount_symbols = 99;
 	constexpr size_t amount_transitions = 128;
-	constexpr size_t amount_states = 150;
+	constexpr size_t amount_states = 200;
 	constexpr size_t amount_end_word = 37;
 	constexpr size_t amount_keywords = 32;
 	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amount_states,amount_transitions,amount_symbols>
@@ -512,6 +512,8 @@ namespace oct::cc::v0::c90
 		{"volatil",Tokens::keyword_volatil},
 		{"while",Tokens::keyword_while}
 	};
+	constexpr static size_t amount_graphic = 29;
+	constexpr static size_t amount_display = 7;
 
 	public:
 		constexpr TTB()
@@ -568,6 +570,11 @@ namespace oct::cc::v0::c90
 			{
 				symbols[position] = i;
 			}
+			if(position != amount_symbols)
+			{
+				error = core_here::lex::errors::fail_create_symbols;
+				return;
+			}
 
 			symbols_end_words[0] = '\a';
 			symbols_end_words[1] = '\b';
@@ -597,6 +604,47 @@ namespace oct::cc::v0::c90
 			{
 				symbols_end_words[position] = i;
 			}
+			if(position != amount_end_word)
+			{
+				error = core_here::lex::errors::fail_create_end_word;
+				return;
+			}
+
+			//symbols_graphic = { '!','"','#','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
+			position = 0;
+			for(size_t i = '!'; i < '$'; i++,position++)
+			{
+				symbols_graphic[position] = i;
+			}
+			for(size_t i = '%'; i < '0'; i++,position++)
+			{
+				symbols_graphic[position] = i;
+			}
+			for(size_t i = ':'; i < '@'; i++,position++)
+			{
+				symbols_graphic[position] = i;
+			}
+			for(size_t i = '['; i < 96; i++,position++)
+			{
+				symbols_graphic[position] = i;
+			}
+			for(size_t i = '{'; i < 127; i++,position++)
+			{
+				symbols_graphic[position] = i;
+			}
+			if(position != amount_graphic)
+			{
+				error = core_here::lex::errors::fail_create_graphic_symbols;
+				return;
+			}
+
+			symbols_display[0] = '\a';
+			symbols_display[1] = '\b';
+			symbols_display[2] = '\f';
+			symbols_display[3] = '\n';
+			symbols_display[4] = '\r';
+			symbols_display[5] = '\t';
+			symbols_display[6] = '\v';
 		}
 		constexpr void make_transitions()
 		{
@@ -611,12 +659,27 @@ namespace oct::cc::v0::c90
 				state_last = word(keywords[i].string,keywords[i].token, symbols_end_words,amount_end_word,core_here::lex::Flag::error);
                 if(state_last < 0) return;
 			}
+
+			for (size_t i = 0 ; i < amount_graphic; i++)
+			{
+				if(symbols_graphic[i] == '_') continue;
+				state_last = one(symbols_graphic[i], (Tokens)symbols_graphic[i], symbols_end_words, amount_graphic, core_here::lex::Flag::error);
+				if(state_last < 0) return;
+			}
+
+			/*for (size_t i = 0 ; i < amount_display; i++)
+			{
+				if(symbols_display[i] == '_') continue;
+				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_display, core_here::lex::Flag::error);
+			}*/
 		}
 
 
 	private:
-		char symbols_end_words[amount_end_word];
         core_here::lex::State state_last;
+		char symbols_end_words[amount_end_word];
+		char symbols_graphic[amount_graphic];
+		char symbols_display[amount_display];
 	};
 
 	constexpr auto create_lexer_b()

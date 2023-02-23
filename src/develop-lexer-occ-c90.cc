@@ -322,10 +322,13 @@ int main()
 
 	constexpr auto ttb = occ_here::c90::create_lexer_b();
 	//constexpr const occ_here::c90::TTB ttb;
-	/*for(size_t i = 0; i < 99; i++)
+	/*
+	int position = 0;
+	for(size_t i = 0; i < 99; i++)
 	{
-		std::cout << ttb.get_symbols()[i] << "\n";
-	}*/
+		std::cout << ++position << ".-"<< ttb.get_symbols()[i] << "\n";
+	}
+	*/
 	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
 	std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
 	//ttb.print(std::cout);
