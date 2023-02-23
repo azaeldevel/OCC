@@ -30,7 +30,7 @@ int main()
 	///>>>A
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	//const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
-	const char* str_c90 = "auto char break switch volatil void int 923456789 5 % ? #";
+	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TT tt_c90;
@@ -346,7 +346,7 @@ int main()
 		}
 	}*/
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90b = "auto char break switch volatil void int 923456789 5 % ? #";
+	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
 	core_next::Buffer<char> buff1_c90b(str_c90b);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TTB tt_c90b;
