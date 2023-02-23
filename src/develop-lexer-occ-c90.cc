@@ -30,7 +30,7 @@ int main()
 	///>>>A
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	//const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
-	const char* str_c90 = "auto char break switch volatil void int % ? #";
+	const char* str_c90 = "auto char break switch volatil void int 923456789 5 % ? #";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TT tt_c90;
@@ -126,31 +126,31 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != occ_here::c90::Tokens::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != occ_here::c90::Tokens::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
 	/*tk_c90 = lex_c90.next();
-	if (tk_c90 != occ_here::c90::Tokens::integer)
-	{
-		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
-
-	tk_c90 = lex_c90.next();
-	if (tk_c90 != occ_here::c90::Tokens::space)
-	{
-		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
-
-	tk_c90 = lex_c90.next();
-	if (tk_c90 != occ_here::c90::Tokens::integer)
-	{
-		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
-
-	tk_c90 = lex_c90.next();
-	if (tk_c90 != occ_here::c90::Tokens::space)
-	{
-		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
-
-	tk_c90 = lex_c90.next();
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
@@ -346,7 +346,7 @@ int main()
 		}
 	}*/
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90b = "auto char break switch volatil void int % ? #";
+	const char* str_c90b = "auto char break switch volatil void int 923456789 5 % ? #";
 	core_next::Buffer<char> buff1_c90b(str_c90b);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TTB tt_c90b;
@@ -434,6 +434,30 @@ int main()
 	if (tk_c90 != occ_here::c90::Tokens::keyword_int)
 	{
 		std::cout << "Fallo, se espera keywod int, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
 	tk_c90 = lex_c90b.next();
