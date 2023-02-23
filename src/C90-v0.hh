@@ -416,7 +416,7 @@ namespace oct::cc::v0::c90
 
 			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
 
-			/*std::vector<char> symbols_identifier_begin;
+			std::vector<char> symbols_identifier_begin;
 			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
 			for (char c : lower)
 			{
@@ -444,7 +444,6 @@ namespace oct::cc::v0::c90
 			}
 			symbols_identifier.push_back('_');
 			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
-			*/
 
 			for (char c : graphic)
 			{
@@ -516,6 +515,8 @@ namespace oct::cc::v0::c90
 	constexpr static size_t amount_graphic = 29;
 	constexpr static size_t amount_display = 7;
 	constexpr static size_t amount_digits = 10;
+	constexpr static size_t amount_identifier_begin = 53;
+	constexpr static size_t amount_identifier = 63;
 
 	public:
 		constexpr TTB()
@@ -658,6 +659,42 @@ namespace oct::cc::v0::c90
 			symbols_digits[7] = '7';
 			symbols_digits[8] = '8';
 			symbols_digits[9] = '9';
+
+			position = 0;
+			for(size_t i = 'A'; i < '['; i++,position++)
+			{
+				symbols_identifier_begin[position] = i;
+			}
+			for(size_t i = 'a'; i < '{'; i++,position++)
+			{
+				symbols_identifier_begin[position] = i;
+			}
+			symbols_identifier_begin[52] = '_';
+			if(position + 1 != amount_identifier_begin)
+			{
+				error = core_here::lex::errors::fail_create_identifier_begin;
+				return;
+			}
+
+			position = 0;
+			for(size_t i = 'A'; i < '['; i++,position++)
+			{
+				symbols_identifier[position] = i;
+			}
+			for(size_t i = 'a'; i < '{'; i++,position++)
+			{
+				symbols_identifier[position] = i;
+			}
+			for(size_t i = '0'; i < ':'; i++,position++)
+			{
+				symbols_identifier[position] = i;
+			}
+			symbols_identifier[62] = '_';
+			if(position + 1 != amount_identifier)
+			{
+				error = core_here::lex::errors::fail_create_identifier;
+				return;
+			}
 		}
 		constexpr void make_transitions()
 		{
@@ -676,7 +713,13 @@ namespace oct::cc::v0::c90
 			state_last = almost_one(symbols_digits,amount_digits, Tokens::integer, symbols_end_words,amount_end_word,core_here::lex::Flag::error);
 			if(state_last < 0) return;
 
-			for (size_t i = 0 ; i < amount_graphic; i++)
+			state_last = one(symbols_identifier_begin,amount_identifier_begin, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::only_free);
+            if(state_last < 0) return;
+
+            state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
+            if(state_last < 0) return;
+
+			/*for (size_t i = 0 ; i < amount_graphic; i++)
 			{
 				if(symbols_graphic[i] == '_') continue;
 				state_last = one(symbols_graphic[i], (Tokens)symbols_graphic[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
@@ -687,7 +730,7 @@ namespace oct::cc::v0::c90
 			{
 				if(symbols_display[i] == '_') continue;
 				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
-			}
+			}*/
 		}
 
 
@@ -697,6 +740,8 @@ namespace oct::cc::v0::c90
 		char symbols_graphic[amount_graphic];
 		char symbols_display[amount_display];
 		char symbols_digits[amount_digits];
+		char symbols_identifier_begin[amount_identifier_begin];
+		char symbols_identifier[amount_identifier];
 	};
 
 	constexpr auto create_lexer_b()
