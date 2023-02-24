@@ -24,6 +24,8 @@
 
 #include <core/src/Buffer-v3.hh>
 #include <core/src/lexer-v3.hh>
+#include <core/src/lexer-TTA-v3.hh>
+#include <core/src/lexer-TTB-v3.hh>
 
 
 namespace core_here = oct::core::v3;
