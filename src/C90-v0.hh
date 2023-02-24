@@ -446,16 +446,16 @@ namespace oct::cc::v0::c90
 			symbols_identifier.push_back('_');
 			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
 
-			for (char c : graphic)
+			/*for (char c : graphic)
 			{
 				if(c == '_') continue;
 				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
-			}
+			}*/
 
-			for (char c : display)
+			/*for (char c : display)
 			{
 				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
-			}
+			}*/
 		}
 
 
