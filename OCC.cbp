@@ -44,6 +44,12 @@
 		<Unit filename="../core/src/Exception-v3.hh">
 			<Option target="developing" />
 		</Unit>
+		<Unit filename="../core/src/lexer-TTA-v3.hh">
+			<Option target="developing" />
+		</Unit>
+		<Unit filename="../core/src/lexer-TTB-v3.hh">
+			<Option target="developing" />
+		</Unit>
 		<Unit filename="../core/src/lexer-v3.hh">
 			<Option target="developing" />
 		</Unit>
