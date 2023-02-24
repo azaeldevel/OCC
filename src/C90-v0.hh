@@ -717,8 +717,8 @@ namespace oct::cc::v0::c90
 			state_last = one(symbols_identifier_begin,amount_identifier_begin, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::only_free);
             if(state_last < 0) return;
 
-            /*state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
-            if(state_last < 0) return;*/
+            state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
+            if(state_last < 0) return;
 
 			/*for (size_t i = 0 ; i < amount_graphic; i++)
 			{
