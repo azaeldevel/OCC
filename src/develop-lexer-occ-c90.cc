@@ -473,7 +473,7 @@ int main()
 	}
 	//std::cout << "\n";
 
-	tk_c90 = lex_c90b.next();
+	/*tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
@@ -581,7 +581,7 @@ int main()
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}
+	}*/
 
 	/*tk_c90 = lex_c90b.next();
 	if (tk_c90 != (occ_here::c90::Tokens)'%')

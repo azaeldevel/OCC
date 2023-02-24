@@ -473,7 +473,7 @@ namespace oct::cc::v0::c90
 
 	constexpr size_t amount_symbols = 99;
 	constexpr size_t amount_transitions = 128;
-	constexpr size_t amount_states = 200;
+	constexpr size_t amount_states = 300;
 	constexpr size_t amount_end_word = 37;
 	constexpr size_t amount_keywords = 32;
 	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amount_states,amount_transitions,amount_symbols>
@@ -717,8 +717,8 @@ namespace oct::cc::v0::c90
 			state_last = one(symbols_identifier_begin,amount_identifier_begin, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::only_free);
             if(state_last < 0) return;
 
-            state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
-            if(state_last < 0) return;
+            /*state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
+            if(state_last < 0) return;*/
 
 			/*for (size_t i = 0 ; i < amount_graphic; i++)
 			{
