@@ -299,23 +299,31 @@ int main()
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 	//std::cout << "\n";
-
+    std::cout << "///<<<A section\n\n\n";
 
 	/*auto begin1 = std::chrono::high_resolution_clock::now();
-	occ_here::c90::TT tt_c90test[177];
+	occ_here::c90::TT tt_c90test[10];
 	auto end1 = std::chrono::high_resolution_clock::now();
-	auto elapsed1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - begin1);
+	auto elapsed1 = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin1);
 	std::cout << "Tiempo : " << elapsed1 << "\n";
 
-
 	auto begin2 = std::chrono::high_resolution_clock::now();
-	std::vector<std::vector<core_here::lex::Transition<occ_here::c90::Tokens, core_here::lex::State>>> tts[177];
+	std::vector<std::vector<core_here::lex::Transition<occ_here::c90::Tokens, core_here::lex::State>>> tts[10];
+	for(size_t i = 0; i < 10; i++)
+    {
+        tts[i].resize(100);
+    }
 	auto end2 = std::chrono::high_resolution_clock::now();
-	auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+	auto elapsed2 = std::chrono::duration_cast<std::chrono::milliseconds>(end2 - begin2);
 	std::cout << "Tiempo : " << elapsed2 << "\n";
 
-	constexpr const std::vector<char> symbols {'a','b'};*/
+    auto begin3 = std::chrono::high_resolution_clock::now();
+	occ_here::c90::TTB tt_c90testB1[10];
+	auto end3 = std::chrono::high_resolution_clock::now();
+	auto elapsed3 = std::chrono::duration_cast<std::chrono::milliseconds>(end3 - begin3);
+	std::cout << "Tiempo : " << elapsed3 << "\n";
 
+	auto p1 = tt_c90testB1[3].get(1,3);*/
 
 	std::cout << "///>>>B section\n\n\n";
 	///>>>B
