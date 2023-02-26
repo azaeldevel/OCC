@@ -17,11 +17,14 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <chrono>
-
+#include <algorithm>
+#include <iterator>
 
 #include "C90-v0.hh"
 
 namespace occ_here = oct::cc::v0;
+
+
 
 int main()
 {
@@ -328,6 +331,49 @@ int main()
 	std::cout << "///>>>B section\n\n\n";
 	///>>>B
 
+	size_t amount_graphic = 29;
+	char symbols_graphic[amount_graphic];
+	size_t position = 0;
+	for(size_t i = '!'; i < '$'; i++,position++)
+	{
+		std::cout << position << ".- " << (char)i << "\n";
+		symbols_graphic[position] = i;
+	}
+	for(size_t i = '%'; i < '0'; i++,position++)
+	{
+		std::cout << position << ".- " << (char)i << "\n";
+		symbols_graphic[position] = i;
+	}
+	for(size_t i = ':'; i < '@'; i++,position++)
+	{
+		std::cout << position << ".- " << (char)i << "\n";
+		symbols_graphic[position] = i;
+	}
+	for(size_t i = '['; i < 96; i++,position++)
+	{
+		std::cout << position << ".- " << (char)i << "\n";
+		symbols_graphic[position] = i;
+	}
+	for(size_t i = '{'; i < 127; i++,position++)
+	{
+		std::cout << position << ".- " << (char)i << "\n";
+		symbols_graphic[position] = i;
+	}
+	//const char* end = symbols_graphic + 29;
+	for (size_t k = 0; k < 29; k++)
+	{
+		/*if (std::find(symbols_graphic, end, char(k)) == end)
+		{
+			std::cout << "Not found : " << k << "\n";
+		}
+		else
+		{
+			std::cout << "Fount : " << k << "\n";
+		}*/
+		std::cout << symbols_graphic[k] << "\n";
+	}
+
+
 	//constexpr auto ttb = occ_here::c90::create_lexer_b();
 	constexpr const occ_here::c90::TTB ttb;
 	/*
@@ -338,7 +384,7 @@ int main()
 	}
 	*/
 	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
-	if(ttb.size() == 0) std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
+	std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
 	//ttb.print(std::cout);
 	/*for(size_t i = 0; i < ttb.get_amoun_states(); i++)
 	{
@@ -370,116 +416,132 @@ int main()
 	{
 		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "TT size : " << tt_c90.size() << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_char)
 	{
 		std::cout << "Fallo, se espera keywod char, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-
+	std::cout << "\n";
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_break)
 	{
 		std::cout << "Fallo, se espera keywod break, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_switch)
 	{
 		std::cout << "Fallo, se espera keywod switch, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_volatil)
 	{
 		std::cout << "Fallo, se espera keywod volatil, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_void)
 	{
 		std::cout << "Fallo, se espera keywod void, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_int)
 	{
 		std::cout << "Fallo, se espera keywod int, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::integer)
 	{
 		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::integer)
 	{
 		std::cout << "Fallo, se espera integer, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
     tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -492,7 +554,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -505,7 +567,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -518,7 +580,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -531,7 +593,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -544,7 +606,7 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -557,33 +619,35 @@ int main()
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
 	{
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
-	//std::cout << "\n";
+	std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::space)
@@ -591,7 +655,7 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-	/*tk_c90 = lex_c90b.next();
+	tk_c90 = lex_c90b.next();
 	if (tk_c90 != (occ_here::c90::Tokens)'%')
 	{
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
@@ -604,7 +668,7 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-	tk_c90 = lex_c90b.next();
+	/*tk_c90 = lex_c90b.next();
 	if (tk_c90 != (occ_here::c90::Tokens)'?')
 	{
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";

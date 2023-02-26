@@ -23,7 +23,6 @@
 #include <algorithm>
 
 #include <core/src/Buffer-v3.hh>
-#include <core/src/lexer-v3.hh>
 #include <core/src/lexer-TTA-v3.hh>
 #include <core/src/lexer-TTB-v3.hh>
 
@@ -729,11 +728,11 @@ namespace oct::cc::v0::c90
 				if(state_last < 0) return;
 			}*/
 
-			/*for (size_t i = 0 ; i < amount_display; i++)
+			for (size_t i = 0 ; i < amount_display; i++)
 			{
 				if(symbols_display[i] == '_') continue;
 				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
-			}*/
+			}
 		}
 
 
