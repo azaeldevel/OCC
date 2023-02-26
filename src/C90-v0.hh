@@ -721,18 +721,18 @@ namespace oct::cc::v0::c90
             state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
             if(state_last < 0) return;
 
-			for (size_t i = 0 ; i < amount_graphic; i++)
+			/*for (size_t i = 0 ; i < amount_graphic; i++)
 			{
 				if(symbols_graphic[i] == '_') continue;
 				state_last = one(symbols_graphic[i], (Tokens)symbols_graphic[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
 				if(state_last < 0) return;
-			}
+			}*/
 
-			for (size_t i = 0 ; i < amount_display; i++)
+			/*for (size_t i = 0 ; i < amount_display; i++)
 			{
 				if(symbols_display[i] == '_') continue;
 				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
-			}
+			}*/
 		}
 
 

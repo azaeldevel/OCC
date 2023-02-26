@@ -331,7 +331,7 @@ int main()
 	std::cout << "///>>>B section\n\n\n";
 	///>>>B
 
-	/*size_t amount_graphic = 29;
+	size_t amount_graphic = 29;
 	char symbols_graphic[amount_graphic];
 	size_t position = 0;
 	for(size_t i = '!'; i < '$'; i++,position++)
@@ -372,7 +372,7 @@ int main()
 			std::cout  << k << ".- " << "Fount : " << symbols_graphic[k] << "\n";
 		}
 		//std::cout << k << ".- " << symbols_graphic[k] << "\n";
-	}*/
+	}
 
 
 	//constexpr auto ttb = occ_here::c90::create_lexer_b();
