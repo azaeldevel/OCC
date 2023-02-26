@@ -331,47 +331,48 @@ int main()
 	std::cout << "///>>>B section\n\n\n";
 	///>>>B
 
-	size_t amount_graphic = 29;
+	/*size_t amount_graphic = 29;
 	char symbols_graphic[amount_graphic];
 	size_t position = 0;
 	for(size_t i = '!'; i < '$'; i++,position++)
 	{
-		std::cout << position << ".- " << (char)i << "\n";
+		//std::cout << position << ".- " << (char)i << "\n";
 		symbols_graphic[position] = i;
 	}
 	for(size_t i = '%'; i < '0'; i++,position++)
 	{
-		std::cout << position << ".- " << (char)i << "\n";
+		//std::cout << position << ".- " << (char)i << "\n";
 		symbols_graphic[position] = i;
 	}
 	for(size_t i = ':'; i < '@'; i++,position++)
 	{
-		std::cout << position << ".- " << (char)i << "\n";
+		//std::cout << position << ".- " << (char)i << "\n";
 		symbols_graphic[position] = i;
 	}
 	for(size_t i = '['; i < 96; i++,position++)
 	{
-		std::cout << position << ".- " << (char)i << "\n";
+		//std::cout << position << ".- " << (char)i << "\n";
 		symbols_graphic[position] = i;
 	}
 	for(size_t i = '{'; i < 127; i++,position++)
 	{
-		std::cout << position << ".- " << (char)i << "\n";
+		//std::cout << position << ".- " << (char)i << "\n";
 		symbols_graphic[position] = i;
 	}
-	//const char* end = symbols_graphic + 29;
+	const char* end = symbols_graphic + 29;
+	const char* symbols = symbols_graphic;
 	for (size_t k = 0; k < 29; k++)
 	{
-		/*if (std::find(symbols_graphic, end, char(k)) == end)
+		if (std::find(symbols, end, symbols[k]) == end)
 		{
-			std::cout << "Not found : " << k << "\n";
+			std::cout  << k << ".- " << "Not found : " << symbols_graphic[k] << "\n";
 		}
 		else
 		{
-			std::cout << "Fount : " << k << "\n";
-		}*/
-		std::cout << symbols_graphic[k] << "\n";
-	}
+			std::cout  << k << ".- " << "Fount : " << symbols_graphic[k] << "\n";
+		}
+		//std::cout << k << ".- " << symbols_graphic[k] << "\n";
+	}*/
 
 
 	//constexpr auto ttb = occ_here::c90::create_lexer_b();
@@ -668,7 +669,7 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-	/*tk_c90 = lex_c90b.next();
+	tk_c90 = lex_c90b.next();
 	if (tk_c90 != (occ_here::c90::Tokens)'?')
 	{
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
@@ -685,7 +686,7 @@ int main()
 	if (tk_c90 != (occ_here::c90::Tokens)'#')
 	{
 		std::cout << "Fallo, se espera %, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
-	}*/
+	}
 	//std::cout << "\n";
 
 
