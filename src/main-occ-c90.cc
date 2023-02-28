@@ -29,8 +29,9 @@ bool lexing(T& lex)
 	std::string strcat;
 	while (lex.next(actual) != occ_here::c90::Tokens::none)
 	{
+		strcat.clear ();
 		strcat = occ_here::c90::category(actual.token);
-		if(not strcat.empty()) std::cout << strcat << " " << (std::string)actual << "\n";
+		if(not strcat.empty()) std::cout << strcat << " \"" << (std::string)actual << "\"\n";
 		counter++;
 	}
 

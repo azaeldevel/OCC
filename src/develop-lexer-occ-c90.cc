@@ -331,7 +331,7 @@ int main()
 	std::cout << "///>>>B section\n\n\n";
 	///>>>B
 
-	size_t amount_graphic = 29;
+	/*size_t amount_graphic = 29;
 	char symbols_graphic[amount_graphic];
 	size_t position = 0;
 	for(size_t i = '!'; i < '$'; i++,position++)
@@ -365,14 +365,42 @@ int main()
 	{
 		if (std::find(symbols, end, symbols[k]) == end)
 		{
-			std::cout  << k << ".- " << "Not found : " << symbols_graphic[k] << "\n";
+			std::cout  << k << ".- " << "Not found : '" << symbols_graphic[k] << "'\n";
 		}
 		else
 		{
-			std::cout  << k << ".- " << "Fount : " << symbols_graphic[k] << "\n";
+			std::cout  << k << ".- " << "Fount : '" << symbols_graphic[k] << "'\n";
 		}
 		//std::cout << k << ".- " << symbols_graphic[k] << "\n";
+	}*/
+
+	size_t position = 0;
+	for(size_t i = ' '; i < '$'; i++,position++)
+	{
+		//symbols_end_words[position] = i;
+		std::cout << position << ".- '" << (char)i << "'\n";
 	}
+	for(size_t i = '%'; i < '0'; i++,position++)
+	{
+		//symbols_end_words[position] = i;
+		std::cout << position << ".- '" << (char)i << "'\n";
+	}
+	for(size_t i = ':'; i < '@'; i++,position++)
+	{
+		//symbols_end_words[position] = i;
+		std::cout << position << ".- '" << (char)i << "'\n";
+	}
+	for(size_t i = '['; i < 96; i++,position++)
+	{
+		//symbols_end_words[position] = i;
+		std::cout << position << ".- '" << (char)i << "'\n";
+	}
+	for(size_t i = '{'; i < 127; i++,position++)
+	{
+		//symbols_end_words[position] = i;
+		std::cout << position << ".- '" << (char)i << "'\n";
+	}
+
 
 
 	//constexpr auto ttb = occ_here::c90::create_lexer_b();
@@ -401,13 +429,12 @@ int main()
 		}
 	}*/
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
+	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? # inta main()";
 	core_next::Buffer<char> buff1_c90b(str_c90b);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TTB tt_c90b;
-	//std::cout << "TT listing...\n";
-	//tt_c90.print(std::cout);
-	//tt_c90.check(std::cout);
+	std::cout << "TT listing...\n";
+	tt_c90.print(std::cout,142);
 	std::cout << "\n";
 	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90b(tt_c90b, buff1_c90b);
 
@@ -689,7 +716,24 @@ int main()
 	}
 	//std::cout << "\n";
 
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	//std::cout << "\n";
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != occ_here::c90::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
 
 	return EXIT_SUCCESS;
 }
