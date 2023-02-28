@@ -342,7 +342,7 @@ namespace oct::cc::v0::c90
 	};
 
 	typedef core_here::lex::TTA<char, Tokens, core_here::lex::State> TT_CC;
-	class TT : public TT_CC
+	class TTA : public TT_CC
 	{
 	private:
 		const std::vector<char> digits = {'0','1','2','3','4','5','6','7','8','9'};
@@ -354,15 +354,15 @@ namespace oct::cc::v0::c90
 		const int simbols_amount = 99;
 
 	public:
-		constexpr TT()
+		constexpr TTA()
 		{
 			create();
 			make();
 		}
-		constexpr TT(const TT& obj) : TT_CC(obj)
+		constexpr TTA(const TTA& obj) : TT_CC(obj)
 		{
 		}
-		constexpr TT(const TT&& obj) : TT_CC(obj)
+		constexpr TTA(const TTA&& obj) : TT_CC(obj)
 		{
 		}
 
@@ -467,7 +467,7 @@ namespace oct::cc::v0::c90
 
 	constexpr auto create_lexer_a()
 	{
-		TT tt;
+		TTA tt;
 		return tt;
 	}
 
@@ -477,7 +477,8 @@ namespace oct::cc::v0::c90
 	constexpr size_t amount_states = 300;
 	constexpr size_t amount_end_word = 37;
 	constexpr size_t amount_keywords = 32;
-	class TTB : public core_here::lex::TTB<char, Tokens, core_here::lex::State,amount_states,amount_transitions,amount_symbols>
+	typedef core_here::lex::TTB<char,Tokens,core_here::lex::State,amount_states,amount_transitions,amount_symbols> TTB_BASE;
+	class TTB : public TTB_BASE
 	{
 	public:
 		constexpr static core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
@@ -615,7 +616,6 @@ namespace oct::cc::v0::c90
 				return;
 			}
 
-			//symbols_graphic = { '!','"','#','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
 			position = 0;
 			for(size_t i = '!'; i < '$'; i++,position++)
 			{
@@ -721,18 +721,21 @@ namespace oct::cc::v0::c90
             state_last = some(symbols_identifier,amount_identifier, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::join_same,state_last);
             if(state_last < 0) return;
 
-			/*for (size_t i = 0 ; i < amount_graphic; i++)
+			/*
+			for (size_t i = 0 ; i < amount_graphic; i++)
 			{
 				if(symbols_graphic[i] == '_') continue;
 				state_last = one(symbols_graphic[i], (Tokens)symbols_graphic[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
 				if(state_last < 0) return;
-			}*/
-
-			/*for (size_t i = 0 ; i < amount_display; i++)
+			}
+			*/
+			/*
+			for (size_t i = 0 ; i < amount_display; i++)
 			{
 				if(symbols_display[i] == '_') continue;
 				one(symbols_display[i], (Tokens)symbols_display[i], symbols_end_words, amount_end_word, core_here::lex::Flag::error);
-			}*/
+			}
+			*/
 		}
 
 

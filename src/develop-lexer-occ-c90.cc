@@ -36,7 +36,7 @@ int main()
 	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
 	core_next::Buffer<char> buff1_c90(str_c90);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
-	occ_here::c90::TT tt_c90;
+	occ_here::c90::TTA tt_c90;
 	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
@@ -374,7 +374,7 @@ int main()
 		//std::cout << k << ".- " << symbols_graphic[k] << "\n";
 	}*/
 
-	size_t position = 0;
+	/*size_t position = 0;
 	for(size_t i = ' '; i < '$'; i++,position++)
 	{
 		//symbols_end_words[position] = i;
@@ -399,7 +399,7 @@ int main()
 	{
 		//symbols_end_words[position] = i;
 		std::cout << position << ".- '" << (char)i << "'\n";
-	}
+	}*/
 
 
 
@@ -415,7 +415,8 @@ int main()
 	if(ttb.get_last_error() > core_here::lex::errors::none) std::cout << "Error detectado : " << core_here::lex::to_string(ttb.get_last_error()) << "\n";
 	std::cout << "Ultimo estado creado : " << ttb.get_state_last() << "\n";
 	//ttb.print(std::cout);
-	/*for(size_t i = 0; i < ttb.get_amoun_states(); i++)
+	/*
+	for(size_t i = 0; i < ttb.get_amoun_states(); i++)
 	{
 		for(size_t j = 0; j < ttb.get_amoun_transitions(); j++)
 		{
@@ -427,17 +428,17 @@ int main()
 				std::cout << i << "--" << j << "-->" << ttb.get(i,j)->next << "\n";
 			}
 		}
-	}*/
+	}
+	*/
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? # inta main()";
 	core_next::Buffer<char> buff1_c90b(str_c90b);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
-	occ_here::c90::TTB tt_c90b;
+	constexpr const occ_here::c90::TTB tt_c90b;
 	std::cout << "TT listing...\n";
-	tt_c90.print(std::cout,142);
+	tt_c90b.print(std::cout,142);
 	std::cout << "\n";
-	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90b(tt_c90b, buff1_c90b);
-
+	core_next::lex::Lexer<char,occ_here::c90::Tokens,core_here::lex::State,occ_here::c90::TTB_BASE> lex_c90b(tt_c90b, buff1_c90b);
 	//std::cout << "\n\n";
 	tk_c90 = lex_c90b.next();
 	if (tk_c90 != occ_here::c90::Tokens::keyword_auto)
@@ -735,11 +736,18 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-	tk_c90 = lex_c90b.next();
+    core_here::lex::Tokenized<char,occ_here::c90::Tokens> tkzed;
+	tk_c90 = lex_c90b.next(tkzed);
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
 		std::cout << "Fallo, se espera identifier, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	if(lex_c90b.get_string_length() != 4)
+    {
+        std::cout << "Se esperaba un string de 4 caracteres, encontranron" << lex_c90b.get_string_length() << "\n";
+    }
+    std::string strtk = (std::string)tkzed;
+    std::cout << strtk << "\n";
 	//std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
