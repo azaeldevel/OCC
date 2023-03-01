@@ -433,18 +433,28 @@ int main()
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? # inta main()";
 	core_next::Buffer<char> buff1_c90b(str_c90b);
+    core_here::lex::Tokenized<char,occ_here::c90::Tokens> tkzed;
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	constexpr const occ_here::c90::TTB tt_c90b;
+	/*
 	std::cout << "TT listing...\n";
-	tt_c90b.print(std::cout,142);
+	tt_c90b.print(std::cout);
 	std::cout << "\n";
+	*/
+	std::string strtk;
 	core_next::lex::Lexer<char,occ_here::c90::Tokens,core_here::lex::State,occ_here::c90::TTB_BASE> lex_c90b(tt_c90b, buff1_c90b);
 	//std::cout << "\n\n";
-	tk_c90 = lex_c90b.next();
+	tk_c90 = lex_c90b.next(tkzed);
 	if (tk_c90 != occ_here::c90::Tokens::keyword_auto)
 	{
 		std::cout << "Fallo, se espera keyword auto, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+	if(lex_c90b.get_string_length() != 4)
+    {
+        std::cout << "Tamano del es tring es incorrecto se peseraba 4\n";
+    }
+    //strtk = (std::string)tkzed;
+    //std::cout << strtk << "\n";
 	//std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
@@ -736,7 +746,6 @@ int main()
 		std::cout << "Fallo, se espera space, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
 
-    core_here::lex::Tokenized<char,occ_here::c90::Tokens> tkzed;
 	tk_c90 = lex_c90b.next(tkzed);
 	if (tk_c90 != occ_here::c90::Tokens::identifier)
 	{
@@ -746,8 +755,6 @@ int main()
     {
         std::cout << "Se esperaba un string de 4 caracteres, encontranron" << lex_c90b.get_string_length() << "\n";
     }
-    std::string strtk = (std::string)tkzed;
-    std::cout << strtk << "\n";
 	//std::cout << "\n";
 
 	tk_c90 = lex_c90b.next();
@@ -755,6 +762,16 @@ int main()
 	{
 		std::cout << "Fallo, se espera (, se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
 	}
+
+	tk_c90 = lex_c90b.next();
+	if (tk_c90 != (occ_here::c90::Tokens)')')
+	{
+		std::cout << "Fallo, se espera ), se encontro " << to_string(tk_c90) << " - " << std::to_string((int)tk_c90) << "\n";
+	}
+	//std::cout << "\n";
+
+	std::cout << "///<<<B section\n\n\n";
+	///<<<B
 
 	return EXIT_SUCCESS;
 }
