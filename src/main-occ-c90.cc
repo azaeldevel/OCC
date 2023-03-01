@@ -25,13 +25,14 @@ static int counter = 0;
 template<typename T>
 bool lexing(T& lex)
 {
-	core_here::lex::Tokenized<char, occ_here::c90::Tokens> actual;
-	std::string strcat;
-	while (lex.next(actual) != occ_here::c90::Tokens::none)
+	//core_here::lex::Tokenized<char, occ_here::c90::Tokens> actual;
+
+	//std::string strcat;
+	while (lex.next() != occ_here::c90::Tokens::none)
 	{
-		strcat.clear ();
-		strcat = occ_here::c90::category(actual.token);
-		if(not strcat.empty()) std::cout << strcat << " \"" << (std::string)actual << "\"\n";
+		//strcat.clear ();
+		//strcat = occ_here::c90::category(actual.token);
+		//if(not strcat.empty()) std::cout << strcat << " " << (std::string)actual << "\n";
 		counter++;
 	}
 
@@ -50,14 +51,14 @@ int main(int argc, char* argv[])
 	//const occ_here::c90::TT tt_c90 = occ_here::c90::create_lexer();
 	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90(tt_c90, buff1_c90);
 		
-	std::cout << "Compilation... \n";
+	//std::cout << "Compilation... \n";
 	if(lexing(lex_c90))
 	{
-		std::cout << "... done\n";
+		//std::cout << "... done\n";
 	}
 	else
 	{
-		std::cout << "... fail\n";
+		//std::cout << "... fail\n";
 	}
 	
 	return EXIT_SUCCESS;

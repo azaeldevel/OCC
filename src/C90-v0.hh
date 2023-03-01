@@ -267,7 +267,7 @@ namespace oct::cc::v0::c90
 		}
 		else if (t >= Token::keyword_auto and t <= Token::keyword_while)
 		{
-			return "keyword";
+			return "Keyword";
 		}
 		else if (t == Token::integer)
 		{
