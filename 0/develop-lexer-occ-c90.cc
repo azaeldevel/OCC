@@ -25,8 +25,6 @@
 
 namespace occ_here = oct::cc::v0;
 
-
-
 int main()
 {
 	std::cout << "///>>>A section\n\n\n";

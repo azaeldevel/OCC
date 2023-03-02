@@ -1,0 +1,31 @@
+
+
+boot:
+	char actual 'A';
+	tiny off 1;
+	short counter  0;
+	integer valor 5;
+	long valor2 5;
+	byte test 1;
+
+	mov 'B' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 'o' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 'o' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 't' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 'i' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 'n' , al;
+	mov 0x0e, ah;
+	int 0x10;
+	mov 'g' , al;
+	mov 0x0e, ah;
+	int 0x10;

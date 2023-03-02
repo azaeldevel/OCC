@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_CC_C90_HH
-#define OCTETOS_CC_C90_HH
+#ifndef OCTETOS_CC_AS_HH
+#define OCTETOS_CC_AS_HH
 
 
 /*
@@ -32,7 +32,7 @@
 
 
 namespace core_here = oct::core::v3;
-namespace oct::cc::v0::c90
+namespace oct::cc::v0::as
 {
 	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
@@ -187,68 +187,24 @@ namespace oct::cc::v0::c90
 		//>>>Tokens
 		base = 0x110000,
 		new_line,
-		keyword_auto,
-		keyword_break,
-		keyword_case,
+
+		keyword_byte,
+
 		keyword_char,
-		keyword_const,
-		keyword_continue,
-		keyword_default,
-		keyword_do,
-		keyword_double,
-		keyword_else,
-		keyword_enum,
-		keyword_extern,
-		keyword_float,
-		keyword_for,
-		keyword_goto,
-		keyword_if,
+
+		keyword_tiny,//integer 1-byte
+		keyword_short,//integer 2-byte
+		keyword_medium,//integer 4-byte
+		keyword_long,//integer 8-byte
+		keyword_integer,//integer<n-byte>
+
+		//instruction set
 		keyword_int,
-		keyword_long,
-		keyword_register,
-		keyword_return,
-		keyword_short,
-		keyword_signed,
-		keyword_sizeof,
-		keyword_static,
-		keyword_struct,
-		keyword_switch,
-		keyword_typedef,
-		keyword_union,
-		keyword_unsigned,
-		keyword_void,
-		keyword_volatil,
-		keyword_while,
+		keyword_mov,
+
 		identifier,
-		integer,
-
+        literal_integer,
 	};
-	template<typename Token> std::string to_string(Token t)
-	{
-		std::string str;
-
-		if (t < Token::base)
-		{
-			return core_here::lex::to_string(t);
-		}
-		else if (t > Token::base)
-		{
-			if (t > Token::keyword_auto)
-			{
-				return "keyword auto";
-			}
-			else if (t > Token::keyword_break)
-			{
-				return "keyword break";
-			}
-			else if (t > Token::keyword_case)
-			{
-				return "keyword case";
-			}
-		}
-
-		return std::to_string((int)t);
-	}
 	template<typename Token> std::string category(Token t)
 	{
 		std::string str;
@@ -310,220 +266,32 @@ namespace oct::cc::v0::c90
 	}
 
 
-	const std::vector<core_here::lex::pair_keyword<char, Tokens>> keywords = {
-		{"auto",Tokens::keyword_auto},
-		{"break",Tokens::keyword_break},
-		{"case",Tokens::keyword_case},
-		{"char",Tokens::keyword_char},
-		{"const",Tokens::keyword_const},
-		{"continue",Tokens::keyword_continue},
-		{"default",Tokens::keyword_default},
-		{"do",Tokens::keyword_do},
-		{"double",Tokens::keyword_double},
-		{"else",Tokens::keyword_else},
-		{"enum",Tokens::keyword_enum},
-		{"extern",Tokens::keyword_extern},
-		{"float",Tokens::keyword_float},
-		{"for",Tokens::keyword_for},
-		{"goto",Tokens::keyword_goto},
-		{"if",Tokens::keyword_if},
-		{"int",Tokens::keyword_int},
-		{"long",Tokens::keyword_long},
-		{"register",Tokens::keyword_register},
-		{"return",Tokens::keyword_return},
-		{"short",Tokens::keyword_short},
-		{"signed",Tokens::keyword_signed},
-		{"sizeof",Tokens::keyword_sizeof},
-		{"static",Tokens::keyword_static},
-		{"struct",Tokens::keyword_struct},
-		{"switch",Tokens::keyword_switch},
-		{"typedef",Tokens::keyword_typedef},
-		{"union",Tokens::keyword_union},
-		{"unsigned",Tokens::keyword_unsigned},
-		{"void",Tokens::keyword_void},
-		{"volatil",Tokens::keyword_volatil},
-		{"while",Tokens::keyword_while}
-	};
-
-	typedef core_here::lex::TTA<char, Tokens, core_here::lex::State> TT_CC;
-	class TTA : public TT_CC
-	{
-	private:
-		const std::vector<char> digits = {'0','1','2','3','4','5','6','7','8','9'};
-		const std::vector<char> lower = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-		const std::vector<char> upper = { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-		const std::vector<char> graphic = { '!','"','#','%','\'','(',')','*','+',',','-','.','/',':',';','<','=','>','?','[','\\',']','^','_','{','|','}','~'};
-		const std::vector<char> display = { '\a','\b','\f','\n','\r','\t','\v'};
-		const std::vector<char> not_c = {' '};
-		const int simbols_amount = 99;
-
-	public:
-		constexpr TTA()
-		{
-			create();
-			make();
-		}
-		constexpr TTA(const TTA& obj) : TT_CC(obj)
-		{
-		}
-		constexpr TTA(const TTA&& obj) : TT_CC(obj)
-		{
-		}
-
-		constexpr void make()
-		{
-			_simbols.reserve(simbols_amount);
-			for (char c : digits)
-			{
-				_simbols.push_back(c);
-			}
-			for (char c : lower)
-			{
-				_simbols.push_back(c);
-			}
-			for (char c : upper)
-			{
-				_simbols.push_back(c);
-			}
-			for (char c : graphic)
-			{
-				_simbols.push_back(c);
-			}
-			for (char c : display)
-			{
-				_simbols.push_back(c);
-			}
-			for (char c : not_c)
-			{
-				_simbols.push_back(c);
-			}
-			sort_symbols();
-
-			std::vector<char> symbols_end_words(37);
-			for (char c : graphic)
-			{
-				if(c == '_') continue;
-				symbols_end_words.push_back(c);
-			}
-			for (char c : display)
-			{
-				symbols_end_words.push_back(c);
-			}
-			for (char c : not_c)
-			{
-				symbols_end_words.push_back(c);
-			}
-			symbols_end_words.push_back('\0');
-
-			for (const auto& p : keywords)
-			{
-				word(p.string,p.token, symbols_end_words,core_here::lex::Flag::error);
-			}
-
-			almost_one(digits, Tokens::integer, symbols_end_words,core_here::lex::Flag::error);
-
-			std::vector<char> symbols_identifier_begin;
-			symbols_identifier_begin.reserve(lower.size() + upper.size() + 1);
-			for (char c : lower)
-			{
-				symbols_identifier_begin.push_back(c);
-			}
-			for (char c : upper)
-			{
-				symbols_identifier_begin.push_back(c);
-			}
-			symbols_identifier_begin.push_back('_');
-			core_here::lex::State state_identifier = one(symbols_identifier_begin, Tokens::identifier, symbols_end_words,core_here::lex::Flag::only_free);
-			std::vector<char> symbols_identifier;
-			symbols_identifier.reserve(lower.size() + upper.size() + digits.size() + 1);
-			for (char c : lower)
-			{
-				symbols_identifier.push_back(c);
-			}
-			for (char c : upper)
-			{
-				symbols_identifier.push_back(c);
-			}
-			for (char c : digits)
-			{
-				symbols_identifier.push_back(c);
-			}
-			symbols_identifier.push_back('_');
-			some(symbols_identifier, Tokens::identifier, symbols_end_words,core_here::lex::Flag::join_same,state_identifier);
-
-			/*for (char c : graphic)
-			{
-				if(c == '_') continue;
-				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
-			}*/
-
-			/*for (char c : display)
-			{
-				one(c, (Tokens)c, symbols_end_words, core_here::lex::Flag::error);
-			}*/
-		}
-
-
-	private:
-
-	};
-
-
-	constexpr auto create_lexer_a()
-	{
-		TTA tt;
-		return tt;
-	}
-
 
 	constexpr size_t amount_symbols = 99;
 	constexpr size_t amount_transitions = 128;
 	constexpr size_t amount_states = 300;
 	constexpr size_t amount_end_word = 37;
-	constexpr size_t amount_keywords = 32;
 	typedef core_here::lex::TTB<char,Tokens,core_here::lex::State,amount_states,amount_transitions,amount_symbols> TTB_BASE;
 	class TTB : public TTB_BASE
 	{
 	public:
-		constexpr static core_here::lex::pair_keyword<char, Tokens> keywords[32] = {
-		{"auto",Tokens::keyword_auto},
-		{"break",Tokens::keyword_break},
-		{"case",Tokens::keyword_case},
+        constexpr static size_t amount_graphic = 29;
+        constexpr static size_t amount_display = 7;
+        constexpr static size_t amount_digits = 10;
+        constexpr static size_t amount_identifier_begin = 53;
+        constexpr static size_t amount_identifier = 63;
+        constexpr static size_t amount_keywords = 9;
+		constexpr static core_here::lex::pair_keyword<char, Tokens> keywords[amount_keywords] = {
+		{"byte",Tokens::keyword_byte},
 		{"char",Tokens::keyword_char},
-		{"const",Tokens::keyword_const},
-		{"continue",Tokens::keyword_continue},
-		{"default",Tokens::keyword_default},
-		{"do",Tokens::keyword_do},
-		{"double",Tokens::keyword_double},
-		{"else",Tokens::keyword_else},
-		{"enum",Tokens::keyword_enum},
-		{"extern",Tokens::keyword_extern},
-		{"float",Tokens::keyword_float},
-		{"for",Tokens::keyword_for},
-		{"goto",Tokens::keyword_goto},
-		{"if",Tokens::keyword_if},
-		{"int",Tokens::keyword_int},
-		{"long",Tokens::keyword_long},
-		{"register",Tokens::keyword_register},
-		{"return",Tokens::keyword_return},
+		{"tiny",Tokens::keyword_tiny},
 		{"short",Tokens::keyword_short},
-		{"signed",Tokens::keyword_signed},
-		{"sizeof",Tokens::keyword_sizeof},
-		{"static",Tokens::keyword_static},
-		{"struct",Tokens::keyword_struct},
-		{"switch",Tokens::keyword_switch},
-		{"typedef",Tokens::keyword_typedef},
-		{"union",Tokens::keyword_union},
-		{"unsigned",Tokens::keyword_unsigned},
-		{"void",Tokens::keyword_void},
-		{"volatil",Tokens::keyword_volatil},
-		{"while",Tokens::keyword_while}
+		{"medium",Tokens::keyword_medium},
+		{"long",Tokens::keyword_long},
+		{"integer",Tokens::keyword_integer},
+		{"mov",Tokens::keyword_mov},
+		{"int",Tokens::keyword_int},
 	};
-	constexpr static size_t amount_graphic = 29;
-	constexpr static size_t amount_display = 7;
-	constexpr static size_t amount_digits = 10;
-	constexpr static size_t amount_identifier_begin = 53;
-	constexpr static size_t amount_identifier = 63;
 
 	public:
 		constexpr TTB()
@@ -716,7 +484,7 @@ namespace oct::cc::v0::c90
                 if(state_last < 0) return;
 			}
 
-			state_last = almost_one(symbols_digits,amount_digits, Tokens::integer, symbols_end_words,amount_end_word,core_here::lex::Flag::error);
+			state_last = almost_one(symbols_digits,amount_digits, Tokens::literal_integer, symbols_end_words,amount_end_word,core_here::lex::Flag::error);
 			if(state_last < 0) return;
 
 			state_last = one(symbols_identifier_begin,amount_identifier_begin, Tokens::identifier, symbols_end_words,amount_end_word,core_here::lex::Flag::only_free);
