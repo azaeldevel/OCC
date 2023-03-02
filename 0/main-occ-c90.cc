@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "C90-v0.hh"
+#include "C90.hh"
 
 namespace occ_here = oct::cc::v0;
 static int counter = 0;
@@ -46,10 +46,10 @@ int main(int argc, char* argv[])
 	if(argc < 2) throw oct::core::v3::exception("Agrege archivo fuente.");
 	std::filesystem::path file1_c90 = argv[1];
 	//const char* str_c90 = "struct auto char break switch volatil void int 923456789 5";
-	core_next::Buffer<char> buff1_c90(file1_c90);
+	core_here::Buffer<char> buff1_c90(file1_c90);
 	const occ_here::c90::TTB tt_c90;
 	//const occ_here::c90::TT tt_c90 = occ_here::c90::create_lexer();
-	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90(tt_c90, buff1_c90);
+	core_here::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTB<char,occ_here::c90::Tokens, core_here::lex::State,occ_here::c90::amount_states,occ_here::c90::amount_transitions,occ_here::c90::amount_symbols>> lex_c90(tt_c90, buff1_c90);
 		
 	//std::cout << "Compilation... \n";
 	if(lexing(lex_c90))

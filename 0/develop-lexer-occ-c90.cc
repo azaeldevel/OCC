@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <chrono>
 #include <algorithm>
 #include <iterator>
 
-#include "C90-v0.hh"
+#include "C90.hh"
 
 namespace occ_here = oct::cc::v0;
 
@@ -28,20 +29,19 @@ namespace occ_here = oct::cc::v0;
 
 int main()
 {
-
 	std::cout << "///>>>A section\n\n\n";
 	///>>>A
 	std::filesystem::path file1_c90 = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	//const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
 	const char* str_c90 = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? #";
-	core_next::Buffer<char> buff1_c90(str_c90);
+	core_here::Buffer<char> buff1_c90(str_c90);
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	occ_here::c90::TTA tt_c90;
 	//std::cout << "TT listing...\n";
 	//tt_c90.print(std::cout);
 	//tt_c90.check(std::cout);
 	std::cout << "\n";
-	core_next::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTA<char,occ_here::c90::Tokens, core_here::lex::State>> lex_c90(tt_c90, buff1_c90);
+	core_here::lex::Lexer<char, occ_here::c90::Tokens, core_here::lex::State,core_here::lex::TTA<char,occ_here::c90::Tokens, core_here::lex::State>> lex_c90(tt_c90, buff1_c90);
 
 	std::cout << "\n\n";
 	occ_here::c90::Tokens tk_c90 = lex_c90.next();
@@ -432,7 +432,7 @@ int main()
 	*/
 	std::filesystem::path file1_c90b = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
 	const char* str_c90b = "auto char break switch volatil void int 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? # inta main()";
-	core_next::Buffer<char> buff1_c90b(str_c90b);
+	core_here::Buffer<char> buff1_c90b(str_c90b);
     core_here::lex::Tokenized<char,occ_here::c90::Tokens> tkzed;
 	//constexpr auto tt_c90 = occ_here::c90::create_lexer_a();
 	constexpr const occ_here::c90::TTB tt_c90b;
@@ -442,7 +442,7 @@ int main()
 	std::cout << "\n";
 	*/
 	std::string strtk;
-	core_next::lex::Lexer<char,occ_here::c90::Tokens,core_here::lex::State,occ_here::c90::TTB_BASE> lex_c90b(tt_c90b, buff1_c90b);
+	core_here::lex::Lexer<char,occ_here::c90::Tokens,core_here::lex::State,occ_here::c90::TTB_BASE> lex_c90b(tt_c90b, buff1_c90b);
 	//std::cout << "\n\n";
 	tk_c90 = lex_c90b.next(tkzed);
 	if (tk_c90 != occ_here::c90::Tokens::keyword_auto)
