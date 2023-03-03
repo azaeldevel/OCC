@@ -57,8 +57,8 @@ AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
 
 AC_OUTPUT([
 Makefile
-src/Makefile
+0/Makefile
 po/Makefile.in
-src/octetos-cc.pc
+0/octetos-cc.pc
 tests/Makefile
 ])
