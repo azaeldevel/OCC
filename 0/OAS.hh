@@ -97,8 +97,8 @@ namespace oct::cc::v0::as
 		digit_7,
 		digit_8,
 		digit_9,
-		symbol_column,
-		semicolumn,
+		colon,
+		semicolon,
 		less,
 		equal,
 		grater,
@@ -204,6 +204,8 @@ namespace oct::cc::v0::as
 
 		identifier,
         literal_integer,
+        literal_char,
+        literal_string,
 	};
 	template<typename Token> std::string category(Token t)
 	{

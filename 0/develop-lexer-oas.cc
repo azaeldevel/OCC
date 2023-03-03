@@ -28,7 +28,7 @@ namespace occ_here = oct::cc::v0;
 int main()
 {
 	std::filesystem::path file1_as = "C:\\Users\\Azael\\Documents\\develop\\octetos\\OCC\\tests\\main-ansi-90.c";
-	const char* str_as = "byte short integer tiny long char int mov 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont % ? # inta main()";
+	const char* str_as = "byte short integer tiny long char int mov 923456789 5 j a0 aabcd a1_test z juan contianer09 _09cont _09cont ; :";
 	core_here::Buffer<char> buff1_as(str_as);
     core_here::lex::Tokenized<char,occ_here::as::Tokens> tkzed;
 	constexpr const occ_here::as::TTB tt_as;
@@ -193,6 +193,195 @@ int main()
 	{
 		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
 	}
+	std::cout << "\n";
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::literal_integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::literal_integer)
+	{
+		std::cout << "Fallo, se espera integer, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::identifier)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::semicolon)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
+	std::cout << "\n";
+
+	tk_as = lex_as.next();
+	if (tk_as != occ_here::as::Tokens::space)
+	{
+		std::cout << "Fallo, se espera space, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+
+	tk_as = lex_as.next(tkzed);
+	if (tk_as != occ_here::as::Tokens::colon)
+	{
+		std::cout << "Fallo, se espera identificador, se encontro " << std::to_string((int)tk_as) << "\n";
+	}
+    strtk = (std::string)tkzed;
+    std::cout << "'" << strtk << "'\n";
 	std::cout << "\n";
 
 	return EXIT_SUCCESS;
