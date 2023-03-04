@@ -30,9 +30,9 @@ occ_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/de
 AM_YFLAGS = -d
 BUILT_SOURCES = oas-intel
 
-oas-intel : $(top_srcdir)/0/oas-intel.l $(top_srcdir)/0/oas-intel.y
-	bison --header $(top_srcdir)/0/oas-intel.y -o oas-intel-parser.c
-	flex --header=$(top_builddir)/0/oas-intel.tab.h -o oas-intel-lexer.c $(top_srcdir)/0/oas-intel.l
-	$(CC) $(CFLAGS) -lfl oas-intel.tab.c oas-intel-lexer.c oas-intel-parser.c  
+oas-intel : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
+	bison --header $(top_srcdir)/0/oas-intel-parser.y 
+	flex --header=$(top_builddir)/0/oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
+	$(CC) $(CFLAGS) -lfl lex.yy.c oas-intel-parser.tab.c -o oas-intel
 	
 
