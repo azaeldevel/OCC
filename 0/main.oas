@@ -1,12 +1,12 @@
+	
+char actual 'A';
+tiny off 1;
+short counter 0;
+long valor2 5;
+byte test 1;
 
 
 boot:
-	char actual 'A';
-	tiny off 1;
-	short counter  0;
-	integer<12> valor 5;
-	long valor2 5;
-	byte test 1;
 
 	mov 'B' , al;
 	mov 0x0e, ah;

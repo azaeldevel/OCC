@@ -26,10 +26,10 @@
   // Tell Flex the expected prototype of yylex.
   // The scanner argument must be named yyscanner.
 #define YY_DECL                                                         \
-  yytoken_kind_t yylex (YYSTYPE* yylval, yyscan_t yyscanner, result *res)
+  yytoken_kind_t yylex (YYSTYPE* yylval,YYLTYPE*, yyscan_t yyscanner, result *res)
   YY_DECL;
 
-  void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
+  void yyerror (YYLTYPE*,yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -64,7 +64,7 @@
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
-
+%locations
 
 %token keyword_byte
 %token keyword_char
@@ -106,32 +106,28 @@ label : IDENTIFIER ':';
 
 decl :
 	keyword_byte IDENTIFIER ';' |
-	keyword_char IDENTIFIER LITERAL_CHAR ';' |
+	keyword_byte IDENTIFIER literals_integers ';' |
 	keyword_char IDENTIFIER ';' |
-	keyword_tiny IDENTIFIER LITERAL_INTEGER_HEX ';' |
-	keyword_tiny IDENTIFIER LITERAL_INTEGER_DEC ';' |
+	keyword_char IDENTIFIER LITERAL_CHAR ';' |
 	keyword_tiny IDENTIFIER ';' |
+	keyword_tiny IDENTIFIER literals_integers ';' |
 	keyword_short IDENTIFIER ';' |
-	keyword_short IDENTIFIER LITERAL_INTEGER_HEX ';' |
-	keyword_short IDENTIFIER LITERAL_INTEGER_DEC ';' |
-	keyword_medium IDENTIFIER LITERAL_INTEGER_HEX ';' |
-	keyword_medium IDENTIFIER LITERAL_INTEGER_DEC ';' |
+	keyword_short IDENTIFIER literals_integers ';' |
 	keyword_medium IDENTIFIER ';' |
-	keyword_long IDENTIFIER LITERAL_INTEGER_HEX ';' |
-	keyword_long IDENTIFIER LITERAL_INTEGER_DEC ';' |
+	keyword_medium IDENTIFIER literals_integers ';' |
 	keyword_long IDENTIFIER ';' |
-	keyword_integer '<' keyword_tiny '>' IDENTIFIER LITERAL_INTEGER_HEX ';'|
-	keyword_integer '<' keyword_tiny '>' IDENTIFIER LITERAL_INTEGER_DEC ';'|
-	keyword_integer '<' keyword_tiny '>' IDENTIFIER ';'
+	keyword_long IDENTIFIER literals_integers ';' |
+	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'|
+	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'
 ;
 
 
 literals : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | LITERAL_CHAR;
+literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 %%
 
 #include "oas-intel.tab.h"
-#include "oas-intel-parser.tab.h"
 
 result
 parse (void)
@@ -156,15 +152,9 @@ result parse_string (const char *str)
   return res;
 }
 
-void yyerror (yyscan_t scanner, result *res,const char *msg, ...)
+void yyerror (YYLTYPE* loc,yyscan_t scanner, result *res,const char *msg, ...)
 {
-  (void) scanner;
-  va_list args;
-  va_start (args, msg);
-  vfprintf (stderr, msg, args);
-  va_end (args);
-  fputc ('\n', stderr);
-  res->nerrs += 1;
+	fprintf(stderr,"Error in %i:%i %s",loc->first_line,loc->first_column,msg);
 }
 
 int main (void)
