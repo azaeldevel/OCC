@@ -1,10 +1,20 @@
+%option nodefault noinput nounput noyywrap
 
+%option reentrant
+
+%{
+#include <assert.h>
+#include <limits.h> /* INT_MIN */
+#include <stdlib.h> /* strtol */
+
+#include "oas-intel.tab.h"
+%}
 
 DIGIT_DEC [0-9]
 DIGIT_HEX [0-9A-Fa-f]
 LETTER [a-zA-Z]
-INTEGER_DEC {DIGIT_DEC}+
-INTEGER_HEX 0x{DIGIT_HEX}+
+LIETRAL_INTEGER_DEC {DIGIT_DEC}+
+LIETRAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LIETRAL_CHAR '{LETTER}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
@@ -22,12 +32,11 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 "int"			{printf("keyword int\n");}
 "mov"			{printf("keyword mov\n");}
 
-
 "al"			{printf("keyword al\n");}
-"ah"			{printf("keyword mov\n");}
+"ah"			{printf("keyword ah\n");}
 
-{INTEGER_HEX}		{printf("Hexadecimal \"%s\"\n",yytext);}
-{INTEGER_DEC}		{printf("Entero \"%s\"\n",yytext);}
+{LIETRAL_INTEGER_HEX}		{printf("Hexadecimal \"%s\"\n",yytext);}
+{LIETRAL_INTEGER_DEC}		{printf("Entero \"%s\"\n",yytext);}
 
 
 {IDENTIFIER}		{printf("Identificador \"%s\"\n",yytext);}
@@ -39,7 +48,3 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 %%
 
-int main()
-{
-  yylex();
-}
