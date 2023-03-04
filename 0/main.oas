@@ -4,7 +4,7 @@ boot:
 	char actual 'A';
 	tiny off 1;
 	short counter  0;
-	integer valor 5;
+	integer<12> valor 5;
 	long valor2 5;
 	byte test 1;
 

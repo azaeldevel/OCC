@@ -46,8 +46,6 @@
   result parse (void);
 }
 
-// Include the header in the implementation rather than duplicating it.
-//%define api.header.include {"parse.h"}
 
 // Don't share global variables between the scanner and the parser.
 %define api.pure full
@@ -66,9 +64,6 @@
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
-
-
-
 
 
 %token keyword_byte
@@ -91,22 +86,21 @@
 %token LITERAL_INTEGER_DEC
 %token LITERAL_INTEGER_HEX
 %token LITERAL_CHAR
-
+%token ENDOFFILE 0  "end-of-file"
 
 
 %%
 
-stm : stm
-	decl | 
-	label | 
-	insts ;
+unit : decls insts ENDOFFILE;
 
+decls : decl | decls decl;
+insts : inst | insts inst;
 
-insts : insts_mov | insts_int;
+inst : inst_mov | inst_int | label;
+inst_mov : keyword_mov literals ',' keyword_al ';' |		
+		keyword_mov literals ',' keyword_ah ';';		
 
-insts_mov : keyword_mov LITERAL_CHAR ',' LITERAL_INTEGER_HEX ';';
-
-insts_int : keyword_int LITERAL_INTEGER_HEX ';';
+inst_int : keyword_int LITERAL_INTEGER_HEX ';';
 
 label : IDENTIFIER ':';
 
@@ -130,6 +124,9 @@ decl :
 	keyword_integer '<' keyword_tiny '>' IDENTIFIER LITERAL_INTEGER_DEC ';'|
 	keyword_integer '<' keyword_tiny '>' IDENTIFIER ';'
 ;
+
+
+literals : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | LITERAL_CHAR;
 
 %%
 

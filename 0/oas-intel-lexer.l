@@ -1,6 +1,5 @@
 
 %option nodefault noinput nounput noyywrap
-
 %option reentrant
 
 
@@ -50,8 +49,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 :			return ':';
 ;			return ';';
 
-[.\n\t ]				;
+<<EOF>>  return ENDOFFILE;
 
+[.\n\t ]				;
 
 %%
 
