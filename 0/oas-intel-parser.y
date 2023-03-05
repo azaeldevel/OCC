@@ -152,6 +152,21 @@ result parse_string (const char *str)
   	return res;
 }
 
+result parse_file (const char *file)
+{
+	yyscan_t scanner;
+  	yylex_init (&scanner);
+  	result res = {0, 0, 0};
+	yyin = fopen( file, "r" );
+    if (!yyin) return res;
+	YY_BUFFER_STATE buf = yy_create_buffer(yyin, YY_BUF_SIZE, scanner);
+    yy_switch_to_buffer(buf, scanner);
+  	yyparse (scanner, &res);
+  	yy_delete_buffer (buf, scanner);
+  	yylex_destroy (scanner);
+  	return res;
+}
+
 void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
 {
   	(void) scanner;
@@ -166,14 +181,9 @@ void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
 int main (int argc, char* argv[])
 {
   	// Possibly enable parser runtime debugging.
+	if(argc != 2) fprintf(stderr,"Ingrese en nombre del archivo");
   	yydebug = !!getenv ("YYDEBUG");
-	yyin = fopen(argv[1], "r" );
-	if(!yyin)
-	{
-		fprintf(stderr,"Fallo la apertura %s...",argv[1]);
-	}
-	printf("parsing file %s...",argv[1]);
-  	result res = parse ();
+  	result res = parse_file (argv[1]);
   	// Exit on failure if there were errors.
   	return !!res.nerrs;
 }
