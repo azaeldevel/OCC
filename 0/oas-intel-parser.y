@@ -106,10 +106,10 @@ inst_int : keyword_int LITERAL_INTEGER_HEX ';';
 label : IDENTIFIER ':';
 
 decl :
-	keyword_byte IDENTIFIER ';' |
-	keyword_byte IDENTIFIER literals_integers ';' |
-	keyword_char IDENTIFIER ';' |
-	keyword_char IDENTIFIER LITERAL_CHAR ';' |
+	keyword_byte IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_byte IDENTIFIER literals_integers ';'	{printf("%s %s %i;\n",$1,$2,$3);}|
+	keyword_char IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("%s %s %c;\n",$1,$2,$3);}|
 	keyword_tiny IDENTIFIER ';' |
 	keyword_tiny IDENTIFIER literals_integers ';' |
 	keyword_short IDENTIFIER ';' |
