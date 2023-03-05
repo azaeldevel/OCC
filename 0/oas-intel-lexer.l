@@ -1,7 +1,7 @@
 
 %option nodefault noinput nounput noyywrap
 %option reentrant
-%option yylineno
+
 
 
 %{

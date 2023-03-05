@@ -26,10 +26,10 @@
   // Tell Flex the expected prototype of yylex.
   // The scanner argument must be named yyscanner.
 #define YY_DECL                                                         \
-  yytoken_kind_t yylex (YYSTYPE* yylval,YYLTYPE*, yyscan_t yyscanner, result *res)
+  yytoken_kind_t yylex (YYSTYPE* yylval, yyscan_t yyscanner, result *res)
   YY_DECL;
 
-  void yyerror (YYLTYPE*,yyscan_t scanner, result *res, const char *msg, ...);
+  void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -64,7 +64,7 @@
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
-%locations
+
 
 %token keyword_byte
 %token keyword_char
@@ -129,8 +129,7 @@ literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 #include "oas-intel.tab.h"
 
-result
-parse (void)
+result parse (void)
 {
   yyscan_t scanner;
   yylex_init (&scanner);
@@ -142,19 +141,25 @@ parse (void)
 
 result parse_string (const char *str)
 {
-  yyscan_t scanner;
-  yylex_init (&scanner);
-  YY_BUFFER_STATE buf = yy_scan_string (str ? str : "", scanner);
-  result res = {0, 0, 0};
-  yyparse (scanner, &res);
-  yy_delete_buffer (buf, scanner);
-  yylex_destroy (scanner);
-  return res;
+	yyscan_t scanner;
+  	yylex_init (&scanner);
+  	YY_BUFFER_STATE buf = yy_scan_string (str ? str : "", scanner);
+  	result res = {0, 0, 0};
+  	yyparse (scanner, &res);
+  	yy_delete_buffer (buf, scanner);
+  	yylex_destroy (scanner);
+  	return res;
 }
 
-void yyerror (YYLTYPE* loc,yyscan_t scanner, result *res,const char *msg, ...)
+void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
 {
-	fprintf(stderr,"Error in %i:%i %s",loc->first_line,loc->first_column,msg);
+  	(void) scanner;
+  	va_list args;
+  	va_start (args, msg);
+  	vfprintf (stderr, msg, args);
+  	va_end (args);
+  	fputc ('\n', stderr);
+  	res->nerrs += 1;
 }
 
 int main (void)
