@@ -38,6 +38,7 @@
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
+FILE* yyin;
 }
 
 %code
@@ -162,13 +163,19 @@ void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
   	res->nerrs += 1;
 }
 
-int main (void)
+int main (int argc, char* argv[])
 {
-  // Possibly enable parser runtime debugging.
-  yydebug = !!getenv ("YYDEBUG");
-  result res = parse ();
-  // Exit on failure if there were errors.
-  return !!res.nerrs;
+  	// Possibly enable parser runtime debugging.
+  	yydebug = !!getenv ("YYDEBUG");
+	yyin = fopen(argv[1], "r" );
+	if(!yyin)
+	{
+		fprintf(stderr,"Fallo la apertura %s...",argv[1]);
+	}
+	printf("parsing file %s...",argv[1]);
+  	result res = parse ();
+  	// Exit on failure if there were errors.
+  	return !!res.nerrs;
 }
 
 
