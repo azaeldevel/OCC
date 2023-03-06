@@ -4,20 +4,20 @@
 // Emitted in the header file, before the definition of YYSTYPE.
 %code requires
 {
-  #ifndef YY_TYPEDEF_YY_SCANNER_T
-  # define YY_TYPEDEF_YY_SCANNER_T
-  typedef void* yyscan_t;
-  #endif
-
-  typedef struct
-  {
-    // Whether to print the intermediate results.
-    int verbose;
-    // Value of the last computation.
-    int value;
-    // Number of errors.
-    int nerrs;
-  } result;
+	#ifndef YY_TYPEDEF_YY_SCANNER_T
+  	# define YY_TYPEDEF_YY_SCANNER_T
+  		typedef void* yyscan_t;
+  	#endif
+	
+  	typedef struct
+  	{
+		// Whether to print the intermediate results.
+		int verbose;
+		// Value of the last computation.
+		int value;
+		// Number of errors.
+		int nerrs;
+  	} result;
 }
 
 // Emitted in the header file, after the definition of YYSTYPE.
@@ -35,24 +35,23 @@
 // Emitted on top of the implementation file.
 %code top
 {
-#include <stdarg.h> // va_list.
-#include <stdio.h>  // printf.
-#include <stdlib.h> // getenv.
-FILE* yyin;
+	#include <stdarg.h> // va_list.
+	#include <stdio.h>  // printf.
+	#include <stdlib.h> // getenv.
+	FILE* yyin;
+	//char* yytext;
+	
 }
 
 %code
 {
+  result parse_file (const char* cp);
   result parse_string (const char* cp);
   result parse (void);
 }
 
-
 // Don't share global variables between the scanner and the parser.
 %define api.pure full
-
-// Generate YYSTYPE from the types assigned to symbols.
-%define api.value.type union
 
 // Error messages with "unexpected XXX, expected XXX...".
 %define parse.error detailed
@@ -110,16 +109,16 @@ decl :
 	keyword_byte IDENTIFIER literals_integers ';'	{printf("%s %s %i;\n",$1,$2,$3);}|
 	keyword_char IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
 	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("%s %s %c;\n",$1,$2,$3);}|
-	keyword_tiny IDENTIFIER ';' |
-	keyword_tiny IDENTIFIER literals_integers ';' |
-	keyword_short IDENTIFIER ';' |
-	keyword_short IDENTIFIER literals_integers ';' |
-	keyword_medium IDENTIFIER ';' |
-	keyword_medium IDENTIFIER literals_integers ';' |
-	keyword_long IDENTIFIER ';' |
-	keyword_long IDENTIFIER literals_integers ';' |
-	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'|
-	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'
+	keyword_tiny IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_tiny IDENTIFIER literals_integers ';' 	{printf("%s %s %i;\n",$1,$2,$3);}|
+	keyword_short IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_short IDENTIFIER literals_integers ';' 	{printf("%s %s %i;\n",$1,$2,$3);}|
+	keyword_medium IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_medium IDENTIFIER literals_integers ';' {printf("%s %s %i;\n",$1,$2,$3);}|
+	keyword_long IDENTIFIER ';' 					{printf("%s %s;\n",$1,$2);}|
+	keyword_long IDENTIFIER literals_integers ';' 	{printf("%s %s %i;\n",$1,$2,$3);}|
+	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'						{printf("%s %s;\n",$1,$2);}|
+	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'	{printf("%s %s %c;\n",$1,$2,$3);}
 ;
 
 
