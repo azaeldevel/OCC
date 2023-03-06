@@ -38,11 +38,11 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 "al"			{return keyword_al;}
 "ah"			{return keyword_ah;}
 
-{LIETRAL_INTEGER_HEX}		{return LITERAL_INTEGER_HEX;}
+{LIETRAL_INTEGER_HEX}		{;return LITERAL_INTEGER_HEX;}
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{return IDENTIFIER;}
+{IDENTIFIER}		{yylval.IDENTIFIER = yytext; return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
