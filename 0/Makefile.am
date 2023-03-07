@@ -31,8 +31,8 @@ AM_YFLAGS = -d
 BUILT_SOURCES = oas-intel
 
 oas-intel : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
-	bison -d --header $(top_srcdir)/0/oas-intel-parser.y 
-	flex --header=$(top_builddir)/0/oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
-	$(CC) $(CFLAGS) -lfl -I. oas-intel-parser.tab.c lex.yy.c $(top_srcdir)/0/oas-main.c -o oas-intel
+	bison -d --header $(top_srcdir)/0/oas-intel-parser.y -o $(top_builddir)/0/oas-intel-parser.c
+	flex --header=$(top_builddir)/0/oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l 
+	$(CC) $(CFLAGS) -lfl -I. oas-intel-parser.c lex.yy.c $(top_srcdir)/0/oas-main.c -o oas-intel
 	
 

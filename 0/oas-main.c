@@ -19,7 +19,7 @@
 
 
 #include <oas-intel.tab.h>
-#include <oas-intel-parser.tab.h>
+#include <oas-intel-parser.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.

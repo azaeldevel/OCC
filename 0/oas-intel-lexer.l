@@ -9,7 +9,7 @@
 	#include <stdlib.h>
 
 	//#include "oas-intel.tab.h"
-	#include "oas-intel-parser.tab.h"
+	#include "oas-intel-parser.h"
 %}
 
 DIGIT_DEC [0-9]
