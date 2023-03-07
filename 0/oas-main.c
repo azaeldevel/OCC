@@ -24,9 +24,7 @@
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
 
-void
-yyerror (yyscan_t scanner, result *res,
-         const char *msg, ...)
+void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
 {
   (void) scanner;
   va_list args;
@@ -40,28 +38,28 @@ yyerror (yyscan_t scanner, result *res,
 
 int main (int argc, char* argv[])
 {
-
+	/*
 	yyscan_t scanner;
   	yylex_init (&scanner);
   	result res = {1, 0, 0};
   	yyparse (scanner, &res);
   	yylex_destroy (scanner);	
-
-	/*
+	*/
+	
   	result res = {0, 0, 0};
 	if(argc != 2) 
 	{
 		fprintf(stderr,"Indique el nombre de archivo");
-		return res;
+		return EXIT_FAILURE;
 	}
 	yyscan_t scanner;
   	yylex_init (&scanner);
 	yyin = fopen( argv[1], "r" );
-    if (!yyin) return res;
+    if (!yyin) return EXIT_FAILURE;
 	YY_BUFFER_STATE buf = yy_create_buffer(yyin, YY_BUF_SIZE, scanner);
     yy_switch_to_buffer(buf, scanner);
   	yyparse (scanner, &res);
   	yy_delete_buffer (buf, scanner);
   	yylex_destroy (scanner);
-  	return res;*/
+  	return EXIT_SUCCESS;
 }

@@ -3,14 +3,13 @@
 %option reentrant
 
 
-
 %{
-#include <assert.h>
-#include <limits.h> /* INT_MIN */
-#include <stdlib.h> /* strtol */
+	#include <assert.h>
+	#include <limits.h>
+	#include <stdlib.h>
 
-//#include "oas-intel.tab.h"
-#include "oas-intel-parser.tab.h"
+	//#include "oas-intel.tab.h"
+	#include "oas-intel-parser.tab.h"
 %}
 
 DIGIT_DEC [0-9]

@@ -21,7 +21,7 @@
 %code provides
 {
 
-  void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
+  	void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -99,7 +99,6 @@ literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 %%
 
-#include "oas-intel.tab.h"
 
 
 
