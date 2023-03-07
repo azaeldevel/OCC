@@ -22,6 +22,7 @@
 {
 
   	void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
+
 }
 
 // Emitted on top of the implementation file.
