@@ -48,15 +48,15 @@ int main (int argc, char* argv[])
 	
 	//return yyparse();
 	
-	/*
-	syyscan_t scanner;
+	
+	yyscan_t scanner;
   	yylex_init (&scanner);
   	result res = {1, 0, 0};
   	yyparse (scanner, &res);
   	yylex_destroy (scanner);
-	*/
 	
-  	result res = {0, 0, 0};
+	
+  	/*result res = {0, 0, 0};
 	if(argc != 2)
 	{
 		fprintf(stderr,"Indique el nombre de archivo");
@@ -71,5 +71,5 @@ int main (int argc, char* argv[])
   	yyparse (scanner, &res);
   	yy_delete_buffer (buf, scanner);
   	yylex_destroy (scanner);
-  	return EXIT_SUCCESS;
+  	return EXIT_SUCCESS;*/
 }

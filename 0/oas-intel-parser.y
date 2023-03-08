@@ -34,10 +34,9 @@
 // Generate the parser description file (parse.output).
 %verbose
 
-/* Generate YYSTYPE from the types used in %token and %type.  */
-%define api.value.type union
 
 %param {yyscan_t scanner}{result *res}
+
 
 %token keyword_byte
 %token keyword_char
@@ -55,10 +54,10 @@
 %token keyword_al
 %token keyword_ah
 
-%token <char*> IDENTIFIER
-%token <long long> LITERAL_INTEGER_DEC
-%token <long long> LITERAL_INTEGER_HEX
-%token <char> LITERAL_CHAR
+%token IDENTIFIER
+%token LITERAL_INTEGER_DEC
+%token LITERAL_INTEGER_HEX
+%token LITERAL_CHAR
 %token ENDOFFILE 0  "end-of-file"
 
 

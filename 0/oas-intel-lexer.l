@@ -1,5 +1,5 @@
 
-%option nodefault noinput nounput noyywrap
+%option noyywrap
 %option reentrant
 
 
@@ -40,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{yylval.IDENTIFIER = yytext; return IDENTIFIER;}
+{IDENTIFIER}		{return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
