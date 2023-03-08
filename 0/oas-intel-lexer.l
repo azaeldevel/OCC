@@ -7,8 +7,7 @@
 	#include <assert.h>
 	#include <limits.h>
 	#include <stdlib.h>
-
-	//#include "oas-intel.tab.h"
+	
 	#include "oas-intel-parser.h"
 %}
 
@@ -37,7 +36,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 "al"			{return keyword_al;}
 "ah"			{return keyword_ah;}
 
-{LIETRAL_INTEGER_HEX}		{;return LITERAL_INTEGER_HEX;}
+{LIETRAL_INTEGER_HEX}		{return LITERAL_INTEGER_HEX;}
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
