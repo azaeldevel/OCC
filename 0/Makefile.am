@@ -6,7 +6,7 @@ AM_CPPFLAGS = \
 	
 
 
-noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90
+noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90 oas-intel
 
 octetos_cc_includedir = $(includedir)/octetos/cc
 octetos_cc_include_HEADERS = 
@@ -27,11 +27,13 @@ occ_c90_LDADD =
 occ_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
 
 AM_YFLAGS = -d
-BUILT_SOURCES = oas-intel
+BUILT_SOURCES = oas-intel-sources
 
-oas-intel : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
+oas-intel-sources : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
 	bison -d --header $(top_srcdir)/0/oas-intel-parser.y -o oas-intel-parser.c
 	flex  -o lex.yy.c --header=oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
-	$(CC) $(CFLAGS) -lfl -I. oas-intel-parser.c lex.yy.c $(top_srcdir)/0/oas-main.c -o oas-intel
-	
+
+
+oas_intel_SOURCES = oas-intel-parser.c lex.yy.c oas-main.cc
+oas_intel_LDADD =
 

@@ -84,12 +84,12 @@ decl :
 	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("ID : %s\n",$2);}|
 	keyword_tiny IDENTIFIER ';' 					{printf("ID : %s\n",$2);}|
 	keyword_tiny IDENTIFIER literals_integers ';' 	{printf("ID : %s\n",$2);}|
-	keyword_short IDENTIFIER ';' 					|
-	keyword_short IDENTIFIER literals_integers ';' 	|
-	keyword_medium IDENTIFIER ';' 					|
-	keyword_medium IDENTIFIER literals_integers ';' |
-	keyword_long IDENTIFIER ';' 					|
-	keyword_long IDENTIFIER literals_integers ';' 	|
+	keyword_short IDENTIFIER ';' 					{printf("ID : %s\n",$2);}|
+	keyword_short IDENTIFIER literals_integers ';' 	{printf("ID : %s\n",$2);}|
+	keyword_medium IDENTIFIER ';' 					{printf("ID : %s\n",$2);}|
+	keyword_medium IDENTIFIER literals_integers ';' {printf("ID : %s\n",$2);}|
+	keyword_long IDENTIFIER ';' 					{printf("ID : %s\n",$2);}|
+	keyword_long IDENTIFIER literals_integers ';' 	{printf("ID : %s\n",$2);}|
 	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'						|
 	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'	
 ;
