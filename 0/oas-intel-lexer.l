@@ -1,11 +1,13 @@
 
-%option noyywrap reentrant bison-bridge
+%option noyywrap reentrant bison-bridge yylineno
 
 %{
 	#include <assert.h>
 	#include <limits.h>
 	#include <stdlib.h>
-	
+
+	#include <A.h>	
+
 	#include "oas-intel-parser.h"
 %}
 
@@ -38,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{return IDENTIFIER;}
+{IDENTIFIER}		{add_identifier(yylineno,"file","text",4);return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
@@ -51,4 +53,31 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 [.\n\t ]				;
 
 %%
+
+struct instance
+{
+	yyscan_t scanner;
+	FILE* file;
+	char* filename;
+	YY_BUFFER_STATE buffer;
+};
+
+struct instance open_file(char* fn)
+{
+	struct instance inst;
+  	yylex_init (&inst.scanner);
+	inst.file = fopen(fn, "r" );
+    if (inst.file) return inst;
+	inst.buffer = yy_create_buffer(inst.file, YY_BUF_SIZE, inst.scanner);
+    yy_switch_to_buffer(inst.buffer, inst.scanner);
+
+	return inst;
+}
+
+void close_file(struct instance* inst)
+{
+  	yy_delete_buffer (inst->buffer, inst->scanner);
+  	yylex_destroy (inst->scanner);
+}
+
 
