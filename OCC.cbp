@@ -55,6 +55,21 @@
 					<Add option="-g" />
 				</Compiler>
 			</Target>
+			<Target title="oas-intel">
+				<Option output="bin/Debug/oas-intel" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Compiler>
+					<Add directory="bin/Debug" />
+				</Compiler>
+				<ExtraCommands>
+					<Add before="bison -d --header $(PROJECT_DIR)0/oas-intel-parser.y -o $(TARGET_OUTPUT_DIR)oas-intel-parser.c" />
+					<Add before="mv $(TARGET_OUTPUT_DIR)oas-intel-parser.tab.h $(TARGET_OUTPUT_DIR)oas-intel.tab.h" />
+					<Add before="flex --outfile=$(TARGET_OUTPUT_DIR)lex.yy.c --header=$(TARGET_OUTPUT_DIR)oas-intel-parser.tab.h $(PROJECT_DIR)0/oas-intel-lexer.l" />
+				</ExtraCommands>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall --std=c++20" />
@@ -86,6 +101,18 @@
 		</Unit>
 		<Unit filename="0/main-occ-c90.cc">
 			<Option target="occ" />
+		</Unit>
+		<Unit filename="0/oas-main.c">
+			<Option compilerVar="CC" />
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="bin/Debug/lex.yy.c">
+			<Option compilerVar="CC" />
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="bin/Debug/oas-intel-parser.c">
+			<Option compilerVar="CC" />
+			<Option target="oas-intel" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

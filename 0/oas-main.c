@@ -17,9 +17,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include <oas-intel.tab.h>
 #include <oas-intel-parser.h>
+#include <oas-intel.tab.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
@@ -46,9 +45,9 @@ void yyerror (const char  *s)
 
 int main (int argc, char* argv[])
 {
-	
+
 	//return yyparse();
-	
+
 	/*
 	syyscan_t scanner;
   	yylex_init (&scanner);
@@ -56,9 +55,9 @@ int main (int argc, char* argv[])
   	yyparse (scanner, &res);
   	yylex_destroy (scanner);
 	*/
-	
+
   	result res = {0, 0, 0};
-	if(argc != 2) 
+	if(argc != 2)
 	{
 		fprintf(stderr,"Indique el nombre de archivo");
 		return EXIT_FAILURE;
