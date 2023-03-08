@@ -26,14 +26,13 @@ occ_c90_SOURCES = main-occ-c90.cc
 occ_c90_LDADD = 
 occ_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
 
-AM_YFLAGS = -d
 BUILT_SOURCES = oas-intel-sources
 
 oas-intel-sources : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
-	bison -d --header $(top_srcdir)/0/oas-intel-parser.y -o oas-intel-parser.c
-	flex  -o lex.yy.c --header=oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
+	bison --header $(top_srcdir)/0/oas-intel-parser.y -o oas-intel-parser.c
+	flex -o oas-intel.lexer.c --header-file=oas-intel.lexer.h --tables-file=oas-intel.tables.h --header=oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
 
+oas_intel_SOURCES = oas-intel-parser.c oas-main.cc oas-intel.lexer.c
+oas_intel_LDADD = 
 
-oas_intel_SOURCES = oas-intel-parser.c lex.yy.c oas-main.cc
-oas_intel_LDADD =
 
