@@ -17,24 +17,43 @@
     int nerrs;
   } result;
 }
+
 // Emitted in the header file, after the definition of YYSTYPE.
 %code provides
 {
 
-  	void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
-
+	void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
 %code top
 {
-	#include <stdio.h>
+#include <stdarg.h> // va_list.
+#include <stdio.h>  // printf.
+#include <stdlib.h> // getenv.
 }
+
+
+
+
+
+
+// Don't share global variables between the scanner and the parser.
+%define api.pure full
+
+// Generate YYSTYPE from the types assigned to symbols.
+%define api.value.type union
+
+// Error messages with "unexpected XXX, expected XXX...".
+%define parse.error detailed
+
+// Enable run-time traces (yydebug).
+%define parse.trace
 
 // Generate the parser description file (parse.output).
 %verbose
 
-
+// Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
 
 

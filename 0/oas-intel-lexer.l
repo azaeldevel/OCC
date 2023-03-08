@@ -1,7 +1,5 @@
 
-%option noyywrap
-%option reentrant
-
+%option noyywrap reentrant bison-bridge
 
 %{
 	#include <assert.h>
