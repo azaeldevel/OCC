@@ -42,34 +42,28 @@ void yyerror (const char  *s)
 }
 */
 
-
 int main (int argc, char* argv[])
 {
+	//std::cout << "Step 1\n";
+	//std::list<instance> instances;
 	
-	//return yyparse();
-	
-	
-	yyscan_t scanner;
-  	yylex_init (&scanner);
-  	result res = {1, 0, 0};
-  	yyparse (scanner, &res);
-  	yylex_destroy (scanner);
-	
-	
-  	/*result res = {0, 0, 0};
 	if(argc != 2)
 	{
 		fprintf(stderr,"Indique el nombre de archivo");
 		return EXIT_FAILURE;
 	}
+	//std::cout << "Step 2 " << argv[1] << "\n";
+  	result res = {0, 0, 0};
+	FILE* file = fopen(argv[1],"r");
+    if(!file) return EXIT_FAILURE;
+	printf("Reding %s...\n",argv[1]);
 	yyscan_t scanner;
   	yylex_init (&scanner);
-	FILE* yyin = fopen(argv[1], "r" );
-    if (!yyin) return EXIT_FAILURE;
-	YY_BUFFER_STATE buf = yy_create_buffer(yyin, YY_BUF_SIZE, scanner);
+	YY_BUFFER_STATE buf = yy_create_buffer(file, YY_BUF_SIZE, scanner);
     yy_switch_to_buffer(buf, scanner);
   	yyparse (scanner, &res);
   	yy_delete_buffer (buf, scanner);
   	yylex_destroy (scanner);
-  	return EXIT_SUCCESS;*/
+  	return EXIT_SUCCESS;
+	
 }
