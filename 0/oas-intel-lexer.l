@@ -40,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{add_identifier(yylineno,"file","text",4);return IDENTIFIER;}
+{IDENTIFIER}		{add_identifier(yylineno,"file",yytext,yyleng);return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 

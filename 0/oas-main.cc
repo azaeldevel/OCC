@@ -42,6 +42,8 @@ void yyerror (const char  *s)
 }
 */
 
+#include <iostream>
+
 int main (int argc, char* argv[])
 {
 	//std::cout << "Step 1\n";
@@ -55,7 +57,11 @@ int main (int argc, char* argv[])
 	//std::cout << "Step 2 " << argv[1] << "\n";
   	result res = {0, 0, 0};
 	FILE* file = fopen(argv[1],"r");
-    if(!file) return EXIT_FAILURE;
+    if(!file) 
+	{
+		std::cout << "Fail to open file : " << argv[1] << "\n";
+		return EXIT_FAILURE;
+	}
 	printf("Reding %s...\n",argv[1]);
 	yyscan_t scanner;
   	yylex_init (&scanner);

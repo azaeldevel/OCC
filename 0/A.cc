@@ -25,7 +25,10 @@
 
 void add_identifier(int l,const char* f,const char* w, int leng)
 {
-	printf("%s:%i %s\n",f,l,w);
+	//printf("%s:%i %s\n",f,l,w);
+	std::string str;
+	str.insert(0,w,leng);
+	std::cout << f << ":" << l << " " << str << "\n";
 }
 
 namespace oct::cc::v0::A
