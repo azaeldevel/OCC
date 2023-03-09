@@ -6,9 +6,9 @@
 	#include <limits.h>
 	#include <stdlib.h>
 
-	#include <A.h>	
+	#include <A.hh>	
 
-	#include "oas-intel-parser.h"
+	#include "oas-intel-parser.hh"
 %}
 
 DIGIT_DEC [0-9]
@@ -40,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{add_identifier(yylineno,"file","text",4);return IDENTIFIER;}
+{IDENTIFIER}		{return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 

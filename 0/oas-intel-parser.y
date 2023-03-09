@@ -22,15 +22,21 @@
 %code provides
 {
 
-	void yyerror (yyscan_t scanner, result *res, const char *msg, ...);
+  // Tell Flex the expected prototype of yylex.
+  // The scanner argument must be named yyscanner.
+#define YY_DECL                                                         \
+  int yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res)
+  YY_DECL;
+
+	void yyerror(yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
 %code top
 {
-#include <stdarg.h> // va_list.
-#include <stdio.h>  // printf.
-#include <stdlib.h> // getenv.
+	#include <stdarg.h> // va_list.
+	#include <stdio.h>  // printf.
+	#include <stdlib.h> // getenv.
 }
 
 
@@ -42,7 +48,7 @@
 %define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
-%define api.value.type union
+//%define api.value.type union
 
 // Error messages with "unexpected XXX, expected XXX...".
 %define parse.error detailed

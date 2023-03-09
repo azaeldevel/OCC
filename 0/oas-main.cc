@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <oas-intel-parser.h>
+#include <oas-intel-parser.hh>
 #include <oas-intel.tab.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
