@@ -40,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{add_identifier(yylineno,"file",yytext,yyleng);return IDENTIFIER;}
+{IDENTIFIER}		{oct::cc::v0::A::add_identifier(yylineno,"file",yytext,yyleng);return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
@@ -62,6 +62,7 @@ struct instance
 	YY_BUFFER_STATE buffer;
 };
 
+
 struct instance open_file(char* fn)
 {
 	struct instance inst;
@@ -81,3 +82,22 @@ void close_file(struct instance* inst)
 }
 
 
+
+
+struct File
+{
+	FILE* file;
+	const char* filename;
+	YY_BUFFER_STATE buffer;
+};
+
+File open_file(const char* fn,yyscan_t scanner)
+{
+	File inst;
+	inst.file = fopen(fn, "r" );
+    if (inst.file) return inst;
+	inst.buffer = yy_create_buffer(inst.file, YY_BUF_SIZE, scanner);
+    yy_switch_to_buffer(inst.buffer, scanner);
+
+	return inst;
+}

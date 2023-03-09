@@ -25,12 +25,13 @@
 #include <string>
 
 
-void add_identifier(int line,const char* filename,const char* word, int leng);
+
+
 
 namespace oct::cc::v0::A
 {
 //namespace core_here = oct::core::v3;
-
+void add_identifier(int line,const char* filename,const char* word, int leng);
 
 class SymbolTable
 {
