@@ -40,7 +40,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{printf("Line : %i\n",yylineno);return IDENTIFIER;}
+{IDENTIFIER}		{add_identifier(yylineno,"file","text",4);return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 

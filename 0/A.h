@@ -4,7 +4,7 @@
 #define OCTETOS_CC_A_H
 
 
-void add_identifier(int line,char* filename,char* word, int leng);
+
 
 
 #endif
