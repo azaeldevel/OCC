@@ -32,7 +32,7 @@ oas-intel-sources : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-
 	bison --header $(top_srcdir)/0/oas-intel-parser.y -o oas-intel-parser.cc
 	flex -o oas-intel.lexer.cc --header=oas-intel.tab.h --header-file=oas-intel.lexer.h --header=oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
 
-oas_intel_SOURCES = oas-main.cc oas-intel-parser.cc oas-intel.lexer.cc A.c 
+oas_intel_SOURCES = oas-main.cc A.c oas-intel-parser.cc oas-intel.lexer.cc 
 oas_intel_CFLAGS = -I$(top_srcdir)/0
 
 

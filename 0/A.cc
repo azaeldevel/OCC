@@ -23,11 +23,6 @@
 #include "A.hh"
 
 
-void add_identifier(int l,const char* f, const char* w, int leng)
-{
-	printf("%s:%i %s\n",f,l,w);
-}
-
 namespace oct::cc::v0::A
 {
 

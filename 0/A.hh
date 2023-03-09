@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 
-extern "C" void add_identifier(int line,const char* filename,const char* word, int leng);
+
 
 namespace oct::cc::v0::A
 {
