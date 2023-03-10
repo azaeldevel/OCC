@@ -16,6 +16,9 @@
     // Number of errors.
     int nerrs;
   } result;
+	#include <A.hh>	
+	namespace A_here = oct::cc::v0::A;
+	extern A_here::File A_here::current_file;
 }
 
 // Emitted in the header file, after the definition of YYSTYPE.
@@ -47,7 +50,7 @@
 %define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
-//%define api.value.type union
+%define api.value.type union
 
 // Error messages with "unexpected XXX, expected XXX...".
 %define parse.error detailed
@@ -62,6 +65,7 @@
 %param {yyscan_t scanner}{result *res}
 
 
+//keywords
 %token keyword_byte
 %token keyword_char
 %token keyword_tiny
@@ -74,14 +78,14 @@
 %token keyword_int
 %token keyword_mov
 
-//
+//rgisters
 %token keyword_al
 %token keyword_ah
 
-%token IDENTIFIER
+%token <const char*>IDENTIFIER
 %token LITERAL_INTEGER_DEC
 %token LITERAL_INTEGER_HEX
-%token LITERAL_CHAR
+%token <char>LITERAL_CHAR
 %token ENDOFFILE 0  "end-of-file"
 
 
@@ -93,8 +97,8 @@ decls : decl | decl decls;
 insts : inst | inst insts;
 
 inst : inst_mov | inst_int | label;
-inst_mov : keyword_mov literals ',' keyword_al ';' |		
-		keyword_mov literals ',' keyword_ah ';';		
+inst_mov : keyword_mov literals keyword_al ';' |		
+		keyword_mov literals keyword_ah ';';		
 
 inst_int : keyword_int LITERAL_INTEGER_HEX ';';
 
@@ -103,8 +107,8 @@ label : IDENTIFIER ':';
 decl :
 	keyword_byte IDENTIFIER ';' 					|
 	keyword_byte IDENTIFIER literals_integers ';'	|
-	keyword_char IDENTIFIER ';' 					|
-	keyword_char IDENTIFIER LITERAL_CHAR ';' 		|
+	keyword_char IDENTIFIER ';' 					{printf("char %s;\n",$2);}|
+	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s %c;\n",$2,$3);}|
 	keyword_tiny IDENTIFIER ';' 					|
 	keyword_tiny IDENTIFIER literals_integers ';' 	|
 	keyword_short IDENTIFIER ';' 					|

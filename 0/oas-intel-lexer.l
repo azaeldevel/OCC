@@ -5,6 +5,9 @@
 	#include <assert.h>
 	#include <limits.h>
 	#include <stdlib.h>
+	#include <stdio.h>
+	#include <string.h>
+
 
 	#include <A.hh>	
 	namespace A_here = oct::cc::v0::A;
@@ -14,7 +17,7 @@
 %}
 
 DIGIT_DEC [0-9]
-DIGIT_HEX [0-9(A-F)|(a-f)]
+DIGIT_HEX [0-9A-Fa-f]
 LETTER [a-zA-Z]
 LIETRAL_INTEGER_DEC {DIGIT_DEC}+
 LIETRAL_INTEGER_HEX 0x{DIGIT_HEX}+
@@ -38,20 +41,27 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 "al"			{return keyword_al;}
 "ah"			{return keyword_ah;}
 
+[\n\t ]			;
+
+{IDENTIFIER}	{
+					yylval->IDENTIFIER = new char[yyleng+1];
+					memcpy((void*)yylval->IDENTIFIER,(const void*)yytext,yyleng);
+					//yylval->IDENTIFIER[yyleng] = '\0';
+					return IDENTIFIER;
+				}//oct::cc::v0::A::add_identifier(yylineno,A_here::current_file.get_filename().string().c_str(),yytext,yyleng);
+
+[:;]			{
+					yylval->LITERAL_CHAR = yytext[0];
+					return (yytoken_kind_t)yytext[0];
+				}
+
 {LIETRAL_INTEGER_HEX}		{return LITERAL_INTEGER_HEX;}
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
+{LIETRAL_CHAR}				{return LITERAL_CHAR;}
 
-
-{IDENTIFIER}		{oct::cc::v0::A::add_identifier(yylineno,A_here::current_file.get_filename().string().c_str(),yytext,yyleng);return IDENTIFIER;}
-{LIETRAL_CHAR}		{return LITERAL_CHAR;}
-
-
-,			return (yytoken_kind_t)',';
-:			return (yytoken_kind_t)':';
-;			return (yytoken_kind_t)';';
 
 <<EOF>>  return ENDOFFILE;
 
-[.\n\t ]				;
+.				;
 
 %%

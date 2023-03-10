@@ -65,6 +65,12 @@ private:
 	 
 };
 
+struct Token
+{
+	int number;
+	std::string text;
+};
+
 
 extern File current_file;
 }
