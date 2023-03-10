@@ -92,6 +92,7 @@ bool File::open(const std::filesystem::path& fn)
 	
 	return true;
 }
+
 const std::filesystem::path& File::get_filename() const
 {
 	return filename;

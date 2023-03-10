@@ -6,7 +6,7 @@ AM_CPPFLAGS = \
 	
 
 
-noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90 oas-intel
+noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90 oas-intel oas-intel-lexer
 
 octetos_cc_includedir = $(includedir)/octetos/cc
 octetos_cc_include_HEADERS = 
@@ -35,5 +35,6 @@ oas-intel-sources : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-
 oas_intel_SOURCES = oas-main.cc A.cc oas-intel-parser.cc oas-intel.lexer.cc
 oas_intel_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
 
-
+oas_intel_lexer_SOURCES = oas-intel-lexer.cc A.cc oas-intel.lexer.cc
+oas_intel_lexer_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
 

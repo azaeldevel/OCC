@@ -44,7 +44,7 @@ public:
 	const std::filesystem::path& get_filename()const;
 	bool open(const std::filesystem::path& file);
 protected:
-
+	
 private:
 	FILE* file;
 	std::filesystem::path filename;
