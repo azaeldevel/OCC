@@ -60,25 +60,6 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 	
-  	/*
-	result res = {0, 0, 0};
-	FILE* file = fopen(argv[1],"r");
-    if(!file) 
-	{
-		std::cout << "Fail to open file : " << argv[1] << "\n";
-		return EXIT_FAILURE;
-	}
-	printf("Reding %s...\n",argv[1]);
-	yyscan_t scanner;
-  	yylex_init (&scanner);
-	YY_BUFFER_STATE buf = yy_create_buffer(file, YY_BUF_SIZE, scanner);
-    yy_switch_to_buffer(buf, scanner);
-  	yyparse (scanner, &res);
-  	yy_delete_buffer (buf, scanner);
-  	yylex_destroy (scanner);
-  	return EXIT_SUCCESS;
-	*/
-
 	result res = {0, 0, 0};
 	if(not A_here::current_file.open(argv[1]))
 	{
