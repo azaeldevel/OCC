@@ -97,7 +97,7 @@ inst : inst_mov | inst_int | label;
 inst_mov : keyword_mov literals keyword_al ';' |		
 		keyword_mov literals keyword_ah ';';		
 
-inst_int : keyword_int LITERAL_INTEGER_HEX ';';
+inst_int : keyword_int literals_integers ';';
 
 label : IDENTIFIER ':';
 
@@ -110,8 +110,8 @@ decl :
 	keyword_short IDENTIFIER literals_integers ';' 	{printf("short %s %i';\n",$2,$3);}|
 	keyword_long IDENTIFIER ';' 					{printf("long %s;\n",$2);}|
 	keyword_long IDENTIFIER literals_integers ';' 	{printf("long %s %i';\n",$2,$3);}|
-	keyword_int IDENTIFIER ';'						|
-	keyword_int IDENTIFIER literals_integers ';'	
+	keyword_int IDENTIFIER ';'						{printf("int %s;\n",$2);}|
+	keyword_int IDENTIFIER literals_integers ';'	{printf("int %s %i';\n",$2,$3);}
 ;
 
 

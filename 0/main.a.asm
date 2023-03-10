@@ -4,6 +4,7 @@ char actual2 ;
 short counter 0;
 long valor2 5;
 byte test 1;
+int flag2 1598;
 
 
 boot:
@@ -27,5 +28,5 @@ boot:
 	mov 0x0 ah;
 	int 0x10;
 	mov 'g' al;
-	mov 0xEe ah;
+	mov 0x0e ah;
 	int 0x10;
