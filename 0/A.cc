@@ -38,4 +38,64 @@ void add_identifier(int l,const char* f,const char* w, int leng)
 	str.insert(0,w,leng);
 	std::cout << f << ":" << l << " " << str << "\n";
 }
+
+
+
+
+
+
+File::File() : file(NULL),buffer(NULL),scanner(NULL)
+{
+}
+File::~File()
+{
+	if(buffer)
+	{
+		yy_delete_buffer ((YY_BUFFER_STATE)buffer, scanner);
+		buffer = NULL;
+	}
+	if(scanner)
+	{
+		yylex_destroy (scanner);
+		scanner = NULL;
+	}
+	if(file)
+	{
+		fclose(file);
+		file = NULL;
+	}
+}
+
+
+void* File::get_scanner()
+{
+	return scanner;
+}
+
+bool File::open(const char* fn)
+{
+	if(file) return false;
+	if(buffer) return false;
+	if(not filename.empty()) return false;
+	//std::cout << "Loading file " << fn << "..\n";
+	
+	filename = fn;
+	file = fopen(filename.c_str(), "r");
+	if(not file) return false;
+	//std::cout << "Create file " << fn << "..\n";
+	
+	yylex_init (&scanner);
+	//std::cout << "Creating scanner..\n";
+	buffer = yy_create_buffer(file, YY_BUF_SIZE, scanner);
+    yy_switch_to_buffer((YY_BUFFER_STATE)buffer,(yyscan_t)scanner);
+	
+	return true;
+}
+const char* File::get_filename() const
+{
+	return filename.c_str();
+}
+
+
+
 }

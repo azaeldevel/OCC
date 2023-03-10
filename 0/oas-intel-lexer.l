@@ -7,6 +7,8 @@
 	#include <stdlib.h>
 
 	#include <A.hh>	
+	namespace A_here = oct::cc::v0::A;
+	A_here::File A_here::current_file;
 
 	#include "oas-intel-parser.hh"
 %}
@@ -40,7 +42,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
 
 
-{IDENTIFIER}		{oct::cc::v0::A::add_identifier(yylineno,"file",yytext,yyleng);return IDENTIFIER;}
+{IDENTIFIER}		{oct::cc::v0::A::add_identifier(yylineno,A_here::current_file.get_filename(),yytext,yyleng);return IDENTIFIER;}
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
@@ -84,13 +86,7 @@ void close_file(struct instance* inst)
 
 
 
-struct File
-{
-	FILE* file;
-	const char* filename;
-	YY_BUFFER_STATE buffer;
-};
-
+/*
 File open_file(const char* fn,yyscan_t scanner)
 {
 	File inst;
@@ -100,4 +96,4 @@ File open_file(const char* fn,yyscan_t scanner)
     yy_switch_to_buffer(inst.buffer, scanner);
 
 	return inst;
-}
+}*/

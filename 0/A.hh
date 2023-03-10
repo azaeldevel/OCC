@@ -23,7 +23,7 @@
 
 #include <iostream>
 #include <string>
-
+#include <stdio.h>
 
 
 
@@ -32,6 +32,26 @@ namespace oct::cc::v0::A
 {
 //namespace core_here = oct::core::v3;
 void add_identifier(int line,const char* filename,const char* word, int leng);
+
+class File
+{
+public:
+	File();
+	~File();
+
+	void* get_scanner();
+
+	const char* get_filename()const;
+	bool open(const char* file);
+protected:
+
+private:
+	FILE* file;
+	std::string filename;
+	void* buffer;
+	void* scanner;
+};
+
 
 class SymbolTable
 {
@@ -45,6 +65,9 @@ private:
 	 
 };
 
+
+extern File current_file;
 }
+
 
 #endif
