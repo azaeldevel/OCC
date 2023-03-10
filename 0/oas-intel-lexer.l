@@ -29,13 +29,10 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 "byte"			{return keyword_byte;}
 "char"			{return keyword_char;}
-"tiny"			{return keyword_tiny;}
 "short"			{return keyword_short;}
-"medium"		{return keyword_medium;}
 "long"			{return keyword_long;}
-"integer"		{return keyword_integer;}
+"int"		{return keyword_int;}
 
-"int"			{return keyword_int;}
 "mov"			{return keyword_mov;}
 
 "al"			{return keyword_al;}

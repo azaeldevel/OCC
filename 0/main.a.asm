@@ -1,7 +1,6 @@
 	
 char actual 'A';
 char actual2 ;
-tiny off 1;
 short counter 0;
 long valor2 5;
 byte test 1;

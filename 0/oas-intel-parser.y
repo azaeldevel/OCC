@@ -68,14 +68,11 @@
 //keywords
 %token keyword_byte
 %token keyword_char
-%token keyword_tiny
 %token keyword_short
-%token keyword_medium
+%token keyword_int
 %token keyword_long
-%token keyword_integer
 
 //instruction set
-%token keyword_int
 %token keyword_mov
 
 //rgisters
@@ -109,16 +106,12 @@ decl :
 	keyword_byte IDENTIFIER literals_integers ';'	{printf("byte %s %i;\n",$2,$3);}|
 	keyword_char IDENTIFIER ';' 					{printf("char %s;\n",$2);}|
 	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s '%c';\n",$2,$3);}|
-	keyword_tiny IDENTIFIER ';' 					{printf("tiny %s;\n",$2);}|
-	keyword_tiny IDENTIFIER literals_integers ';' 	{printf("tiny %s %i';\n",$2,$3);}|
 	keyword_short IDENTIFIER ';' 					{printf("short %s;\n",$2);}|
 	keyword_short IDENTIFIER literals_integers ';' 	{printf("short %s %i';\n",$2,$3);}|
-	keyword_medium IDENTIFIER ';' 					{printf("medium %s;\n",$2);}|
-	keyword_medium IDENTIFIER literals_integers ';' {printf("medium %s %i';\n",$2,$3);}|
 	keyword_long IDENTIFIER ';' 					{printf("long %s;\n",$2);}|
 	keyword_long IDENTIFIER literals_integers ';' 	{printf("long %s %i';\n",$2,$3);}|
-	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'						|
-	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'	
+	keyword_int IDENTIFIER ';'						|
+	keyword_int IDENTIFIER literals_integers ';'	
 ;
 
 
