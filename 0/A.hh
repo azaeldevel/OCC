@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-
+#include <filesystem>
 
 
 
@@ -41,13 +41,13 @@ public:
 
 	void* get_scanner();
 
-	const char* get_filename()const;
-	bool open(const char* file);
+	const std::filesystem::path& get_filename()const;
+	bool open(const std::filesystem::path& file);
 protected:
 
 private:
 	FILE* file;
-	std::string filename;
+	std::filesystem::path filename;
 	void* buffer;
 	void* scanner;
 };

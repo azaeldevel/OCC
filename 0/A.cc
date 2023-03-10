@@ -72,15 +72,16 @@ void* File::get_scanner()
 	return scanner;
 }
 
-bool File::open(const char* fn)
+bool File::open(const std::filesystem::path& fn)
 {
 	if(file) return false;
 	if(buffer) return false;
 	if(not filename.empty()) return false;
+	if(fn.empty()) return false;
 	//std::cout << "Loading file " << fn << "..\n";
 	
 	filename = fn;
-	file = fopen(filename.c_str(), "r");
+	file = fopen(filename.string().c_str(), "r");
 	if(not file) return false;
 	//std::cout << "Create file " << fn << "..\n";
 	
@@ -91,9 +92,9 @@ bool File::open(const char* fn)
 	
 	return true;
 }
-const char* File::get_filename() const
+const std::filesystem::path& File::get_filename() const
 {
-	return filename.c_str();
+	return filename;
 }
 
 

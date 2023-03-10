@@ -89,8 +89,8 @@
 
 unit : decls insts ENDOFFILE;
 
-decls : decl | decls decl;
-insts : inst | insts inst;
+decls : decl | decl decls;
+insts : inst | inst insts;
 
 inst : inst_mov | inst_int | label;
 inst_mov : keyword_mov literals ',' keyword_al ';' |		

@@ -51,9 +51,7 @@ namespace A_here = oct::cc::v0::A;
 int main (int argc, char* argv[])
 {
 	//std::cout << "Step 1\n";
-	
-	const char* current = A_here::current_file.get_filename();
-	
+		
 	if(argc != 2)
 	{
 		fprintf(stderr,"Indique el nombre de archivo");
