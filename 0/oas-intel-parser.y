@@ -83,11 +83,11 @@
 %token keyword_ah
 
 %token <const char*>IDENTIFIER
-%token LITERAL_INTEGER_DEC
-%token LITERAL_INTEGER_HEX
+%token <long long>LITERAL_INTEGER_DEC
+%token <long long>LITERAL_INTEGER_HEX
 %token <char>LITERAL_CHAR
 %token ENDOFFILE 0  "end-of-file"
-
+%type <long long> literals_integers 
 
 %%
 
@@ -105,18 +105,18 @@ inst_int : keyword_int LITERAL_INTEGER_HEX ';';
 label : IDENTIFIER ':';
 
 decl :
-	keyword_byte IDENTIFIER ';' 					|
-	keyword_byte IDENTIFIER literals_integers ';'	|
+	keyword_byte IDENTIFIER ';' 					{printf("byte %s;\n",$2);}|
+	keyword_byte IDENTIFIER literals_integers ';'	{printf("byte %s %i;\n",$2,$3);}|
 	keyword_char IDENTIFIER ';' 					{printf("char %s;\n",$2);}|
-	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s %c;\n",$2,$3);}|
-	keyword_tiny IDENTIFIER ';' 					|
-	keyword_tiny IDENTIFIER literals_integers ';' 	|
-	keyword_short IDENTIFIER ';' 					|
-	keyword_short IDENTIFIER literals_integers ';' 	|
-	keyword_medium IDENTIFIER ';' 					|
-	keyword_medium IDENTIFIER literals_integers ';' |
-	keyword_long IDENTIFIER ';' 					|
-	keyword_long IDENTIFIER literals_integers ';' 	|
+	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s '%c';\n",$2,$3);}|
+	keyword_tiny IDENTIFIER ';' 					{printf("tiny %s;\n",$2);}|
+	keyword_tiny IDENTIFIER literals_integers ';' 	{printf("tiny %s %i';\n",$2,$3);}|
+	keyword_short IDENTIFIER ';' 					{printf("short %s;\n",$2);}|
+	keyword_short IDENTIFIER literals_integers ';' 	{printf("short %s %i';\n",$2,$3);}|
+	keyword_medium IDENTIFIER ';' 					{printf("medium %s;\n",$2);}|
+	keyword_medium IDENTIFIER literals_integers ';' {printf("medium %s %i';\n",$2,$3);}|
+	keyword_long IDENTIFIER ';' 					{printf("long %s;\n",$2);}|
+	keyword_long IDENTIFIER literals_integers ';' 	{printf("long %s %i';\n",$2,$3);}|
 	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER ';'						|
 	keyword_integer '<' LITERAL_INTEGER_DEC '>' IDENTIFIER literals_integers ';'	
 ;

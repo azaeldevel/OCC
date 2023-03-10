@@ -19,7 +19,7 @@
 DIGIT_DEC [0-9]
 DIGIT_HEX [0-9A-Fa-f]
 LETTER [a-zA-Z]
-LIETRAL_INTEGER_DEC {DIGIT_DEC}+
+LITERAL_INTEGER_DEC {DIGIT_DEC}+
 LIETRAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LIETRAL_CHAR '{LETTER}'
 
@@ -56,8 +56,16 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				}
 
 {LIETRAL_INTEGER_HEX}		{return LITERAL_INTEGER_HEX;}
-{LIETRAL_INTEGER_DEC}		{return LITERAL_INTEGER_DEC;}
-{LIETRAL_CHAR}				{return LITERAL_CHAR;}
+{LITERAL_INTEGER_DEC}		{
+								const char* num = new char[yyleng+1];
+								memcpy((void*)num,(const void*)yytext,yyleng);								
+								yylval->LITERAL_INTEGER_DEC = std::stoll(num);
+								return LITERAL_INTEGER_DEC;
+							}
+{LIETRAL_CHAR}				{
+								yylval->LITERAL_CHAR = yytext[1];
+								return LITERAL_CHAR;
+							}
 
 
 <<EOF>>  return ENDOFFILE;
