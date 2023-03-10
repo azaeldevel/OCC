@@ -46,9 +46,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_CHAR}		{return LITERAL_CHAR;}
 
 
-,			return ',';
-:			return ':';
-;			return ';';
+,			return (yytoken_kind_t)',';
+:			return (yytoken_kind_t)':';
+;			return (yytoken_kind_t)';';
 
 <<EOF>>  return ENDOFFILE;
 

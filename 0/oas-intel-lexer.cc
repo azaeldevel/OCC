@@ -43,6 +43,7 @@ void yyerror (const char  *s)
 */
 
 #include <iostream>
+#include <fstream>
 #include "A.hh"
 
 
@@ -52,18 +53,31 @@ int main (int argc, char* argv[])
 {
 	//std::cout << "Step 1\n";
 		
-	if(argc != 2)
+	if(argc != 3)
 	{
-		fprintf(stderr,"Indique el nombre de archivo");
+		fprintf(stderr,"Indique el nombre de archivos");
 		return EXIT_FAILURE;
 	}
+	
+	std::filesystem::path work_dir = argv[2];
+	std::filesystem::path result_file_path = argv[1];
+	result_file_path = result_file_path.filename();
+	result_file_path = work_dir/result_file_path;
+	result_file_path.replace_extension(".asm.lex");
+	std::fstream result_file;
+    result_file.open(result_file_path, std::ios_base::out|std::ios_base::binary);
+	if(!result_file.is_open())
+    {
+        std::cout << "No se puede abrir '" << result_file_path << "'\n";
+        return EXIT_FAILURE;
+    }
 	
 	result res = {0, 0, 0};
 	if(not A_here::current_file.open(argv[1]))
 	{
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
 		return EXIT_FAILURE;		
-	}
+	}	
 
 	int token = -1;
 	YYSTYPE yylval;
@@ -71,9 +85,12 @@ int main (int argc, char* argv[])
 	do
 	{
 		token = yylex(&yylval,A_here::current_file.get_scanner(), &res);
+		result_file.write((const char*)&token,sizeof(token));
 		std::cout << token << "\n";
 	}
 	while(token > 0);
+	result_file.flush();
+	result_file.close();
 
 	return EXIT_SUCCESS;
 }
