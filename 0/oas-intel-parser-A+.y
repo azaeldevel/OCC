@@ -26,10 +26,11 @@
 {
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
-#define YY_DECL                                                         \
-  	yytoken_kind_t yylex ()
-  	YY_DECL;
-	
+	#define YY_DECL                                                         \
+	  	yytoken_kind_t poslex()
+	  	YY_DECL;	
+		#define yylex poslex
+
 	void yyerror(const char *msg);
 }
 

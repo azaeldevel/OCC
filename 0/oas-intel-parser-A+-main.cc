@@ -42,7 +42,7 @@
 namespace A_here = oct::cc::v0::A;
 static std::ifstream infile;
 
-yytoken_kind_t yylex()
+yytoken_kind_t poslex()
 {
 	yytoken_kind_t token;
 	infile.read((char*)&token,sizeof(token));

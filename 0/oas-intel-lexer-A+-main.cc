@@ -17,30 +17,12 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <oas-intel-parser-A+.hh>
+
 #include <oas-intel-A+.tab.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
 
-
-/*void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
-{
-  (void) scanner;
-  va_list args;
-  va_start (args, msg);
-  vfprintf (stderr, msg, args);
-  va_end (args);
-  fputc ('\n', stderr);
-  res->nerrs += 1;
-}*/
-
-/*
-void yyerror (const char  *s)
-{
-  fprintf (stderr, "%s\n", s);
-}
-*/
 
 #include <iostream>
 #include <fstream>
@@ -48,6 +30,30 @@ void yyerror (const char  *s)
 
 
 namespace A_here = oct::cc::v0::A;
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    ENDOFFILE = 0,                 /* "end-of-file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    keyword_byte = 258,            /* keyword_byte  */
+    keyword_char = 259,            /* keyword_char  */
+    keyword_short = 260,           /* keyword_short  */
+    keyword_int = 261,             /* keyword_int  */
+    keyword_long = 262,            /* keyword_long  */
+    keyword_mov = 263,             /* keyword_mov  */
+    keyword_al = 264,              /* keyword_al  */
+    keyword_ah = 265,              /* keyword_ah  */
+    IDENTIFIER = 266,              /* IDENTIFIER  */
+    LITERAL_INTEGER_DEC = 267,     /* LITERAL_INTEGER_DEC  */
+    LITERAL_INTEGER_HEX = 268,     /* LITERAL_INTEGER_HEX  */
+    LITERAL_CHAR = 269             /* LITERAL_CHAR  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
+yytoken_kind_t lexer();
 
 int main (int argc, char* argv[])
 {
@@ -72,7 +78,6 @@ int main (int argc, char* argv[])
         return EXIT_FAILURE;
     }
 	
-	result res = {0, 0, 0};
 	if(not A_here::current_file.open(argv[1]))
 	{
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
@@ -80,10 +85,9 @@ int main (int argc, char* argv[])
 	}	
 
 	int token = -1;
-	YYSTYPE yylval;	
 	do
 	{
-		token = yylex();
+		token = lexer();
 		result_file.write((const char*)&token,sizeof(token));
 		std::cout << token << "\n";
 	}

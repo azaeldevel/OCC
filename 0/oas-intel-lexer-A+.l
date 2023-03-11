@@ -13,8 +13,32 @@
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
 	A_here::File A_here::current_file;
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    ENDOFFILE = 0,                 /* "end-of-file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    keyword_byte = 258,            /* keyword_byte  */
+    keyword_char = 259,            /* keyword_char  */
+    keyword_short = 260,           /* keyword_short  */
+    keyword_int = 261,             /* keyword_int  */
+    keyword_long = 262,            /* keyword_long  */
+    keyword_mov = 263,             /* keyword_mov  */
+    keyword_al = 264,              /* keyword_al  */
+    keyword_ah = 265,              /* keyword_ah  */
+    IDENTIFIER = 266,              /* IDENTIFIER  */
+    LITERAL_INTEGER_DEC = 267,     /* LITERAL_INTEGER_DEC  */
+    LITERAL_INTEGER_HEX = 268,     /* LITERAL_INTEGER_HEX  */
+    LITERAL_CHAR = 269             /* LITERAL_CHAR  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
 
-	#include "oas-intel-parser-A+.hh"
+#define YY_DECL yytoken_kind_t lexer()
+
 %}
 
 DIGIT_DEC [0-9]

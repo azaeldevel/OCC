@@ -39,8 +39,13 @@ oas-intel-A+-sources : $(top_srcdir)/0/oas-intel-lexer-A+.l $(top_srcdir)/0/oas-
 oas_intel_SOURCES = oas-main.cc A+.cc oas-intel-parser-A+.cc oas-intel-A+.lexer.cc
 oas_intel_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -I-I$(top_srcdir)/.
 
-oas_intel_lexer_A__SOURCES = oas-intel-lexer-A+.cc A+.cc A+-flex.cc oas-intel-A+.lexer.cc
-oas_intel_lexer_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
+oas_intel_lexer_A__SOURCES = A+.cc A+-flex.cc oas-intel-A+.lexer.cc oas-intel-lexer-A+-main.cc 
+oas_intel_lexer_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -DLEXER_DEFAUL
+oas_intel_lexer_A__CXXFLAGS = -DLEXER_DEFAUL
 
 oas_intel_parser_A__SOURCES = A+.cc A+-occ.cc oas-intel-parser-A+-main.cc oas-intel-parser-A+.cc 
-oas_intel_parser_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
+oas_intel_parser_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -DLEXER_POSTERIOR
+oas_intel_parser_A__CXXFLAGS = -DLEXER_POSTERIOR
+
+
+
