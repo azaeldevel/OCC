@@ -90,8 +90,8 @@
 
 unit : decls insts ENDOFFILE;
 
-decls : decl | decl decls;
-insts : inst | inst insts;
+decls : decl {printf("Declaration\n");}| decl decls {printf("Declaration\n");};
+insts : inst {printf("Instruction\n");}| inst insts {printf("Instruction\n");};
 
 inst : inst_mov | inst_int | label;
 inst_mov : keyword_mov literals keyword_al ';' |		

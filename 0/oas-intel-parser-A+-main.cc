@@ -67,6 +67,7 @@ int main (int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
+	/*
 	yytoken_kind_t token;
 	YYSTYPE yylval;	
 	do
@@ -75,6 +76,8 @@ int main (int argc, char* argv[])
 		std::cout << token << "\n";
 	}
 	while(token > 0);
+	*/
+	yyparse();
 
 	return EXIT_SUCCESS;
 }
