@@ -79,7 +79,7 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;		
 	}	
 
-	int token = -1;
+	yytoken_kind_t token;
 	YYSTYPE yylval;
 	yyscan_t scanner = (yyscan_t)A_here::current_file.get_scanner();
 	do

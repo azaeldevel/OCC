@@ -27,10 +27,10 @@
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
 #define YY_DECL                                                         \
-  	yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res)
+  	yytoken_kind_t yylex ()
   	YY_DECL;
-
-	void yyerror(yyscan_t scanner, result *res, const char *msg, ...);
+	
+	void yyerror(const char *msg);
 }
 
 // Emitted on top of the implementation file.
@@ -47,7 +47,7 @@
 
 
 // Don't share global variables between the scanner and the parser.
-%define api.pure full
+//%define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
 %define api.value.type union
@@ -62,7 +62,7 @@
 %verbose
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
-%param {yyscan_t scanner}{result *res}
+//%param {yyscan_t scanner}{result *res}
 
 
 //keywords
@@ -102,16 +102,16 @@ inst_int : keyword_int literals_integers ';';
 label : IDENTIFIER ':';
 
 decl :
-	keyword_byte IDENTIFIER ';' 					{printf("byte %s;\n",$2);}|
-	keyword_byte IDENTIFIER literals_integers ';'	{printf("byte %s %i;\n",$2,$3);}|
-	keyword_char IDENTIFIER ';' 					{printf("char %s;\n",$2);}|
-	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s '%c';\n",$2,$3);}|
-	keyword_short IDENTIFIER ';' 					{printf("short %s;\n",$2);}|
-	keyword_short IDENTIFIER literals_integers ';' 	{printf("short %s %i';\n",$2,$3);}|
-	keyword_long IDENTIFIER ';' 					{printf("long %s;\n",$2);}|
-	keyword_long IDENTIFIER literals_integers ';' 	{printf("long %s %i';\n",$2,$3);}|
-	keyword_int IDENTIFIER ';'						{printf("int %s;\n",$2);}|
-	keyword_int IDENTIFIER literals_integers ';'	{printf("int %s %i';\n",$2,$3);}
+	keyword_byte IDENTIFIER ';' 					|
+	keyword_byte IDENTIFIER literals_integers ';'	|
+	keyword_char IDENTIFIER ';' 					|
+	keyword_char IDENTIFIER LITERAL_CHAR ';' 		|
+	keyword_short IDENTIFIER ';' 					|
+	keyword_short IDENTIFIER literals_integers ';'  |
+	keyword_long IDENTIFIER ';' 					|
+	keyword_long IDENTIFIER literals_integers ';' 	|
+	keyword_int IDENTIFIER ';'						|
+	keyword_int IDENTIFIER literals_integers ';'	
 ;
 
 
@@ -119,6 +119,11 @@ literals : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | LITERAL_CHAR;
 literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 %%
+
+void yyerror (const char  *s)
+{
+  fprintf (stderr, "%s\n", s);
+}
 
 
 

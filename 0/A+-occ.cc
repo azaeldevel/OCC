@@ -31,33 +31,43 @@ namespace oct::cc::v0::A
 {
 
 
-void add_identifier(int l,const char* f,const char* w, int leng)
+File::~File()
 {
-	//printf("%s:%i %s\n",f,l,w);
-	std::string str;
-	str.insert(0,w,leng);
-	std::cout << f << ":" << l << " " << str << "\n";
+	if(buffer)
+	{
+		//yy_delete_buffer ((YY_BUFFER_STATE)buffer);
+		buffer = NULL;
+	}
+	if(file)
+	{
+		fclose(file);
+		file = NULL;
+	}
 }
 
 
 
-
-
-
-File::File() : file(NULL),buffer(NULL)
+bool File::open(const std::filesystem::path& fn)
 {
+	if(file) return false;
+	if(buffer) return false;
+	if(not filename.empty()) return false;
+	if(fn.empty()) return false;
+	//std::cout << "Loading file " << fn << "..\n";
+	
+	filename = fn;
+	file = fopen(filename.string().c_str(), "rb");
+	if(not file) return false;
+	//std::cout << "Create file " << fn << "..\n";
+	
+	//yylex_init (&scanner);
+	//std::cout << "Creating scanner..\n";
+	//buffer = yy_create_buffer(file, YY_BUF_SIZE);
+    //yy_switch_to_buffer((YY_BUFFER_STATE)buffer);
+	
+	return true;
 }
 
-FILE* File::get_file()
-{
-	return file;
-}
-
-
-const std::filesystem::path& File::get_filename() const
-{
-	return filename;
-}
 
 
 

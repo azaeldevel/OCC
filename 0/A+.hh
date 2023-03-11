@@ -39,7 +39,7 @@ public:
 	File();
 	~File();
 
-	void* get_scanner();
+	FILE* get_file();
 
 	const std::filesystem::path& get_filename()const;
 	bool open(const std::filesystem::path& file);
@@ -49,7 +49,6 @@ private:
 	FILE* file;
 	std::filesystem::path filename;
 	void* buffer;
-	void* scanner;
 };
 
 
