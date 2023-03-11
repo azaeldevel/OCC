@@ -6,7 +6,7 @@ AM_CPPFLAGS = \
 	
 
 
-noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90 oas-intel oas-intel-lexer
+noinst_PROGRAMS = develop-lexer-flex-c90 develop-lexer-occ-c90 occ-c90 oas-intel oas-intel-lexer-A+
 
 octetos_cc_includedir = $(includedir)/octetos/cc
 octetos_cc_include_HEADERS = 
@@ -26,15 +26,19 @@ occ_c90_SOURCES = main-occ-c90.cc
 occ_c90_LDADD = 
 occ_c90_CXXFLAGS = $(OCTETOS_CC_CFLGAS) -DOCTETOS_CC_DEGUB=true -I/home/azael/develop/octetos
 
-BUILT_SOURCES = oas-intel-sources
+BUILT_SOURCES = oas-intel-A+-sources
 
 oas-intel-sources : $(top_srcdir)/0/oas-intel-lexer.l $(top_srcdir)/0/oas-intel-parser.y
 	bison --header $(top_srcdir)/0/oas-intel-parser.y -o oas-intel-parser.cc
 	flex -o oas-intel.lexer.cc --header=oas-intel.tab.h $(top_srcdir)/0/oas-intel-lexer.l
 
-oas_intel_SOURCES = oas-main.cc A.cc oas-intel-parser.cc oas-intel.lexer.cc
-oas_intel_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -I-I$(top_srcdir)/..
+oas-intel-A+-sources : $(top_srcdir)/0/oas-intel-lexer-A+.l $(top_srcdir)/0/oas-intel-parser-A+.y
+	bison --header $(top_srcdir)/0/oas-intel-parser-A+.y -o oas-intel-parser-A+.cc
+	flex -o oas-intel-A+.lexer.cc --header=oas-intel-A+.tab.h $(top_srcdir)/0/oas-intel-lexer-A+.l
 
-oas_intel_lexer_SOURCES = oas-intel-lexer.cc A.cc oas-intel.lexer.cc
-oas_intel_lexer_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
+oas_intel_SOURCES = oas-main.cc A+.cc oas-intel-parser-A+.cc oas-intel-A+.lexer.cc
+oas_intel_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -I-I$(top_srcdir)/.
+
+oas_intel_lexer_A__SOURCES = oas-intel-lexer-A+.cc A+.cc oas-intel-A+.lexer.cc
+oas_intel_lexer_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0
 
