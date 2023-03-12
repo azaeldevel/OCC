@@ -30,30 +30,8 @@
 
 
 namespace A_here = oct::cc::v0::A;
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    ENDOFFILE = 0,                 /* "end-of-file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    keyword_byte = 258,            /* keyword_byte  */
-    keyword_char = 259,            /* keyword_char  */
-    keyword_short = 260,           /* keyword_short  */
-    keyword_int = 261,             /* keyword_int  */
-    keyword_long = 262,            /* keyword_long  */
-    keyword_mov = 263,             /* keyword_mov  */
-    keyword_al = 264,              /* keyword_al  */
-    keyword_ah = 265,              /* keyword_ah  */
-    IDENTIFIER = 266,              /* IDENTIFIER  */
-    LITERAL_INTEGER_DEC = 267,     /* LITERAL_INTEGER_DEC  */
-    LITERAL_INTEGER_HEX = 268,     /* LITERAL_INTEGER_HEX  */
-    LITERAL_CHAR = 269             /* LITERAL_CHAR  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
-#endif
-yytoken_kind_t lexer();
+
+A_here::Tokens lexer();
 
 int main (int argc, char* argv[])
 {
@@ -84,14 +62,14 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;		
 	}	
 
-	int token = -1;
+	A_here::Tokens token;
 	do
 	{
 		token = lexer();
 		result_file.write((const char*)&token,sizeof(token));
-		std::cout << token << "\n";
+		std::cout << (int)token << "\n";
 	}
-	while(token > 0);
+	while((int)token > 0);
 	result_file.flush();
 	result_file.close();
 

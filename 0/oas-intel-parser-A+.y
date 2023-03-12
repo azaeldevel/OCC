@@ -67,11 +67,38 @@
 
 
 //keywords
-%token keyword_byte
-%token keyword_char
-%token keyword_short
-%token keyword_int
-%token keyword_long
+%token AUTO
+%token BREAK
+%token CASE
+%token CHAR
+%token CONST
+%token CONTINUE
+%token DEFAULT
+%token DO
+%token DOUBLE
+%token ELSE
+%token ENUM
+%token EXTERN
+%token FLOAT
+%token FOR
+%token GOTO
+%token IF
+%token INT
+%token LONG
+%token REGISTER
+%token RETURN
+%token SHORT
+%token SIGNED
+%token SIZEOF
+%token STATIC
+%token STRUCT
+%token SWITCH
+%token TYPEDEF
+%token UNION
+%token UNSIGNED
+%token VOID
+%token VOLATIL
+%token WHILE
 
 //instruction set
 %token keyword_mov
@@ -98,21 +125,19 @@ inst : inst_mov | inst_int | label;
 inst_mov : keyword_mov literals keyword_al ';' |		
 		keyword_mov literals keyword_ah ';';		
 
-inst_int : keyword_int literals_integers ';';
+inst_int : INT literals_integers ';';
 
 label : IDENTIFIER ':';
 
 decl :
-	keyword_byte IDENTIFIER ';' 					|
-	keyword_byte IDENTIFIER literals_integers ';'	|
-	keyword_char IDENTIFIER ';' 					|
-	keyword_char IDENTIFIER LITERAL_CHAR ';' 		|
-	keyword_short IDENTIFIER ';' 					|
-	keyword_short IDENTIFIER literals_integers ';'  |
-	keyword_long IDENTIFIER ';' 					|
-	keyword_long IDENTIFIER literals_integers ';' 	|
-	keyword_int IDENTIFIER ';'						|
-	keyword_int IDENTIFIER literals_integers ';'	
+	CHAR IDENTIFIER ';' 					|
+	CHAR IDENTIFIER LITERAL_CHAR ';' 		|
+	SHORT IDENTIFIER ';' 					|
+	SHORT IDENTIFIER literals_integers ';'  |
+	LONG IDENTIFIER ';' 					|
+	LONG IDENTIFIER literals_integers ';' 	|
+	INT IDENTIFIER ';'						|
+	INT IDENTIFIER literals_integers ';'	
 ;
 
 

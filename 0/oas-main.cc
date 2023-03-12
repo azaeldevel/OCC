@@ -24,23 +24,6 @@
 #include <stdlib.h> // getenv.
 
 
-void yyerror (yyscan_t scanner, result *res, const char *msg, ...)
-{
-  (void) scanner;
-  va_list args;
-  va_start (args, msg);
-  vfprintf (stderr, msg, args);
-  va_end (args);
-  fputc ('\n', stderr);
-  res->nerrs += 1;
-}
-
-/*
-void yyerror (const char  *s)
-{
-  fprintf (stderr, "%s\n", s);
-}
-*/
 
 #include <iostream>
 #include "A+.hh"
