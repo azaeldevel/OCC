@@ -12,7 +12,10 @@
 
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
+	namespace core_here = oct::core::v3;
 	A_here::File A_here::current_file;
+	core_here::Block A_here::block;
+	A_here::Symbol* A_here::current_symbol;
 	
 	#define YY_DECL A_here::Tokens lexer()
 	
@@ -71,14 +74,20 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 [\n\t ]			;
 
 {IDENTIFIER}	{
+					A_here::Identifier* identifer;
+					identifer = A_here::block.create<A_here::Identifier>();
+					identifer->name.insert(0,yytext,yyleng);
+					std::cout << "Identifier : " << identifer->name << "\n";
+					
 					return A_here::Tokens::identifier;
-				}//oct::cc::v0::A::add_identifier(yylineno,A_here::current_file.get_filename().string().c_str(),yytext,yyleng);
+				}
 
 [!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
 										return (A_here::Tokens)yytext[0];
 									}
 
 {LIETRAL_INTEGER_HEX}		{
+								
 								return A_here::Tokens::LITERAL_INTEGER_HEX;
 							}
 {LITERAL_INTEGER_DEC}		{

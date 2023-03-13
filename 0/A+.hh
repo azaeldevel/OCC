@@ -33,11 +33,15 @@ namespace oct::core::v3
 class Block
 {
 public:
-	Block(size_t size) : page_size(size),actual(NULL),index(0)
+	Block() : page_size(1024),actual(NULL),index(0)
 	{
 		actual = malloc(page_size);
 		blocks.push_back(actual);
-		
+	}
+	Block(size_t size) : page_size(size),actual(NULL),index(0)
+	{
+		actual = malloc(page_size);
+		blocks.push_back(actual);		
 	}
 	~Block()
 	{
@@ -56,8 +60,8 @@ public:
 			index = 0;			
 		}
 
-		T* obj = actual + index;
-		index += sizeof(T);		
+		T* obj = (T*) (actual + index);
+		index += sizeof(T) + 1;		
 		return obj;
 	}
 private:
@@ -73,6 +77,7 @@ private:
 
 namespace oct::cc::v0::A
 {
+namespace core_here = oct::core::v3;
 enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
 		command = -100,
@@ -348,7 +353,7 @@ enum class Tokens : int
 
 	};
 
-//namespace core_here = oct::core::v3;
+
 void add_identifier(int line,const char* filename,const char* word, int leng);
 
 class File
@@ -384,7 +389,7 @@ private:
 
 struct Symbol
 {
-	int number;
+	Tokens number;
 };
 
 struct Identifier : public Symbol
@@ -392,8 +397,15 @@ struct Identifier : public Symbol
 	std::string name;
 };
 
+struct Integer : public Symbol
+{
+	long long number;
+};
+
 
 extern File current_file;
+extern core_here::Block block;
+extern Symbol* current_symbol;
 }
 
 
