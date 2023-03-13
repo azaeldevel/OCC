@@ -94,7 +94,7 @@ enum class Tokens : int
 		FF,
 		CR,
 		SO,
-		SI,
+		SIC,//SI control char
 		DLE,
 		DC1,
 		DC2,
@@ -106,7 +106,7 @@ enum class Tokens : int
 		CAN,
 		EM,
 		SUB,
-		ESC,
+		ESCC,//ESC control char
 		FS,
 		GS,
 		RS,
@@ -261,15 +261,66 @@ enum class Tokens : int
 		WHILE,
 
 		//Intel instruction set
+		AAA,
+		AAD,
+		AAM,
+		AAS,
+		ADC,
+		ADD,
+		AND,
+		CALL,
+		CBW,
+		CLC,
+		CLD,
+		CLI,
+		CMC,
+		CMP,
+		CMPS,
+		CWD,
+		DAA,
+		DAS,
+		DEC,
+		DIV,
+		ESC,
+		HLT,
+		IDIV,
+		IMUL,
+		IN,
+		INC,
+
+		
 		MOV,
 
 		//intel registers
 		AL,
 		AH,
+		AX,
+		BL,
+		BH,
+		BX,
+		CL,
+		CH,
+		CX,
+		DL,
+		DH,
+		DX,
+
+		//Ponters
+		SP,
+		BP,
+		SI,
+		DI,
+
+		//Segments
+		CS,
+		DS,
+		SS,
+		ES,
+	
 
 		//leterals
 		LITERAL_INTEGER_DEC,
-		LITERAL_INTEGER_DEC_CHAR,		
+		LITERAL_INTEGER_DEC_SCHAR,		
 		LITERAL_INTEGER_DEC_UCHAR,
 		LITERAL_INTEGER_DEC_SHORT,
 		LITERAL_INTEGER_DEC_USHORT,
@@ -280,6 +331,10 @@ enum class Tokens : int
 		LITERAL_INTEGER_DEC_LONGLONG,
 		LITERAL_INTEGER_DEC_ULONGLONG,
 		LITERAL_INTEGER_HEX,
+		LITERAL_INTEGER_HEX_CHAR,		
+		LITERAL_INTEGER_HEX_UCHAR,
+		LITERAL_INTEGER_HEX_SHORT,
+		LITERAL_INTEGER_HEX_USHORT,
 		LITERAL_CHAR,
 		LITERAL_STRING,
 		LITERAL_FLOAT,

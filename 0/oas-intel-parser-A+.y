@@ -101,48 +101,67 @@
 %token WHILE
 
 //instruction set
-%token keyword_mov
+%token MOV
 
-//rgisters
-%token keyword_al
-%token keyword_ah
+//registers
+%token AL
+%token AH
+%token AX
+%token BL
+%token BH
+%token BX
+%token CL
+%token CH
+%token CX
+%token DH
+%token DL
+%token DX
 
-%token <const char*>IDENTIFIER
-%token <long long>LITERAL_INTEGER_DEC
-%token <long long>LITERAL_INTEGER_HEX
-%token <char>LITERAL_CHAR
+
+
 %token ENDOFFILE 0  "end-of-file"
+%token <long long>LITERAL_INTEGER_DEC
+%token <signed char>LITERAL_INTEGER_DEC_SCHAR	
+%token <unsigned char>LITERAL_INTEGER_DEC_UCHAR
+%token <short> LITERAL_INTEGER_DEC_SHORT
+%token <unsigned short> LITERAL_INTEGER_DEC_USHORT
+%token <long long>LITERAL_INTEGER_HEX
+%token <signed char>LITERAL_INTEGER_HEX_SCHAR		
+%token <unsigned char>LITERAL_INTEGER_HEX_UCHAR
+%token <short> LITERAL_INTEGER_HEX_SHORT
+%token <unsigned short> LITERAL_INTEGER_HEX_USHORT
+%token <char> LITERAL_CHAR
+%token <const char*> IDENTIFIER
 %type <long long> literals_integers 
 
 %%
 
 unit : decls insts ENDOFFILE;
 
-decls : decl {printf("Declaration\n");}| decl decls {printf("Declaration\n");};
-insts : inst {printf("Instruction\n");}| inst insts {printf("Instruction\n");};
+decls : decl {printf("Declaration\n");}| decls decl {printf("Declaration\n");};
+insts : inst {printf("Instruction\n");}| insts inst {printf("Instruction\n");};
 
-inst : inst_mov | inst_int | label;
-inst_mov : keyword_mov literals keyword_al ';' |		
-		keyword_mov literals keyword_ah ';';		
-
+inst : inst_mov | inst_int | inst_label ;
+inst_mov : MOV registers_8b literals_8b ';' | MOV registers_16b literals_16b ';';		
 inst_int : INT literals_integers ';';
-
-label : IDENTIFIER ':';
+inst_label : IDENTIFIER ':';
 
 decl :
-	CHAR IDENTIFIER ';' 					|
-	CHAR IDENTIFIER LITERAL_CHAR ';' 		|
-	SHORT IDENTIFIER ';' 					|
-	SHORT IDENTIFIER literals_integers ';'  |
-	LONG IDENTIFIER ';' 					|
-	LONG IDENTIFIER literals_integers ';' 	|
-	INT IDENTIFIER ';'						|
-	INT IDENTIFIER literals_integers ';'	
+	CHAR IDENTIFIER initializer_char ';' 	|
+	SHORT IDENTIFIER initializer_integer ';'|
+	LONG IDENTIFIER initializer_integer ';' |
+	INT IDENTIFIER initializer_integer ';'	
 ;
 
 
-literals : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | LITERAL_CHAR;
+literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
+literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT;
 literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+initializer_char : LITERAL_CHAR | ;
+initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
+
+registers_8b : AL | AH ;
+registers_16b : AX ;
 
 %%
 

@@ -21,7 +21,7 @@
 DIGIT_DEC [0-9]
 DIGIT_HEX [0-9A-Fa-f]
 LETTER [a-zA-Z]
-LITERAL_INTEGER_DEC {DIGIT_DEC}+
+LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
 LIETRAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LIETRAL_CHAR '{LETTER}'
 
@@ -74,12 +74,15 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 					return A_here::Tokens::identifier;
 				}//oct::cc::v0::A::add_identifier(yylineno,A_here::current_file.get_filename().string().c_str(),yytext,yyleng);
 
-[:;]			{
-					return (A_here::Tokens)yytext[0];
-				}
+[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
+										return (A_here::Tokens)yytext[0];
+									}
 
-{LIETRAL_INTEGER_HEX}		{return A_here::Tokens::LITERAL_INTEGER_HEX;}
+{LIETRAL_INTEGER_HEX}		{
+								return A_here::Tokens::LITERAL_INTEGER_HEX;
+							}
 {LITERAL_INTEGER_DEC}		{
+								std::cout << "Integer : " << yytext << "\n";
 								return A_here::Tokens::LITERAL_INTEGER_DEC;
 							}
 {LIETRAL_CHAR}				{
@@ -87,8 +90,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							}
 
 
-<<EOF>>  return A_here::Tokens::NUL;
+<<EOF>>  					return A_here::Tokens::NUL;
 
-.				;
+.							;
 
 %%

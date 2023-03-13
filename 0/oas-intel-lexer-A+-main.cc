@@ -67,8 +67,9 @@ int main (int argc, char* argv[])
 	{
 		token = lexer();
 		result_file.write((const char*)&token,sizeof(token));
-		std::cout << (int)token << "\n";
+		//std::cout << (int)token << "\n";
 	}
+
 	while((int)token > 0);
 	result_file.flush();
 	result_file.close();
