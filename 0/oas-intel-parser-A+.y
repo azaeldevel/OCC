@@ -136,22 +136,137 @@
 
 %%
 
-unit : decls insts ENDOFFILE;
+translation_unit : external_declaration ENDOFFILE |
+	external_declaration translation_unit ENDOFFILE
+	;
 
-decls : decl {printf("Declaration\n");}| decls decl {printf("Declaration\n");};
-insts : inst {printf("Instruction\n");}| insts inst {printf("Instruction\n");};
+external_declaration : function_implementation |
+	declaration 
+	;
 
-inst : inst_mov | inst_int | inst_label ;
-inst_mov : MOV registers_8b literals_8b ';' | MOV registers_16b literals_16b ';';		
-inst_int : INT literals_integers ';';
-inst_label : IDENTIFIER ':';
+function_implementation : 
+	declaration_specifiers declarator declaration_list compound_statement |
+	declaration_specifiers declarator compound_statement |
+	declarator declaration_list compound_statement |
+	declarator compound_statement
+	;
 
-decl :
-	CHAR IDENTIFIER initializer_char ';' 	|
-	SHORT IDENTIFIER initializer_integer ';'|
-	LONG IDENTIFIER initializer_integer ';' |
-	INT IDENTIFIER initializer_integer ';'	
-;
+//6.5
+declaration : declaration_specifiers init_declarator_list | declaration_specifiers;
+declaration_specifiers :
+	starage_class_especifier declaration_specifiers |
+	starage_class_especifier |
+	type_specifier declaration_specifiers |
+	type_specifier |
+	type_qualifer declaration_specifiers |
+	type_qualifer
+	;
+
+starage_class_especifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+
+init_declarator_list : init_declarator |
+	init_declarator_list ',' init_declarator
+	;
+
+init_declarator : declarator |
+	init_declarator '=' initializer;
+
+//TODO : esta gramatica no es exacta para el estandar
+initializer : const_expression |
+	'{' initilizer_list '}'
+	;
+
+
+const_expression : LITERAL_CHAR | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ; 
+
+
+
+initilizer_list : const_expression |
+	initilizer_list ',' const_expression
+	;
+
+ 
+type_specifier :  VOID | CHAR | SHORT | INT | LONG | FLOAT | SIGNED | UNSIGNED ;
+
+type_qualifer : CONST | VOLATIL;
+
+declarator : pointer direct_declarator |
+	direct_declarator;
+
+direct_declarator : IDENTIFIER |
+	'(' declarator ')' |
+	direct_declarator '[' const_expression ']' |
+	direct_declarator '(' parameter_type_list ')' |
+	direct_declarator '(' identifer_list ')' 
+	;
+
+identifer_list : IDENTIFIER |
+	identifer_list IDENTIFIER
+	;
+	
+
+parameter_type_list : parameter_list |
+	parameter_list ',' "..."
+	;
+
+parameter_list : parameter_declaration
+	parameter_list ',' parameter_declaration
+	;
+
+parameter_declaration : 
+	declaration_specifiers declarator |
+	declaration_specifiers abstract_declarator |
+	declaration_specifiers |
+	;
+
+abstract_declarator : pointer |
+	pointer direct_abstract_declarator|
+	direct_abstract_declarator
+	;
+
+direct_abstract_declarator : 
+	'(' abstract_declarator ')' |
+	direct_abstract_declarator '[' const_expression ']' |
+	'[' const_expression ']' |
+	direct_abstract_declarator '[' ']' |	
+	'[' ']' |
+	direct_abstract_declarator '(' const_expression ')' | 
+	'(' const_expression ')' |
+	direct_abstract_declarator '(' ')' |	
+	'(' ')' |
+	;
+
+pointer : '*' type_qualifer_list |
+	'*' |
+	'*' type_qualifer_list pointer |
+	'*' pointer
+	;
+
+type_qualifer_list : type_qualifer |
+	type_qualifer_list type_qualifer 
+	;
+
+compound_statement : '{' declaration_list statement_list '}' | 
+	'{' statement_list '}' |
+	'{' declaration_list '}' |
+	'{' '}' 
+	;
+	
+declaration_list : declaration |
+	declaration_list declaration
+	;
+
+
+statement_list : statement |
+	statement_list statement
+	;
+
+statement : compound_statement |  instruction_mov | instruction_int ;
+
+
+
+instruction_mov : MOV registers_8b literals_8b ';' | MOV registers_16b literals_16b ';';		
+instruction_int : INT literals_integers ';';
 
 
 literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
