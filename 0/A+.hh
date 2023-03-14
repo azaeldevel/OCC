@@ -392,6 +392,7 @@ private:
 struct Symbol
 {
 	Tokens token;
+	std::list<Symbol*> childs;
 };
 
 struct Identifier : public Symbol
