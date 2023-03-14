@@ -74,10 +74,11 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 [\n\t ]			;
 
 {IDENTIFIER}	{
-					A_here::Identifier* identifer;
-					identifer = A_here::block.create<A_here::Identifier>();
-					identifer->name.insert(0,yytext,yyleng);
-					std::cout << "Identifier : " << identifer->name << "\n";
+					A_here::Identifier* identifier;
+					identifier = A_here::block.create<A_here::Identifier>();
+					identifier->name.insert(0,yytext,yyleng);
+					std::cout << "Identifier : " << identifier->name << "\n";
+					A_here::current_symbol = (A_here::Symbol*)identifier;
 					
 					return A_here::Tokens::identifier;
 				}
@@ -91,10 +92,19 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 								return A_here::Tokens::LITERAL_INTEGER_HEX;
 							}
 {LITERAL_INTEGER_DEC}		{
-								std::cout << "Integer : " << yytext << "\n";
+								A_here::Integer* integer;
+								integer = A_here::block.create<A_here::Integer>();
+								//const char*  strnum = new char[yyleng + 1];								
+								integer->number = core_here::to_number<long long>(yytext);
+								std::cout << "Integer : " << integer->number << "\n";
+								A_here::current_symbol = (A_here::Symbol*)integer;
 								return A_here::Tokens::LITERAL_INTEGER_DEC;
 							}
 {LIETRAL_CHAR}				{
+								A_here::Char* letter;
+								letter = A_here::block.create<A_here::Char>();
+								std::cout << "Letter : " << letter->letter << "\n";
+								A_here::current_symbol = (A_here::Symbol*)letter;
 								return A_here::Tokens::LITERAL_CHAR;
 							}
 

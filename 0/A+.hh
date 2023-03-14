@@ -27,6 +27,8 @@
 #include <filesystem>
 #include <list>
 
+#include <core/3/math.hh>
+
 namespace oct::core::v3
 {
 
@@ -60,7 +62,7 @@ public:
 			index = 0;			
 		}
 
-		T* obj = (T*) (actual + index);
+		T* obj = (T*) ((char*)actual + index);
 		index += sizeof(T) + 1;		
 		return obj;
 	}
@@ -400,6 +402,11 @@ struct Identifier : public Symbol
 struct Integer : public Symbol
 {
 	long long number;
+};
+
+struct Char : public Symbol
+{
+	char letter;
 };
 
 
