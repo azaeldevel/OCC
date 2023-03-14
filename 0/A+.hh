@@ -397,6 +397,7 @@ struct Symbol
 {
 	Tokens token;
 	std::vector<Symbol*> childs;
+	unsigned int line;
 };
 
 struct Identifier : public Symbol
@@ -431,7 +432,6 @@ public:
 	}
 	
 protected:
-
 	Symbol* next();
 	
 
