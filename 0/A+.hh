@@ -391,7 +391,7 @@ private:
 
 struct Symbol
 {
-	Tokens number;
+	Tokens token;
 };
 
 struct Identifier : public Symbol
