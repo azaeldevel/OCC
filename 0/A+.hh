@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <filesystem>
 #include <list>
+#include <vector>
 
 #include <core/3/math.hh>
 
@@ -61,16 +62,19 @@ public:
 			blocks.push_back(actual);
 			index = 0;			
 		}
-
-		T* obj = (T*) ((char*)actual + index);
+		
+		char* actual = (char*) this->actual;
+		T* obj = (T*)(actual + index);
 		index += sizeof(T) + 1;		
 		return obj;
 	}
+protected:
+	void* actual;//last block memory assignable
+	size_t index;//firs posistion usable in actual block memory
+	
 private:
 	std::list<void*> blocks;
 	size_t page_size;
-	void* actual;//last block memory assignable
-	size_t index;//firs posistion usable in actual block memory
 	
 };
 
@@ -392,7 +396,7 @@ private:
 struct Symbol
 {
 	Tokens token;
-	std::list<Symbol*> childs;
+	std::vector<Symbol*> childs;
 };
 
 struct Identifier : public Symbol
@@ -403,6 +407,9 @@ struct Identifier : public Symbol
 struct Integer : public Symbol
 {
 	long long number;
+	char format;//Decimal, Hexadecimal
+
+	Tokens reduced_token()const;
 };
 
 struct Char : public Symbol
@@ -410,9 +417,31 @@ struct Char : public Symbol
 	char letter;
 };
 
+class Block : public core_here::Block
+{
+public:
+	Block();
+
+	template<typename T> T* create()
+	{
+		T* obj = core_here::Block::create<T>();
+		actual = (Symbol*)obj;
+		
+		return obj;
+	}
+	
+protected:
+
+	Symbol* next();
+	
+
+private:
+	Symbol* actual;
+};
+
 
 extern File current_file;
-extern core_here::Block block;
+extern Block block;
 extern Symbol* current_symbol;
 }
 

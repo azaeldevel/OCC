@@ -1,8 +1,8 @@
 	
 char actual 'A';
 char actual2 ;
-signed char actual3 122;
-unsigned char actual4 -126;
+unsigned char actual3 122;
+signed char actual4 -126;
 short counter 1309;
 long valor2 5;
 byte test 1;

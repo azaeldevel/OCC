@@ -21,7 +21,8 @@
 
 #include <oas-intel-parser-A+.hh>
 #include <oas-intel-A+.tab.h>
-
+#include <limits>
+#include <core/3/Exception.hh>
 
 #include "A+.hh"
 
@@ -59,6 +60,60 @@ const std::filesystem::path& File::get_filename() const
 	return filename;
 }
 
+
+Block::Block() : actual(NULL)
+{
+}
+Symbol* Block::next()
+{
+	if(index == 0) return NULL;
+	if(not actual) actual = (Symbol*)core_here::Block::actual;
+	char* actual = (char*) this->actual;
+	
+	switch(this->actual->token)
+	{
+		case Tokens::identifier:
+			actual += sizeof(Identifier) + 1;
+			break;
+		case Tokens::LITERAL_INTEGER_DEC:
+		case Tokens::LITERAL_INTEGER_HEX:
+			actual += sizeof(Integer) + 1;
+			break;
+		default:
+			actual += sizeof(Char) + 1;
+			break;
+	}
+	this->actual = (Symbol*)actual;
+	
+	return this->actual;
+}
+
+
+
+
+
+Tokens Integer::reduced_token() const
+{
+	//std::cout << "reduced_token : step 1 " << number << "\n";
+	if(0 > number)
+	{
+		if(std::numeric_limits<signed char>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SCHAR;
+		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
+		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
+		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
+		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;	
+	}
+	else
+	{
+		if(std::numeric_limits<unsigned char>::max() > number) return Tokens::LITERAL_INTEGER_DEC_UCHAR;
+		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
+		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
+		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
+		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;		
+	}
+	
+	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
+}
 
 
 }
