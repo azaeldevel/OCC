@@ -88,13 +88,16 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 									}
 
 {LIETRAL_INTEGER_HEX}		{
-								
+								A_here::Integer* integer;
+								integer = A_here::block.create<A_here::Integer>();							
+								integer->number = std::stoul(yytext, nullptr, 16);
+								std::cout << "Integer : " << integer->number << "\n";
+								A_here::current_symbol = (A_here::Symbol*)integer;								
 								return A_here::Tokens::LITERAL_INTEGER_HEX;
 							}
 {LITERAL_INTEGER_DEC}		{
 								A_here::Integer* integer;
-								integer = A_here::block.create<A_here::Integer>();
-								//const char*  strnum = new char[yyleng + 1];								
+								integer = A_here::block.create<A_here::Integer>();							
 								integer->number = core_here::to_number<long long>(yytext);
 								std::cout << "Integer : " << integer->number << "\n";
 								A_here::current_symbol = (A_here::Symbol*)integer;
