@@ -66,30 +66,45 @@ const std::filesystem::path& File::get_filename() const
 
 Block::Block() : actual(NULL)
 {
+	if(blocks.empty()) return;
+	it = blocks.begin();
+	actual = (Symbol*)*it;
 }
-Symbol* Block::next()
+/*Symbol* Block::next()
 {
-	if(index == 0) return NULL;
-	if(not actual) actual = (Symbol*)core_here::Block::actual;
-	char* actual = (char*) this->actual;
+	if(not actual) return NULL;
+	Symbol* prev = actual;
 	
-	switch(this->actual->token)
+	char* obj = (char*)actual;
+	std::cout << "Block::next : actual = " << prev << "\n";	
+	switch(actual->token)
 	{
-		case Tokens::identifier:
-			actual += sizeof(Identifier) + 1;
-			break;
-		case Tokens::LITERAL_INTEGER_DEC:
-		case Tokens::LITERAL_INTEGER_HEX:
-			actual += sizeof(Integer) + 1;
-			break;
-		default:
-			actual += sizeof(Char) + 1;
-			break;
+	case Tokens::identifier:
+		std::cout << "Block::next : identifier\n";
+		obj += sizeof(Identifier) + 1;
+		break;
+	case Tokens::LITERAL_INTEGER_DEC:
+	case Tokens::LITERAL_INTEGER_HEX:
+		std::cout << "Block::next : LITERAL_INTEGER\n";
+		obj += sizeof(Integer) + 1;
+		break;
+	default:
+		if (actual->token >= Tokens::AUTO and actual->token <= Tokens::WHILE)
+		{
+			std::cout << "Block::next : Symbol\n";
+			obj += sizeof(Symbol) + 1;
+		}
+		else
+		{
+			std::cout << "Block::next : char\n";
+			obj += sizeof(Char) + 1;
+		}			
+		break;
 	}
-	this->actual = (Symbol*)actual;
+	actual = (Symbol*)obj;
 	
-	return this->actual;
-}
+	return prev;
+}*/
 
 
 

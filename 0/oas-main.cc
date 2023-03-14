@@ -17,37 +17,68 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <oas-intel-parser-A+.hh>
 #include <oas-intel-A+.tab.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
 
 
-
 #include <iostream>
+#include <fstream>
 #include "A+.hh"
 
 
 namespace A_here = oct::cc::v0::A;
 
+A_here::Tokens lexer();
+
 int main (int argc, char* argv[])
-{
-	//std::cout << "Step 1\n";
-		
-	if(argc != 2)
+{		
+	if(argc != 3)
 	{
-		fprintf(stderr,"Indique el nombre de archivo");
+		fprintf(stderr,"Indique el nombre de archivos");
 		return EXIT_FAILURE;
 	}
 	
-	result res = {0, 0, 0};
+	std::filesystem::path work_dir = argv[2];
+	std::filesystem::path result_file_path = argv[1];
+	result_file_path = result_file_path.filename();
+	result_file_path = work_dir/result_file_path;
+	result_file_path.replace_extension(".asm.lex");
+	std::fstream result_file;
+    result_file.open(result_file_path, std::ios_base::out|std::ios_base::binary);
+	if(!result_file.is_open())
+    {
+        std::cout << "No se puede abrir '" << result_file_path << "'\n";
+        return EXIT_FAILURE;
+    }
+	
 	if(not A_here::current_file.open(argv[1]))
 	{
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
 		return EXIT_FAILURE;		
+	}	
+
+	A_here::Tokens token;
+	do
+	{
+		token = lexer();
+		result_file.write((const char*)&token,sizeof(token));
+		//std::cout << (int)token << "\n";
 	}
-	yyparse(A_here::current_file.get_scanner(), &res);
+
+	while((int)token > 0);
+	result_file.flush();
+	result_file.close();
+
+	/*A_here::Symbol* symbol = A_here::block.next();
+	while(symbol)
+	{
+		std::cout << A_here::to_string(symbol->token) << "\n";
+
+		
+		symbol = A_here::block.next();		
+	}*/
 
 	return EXIT_SUCCESS;
 }

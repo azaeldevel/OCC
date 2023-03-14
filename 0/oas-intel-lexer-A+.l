@@ -15,10 +15,8 @@
 	namespace core_here = oct::core::v3;
 	A_here::File A_here::current_file;
 	A_here::Block A_here::block;
-	A_here::Symbol* A_here::current_symbol;
-	
-	#define YY_DECL A_here::Tokens lexer()
-	
+	A_here::Symbol* A_here::current_symbol;	
+	#define YY_DECL A_here::Tokens lexer()	
 %}
 
 DIGIT_DEC [0-9]
@@ -318,9 +316,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 					A_here::Identifier* identifier;
 					identifier = A_here::block.create<A_here::Identifier>();
 					identifier->line = yylineno;
-					identifier->name.insert(0,yytext,yyleng);
-					A_here::current_symbol = (A_here::Symbol*)identifier;
-					
+					identifier->name.insert(0,yytext,yyleng);					
 					return A_here::Tokens::identifier;
 				}
 
@@ -330,7 +326,6 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 										letter = A_here::block.create<A_here::Char>();
 										letter->line = yylineno;
 										letter->token = (A_here::Tokens)yytext[0];
-										A_here::current_symbol = (A_here::Symbol*)letter;
 										return (A_here::Tokens)yytext[0];
 									}
 
@@ -341,8 +336,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->line = yylineno;
 							integer->format = 'H';		
 							integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;				
-							integer->number = std::stoll(yytext, nullptr, 16);
-							A_here::current_symbol = (A_here::Symbol*)integer;								
+							integer->number = std::stoll(yytext, nullptr, 16);								
 							return integer->reduced_token();
 						}
 {LITERAL_INTEGER_DEC}	{								
@@ -356,26 +350,26 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							A_here::current_symbol = (A_here::Symbol*)integer;
 							return integer->reduced_token();
 						}
-{LIETRAL_CHAR}		{								
+{LIETRAL_CHAR}		{
 						//std::cout << "Line : " << yylineno << "\n";
-						A_here::Char* letter;
-						letter = A_here::block.create<A_here::Char>();
+						A_here::LiteralChar* letter;
+						letter = A_here::block.create<A_here::LiteralChar>();
 						letter->token = (A_here::Tokens)yytext[0];
 						letter->line = yylineno;
 						A_here::current_symbol = (A_here::Symbol*)letter;
 						return A_here::Tokens::LITERAL_CHAR;
 					}
 
-<<EOF>>  					return A_here::Tokens::NUL;
+<<EOF>>  	return A_here::Tokens::NUL;
 
-.							{
-								//std::cout << "Line : " << yylineno << "\n";
-								A_here::Char* letter;
-								letter = A_here::block.create<A_here::Char>();
-								letter->line = yylineno;
-								letter->token = (A_here::Tokens)yytext[0];
-								A_here::current_symbol = (A_here::Symbol*)letter;
-								return (A_here::Tokens)yytext[0];
-							}
+.	{
+		//std::cout << "Line : " << yylineno << "\n";
+		A_here::Char* letter;
+		letter = A_here::block.create<A_here::Char>();
+		letter->line = yylineno;
+		letter->token = (A_here::Tokens)yytext[0];
+		A_here::current_symbol = (A_here::Symbol*)letter;
+		return (A_here::Tokens)yytext[0];
+	}
 
 %%

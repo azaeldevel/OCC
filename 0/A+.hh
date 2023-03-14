@@ -58,23 +58,28 @@ public:
 	{
 		if(sizeof(T) + index >= page_size)
 		{
+			std::cout << "Block::create malloc\n";
 			actual = malloc(page_size);
 			blocks.push_back(actual);
 			index = 0;			
 		}
 		
-		char* actual = (char*) this->actual;
-		T* obj = (T*)(actual + index);
-		index += sizeof(T) + 1;		
+		char* newptr = static_cast<char*>(actual);
+		std::cout << "Block::create actual : " << (void*)actual << "\n";
+		T* obj = (T*)(newptr + index);
+		std::cout << "Block::create newptr : " << (void*)newptr << "\n";
+		index += sizeof(T);//next aviable memory
+		actual = (void*)newptr;
 		return obj;
 	}
 protected:
 	void* actual;//last block memory assignable
 	size_t index;//firs posistion usable in actual block memory
+	std::list<void*> blocks;
+	std::list<void*>::iterator it;
+	size_t page_size;
 	
 private:
-	std::list<void*> blocks;
-	size_t page_size;
 	
 };
 
@@ -83,8 +88,8 @@ private:
 
 namespace oct::cc::v0::A
 {
-namespace core_here = oct::core::v3;
-enum class Tokens : int
+	namespace core_here = oct::core::v3;
+	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
 		command = -100,
 		eoi,//end of input
@@ -360,6 +365,50 @@ enum class Tokens : int
 	};
 
 
+	template<typename Token> std::string to_string(Token t)
+	{
+		std::string str;
+
+		if (t >= Token::AUTO and t <= Token::WHILE)
+		{
+			switch(t)
+			{
+			case Token::AUTO : return "auto";
+			case Token::BREAK : return "break";
+			case Token::CASE : return "case";
+			case Token::CHAR : return "char";
+			case Token::CONST : return "const";
+			case Token::CONTINUE : return "continue";
+			case Token::DEFAULT : return "default";
+			case Token::DO : return "do";
+			case Token::ELSE : return "else";
+			case Token::ENUM : return "enum";
+			case Token::EXTERN : return "extern";
+			case Token::FLOAT : return "float";
+			case Token::FOR : return "for";
+			case Token::GOTO : return "goto";
+			case Token::IF : return "if";
+			case Token::INT : return "int";
+			case Token::LONG : return "long";
+			case Token::REGISTER : return "register";
+			case Token::RETURN : return "return";
+			case Token::SHORT : return "short";
+			case Token::SIGNED : return "signed";
+			case Token::SIZEOF : return "sizeof";
+			case Token::STATIC : return "static";
+			case Token::STRUCT : return "struct";
+			case Token::SWITCH : return "switch";
+			case Token::TYPEDEF : return "typedef";
+			case Token::UNION : return "union";
+			case Token::UNSIGNED : return "unsgined";
+			case Token::VOID : return "void";
+			case Token::VOLATIL : return "volatil";
+			case Token::WHILE : return "while";
+			}
+		}
+
+		return std::to_string((int)t);
+	}
 void add_identifier(int line,const char* filename,const char* word, int leng);
 
 class File
@@ -418,21 +467,20 @@ struct Char : public Symbol
 	char letter;
 };
 
+struct LiteralChar : public Symbol
+{
+	char letter;
+};
+
 class Block : public core_here::Block
 {
 public:
 	Block();
 
-	template<typename T> T* create()
-	{
-		T* obj = core_here::Block::create<T>();
-		actual = (Symbol*)obj;
-		
-		return obj;
-	}
+	
+	Symbol* next();
 	
 protected:
-	Symbol* next();
 	
 
 private:
