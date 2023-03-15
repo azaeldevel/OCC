@@ -56,12 +56,6 @@ int main (int argc, char* argv[])
         return EXIT_FAILURE;
     }
 	
-	if(not A_here::current_file.open(argv[1]))
-	{
-		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
-		return EXIT_FAILURE;		
-	}	
-
 	A_here::Tokens token;
 	do
 	{

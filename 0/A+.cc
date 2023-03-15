@@ -70,45 +70,45 @@ Block::Block() : actual(NULL)
 	it = blocks.begin();
 	actual = (Symbol*)*it;
 }
+
 /*Symbol* Block::next()
 {
 	if(not actual) return NULL;
 	Symbol* prev = actual;
+	size_t index;
 	
-	char* obj = (char*)actual;
-	std::cout << "Block::next : actual = " << prev << "\n";	
+	char* obj = (char*)actual;	
+	std::cout << "Block::next actual : " << (long)actual << "\n";
 	switch(actual->token)
 	{
 	case Tokens::identifier:
-		std::cout << "Block::next : identifier\n";
-		obj += sizeof(Identifier) + 1;
+		//std::cout << "Block::next : identifier\n";
+		index = sizeof(Identifier) + 1;
+		obj += index;
 		break;
 	case Tokens::LITERAL_INTEGER_DEC:
 	case Tokens::LITERAL_INTEGER_HEX:
-		std::cout << "Block::next : LITERAL_INTEGER\n";
+		//std::cout << "Block::next : LITERAL_INTEGER\n";
 		obj += sizeof(Integer) + 1;
 		break;
 	default:
 		if (actual->token >= Tokens::AUTO and actual->token <= Tokens::WHILE)
 		{
-			std::cout << "Block::next : Symbol\n";
+			//std::cout << "Block::next : Symbol\n";
 			obj += sizeof(Symbol) + 1;
 		}
 		else
 		{
-			std::cout << "Block::next : char\n";
+			//std::cout << "Block::next : char\n";
 			obj += sizeof(Char) + 1;
 		}			
 		break;
 	}
 	actual = (Symbol*)obj;
+	std::cout << "Block::next index : " << index << "\n";	
 	
 	return prev;
 }*/
-
-
-
-
 
 Tokens Integer::reduced_token() const
 {

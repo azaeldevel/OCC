@@ -5,7 +5,6 @@ unsigned char actual3 122;
 signed char actual4 -126;
 short counter 1309;
 long valor2 5;
-byte test 1;
 short flag2 -21598;
 
 int main(void)

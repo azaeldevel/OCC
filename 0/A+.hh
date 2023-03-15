@@ -56,6 +56,7 @@ public:
 
 	template<typename T> T* create()
 	{
+		std::cout << "Block::create begin\n";
 		if(sizeof(T) + index >= page_size)
 		{
 			std::cout << "Block::create malloc\n";
@@ -74,6 +75,7 @@ public:
 		std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
 		index += sizeof(T) + 1;//next aviable memory
 		actual = (void*)newptr;
+		std::cout << "Block::create end\n";
 		return obj;
 	}
 protected:

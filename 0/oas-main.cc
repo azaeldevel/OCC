@@ -59,15 +59,18 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;		
 	}	
 
+	std::cout << ">>>Inicio\n";
 	A_here::Tokens token;
 	do
 	{
+		std::cout << ">>>lexer\n";
 		token = lexer();
+		std::cout << "<<<lexer\n\n";
 		result_file.write((const char*)&token,sizeof(token));
-		//std::cout << (int)token << "\n";
+		std::cout << (int)token << "\n\n";
 	}
-
 	while((int)token > 0);
+	std::cout << "<<<Final\n\n";
 	result_file.flush();
 	result_file.close();
 
