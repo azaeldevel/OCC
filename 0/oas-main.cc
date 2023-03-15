@@ -74,14 +74,14 @@ int main (int argc, char* argv[])
 	result_file.flush();
 	result_file.close();
 
-	/*A_here::Symbol* symbol = A_here::block.next();
-	while(symbol)
+	std::cout << ">>>Inicio\n";
+	A_here::Symbol* symbol = A_here::block.next();
+	while((int)symbol->token > 0)
 	{
-		std::cout << A_here::to_string(symbol->token) << "\n";
-
-		
+		std::cout << A_here::to_string(symbol->token) << "\n";		
 		symbol = A_here::block.next();		
-	}*/
+	}
+	std::cout << "<<<Final\n\n";
 
 	return EXIT_SUCCESS;
 }

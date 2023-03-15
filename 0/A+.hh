@@ -71,7 +71,7 @@ public:
 		newptr += index;
 		T* obj = (T*)newptr;
 		std::cout << "Block::create newptr : " << (long)newptr << "\n";
-		std::cout << "Block::create index : " << index << "\n";
+		//std::cout << "Block::create index : " << index << "\n";
 		std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
 		index += sizeof(T) + 1;//next aviable memory
 		actual = (void*)newptr;
@@ -433,6 +433,7 @@ private:
 	FILE* file;
 	std::filesystem::path filename;
 	void* buffer;
+	size_t index;
 };
 
 
@@ -491,6 +492,7 @@ protected:
 
 private:
 	Symbol* actual;
+	size_t index;
 };
 
 

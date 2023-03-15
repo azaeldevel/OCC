@@ -367,7 +367,14 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 						return A_here::Tokens::LITERAL_CHAR;
 					}
 
-<<EOF>>  	return A_here::Tokens::NUL;
+<<EOF>>  	{
+				std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
+				A_here::LiteralChar* letter;
+				letter = A_here::block.create<A_here::LiteralChar>();
+				letter->token = A_here::Tokens::NUL;
+				letter->line = yylineno;
+				return A_here::Tokens::NUL;
+			}
 
 .	;
 

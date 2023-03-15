@@ -64,51 +64,63 @@ const std::filesystem::path& File::get_filename() const
 
 
 
-Block::Block() : actual(NULL)
+Block::Block() : actual(NULL),index(0)
 {
 	if(blocks.empty()) return;
 	it = blocks.begin();
 	actual = (Symbol*)*it;
 }
 
-/*Symbol* Block::next()
+Symbol* Block::next()
 {
-	if(not actual) return NULL;
-	Symbol* prev = actual;
-	size_t index;
+	std::cout << "Block::next begin\n";
+	if(not actual) return NULL;	
+	if(index >= page_size)
+	{
+		//std::cout << "Block::create malloc\n";
+		it++;
+		actual = (Symbol*)*it;
+		index = 0;		
+	}
 	
-	char* obj = (char*)actual;	
+	char* newptr = (char*)actual;
 	std::cout << "Block::next actual : " << (long)actual << "\n";
+	std::cout << "Block::next index : " << index << "\n";
+	newptr += index;
+	Symbol* obj = (Symbol*)newptr;
+	std::cout << "Block::create newptr : " << (long)newptr << "\n";
+	//std::cout << "Block::create index : " << index << "\n";
 	switch(actual->token)
 	{
 	case Tokens::identifier:
 		//std::cout << "Block::next : identifier\n";
-		index = sizeof(Identifier) + 1;
-		obj += index;
+		index += sizeof(Identifier) + 1;
 		break;
 	case Tokens::LITERAL_INTEGER_DEC:
 	case Tokens::LITERAL_INTEGER_HEX:
 		//std::cout << "Block::next : LITERAL_INTEGER\n";
-		obj += sizeof(Integer) + 1;
+		index += sizeof(Integer) + 1;
+		std::cout << "Block::create sizeof(T) : " << sizeof(Integer) << "\n";
 		break;
 	default:
 		if (actual->token >= Tokens::AUTO and actual->token <= Tokens::WHILE)
 		{
 			//std::cout << "Block::next : Symbol\n";
-			obj += sizeof(Symbol) + 1;
+			index += sizeof(Symbol) + 1;
+			std::cout << "Block::create sizeof(T) : " << sizeof(Symbol) << "\n";
 		}
 		else
 		{
 			//std::cout << "Block::next : char\n";
-			obj += sizeof(Char) + 1;
-		}			
+			index += sizeof(Char) + 1;
+			std::cout << "Block::create sizeof(T) : " << sizeof(Char) << "\n";
+		}
 		break;
 	}
 	actual = (Symbol*)obj;
-	std::cout << "Block::next index : " << index << "\n";	
-	
-	return prev;
-}*/
+	std::cout << "Block::next end\n";
+	return obj;
+}
 
 Tokens Integer::reduced_token() const
 {
