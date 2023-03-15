@@ -65,10 +65,14 @@ public:
 		}
 		
 		char* newptr = static_cast<char*>(actual);
-		std::cout << "Block::create actual : " << (void*)actual << "\n";
-		T* obj = (T*)(newptr + index);
-		std::cout << "Block::create newptr : " << (void*)newptr << "\n";
-		index += sizeof(T);//next aviable memory
+		std::cout << "Block::create actual : " << (long)actual << "\n";
+		std::cout << "Block::create index : " << index << "\n";
+		newptr += index;
+		T* obj = (T*)newptr;
+		std::cout << "Block::create newptr : " << (long)newptr << "\n";
+		std::cout << "Block::create index : " << index << "\n";
+		std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
+		index += sizeof(T) + 1;//next aviable memory
 		actual = (void*)newptr;
 		return obj;
 	}
