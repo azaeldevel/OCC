@@ -196,8 +196,10 @@ declarator : pointer direct_declarator |
 direct_declarator : IDENTIFIER |
 	'(' declarator ')' |
 	direct_declarator '[' const_expression ']' |
+	direct_declarator '['  ']' |
 	direct_declarator '(' parameter_type_list ')' |
-	direct_declarator '(' identifer_list ')' 
+	direct_declarator '(' identifer_list ')' |
+	direct_declarator '('  ')' 
 	;
 
 identifer_list : IDENTIFIER |
@@ -261,16 +263,23 @@ statement_list : statement |
 	statement_list statement
 	;
 
-statement : compound_statement |  instruction_mov | instruction_int ;
+statement : compound_statement |  instruction_mov ';' | instruction_int ';' | return ';';
+
+return  : 
+	RETURN |
+	RETURN literals_8b |
+	RETURN literals_16b
+	;
+
+instruction_mov : 
+	MOV registers_8b literals_8b | 
+	MOV registers_16b literals_16b 
+	;		
+instruction_int : INT literals_integers ;
 
 
-
-instruction_mov : MOV registers_8b literals_8b ';' | MOV registers_16b literals_16b ';';		
-instruction_int : INT literals_integers ';';
-
-
-literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
-literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT;
+literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC | LITERAL_INTEGER_HEX;
+literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_DEC | LITERAL_INTEGER_HEX;
 literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;

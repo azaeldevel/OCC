@@ -7,28 +7,28 @@ short counter = 1309;
 long valor2 = 5;
 short flag2 = -21598;
 
-int main(void)
+int main()
 {
 	mov al 'B';
-	mov 0x0e ah;
+	mov ah  0x0e;
 	int 0x10;
 	mov al 'o';
-	mov 0x0e ah;
+	mov ah 0x0e;
 	int 0x10;
 	mov al 'o';
-	mov 0x0 ah;
+	mov ah 0x0e;
 	int 0x10;
 	mov al 't';
-	mov 0x0e ah;
+	mov ah 0x0e;
 	int 0x10;
 	mov al 'i';
-	mov 0x0e ah;
+	mov ah 0x0e;
 	int 0x10;
 	mov al 'n';
-	mov 0x0 ah;
+	mov ah 0x0e;
 	int 0x10;
 	mov al 'g';
-	mov 0x0e ah;
+	mov ah 0x0e;
 	int 0x10;
 	
 	return 0;
