@@ -9,25 +9,25 @@ short flag2 -21598;
 
 int main(void)
 {
-	mov 'B' al;
+	mov al 'B';
 	mov 0x0e ah;
 	int 0x10;
-	mov 'o' al;
+	mov al 'o';
 	mov 0x0e ah;
 	int 0x10;
-	mov 'o' al;
+	mov al 'o';
 	mov 0x0 ah;
 	int 0x10;
-	mov 't' al;
+	mov al 't';
 	mov 0x0e ah;
 	int 0x10;
-	mov 'i' al;
+	mov al 'i';
 	mov 0x0e ah;
 	int 0x10;
-	mov 'n' al;
+	mov al 'n';
 	mov 0x0 ah;
 	int 0x10;
-	mov 'g' al;
+	mov al 'g';
 	mov 0x0e ah;
 	int 0x10;
 	

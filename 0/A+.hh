@@ -56,21 +56,21 @@ public:
 
 	template<typename T> T* create()
 	{
-		std::cout << "Block::create begin\n";
+		//std::cout << "Block::create begin\n";
 		if((long)actual >= page_size)
 		{
-			std::cout << "Block::create malloc\n";
+			//std::cout << "Block::create malloc\n";
 			actual = malloc(page_size);
 			blocks.push_back(actual);		
 		}
 		void* now = actual;
 		char* newptr = static_cast<char*>(actual);
-		std::cout << "Block::create actual : " << (long)actual << "\n";
+		//std::cout << "Block::create actual : " << (long)actual << "\n";
 		newptr += sizeof(T) + 1;
-		std::cout << "Block::create newptr : " << (long)newptr << "\n";
-		std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
+		//std::cout << "Block::create newptr : " << (long)newptr << "\n";
+		//std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
 		actual = (void*)newptr;
-		std::cout << "Block::create end\n";
+		//std::cout << "Block::create end\n";
 		return (T*)now;
 	}
 protected:

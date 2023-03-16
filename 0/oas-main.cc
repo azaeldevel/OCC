@@ -35,25 +35,12 @@ namespace A_here = oct::cc::v0::A;
 
 int main (int argc, char* argv[])
 {		
-	if(argc != 3)
+	if(argc < 2)
 	{
 		fprintf(stderr,"Indique el nombre de archivos");
 		return EXIT_FAILURE;
 	}
-	
-	std::filesystem::path work_dir = argv[2];
-	std::filesystem::path result_file_path = argv[1];
-	result_file_path = result_file_path.filename();
-	result_file_path = work_dir/result_file_path;
-	result_file_path.replace_extension(".asm.lex");
-	std::fstream result_file;
-    result_file.open(result_file_path, std::ios_base::out|std::ios_base::binary);
-	if(!result_file.is_open())
-    {
-        std::cout << "No se puede abrir '" << result_file_path << "'\n";
-        return EXIT_FAILURE;
-    }
-	
+		
 	if(not A_here::current_file.open(argv[1]))
 	{
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
@@ -61,31 +48,7 @@ int main (int argc, char* argv[])
 	}	
 
 	result res = {0, 0, 0};
-	/*std::cout << ">>>Inicio\n";
-	A_here::Tokens token;
-	do
-	{
-		std::cout << ">>>lexer\n";
-		token = lexer();
-		std::cout << "<<<lexer\n\n";
-		result_file.write((const char*)&token,sizeof(token));
-		std::cout << (int)token << "\n\n";
-	}
-	while((int)token > 0);
-	std::cout << "<<<Final\n\n";
-	result_file.flush();
-	result_file.close();*/
-
-	/*
-	std::cout << ">>>Inicio\n";
-	A_here::Symbol* symbol = A_here::block.next();
-	while((int)symbol->token > 0)
-	{
-		std::cout << A_here::to_string(symbol->token) << "\n";		
-		symbol = A_here::block.next();		
-	}
-	std::cout << "<<<Final\n\n";
-	*/
+	
 
 	yyparse(A_here::current_file.get_scanner(), &res);
 

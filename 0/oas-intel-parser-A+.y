@@ -44,7 +44,6 @@
 }
 
 
-
 // Don't share global variables between the scanner and the parser.
 %define api.pure full
 
