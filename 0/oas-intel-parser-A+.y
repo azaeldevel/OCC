@@ -28,11 +28,11 @@
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
 	#define YY_DECL                                                         \
-	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res)
+	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res)
 	  	YY_DECL;	
 		//#define yylex poslex
 
-	void yyerror(yyscan_t scanner, result *res, const char *msg, ...);
+	void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -43,6 +43,8 @@
 	#include <stdlib.h> // getenv.
 }
 
+// with locations.
+%locations
 
 // Don't share global variables between the scanner and the parser.
 %define api.pure full
@@ -278,9 +280,10 @@ registers_16b : AX ;
 
 %%
 
-void yyerror(yyscan_t scanner, result *res, const char *msg, ...)
+void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, const char *msg, ...)
 {
-  fprintf (stderr, "%s\n", msg);
+	YYLOCATION_PRINT (stderr, loc);
+  	fprintf (stderr, "%s\n", msg);
 }
 
 
