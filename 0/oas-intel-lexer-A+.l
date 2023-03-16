@@ -8,6 +8,7 @@
 	#include <stdio.h>
 	#include <string.h>
 	//#include <core/3/math.hh>
+	#include "oas-intel-parser-A+.hh"
 
 
 	#include <A+.hh>	
@@ -44,7 +45,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::BREAK;
-				return yytoken_kind_t::BREAK;
+				return BREAK;
 			}
 "case"		{
 				std::cout << "Line case : " << yylineno << "\n";
@@ -52,7 +53,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::CASE;
-				return A_here::Tokens::CASE;
+				return CASE;
 			}
 "char"		{
 				std::cout << "Line char : " << yylineno << "\n";
@@ -60,7 +61,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::CHAR;
-				return A_here::Tokens::CHAR;
+				return CHAR;
 			}
 "const"		{
 				std::cout << "Line const : " << yylineno << "\n";
@@ -68,7 +69,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::CONST;
-				return A_here::Tokens::CONST;
+				return CONST;
 			}
 "continue"	{
 				std::cout << "Line continue : " << yylineno << "\n";
@@ -76,7 +77,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::CONTINUE;
-				return A_here::Tokens::CONTINUE;
+				return CONTINUE;
 			}
 "default"	{
 				std::cout << "Line default : " << yylineno << "\n";
@@ -84,7 +85,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::DEFAULT;
-				return A_here::Tokens::DEFAULT;
+				return DEFAULT;
 			}
 "do"		{
 				std::cout << "Line do : " << yylineno << "\n";
@@ -92,7 +93,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::DO;
-				return A_here::Tokens::DO;
+				return DO;
 			}
 "double"	{
 				std::cout << "Line double : " << yylineno << "\n";
@@ -100,7 +101,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::DOUBLE;
-				return A_here::Tokens::DOUBLE;
+				return DOUBLE;
 			}
 "else"		{
 				std::cout << "Line else : " << yylineno << "\n";
@@ -108,7 +109,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::ELSE;
-				return A_here::Tokens::ELSE;
+				return ELSE;
 			}
 "enum"		{
 				std::cout << "Line enum : " << yylineno << "\n";
@@ -116,7 +117,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::ENUM;
-				return A_here::Tokens::ENUM;
+				return ENUM;
 			}
 "extern"	{
 				std::cout << "Line extern : " << yylineno << "\n";
@@ -124,7 +125,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::EXTERN;
-				return A_here::Tokens::EXTERN;
+				return EXTERN;
 			}
 "float"		{
 				std::cout << "Line float : " << yylineno << "\n";
@@ -132,7 +133,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::FLOAT;
-				return A_here::Tokens::FLOAT;
+				return FLOAT;
 			}
 "for"		{
 				std::cout << "Line for : " << yylineno << "\n";
@@ -140,7 +141,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::FOR;
-				return A_here::Tokens::FOR;
+				return FOR;
 			}
 "goto"		{
 				std::cout << "Line goto : " << yylineno << "\n";
@@ -148,7 +149,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::GOTO;
-				return A_here::Tokens::GOTO;
+				return GOTO;
 			}
 "if"		{
 				std::cout << "Line if : " << yylineno << "\n";
@@ -156,7 +157,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::IF;
-				return A_here::Tokens::IF;
+				return IF;
 			}
 "int"		{
 				std::cout << "Line int : " << yylineno << "\n";
@@ -164,7 +165,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::INT;
-				return A_here::Tokens::INT;
+				return INT;
 			}
 "long"		{
 				std::cout << "Line long : " << yylineno << "\n";
@@ -172,7 +173,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::LONG;
-				return A_here::Tokens::LONG;
+				return LONG;
 			}
 "register"	{
 				std::cout << "Line register : " << yylineno << "\n";
@@ -180,7 +181,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::REGISTER;
-				return A_here::Tokens::REGISTER;
+				return REGISTER;
 			}
 "return"	{
 				std::cout << "Line return : " << yylineno << "\n";
@@ -188,7 +189,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::RETURN;
-				return A_here::Tokens::RETURN;
+				return RETURN;
 			}
 "short"		{
 				std::cout << "Line short : " << yylineno << "\n";
@@ -201,7 +202,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				std::cout << "Step 4\n";
 				symbol->token = A_here::Tokens::SHORT;
 				std::cout << "Step 5\n";
-				return A_here::Tokens::SHORT;
+				return SHORT;
 			}
 "signed"	{
 				std::cout << "Line signed : " << yylineno << "\n";
@@ -209,7 +210,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::SIGNED;
-				return A_here::Tokens::SIGNED;
+				return SIGNED;
 			}
 "sizeof"	{
 				std::cout << "Line sizeof : " << yylineno << "\n";
@@ -217,7 +218,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::SIZEOF;
-				return A_here::Tokens::SIZEOF;
+				return SIZEOF;
 			}
 "static"	{
 				std::cout << "Line static : " << yylineno << "\n";
@@ -225,7 +226,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::STATIC;
-				return A_here::Tokens::STATIC;
+				return STATIC;
 			}
 "struct"	{
 				std::cout << "Line struct : " << yylineno << "\n";
@@ -233,7 +234,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::STRUCT;
-				return A_here::Tokens::STRUCT;
+				return STRUCT;
 			}
 "switch"	{
 				std::cout << "Line switch : " << yylineno << "\n";
@@ -241,7 +242,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::SWITCH;
-				return A_here::Tokens::SWITCH;
+				return SWITCH;
 			}
 "typedef"	{
 				std::cout << "Line typedef : " << yylineno << "\n";
@@ -249,7 +250,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::TYPEDEF;
-				return A_here::Tokens::TYPEDEF;
+				return TYPEDEF;
 			}
 "union"		{
 				std::cout << "Line : " << yylineno << "\n";
@@ -257,7 +258,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::UNION;
-				return A_here::Tokens::UNION;
+				return UNION;
 			}
 "unsigned"	{
 				std::cout << "Line union : " << yylineno << "\n";
@@ -265,7 +266,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::UNSIGNED;
-				return A_here::Tokens::UNSIGNED;
+				return UNSIGNED;
 			}
 "void"		{
 				std::cout << "Line : " << yylineno << "\n";
@@ -273,7 +274,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::VOID;
-				return A_here::Tokens::VOID;
+				return VOID;
 			}
 "volatil"	{
 				std::cout << "Line volatil : " << yylineno << "\n";
@@ -281,7 +282,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::VOLATIL;
-				return A_here::Tokens::VOLATIL;
+				return VOLATIL;
 			}
 "while"		{
 				std::cout << "Line : " << yylineno << "\n";
@@ -289,7 +290,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::WHILE;
-				return A_here::Tokens::WHILE;
+				return WHILE;
 			}
 
 "mov"		{
@@ -298,7 +299,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::MOV;
-				return A_here::Tokens::MOV;
+				return MOV;
 			}
 
 "al"	{
@@ -307,7 +308,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			symbol = A_here::block.create<A_here::Symbol>();
 			symbol->line = yylineno;
 			symbol->token = A_here::Tokens::AL;
-			return A_here::Tokens::AL;
+			return AL;
 		}
 "ah"	{
 			std::cout << "Line ah : " << yylineno << "\n";
@@ -315,7 +316,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			symbol = A_here::block.create<A_here::Symbol>();
 			symbol->line = yylineno;
 			symbol->token = A_here::Tokens::AH;
-			return A_here::Tokens::AH;
+			return AH;
 		}
 
 [\n\t ]			;
@@ -326,7 +327,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 					identifier = A_here::block.create<A_here::Identifier>();
 					identifier->line = yylineno;
 					identifier->name.insert(0,yytext,yyleng);					
-					return A_here::Tokens::identifier;
+					return IDENTIFIER;
 				}
 
 [!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
@@ -335,7 +336,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 										letter = A_here::block.create<A_here::Symbol>();
 										letter->line = yylineno;
 										letter->token = (A_here::Tokens)yytext[0];
-										return (A_here::Tokens)yytext[0];
+										return (yytoken_kind_t)yytext[0];
 									}
 
 {LIETRAL_INTEGER_HEX}	{
@@ -346,7 +347,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->format = 'H';		
 							integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;				
 							integer->number = std::stoll(yytext, nullptr, 16);								
-							return integer->reduced_token();
+							return LITERAL_INTEGER_HEX;
 						}
 {LITERAL_INTEGER_DEC}	{
 							std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
@@ -356,7 +357,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->format = 'D';
 							integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;					
 							integer->number = std::stoll(yytext);
-							return integer->reduced_token();
+							return LITERAL_INTEGER_DEC;
 						}
 {LIETRAL_CHAR}		{
 						std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
@@ -364,7 +365,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 						letter = A_here::block.create<A_here::Symbol>();
 						letter->token = (A_here::Tokens)yytext[0];
 						letter->line = yylineno;
-						return A_here::Tokens::LITERAL_CHAR;
+						return LITERAL_CHAR;
 					}
 
 <<EOF>>  	{
@@ -373,7 +374,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				letter = A_here::block.create<A_here::Symbol>();
 				letter->token = A_here::Tokens::NUL;
 				letter->line = yylineno;
-				return A_here::Tokens::NUL;
+				return ENDOFFILE;
 			}
 
 .	;

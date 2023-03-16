@@ -1,4 +1,5 @@
 
+
 // Emitted in the header file, before the definition of YYSTYPE.
 %code requires
 {

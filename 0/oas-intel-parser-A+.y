@@ -16,6 +16,7 @@
     // Number of errors.
     int nerrs;
   } result;
+	
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
 	extern A_here::File A_here::current_file;
@@ -48,7 +49,7 @@
 %define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
-%define api.value.type union
+//%define api.value.type union
 
 // Error messages with "unexpected XXX, expected XXX...".
 %define parse.error detailed
@@ -62,6 +63,10 @@
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
 
+
+
+
+%token ENDOFFILE 0  "end-of-file"
 
 //keywords
 %token AUTO
@@ -114,22 +119,19 @@
 %token DL
 %token DX
 
-
-
-%token ENDOFFILE 0  "end-of-file"
-%token <long long>LITERAL_INTEGER_DEC
-%token <signed char>LITERAL_INTEGER_DEC_SCHAR	
-%token <unsigned char>LITERAL_INTEGER_DEC_UCHAR
-%token <short> LITERAL_INTEGER_DEC_SHORT
-%token <unsigned short> LITERAL_INTEGER_DEC_USHORT
-%token <long long>LITERAL_INTEGER_HEX
-%token <signed char>LITERAL_INTEGER_HEX_SCHAR		
-%token <unsigned char>LITERAL_INTEGER_HEX_UCHAR
-%token <short> LITERAL_INTEGER_HEX_SHORT
-%token <unsigned short> LITERAL_INTEGER_HEX_USHORT
-%token <char> LITERAL_CHAR
-%token <const char*> IDENTIFIER
-%type <long long> literals_integers 
+%token LITERAL_INTEGER_DEC
+%token LITERAL_INTEGER_DEC_SCHAR	
+%token LITERAL_INTEGER_DEC_UCHAR
+%token LITERAL_INTEGER_DEC_SHORT
+%token LITERAL_INTEGER_DEC_USHORT
+%token LITERAL_INTEGER_HEX
+%token LITERAL_INTEGER_HEX_SCHAR		
+%token LITERAL_INTEGER_HEX_UCHAR
+%token LITERAL_INTEGER_HEX_SHORT
+%token LITERAL_INTEGER_HEX_USHORT
+%token LITERAL_CHAR
+%token IDENTIFIER
+%type literals_integers 
 
 %%
 
