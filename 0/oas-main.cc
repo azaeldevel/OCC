@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <oas-intel-parser-A+.hh>
 #include <oas-intel-A+.tab.h>
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
@@ -30,7 +31,7 @@
 
 namespace A_here = oct::cc::v0::A;
 
-A_here::Tokens lexer();
+//A_here::Tokens lexer();
 
 int main (int argc, char* argv[])
 {		
@@ -59,7 +60,8 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;		
 	}	
 
-	std::cout << ">>>Inicio\n";
+	result res = {0, 0, 0};
+	/*std::cout << ">>>Inicio\n";
 	A_here::Tokens token;
 	do
 	{
@@ -72,8 +74,9 @@ int main (int argc, char* argv[])
 	while((int)token > 0);
 	std::cout << "<<<Final\n\n";
 	result_file.flush();
-	result_file.close();
+	result_file.close();*/
 
+	/*
 	std::cout << ">>>Inicio\n";
 	A_here::Symbol* symbol = A_here::block.next();
 	while((int)symbol->token > 0)
@@ -82,6 +85,9 @@ int main (int argc, char* argv[])
 		symbol = A_here::block.next();		
 	}
 	std::cout << "<<<Final\n\n";
+	*/
+
+	yyparse(A_here::current_file.get_scanner(), &res);
 
 	return EXIT_SUCCESS;
 }

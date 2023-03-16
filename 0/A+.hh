@@ -36,12 +36,12 @@ namespace oct::core::v3
 class Block
 {
 public:
-	Block() : page_size(1024),actual(NULL),index(0)
+	Block() : page_size(1024),actual(NULL)
 	{
 		actual = malloc(page_size);
 		blocks.push_back(actual);
 	}
-	Block(size_t size) : page_size(size),actual(NULL),index(0)
+	Block(size_t size) : page_size(size),actual(NULL)
 	{
 		actual = malloc(page_size);
 		blocks.push_back(actual);		
@@ -57,35 +57,31 @@ public:
 	template<typename T> T* create()
 	{
 		std::cout << "Block::create begin\n";
-		if(sizeof(T) + index >= page_size)
+		if((long)actual >= page_size)
 		{
 			std::cout << "Block::create malloc\n";
 			actual = malloc(page_size);
-			blocks.push_back(actual);
-			index = 0;			
+			blocks.push_back(actual);		
 		}
-		
+		void* now = actual;
 		char* newptr = static_cast<char*>(actual);
 		std::cout << "Block::create actual : " << (long)actual << "\n";
-		std::cout << "Block::create index : " << index << "\n";
-		newptr += index;
-		T* obj = (T*)newptr;
+		newptr += sizeof(T) + 1;
 		std::cout << "Block::create newptr : " << (long)newptr << "\n";
-		//std::cout << "Block::create index : " << index << "\n";
 		std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
-		index += sizeof(T) + 1;//next aviable memory
 		actual = (void*)newptr;
 		std::cout << "Block::create end\n";
-		return obj;
+		return (T*)now;
 	}
 protected:
 	void* actual;//last block memory assignable
-	size_t index;//firs posistion usable in actual block memory
+	//size_t index;//firs posistion usable in actual block memory
 	std::list<void*> blocks;
 	std::list<void*>::iterator it;
 	size_t page_size;
 	
 private:
+
 	
 };
 
@@ -424,6 +420,7 @@ public:
 	~File();
 
 	FILE* get_file();
+	void* get_scanner();
 
 	const std::filesystem::path& get_filename()const;
 	bool open(const std::filesystem::path& file);
@@ -434,6 +431,7 @@ private:
 	std::filesystem::path filename;
 	void* buffer;
 	size_t index;
+	void* scanner;
 };
 
 
@@ -469,16 +467,6 @@ struct Integer : public Symbol
 	Tokens reduced_token()const;
 };
 
-struct Char : public Symbol
-{
-	char letter;
-};
-
-struct LiteralChar : public Symbol
-{
-	char letter;
-};
-
 class Block : public core_here::Block
 {
 public:
@@ -493,6 +481,10 @@ protected:
 private:
 	Symbol* actual;
 	size_t index;
+
+
+	size_t get_size(Symbol*) const;
+	Symbol* get(size_t at);
 };
 
 

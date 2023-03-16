@@ -35,8 +35,13 @@ File::~File()
 {
 	if(buffer)
 	{
-		yy_delete_buffer ((YY_BUFFER_STATE)buffer);
+		yy_delete_buffer ((YY_BUFFER_STATE)buffer,scanner);
 		buffer = NULL;
+	}
+	if(scanner)
+	{
+		yylex_destroy (scanner);
+		scanner = NULL;
 	}
 	if(file)
 	{
@@ -60,10 +65,10 @@ bool File::open(const std::filesystem::path& fn)
 	if(not file) return false;
 	//std::cout << "Create file " << fn << "..\n";
 	
-	//yylex_init (&scanner);
+	yylex_init (&scanner);
 	//std::cout << "Creating scanner..\n";
-	buffer = yy_create_buffer(file, YY_BUF_SIZE);
-    yy_switch_to_buffer((YY_BUFFER_STATE)buffer);
+	buffer = yy_create_buffer(file, YY_BUF_SIZE,(yyscan_t)scanner);
+    yy_switch_to_buffer((YY_BUFFER_STATE)buffer,(yyscan_t)scanner);
 	
 	return true;
 }

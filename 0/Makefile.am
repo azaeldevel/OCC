@@ -6,7 +6,7 @@ AM_CPPFLAGS = \
 	
 
 
-noinst_PROGRAMS = oas-intel-lexer-A+ oas-intel-parser-A+ oas-intel
+noinst_PROGRAMS = oas-intel
 
 octetos_cc_includedir = $(includedir)/octetos/cc
 octetos_cc_include_HEADERS = 
@@ -36,7 +36,7 @@ oas-intel-A+-sources : $(top_srcdir)/0/oas-intel-lexer-A+.l $(top_srcdir)/0/oas-
 	bison --header $(top_srcdir)/0/oas-intel-parser-A+.y -o oas-intel-parser-A+.cc
 	flex -o oas-intel-A+.lexer.cc --header=oas-intel-A+.tab.h $(top_srcdir)/0/oas-intel-lexer-A+.l
 
-oas_intel_SOURCES = oas-main.cc A+.cc A+-flex.cc oas-intel-A+.lexer.cc
+oas_intel_SOURCES = oas-main.cc A+.cc A+-flex.cc oas-intel-A+.lexer.cc oas-intel-parser-A+.cc
 oas_intel_CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -I$(top_srcdir)/. -I/home/azael/develop/octetos/
 oas_intel_CXXFLAGS = -I/home/azael/develop/octetos/
 

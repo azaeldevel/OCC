@@ -27,11 +27,11 @@
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
 	#define YY_DECL                                                         \
-	  	yytoken_kind_t poslex()
+	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res)
 	  	YY_DECL;	
-		#define yylex poslex
+		//#define yylex poslex
 
-	void yyerror(const char *msg);
+	void yyerror(yyscan_t scanner, result *res, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -44,11 +44,8 @@
 
 
 
-
-
-
 // Don't share global variables between the scanner and the parser.
-//%define api.pure full
+%define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
 %define api.value.type union
@@ -63,7 +60,7 @@
 %verbose
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
-//%param {yyscan_t scanner}{result *res}
+%param {yyscan_t scanner}{result *res}
 
 
 //keywords
@@ -280,9 +277,9 @@ registers_16b : AX ;
 
 %%
 
-void yyerror (const char  *s)
+void yyerror(yyscan_t scanner, result *res, const char *msg, ...)
 {
-  fprintf (stderr, "%s\n", s);
+  fprintf (stderr, "%s\n", msg);
 }
 
 

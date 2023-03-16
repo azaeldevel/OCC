@@ -1,5 +1,5 @@
 
-%option noyywrap yylineno
+%option noyywrap yylineno bison-bridge reentrant
 
 %{
 	#include <assert.h>
@@ -16,7 +16,7 @@
 	A_here::File A_here::current_file;
 	A_here::Block A_here::block;
 	//A_here::Symbol* A_here::current_symbol;	
-	#define YY_DECL A_here::Tokens lexer()	
+	//#define YY_DECL A_here::Tokens lexer()	
 %}
 
 DIGIT_DEC [0-9]
@@ -36,7 +36,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::AUTO;
-				return A_here::Tokens::AUTO;
+				return AUTO;
 			}
 "break"		{
 				std::cout << "Line break : " << yylineno << "\n";
@@ -44,7 +44,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				symbol = A_here::block.create<A_here::Symbol>();
 				symbol->line = yylineno;
 				symbol->token = A_here::Tokens::BREAK;
-				return A_here::Tokens::BREAK;
+				return yytoken_kind_t::BREAK;
 			}
 "case"		{
 				std::cout << "Line case : " << yylineno << "\n";
@@ -331,8 +331,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 [!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
 										std::cout << "Line !#%'()* ... : " << yylineno << "\n";
-										A_here::Char* letter;
-										letter = A_here::block.create<A_here::Char>();
+										A_here::Symbol* letter;
+										letter = A_here::block.create<A_here::Symbol>();
 										letter->line = yylineno;
 										letter->token = (A_here::Tokens)yytext[0];
 										return (A_here::Tokens)yytext[0];
@@ -360,8 +360,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 						}
 {LIETRAL_CHAR}		{
 						std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-						A_here::LiteralChar* letter;
-						letter = A_here::block.create<A_here::LiteralChar>();
+						A_here::Symbol* letter;
+						letter = A_here::block.create<A_here::Symbol>();
 						letter->token = (A_here::Tokens)yytext[0];
 						letter->line = yylineno;
 						return A_here::Tokens::LITERAL_CHAR;
@@ -369,8 +369,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 <<EOF>>  	{
 				std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				A_here::LiteralChar* letter;
-				letter = A_here::block.create<A_here::LiteralChar>();
+				A_here::Symbol* letter;
+				letter = A_here::block.create<A_here::Symbol>();
 				letter->token = A_here::Tokens::NUL;
 				letter->line = yylineno;
 				return A_here::Tokens::NUL;
