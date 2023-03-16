@@ -141,7 +141,7 @@ translation_unit : external_declaration ENDOFFILE |
 	;
 
 external_declaration : function_implementation |
-	declaration 
+	declaration ';'
 	;
 
 function_implementation : 
