@@ -193,7 +193,7 @@ type_qualifer : CONST | VOLATIL;
 declarator : pointer direct_declarator |
 	direct_declarator;
 
-direct_declarator : IDENTIFIER {simbols->push_back($1);}|
+direct_declarator : IDENTIFIER {std::cout << "Identifeir : " << $1 << "\n";}|
 	'(' declarator ')' |
 	direct_declarator '[' const_expression ']' |
 	direct_declarator '['  ']' |
