@@ -48,6 +48,3 @@ oas_intel_parser_A__SOURCES = A+.cc A+-occ.cc oas-intel-parser-A+-main.cc oas-in
 oas_intel_parser_A__CFLAGS = -I$(top_srcdir)/0 -I$(top_builddir)/0 -DLEXER_POSTERIOR
 oas_intel_parser_A__CXXFLAGS = -I/home/azael/develop/octetos/ -DLEXER_POSTERIOR
 
-
-
- 

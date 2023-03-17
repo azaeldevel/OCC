@@ -40,17 +40,18 @@ int main (int argc, char* argv[])
 		fprintf(stderr,"Indique el nombre de archivos");
 		return EXIT_FAILURE;
 	}
-		
-	if(not A_here::current_file.open(argv[1]))
+
+	
+	A_here::SymbolTable symbols;
+	A_here::File current_file(symbols);		
+	if(not current_file.open(argv[1]))
 	{
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
 		return EXIT_FAILURE;		
-	}	
+	}
 
 	result res = {0, 0, 0};
-	
-
-	yyparse(A_here::current_file.get_scanner(), &res);
+	yyparse(current_file.get_scanner(),&res,&symbols);
 
 	return EXIT_SUCCESS;
 }

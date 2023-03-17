@@ -413,10 +413,31 @@ namespace oct::cc::v0::A
 	}
 void add_identifier(int line,const char* filename,const char* word, int leng);
 
+
+
+struct identifier
+{
+	int number;
+	std::string name;
+	int line;
+	unsigned int memory;
+};
+
+class SymbolTable : public std::list<identifier>
+{
+
+public:
+
+protected:
+
+private:
+
+};
+
 class File
 {
 public:
-	File();
+	File(SymbolTable& symbols);
 	~File();
 
 	FILE* get_file();
@@ -432,20 +453,9 @@ private:
 	void* buffer;
 	size_t index;
 	void* scanner;
+	SymbolTable* symbols;
 };
 
-
-class SymbolTable
-{
-public:
-
-	 int add(int line, const char filename,char* string, size_t leng);
-	 
-protected:
-
-private:
-	 
-};
 
 struct Symbol
 {
@@ -488,9 +498,12 @@ private:
 };
 
 
-extern File current_file;
-extern Block block;
-extern Symbol* current_symbol;
+
+
+
+//extern File current_file;
+extern core_here::Block block;
+//extern Symbol* current_symbol;
 }
 
 

@@ -19,7 +19,7 @@
 	
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
-	extern A_here::File A_here::current_file;
+	//extern A_here::File A_here::current_file;
 }
 
 // Emitted in the header file, after the definition of YYSTYPE.
@@ -28,11 +28,11 @@
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
 	#define YY_DECL                                                         \
-	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res)
+	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res,A_here::SymbolTable* symbols)
 	  	YY_DECL;	
 		//#define yylex poslex
 
-	void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, const char *msg, ...);
+	void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res,A_here::SymbolTable* symbols, const char *msg, ...);
 }
 
 // Emitted on top of the implementation file.
@@ -50,7 +50,7 @@
 %define api.pure full
 
 // Generate YYSTYPE from the types assigned to symbols.
-//%define api.value.type union
+%define api.value.type union
 
 // Error messages with "unexpected XXX, expected XXX...".
 %define parse.error detailed
@@ -63,7 +63,7 @@
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
-
+%param {A_here::SymbolTable* symbols}
 
 
 
@@ -120,18 +120,18 @@
 %token DL
 %token DX
 
-%token LITERAL_INTEGER_DEC
+%token <long long> LITERAL_INTEGER_DEC
 %token LITERAL_INTEGER_DEC_SCHAR	
 %token LITERAL_INTEGER_DEC_UCHAR
 %token LITERAL_INTEGER_DEC_SHORT
 %token LITERAL_INTEGER_DEC_USHORT
-%token LITERAL_INTEGER_HEX
+%token <long long> LITERAL_INTEGER_HEX
 %token LITERAL_INTEGER_HEX_SCHAR		
 %token LITERAL_INTEGER_HEX_UCHAR
 %token LITERAL_INTEGER_HEX_SHORT
 %token LITERAL_INTEGER_HEX_USHORT
-%token LITERAL_CHAR
-%token IDENTIFIER
+%token <char> LITERAL_CHAR
+%token <const char*> IDENTIFIER
 %type literals_integers 
 
 %%
@@ -193,7 +193,7 @@ type_qualifer : CONST | VOLATIL;
 declarator : pointer direct_declarator |
 	direct_declarator;
 
-direct_declarator : IDENTIFIER |
+direct_declarator : IDENTIFIER {std::cout << "Identifeir : " << $1 << "\n";}|
 	'(' declarator ')' |
 	direct_declarator '[' const_expression ']' |
 	direct_declarator '['  ']' |
@@ -289,9 +289,9 @@ registers_16b : AX ;
 
 %%
 
-void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, const char *msg, ...)
+void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, A_here::SymbolTable* symbols, const char *msg, ...)
 {
-	YYLOCATION_PRINT (stderr, loc);
+	YYLOCATION_PRINT(stderr, loc);
   	fprintf (stderr, "%s\n", msg);
 }
 

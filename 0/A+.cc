@@ -45,7 +45,7 @@ void add_identifier(int l,const char* f,const char* w, int leng)
 
 
 
-File::File() : file(NULL),buffer(NULL),scanner(NULL)
+File::File(SymbolTable& s) : file(NULL),buffer(NULL),scanner(NULL),symbols(&s)
 {
 }
 

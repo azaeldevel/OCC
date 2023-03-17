@@ -14,18 +14,16 @@
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
-	A_here::File A_here::current_file;
-	A_here::Block A_here::block;
-	//A_here::Symbol* A_here::current_symbol;	
-	//#define YY_DECL A_here::Tokens lexer()	
+	core_here::Block A_here::block;
+		
 %}
 
 DIGIT_DEC [0-9]
 DIGIT_HEX [0-9A-Fa-f]
-LETTER [a-zA-Z]
+CHAR [a-zA-Z]
 LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
 LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
-LIETRAL_CHAR '{LETTER}'
+LITERAL_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
@@ -326,7 +324,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 					A_here::Identifier* identifier;
 					identifier = A_here::block.create<A_here::Identifier>();
 					identifier->line = yylineno;
-					identifier->name.insert(0,yytext,yyleng);					
+					identifier->name.insert(0,yytext,yyleng);	
+					yylval->IDENTIFIER = identifier->name.c_str();					
 					return IDENTIFIER;
 				}
 
@@ -346,7 +345,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->line = yylineno;
 							integer->format = 'H';		
 							integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;				
-							integer->number = std::stoll(yytext, nullptr, 16);								
+							integer->number = std::stoll(yytext, nullptr, 16);	
+							yylval->LITERAL_INTEGER_HEX = integer->number;							
 							return LITERAL_INTEGER_HEX;
 						}
 {LITERAL_INTEGER_DEC}	{
@@ -357,14 +357,16 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->format = 'D';
 							integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;					
 							integer->number = std::stoll(yytext);
+							yylval->LITERAL_INTEGER_DEC = integer->number;
 							return LITERAL_INTEGER_DEC;
 						}
-{LIETRAL_CHAR}		{
+{LITERAL_CHAR}		{
 						//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
 						A_here::Symbol* letter;
 						letter = A_here::block.create<A_here::Symbol>();
 						letter->token = (A_here::Tokens)yytext[1];
 						letter->line = yylineno;
+						yylval->LITERAL_CHAR = (char)letter->token;
 						return LITERAL_CHAR;
 					}
 
