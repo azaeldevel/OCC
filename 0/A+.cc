@@ -80,7 +80,7 @@ size_t Block::get_size(Symbol* symbol) const
 }
 Symbol* Block::next()
 {
-	std::cout << "Block::next begin\n";
+	//std::cout << "Block::next begin\n";
 	if(not actual) return NULL;	
 	if(get_size(actual) + index >= page_size)
 	{
@@ -91,14 +91,14 @@ Symbol* Block::next()
 	}
 	
 	char* newptr = (char*)actual;
-	std::cout << "Block::next actual : " << (long)actual << "\n";
-	std::cout << "Block::next index : " << index << "\n";
+	//std::cout << "Block::next actual : " << (long)actual << "\n";
+	//std::cout << "Block::next index : " << index << "\n";
 	newptr += index;
 	Symbol* obj = (Symbol*)newptr;
 	index += get_size(actual) + 1;
-	std::cout << "Block::create newptr : " << (long)newptr << "\n";	
+	//std::cout << "Block::create newptr : " << (long)newptr << "\n";	
 	actual = (Symbol*)obj;
-	std::cout << "Block::next end\n";
+	//std::cout << "Block::next end\n";
 	return obj;
 }
 

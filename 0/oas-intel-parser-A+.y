@@ -214,7 +214,9 @@ init_declarator_list : init_declarator |
 	;
 
 init_declarator : declarator |
-	init_declarator '=' initializer;
+	init_declarator '=' initializer {									
+										//(*symbols_table->end())->value = "123456";
+									};
 
 //TODO : esta gramatica no es exacta para el estandar
 initializer : const_expression |
@@ -222,11 +224,13 @@ initializer : const_expression |
 	;
 
 
-const_expression : LITERAL_CHAR | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ; 
+const_expression : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ; 
 
 
 
-initilizer_list : const_expression |
+initilizer_list : const_expression  {									
+										//(*symbols_table->end())->value = "123456";
+									}|
 	initilizer_list ',' const_expression
 	;
 
@@ -239,9 +243,9 @@ declarator : pointer direct_declarator |
 	direct_declarator;
 
 direct_declarator : IDENTIFIER 		{
-										A_here::identifier id;
-										id.number = symbols_table->size();
-										id.name = $1;										
+										A_here::identifier* id = new A_here::identifier;
+										id->number = symbols_table->size();
+										id->name = $1;										
 										symbols_table->push_back(id);
 									}|
 	'(' declarator ')' 				|
@@ -328,8 +332,8 @@ instruction_mov :
 instruction_int : INT literals_integers ;
 
 
-literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC | LITERAL_INTEGER_HEX;
-literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_DEC | LITERAL_INTEGER_HEX;
+literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
+literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT;
 literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;

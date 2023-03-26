@@ -419,12 +419,12 @@ Tokens integer_token(long long number);
 struct identifier
 {
 	int number;
-	std::string name;
+	std::string name,value;
 	int line;
 	unsigned int memory;
 };
 
-class SymbolTable : public std::list<identifier>
+class SymbolTable : public std::list<identifier*>
 {
 
 public:

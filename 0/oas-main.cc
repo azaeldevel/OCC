@@ -49,17 +49,17 @@ int main (int argc, char* argv[])
 		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
 		return EXIT_FAILURE;		
 	}
-
+	
 	result res = {0, 0, 0};
 	yyparse(current_file.get_scanner(),&res,&symbols);
-
-	/*
-	for(const A_here::identifier& id : symbols)
+	
+	
+	for(const A_here::identifier* id : symbols)
 	{
-		std::cout << id.number << " " << id.name << "\n";
+		std::cout << id->number << " " << id->name << " " << "\n";
 	}
-	std::cout << "ID : " << (int)A_here::Tokens::AUTO << "\n";
-	*/
+	//std::cout << "ID : " << (int)A_here::Tokens::AUTO << "\n";
+	
 
 	return EXIT_SUCCESS;
 }
