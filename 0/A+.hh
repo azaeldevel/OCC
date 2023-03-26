@@ -245,8 +245,8 @@ namespace oct::cc::v0::A
 		base = 0x110000,
 
 		//C-keywords
-		AUTO = 110100,
-		BREAK,
+		AUTO = 110200,
+		BREAK = 110202,
 		CASE,
 		CHAR,
 		CONST,

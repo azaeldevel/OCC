@@ -70,9 +70,9 @@
 %token ENDOFFILE 0  "end-of-file"
 
 //keywords
-%token AUTO 110100
+%token AUTO 110200
 %token BREAK
-%token CASE
+%token CASE 
 %token CHAR
 %token CONST
 %token CONTINUE
