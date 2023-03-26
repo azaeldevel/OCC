@@ -347,7 +347,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;				
 							integer->number = std::stoll(yytext, nullptr, 16);	
 							yylval->LITERAL_INTEGER_HEX = integer->number;							
-							return LITERAL_INTEGER_HEX;
+							return (yytoken_kind_t)(int)A_here::integer_token(integer->number);
 						}
 {LITERAL_INTEGER_DEC}	{
 							//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
@@ -358,7 +358,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 							integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;					
 							integer->number = std::stoll(yytext);
 							yylval->LITERAL_INTEGER_DEC = integer->number;
-							return LITERAL_INTEGER_DEC;
+							return (yytoken_kind_t)(int)A_here::integer_token(integer->number);
 						}
 {LITERAL_CHAR}		{
 						//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
@@ -377,3 +377,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 .	;
 
 %%
+
+
+
+
+

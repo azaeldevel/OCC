@@ -36,17 +36,17 @@ int main(int argc, char *argv[])
 		return CU_get_error();
 	}
 	
-	if ((NULL == CU_add_test(pSuite_v0, "AFD Grammar A..", v0_Grammar_A)))
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	
 	/*if ((NULL == CU_add_test(pSuite_v0, "Test performace", v0_performance)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}*/
+	
+	if ((NULL == CU_add_test(pSuite_v0, "A+ compiler..", v0_AA)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 
 	if ((NULL == CU_add_test(pSuite_v0, "Developing..", v0_developing)))
 	{

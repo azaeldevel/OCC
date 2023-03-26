@@ -1,5 +1,5 @@
 
-SUBDIRS = 0 po tests
+SUBDIRS = 0 tests
 
 dist_doc_DATA = \
 	README \

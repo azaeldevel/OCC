@@ -53,5 +53,14 @@ int main (int argc, char* argv[])
 	result res = {0, 0, 0};
 	yyparse(current_file.get_scanner(),&res,&symbols);
 
+	/*
+	for(const A_here::identifier& id : symbols)
+	{
+		std::cout << id.number << " " << id.name << "\n";
+	}
+	std::cout << "ID : " << (int)A_here::Tokens::AUTO << "\n";
+	*/
+
 	return EXIT_SUCCESS;
 }
+

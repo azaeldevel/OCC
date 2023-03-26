@@ -245,7 +245,7 @@ namespace oct::cc::v0::A
 		base = 0x110000,
 
 		//C-keywords
-		AUTO,
+		AUTO = 110100,
 		BREAK,
 		CASE,
 		CHAR,
@@ -414,6 +414,7 @@ namespace oct::cc::v0::A
 void add_identifier(int line,const char* filename,const char* word, int leng);
 
 
+Tokens integer_token(long long number);
 
 struct identifier
 {

@@ -32,19 +32,6 @@ namespace oct::cc::v0::A
 {
 
 
-void add_identifier(int l,const char* f,const char* w, int leng)
-{
-	//printf("%s:%i %s\n",f,l,w);
-	std::string str;
-	str.insert(0,w,leng);
-	std::cout << f << ":" << l << " " << str << "\n";
-}
-
-
-
-
-
-
 File::File(SymbolTable& s) : file(NULL),buffer(NULL),scanner(NULL),symbols(&s)
 {
 }
@@ -138,5 +125,27 @@ Tokens Integer::reduced_token() const
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
 
+
+Tokens integer_token(long long number)
+{
+	if(0 > number)
+	{
+		if(std::numeric_limits<signed char>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SCHAR;
+		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
+		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
+		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
+		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;	
+	}
+	else
+	{
+		if(std::numeric_limits<unsigned char>::max() > number) return Tokens::LITERAL_INTEGER_DEC_UCHAR;
+		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
+		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
+		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
+		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;		
+	}
+	
+	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
+}
 
 }

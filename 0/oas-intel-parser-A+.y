@@ -28,7 +28,7 @@
 // Tell Flex the expected prototype of yylex.
 // The scanner argument must be named yyscanner.
 	#define YY_DECL                                                         \
-	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res,A_here::SymbolTable* symbols)
+	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res,A_here::SymbolTable* symbols_table)
 	  	YY_DECL;	
 		//#define yylex poslex
 
@@ -63,14 +63,14 @@
 
 // Scanner and error count are exchanged between main, yyparse and yylex.
 %param {yyscan_t scanner}{result *res}
-%param {A_here::SymbolTable* symbols}
+%param {A_here::SymbolTable* symbols_table}
 
 
 
 %token ENDOFFILE 0  "end-of-file"
 
 //keywords
-%token AUTO
+%token AUTO 110100
 %token BREAK
 %token CASE
 %token CHAR
@@ -103,6 +103,34 @@
 %token VOLATIL
 %token WHILE
 
+//
+%token AAA
+%token AAD
+%token AAM
+%token AAS
+%token ADC
+%token ADD
+%token AND
+%token CALL
+%token CBW
+%token CLC
+%token CLD
+%token CLI
+%token CMC
+%token CMP
+%token CMPS
+%token CWD
+%token DAA
+%token DAS
+%token DEC
+%token DIV
+%token ESC
+%token HLT
+%token IDIV
+%token IMUL
+%token IN
+%token INC
+
 //instruction set
 %token MOV
 
@@ -120,16 +148,33 @@
 %token DL
 %token DX
 
+
+//Ponters
+%token SP
+%token BP
+%token SI
+%token DI
+
+//Segments
+%token CS
+%token DS
+%token SS
+%token ES
+
+//
 %token <long long> LITERAL_INTEGER_DEC
 %token LITERAL_INTEGER_DEC_SCHAR	
 %token LITERAL_INTEGER_DEC_UCHAR
 %token LITERAL_INTEGER_DEC_SHORT
 %token LITERAL_INTEGER_DEC_USHORT
+%token LITERAL_INTEGER_DEC_INT
+%token LITERAL_INTEGER_DEC_UNIT
+%token LITERAL_INTEGER_DEC_LONG
+%token LITERAL_INTEGER_DEC_ULONG
 %token <long long> LITERAL_INTEGER_HEX
-%token LITERAL_INTEGER_HEX_SCHAR		
 %token LITERAL_INTEGER_HEX_UCHAR
-%token LITERAL_INTEGER_HEX_SHORT
 %token LITERAL_INTEGER_HEX_USHORT
+%token LITERAL_INTEGER_HEX_UNIT
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
 %type literals_integers 
@@ -193,12 +238,17 @@ type_qualifer : CONST | VOLATIL;
 declarator : pointer direct_declarator |
 	direct_declarator;
 
-direct_declarator : IDENTIFIER {std::cout << "Identifeir : " << $1 << "\n";}|
-	'(' declarator ')' |
-	direct_declarator '[' const_expression ']' |
-	direct_declarator '['  ']' |
-	direct_declarator '(' parameter_type_list ')' |
-	direct_declarator '(' identifer_list ')' |
+direct_declarator : IDENTIFIER 		{
+										A_here::identifier id;
+										id.number = symbols_table->size();
+										id.name = $1;										
+										symbols_table->push_back(id);
+									}|
+	'(' declarator ')' 				|
+	direct_declarator '[' const_expression ']' 	|
+	direct_declarator '['  ']' 					|
+	direct_declarator '(' parameter_type_list ')' 		|
+	direct_declarator '(' identifer_list ')' 			|
 	direct_declarator '('  ')' 
 	;
 
@@ -294,8 +344,4 @@ void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res, A_here::SymbolTa
 	YYLOCATION_PRINT(stderr, loc);
   	fprintf (stderr, "%s\n", msg);
 }
-
-
-
-
 
