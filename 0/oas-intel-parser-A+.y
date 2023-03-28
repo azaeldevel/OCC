@@ -44,6 +44,7 @@
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
 	A_here::Identifier* identifier = NULL;
+	A_here::Instruction instruction;
 }
 
 // with locations.

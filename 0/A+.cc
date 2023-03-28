@@ -148,4 +148,21 @@ Tokens integer_token(long long number)
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
 
+void Instruction::movbi(int reg,unsigned char data)
+{
+	D1 << 0b000;
+	D1 << 0b10001;
+	
+	D2 = 0b00110000;
+	
+	D3 = (unsigned char) reg;
+	D4 = (unsigned char) data;
+}
+
+void Instruction::print(std::ostream& out)
+{
+	out << D1 << " " << D2 << "";
+}
+
+
 }
