@@ -19,7 +19,7 @@
 	
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
-	//extern A_here::File A_here::current_file;
+	//A_here::Symbol* A_here::current_symbol;
 }
 
 // Emitted in the header file, after the definition of YYSTYPE.
@@ -38,9 +38,12 @@
 // Emitted on top of the implementation file.
 %code top
 {
-	#include <stdarg.h> // va_list.
-	#include <stdio.h>  // printf.
-	#include <stdlib.h> // getenv.
+	#include <stdarg.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <A+.hh>	
+	namespace A_here = oct::cc::v0::A;
+	A_here::Identifier* identifier = NULL;
 }
 
 // with locations.
@@ -213,23 +216,85 @@ init_declarator_list : init_declarator |
 	init_declarator_list ',' init_declarator
 	;
 
-init_declarator : declarator |
-	init_declarator '=' initializer {									
-										//(*symbols_table->end())->value = "123456";
-									};
+init_declarator : declarator 		{
+										//std::cout << "Line " << A_here::symbol_current->line << "\n";
+										identifier = NULL;
+									}|
+	init_declarator '=' initializer {
+										//std::cout << "Line " << A_here::symbol_current->line << "\n";
+										identifier = NULL;
+										if(identifier)
+										{
+											
+										}
+									}
+	;
 
 //TODO : esta gramatica no es exacta para el estandar
-initializer : const_expression |
+initializer : const_expression 		{
+										if(identifier)
+										{
+											
+										}
+									}|
 	'{' initilizer_list '}'
 	;
 
 
-const_expression : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ; 
+const_expression : LITERAL_CHAR | 
+				LITERAL_INTEGER_DEC_UCHAR 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}| 
+				LITERAL_INTEGER_DEC_SCHAR 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}| 
+				LITERAL_INTEGER_DEC_USHORT 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}| 
+				LITERAL_INTEGER_DEC_SHORT 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}| 
+				LITERAL_INTEGER_HEX 		{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}| 
+				LITERAL_INTEGER_DEC 		{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												//std::cout << "value : " << integer->strvalue << "\n";
+												auto it = symbols_table->end();
+												it--;
+												A_here::Identifier* identifier = *it;
+												identifier->strvalue = integer->strvalue;
+											}; 
 
 
 
 initilizer_list : const_expression  {									
-										//(*symbols_table->end())->value = "123456";
+										
 									}|
 	initilizer_list ',' const_expression
 	;
@@ -243,10 +308,10 @@ declarator : pointer direct_declarator |
 	direct_declarator;
 
 direct_declarator : IDENTIFIER 		{
-										A_here::identifier* id = new A_here::identifier;
-										id->number = symbols_table->size();
-										id->name = $1;										
-										symbols_table->push_back(id);
+										identifier = new A_here::Identifier;
+										identifier->number = symbols_table->size();
+										identifier->name = $1;										
+										symbols_table->push_back(identifier);
 									}|
 	'(' declarator ')' 				|
 	direct_declarator '[' const_expression ']' 	|
@@ -326,15 +391,22 @@ return  :
 	;
 
 instruction_mov : 
-	MOV registers_8b literals_8b | 
-	MOV registers_16b literals_16b 
+	MOV registers_8b literals_8b {
+										//std::cout << "mov\n";
+									}| 
+	MOV registers_16b literals_16b {
+										//std::cout << "mov\n";
+									}
 	;		
-instruction_int : INT literals_integers ;
+instruction_int : INT literals_integers {
+										//std::cout << "int\n";
+									}
+	;
 
 
 literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
 literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT;
-literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+literals_integers : LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 

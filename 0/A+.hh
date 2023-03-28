@@ -416,15 +416,32 @@ void add_identifier(int line,const char* filename,const char* word, int leng);
 
 Tokens integer_token(long long number);
 
-struct identifier
+struct Symbol
+{
+	Tokens token;
+	std::vector<Symbol*> childs;
+	unsigned int line;
+	std::string strvalue;
+};
+
+struct Integer : public Symbol
+{
+	long long number;
+	char format;//Decimal, Hexadecimal
+
+	Tokens reduced_token()const;
+};
+
+struct Identifier : public Symbol
 {
 	int number;
-	std::string name,value;
+	std::string name;
+	long long llvalue;
 	int line;
 	unsigned int memory;
 };
 
-class SymbolTable : public std::list<identifier*>
+class SymbolTable : public std::list<Identifier*>
 {
 
 public:
@@ -458,25 +475,7 @@ private:
 };
 
 
-struct Symbol
-{
-	Tokens token;
-	std::vector<Symbol*> childs;
-	unsigned int line;
-};
 
-struct Identifier : public Symbol
-{
-	std::string name;
-};
-
-struct Integer : public Symbol
-{
-	long long number;
-	char format;//Decimal, Hexadecimal
-
-	Tokens reduced_token()const;
-};
 
 class Block : public core_here::Block
 {
@@ -504,7 +503,7 @@ private:
 
 //extern File current_file;
 extern core_here::Block block;
-//extern Symbol* current_symbol;
+extern Symbol* symbol_current;
 }
 
 
