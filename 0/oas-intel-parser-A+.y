@@ -218,24 +218,18 @@ init_declarator_list : init_declarator |
 
 init_declarator : declarator 		{
 										//std::cout << "Line " << A_here::symbol_current->line << "\n";
-										identifier = NULL;
+										auto it = symbols_table->end();
+										it--;
+										A_here::Identifier* identifier = *it;
+										identifier->line = A_here::symbol_current->line;
 									}|
 	init_declarator '=' initializer {
 										//std::cout << "Line " << A_here::symbol_current->line << "\n";
-										identifier = NULL;
-										if(identifier)
-										{
-											
-										}
 									}
 	;
 
 //TODO : esta gramatica no es exacta para el estandar
 initializer : const_expression 		{
-										if(identifier)
-										{
-											
-										}
 									}|
 	'{' initilizer_list '}'
 	;
@@ -249,7 +243,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}| 
+											}|
 				LITERAL_INTEGER_DEC_SCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -257,7 +251,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}| 
+											}|
 				LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -265,7 +259,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}| 
+											}|
 				LITERAL_INTEGER_DEC_SHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -281,7 +275,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}| 
+											}|
 				LITERAL_INTEGER_DEC 		{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -289,7 +283,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}; 
+											};
 
 
 
@@ -382,7 +376,7 @@ statement_list : statement |
 	statement_list statement
 	;
 
-statement : compound_statement |  instruction_mov ';' | instruction_int ';' | return ';';
+statement : compound_statement |  instruction_mov ';' {std::cout << ";\n";} | instruction_int ';' {std::cout << ";\n";} | return ';';
 
 return  : 
 	RETURN |
@@ -391,27 +385,75 @@ return  :
 	;
 
 instruction_mov : 
-	MOV registers_8b literals_8b {
-										//std::cout << "mov\n";
+	MOV registers_8b literals_8b 	{
+										std::cout << "mov ";
 									}| 
-	MOV registers_16b literals_16b {
-										//std::cout << "mov\n";
+	MOV registers_16b literals_16b 	{
+										std::cout << "mov ";
 									}
 	;		
 instruction_int : INT literals_integers {
-										//std::cout << "int\n";
-									}
+										std::cout << "int ";
+										}
 	;
 
 
-literals_8b : LITERAL_CHAR | LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR;
-literals_16b : LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT;
-literals_integers : LITERAL_INTEGER_DEC_UCHAR | LITERAL_INTEGER_DEC_SCHAR | LITERAL_INTEGER_DEC_USHORT | LITERAL_INTEGER_DEC_SHORT | LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+literals_8b : 	LITERAL_CHAR 	{
+									A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+									std::cout << integer->strvalue << " ";
+								}| 
+				LITERAL_INTEGER_DEC_UCHAR 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											}| 
+				LITERAL_INTEGER_DEC_SCHAR	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											};
+literals_16b : LITERAL_INTEGER_DEC_USHORT 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											}| 
+				LITERAL_INTEGER_DEC_SHORT	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											};
+literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+												}| 
+					LITERAL_INTEGER_DEC_SCHAR 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+												}| 
+					LITERAL_INTEGER_DEC_USHORT 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+												}| 
+					LITERAL_INTEGER_DEC_SHORT 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+												}| 
+					LITERAL_INTEGER_HEX 	{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											}| 
+					LITERAL_INTEGER_DEC		{
+												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												std::cout << integer->strvalue << " ";
+											};
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 
-registers_8b : AL | AH ;
-registers_16b : AX ;
+registers_8b : 	AL 	{
+						std::cout << "AL ";
+					}| 
+				AH 	{
+						std::cout <<"AH ";
+					};
+registers_16b : AX 	{
+						std::cout << "AX ";
+					};
 
 %%
 
