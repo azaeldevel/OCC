@@ -80,14 +80,7 @@ int main (int argc, char* argv[])
 		result res = {0, 0, 0};
 		yyparse(current_file.get_scanner(),&res,&symbols);
 	}
-	/*
-	for(const A_here::Identifier* id : symbols)
-	{
-		std::cout << id->line << " : " << id->number << " " << id->name << " " << id->strvalue << "\n";
-	}
-	*/
 	
-	//std::cout << "ID : " << (int)A_here::Tokens::AUTO << "\n";
 	
 	outstream.close();
 	return EXIT_SUCCESS;
