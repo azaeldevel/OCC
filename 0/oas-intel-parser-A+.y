@@ -44,7 +44,7 @@
 	#include <A+.hh>	
 	namespace A_here = oct::cc::v0::A;
 	A_here::Identifier* identifier = NULL;
-	A_here::Instruction instruction;
+	std::vector<unsigned char> instruction(6);
 }
 
 // with locations.
@@ -182,6 +182,8 @@
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
 %type literals_integers 
+%type <unsigned char> literals_8b 
+%type <short> literals_16b
 
 %%
 
@@ -388,13 +390,19 @@ return  :
 instruction_mov : 
 	MOV registers_8b literals_8b 	{
 										std::cout << "mov ";
+										instruction[0] << 0b000;
+										instruction[0] << 0b10001;
+										instruction[1] = 0b00110000;
+
+										instruction[2] = $3;
+										instruction[3] = 0;
 									}| 
 	MOV registers_16b literals_16b 	{
 										std::cout << "mov ";
 									}
-	;		
+									;		
 instruction_int : INT literals_integers {
-										std::cout << "int ";
+											std::cout << "int ";
 										}
 	;
 
@@ -422,7 +430,7 @@ literals_16b : LITERAL_INTEGER_DEC_USHORT 	{
 literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
-												}| 
+												}|
 					LITERAL_INTEGER_DEC_SCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
@@ -430,15 +438,15 @@ literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
 					LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
-												}| 
+												}|
 					LITERAL_INTEGER_DEC_SHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
-												}| 
+												}|
 					LITERAL_INTEGER_HEX 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
-											}| 
+											}|
 					LITERAL_INTEGER_DEC		{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												std::cout << integer->strvalue << " ";
