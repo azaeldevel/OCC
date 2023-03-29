@@ -22,37 +22,64 @@
 #include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
-
+#include <iostream>
+#include <fstream>
 
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "A+.hh"
 
 
 namespace A_here = oct::cc::v0::A;
-
+extern std::fstream outstream;
 //A_here::Tokens lexer();
-
+std::filesystem::path outfile;
+std::list<std::string> inputs;
 int main (int argc, char* argv[])
-{		
-	if(argc < 2)
+{	
+	for(size_t i = 0; i < argc; i++)
 	{
-		fprintf(stderr,"Indique el nombre de archivos");
-		return EXIT_FAILURE;
+		if(strcmp(argv[i],"--output") == 0)
+		{
+			outfile = argv[++i];
+		}
+		else if(argv[i][0] == '-')
+		{
+			std::cout << "Comando desconocido\n";
+		}
+		else
+		{//posibles archivos input
+			inputs.push_back(argv[++i]);
+		}
 	}
 
 	
 	A_here::SymbolTable symbols;
 	A_here::File current_file(symbols);		
-	if(not current_file.open(argv[1]))
+	if(inputs.empty())
 	{
-		fprintf(stderr,"Fallo al abrir el archivo %s",argv[1]);
-		return EXIT_FAILURE;		
-	}
+		std::cout << "Indique almenos un archivo para compilar.";
+		return EXIT_FAILURE;
+	}	
+	if(outfile.empty())
+	{
+		std::cout << "Indique el archivo de resultado.";
+		return EXIT_FAILURE;
+	}	
+	outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
 	
-	result res = {0, 0, 0};
-	yyparse(current_file.get_scanner(),&res,&symbols);
+	for(const std::string& f : inputs)
+	{
+		if(not current_file.open(f.c_str()))
+		{
+			fprintf(stderr,"Fallo al abrir el archivo %s",f.c_str());
+			return EXIT_FAILURE;		
+		}
 		
+		result res = {0, 0, 0};
+		yyparse(current_file.get_scanner(),&res,&symbols);
+	}
 	/*
 	for(const A_here::Identifier* id : symbols)
 	{
@@ -62,7 +89,7 @@ int main (int argc, char* argv[])
 	
 	//std::cout << "ID : " << (int)A_here::Tokens::AUTO << "\n";
 	
-
+	outstream.close();
 	return EXIT_SUCCESS;
 }
 

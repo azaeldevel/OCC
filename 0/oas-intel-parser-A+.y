@@ -41,10 +41,14 @@
 	#include <stdarg.h>
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include <A+.hh>	
+	#include <A+.hh>
+	#include <iostream>
+	#include <fstream>	
 	namespace A_here = oct::cc::v0::A;
 	A_here::Identifier* identifier = NULL;
 	std::vector<unsigned char> instruction(6);
+	int instruction_len = 0;
+	std::fstream outstream;
 }
 
 // with locations.
@@ -184,6 +188,8 @@
 %type literals_integers 
 %type <unsigned char> literals_8b 
 %type <short> literals_16b
+%type <int> registers_8b
+%type <int> registers_16b
 
 %%
 
@@ -390,12 +396,30 @@ return  :
 instruction_mov : 
 	MOV registers_8b literals_8b 	{
 										std::cout << "mov ";
-										instruction[0] << 0b000;
+										switch($2)
+										{
+										case AL:
+										case AH:
+											instruction[0] << 0b000;
+											break;
+										case BL:
+										case BH:
+											instruction[0] << 0b001;
+											break;
+										case CL:
+										case CH:
+											instruction[0] << 0b010;
+											break;
+										default:
+											instruction[0] << 0b000;
+											break;
+										}
 										instruction[0] << 0b10001;
 										instruction[1] = 0b00110000;
 
 										instruction[2] = $3;
-										instruction[3] = 0;
+										instruction[3] = (unsigned char)$2;
+										outstream.write((char*)&instruction,3);
 									}| 
 	MOV registers_16b literals_16b 	{
 										std::cout << "mov ";

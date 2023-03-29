@@ -73,6 +73,31 @@ void v0_AA()
 	CU_ASSERT((int)A_here::Tokens::LITERAL_INTEGER_DEC_INT == (int)yytoken_kind_t::LITERAL_INTEGER_DEC_INT);
 	CU_ASSERT((int)A_here::Tokens::LITERAL_INTEGER_DEC_SHORT == (int)yytoken_kind_t::LITERAL_INTEGER_DEC_SHORT);
 	CU_ASSERT((int)A_here::Tokens::LITERAL_INTEGER_DEC_LONG == (int)yytoken_kind_t::LITERAL_INTEGER_DEC_LONG);
+
+
+
+
+	
+	CU_ASSERT((int)A_here::Tokens::AAA == (int)yytoken_kind_t::AAA);
+	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+	
+	
+	CU_ASSERT((int)A_here::Tokens::INC == (int)yytoken_kind_t::INC);
+	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+
+	
+	CU_ASSERT((int)A_here::Tokens::MOV == (int)yytoken_kind_t::MOV);
+	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+
+	
+	CU_ASSERT((int)A_here::Tokens::AL == (int)yytoken_kind_t::AL);
+	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+
+	
+	CU_ASSERT((int)A_here::Tokens::DL == (int)yytoken_kind_t::DL);
+	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+
+	
 }
 
 
