@@ -91,11 +91,12 @@ void v0_AA()
 
 	
 	CU_ASSERT((int)A_here::Tokens::AL == (int)yytoken_kind_t::AL);
-	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+	//std::cout << "AL : "  << (int)A_here::Tokens::AL << " " << (int)yytoken_kind_t::AL << "\n";
 
 	
 	CU_ASSERT((int)A_here::Tokens::DL == (int)yytoken_kind_t::DL);
-	//std::cout << "WHILE : "  << (int)A_here::Tokens::WHILE << " " << (int)yytoken_kind_t::WHILE << "\n";
+	//std::cout << "DL : "  << (int)A_here::Tokens::DL << " " << (int)yytoken_kind_t::DL << "\n";
+
 
 	
 }

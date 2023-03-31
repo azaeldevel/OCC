@@ -44,7 +44,9 @@
 	#include <A+.hh>
 	#include <iostream>
 	#include <fstream>	
+	#include <core/3/Exception.hh>
 	namespace A_here = oct::cc::v0::A;
+	namespace core_here = oct::core::v3;
 	A_here::Identifier* identifier = NULL;
 	std::vector<unsigned char> instruction(6);
 	int instruction_len = 0;
@@ -152,8 +154,8 @@
 %token CL
 %token CH
 %token CX
-%token DH
 %token DL
+%token DH
 %token DX
 
 
@@ -188,8 +190,8 @@
 %type literals_integers 
 %type <unsigned char> literals_8b 
 %type <short> literals_16b
-%type <int> registers_8b
-%type <int> registers_16b
+%type <yytoken_kind_t> registers_8b
+%type <yytoken_kind_t> registers_16b
 
 %%
 
@@ -396,25 +398,41 @@ return  :
 instruction_mov : 
 	MOV registers_8b literals_8b 	{
 										std::cout << "mov ";
+										//inmediate to register 8b
+										instruction[0] << 0b1011;//opcode
+										instruction[0] << 0b0;//w = one byte										
 										switch($2)
 										{
 										case AL:
-										case AH:
 											instruction[0] << 0b000;
-											break;
-										case BL:
-										case BH:
-											instruction[0] << 0b001;
 											break;
 										case CL:
-										case CH:
+											instruction[0] << 0b001;
+											break;
+										case DL:
 											instruction[0] << 0b010;
 											break;
+										case BL:
+											instruction[0] << 0b011;
+											break;
+										case AH:
+											instruction[0] << 0b100;
+											break;
+										case CH:
+											instruction[0] << 0b101;
+											break;
+										case DH:
+											instruction[0] << 0b110;
+											break;
+										case BH:
+											instruction[0] << 0b111;
+											break;
 										default:
-											instruction[0] << 0b000;
+											//error
+											throw core_here::exception("El operando no es un registro de 8 bits valido.");
+											//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
 											break;
 										}
-										instruction[0] << 0b10001;
 										instruction[1] = 0b00110000;
 
 										instruction[2] = $3;
@@ -480,12 +498,15 @@ initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 
 registers_8b : 	AL 	{
 						std::cout << "AL ";
+						$$ = AL;
 					}| 
 				AH 	{
 						std::cout <<"AH ";
+						$$ = AH;
 					};
 registers_16b : AX 	{
 						std::cout << "AX ";
+						$$ = AX;
 					};
 
 %%
