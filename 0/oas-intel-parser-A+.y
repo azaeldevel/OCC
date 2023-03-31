@@ -401,7 +401,7 @@ instruction_mov :
 										//inmediate to register 8b
 										instruction[0] << 0b1011;//opcode
 										instruction[0] << 0b0;//w = one byte										
-										switch($2)
+										switch($2)//reg
 										{
 										case AL:
 											instruction[0] << 0b000;
@@ -433,11 +433,8 @@ instruction_mov :
 											//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
 											break;
 										}
-										instruction[1] = 0b00110000;
-
-										instruction[2] = $3;
-										instruction[3] = (unsigned char)$2;
-										outstream.write((char*)&instruction,3);
+										instruction[1] = $3;
+										outstream.write((char*)&instruction,2);
 									}| 
 	MOV registers_16b literals_16b 	{
 										std::cout << "mov ";
