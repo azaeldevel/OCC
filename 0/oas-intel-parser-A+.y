@@ -48,7 +48,7 @@
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
 	A_here::Identifier* identifier = NULL;
-	std::vector<unsigned char> instruction(6);
+	char instruction[6];
 	int instruction_len = 0;
 	std::fstream outstream;
 }
@@ -188,7 +188,7 @@
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
 %type literals_integers 
-%type <unsigned char> literals_8b 
+%type <char> literals_8b 
 %type <short> literals_16b
 %type <yytoken_kind_t> registers_8b
 %type <yytoken_kind_t> registers_16b
@@ -387,7 +387,7 @@ statement_list : statement |
 	statement_list statement
 	;
 
-statement : compound_statement |  instruction_mov ';' {std::cout << ";\n";} | instruction_int ';' {std::cout << ";\n";} | return ';';
+statement : compound_statement |  instruction_mov ';' | instruction_int ';' | return ';';
 
 return  : 
 	RETURN |
@@ -397,7 +397,7 @@ return  :
 
 instruction_mov : 
 	MOV registers_8b literals_8b 	{
-										std::cout << "mov ";
+										//std::cout << "mov ";
 										//inmediate to register 8b
 										instruction[0] << 0b1011;//opcode
 										instruction[0] << 0b0;//w = one byte										
@@ -436,73 +436,104 @@ instruction_mov :
 										instruction[1] = $3;
 										outstream.write((char*)&instruction,2);
 									}| 
-	MOV registers_16b literals_16b 	{
-										std::cout << "mov ";
+	MOV registers_16b literals_16b 	
+	;		
+instruction_int : INT literals_8b 	{
+										//std::cout << "int " << $2 << "<";
+										instruction[0] = 0b11001101;//opcode
+										instruction[1] = $2;
+										std::cout << "int " << instruction[1] << ";\n";
+										outstream.write((char*)&instruction,2);
 									}
-									;		
-instruction_int : INT literals_integers {
-											std::cout << "int ";
-										}
 	;
 
 
 literals_8b : 	LITERAL_CHAR 	{
-									A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-									std::cout << integer->strvalue << " ";
+									A_here::Symbol* letter = (A_here::Symbol*)A_here::symbol_current;
+									$$ = (char)letter->token;
+									//std::cout << "'" << (char)integer->token << "'\n";
 								}| 
 				LITERAL_INTEGER_DEC_UCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												$$ = (char)integer->number;
+												std::cout << "Number : " << static_cast<char>(integer->number) << "\n";
 											}| 
 				LITERAL_INTEGER_DEC_SCHAR	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												$$ = (char)integer->number;
+												//std::cout << integer->strvalue << " ";
 											};
 literals_16b : LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												$$ = (short)integer->number;
+												//std::cout << integer->strvalue << " ";
 											}| 
 				LITERAL_INTEGER_DEC_SHORT	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
+												$$ = (short)integer->number;
 											};
 literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 												}|
 					LITERAL_INTEGER_DEC_SCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 												}| 
 					LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 												}|
 					LITERAL_INTEGER_DEC_SHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 												}|
 					LITERAL_INTEGER_HEX 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 											}|
 					LITERAL_INTEGER_DEC		{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												std::cout << integer->strvalue << " ";
+												//std::cout << integer->strvalue << " ";
 											};
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 
 registers_8b : 	AL 	{
-						std::cout << "AL ";
+						//std::cout << "AL ";
 						$$ = AL;
 					}| 
 				AH 	{
-						std::cout <<"AH ";
+						//std::cout <<"AH ";
 						$$ = AH;
+					}| 
+				BL 	{
+						//std::cout <<"AH ";
+						$$ = BL;
+					}| 
+				BH 	{
+						//std::cout <<"AH ";
+						$$ = BH;
+					}| 
+				CL 	{
+						//std::cout <<"AH ";
+						$$ = CL;
+					}| 
+				CH 	{
+						//std::cout <<"AH ";
+						$$ = CH;
+					}| 
+				DL 	{
+						//std::cout <<"AH ";
+						$$ = DL;
+					}| 
+				DH 	{
+						//std::cout <<"AH ";
+						$$ = DH;
 					};
 registers_16b : AX 	{
-						std::cout << "AX ";
+						//std::cout << "AX ";
 						$$ = AX;
 					};
 
