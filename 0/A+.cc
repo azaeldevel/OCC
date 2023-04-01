@@ -23,6 +23,7 @@
 #include <oas-intel-A+.tab.h>
 #include <limits>
 #include <core/3/Exception.hh>
+#include <core/3/math.hh>
 
 #include "A+.hh"
 
@@ -81,22 +82,22 @@ size_t Block::get_size(Symbol* symbol) const
 Symbol* Block::next()
 {
 	//std::cout << "Block::next begin\n";
-	if(not actual) return NULL;	
+	if(not actual) return NULL;
 	if(get_size(actual) + index >= page_size)
 	{
 		//std::cout << "Block::create malloc\n";
 		it++;
 		actual = (Symbol*)*it;
-		index = 0;		
+		index = 0;
 	}
-	
+
 	char* newptr = (char*)actual;
 	//std::cout << "Block::next actual : " << (long)actual << "\n";
 	//std::cout << "Block::next index : " << index << "\n";
 	newptr += index;
 	Symbol* obj = (Symbol*)newptr;
 	index += get_size(actual) + 1;
-	//std::cout << "Block::create newptr : " << (long)newptr << "\n";	
+	//std::cout << "Block::create newptr : " << (long)newptr << "\n";
 	actual = (Symbol*)obj;
 	//std::cout << "Block::next end\n";
 	return obj;
@@ -111,7 +112,7 @@ Tokens Integer::reduced_token() const
 		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
 		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
 		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
-		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;	
+		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 	}
 	else
 	{
@@ -119,11 +120,12 @@ Tokens Integer::reduced_token() const
 		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
 		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
 		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
-		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;		
+		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;
 	}
-	
+
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
+
 
 
 Tokens integer_token(long long number)
@@ -134,7 +136,7 @@ Tokens integer_token(long long number)
 		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
 		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
 		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
-		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;	
+		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 	}
 	else
 	{
@@ -142,9 +144,9 @@ Tokens integer_token(long long number)
 		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
 		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
 		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
-		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;		
+		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;
 	}
-	
+
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
 
@@ -152,9 +154,9 @@ void Instruction::movbi(int reg,unsigned char data)
 {
 	D1 << 0b000;
 	D1 << 0b10001;
-	
+
 	D2 = 0b00110000;
-	
+
 	D3 = (unsigned char) reg;
 	D4 = (unsigned char) data;
 }

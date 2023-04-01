@@ -60,19 +60,20 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option projectCompilerOptionsRelation="1" />
+				<Option parameters="0/main.a+ --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
+					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bison -d --header $(PROJECT_DIR)0/oas-intel-parser.y -o $(TARGET_OUTPUT_DIR)oas-intel-parser.c" />
-					<Add before="mv $(TARGET_OUTPUT_DIR)oas-intel-parser.tab.h $(TARGET_OUTPUT_DIR)oas-intel.tab.h" />
-					<Add before="flex --outfile=$(TARGET_OUTPUT_DIR)lex.yy.c --header=$(TARGET_OUTPUT_DIR)oas-intel-parser.tab.h $(PROJECT_DIR)0/oas-intel-lexer.l" />
+					<Add before="bison --header $(PROJECT_DIR)0/oas-intel-parser-A+.y -o $(TARGET_OUTPUT_DIR)oas-intel-parser-A+.cc" />
+					<Add before="flex -o $(TARGET_OUTPUT_DIR)oas-intel-A+.lexer.cc --header=$(TARGET_OUTPUT_DIR)oas-intel-A+.tab.h $(PROJECT_DIR)0/oas-intel-lexer-A+.l" />
 				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall --std=c++20" />
+			<Add option="-DIDE_CODEBLOCKS" />
 			<Add directory="../../octetos" />
 		</Compiler>
 		<Unit filename="../core/3/Lexer-TTA.hh">
@@ -85,6 +86,15 @@
 			<Option target="developing" />
 			<Option target="occ" />
 			<Option target="develop-as" />
+		</Unit>
+		<Unit filename="0/A+-flex.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/A+.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/A+.hh">
+			<Option target="oas-intel" />
 		</Unit>
 		<Unit filename="0/C90.hh">
 			<Option target="developing" />
@@ -102,16 +112,13 @@
 		<Unit filename="0/main-occ-c90.cc">
 			<Option target="occ" />
 		</Unit>
-		<Unit filename="0/oas-main.c">
-			<Option compilerVar="CC" />
+		<Unit filename="0/oas-main.cc">
 			<Option target="oas-intel" />
 		</Unit>
-		<Unit filename="bin/Debug/lex.yy.c">
-			<Option compilerVar="CC" />
+		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc">
 			<Option target="oas-intel" />
 		</Unit>
-		<Unit filename="bin/Debug/oas-intel-parser.c">
-			<Option compilerVar="CC" />
+		<Unit filename="bin/Debug/oas-intel-parser-A+.cc">
 			<Option target="oas-intel" />
 		</Unit>
 		<Extensions>

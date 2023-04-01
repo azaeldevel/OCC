@@ -30,6 +30,8 @@
 
 #include <core/3/math.hh>
 
+//namespace core_here =  oct::core::v3;
+
 namespace oct::core::v3
 {
 
@@ -44,7 +46,7 @@ public:
 	Block(size_t size) : page_size(size),actual(NULL)
 	{
 		actual = malloc(page_size);
-		blocks.push_back(actual);		
+		blocks.push_back(actual);
 	}
 	~Block()
 	{
@@ -61,7 +63,7 @@ public:
 		{
 			//std::cout << "Block::create malloc\n";
 			actual = malloc(page_size);
-			blocks.push_back(actual);		
+			blocks.push_back(actual);
 		}
 		void* now = actual;
 		char* newptr = static_cast<char*>(actual);
@@ -79,10 +81,10 @@ protected:
 	std::list<void*> blocks;
 	std::list<void*>::iterator it;
 	size_t page_size;
-	
+
 private:
 
-	
+
 };
 
 }
@@ -306,7 +308,7 @@ namespace oct::cc::v0::A
 		IN,
 		INC,
 
-		
+
 		MOV,
 
 		//intel registers
@@ -334,11 +336,11 @@ namespace oct::cc::v0::A
 		DS,
 		SS,
 		ES,
-	
+
 
 		//leterals
 		LITERAL_INTEGER_DEC,
-		LITERAL_INTEGER_DEC_SCHAR,		
+		LITERAL_INTEGER_DEC_SCHAR,
 		LITERAL_INTEGER_DEC_UCHAR,
 		LITERAL_INTEGER_DEC_SHORT,
 		LITERAL_INTEGER_DEC_USHORT,
@@ -349,7 +351,7 @@ namespace oct::cc::v0::A
 		LITERAL_INTEGER_DEC_LONGLONG,
 		LITERAL_INTEGER_DEC_ULONGLONG,
 		LITERAL_INTEGER_HEX,
-		LITERAL_INTEGER_HEX_CHAR,		
+		LITERAL_INTEGER_HEX_CHAR,
 		LITERAL_INTEGER_HEX_UCHAR,
 		LITERAL_INTEGER_HEX_SHORT,
 		LITERAL_INTEGER_HEX_USHORT,
@@ -360,7 +362,7 @@ namespace oct::cc::v0::A
 		LITERAL_LONGDOUBLE,
 
 		new_line,
-		
+
 		identifier,
 		integer,
 
@@ -430,7 +432,30 @@ struct Integer : public Symbol
 	char format;//Decimal, Hexadecimal
 
 	Tokens reduced_token()const;
+
+    template<typename T> T Integer::convert_number() const
+    {
+        /*if(0 > number)
+        {
+            if(std::numeric_limits<signed char>::min()  < number) return core_here::to_number<signed char>(strvalue.c_str());
+            else if(std::numeric_limits<short>::min()  < number) return core_here::to_number<short>(strvalue.c_str());
+            else if(std::numeric_limits<int>::min()  < number) return core_here::to_number<int>(strvalue.c_str());
+            else if(std::numeric_limits<long>::min()  < number) return core_here::to_number<long>(strvalue.c_str());
+            else if(std::numeric_limits<long long>::min()  < number) return core_here::to_number<long long>(strvalue.c_str());
+        }
+        else
+        {
+            if(std::numeric_limits<unsigned char>::max() > number) return core_here::to_number<unsigned char>(strvalue.c_str());
+            else if(std::numeric_limits<unsigned short>::max()  > number) return core_here::to_number<unsigned short>(strvalue.c_str());
+            else if(std::numeric_limits<unsigned int>::max()  > number) return core_here::to_number<unsigned int>(strvalue.c_str());
+            else if(std::numeric_limits<unsigned long>::max()  > number) return core_here::to_number<unsigned long>(strvalue.c_str());
+            else if(std::numeric_limits<unsigned long long>::max()  > number) return core_here::to_number<unsigned long long>(strvalue.c_str());
+        }*/
+
+        return 0;
+    }
 };
+
 
 struct Identifier : public Symbol
 {
@@ -464,7 +489,7 @@ public:
 	const std::filesystem::path& get_filename()const;
 	bool open(const std::filesystem::path& file);
 protected:
-	
+
 private:
 	FILE* file;
 	std::filesystem::path filename;
@@ -482,11 +507,11 @@ class Block : public core_here::Block
 public:
 	Block();
 
-	
+
 	Symbol* next();
-	
+
 protected:
-	
+
 
 private:
 	Symbol* actual;
@@ -509,7 +534,7 @@ public:
 	void print(std::ostream& );
 public:
 	int size;
-	
+
 
 private:
 	/*unsigned char rbp : 3;
@@ -519,7 +544,7 @@ private:
 	unsigned char w : 1;
 	unsigned char opcode : 6;
 	unsigned char mm : 2;*/
-	
+
 	unsigned char D1,D2,D3,D4;
 	unsigned char length;
 };

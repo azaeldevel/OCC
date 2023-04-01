@@ -16,8 +16,9 @@
     // Number of errors.
     int nerrs;
   } result;
-	
-	#include <A+.hh>	
+
+    #include <A+.hh>
+
 	namespace A_here = oct::cc::v0::A;
 	//A_here::Symbol* A_here::current_symbol;
 }
@@ -29,7 +30,7 @@
 // The scanner argument must be named yyscanner.
 	#define YY_DECL                                                         \
 	  	yytoken_kind_t yylex (YYSTYPE* yylval_param, const YYLTYPE *loc, yyscan_t yyscanner, result *res,A_here::SymbolTable* symbols_table)
-	  	YY_DECL;	
+	  	YY_DECL;
 		//#define yylex poslex
 
 	void yyerror(const YYLTYPE *loc, yyscan_t scanner, result *res,A_here::SymbolTable* symbols, const char *msg, ...);
@@ -43,7 +44,7 @@
 	#include <stdlib.h>
 	#include <A+.hh>
 	#include <iostream>
-	#include <fstream>	
+	#include <fstream>
 	#include <core/3/Exception.hh>
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
@@ -82,7 +83,7 @@
 //keywords
 %token AUTO 110200
 %token BREAK
-%token CASE 
+%token CASE
 %token CHAR
 %token CONST
 %token CONTINUE
@@ -173,7 +174,7 @@
 
 //
 %token <long long> LITERAL_INTEGER_DEC
-%token LITERAL_INTEGER_DEC_SCHAR	
+%token LITERAL_INTEGER_DEC_SCHAR
 %token LITERAL_INTEGER_DEC_UCHAR
 %token LITERAL_INTEGER_DEC_SHORT
 %token LITERAL_INTEGER_DEC_USHORT
@@ -187,8 +188,8 @@
 %token LITERAL_INTEGER_HEX_UNIT
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
-%type literals_integers 
-%type <char> literals_8b 
+%type literals_integers
+%type <char> literals_8b
 %type <short> literals_16b
 %type <yytoken_kind_t> registers_8b
 %type <yytoken_kind_t> registers_16b
@@ -203,7 +204,7 @@ external_declaration : function_implementation |
 	declaration ';'
 	;
 
-function_implementation : 
+function_implementation :
 	declaration_specifiers declarator declaration_list compound_statement |
 	declaration_specifiers declarator compound_statement |
 	declarator declaration_list compound_statement |
@@ -246,7 +247,7 @@ initializer : const_expression 		{
 	;
 
 
-const_expression : LITERAL_CHAR | 
+const_expression : LITERAL_CHAR |
 				LITERAL_INTEGER_DEC_UCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -278,7 +279,7 @@ const_expression : LITERAL_CHAR |
 												it--;
 												A_here::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
-											}| 
+											}|
 				LITERAL_INTEGER_HEX 		{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
@@ -298,13 +299,13 @@ const_expression : LITERAL_CHAR |
 
 
 
-initilizer_list : const_expression  {									
-										
+initilizer_list : const_expression  {
+
 									}|
 	initilizer_list ',' const_expression
 	;
 
- 
+
 type_specifier :  VOID | CHAR | SHORT | INT | LONG | FLOAT | SIGNED | UNSIGNED ;
 
 type_qualifer : CONST | VOLATIL;
@@ -315,7 +316,7 @@ declarator : pointer direct_declarator |
 direct_declarator : IDENTIFIER 		{
 										identifier = new A_here::Identifier;
 										identifier->number = symbols_table->size();
-										identifier->name = $1;										
+										identifier->name = $1;
 										symbols_table->push_back(identifier);
 									}|
 	'(' declarator ')' 				|
@@ -323,13 +324,13 @@ direct_declarator : IDENTIFIER 		{
 	direct_declarator '['  ']' 					|
 	direct_declarator '(' parameter_type_list ')' 		|
 	direct_declarator '(' identifer_list ')' 			|
-	direct_declarator '('  ')' 
+	direct_declarator '('  ')'
 	;
 
 identifer_list : IDENTIFIER |
 	identifer_list IDENTIFIER
 	;
-	
+
 
 parameter_type_list : parameter_list |
 	parameter_list ',' "..."
@@ -339,7 +340,7 @@ parameter_list : parameter_declaration
 	parameter_list ',' parameter_declaration
 	;
 
-parameter_declaration : 
+parameter_declaration :
 	declaration_specifiers declarator |
 	declaration_specifiers abstract_declarator |
 	declaration_specifiers |
@@ -350,15 +351,15 @@ abstract_declarator : pointer |
 	direct_abstract_declarator
 	;
 
-direct_abstract_declarator : 
+direct_abstract_declarator :
 	'(' abstract_declarator ')' |
 	direct_abstract_declarator '[' const_expression ']' |
 	'[' const_expression ']' |
-	direct_abstract_declarator '[' ']' |	
+	direct_abstract_declarator '[' ']' |
 	'[' ']' |
-	direct_abstract_declarator '(' const_expression ')' | 
+	direct_abstract_declarator '(' const_expression ')' |
 	'(' const_expression ')' |
-	direct_abstract_declarator '(' ')' |	
+	direct_abstract_declarator '(' ')' |
 	'(' ')' |
 	;
 
@@ -369,15 +370,15 @@ pointer : '*' type_qualifer_list |
 	;
 
 type_qualifer_list : type_qualifer |
-	type_qualifer_list type_qualifer 
+	type_qualifer_list type_qualifer
 	;
 
-compound_statement : '{' declaration_list statement_list '}' | 
+compound_statement : '{' declaration_list statement_list '}' |
 	'{' statement_list '}' |
 	'{' declaration_list '}' |
-	'{' '}' 
+	'{' '}'
 	;
-	
+
 declaration_list : declaration |
 	declaration_list declaration
 	;
@@ -389,18 +390,18 @@ statement_list : statement |
 
 statement : compound_statement |  instruction_mov ';' | instruction_int ';' | return ';';
 
-return  : 
+return  :
 	RETURN |
 	RETURN literals_8b |
 	RETURN literals_16b
 	;
 
-instruction_mov : 
+instruction_mov :
 	MOV registers_8b literals_8b 	{
 										//std::cout << "mov ";
 										//inmediate to register 8b
 										instruction[0] << 0b1011;//opcode
-										instruction[0] << 0b0;//w = one byte										
+										instruction[0] << 0b0;//w = one byte
 										switch($2)//reg
 										{
 										case AL:
@@ -435,9 +436,9 @@ instruction_mov :
 										}
 										instruction[1] = $3;
 										outstream.write((char*)&instruction,2);
-									}| 
-	MOV registers_16b literals_16b 	
-	;		
+									}|
+	MOV registers_16b literals_16b
+	;
 instruction_int : INT literals_8b 	{
 										//std::cout << "int " << $2 << "<";
 										instruction[0] = 0b11001101;//opcode
@@ -452,12 +453,12 @@ literals_8b : 	LITERAL_CHAR 	{
 									A_here::Symbol* letter = (A_here::Symbol*)A_here::symbol_current;
 									$$ = (char)letter->token;
 									//std::cout << "'" << (char)integer->token << "'\n";
-								}| 
+								}|
 				LITERAL_INTEGER_DEC_UCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												$$ = (char)integer->number;
 												std::cout << "Number : " << static_cast<char>(integer->number) << "\n";
-											}| 
+											}|
 				LITERAL_INTEGER_DEC_SCHAR	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												$$ = (char)integer->number;
@@ -467,7 +468,7 @@ literals_16b : LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												$$ = (short)integer->number;
 												//std::cout << integer->strvalue << " ";
-											}| 
+											}|
 				LITERAL_INTEGER_DEC_SHORT	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << integer->strvalue << " ";
@@ -480,7 +481,7 @@ literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
 					LITERAL_INTEGER_DEC_SCHAR 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << integer->strvalue << " ";
-												}| 
+												}|
 					LITERAL_INTEGER_DEC_USHORT 	{
 												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
 												//std::cout << integer->strvalue << " ";
@@ -503,31 +504,31 @@ initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 registers_8b : 	AL 	{
 						//std::cout << "AL ";
 						$$ = AL;
-					}| 
+					}|
 				AH 	{
 						//std::cout <<"AH ";
 						$$ = AH;
-					}| 
+					}|
 				BL 	{
 						//std::cout <<"AH ";
 						$$ = BL;
-					}| 
+					}|
 				BH 	{
 						//std::cout <<"AH ";
 						$$ = BH;
-					}| 
+					}|
 				CL 	{
 						//std::cout <<"AH ";
 						$$ = CL;
-					}| 
+					}|
 				CH 	{
 						//std::cout <<"AH ";
 						$$ = CH;
-					}| 
+					}|
 				DL 	{
 						//std::cout <<"AH ";
 						$$ = DL;
-					}| 
+					}|
 				DH 	{
 						//std::cout <<"AH ";
 						$$ = DH;
