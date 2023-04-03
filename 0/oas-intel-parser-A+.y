@@ -405,7 +405,7 @@ return  :
 
 instruction_mov :
 	MOV registers_8b literals_integer	{
-							//std::cout << "mov ";
+							std::cout << "mov register-8b integer\n";
 							//inmediate to register 8b
 							instruction[0] << 0b1011;//opcode
 							instruction[0] << 0b0;//w = one byte
@@ -445,7 +445,7 @@ instruction_mov :
 							outstream.write((char*)&instruction,2);
 						}|
 	MOV registers_8b LITERAL_CHAR	{
-							//std::cout << "mov ";
+							std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
 							instruction[0] << 0b1011;//opcode
 							instruction[0] << 0b0;//w = one byte
@@ -487,10 +487,9 @@ instruction_mov :
 	MOV registers_16b literals_integer
 	;
 instruction_int : INT literals_integer {
-						//std::cout << "int " << $2 << "<";
+						std::cout << "int " << $2 << "\n";
 						instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
-						std::cout << "interruption " << instruction[1] << ";\n";
 						outstream.write((char*)&instruction,2);
 					}
 	;
