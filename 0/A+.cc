@@ -108,8 +108,15 @@ Tokens Integer::reduced_token() const
 	//std::cout << "reduced_token : step 1 " << number << "\n";
 	if(0 > number)
 	{
-		if(std::numeric_limits<signed char>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SCHAR;
-		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
+		if(std::numeric_limits<signed char>::min()  < number)
+        {
+            if(format == 'D') return Tokens::LITERAL_INTEGER_DEC_SCHAR;
+            else if(format == 'H') return Tokens::LITERAL_INTEGER_HEX_UCHAR;
+        }
+		else if(std::numeric_limits<short>::min()  < number)
+        {
+            return Tokens::LITERAL_INTEGER_DEC_SHORT;
+        }
 		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
 		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
 		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;

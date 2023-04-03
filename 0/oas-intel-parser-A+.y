@@ -49,7 +49,7 @@
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
 	A_here::Identifier* identifier = NULL;
-	char instruction[6];
+	unsigned char instruction[6];
 	int instruction_len = 0;
 	std::fstream outstream;
 }
@@ -183,17 +183,25 @@
 %token LITERAL_INTEGER_DEC_LONG
 %token LITERAL_INTEGER_DEC_ULONG
 %token <long long> LITERAL_INTEGER_HEX
-%token LITERAL_INTEGER_HEX_UCHAR
-%token LITERAL_INTEGER_HEX_USHORT
-%token LITERAL_INTEGER_HEX_UNIT
+%token LITERAL_INTEGER_HEX_SCHAR
+%token <signed char>LITERAL_INTEGER_HEX_UCHAR
+%token LITERAL_INTEGER_HEX_SCHAR
+%token LITERAL_INTEGER_HEX_SHORT
+%token <unsigned short>LITERAL_INTEGER_HEX_USHORT
+%token LITERAL_INTEGER_HEX_INT
+%token <unsigned int>LITERAL_INTEGER_HEX_UINT
+%token LITERAL_INTEGER_HEX_LONG
+%token LITERAL_INTEGER_HEX_ULONG
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
 %type literals_integers
-%type <char> literals_8b
+%type <unsigned char> literals_8b
 %type <short> literals_16b
 %type <yytoken_kind_t> registers_8b
 %type <yytoken_kind_t> registers_16b
+%type <long long>literals_integer
 
+f
 %%
 
 translation_unit : external_declaration ENDOFFILE |
@@ -392,112 +400,104 @@ statement : compound_statement |  instruction_mov ';' | instruction_int ';' | re
 
 return  :
 	RETURN |
-	RETURN literals_8b |
-	RETURN literals_16b
+	RETURN literals_integer
 	;
 
 instruction_mov :
-	MOV registers_8b literals_8b 	{
-										//std::cout << "mov ";
-										//inmediate to register 8b
-										instruction[0] << 0b1011;//opcode
-										instruction[0] << 0b0;//w = one byte
-										switch($2)//reg
-										{
-										case AL:
-											instruction[0] << 0b000;
-											break;
-										case CL:
-											instruction[0] << 0b001;
-											break;
-										case DL:
-											instruction[0] << 0b010;
-											break;
-										case BL:
-											instruction[0] << 0b011;
-											break;
-										case AH:
-											instruction[0] << 0b100;
-											break;
-										case CH:
-											instruction[0] << 0b101;
-											break;
-										case DH:
-											instruction[0] << 0b110;
-											break;
-										case BH:
-											instruction[0] << 0b111;
-											break;
-										default:
-											//error
-											throw core_here::exception("El operando no es un registro de 8 bits valido.");
-											//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-											break;
-										}
-										instruction[1] = $3;
-										outstream.write((char*)&instruction,2);
-									}|
-	MOV registers_16b literals_16b
+	MOV registers_8b literals_integer	{
+							//std::cout << "mov ";
+							//inmediate to register 8b
+							instruction[0] << 0b1011;//opcode
+							instruction[0] << 0b0;//w = one byte
+							switch($2)//reg
+							{
+							case AL:
+								instruction[0] << 0b000;
+								break;
+							case CL:
+								instruction[0] << 0b001;
+								break;
+							case DL:
+								instruction[0] << 0b010;
+								break;
+							case BL:
+								instruction[0] << 0b011;
+								break;
+							case AH:
+								instruction[0] << 0b100;
+								break;
+							case CH:
+								instruction[0] << 0b101;
+								break;
+							case DH:
+								instruction[0] << 0b110;
+								break;
+							case BH:
+								instruction[0] << 0b111;
+								break;
+							default:
+								//error
+								throw core_here::exception("El operando no es un registro de 8 bits valido.");
+								//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+								break;
+							}
+							instruction[1] = $3;
+							outstream.write((char*)&instruction,2);
+						}|
+	MOV registers_8b LITERAL_CHAR	{
+							//std::cout << "mov ";
+							//inmediate to register 8b
+							instruction[0] << 0b1011;//opcode
+							instruction[0] << 0b0;//w = one byte
+							switch($2)//reg
+							{
+							case AL:
+								instruction[0] << 0b000;
+								break;
+							case CL:
+								instruction[0] << 0b001;
+								break;
+							case DL:
+								instruction[0] << 0b010;
+								break;
+							case BL:
+								instruction[0] << 0b011;
+								break;
+							case AH:
+								instruction[0] << 0b100;
+								break;
+							case CH:
+								instruction[0] << 0b101;
+								break;
+							case DH:
+								instruction[0] << 0b110;
+								break;
+							case BH:
+								instruction[0] << 0b111;
+								break;
+							default:
+								//error
+								throw core_here::exception("El operando no es un registro de 8 bits valido.");
+								//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+								break;
+							}
+							instruction[1] = $3;
+							outstream.write((char*)&instruction,2);
+						}|
+	MOV registers_16b literals_integer
 	;
-instruction_int : INT literals_8b 	{
-										//std::cout << "int " << $2 << "<";
-										instruction[0] = 0b11001101;//opcode
-										instruction[1] = $2;
-										std::cout << "int " << instruction[1] << ";\n";
-										outstream.write((char*)&instruction,2);
-									}
+instruction_int : INT literals_integer {
+						//std::cout << "int " << $2 << "<";
+						instruction[0] = 0b11001101;//opcode
+						instruction[1] = $2;
+						std::cout << "interruption " << instruction[1] << ";\n";
+						outstream.write((char*)&instruction,2);
+					}
 	;
 
+literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
-literals_8b : 	LITERAL_CHAR 	{
-									A_here::Symbol* letter = (A_here::Symbol*)A_here::symbol_current;
-									$$ = (char)letter->token;
-									//std::cout << "'" << (char)integer->token << "'\n";
-								}|
-				LITERAL_INTEGER_DEC_UCHAR 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												$$ = (char)integer->number;
-												std::cout << "Number : " << static_cast<char>(integer->number) << "\n";
-											}|
-				LITERAL_INTEGER_DEC_SCHAR	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												$$ = (char)integer->number;
-												//std::cout << integer->strvalue << " ";
-											};
-literals_16b : LITERAL_INTEGER_DEC_USHORT 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												$$ = (short)integer->number;
-												//std::cout << integer->strvalue << " ";
-											}|
-				LITERAL_INTEGER_DEC_SHORT	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-												$$ = (short)integer->number;
-											};
-literals_integers : LITERAL_INTEGER_DEC_UCHAR 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-												}|
-					LITERAL_INTEGER_DEC_SCHAR 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-												}|
-					LITERAL_INTEGER_DEC_USHORT 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-												}|
-					LITERAL_INTEGER_DEC_SHORT 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-												}|
-					LITERAL_INTEGER_HEX 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-											}|
-					LITERAL_INTEGER_DEC		{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
-												//std::cout << integer->strvalue << " ";
-											};
+
 initializer_char : LITERAL_CHAR | ;
 initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
 

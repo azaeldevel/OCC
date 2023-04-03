@@ -34,6 +34,7 @@
 
 namespace oct::core::v3
 {
+//https://en.cppreference.com/w/cpp/string/byte/atoi
 
 class Block
 {
@@ -92,6 +93,123 @@ private:
 
 namespace oct::cc::v0::A
 {
+    /**
+	*\brief Convierte el string dao en el intero indicado
+	*/
+	template<std::signed_integral T, typename C> T to_number(const C* str)
+	{
+		while (std::isspace(static_cast<unsigned char>(*str)))
+		{
+			++str;
+		}
+
+		bool negative = false;
+
+		if (*str == '+')
+		{
+			++str;
+		}
+		else if (*str == '-')
+		{
+			++str;
+			negative = true;
+		}
+
+		T result = 0;
+		for (; std::isdigit(static_cast<unsigned char>(*str)); ++str)
+		{
+			T digit = *str - '0';
+			result *= 10;
+			result -= digit; // calculate in negatives to support INT_MIN, LONG_MIN,..
+		}
+
+		return negative ? result : -result;
+	}
+	/**
+	*\brief Convierte el string dado en el intero indicado
+	*/
+	template<std::unsigned_integral T, typename C> T to_number(const C* str, int base = 10)
+	{
+		while (std::isspace(static_cast<unsigned char>(*str)))
+		{
+			++str;
+		}
+		if(base == 16)
+        {
+            if(str[0] == '0' and str[1] == 'x')
+            {
+                str++;
+                str++;
+            }
+        }
+
+		bool negative = false;
+
+		if (*str == '+')
+		{
+			++str;
+		}
+		else if (*str == '-')
+		{
+			++str;
+			negative = true;
+			//throw error
+		}
+
+		T result = 0;
+		if(base == 10)
+        {
+            for (; std::isdigit(static_cast<unsigned char>(*str)); ++str)
+            {
+                T digit = *str - '0';
+                result *= base;
+                result -= digit; // calculate in negatives to support INT_MIN, LONG_MIN,..
+            }
+        }
+        else if(base == 16)
+        {
+            T digit;
+            for (; std::isxdigit(static_cast<unsigned char>(*str)); ++str)
+            {
+                //digit = 0;
+                switch((char)*str)
+                {
+                    case 'a':
+                    case 'A' :
+                        digit = 10;
+                        break;
+                    case 'b':
+                    case 'B' :
+                        digit = 11;
+                        break;
+                    case 'c':
+                    case 'C' :
+                        digit = 12;
+                        break;
+                    case 'd':
+                    case 'D' :
+                        digit = 13;
+                        break;
+                    case 'e':
+                    case 'E' :
+                        digit = 14;
+                        break;
+                    case 'f':
+                    case 'F' :
+                        digit = 15;
+                        break;
+                    default:
+                        digit = *str - '0';
+                }
+                //std::cout << "Hex : " << *str << " - " << (unsigned char)digit << "\n";
+                result *= base;
+                result += digit; // calculate in negatives to support INT_MIN, LONG_MIN,..
+            }
+        }
+
+		return result;
+	}
+
 	namespace core_here = oct::core::v3;
 	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
@@ -351,10 +469,14 @@ namespace oct::cc::v0::A
 		LITERAL_INTEGER_DEC_LONGLONG,
 		LITERAL_INTEGER_DEC_ULONGLONG,
 		LITERAL_INTEGER_HEX,
-		LITERAL_INTEGER_HEX_CHAR,
+		LITERAL_INTEGER_HEX_SCHAR,
 		LITERAL_INTEGER_HEX_UCHAR,
 		LITERAL_INTEGER_HEX_SHORT,
 		LITERAL_INTEGER_HEX_USHORT,
+		LITERAL_INTEGER_HEX_INT,
+		LITERAL_INTEGER_HEX_UINT,
+		LITERAL_INTEGER_HEX_LONG,
+		LITERAL_INTEGER_HEX_ULONG,
 		LITERAL_CHAR,
 		LITERAL_STRING,
 		LITERAL_FLOAT,
@@ -433,27 +555,6 @@ struct Integer : public Symbol
 
 	Tokens reduced_token()const;
 
-    template<typename T> T Integer::convert_number() const
-    {
-        /*if(0 > number)
-        {
-            if(std::numeric_limits<signed char>::min()  < number) return core_here::to_number<signed char>(strvalue.c_str());
-            else if(std::numeric_limits<short>::min()  < number) return core_here::to_number<short>(strvalue.c_str());
-            else if(std::numeric_limits<int>::min()  < number) return core_here::to_number<int>(strvalue.c_str());
-            else if(std::numeric_limits<long>::min()  < number) return core_here::to_number<long>(strvalue.c_str());
-            else if(std::numeric_limits<long long>::min()  < number) return core_here::to_number<long long>(strvalue.c_str());
-        }
-        else
-        {
-            if(std::numeric_limits<unsigned char>::max() > number) return core_here::to_number<unsigned char>(strvalue.c_str());
-            else if(std::numeric_limits<unsigned short>::max()  > number) return core_here::to_number<unsigned short>(strvalue.c_str());
-            else if(std::numeric_limits<unsigned int>::max()  > number) return core_here::to_number<unsigned int>(strvalue.c_str());
-            else if(std::numeric_limits<unsigned long>::max()  > number) return core_here::to_number<unsigned long>(strvalue.c_str());
-            else if(std::numeric_limits<unsigned long long>::max()  > number) return core_here::to_number<unsigned long long>(strvalue.c_str());
-        }*/
-
-        return 0;
-    }
 };
 
 
