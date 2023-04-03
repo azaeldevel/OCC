@@ -37,7 +37,7 @@ extern std::fstream outstream;
 std::filesystem::path outfile;
 std::list<std::string> inputs;
 int main (int argc, char* argv[])
-{	
+{
 	for(size_t i = 0; i < argc; i++)
 	{
 		if(strcmp(argv[i],"--output") == 0)
@@ -54,34 +54,45 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	
+	/*int c = 5;
+	std::cout << "Number : " << (int)c << "\n";
+	c = c << 1;
+	std::cout << "Number : " << (int)c << "\n";
+	c << 1;
+	std::cout << "Number : " << (int)c << "\n";
+	c << 1;
+	std::cout << "Number : " << (int)c << "\n";
+	c << 1;
+	std::cout << "Number : " << (int)c << "\n";*/
+
+
 	A_here::SymbolTable symbols;
-	A_here::File current_file(symbols);		
+	A_here::File current_file(symbols);
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
 		return EXIT_FAILURE;
-	}	
+	}
 	if(outfile.empty())
 	{
 		std::cout << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
-	}	
+	}
 	outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
-	
+
 	for(const std::string& f : inputs)
 	{
 		if(not current_file.open(f.c_str()))
 		{
 			fprintf(stderr,"Fallo al abrir el archivo %s",f.c_str());
-			return EXIT_FAILURE;		
+			return EXIT_FAILURE;
 		}
-		
+
 		result res = {0, 0, 0};
 		yyparse(current_file.get_scanner(),&res,&symbols);
 	}
-	
-	
+
+
 	outstream.close();
 	return EXIT_SUCCESS;
 }

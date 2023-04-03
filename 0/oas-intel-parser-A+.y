@@ -185,7 +185,6 @@
 %token <long long> LITERAL_INTEGER_HEX
 %token LITERAL_INTEGER_HEX_SCHAR
 %token <signed char>LITERAL_INTEGER_HEX_UCHAR
-%token LITERAL_INTEGER_HEX_SCHAR
 %token LITERAL_INTEGER_HEX_SHORT
 %token <unsigned short>LITERAL_INTEGER_HEX_USHORT
 %token LITERAL_INTEGER_HEX_INT
@@ -194,14 +193,11 @@
 %token LITERAL_INTEGER_HEX_ULONG
 %token <char> LITERAL_CHAR
 %token <const char*> IDENTIFIER
-%type literals_integers
-%type <unsigned char> literals_8b
-%type <short> literals_16b
 %type <yytoken_kind_t> registers_8b
 %type <yytoken_kind_t> registers_16b
 %type <long long>literals_integer
 
-f
+
 %%
 
 translation_unit : external_declaration ENDOFFILE |
@@ -407,33 +403,42 @@ instruction_mov :
 	MOV registers_8b literals_integer	{
 							std::cout << "mov register-8b integer\n";
 							//inmediate to register 8b
-							instruction[0] << 0b1011;//opcode
-							instruction[0] << 0b0;//w = one byte
+							instruction[0] = 0b1011;//opcode
+							std::cout << (int)instruction[0] << " register-8b integer\n";
+							instruction[0] = instruction[0] << 1;//w = one byte
+							std::cout << (int)instruction[0] << " register-8b integer\n";
 							switch($2)//reg
 							{
 							case AL:
-								instruction[0] << 0b000;
+								instruction[0] = instruction[0] << 3;
 								break;
 							case CL:
-								instruction[0] << 0b001;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b001;
 								break;
 							case DL:
-								instruction[0] << 0b010;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b010;
 								break;
 							case BL:
-								instruction[0] << 0b011;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b011;
 								break;
 							case AH:
-								instruction[0] << 0b100;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b100;
 								break;
 							case CH:
-								instruction[0] << 0b101;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b101;
 								break;
 							case DH:
-								instruction[0] << 0b110;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b110;
 								break;
 							case BH:
-								instruction[0] << 0b111;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b111;
 								break;
 							default:
 								//error
@@ -442,38 +447,48 @@ instruction_mov :
 								break;
 							}
 							instruction[1] = $3;
+							std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);
 						}|
 	MOV registers_8b LITERAL_CHAR	{
-							std::cout << "mov register-8b char\n";
+						std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
-							instruction[0] << 0b1011;//opcode
-							instruction[0] << 0b0;//w = one byte
+							instruction[0] = 0b1011;//opcode
+							std::cout << (int)instruction[0] << " register-8b char\n";
+							instruction[0] = instruction[0] << 1;//w = one byte
+							std::cout << (int)instruction[0] << " register-8b char\n";
 							switch($2)//reg
 							{
 							case AL:
-								instruction[0] << 0b000;
+								instruction[0] = instruction[0] << 3;
 								break;
 							case CL:
-								instruction[0] << 0b001;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b001;
 								break;
 							case DL:
-								instruction[0] << 0b010;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b010;
 								break;
 							case BL:
-								instruction[0] << 0b011;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b011;
 								break;
 							case AH:
-								instruction[0] << 0b100;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b100;
 								break;
 							case CH:
-								instruction[0] << 0b101;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b101;
 								break;
 							case DH:
-								instruction[0] << 0b110;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b110;
 								break;
 							case BH:
-								instruction[0] << 0b111;
+								instruction[0] = instruction[0] << 3;
+								instruction[0] = instruction[0] + 0b111;
 								break;
 							default:
 								//error
@@ -482,8 +497,9 @@ instruction_mov :
 								break;
 							}
 							instruction[1] = $3;
-							outstream.write((char*)&instruction,2);
-						}|
+							std::cout << (int)instruction[0] << " register-8b char\n";
+							outstream.write((char*)&instruction,2);		
+					}|
 	MOV registers_16b literals_integer
 	;
 instruction_int : INT literals_integer {
@@ -498,40 +514,40 @@ literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 
 initializer_char : LITERAL_CHAR | ;
-initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | ;
+initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ;
 
 registers_8b : 	AL 	{
-						//std::cout << "AL ";
-						$$ = AL;
-					}|
-				AH 	{
-						//std::cout <<"AH ";
-						$$ = AH;
-					}|
-				BL 	{
-						//std::cout <<"AH ";
-						$$ = BL;
-					}|
-				BH 	{
-						//std::cout <<"AH ";
-						$$ = BH;
-					}|
-				CL 	{
-						//std::cout <<"AH ";
-						$$ = CL;
-					}|
-				CH 	{
-						//std::cout <<"AH ";
-						$$ = CH;
-					}|
-				DL 	{
-						//std::cout <<"AH ";
-						$$ = DL;
-					}|
-				DH 	{
-						//std::cout <<"AH ";
-						$$ = DH;
-					};
+				//std::cout << "AL ";
+				$$ = AL;
+			}|
+		AH 	{
+				//std::cout <<"AH ";
+				$$ = AH;
+			}|
+		BL 	{
+				//std::cout <<"AH ";
+				$$ = BL;
+			}|
+		BH 	{
+				//std::cout <<"AH ";
+				$$ = BH;
+			}|
+		CL 	{
+				//std::cout <<"AH ";
+				$$ = CL;
+			}|
+		CH 	{
+				//std::cout <<"AH ";
+				$$ = CH;
+			}|
+		DL 	{
+				//std::cout <<"AH ";
+				$$ = DL;
+			}|
+		DH 	{
+				//std::cout <<"AH ";
+				$$ = DH;
+			};
 registers_16b : AX 	{
 						//std::cout << "AX ";
 						$$ = AX;
