@@ -197,6 +197,8 @@
 %type <yytoken_kind_t> registers_16b
 %type <long long>literals_integer
 
+%type <A_here::nodes::Statement*> statement
+%type <A_here::nodes::Statement*> instruction_mov
 
 %%
 
@@ -449,6 +451,8 @@ instruction_mov :
 							instruction[1] = $3;
 							std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);
+							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
+                            $$ = mv8;
 						}|
 	MOV registers_8b LITERAL_CHAR	{
 						std::cout << "mov register-8b char\n";
@@ -498,7 +502,9 @@ instruction_mov :
 							}
 							instruction[1] = $3;
 							std::cout << (int)instruction[0] << " register-8b char\n";
-							outstream.write((char*)&instruction,2);		
+							outstream.write((char*)&instruction,2);
+							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
+                            $$ = mv8;
 					}|
 	MOV registers_16b literals_integer
 	;

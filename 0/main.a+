@@ -9,7 +9,7 @@ short flag2 = -21598;
 
 int main()
 {
-	mov al 'B';
+	mov al 'b';
 	mov ah  0x0e;
 	int 0x10;
 	mov al 'o';
@@ -28,6 +28,15 @@ int main()
 	mov ah 0x0e;
 	int 0x10;
 	mov al 'g';
+	mov ah 0x0e;
+	int 0x10;
+	mov al '.';
+	mov ah 0x0e;
+	int 0x10;
+	mov al '.';
+	mov ah 0x0e;
+	int 0x10;
+	mov al '.';
 	mov ah 0x0e;
 	int 0x10;
 	
