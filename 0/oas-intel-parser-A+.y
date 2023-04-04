@@ -403,12 +403,12 @@ return  :
 
 instruction_mov :
 	MOV registers_8b literals_integer	{
-							std::cout << "mov register-8b integer\n";
+							//std::cout << "mov register-8b integer\n";
 							//inmediate to register 8b
 							instruction[0] = 0b1011;//opcode
-							std::cout << (int)instruction[0] << " register-8b integer\n";
+							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							instruction[0] = instruction[0] << 1;//w = one byte
-							std::cout << (int)instruction[0] << " register-8b integer\n";
+							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							switch($2)//reg
 							{
 							case AL:
@@ -449,7 +449,7 @@ instruction_mov :
 								break;
 							}
 							instruction[1] = $3;
-							std::cout << (int)instruction[0] << " register-8b integer\n";
+							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);
 
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
@@ -458,12 +458,12 @@ instruction_mov :
                             				$$ = mv8;
 						}|
 	MOV registers_8b LITERAL_CHAR	{
-						std::cout << "mov register-8b char\n";
+						//std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
 							instruction[0] = 0b1011;//opcode
-							std::cout << (int)instruction[0] << " register-8b char\n";
+							//std::cout << (int)instruction[0] << " register-8b char\n";
 							instruction[0] = instruction[0] << 1;//w = one byte
-							std::cout << (int)instruction[0] << " register-8b char\n";
+							//std::cout << (int)instruction[0] << " register-8b char\n";
 							switch($2)//reg
 							{
 							case AL:
@@ -504,7 +504,7 @@ instruction_mov :
 								break;
 							}
 							instruction[1] = $3;
-							std::cout << (int)instruction[0] << " register-8b char\n";
+							//std::cout << (int)instruction[0] << " register-8b char\n";
 							outstream.write((char*)&instruction,2);
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
 							mv8->registe = (A_here::Tokens)$2;
@@ -514,7 +514,7 @@ instruction_mov :
 	MOV registers_16b literals_integer
 	;
 instruction_int : INT literals_integer {
-						std::cout << "int " << $2 << "\n";
+						//std::cout << "int " << $2 << "\n";
 						instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
 						outstream.write((char*)&instruction,2);

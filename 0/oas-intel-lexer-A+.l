@@ -19,9 +19,9 @@
 
 %}
 
-DIGIT_DEC [0-9]
-DIGIT_HEX [0-9A-Fa-f]
-CHAR [[:alpha:][:upper:][:digit:][:punct:][:graph:]]
+DIGIT_DEC [[:digit:]]
+DIGIT_HEX [[:xdigit:]]
+CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]
 LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
 LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LITERAL_CHAR '{CHAR}'
@@ -143,7 +143,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				return IF;
 			}
 "int"		{
-				std::cout << "Line int : " << yylineno << "\n";
+				//std::cout << "Line int : " << yylineno << "\n";
 				A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current->line = yylineno;
 				A_here::symbol_current->token = A_here::Tokens::INT;
@@ -261,7 +261,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 
 "mov"		{
-				std::cout << "Line mov : " << yylineno << "\n";
+				//std::cout << "Line mov : " << yylineno << "\n";
 				A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current->line = yylineno;
 				A_here::symbol_current->token = A_here::Tokens::MOV;
@@ -269,21 +269,21 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 
 "al"	{
-			std::cout << "Line al : " << yylineno << "\n";
+			//std::cout << "Line al : " << yylineno << "\n";
 			A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 			A_here::symbol_current->line = yylineno;
 			A_here::symbol_current->token = A_here::Tokens::AL;
 			return AL;
 		}
 "ah"	{
-			std::cout << "Line ah : " << yylineno << "\n";
+			//std::cout << "Line ah : " << yylineno << "\n";
 			A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 			A_here::symbol_current->line = yylineno;
 			A_here::symbol_current->token = A_here::Tokens::AH;
 			return AH;
 		}
 
-[\n\t ]			std::cout << "Line whitespace : " << yylineno << "\n";;
+[[:space:]]			;
 
 {IDENTIFIER}	{
 			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
@@ -297,7 +297,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 		}
 
 {LITERAL_INTEGER_HEX}	{
-				std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
+				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
 				A_here::Integer* integer;
 				integer = A_here::block.create<A_here::Integer>();
 				A_here::symbol_current = (A_here::Symbol*)integer;
@@ -310,7 +310,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				return LITERAL_INTEGER_HEX;
 			}
 {LITERAL_INTEGER_DEC}	{
-				std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
+				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
 				A_here::Integer* integer;
 				integer = A_here::block.create<A_here::Integer>();
 				A_here::symbol_current = (A_here::Symbol*)integer;
@@ -323,7 +323,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				return LITERAL_INTEGER_DEC;
 			}
 {LITERAL_CHAR}		{
-				std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
+				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
 				A_here::Symbol* letter;
 				letter = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current = (A_here::Symbol*)letter;
@@ -331,14 +331,14 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				letter->line = yylineno;
 				yylval->LITERAL_CHAR = yytext[1];
 				letter->strvalue.insert(0,yytext,yyleng);
-				std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
+				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				return LITERAL_CHAR;
 			}
 
 
 
-[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
-						std::cout << "Line symbol '" << yytext[0] << "' : " << yylineno << "\n";
+[[:punct:]]	{
+						//std::cout << "Line symbol '" << yytext[0] << "' : " << yylineno << "\n";
 						A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 						A_here::symbol_current->line = yylineno;
 						A_here::symbol_current->token = (A_here::Tokens)yytext[0];
