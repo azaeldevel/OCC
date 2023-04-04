@@ -199,7 +199,7 @@
 
 %type <A_here::nodes::Statement*> statement
 %type <A_here::nodes::Statement*> instruction_mov
-
+%type <A_here::nodes::Statement*> instruction_int
 %%
 
 translation_unit : external_declaration ENDOFFILE |
@@ -394,7 +394,7 @@ statement_list : statement |
 	statement_list statement
 	;
 
-statement : compound_statement |  instruction_mov ';' | instruction_int ';' | return ';';
+statement : compound_statement |  instruction_mov ';' {$$ = $1;}| instruction_int ';' {$$ = $1;}| return ';';
 
 return  :
 	RETURN |
@@ -451,8 +451,11 @@ instruction_mov :
 							instruction[1] = $3;
 							std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);
+
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
-                            $$ = mv8;
+							mv8->registe = (A_here::Tokens)$2;
+							mv8->integer = $3;
+                            				$$ = mv8;
 						}|
 	MOV registers_8b LITERAL_CHAR	{
 						std::cout << "mov register-8b char\n";
@@ -504,7 +507,9 @@ instruction_mov :
 							std::cout << (int)instruction[0] << " register-8b char\n";
 							outstream.write((char*)&instruction,2);
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
-                            $$ = mv8;
+							mv8->registe = (A_here::Tokens)$2;
+							mv8->integer = $3;
+							$$ = mv8;
 					}|
 	MOV registers_16b literals_integer
 	;
@@ -513,6 +518,10 @@ instruction_int : INT literals_integer {
 						instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
 						outstream.write((char*)&instruction,2);
+
+						A_here::nodes::Interruption* serv = A_here::block.create<A_here::nodes::Interruption>();
+						serv->service = $2;
+						$$ = serv;
 					}
 	;
 
@@ -555,9 +564,9 @@ registers_8b : 	AL 	{
 				$$ = DH;
 			};
 registers_16b : AX 	{
-						//std::cout << "AX ";
-						$$ = AX;
-					};
+				//std::cout << "AX ";
+				$$ = AX;
+			};
 
 %%
 

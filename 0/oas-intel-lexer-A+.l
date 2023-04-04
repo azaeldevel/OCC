@@ -11,17 +11,17 @@
 	#include "oas-intel-parser-A+.hh"
 
 
-	#include <A+.hh>	
+	#include <A+.hh>
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
 	core_here::Block A_here::block;
 	A_here::Symbol* A_here::symbol_current;
-	
+
 %}
 
 DIGIT_DEC [0-9]
 DIGIT_HEX [0-9A-Fa-f]
-CHAR [a-zA-Z]
+CHAR [[:alpha:][:upper:][:digit:][:punct:][:graph:]]
 LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
 LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LITERAL_CHAR '{CHAR}'
@@ -143,7 +143,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				return IF;
 			}
 "int"		{
-				//std::cout << "Line int : " << yylineno << "\n";
+				std::cout << "Line int : " << yylineno << "\n";
 				A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current->line = yylineno;
 				A_here::symbol_current->token = A_here::Tokens::INT;
@@ -261,7 +261,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 
 "mov"		{
-				//std::cout << "Line while : " << yylineno << "\n";
+				std::cout << "Line mov : " << yylineno << "\n";
 				A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current->line = yylineno;
 				A_here::symbol_current->token = A_here::Tokens::MOV;
@@ -269,78 +269,81 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 
 "al"	{
-			//std::cout << "Line al : " << yylineno << "\n";
+			std::cout << "Line al : " << yylineno << "\n";
 			A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 			A_here::symbol_current->line = yylineno;
 			A_here::symbol_current->token = A_here::Tokens::AL;
 			return AL;
 		}
 "ah"	{
-			//std::cout << "Line ah : " << yylineno << "\n";
+			std::cout << "Line ah : " << yylineno << "\n";
 			A_here::symbol_current = A_here::block.create<A_here::Symbol>();
 			A_here::symbol_current->line = yylineno;
 			A_here::symbol_current->token = A_here::Tokens::AH;
 			return AH;
 		}
 
-[\n\t ]			;
+[\n\t ]			std::cout << "Line whitespace : " << yylineno << "\n";;
 
-{IDENTIFIER}	{								
-					//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-					A_here::Identifier* identifer;
-					identifer = A_here::block.create<A_here::Identifier>();
-					A_here::symbol_current = (A_here::Symbol*)identifer;
-					identifer->line = yylineno;
-					identifer->name.insert(0,yytext,yyleng);	
-					yylval->IDENTIFIER = identifer->name.c_str();					
-					return IDENTIFIER;
-				}
-
-[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
-										//std::cout << "Line '" << yytext[0] << "'" << yylineno << "\n";
-										A_here::symbol_current = A_here::block.create<A_here::Symbol>();
-										A_here::symbol_current->line = yylineno;
-										A_here::symbol_current->token = (A_here::Tokens)yytext[0];
-										A_here::symbol_current->strvalue.insert(0,yytext,yyleng);	
-										return (yytoken_kind_t)yytext[0];
-									}
+{IDENTIFIER}	{
+			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
+			A_here::Identifier* identifer;
+			identifer = A_here::block.create<A_here::Identifier>();
+			A_here::symbol_current = (A_here::Symbol*)identifer;
+			identifer->line = yylineno;
+			identifer->name.insert(0,yytext,yyleng);
+			yylval->IDENTIFIER = identifer->name.c_str();
+			return IDENTIFIER;
+		}
 
 {LITERAL_INTEGER_HEX}	{
-				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-				A_here::Integer* integer;
-				integer = A_here::block.create<A_here::Integer>();	
-				A_here::symbol_current = (A_here::Symbol*)integer;
-				integer->line = yylineno;
-				integer->format = 'H';		
-				integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;				
-				integer->number = std::stoll(yytext, nullptr, 16);	
-				integer->strvalue.insert(0,yytext,yyleng);
-				yylval->LITERAL_INTEGER_HEX = integer->number;						
-				return LITERAL_INTEGER_HEX;
-			}
-{LITERAL_INTEGER_DEC}	{
-				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
+				std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
 				A_here::Integer* integer;
 				integer = A_here::block.create<A_here::Integer>();
 				A_here::symbol_current = (A_here::Symbol*)integer;
-				integer->line = yylineno;		
+				integer->line = yylineno;
+				integer->format = 'H';
+				integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;
+				integer->number = std::stoll(yytext, nullptr, 16);
+				integer->strvalue.insert(0,yytext,yyleng);
+				yylval->LITERAL_INTEGER_HEX = integer->number;
+				return LITERAL_INTEGER_HEX;
+			}
+{LITERAL_INTEGER_DEC}	{
+				std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
+				A_here::Integer* integer;
+				integer = A_here::block.create<A_here::Integer>();
+				A_here::symbol_current = (A_here::Symbol*)integer;
+				integer->line = yylineno;
 				integer->format = 'D';
-				integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;					
+				integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
 				integer->strvalue.insert(0,yytext,yyleng);
 				yylval->LITERAL_INTEGER_DEC = integer->number;
 				return LITERAL_INTEGER_DEC;
 			}
 {LITERAL_CHAR}		{
-				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
+				std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
 				A_here::Symbol* letter;
 				letter = A_here::block.create<A_here::Symbol>();
 				A_here::symbol_current = (A_here::Symbol*)letter;
 				letter->token = (A_here::Tokens)yytext[1];
 				letter->line = yylineno;
-				yylval->LITERAL_CHAR = (char)letter->token;
+				yylval->LITERAL_CHAR = yytext[1];
 				letter->strvalue.insert(0,yytext,yyleng);
+				std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				return LITERAL_CHAR;
+			}
+
+
+
+[!"#%'()*+,-./:;<=>?\[\\\]^_\{|\}~]	{
+						std::cout << "Line symbol '" << yytext[0] << "' : " << yylineno << "\n";
+						A_here::symbol_current = A_here::block.create<A_here::Symbol>();
+						A_here::symbol_current->line = yylineno;
+						A_here::symbol_current->token = (A_here::Tokens)yytext[0];
+						A_here::symbol_current->strvalue.insert(0,yytext,yyleng);
+						return (yytoken_kind_t)yytext[0];
 					}
 
 <<EOF>>  	{

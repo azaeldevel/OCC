@@ -549,6 +549,11 @@ namespace nodes
         Tokens registe;
         unsigned char integer;
     };
+
+    struct Interruption : public Statement
+    {
+        unsigned char service;
+    };
 }
 
 
