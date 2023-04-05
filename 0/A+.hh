@@ -447,7 +447,7 @@ namespace nodes
     };
 
 
-    struct Identifier : public Symbol
+    struct identifier : public Symbol
     {
         int number;
         std::string name;
@@ -497,17 +497,17 @@ namespace nodes
         Tokens type;
     };
 
-    struct Pointer : public Statement
+    struct pointer : public Statement
     {
         std::list<type_qualifer*>* qualifiers;
-        Pointer* pointer;
+        pointer* point;
     };
 
     struct declarator : public Statement
     {
-        Pointer* pointer;
+        pointer* point;
         std::list<type_qualifer*>* qualifiers;
-        Identifier* identifier;
+        identifier* identity;
     };
 
     struct StorageSpecifiers : public Statement
@@ -534,7 +534,7 @@ namespace nodes
 
 
 
-class SymbolTable : public std::list<nodes::Identifier*>
+class SymbolTable : public std::list<nodes::identifier*>
 {
 
 public:

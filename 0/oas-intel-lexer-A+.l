@@ -287,8 +287,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 {IDENTIFIER}	{
 			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-			A_here::nodes::Identifier* identifer;
-			identifer = A_here::block.create<A_here::nodes::Identifier>();
+			A_here::nodes::identifier* identifer;
+			identifer = A_here::block.create<A_here::nodes::identifier>();
 			A_here::symbol_current = (A_here::nodes::Symbol*)identifer;
 			identifer->line = yylineno;
 			identifer->name.insert(0,yytext,yyleng);
