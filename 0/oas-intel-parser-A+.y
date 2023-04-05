@@ -202,13 +202,16 @@
 %type <A_here::nodes::Statement*> instruction_int
 %type <std::list<A_here::nodes::Statement*>*> statement_list
 %type <A_here::nodes::Return*> statement_return
-%type <A_here::nodes::Compound*> compound_statement
-%type <A_here::nodes::Function*> function_implementation
-%type <A_here::nodes::TypeQualifer*> type_qualifer
-%type <std::list<A_here::nodes::TypeQualifer*>*> type_qualifer_list
+%type <A_here::nodes::compound_statement*> compound_statement
+%type <A_here::nodes::function_implementation*> function_implementation
+%type <A_here::nodes::type_qualifer*> type_qualifer
+%type <std::list<A_here::nodes::type_qualifer*>*> type_qualifer_list
 %type <A_here::nodes::Identifier*> direct_declarator
-%type <A_here::nodes::Declarator*> declarator
+%type <A_here::nodes::declarator*> declarator
 %type <A_here::nodes::Pointer*> pointer
+%type <A_here::nodes::type_specifier*> type_specifier
+%type <A_here::nodes::declaration_specifiers*> declaration_specifiers
+
 
 %%
 
@@ -223,17 +226,17 @@ external_declaration : function_implementation |
 function_implementation :
 	declaration_specifiers declarator declaration_list compound_statement
 	{
-        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $4;
-        $$->declarator = $2;
+        $$->declaration = $2;
         std::cout << "Function 1\n";
 	}
 	|
 	declaration_specifiers declarator compound_statement
 	{
-        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
-        $$->declarator = $2;
+        $$->declaration = $2;
         std::cout << "Function 2\n";
         if($2->identifier)
         {
@@ -243,32 +246,127 @@ function_implementation :
 	|
 	declarator declaration_list compound_statement
 	{
-        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
-        $$->declarator = $1;
+        $$->declaration = $1;
         std::cout << "Function 3\n";
 	}
 	|
 	declarator compound_statement
 	{
-        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $2;
-        $$->declarator = $1;
+        $$->declaration = $1;
         std::cout << "Function 4\n";
 	}
 	;
 
-declaration_specifiers : storage_class_specifier |
-        storage_class_specifier declaration_specifiers |
-        type_specifier |
-        type_specifier declaration_specifiers |
-        type_qualifer |
+declaration_specifiers : storage_class_specifier
+        {
+            //std::cout << "1\n";
+            $$ = NULL;
+        }
+        |
+        storage_class_specifier declaration_specifiers
+        {
+            //std::cout << "2\n";
+            $$ = NULL;
+        }
+        |
+        type_specifier
+        {
+            //std::cout << "3\n";
+            $$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
+            $$->storage = NULL;
+            $$->type = $1;
+            $$->qualifer = NULL;
+            $$->declaration = NULL;
+        }
+        |
+        type_specifier declaration_specifiers
+        {
+            //std::cout << "4\n";
+            $$ = NULL;
+        }
+        |
+        type_qualifer
+        {
+            //std::cout << "5\n";
+            $$ = NULL;
+        }
+        |
         type_qualifer declaration_specifiers
+        {
+            //std::cout << "6\n";
+            $$ = NULL;
+        }
         ;
 
 storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER
 
-type_specifier : VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier | enum_specifier | typedef_name ;
+type_specifier : VOID
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::VOID;
+    }
+    |
+    CHAR
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::CHAR;
+    }
+    |
+    SHORT
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SHORT;
+    }
+    |
+    INT
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::INT;
+    }
+    |
+    LONG
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::LONG;
+    }
+    |
+    FLOAT
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::FLOAT;
+    }
+    | DOUBLE
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::DOUBLE;
+    }
+    | SIGNED
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SIGNED;
+    }
+    | UNSIGNED
+    {
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::UNSIGNED;
+    }
+    | struct_or_union_specifier
+    {
+        $$ = NULL;
+    }
+    | enum_specifier
+    {
+        $$ = NULL;
+    }
+    | typedef_name
+    {
+        $$ = NULL;
+    }
+    ;
 
 
 struct_or_union_specifier :
@@ -377,13 +475,13 @@ type_specifier :  VOID | CHAR | SHORT | INT | LONG | FLOAT | SIGNED | UNSIGNED ;
 type_qualifer :
     CONST
     {
-        $$ = A_here::block.create<A_here::nodes::TypeQualifer>();
+        $$ = A_here::block.create<A_here::nodes::type_qualifer>();
         $$->qualifer = A_here::Tokens::CONST;
     }
     |
     VOLATIL
     {
-        $$ = A_here::block.create<A_here::nodes::TypeQualifer>();
+        $$ = A_here::block.create<A_here::nodes::type_qualifer>();
         $$->qualifer = A_here::Tokens::VOLATIL;
     }
     ;
@@ -391,14 +489,14 @@ type_qualifer :
 declarator :
     pointer direct_declarator
     {
-        $$ = A_here::block.create<A_here::nodes::Declarator>();
+        $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->pointer = $1;
         $$->identifier = $2;
     }
     |
 	direct_declarator
 	{
-        $$ = A_here::block.create<A_here::nodes::Declarator>();
+        $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->pointer = NULL;
         $$->identifier = $1;
 	}
@@ -466,10 +564,29 @@ type_qualifer_list : type_qualifer |
 	type_qualifer_list type_qualifer
 	;
 
-compound_statement : '{' declaration_list statement_list '}' |
-	'{' statement_list '}' |
-	'{' declaration_list '}' |
+compound_statement : '{' declaration_list statement_list '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $3;
+    }
+    |
+	'{' statement_list '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
+    }
+    |
+	'{' declaration_list '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
+    }
+    |
 	'{' '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
+    }
 	;
 
 declaration_list : declaration |

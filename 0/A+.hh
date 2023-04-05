@@ -477,37 +477,55 @@ namespace nodes
     };
 
 
-    struct Compound : public Statement
+    struct compound_statement : public Statement
     {
-        unsigned char service;
+        //unsigned char service;
+        std::list<Statement*>* statement_list;
     };
 
     struct Return : public Statement
     {
     };
 
-    struct TypeQualifer : public Statement
+    struct type_qualifer : public Statement
     {
         Tokens qualifer;
     };
 
+    struct type_specifier : public Statement
+    {
+        Tokens type;
+    };
+
     struct Pointer : public Statement
     {
-        std::list<TypeQualifer*>* qualifiers;
+        std::list<type_qualifer*>* qualifiers;
         Pointer* pointer;
     };
 
-    struct Declarator : public Statement
+    struct declarator : public Statement
     {
         Pointer* pointer;
-        std::list<TypeQualifer*>* qualifiers;
+        std::list<type_qualifer*>* qualifiers;
         Identifier* identifier;
     };
 
-    struct Function : public Statement
+    struct StorageSpecifiers : public Statement
     {
-        Declarator* declarator;
-        Compound* body;
+    };
+
+    struct declaration_specifiers : public Statement
+    {
+        StorageSpecifiers* storage;
+        type_specifier* type;
+        type_qualifer* qualifer;
+        declaration_specifiers* declaration;
+    };
+
+    struct function_implementation : public Statement
+    {
+        declarator* declaration;
+        compound_statement* body;
     };
 }
 
