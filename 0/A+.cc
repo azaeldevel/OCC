@@ -225,7 +225,7 @@ Tokens integer_token(long long number)
                         std::cout << "\tmove\n";
                         break;
                     case Tokens::INT :
-                        std::cout << "\tinterrution\n";
+                        std::cout << "\tinterruption\n";
                         break;
                     }
                 }
