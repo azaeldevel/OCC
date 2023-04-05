@@ -436,7 +436,6 @@ namespace nodes
         unsigned int line;
         std::string strvalue;
     };
-
     struct Integer : public Symbol
     {
         long long number;
@@ -445,8 +444,6 @@ namespace nodes
         Tokens reduced_token()const;
 
     };
-
-
     struct identifier : public Symbol
     {
         int number;
@@ -461,60 +458,68 @@ namespace nodes
 
     };
 
-    struct Statement : public Rule
+    struct statement : public Rule
     {
+        bool is_instruction;
+
+        statement();
     };
 
-    struct MoveI8b : public Statement
+    struct instruction : public statement
+    {
+        Tokens inst;
+    };
+
+    struct MoveI8b : public instruction
     {
         Tokens registe;
         unsigned char integer;
     };
 
-    struct Interruption : public Statement
+    struct Interruption : public instruction
     {
         unsigned char service;
     };
 
 
-    struct compound_statement : public Statement
+    struct compound_statement : public statement
     {
         //unsigned char service;
-        std::list<Statement*>* statement_list;
+        std::list<statement*>* statement_list;
     };
 
-    struct Return : public Statement
+    struct return_statement : public statement
     {
     };
 
-    struct type_qualifer : public Statement
+    struct type_qualifer : public statement
     {
         Tokens qualifer;
     };
 
-    struct type_specifier : public Statement
+    struct type_specifier : public statement
     {
         Tokens type;
     };
 
-    struct pointer : public Statement
+    struct pointer : public statement
     {
         std::list<type_qualifer*>* qualifiers;
         pointer* point;
     };
 
-    struct declarator : public Statement
+    struct declarator : public statement
     {
         pointer* point;
         std::list<type_qualifer*>* qualifiers;
         identifier* identity;
     };
 
-    struct StorageSpecifiers : public Statement
+    struct StorageSpecifiers : public statement
     {
     };
 
-    struct declaration_specifiers : public Statement
+    struct declaration_specifiers : public statement
     {
         StorageSpecifiers* storage;
         type_specifier* type;
@@ -522,11 +527,18 @@ namespace nodes
         declaration_specifiers* declaration;
     };
 
-    struct function_implementation : public Statement
+    struct function_implementation : public statement
     {
+        declaration_specifiers* specifier;
         declarator* declaration;
         compound_statement* body;
     };
+
+
+    void print(const declaration_specifiers* spec);
+    void print(const declarator* func);
+    void print(const function_implementation* func);
+
 }
 
 

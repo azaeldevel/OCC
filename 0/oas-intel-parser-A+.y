@@ -197,11 +197,11 @@
 %type <yytoken_kind_t> registers_16b
 %type <long long>literals_integer
 
-%type <A_here::nodes::Statement*> statement
-%type <A_here::nodes::Statement*> instruction_mov
-%type <A_here::nodes::Statement*> instruction_int
-%type <std::list<A_here::nodes::Statement*>*> statement_list
-%type <A_here::nodes::Return*> statement_return
+%type <A_here::nodes::statement*> statement
+%type <A_here::nodes::statement*> instruction_mov
+%type <A_here::nodes::statement*> instruction_int
+%type <std::list<A_here::nodes::statement*>*> statement_list
+%type <A_here::nodes::return_statement*> statement_return
 %type <A_here::nodes::compound_statement*> compound_statement
 %type <A_here::nodes::function_implementation*> function_implementation
 %type <A_here::nodes::type_qualifer*> type_qualifer
@@ -229,7 +229,7 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $4;
         $$->declaration = $2;
-        std::cout << "Function 1\n";
+        //std::cout << "Function 1\n";
 	}
 	|
 	declaration_specifiers declarator compound_statement
@@ -237,11 +237,9 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
-        std::cout << "Function 2\n";
-        if($2->identity)
-        {
-            std::cout << $2->identity->name << "\n";
-        }
+        $$->specifier = $1;
+        //std::cout << "Function 2\n";
+        print($$);
 	}
 	|
 	declarator declaration_list compound_statement
@@ -249,7 +247,7 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $1;
-        std::cout << "Function 3\n";
+        //std::cout << "Function 3\n";
 	}
 	|
 	declarator compound_statement
@@ -257,7 +255,7 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $2;
         $$->declaration = $1;
-        std::cout << "Function 4\n";
+        //std::cout << "Function 4\n";
 	}
 	;
 
@@ -573,7 +571,7 @@ compound_statement : '{' declaration_list statement_list '}'
 	'{' statement_list '}'
     {
         $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
+        $$->statement_list = $2;
     }
     |
 	'{' declaration_list '}'
@@ -596,7 +594,7 @@ declaration_list : declaration |
 
 statement_list : statement
             {
-                $$ = new std::list<A_here::nodes::Statement*>;
+                $$ = new std::list<A_here::nodes::statement*>;
                 //std::cout << "statement\n";
                 $$->push_back($1);
             } |
@@ -616,17 +614,17 @@ statement : compound_statement
     |
     instruction_int {$$ = $1;}
     |
-    statement_return ;
+    statement_return  {$$ = $1;};
 
 statement_return  :
 	RETURN ';'
 	{
-        $$ = A_here::block.create<A_here::nodes::Return>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
     |
 	RETURN literals_integer ';'
 	{
-        $$ = A_here::block.create<A_here::nodes::Return>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
 	;
 
@@ -684,7 +682,9 @@ instruction_mov :
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
 							mv8->registe = (A_here::Tokens)$2;
 							mv8->integer = $3;
-                            				$$ = mv8;
+							mv8->inst = A_here::Tokens::MOV;
+							mv8->is_instruction = true;
+                            $$ = mv8;
 						}|
 	MOV registers_8b LITERAL_CHAR ';' {
 						//std::cout << "mov register-8b char\n";
@@ -735,9 +735,12 @@ instruction_mov :
 							instruction[1] = $3;
 							//std::cout << (int)instruction[0] << " register-8b char\n";
 							outstream.write((char*)&instruction,2);
+
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
 							mv8->registe = (A_here::Tokens)$2;
 							mv8->integer = $3;
+							mv8->inst = A_here::Tokens::MOV;
+							mv8->is_instruction = true;
 							$$ = mv8;
 					}|
 	MOV registers_16b literals_integer
@@ -750,6 +753,8 @@ instruction_int : INT literals_integer ';' {
 
 						A_here::nodes::Interruption* serv = A_here::block.create<A_here::nodes::Interruption>();
 						serv->service = $2;
+                        serv->inst = A_here::Tokens::INT;
+                        serv->is_instruction = true;
 						$$ = serv;
 					}
 	;

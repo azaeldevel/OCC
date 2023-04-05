@@ -160,23 +160,81 @@ Tokens integer_token(long long number)
 
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
+
+    statement::statement() : is_instruction(false)
+    {
+    }
+
+    void print(const declaration_specifiers* spec)
+    {
+        if(spec)
+        {
+            //std::cout << $$->specifer->type << "\n";
+            switch(spec->type->type)
+            {
+            case Tokens::VOID :
+                std::cout << "void";
+                break;
+            case Tokens::CHAR :
+                std::cout << "char";
+                break;
+            case Tokens::SHORT :
+                std::cout << "short";
+                break;
+            case Tokens::INT :
+                std::cout << "int";
+                break;
+            case Tokens::LONG :
+                std::cout << "long";
+                break;
+            case Tokens::FLOAT :
+                std::cout << "float";
+                break;
+            case Tokens::DOUBLE :
+                std::cout << "double";
+                break;
+            case Tokens::SIGNED :
+                std::cout << "signed";
+                break;
+            case Tokens::UNSIGNED : std::cout << "unsigned";
+                break;
+            }
+        }
+    }
+    void print(const declarator* func)
+    {
+
+    }
+    void print(const function_implementation* func)
+    {
+        print(func->specifier);
+        std::cout << " ";
+        std::cout << func->declaration->identity->name;
+        std::cout << "\n{\n";
+        if(func->body->statement_list)
+        {
+            //std::cout << "statement_list\n";
+            std::list<statement*>* list = func->body->statement_list;
+            for(statement* stmt : *list)
+            {
+                if(stmt->is_instruction)
+                {
+                    switch(((instruction*)stmt)->inst)
+                    {
+                    case Tokens::MOV :
+                        std::cout << "\tmove\n";
+                        break;
+                    case Tokens::INT :
+                        std::cout << "\tinterrution\n";
+                        break;
+                    }
+                }
+            }
+        }
+        std::cout << "}";
+    }
+
+
 }
-/*
-void Instruction::movbi(int reg,unsigned char data)
-{
-	D1 << 0b000;
-	D1 << 0b10001;
-
-	D2 = 0b00110000;
-
-	D3 = (unsigned char) reg;
-	D4 = (unsigned char) data;
-}
-
-void Instruction::print(std::ostream& out)
-{
-	out << D1 << " " << D2 << "";
-}*/
-
 
 }
