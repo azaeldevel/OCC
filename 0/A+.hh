@@ -423,34 +423,100 @@ void add_identifier(int line,const char* filename,const char* word, int leng);
 
 Tokens integer_token(long long number);
 
-struct Symbol
+
+
+
+namespace nodes
 {
-	Tokens token;
-	std::vector<Symbol*> childs;
-	unsigned int line;
-	std::string strvalue;
-};
 
-struct Integer : public Symbol
-{
-	long long number;
-	char format;//Decimal, Hexadecimal
+    struct Symbol
+    {
+        Tokens token;
+        std::vector<Symbol*> childs;
+        unsigned int line;
+        std::string strvalue;
+    };
 
-	Tokens reduced_token()const;
+    struct Integer : public Symbol
+    {
+        long long number;
+        char format;//Decimal, Hexadecimal
 
-};
+        Tokens reduced_token()const;
+
+    };
 
 
-struct Identifier : public Symbol
-{
-	int number;
-	std::string name;
-	long long llvalue;
-	int line;
-	unsigned int memory;
-};
+    struct Identifier : public Symbol
+    {
+        int number;
+        std::string name;
+        long long llvalue;
+        int line;
+        unsigned int memory;
+    };
 
-class SymbolTable : public std::list<Identifier*>
+    struct Rule
+    {
+
+    };
+
+    struct Statement : public Rule
+    {
+    };
+
+    struct MoveI8b : public Statement
+    {
+        Tokens registe;
+        unsigned char integer;
+    };
+
+    struct Interruption : public Statement
+    {
+        unsigned char service;
+    };
+
+
+    struct Compound : public Statement
+    {
+        unsigned char service;
+    };
+
+    struct Return : public Statement
+    {
+    };
+
+    struct TypeQualifer : public Statement
+    {
+        Tokens qualifer;
+    };
+
+    struct Pointer : public Statement
+    {
+        std::list<TypeQualifer*>* qualifiers;
+        Pointer* pointer;
+    };
+
+    struct Declarator : public Statement
+    {
+        Pointer* pointer;
+        std::list<TypeQualifer*>* qualifiers;
+        Identifier* identifier;
+    };
+
+    struct Function : public Statement
+    {
+        Declarator* declarator;
+        Compound* body;
+    };
+}
+
+
+
+
+
+
+class SymbolTable : public std::list<nodes::Identifier*>
 {
 
 public:
@@ -485,14 +551,14 @@ private:
 
 
 
-
+/*
 class Block : public core_here::Block
 {
 public:
 	Block();
 
 
-	Symbol* next();
+	nodes::Symbol* next();
 
 protected:
 
@@ -504,62 +570,17 @@ private:
 
 	size_t get_size(Symbol*) const;
 	Symbol* get(size_t at);
-};
+};*/
 
 //https://www.lkouniv.ac.in/site/writereaddata/siteContent/202004101310174347kalpana_singh_engg_Microprocessor_instruction_format.pdf
 //http://www.mathemainzel.info/files/x86asmref.html#mov
-class Instruction
-{
-
-public:
-	void movbi(int reg,unsigned char data);
-	void set_opcode(Tokens inst);
-
-	void print(std::ostream& );
-public:
-	int size;
 
 
-private:
-	/*unsigned char rbp : 3;
-	unsigned char none : 2;
-	unsigned char wb : 2;
-	unsigned char aa : 2;
-	unsigned char w : 1;
-	unsigned char opcode : 6;
-	unsigned char mm : 2;*/
-
-	unsigned char D1,D2,D3,D4;
-	unsigned char length;
-};
-
-namespace nodes
-{
-    struct Rule
-    {
-
-    };
-
-    struct Statement : public Rule
-    {
-    };
-
-    struct MoveI8b : public Statement
-    {
-        Tokens registe;
-        unsigned char integer;
-    };
-
-    struct Interruption : public Statement
-    {
-        unsigned char service;
-    };
-}
 
 
 //extern File current_file;
 extern core_here::Block block;
-extern Symbol* symbol_current;
+extern nodes::Symbol* symbol_current;
 }
 
 

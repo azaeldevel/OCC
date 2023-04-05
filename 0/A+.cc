@@ -55,7 +55,7 @@ const std::filesystem::path& File::get_filename() const
 
 
 
-
+/*
 Block::Block() : actual(NULL),index(0)
 {
 	if(blocks.empty()) return;
@@ -102,6 +102,10 @@ Symbol* Block::next()
 	//std::cout << "Block::next end\n";
 	return obj;
 }
+*/
+
+namespace nodes
+{
 
 Tokens Integer::reduced_token() const
 {
@@ -156,7 +160,8 @@ Tokens integer_token(long long number)
 
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }
-
+}
+/*
 void Instruction::movbi(int reg,unsigned char data)
 {
 	D1 << 0b000;
@@ -171,7 +176,7 @@ void Instruction::movbi(int reg,unsigned char data)
 void Instruction::print(std::ostream& out)
 {
 	out << D1 << " " << D2 << "";
-}
+}*/
 
 
 }

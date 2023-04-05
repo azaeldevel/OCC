@@ -48,7 +48,7 @@
 	#include <core/3/Exception.hh>
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
-	A_here::Identifier* identifier = NULL;
+	A_here::nodes::Identifier* identifier = NULL;
 	unsigned char instruction[6];
 	int instruction_len = 0;
 	std::fstream outstream;
@@ -200,6 +200,16 @@
 %type <A_here::nodes::Statement*> statement
 %type <A_here::nodes::Statement*> instruction_mov
 %type <A_here::nodes::Statement*> instruction_int
+%type <std::list<A_here::nodes::Statement*>*> statement_list
+%type <A_here::nodes::Return*> statement_return
+%type <A_here::nodes::Compound*> compound_statement
+%type <A_here::nodes::Function*> function_implementation
+%type <A_here::nodes::TypeQualifer*> type_qualifer
+%type <std::list<A_here::nodes::TypeQualifer*>*> type_qualifer_list
+%type <A_here::nodes::Identifier*> direct_declarator
+%type <A_here::nodes::Declarator*> declarator
+%type <A_here::nodes::Pointer*> pointer
+
 %%
 
 translation_unit : external_declaration ENDOFFILE |
@@ -211,24 +221,74 @@ external_declaration : function_implementation |
 	;
 
 function_implementation :
-	declaration_specifiers declarator declaration_list compound_statement |
-	declaration_specifiers declarator compound_statement |
-	declarator declaration_list compound_statement |
+	declaration_specifiers declarator declaration_list compound_statement
+	{
+        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$->body = $4;
+        $$->declarator = $2;
+        std::cout << "Function 1\n";
+	}
+	|
+	declaration_specifiers declarator compound_statement
+	{
+        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$->body = $3;
+        $$->declarator = $2;
+        std::cout << "Function 2\n";
+        if($2->identifier)
+        {
+            std::cout << $2->identifier->name << "\n";
+        }
+	}
+	|
+	declarator declaration_list compound_statement
+	{
+        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$->body = $3;
+        $$->declarator = $1;
+        std::cout << "Function 3\n";
+	}
+	|
 	declarator compound_statement
+	{
+        $$ = A_here::block.create<A_here::nodes::Function>();
+        $$->body = $2;
+        $$->declarator = $1;
+        std::cout << "Function 4\n";
+	}
 	;
+
+declaration_specifiers : storage_class_specifier |
+        storage_class_specifier declaration_specifiers |
+        type_specifier |
+        type_specifier declaration_specifiers |
+        type_qualifer |
+        type_qualifer declaration_specifiers
+        ;
+
+storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER
+
+type_specifier : VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier | enum_specifier | typedef_name ;
+
+
+struct_or_union_specifier :
+
+enum_specifier :
+
+typedef_name :
 
 //6.5
 declaration : declaration_specifiers init_declarator_list | declaration_specifiers;
 declaration_specifiers :
-	starage_class_especifier declaration_specifiers |
-	starage_class_especifier |
+	storage_class_especifier declaration_specifiers |
+	storage_class_especifier |
 	type_specifier declaration_specifiers |
 	type_specifier |
 	type_qualifer declaration_specifiers |
 	type_qualifer
 	;
 
-starage_class_especifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+storage_class_especifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
 
 init_declarator_list : init_declarator |
 	init_declarator_list ',' init_declarator
@@ -238,7 +298,7 @@ init_declarator : declarator 		{
 										//std::cout << "Line " << A_here::symbol_current->line << "\n";
 										auto it = symbols_table->end();
 										it--;
-										A_here::Identifier* identifier = *it;
+										A_here::nodes::Identifier* identifier = *it;
 										identifier->line = A_here::symbol_current->line;
 									}|
 	init_declarator '=' initializer {
@@ -255,51 +315,51 @@ initializer : const_expression 		{
 
 const_expression : LITERAL_CHAR |
 				LITERAL_INTEGER_DEC_UCHAR 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											}|
 				LITERAL_INTEGER_DEC_SCHAR 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											}|
 				LITERAL_INTEGER_DEC_USHORT 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											}|
 				LITERAL_INTEGER_DEC_SHORT 	{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											}|
 				LITERAL_INTEGER_HEX 		{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											}|
 				LITERAL_INTEGER_DEC 		{
-												A_here::Integer* integer = (A_here::Integer*)A_here::symbol_current;
+												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
 												//std::cout << "value : " << integer->strvalue << "\n";
 												auto it = symbols_table->end();
 												it--;
-												A_here::Identifier* identifier = *it;
+												A_here::nodes::Identifier* identifier = *it;
 												identifier->strvalue = integer->strvalue;
 											};
 
@@ -314,16 +374,42 @@ initilizer_list : const_expression  {
 
 type_specifier :  VOID | CHAR | SHORT | INT | LONG | FLOAT | SIGNED | UNSIGNED ;
 
-type_qualifer : CONST | VOLATIL;
+type_qualifer :
+    CONST
+    {
+        $$ = A_here::block.create<A_here::nodes::TypeQualifer>();
+        $$->qualifer = A_here::Tokens::CONST;
+    }
+    |
+    VOLATIL
+    {
+        $$ = A_here::block.create<A_here::nodes::TypeQualifer>();
+        $$->qualifer = A_here::Tokens::VOLATIL;
+    }
+    ;
 
-declarator : pointer direct_declarator |
-	direct_declarator;
+declarator :
+    pointer direct_declarator
+    {
+        $$ = A_here::block.create<A_here::nodes::Declarator>();
+        $$->pointer = $1;
+        $$->identifier = $2;
+    }
+    |
+	direct_declarator
+	{
+        $$ = A_here::block.create<A_here::nodes::Declarator>();
+        $$->pointer = NULL;
+        $$->identifier = $1;
+	}
+	;
 
 direct_declarator : IDENTIFIER 		{
-										identifier = new A_here::Identifier;
+										identifier = A_here::block.create<A_here::nodes::Identifier>();
 										identifier->number = symbols_table->size();
 										identifier->name = $1;
 										symbols_table->push_back(identifier);
+										$$ = identifier;
 									}|
 	'(' declarator ')' 				|
 	direct_declarator '[' const_expression ']' 	|
@@ -369,7 +455,8 @@ direct_abstract_declarator :
 	'(' ')' |
 	;
 
-pointer : '*' type_qualifer_list |
+pointer :
+    '*' type_qualifer_list |
 	'*' |
 	'*' type_qualifer_list pointer |
 	'*' pointer
@@ -390,19 +477,44 @@ declaration_list : declaration |
 	;
 
 
-statement_list : statement |
-	statement_list statement
+statement_list : statement
+            {
+                $$ = new std::list<A_here::nodes::Statement*>;
+                //std::cout << "statement\n";
+                $$->push_back($1);
+            } |
+            statement_list statement
+            {
+                //std::cout << "statement_list statement\n";
+                $$->push_back($2);
+            }
 	;
 
-statement : compound_statement |  instruction_mov ';' {$$ = $1;}| instruction_int ';' {$$ = $1;}| return ';';
+statement : compound_statement
+    {
+        $$ = $1;
+    }
+    |
+    instruction_mov {$$ = $1;}
+    |
+    instruction_int {$$ = $1;}
+    |
+    statement_return ;
 
-return  :
-	RETURN |
-	RETURN literals_integer
+statement_return  :
+	RETURN ';'
+	{
+        $$ = A_here::block.create<A_here::nodes::Return>();
+	}
+    |
+	RETURN literals_integer ';'
+	{
+        $$ = A_here::block.create<A_here::nodes::Return>();
+	}
 	;
 
 instruction_mov :
-	MOV registers_8b literals_integer	{
+	MOV registers_8b literals_integer ';'	{
 							//std::cout << "mov register-8b integer\n";
 							//inmediate to register 8b
 							instruction[0] = 0b1011;//opcode
@@ -457,7 +569,7 @@ instruction_mov :
 							mv8->integer = $3;
                             				$$ = mv8;
 						}|
-	MOV registers_8b LITERAL_CHAR	{
+	MOV registers_8b LITERAL_CHAR ';' {
 						//std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
 							instruction[0] = 0b1011;//opcode
@@ -513,7 +625,7 @@ instruction_mov :
 					}|
 	MOV registers_16b literals_integer
 	;
-instruction_int : INT literals_integer {
+instruction_int : INT literals_integer ';' {
 						//std::cout << "int " << $2 << "\n";
 						instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
