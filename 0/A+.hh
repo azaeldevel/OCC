@@ -508,11 +508,31 @@ namespace nodes
         pointer* point;
     };
 
+    struct direct_declarator : public statement
+    {
+        identifier* identity;
+
+        void print()const;
+    };
+
+    struct direct_declarator_function : public direct_declarator
+    {
+        void print()const;
+    };
+
     struct declarator : public statement
     {
         pointer* point;
-        std::list<type_qualifer*>* qualifiers;
-        identifier* identity;
+        direct_declarator* direct;
+
+        void print()const;
+    };
+
+    struct declarator_function : public declarator
+    {
+        std::list<identifier*>* identifiers;
+
+        void print()const;
     };
 
     struct StorageSpecifiers : public statement
@@ -525,6 +545,8 @@ namespace nodes
         type_specifier* type;
         type_qualifer* qualifer;
         declaration_specifiers* declaration;
+
+        void print()const;
     };
 
     struct function_implementation : public statement
@@ -532,12 +554,10 @@ namespace nodes
         declaration_specifiers* specifier;
         declarator* declaration;
         compound_statement* body;
+
+        void print()const;
     };
 
-
-    void print(const declaration_specifiers* spec);
-    void print(const declarator* func);
-    void print(const function_implementation* func);
 
 }
 
@@ -610,7 +630,7 @@ private:
 
 //extern File current_file;
 extern core_here::Block block;
-extern nodes::Symbol* symbol_current;
+//extern nodes::Symbol* symbol_current;
 }
 
 

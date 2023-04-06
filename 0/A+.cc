@@ -165,12 +165,12 @@ Tokens integer_token(long long number)
     {
     }
 
-    void print(const declaration_specifiers* spec)
+    void declaration_specifiers::print()const
     {
-        if(spec)
+        if(type)
         {
             //std::cout << $$->specifer->type << "\n";
-            switch(spec->type->type)
+            switch(type->type)
             {
             case Tokens::VOID :
                 std::cout << "void";
@@ -201,20 +201,24 @@ Tokens integer_token(long long number)
             }
         }
     }
-    void print(const declarator* func)
+    void direct_declarator::print()const
     {
-
+        std::cout << identity->name;
     }
-    void print(const function_implementation* func)
+    void declarator::print()const
     {
-        print(func->specifier);
+        if(direct) direct->print();
+    }
+    void function_implementation::print() const
+    {
+        specifier->print();
         std::cout << " ";
-        std::cout << func->declaration->identity->name;
+        if(declaration) declaration->print();
         std::cout << "\n{\n";
-        if(func->body->statement_list)
+        if(body->statement_list)
         {
             //std::cout << "statement_list\n";
-            std::list<statement*>* list = func->body->statement_list;
+            std::list<statement*>* list = body->statement_list;
             for(statement* stmt : *list)
             {
                 if(stmt->is_instruction)

@@ -48,7 +48,7 @@
 	#include <core/3/Exception.hh>
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
-	A_here::nodes::identifier* identifier = NULL;
+	//A_here::nodes::identifier* identifier = NULL;
 	unsigned char instruction[6];
 	int instruction_len = 0;
 	std::fstream outstream;
@@ -206,11 +206,15 @@
 %type <A_here::nodes::function_implementation*> function_implementation
 %type <A_here::nodes::type_qualifer*> type_qualifer
 %type <std::list<A_here::nodes::type_qualifer*>*> type_qualifer_list
-%type <A_here::nodes::identifier*> direct_declarator
+%type <A_here::nodes::direct_declarator*> direct_declarator
 %type <A_here::nodes::declarator*> declarator
 %type <A_here::nodes::pointer*> pointer
 %type <A_here::nodes::type_specifier*> type_specifier
 %type <A_here::nodes::declaration_specifiers*> declaration_specifiers
+%type <std::list<A_here::nodes::identifier*>*> identifer_list
+//%type <A_here::nodes::Symbol*> const_expression
+
+
 
 
 %%
@@ -234,12 +238,13 @@ function_implementation :
 	|
 	declaration_specifiers declarator compound_statement
 	{
+        std::cout << "Function 2 - 1\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
         $$->specifier = $1;
-        //std::cout << "Function 2\n";
-        print($$);
+        std::cout << "Function 2 - 2\n";
+        //$$->print();
 	}
 	|
 	declarator declaration_list compound_statement
@@ -392,10 +397,10 @@ init_declarator_list : init_declarator |
 
 init_declarator : declarator 		{
 										//std::cout << "Line " << A_here::symbol_current->line << "\n";
-										auto it = symbols_table->end();
-										it--;
-										A_here::nodes::identifier* identifier = *it;
-										identifier->line = A_here::symbol_current->line;
+										//auto it = symbols_table->end();
+										//it--;
+										//A_here::nodes::identifier* identifier = *it;
+										//identifier->line = A_here::symbol_current->line;
 									}|
 	init_declarator '=' initializer {
 										//std::cout << "Line " << A_here::symbol_current->line << "\n";
@@ -409,55 +414,15 @@ initializer : const_expression 		{
 	;
 
 
-const_expression : LITERAL_CHAR |
-				LITERAL_INTEGER_DEC_UCHAR 	{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											}|
-				LITERAL_INTEGER_DEC_SCHAR 	{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											}|
-				LITERAL_INTEGER_DEC_USHORT 	{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											}|
-				LITERAL_INTEGER_DEC_SHORT 	{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											}|
-				LITERAL_INTEGER_HEX 		{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											}|
-				LITERAL_INTEGER_DEC 		{
-												A_here::nodes::Integer* integer = (A_here::nodes::Integer*)A_here::symbol_current;
-												//std::cout << "value : " << integer->strvalue << "\n";
-												auto it = symbols_table->end();
-												it--;
-												A_here::nodes::identifier* identifier = *it;
-												identifier->strvalue = integer->strvalue;
-											};
+const_expression : LITERAL_CHAR {
+
+                                }|
+				LITERAL_INTEGER_HEX {
+
+									}|
+				LITERAL_INTEGER_DEC {
+
+									};
 
 
 
@@ -489,30 +454,57 @@ declarator :
     {
         $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = $1;
-        $$->identity = $2;
+        $$->direct = $2;
     }
     |
 	direct_declarator
 	{
+        std::cout << "declarator 1\n";
         $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = NULL;
-        $$->identity = $1;
+        $$->direct = $1;
+        std::cout << "declarator 2\n";
 	}
 	;
 
 direct_declarator : IDENTIFIER 		{
-										identifier = A_here::block.create<A_here::nodes::identifier>();
-										identifier->number = symbols_table->size();
-										identifier->name = $1;
-										symbols_table->push_back(identifier);
-										$$ = identifier;
+										$$ = A_here::block.create<A_here::nodes::direct_declarator>();
+										$$->identity = A_here::block.create<A_here::nodes::identifier>();
+										$$->identity->name = $1;
+										std::cout << " direct_declarator identifer\n";
 									}|
-	'(' declarator ')' 				|
-	direct_declarator '[' const_expression ']' 	|
-	direct_declarator '['  ']' 					|
-	direct_declarator '(' parameter_type_list ')' 		|
-	direct_declarator '(' identifer_list ')' 			|
+	'(' declarator ')'
+	{
+        $$ = NULL;
+	}
+	|
+	direct_declarator '[' const_expression ']'
+	{
+        $$ = NULL;
+	}
+	|
+	direct_declarator '['  ']'
+	{
+        $$ = NULL;
+	}
+	|
+	direct_declarator '(' parameter_type_list ')'
+	{
+        $$ = NULL;
+	}
+	|
+	direct_declarator '(' identifer_list ')'
+	{
+        $$ = NULL;
+	}
+	|
 	direct_declarator '('  ')'
+	{
+        //A_here::nodes::identifier* identifier = $$;//optiene el identifier previamente cargado
+        //$$ = A_here::block.create<A_here::nodes::direct_declarator>();
+        //$$->identity = identifier;
+        std::cout << " direct_declarator funtion\n";
+	}
 	;
 
 identifer_list : IDENTIFIER |
