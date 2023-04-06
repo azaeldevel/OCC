@@ -238,13 +238,13 @@ function_implementation :
 	|
 	declaration_specifiers declarator compound_statement
 	{
-        std::cout << "Function 2 - 1\n";
+        //std::cout << "Function 2 - 1\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
         $$->specifier = $1;
-        std::cout << "Function 2 - 2\n";
-        //$$->print();
+        //std::cout << "Function 2 - 2\n";
+        $$->print();
 	}
 	|
 	declarator declaration_list compound_statement
@@ -459,11 +459,11 @@ declarator :
     |
 	direct_declarator
 	{
-        std::cout << "declarator 1\n";
+        //std::cout << "declarator 1\n";
         $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = NULL;
         $$->direct = $1;
-        std::cout << "declarator 2\n";
+        //std::cout << "declarator 2\n";
 	}
 	;
 
@@ -471,7 +471,7 @@ direct_declarator : IDENTIFIER 		{
 										$$ = A_here::block.create<A_here::nodes::direct_declarator>();
 										$$->identity = A_here::block.create<A_here::nodes::identifier>();
 										$$->identity->name = $1;
-										std::cout << " direct_declarator identifer\n";
+										//std::cout << " direct_declarator identifer\n";
 									}|
 	'(' declarator ')'
 	{
@@ -503,7 +503,7 @@ direct_declarator : IDENTIFIER 		{
         //A_here::nodes::identifier* identifier = $$;//optiene el identifier previamente cargado
         //$$ = A_here::block.create<A_here::nodes::direct_declarator>();
         //$$->identity = identifier;
-        std::cout << " direct_declarator funtion\n";
+        //std::cout << " direct_declarator funtion\n";
 	}
 	;
 
