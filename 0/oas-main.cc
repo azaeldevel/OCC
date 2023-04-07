@@ -67,7 +67,7 @@ int main (int argc, char* argv[])
 
 
 	A_here::SymbolTable symbols;
-	A_here::File current_file(symbols);
+	//A_here::File current_file(symbols);
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
@@ -82,14 +82,7 @@ int main (int argc, char* argv[])
 
 	for(const std::string& f : inputs)
 	{
-		if(not current_file.open(f.c_str()))
-		{
-			fprintf(stderr,"Fallo al abrir el archivo %s",f.c_str());
-			return EXIT_FAILURE;
-		}
 
-		result res = {0, 0, 0};
-		yyparse(current_file.get_scanner(),&res,&symbols);
 	}
 
 

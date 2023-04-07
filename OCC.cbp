@@ -66,8 +66,8 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bison --header $(PROJECT_DIR)0/oas-intel-parser-A+.y -o $(TARGET_OUTPUT_DIR)oas-intel-parser-A+.cc" />
-					<Add before="flex -o $(TARGET_OUTPUT_DIR)oas-intel-A+.lexer.cc --header=$(TARGET_OUTPUT_DIR)oas-intel-A+.tab.h $(PROJECT_DIR)0/oas-intel-lexer-A+.l" />
+					<Add before="bison --header $(PROJECT_DIR)0/oas-intel-parser-A+.yy -o $(TARGET_OUTPUT_DIR)oas-intel-parser-A+.cc" />
+					<Add before="flex -o $(TARGET_OUTPUT_DIR)oas-intel-A+.lexer.cc --header=$(TARGET_OUTPUT_DIR)oas-intel-A+.tab.h $(PROJECT_DIR)0/oas-intel-lexer-A+.ll" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -108,6 +108,12 @@
 		</Unit>
 		<Unit filename="0/develop-lexer-occ-c90.cc">
 			<Option target="developing" />
+		</Unit>
+		<Unit filename="0/driver.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/driver.hh">
+			<Option target="oas-intel" />
 		</Unit>
 		<Unit filename="0/main-occ-c90.cc">
 			<Option target="occ" />
