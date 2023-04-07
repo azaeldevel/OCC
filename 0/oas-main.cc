@@ -32,8 +32,8 @@
 namespace A_here = oct::cc::v0::A;
 
 
-extern std::fstream outstream;
-std::filesystem::path outfile;
+//extern std::fstream outstream;
+//std::filesystem::path outfile;
 std::list<std::string> inputs;
 
 int main (int argc, char* argv[])
@@ -42,7 +42,7 @@ int main (int argc, char* argv[])
 	{
 		if(strcmp(argv[i],"--output") == 0)
 		{
-			outfile = argv[++i];
+			//outfile = argv[++i];
 		}
 		else if(argv[i][0] == '-')
 		{
@@ -61,12 +61,12 @@ int main (int argc, char* argv[])
 		std::cout << "Indique almenos un archivo para compilar.";
 		return EXIT_FAILURE;
 	}
-	if(outfile.empty())
+	/*if(outfile.empty())
 	{
 		std::cout << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
-	}
-	outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
+	}*/
+	//outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
 
 	for(const std::string& f : inputs)
 	{
@@ -74,7 +74,7 @@ int main (int argc, char* argv[])
 	}
 
 
-	outstream.close();
+	//outstream.close();
 	return EXIT_SUCCESS;
 }
 

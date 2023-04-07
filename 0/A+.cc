@@ -20,7 +20,7 @@
  */
 
 #include <oas-intel-parser-A+.hh>
-#include <oas-intel-A+.tab.h>
+//#include <oas-intel-A+.tab.h>
 #include <limits>
 #include <core/3/Exception.hh>
 #include <core/3/math.hh>

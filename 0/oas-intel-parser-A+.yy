@@ -1,9 +1,26 @@
 
+%skeleton "lalr1.cc"
+%require  "3.0"
+%debug
+%defines
+%define api.namespace {yy}
+%define api.parser.class {parser}
+
+//%define parse.trace
+//%define parse.error detailed
+//%define parse.lac full
+
 %code requires
 {
     #include <A+.hh>
     #include <driver.hh>
+	#include <core/3/Exception.hh>
+	#include <fstream>
 	namespace A_here = oct::cc::v0::A;
+	namespace core_here = oct::core::v3;
+	//unsigned char instruction[6];
+	//std::fstream outstream;
+
 	class Driver;
 	class Scanner;
 
@@ -16,42 +33,19 @@
     # endif
 }
 
-%code top
-{
-	#include <A+.hh>
-	#include <iostream>
-	#include <fstream>
-	#include <core/3/Exception.hh>
-	namespace A_here = oct::cc::v0::A;
-	namespace core_here = oct::core::v3;
-	unsigned char instruction[6];
-	std::fstream outstream;
-}
-
-
-%skeleton "lalr1.cc"
-%define parse.trace
-%define parse.error detailed
-%define parse.lac full
-%define api.value.type variant
-%defines
-%define api.namespace {yy}
-%define parser_class_name {parser}
-
-// Generate the parser description file (parse.output).
-%verbose
-
 %parse-param { Scanner& scanner }
 %parse-param { Driver& driver }
 
-
 %code
 {
-    #include <driver.hh>
-    #undef
-    #define lex.yylex
+    #include <scanner.hh>
+    #undef yylex
+    #define yylex scanner.yylex
 }
 
+%define api.value.type variant
+%define parse.assert
+%locations
 
 %token ENDOFFILE 0  "end-of-file"
 
@@ -599,7 +593,7 @@ instruction_mov :
 	MOV registers_8b literals_integer ';'	{
 							//std::cout << "mov register-8b integer\n";
 							//inmediate to register 8b
-							instruction[0] = 0b1011;//opcode
+							/*instruction[0] = 0b1011;//opcode
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							instruction[0] = instruction[0] << 1;//w = one byte
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
@@ -644,7 +638,7 @@ instruction_mov :
 							}
 							instruction[1] = $3;
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
-							outstream.write((char*)&instruction,2);
+							outstream.write((char*)&instruction,2);*/
 
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
 							mv8->registe = (A_here::Tokens)$2;
@@ -656,7 +650,7 @@ instruction_mov :
 	MOV registers_8b LITERAL_CHAR ';' {
 						//std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
-							instruction[0] = 0b1011;//opcode
+							/*instruction[0] = 0b1011;//opcode
 							//std::cout << (int)instruction[0] << " register-8b char\n";
 							instruction[0] = instruction[0] << 1;//w = one byte
 							//std::cout << (int)instruction[0] << " register-8b char\n";
@@ -701,7 +695,7 @@ instruction_mov :
 							}
 							instruction[1] = $3;
 							//std::cout << (int)instruction[0] << " register-8b char\n";
-							outstream.write((char*)&instruction,2);
+							outstream.write((char*)&instruction,2);*/
 
 							A_here::nodes::MoveI8b* mv8 = A_here::block.create<A_here::nodes::MoveI8b>();
 							mv8->registe = (A_here::Tokens)$2;
@@ -714,9 +708,9 @@ instruction_mov :
 	;
 instruction_int : INT literals_integer ';' {
 						//std::cout << "int " << $2 << "\n";
-						instruction[0] = 0b11001101;//opcode
+						/*instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
-						outstream.write((char*)&instruction,2);
+						outstream.write((char*)&instruction,2);*/
 
 						A_here::nodes::Interruption* serv = A_here::block.create<A_here::nodes::Interruption>();
 						serv->service = $2;
@@ -773,5 +767,5 @@ registers_16b : AX 	{
 
 void yy::parser::error (const location_type& l, const std::string& m)
 {
-  std::cerr << l << ": " << m << '\n';
+    std::cerr << l << ": " << m << '\n';
 }

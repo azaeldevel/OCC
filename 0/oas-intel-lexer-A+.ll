@@ -1,6 +1,4 @@
 
-%option noyywrap nounput noinput batch debug
-
 %{
 	#include <assert.h>
 	#include <limits.h>
@@ -8,20 +6,34 @@
 	#include <stdio.h>
 	#include <string.h>
 	//#include <core/3/math.hh>
-	#include "driver.hh"
-	#include "oas-intel-parser-A+.hh"
-
+	#include <scanner.hh>
+	#include <oas-intel-parser-A+.hh>
 	#include <A+.hh>
 	namespace A_here = oct::cc::v0::A;
 	namespace core_here = oct::core::v3;
 	core_here::Block A_here::block;
-%}
 
-%{
     #undef  YY_DECL
-    #define YY_DECL int Scanner::yylex( yy::parser::semantic_type * const lval, MC::MC_Parser::location_type *location );
+    #define YY_DECL int Scanner::yylex( yy::parser::semantic_type * const lval, yy::parser::location_type *loc)
 
+    /* typedef to make the returns for the tokens shorter */
+    using token = yy::parser::token;
+
+    /* define yyterminate as this instead of NULL */
+    #define yyterminate() return( token::END )
+
+    /* msvc2010 requires that we exclude this header file. */
+    #define YY_NO_UNISTD_H
+
+    /* update location on matching */
+    #define YY_USER_ACTION loc->step(); loc->columns(yyleng);
 %}
+
+%option debug
+%option nodefault
+%option yyclass="Scanner"
+%option noyywrap
+%option c++
 
 
 DIGIT_DEC [[:digit:]]
@@ -33,124 +45,121 @@ LITERAL_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
-%{
-    //#define YY_USER_ACTION  loc.columns (yyleng);
-%}
+
 %%
-%{
-    yy::location& loc = drv.location;
-    loc.step ();
+%{          /** Code executed at the beginning of yylex **/
+            yylval = lval;
 %}
 
 
 "auto"		{
-				return yy::parser::make_AUTO(loc);
+				return token::AUTO;
 			}
 "break"		{
-				return yy::parser::make_BREAK(loc);
+				return token::BREAK;
 			}
 "case"		{
-				return yy::parser::make_CASE(loc);
+				return token::CASE;
 			}
 "char"		{
-				return yy::parser::make_CHAR(loc);
+				return token::CHAR;
 			}
 "const"		{
-				return yy::parser::make_CONST(loc);
+				return token::CONST;
 			}
 "continue"	{
-				return yy::parser::make_CONTINUE(loc);
+				return token::CONTINUE;
 			}
 "default"	{
-				return yy::parser::make_DEFAULT(loc);
+				return token::DEFAULT;
 			}
 "do"		{
-				return yy::parser::make_DO(loc);
+				return token::DO;
 			}
 "double"	{
-				return yy::parser::make_DOUBLE(loc);
+				return token::DOUBLE;
 			}
 "else"		{
-				return yy::parser::make_ELSE(loc);
+				return token::ELSE;
 			}
 "enum"		{
-				return yy::parser::make_ENUM(loc);
+				return token::ENUM;
 			}
 "extern"	{
-				return yy::parser::make_EXTERN(loc);
+				return token::EXTERN;
 			}
 "float"		{
-				return yy::parser::make_FLOAT(loc);
+				return token::FLOAT;
 			}
 "for"		{
-				return yy::parser::make_FOR(loc);
+				return token::FOR;
 			}
 "goto"		{
-				return yy::parser::make_GOTO(loc);
+				return token::GOTO;
 			}
 "if"		{
-				return yy::parser::make_IF(loc);
+				return token::IF;
 			}
 "int"		{
-				return yy::parser::make_INT(loc);
+				return token::INT;
 			}
 "long"		{
-				return yy::parser::make_LONG(loc);
+				return token::LONG;
 			}
 "register"	{
-				return yy::parser::make_REGISTER(loc);
+				return token::REGISTER;
 			}
 "return"	{
-				return yy::parser::make_RETURN(loc);
+				return token::RETURN;
 			}
 "short"		{
-				return yy::parser::make_SHORT(loc);
+				return token::SHORT;
 			}
 "signed"	{
-				return yy::parser::make_SIGNED(loc);
+				return token::SIGNED;
 			}
 "sizeof"	{
-				return yy::parser::make_SIZEOF(loc);
+				return token::SIZEOF;
 			}
 "static"	{
-				return yy::parser::make_STATIC(loc);
+				return token::STATIC;
 			}
 "struct"	{
-				return yy::parser::make_STRUCT(loc);
+				return token::STRUCT;
 			}
 "switch"	{
-				return yy::parser::make_SWITCH(loc);
+				return token::SWITCH;
 			}
 "typedef"	{
-				return yy::parser::make_TYPEDEF(loc);
+				return token::TYPEDEF;
 			}
 "union"		{
-				return yy::parser::make_UNION(loc);
+				return token::UNION;
 			}
 "unsigned"	{
-				return yy::parser::make_UNSIGNED(loc);
+				return token::UNSIGNED;
 			}
 "void"		{
-				return yy::parser::make_VOID(loc);
+				return token::VOID;
 			}
 "volatil"	{
-				return yy::parser::make_VOLATIL(loc);
+				return token::VOLATIL;
 			}
 "while"		{
-				return yy::parser::make_WHILE(loc);
+				return token::WHILE;
 			}
 
 "mov"		{
-				return yy::parser::make_MOV(loc);
+				return token::MOV;
 			}
 
 "al"	{
 
-				return yy::parser::make_AL(loc);
+				return token::AL;
 		}
 "ah"	{
 
-				return yy::parser::make_AH(loc);
+				return token::AH;
 		}
 
 [[:space:]]			;
@@ -160,7 +169,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			A_here::nodes::identifier* identifer = A_here::block.create<A_here::nodes::identifier>();
 			identifer->line = yylineno;
 			identifer->name = yytext;
-            return yy::parser::make_IDENTIFIER(yytext,loc);
+            return token::IDENTIFIER;
 		}
 
 {LITERAL_INTEGER_HEX}	{
@@ -172,7 +181,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
 				integer->strvalue = yytext;
-				return yy::parser::make_LITERAL_INTEGER_HEX(integer->number,loc);
+				return token::LITERAL_INTEGER_HEX;
 			}
 {LITERAL_INTEGER_DEC}	{
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
@@ -183,7 +192,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
 				integer->strvalue = yytext;
-				return yy::parser::make_LITERAL_INTEGER_HEX(integer->number,loc);
+				return token::LITERAL_INTEGER_HEX;
 			}
 {LITERAL_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
@@ -192,17 +201,17 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				letter->line = yylineno;
 				letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
-				return yy::parser::make_LITERAL_CHAR(yytext[1],loc);
+				return token::LITERAL_CHAR;
 			}
 
 
 
 [[:punct:]]	{
-				return yy::parser::symbol_type(yytext[0],loc);
+				return yytext[0];
             }
 
 <<EOF>>  	{
-				return yy::parser::make_ENDOFFILE(loc);
+				return token::ENDOFFILE;
 			}
 
 .	;

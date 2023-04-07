@@ -22,33 +22,9 @@
 
 #include "driver.hh"
 #include <oas-intel-parser-A+.hh>
-#include <oas-intel-A+.tab.h>
-
-
-
-Scanner::Scanner(std::istream *in) : yyFlexLexer(in)
-{
-    loc = new yy::location_type();
-};
-
-
-
-
-Driver::Driver () : trace_parsing (false), trace_scanning (false)
-{
-}
 
 
 int Driver::parse(const std::list<std::filesystem::path>& sources)
 {
 }
 
-void Driver::scan_begin ()
-{
-
-}
-
-void Driver::scan_end ()
-{
-
-}
