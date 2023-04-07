@@ -17,6 +17,11 @@
 	core_here::Block A_here::block;
 %}
 
+%{
+    #undef  YY_DECL
+    #define YY_DECL int Scanner::yylex( yy::parser::semantic_type * const lval, MC::MC_Parser::location_type *location );
+
+%}
 
 
 DIGIT_DEC [[:digit:]]
@@ -29,7 +34,7 @@ LITERAL_CHAR '{CHAR}'
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 %{
-    #define YY_USER_ACTION  loc.columns (yyleng);
+    //#define YY_USER_ACTION  loc.columns (yyleng);
 %}
 %%
 %{
@@ -203,22 +208,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 .	;
 
 %%
-void driver::scan_begin ()
-{
-  yy_flex_debug = trace_scanning;
-  if (file.empty () || file == "-")
-    yyin = stdin;
-  else if (!(yyin = fopen (file.c_str (), "r")))
-    {
-      std::cerr << "cannot open " << file << ": " << strerror (errno) << '\n';
-      exit (EXIT_FAILURE);
-    }
-}
 
-void driver::scan_end ()
-{
-  fclose (yyin);
-}
 
 
 

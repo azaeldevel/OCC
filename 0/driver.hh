@@ -18,31 +18,32 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef DRIVER_HH
-# define DRIVER_HH
-# include <string>
-# include <map>
-# include "oas-intel-parser-A+.hh"
+#define DRIVER_HH
+#include <string>
+#include <oas-intel-parser-A+.hh>
 
-// Give Flex the prototype of yylex we want ...
-# define YY_DECL \
-  yy::parser::symbol_type yylex (driver& drv)
-// ... and declare it for the parser's sake.
-YY_DECL;
+#if ! defined(yyFlexLexerOnce)
+#include <FlexLexer.h>
+#endif
+#include "location.hh"
 
-// Conducting the whole scanning and parsing of Calc++.
-class driver
+
+class Scanner : public yyFlexLexer
 {
 public:
-  driver ();
+    Scanner(std::istream *in);
 
-  std::map<std::string, int> variables;
+    using FlexLexer::yylex;
+    int yylex(yy::parser::semantic_type * const lval, yy::parser::location_type *location);
+};
+// Conducting the whole scanning and parsing of Calc++.
+class Driver
+{
+public:
+  Driver ();
 
-  int result;
+  int parse(const std::list<std::filesystem::path>& sources);
 
-  // Run the parser on file F.  Return 0 on success.
-  int parse (const std::string& f);
-  // The name of the file being parsed.
-  std::string file;
   // Whether to generate parser debug traces.
   bool trace_parsing;
 
@@ -53,5 +54,8 @@ public:
   bool trace_scanning;
   // The token's location used by the scanner.
   yy::location location;
+
+private:
+
 };
 #endif // ! DRIVER_HH

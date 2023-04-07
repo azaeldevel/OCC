@@ -18,13 +18,11 @@
  */
 
 #include <oas-intel-parser-A+.hh>
-#include <oas-intel-A+.tab.h>
-#include <stdarg.h> // va_list.
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
 #include <iostream>
 #include <fstream>
-
+#include <string.h>
 #include <iostream>
 #include <fstream>
 #include <list>
@@ -32,10 +30,12 @@
 
 
 namespace A_here = oct::cc::v0::A;
+
+
 extern std::fstream outstream;
-//A_here::Tokens lexer();
 std::filesystem::path outfile;
 std::list<std::string> inputs;
+
 int main (int argc, char* argv[])
 {
 	for(size_t i = 0; i < argc; i++)
@@ -53,18 +53,6 @@ int main (int argc, char* argv[])
 			inputs.push_back(argv[++i]);
 		}
 	}
-
-	/*int c = 5;
-	std::cout << "Number : " << (int)c << "\n";
-	c = c << 1;
-	std::cout << "Number : " << (int)c << "\n";
-	c << 1;
-	std::cout << "Number : " << (int)c << "\n";
-	c << 1;
-	std::cout << "Number : " << (int)c << "\n";
-	c << 1;
-	std::cout << "Number : " << (int)c << "\n";*/
-
 
 	A_here::SymbolTable symbols;
 	//A_here::File current_file(symbols);

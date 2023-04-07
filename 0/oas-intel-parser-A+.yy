@@ -2,8 +2,18 @@
 %code requires
 {
     #include <A+.hh>
+    #include <driver.hh>
 	namespace A_here = oct::cc::v0::A;
-	class driver;
+	class Driver;
+	class Scanner;
+
+    # ifndef YY_NULLPTR
+    #  if defined __cplusplus && 201103L <= __cplusplus
+    #   define YY_NULLPTR nullptr
+    #  else
+    #   define YY_NULLPTR 0
+    #  endif
+    # endif
 }
 
 %code top
@@ -18,30 +28,29 @@
 	std::fstream outstream;
 }
 
-%code
-{
-    #include "driver.hh"
-}
 
-%skeleton "lalr1.cc" // -*- C++ -*-
-%require "3.8"
-%language "c++"
-%header
-//%define api.token.raw
-%define api.value.type variant
-%define api.token.constructor
-
-// with locations.
-%locations
-
+%skeleton "lalr1.cc"
 %define parse.trace
 %define parse.error detailed
 %define parse.lac full
+%define api.value.type variant
+%defines
+%define api.namespace {yy}
+%define parser_class_name {parser}
 
 // Generate the parser description file (parse.output).
 %verbose
 
-%param { driver& drv }
+%parse-param { Scanner& scanner }
+%parse-param { Driver& driver }
+
+
+%code
+{
+    #include <driver.hh>
+    #undef
+    #define lex.yylex
+}
 
 
 %token ENDOFFILE 0  "end-of-file"

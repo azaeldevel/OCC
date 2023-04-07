@@ -17,25 +17,38 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include "driver.hh"
-#include "oas-intel-parser-A+.hh"
+#include <stdio.h>
+#include <stdlib.h>
 
-driver::driver ()
-  : trace_parsing (false), trace_scanning (false)
+#include "driver.hh"
+#include <oas-intel-parser-A+.hh>
+#include <oas-intel-A+.tab.h>
+
+
+
+Scanner::Scanner(std::istream *in) : yyFlexLexer(in)
 {
-  variables["one"] = 1;
-  variables["two"] = 2;
+    loc = new yy::location_type();
+};
+
+
+
+
+Driver::Driver () : trace_parsing (false), trace_scanning (false)
+{
 }
 
-int
-driver::parse (const std::string &f)
+
+int Driver::parse(const std::list<std::filesystem::path>& sources)
 {
-  file = f;
-  location.initialize (&file);
-  scan_begin ();
-  yy::parser parse (*this);
-  parse.set_debug_level (trace_parsing);
-  int res = parse ();
-  scan_end ();
-  return res;
+}
+
+void Driver::scan_begin ()
+{
+
+}
+
+void Driver::scan_end ()
+{
+
 }

@@ -53,57 +53,6 @@ const std::filesystem::path& File::get_filename() const
 }
 
 
-
-
-/*
-Block::Block() : actual(NULL),index(0)
-{
-	if(blocks.empty()) return;
-	it = blocks.begin();
-	actual = (Symbol*)*it;
-}
-
-
-size_t Block::get_size(Symbol* symbol) const
-{
-	switch(symbol->token)
-	{
-	case Tokens::identifier:
-		//std::cout << "Block::next : identifier\n";
-		return sizeof(Identifier);
-	case Tokens::LITERAL_INTEGER_DEC:
-	case Tokens::LITERAL_INTEGER_HEX:
-		//std::cout << "Block::next : LITERAL_INTEGER\n";
-		return sizeof(Integer);
-	default:
-		return sizeof(Symbol);
-	}
-}
-Symbol* Block::next()
-{
-	//std::cout << "Block::next begin\n";
-	if(not actual) return NULL;
-	if(get_size(actual) + index >= page_size)
-	{
-		//std::cout << "Block::create malloc\n";
-		it++;
-		actual = (Symbol*)*it;
-		index = 0;
-	}
-
-	char* newptr = (char*)actual;
-	//std::cout << "Block::next actual : " << (long)actual << "\n";
-	//std::cout << "Block::next index : " << index << "\n";
-	newptr += index;
-	Symbol* obj = (Symbol*)newptr;
-	index += get_size(actual) + 1;
-	//std::cout << "Block::create newptr : " << (long)newptr << "\n";
-	actual = (Symbol*)obj;
-	//std::cout << "Block::next end\n";
-	return obj;
-}
-*/
-
 namespace nodes
 {
 
