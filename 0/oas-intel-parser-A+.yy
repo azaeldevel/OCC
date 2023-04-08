@@ -252,15 +252,21 @@ function_implementation :
 	;
 
 declaration_specifiers :
+	type_specifier declaration_specifiers
+	{
+		//std::cout << "declaration_specifiers : storage_class_specifier declaration_specifiers\n";
+		$$ = NULL;
+	}
+	|
 	type_specifier
 	{
-            //std::cout << "declaration_specifiers : type_specifier\n";
-            $$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
-            $$->storage = NULL;
-            $$->type = $1;
-            $$->qualifer = NULL;
-            $$->declaration = NULL;
-            //std::cout << "declaration_specifiers 3\n";
+		//std::cout << "declaration_specifiers : type_specifier\n";
+		$$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
+		$$->storage = NULL;
+		$$->type = $1;
+		$$->qualifer = NULL;
+		$$->declaration = NULL;
+		//std::cout << "declaration_specifiers 3\n";
 	}
 	;
 
@@ -476,6 +482,7 @@ type_specifier :
 	VOID
     {
 		//std::cout << "type_specifier : VOID\n";
+		std::cout << "void ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::VOID;
     }
@@ -492,6 +499,7 @@ type_specifier :
     SHORT
     {
 		//std::cout << "type_specifier : SHORT\n";
+		std::cout << "short ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::SHORT;
     }
@@ -499,6 +507,7 @@ type_specifier :
     INT
     {
 		//std::cout << "type_specifier : INT\n";
+		std::cout << "int ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::INT;
     }
@@ -520,6 +529,7 @@ type_specifier :
     SIGNED
     {
 		//std::cout << "type_specifier : SIGNED\n";
+		std::cout << "signed ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::SIGNED;
     }
@@ -527,6 +537,7 @@ type_specifier :
     UNSIGNED
     {
 		//std::cout << "type_specifier : UNSIGNED\n";
+		std::cout << "unsigned ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::UNSIGNED;
     }
