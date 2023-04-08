@@ -21,10 +21,33 @@
 #include <stdlib.h>
 
 #include "driver.hh"
+#include "scanner.hh"
 #include <oas-intel-parser-A+.hh>
 
 
-int Driver::parse(const std::list<std::filesystem::path>& sources)
+Driver::~Driver()
 {
+    for(Source& s : sources)
+    {
+        s.stream->close();
+        delete s.stream;
+    }
 }
 
+bool Driver::parse(std::filesystem::path& path)
+{
+    sources.push_back({&path,NULL});
+    Source* source = &sources.back();
+    source->path = &path;
+    source->stream = new std::ifstream(path);
+    if(not source->stream->good()) return false;
+    return parse(source->stream);
+}
+
+bool Driver::parse(std::ifstream* stream)
+{
+    Scanner scanner(stream);
+    yy::parser parser(scanner,*this);
+    if(parser.parse() != 0) return false;
+    return true;
+}

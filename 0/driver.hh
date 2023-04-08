@@ -2,6 +2,8 @@
 #ifndef DRIVER_HH
 #define DRIVER_HH
 #include <string>
+#include <fstream>
+#include <list>
 #include <oas-intel-parser-A+.hh>
 //#include <oas-intel-A+.tab.h>
 
@@ -15,13 +17,23 @@ class Driver
 {
 public:
   Driver () = default;
+  ~Driver ();
 
-  int parse(const std::list<std::filesystem::path>& sources);
+  bool parse(std::filesystem::path& sources);
 
   // The token's location used by the scanner.
   yy::location location;
 
 private:
+    bool parse(std::ifstream*);
+
+private:
+    struct Source
+    {
+        const std::filesystem::path* path;
+        std::ifstream *stream;
+    };
+    std::list<Source> sources;
 
 };
 

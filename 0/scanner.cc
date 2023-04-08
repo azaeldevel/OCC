@@ -1,9 +1,12 @@
 #include "scanner.hh"
 
 
-Scanner::Scanner(std::istream *in) : yyFlexLexer(in)
+Scanner::Scanner(std::ifstream *in) : yyFlexLexer(in)
 {
     //loc = new yy::location_type();
-};
-
+}
+Scanner::~Scanner()
+{
+    //delete loc;
+}
 

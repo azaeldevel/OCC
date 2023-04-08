@@ -14,7 +14,8 @@
 class Scanner : public yyFlexLexer
 {
 public:
-    Scanner(std::istream *in);
+    Scanner(std::ifstream *in);
+    ~Scanner();
 
     using FlexLexer::yylex;
     int yylex(yy::parser::semantic_type * const lval, yy::parser::location_type *loc);

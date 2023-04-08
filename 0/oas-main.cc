@@ -61,11 +61,13 @@ int main (int argc, char* argv[])
 		std::cout << "Indique almenos un archivo para compilar.";
 		return EXIT_FAILURE;
 	}
-	/*if(outfile.empty())
+	/*
+	if(outfile.empty())
 	{
 		std::cout << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
-	}*/
+	}
+	*/
 	//outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
 
 	for(const std::string& f : inputs)
