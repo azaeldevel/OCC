@@ -521,6 +521,7 @@ namespace nodes
 
     struct direct_declarator_function : public direct_declarator
     {
+    	direct_declarator* funtion_id;
         void print()const;
     };
 
@@ -599,6 +600,11 @@ namespace nodes
     };
 
     struct type_qualifer_list : public statement , public std::list<type_qualifer*>
+    {
+
+    };
+
+    struct statement_list : public statement , public std::list<statement*>
     {
 
     };

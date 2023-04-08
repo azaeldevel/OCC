@@ -168,7 +168,7 @@
 %type <A_here::nodes::statement*> statement
 %type <A_here::nodes::instruction_mov*> instruction_mov
 %type <A_here::nodes::instruction_int*> instruction_int
-%type <std::list<A_here::nodes::statement*>*> statement_list
+%type <A_here::nodes::statement_list*> statement_list
 %type <A_here::nodes::return_statement*> statement_return
 %type <A_here::nodes::compound_statement*> compound_statement
 %type <A_here::nodes::function_implementation*> function_implementation
@@ -399,7 +399,10 @@ direct_declarator : IDENTIFIER
 	|
 	direct_declarator '('  ')'
 	{
-        $$ = NULL;
+		A_here::nodes::direct_declarator_function* id = A_here::block.create<A_here::nodes::direct_declarator_function>();
+		id->funtion_id = $1;
+        $$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
+		std::cout << "direct_declarator : direct_declarator '('  ')'\n";
 	}
 	;
 
@@ -428,6 +431,7 @@ compound_statement : '{' declaration_list statement_list '}'
     |
 	'{' statement_list '}'
     {
+		//std::cout << "compound_statement : '{' statement_list '}'\n";
         $$ = A_here::block.create<A_here::nodes::compound_statement>();
         $$->statement_list = $2;
     }
@@ -462,16 +466,18 @@ const_expression : LITERAL_CHAR
 	|
 	LITERAL_INTEGER_HEX
 	{
-										$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
-										reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-										$$->data_type = A_here::Tokens::LITERAL_INTEGER_HEX;
+		std::cout << $1 << " ";
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::LITERAL_INTEGER_HEX;
 	}
 	|
 	LITERAL_INTEGER_DEC
 	{
-										$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
-										reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-										$$->data_type = A_here::Tokens::LITERAL_INTEGER_DEC;
+		std::cout << $1 << " ";
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::LITERAL_INTEGER_DEC;
 	}
 	;
 
@@ -551,16 +557,17 @@ type_specifier :
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C
 statement_list : statement
-            {
-                $$ = new std::list<A_here::nodes::statement*>;
-                //std::cout << "statement\n";
-                $$->push_back($1);
-            } |
-            statement_list statement
-            {
-                //std::cout << "statement_list statement\n";
-                $$->push_back($2);
-            }
+	{
+		//std::cout << "statement_list : statement\n";
+		$$ = A_here::block.create<A_here::nodes::statement_list>();
+		$$->push_back($1);
+	}
+	|
+	statement_list statement
+	{
+		//std::cout << "statement_list : statement_list statement\n";
+		$$->push_back($2);
+	}
 	;
 
 statement : compound_statement
@@ -589,8 +596,8 @@ statement_return  :
 instruction_mov :
 	MOV registers_8b literals_integer ';'
 	{
-							//std::cout << "mov register-8b integer\n";
-							//inmediate to register 8b
+		std::cout << "mov register-8b integer\n";
+		//inmediate to register 8b
 							/*instruction[0] = 0b1011;//opcode
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							instruction[0] = instruction[0] << 1;//w = one byte
@@ -638,17 +645,17 @@ instruction_mov :
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);*/
 
-							A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
-							mv8->registe = (A_here::Tokens)$2;
-							mv8->integer = $3;
-							mv8->inst = A_here::Tokens::MOV;
-							mv8->is_instruction = true;
-                            $$ = mv8;
+			A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
+			mv8->registe = (A_here::Tokens)$2;
+			mv8->integer = $3;
+			mv8->inst = A_here::Tokens::MOV;
+			mv8->is_instruction = true;
+			$$ = mv8;
 	}
 	|
 	MOV registers_8b LITERAL_CHAR ';'
 	{
-						//std::cout << "mov register-8b char\n";
+		std::cout << "mov register-8b char\n";
 							//inmediate to register 8b
 							/*instruction[0] = 0b1011;//opcode
 							//std::cout << (int)instruction[0] << " register-8b char\n";
@@ -697,12 +704,12 @@ instruction_mov :
 							//std::cout << (int)instruction[0] << " register-8b char\n";
 							outstream.write((char*)&instruction,2);*/
 
-							A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
-							mv8->registe = (A_here::Tokens)$2;
-							mv8->integer = $3;
-							mv8->inst = A_here::Tokens::MOV;
-							mv8->is_instruction = true;
-							$$ = mv8;
+		A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
+		mv8->registe = (A_here::Tokens)$2;
+		mv8->integer = $3;
+		mv8->inst = A_here::Tokens::MOV;
+		mv8->is_instruction = true;
+		$$ = mv8;
 	}
 	|
 	MOV registers_16b literals_integer
@@ -710,8 +717,9 @@ instruction_mov :
 		$$ = NULL;
 	}
 	;
-instruction_int : INT literals_integer ';' {
-						//std::cout << "int " << $2 << "\n";
+instruction_int : INT literals_integer ';'
+	{
+		std::cout << "int " << $2 << "\n";
 						/*instruction[0] = 0b11001101;//opcode
 						instruction[1] = $2;
 						outstream.write((char*)&instruction,2);*/
@@ -721,7 +729,7 @@ instruction_int : INT literals_integer ';' {
                         serv->inst = A_here::Tokens::INT;
                         serv->is_instruction = true;
 						$$ = serv;
-					}
+	}
 	;
 
 literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
