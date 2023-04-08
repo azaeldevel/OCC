@@ -470,13 +470,17 @@ namespace nodes
         Tokens inst;
     };
 
-    struct MoveI8b : public instruction
+    struct instruction_mov : public instruction
+    {
+    };
+
+    struct movei8b : public instruction_mov
     {
         Tokens registe;
         unsigned char integer;
     };
 
-    struct Interruption : public instruction
+    struct instruction_int : public instruction
     {
         unsigned char service;
     };
@@ -587,6 +591,16 @@ namespace nodes
     {
     	declaration_specifiers* specifiers;
     	init_declarator_list* list;
+    };
+
+    struct identifer_list : public statement , public std::list<identifier*>
+    {
+
+    };
+
+    struct type_qualifer_list : public statement , public std::list<type_qualifer*>
+    {
+
     };
 }
 
