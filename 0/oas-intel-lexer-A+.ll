@@ -213,7 +213,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 
 [[:punct:]]	{
-				std::cout << yytext[0] << " ";
+				std::cout << "Lexer(" << yytext[0] << ") ";
 				return yytext[0];
             }
 
