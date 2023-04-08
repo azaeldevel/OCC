@@ -19,7 +19,7 @@ public:
   Driver () = default;
   ~Driver ();
 
-  bool parse(std::filesystem::path& sources);
+  bool parse(const std::filesystem::path& sources);
 
   // The token's location used by the scanner.
   yy::location location;

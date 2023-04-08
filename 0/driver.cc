@@ -34,7 +34,7 @@ Driver::~Driver()
     }
 }
 
-bool Driver::parse(std::filesystem::path& path)
+bool Driver::parse(const std::filesystem::path& path)
 {
     sources.push_back({&path,NULL});
     Source* source = &sources.back();
