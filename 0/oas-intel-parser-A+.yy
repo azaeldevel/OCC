@@ -200,12 +200,13 @@ translation_unit : external_declaration ENDOFFILE
 external_declaration :
 	function_implementation
 	{
-		std::cout << "external_declaration : function_implementation\n";
+		//std::cout << "external_declaration : function_implementation\n";
 	}
 	|
 	declaration ';'
 	{
-		std::cout << "storage_class_specifier : declaration ';'\n";
+		//std::cout << "storage_class_specifier : declaration ';'\n";
+		std::cout << ";\n";
 	}
 
 	;
@@ -270,7 +271,7 @@ declaration_specifiers :
 declaration :
 	declaration_specifiers
 	{
-		std::cout << "declaration : declaration_specifiers\n";
+		//std::cout << "declaration : declaration_specifiers\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
 		$$->specifiers = $1;
 		$$->list = NULL;
@@ -278,7 +279,7 @@ declaration :
 	|
 	declaration_specifiers init_declarator_list
 	{
-		std::cout << "declaration : declaration_specifiers init_declarator_list\n";
+		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
 		$$->specifiers = $1;
 		$$->list = $2;
@@ -290,7 +291,7 @@ declaration :
 
 init_declarator_list : init_declarator
 	{
-		std::cout << "init_declarator_list : init_declarator\n";
+		//std::cout << "init_declarator_list : init_declarator\n";
 		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
 		//$$->push_back($1);
 		//std::cout << "init_declarator_list 1\n";
@@ -298,7 +299,7 @@ init_declarator_list : init_declarator
 	|
 	init_declarator_list ',' init_declarator
 	{
-		std::cout << "init_declarator_list : init_declarator_list ',' init_declarator\n";
+		//std::cout << "init_declarator_list : init_declarator_list ',' init_declarator\n";
 		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
 		$$->push_back($3);
 		//std::cout << "init_declarator_list 2\n";
@@ -307,7 +308,7 @@ init_declarator_list : init_declarator
 
 init_declarator : declarator
 	{
-		std::cout << "init_declarator : declarator\n";
+		//std::cout << "init_declarator : declarator\n";
 		$$ = A_here::block.create<A_here::nodes::init_declarator>();
 		$$->dec = $1;
 		$$->value = NULL;
@@ -316,7 +317,7 @@ init_declarator : declarator
 	|
 	declarator '=' initializer
 	{
-		std::cout << "init_declarator : declarator '=' initializer\n";
+		//std::cout << "init_declarator : declarator '=' initializer\n";
 		$$ = A_here::block.create<A_here::nodes::init_declarator>();
 		$$->dec = $1;
 		$$->value = $3;
