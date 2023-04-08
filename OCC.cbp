@@ -87,9 +87,6 @@
 			<Option target="occ" />
 			<Option target="develop-as" />
 		</Unit>
-		<Unit filename="0/A+-flex.cc">
-			<Option target="oas-intel" />
-		</Unit>
 		<Unit filename="0/A+.cc">
 			<Option target="oas-intel" />
 		</Unit>
@@ -119,6 +116,12 @@
 			<Option target="occ" />
 		</Unit>
 		<Unit filename="0/oas-main.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/scanner.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/scanner.hh">
 			<Option target="oas-intel" />
 		</Unit>
 		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc">

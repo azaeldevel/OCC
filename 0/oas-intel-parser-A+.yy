@@ -1,14 +1,14 @@
 
 %skeleton "lalr1.cc"
-//%require  "3.8"
+%require  "3.8"
 %debug
 %defines
 %define api.namespace {yy}
 %define api.parser.class {parser}
 
-//%define parse.trace
-//%define parse.error detailed
-//%define parse.lac full
+%define parse.trace
+%define parse.error detailed
+%define parse.lac full
 
 %code requires
 {
@@ -161,7 +161,7 @@
 %token LITERAL_INTEGER_HEX_LONG
 %token LITERAL_INTEGER_HEX_ULONG
 %token <char> LITERAL_CHAR
-%token <const char*> IDENTIFIER
+%token <A_here::nodes::identifier*> IDENTIFIER
 %type <int> registers_8b
 %type <int> registers_16b
 %type <long long>literals_integer
@@ -181,164 +181,115 @@
 %type <A_here::nodes::type_specifier*> type_specifier
 %type <A_here::nodes::declaration_specifiers*> declaration_specifiers
 %type <std::list<A_here::nodes::identifier*>*> identifer_list
-//%type <A_here::nodes::Symbol*> const_expression
-
-
-
+%type <A_here::nodes::const_expression*> const_expression
+%type <A_here::nodes::init_declarator*> init_declarator
+%type <A_here::nodes::initializer*> initializer
+%type <A_here::nodes::init_declarator_list*> init_declarator_list
+%type <A_here::nodes::declaration*> declaration
 
 %%
 
-translation_unit : external_declaration ENDOFFILE |
+translation_unit : external_declaration ENDOFFILE
+	{
+		std::cout << "external_declaration\n";
+	}
+	|
 	external_declaration translation_unit ENDOFFILE
+	{
+		std::cout << "external_declaration translation_unit\n";
+	}
+
 	;
 
-external_declaration : function_implementation |
+external_declaration :
+	function_implementation
+	{
+		std::cout << "external_declaration\n";
+	}
+	|
 	declaration ';'
+	{
+		std::cout << "declaration\n";
+	}
+
 	;
 
 function_implementation :
 	declaration_specifiers declarator declaration_list compound_statement
 	{
+        std::cout << "function_implementation - 1\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $4;
         $$->declaration = $2;
-        //std::cout << "Function 1\n";
+        std::cout << "Function 1\n";
 	}
 	|
 	declaration_specifiers declarator compound_statement
 	{
-        //std::cout << "Function 2 - 1\n";
+        std::cout << "function_implementation - 2\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
         $$->specifier = $1;
-        //std::cout << "Function 2 - 2\n";
-        $$->print();
+        std::cout << "function_implementation - 2\n";
+        //$$->print();
 	}
 	|
 	declarator declaration_list compound_statement
 	{
+        std::cout << "function_implementation - 3\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $1;
-        //std::cout << "Function 3\n";
+        std::cout << "Function 3\n";
 	}
 	|
 	declarator compound_statement
 	{
+        std::cout << "function_implementation - 4\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $2;
         $$->declaration = $1;
-        //std::cout << "Function 4\n";
+        std::cout << "Function 4\n";
 	}
 	;
 
 declaration_specifiers : storage_class_specifier
         {
-            //std::cout << "1\n";
+            //std::cout << "declaration_specifiers : storage_class_specifier\n";
             $$ = NULL;
         }
         |
         storage_class_specifier declaration_specifiers
         {
-            //std::cout << "2\n";
+            //std::cout << "declaration_specifiers : storage_class_specifier declaration_specifiers\n";
             $$ = NULL;
         }
         |
         type_specifier
         {
-            //std::cout << "3\n";
+            //std::cout << "declaration_specifiers : type_specifier\n";
             $$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
             $$->storage = NULL;
             $$->type = $1;
             $$->qualifer = NULL;
             $$->declaration = NULL;
+            //std::cout << "declaration_specifiers 3\n";
         }
         |
         type_specifier declaration_specifiers
         {
-            //std::cout << "4\n";
+            //std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
             $$ = NULL;
         }
         |
         type_qualifer
         {
-            //std::cout << "5\n";
-            $$ = NULL;
-        }
-        |
-        type_qualifer declaration_specifiers
-        {
-            //std::cout << "6\n";
+            //std::cout << "declaration_specifiers : type_qualifer\n";
             $$ = NULL;
         }
         ;
 
-storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER
-
-type_specifier : VOID
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::VOID;
-    }
-    |
-    CHAR
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::CHAR;
-    }
-    |
-    SHORT
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::SHORT;
-    }
-    |
-    INT
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::INT;
-    }
-    |
-    LONG
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::LONG;
-    }
-    |
-    FLOAT
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::FLOAT;
-    }
-    | DOUBLE
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::DOUBLE;
-    }
-    | SIGNED
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::SIGNED;
-    }
-    | UNSIGNED
-    {
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::UNSIGNED;
-    }
-    | struct_or_union_specifier
-    {
-        $$ = NULL;
-    }
-    | enum_specifier
-    {
-        $$ = NULL;
-    }
-    | typedef_name
-    {
-        $$ = NULL;
-    }
-    ;
 
 
 struct_or_union_specifier :
@@ -348,50 +299,70 @@ enum_specifier :
 typedef_name :
 
 //6.5
-declaration : declaration_specifiers init_declarator_list | declaration_specifiers;
-declaration_specifiers :
-	storage_class_especifier declaration_specifiers |
-	storage_class_especifier |
-	type_specifier declaration_specifiers |
-	type_specifier |
-	type_qualifer declaration_specifiers |
-	type_qualifer
+declaration :
+	declaration_specifiers
+	{
+		//std::cout << "declaration : declaration_specifiers\n";
+		$$ = A_here::block.create<A_here::nodes::declaration>();
+		$$->specifiers = $1;
+	}
+	|
+	declaration_specifiers init_declarator_list
+	{
+		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
+		$$->specifiers = $1;
+		$$->list = $2;
+	}
 	;
 
-storage_class_especifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
 
-init_declarator_list : init_declarator |
+
+
+init_declarator_list : init_declarator
+	{
+		std::cout << "init_declarator_list : init_declarator\n";
+		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
+		//$$->push_back($1);
+		//std::cout << "init_declarator_list 1\n";
+	}
+	|
 	init_declarator_list ',' init_declarator
+	{
+		//std::cout << "init_declarator_list : init_declarator_list ',' init_declarator\n";
+		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
+		$$->push_back($3);
+		//std::cout << "init_declarator_list 2\n";
+	}
 	;
 
-init_declarator : declarator 		{
-										//std::cout << "Line " << A_here::symbol_current->line << "\n";
-										//auto it = symbols_table->end();
-										//it--;
-										//A_here::nodes::identifier* identifier = *it;
-										//identifier->line = A_here::symbol_current->line;
-									}|
-	init_declarator '=' initializer {
-										//std::cout << "Line " << A_here::symbol_current->line << "\n";
-									}
+init_declarator : declarator
+	{
+										std::cout << "init_declarator : declarator\n";
+										$$ = A_here::block.create<A_here::nodes::init_declarator>();
+										$$->dec = $1;
+										$$->value = NULL;
+										//std::cout << "init_declarator 1\n";
+	}
+	|
+	declarator '=' initializer
+	{
+		//std::cout << "init_declarator : declarator '=' initializer\n";
+		$$ = A_here::block.create<A_here::nodes::init_declarator>();
+		$$->dec = $1;
+		$$->value = $3;
+		//std::cout << "init_declarator 2\n";
+	}
 	;
 
 //TODO : esta gramatica no es exacta para el estandar
 initializer : const_expression 		{
+										$$ = reinterpret_cast<A_here::nodes::initializer*>($1);
 									}|
-	'{' initilizer_list '}'
-	;
+	'{' initilizer_list '}'			{
+									}
+							;
 
 
-const_expression : LITERAL_CHAR {
-
-                                }|
-				LITERAL_INTEGER_HEX {
-
-									}|
-				LITERAL_INTEGER_DEC {
-
-									};
 
 
 
@@ -402,7 +373,6 @@ initilizer_list : const_expression  {
 	;
 
 
-type_specifier :  VOID | CHAR | SHORT | INT | LONG | FLOAT | SIGNED | UNSIGNED ;
 
 type_qualifer :
     CONST
@@ -421,14 +391,16 @@ type_qualifer :
 declarator :
     pointer direct_declarator
     {
+        //std::cout << "declarator : pointer direct_declarator\n";
         $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = $1;
         $$->direct = $2;
+        //std::cout << "declarator 1\n";
     }
     |
 	direct_declarator
 	{
-        //std::cout << "declarator 1\n";
+        //std::cout << "declarator : direct_declarator\n";
         $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = NULL;
         $$->direct = $1;
@@ -436,12 +408,14 @@ declarator :
 	}
 	;
 
-direct_declarator : IDENTIFIER 		{
-										$$ = A_here::block.create<A_here::nodes::direct_declarator>();
-										$$->identity = A_here::block.create<A_here::nodes::identifier>();
-										$$->identity->name = $1;
-										//std::cout << " direct_declarator identifer\n";
-									}|
+direct_declarator : IDENTIFIER
+	{
+		//std::cout << "direct_declarator : IDENTIFIER\n";
+		$$ = A_here::block.create<A_here::nodes::direct_declarator>();
+		$$->id = $1;
+		std::cout << $$->id->name << " ";
+	}
+	|
 	'(' declarator ')'
 	{
         $$ = NULL;
@@ -469,10 +443,7 @@ direct_declarator : IDENTIFIER 		{
 	|
 	direct_declarator '('  ')'
 	{
-        //A_here::nodes::identifier* identifier = $$;//optiene el identifier previamente cargado
-        //$$ = A_here::block.create<A_here::nodes::direct_declarator>();
-        //$$->identity = identifier;
-        //std::cout << " direct_declarator funtion\n";
+        $$ = NULL;
 	}
 	;
 
@@ -553,6 +524,116 @@ declaration_list : declaration |
 	;
 
 
+
+
+const_expression : LITERAL_CHAR
+	{
+		std::cout << "'" << (char)$1 << "' ";
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<char>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<char>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::LITERAL_CHAR;
+	}
+	|
+	LITERAL_INTEGER_HEX
+	{
+										$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+										reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+										$$->data_type = A_here::Tokens::LITERAL_INTEGER_HEX;
+	}
+	|
+	LITERAL_INTEGER_DEC
+	{
+										$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+										reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+										$$->data_type = A_here::Tokens::LITERAL_INTEGER_DEC;
+	}
+	;
+
+
+storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+
+type_specifier :
+	VOID
+    {
+		//std::cout << "type_specifier : VOID\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::VOID;
+    }
+    |
+    CHAR
+    {
+		//std::cout << "type_specifier : CHAR\n";
+		std::cout << "char ";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::CHAR;
+		//std::cout << "type_specifier\n";
+    }
+    |
+    SHORT
+    {
+		//std::cout << "type_specifier : SHORT\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SHORT;
+    }
+    |
+    INT
+    {
+		//std::cout << "type_specifier : INT\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::INT;
+    }
+    |
+    FLOAT
+    {
+		//std::cout << "type_specifier : FLOAT\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::FLOAT;
+    }
+    |
+    DOUBLE
+    {
+		//std::cout << "type_specifier : DOUBLE\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::DOUBLE;
+    }
+    |
+    SIGNED
+    {
+		//std::cout << "type_specifier : SIGNED\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SIGNED;
+    }
+    |
+    UNSIGNED
+    {
+		//std::cout << "type_specifier : UNSIGNED\n";
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::UNSIGNED;
+    }
+    |
+    struct_or_union_specifier
+    {
+        $$ = NULL;
+    }
+    |
+    enum_specifier
+    {
+        $$ = NULL;
+    }
+    |
+    typedef_name
+    {
+        $$ = NULL;
+    }
+    ;
+
+
+
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C
 statement_list : statement
             {
                 $$ = new std::list<A_here::nodes::statement*>;
@@ -758,14 +839,17 @@ registers_8b : 	AL 	{
 				//std::cout <<"AH ";
 				$$ = token::token_kind_type::DH;
 			};
-registers_16b : AX 	{
+
+registers_16b : AX
+	{
 				//std::cout << "AX ";
 				$$ = token::token_kind_type::AX;
-			};
+	};
 
 %%
 
 void yy::parser::error (const location_type& l, const std::string& m)
 {
-    std::cerr << l << ": " << m << '\n';
+    //std::cerr << l << ": " << m << '\n';
+    std::cerr << m << '\n';
 }

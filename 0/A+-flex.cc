@@ -20,7 +20,7 @@
  */
 
 #include <oas-intel-parser-A+.hh>
-#include <oas-intel-A+.tab.h>
+//#include <oas-intel-A+.tab.h>
 
 
 #include "A+.hh"

@@ -48,7 +48,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 %%
 %{          /** Code executed at the beginning of yylex **/
-            yylval = lval;
+	yylval = lval;// A handy shortcut to the location held by the driver.
+	//yy::location& loc = driver.location;
+	//loc.step ();
 %}
 
 
@@ -169,6 +171,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			A_here::nodes::identifier* identifer = A_here::block.create<A_here::nodes::identifier>();
 			identifer->line = yylineno;
 			identifer->name = yytext;
+			yylval->build<A_here::nodes::identifier*>(identifer);
             return token::IDENTIFIER;
 		}
 
@@ -181,6 +184,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
 				integer->strvalue = yytext;
+				yylval->build<long long>(integer->number);
 				return token::LITERAL_INTEGER_HEX;
 			}
 {LITERAL_INTEGER_DEC}	{
@@ -192,6 +196,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
 				integer->strvalue = yytext;
+				yylval->build<long long>(integer->number);
 				return token::LITERAL_INTEGER_HEX;
 			}
 {LITERAL_CHAR}		{
@@ -201,12 +206,14 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				letter->line = yylineno;
 				letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
+				yylval->build<char>(yytext[1]);
 				return token::LITERAL_CHAR;
 			}
 
 
 
 [[:punct:]]	{
+				std::cout << yytext[0] << " ";
 				return yytext[0];
             }
 

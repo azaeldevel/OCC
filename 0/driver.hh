@@ -16,13 +16,11 @@
 class Driver
 {
 public:
-  Driver () = default;
-  ~Driver ();
+	Driver () = default;
+	~Driver ();
 
-  bool parse(const std::filesystem::path& sources);
-
-  // The token's location used by the scanner.
-  yy::location location;
+	bool parse(const std::filesystem::path& sources);
+	yy::location location;
 
 private:
     bool parse(std::ifstream*);

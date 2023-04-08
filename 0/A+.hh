@@ -60,7 +60,7 @@ public:
 	template<typename T> T* create()
 	{
 		//std::cout << "Block::create begin\n";
-		if((long)actual >= page_size)
+		if((long)actual >= (long)page_size)
 		{
 			//std::cout << "Block::create malloc\n";
 			actual = malloc(page_size);
@@ -77,11 +77,11 @@ public:
 		return (T*)now;
 	}
 protected:
+	size_t page_size;
 	void* actual;//last block memory assignable
 	//size_t index;//firs posistion usable in actual block memory
 	std::list<void*> blocks;
 	std::list<void*>::iterator it;
-	size_t page_size;
 
 private:
 
@@ -510,7 +510,7 @@ namespace nodes
 
     struct direct_declarator : public statement
     {
-        identifier* identity;
+        identifier* id;
 
         void print()const;
     };
@@ -558,7 +558,36 @@ namespace nodes
         void print()const;
     };
 
+    struct initializer : public statement
+    {
+		Tokens data_type;
+    };
 
+    struct const_expression : public initializer
+    {
+    };
+
+    template<typename T> struct initializer_literal : public const_expression
+    {
+		T value;
+    };
+
+    struct init_declarator : public statement
+    {
+		declarator* dec;
+		initializer* value;
+    };
+
+    struct init_declarator_list : public statement , public std::list<init_declarator*>
+    {
+
+    };
+
+	struct declaration : public statement
+    {
+    	declaration_specifiers* specifiers;
+    	init_declarator_list* list;
+    };
 }
 
 

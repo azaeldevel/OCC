@@ -38,7 +38,7 @@ std::list<std::filesystem::path> inputs;
 
 int main (int argc, char* argv[])
 {
-	for(size_t i = 0; i < argc; i++)
+	for(size_t i = 0; i < (size_t)argc; i++)
 	{
 		if(strcmp(argv[i],"--output") == 0)
 		{

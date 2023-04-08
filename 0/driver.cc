@@ -40,6 +40,7 @@ bool Driver::parse(const std::filesystem::path& path)
     Source* source = &sources.back();
     source->path = &path;
     source->stream = new std::ifstream(path);
+    //location.initialize(path.string());
     if(not source->stream->good()) return false;
     return parse(source->stream);
 }

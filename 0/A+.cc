@@ -55,7 +55,7 @@ const std::filesystem::path& File::get_filename() const
 
 namespace nodes
 {
-
+/*
 Tokens Integer::reduced_token() const
 {
 	//std::cout << "reduced_token : step 1 " << number << "\n";
@@ -84,10 +84,10 @@ Tokens Integer::reduced_token() const
 	}
 
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-}
+}*/
 
 
-
+/*
 Tokens integer_token(long long number)
 {
 	if(0 > number)
@@ -108,7 +108,7 @@ Tokens integer_token(long long number)
 	}
 
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-}
+}*/
 
     statement::statement() : is_instruction(false)
     {
@@ -147,12 +147,14 @@ Tokens integer_token(long long number)
                 break;
             case Tokens::UNSIGNED : std::cout << "unsigned";
                 break;
+			default:
+				std::cout << "unknow";
             }
         }
     }
     void direct_declarator::print()const
     {
-        std::cout << identity->name;
+        std::cout << id->name;
     }
     void declarator::print()const
     {
@@ -180,6 +182,8 @@ Tokens integer_token(long long number)
                     case Tokens::INT :
                         std::cout << "\tinterruption\n";
                         break;
+					default:
+						std::cout << "\tunknow\n";
                     }
                 }
             }
