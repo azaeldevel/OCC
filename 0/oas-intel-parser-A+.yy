@@ -172,11 +172,8 @@
 %type <A_here::nodes::return_statement*> statement_return
 %type <A_here::nodes::compound_statement*> compound_statement
 %type <A_here::nodes::function_implementation*> function_implementation
-%type <A_here::nodes::type_qualifer*> type_qualifer
-%type <A_here::nodes::type_qualifer_list*> type_qualifer_list
 %type <A_here::nodes::direct_declarator*> direct_declarator
 %type <A_here::nodes::declarator*> declarator
-%type <A_here::nodes::pointer*> pointer
 %type <A_here::nodes::type_specifier*> type_specifier
 %type <A_here::nodes::declaration_specifiers*> declaration_specifiers
 %type <A_here::nodes::identifer_list*> identifer_list
@@ -253,18 +250,7 @@ function_implementation :
 	}
 	;
 
-declaration_specifiers : storage_class_specifier
-	{
-            //std::cout << "declaration_specifiers : storage_class_specifier\n";
-            $$ = NULL;
-	}
-	|
-	storage_class_specifier declaration_specifiers
-	{
-            //std::cout << "declaration_specifiers : storage_class_specifier declaration_specifiers\n";
-            $$ = NULL;
-	}
-	|
+declaration_specifiers :
 	type_specifier
 	{
             //std::cout << "declaration_specifiers : type_specifier\n";
@@ -275,27 +261,10 @@ declaration_specifiers : storage_class_specifier
             $$->declaration = NULL;
             //std::cout << "declaration_specifiers 3\n";
 	}
-	|
-	type_specifier declaration_specifiers
-	{
-            //std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
-            $$ = NULL;
-	}
-	|
-	type_qualifer
-	{
-            //std::cout << "declaration_specifiers : type_qualifer\n";
-            $$ = NULL;
-	}
 	;
 
 
 
-struct_or_union_specifier :
-
-enum_specifier :
-
-typedef_name :
 
 //6.5
 declaration :
@@ -358,25 +327,13 @@ initializer : const_expression
 	{
 		$$ = reinterpret_cast<A_here::nodes::initializer*>($1);
 	}
-	|
-	'{' initilizer_list '}'
-	{
-		$$ = NULL;
-	}
 	;
 
 
 
 
 
-initilizer_list : const_expression  {
-
-									}|
-	initilizer_list ',' const_expression
-	;
-
-
-
+/*
 type_qualifer :
     CONST
     {
@@ -390,17 +347,9 @@ type_qualifer :
         $$->qualifer = A_here::Tokens::VOLATIL;
     }
     ;
+*/
 
 declarator :
-    pointer direct_declarator
-    {
-        //std::cout << "declarator : pointer direct_declarator\n";
-        $$ = A_here::block.create<A_here::nodes::declarator>();
-        $$->point = $1;
-        $$->direct = $2;
-        //std::cout << "declarator 1\n";
-    }
-    |
 	direct_declarator
 	{
         //std::cout << "declarator : direct_declarator\n";
@@ -434,11 +383,6 @@ direct_declarator : IDENTIFIER
         $$ = NULL;
 	}
 	|
-	direct_declarator '(' parameter_type_list ')'
-	{
-        $$ = NULL;
-	}
-	|
 	direct_declarator '(' identifer_list ')'
 	{
         $$ = NULL;
@@ -465,50 +409,7 @@ identifer_list : IDENTIFIER
 	;
 
 
-parameter_type_list : parameter_list | parameter_list ',' "..." ;
 
-parameter_list : parameter_declaration parameter_list ',' parameter_declaration ;
-
-parameter_declaration : declaration_specifiers declarator | declaration_specifiers abstract_declarator | declaration_specifiers | ;
-
-abstract_declarator : pointer | pointer direct_abstract_declarator | direct_abstract_declarator ;
-
-direct_abstract_declarator : '(' abstract_declarator ')' | direct_abstract_declarator '[' const_expression ']' | '[' const_expression ']' | direct_abstract_declarator '[' ']' | '[' ']' | direct_abstract_declarator '(' const_expression ')' | '(' const_expression ')' | direct_abstract_declarator '(' ')' | '(' ')' | ;
-
-
-pointer :
-    '*' type_qualifer_list
-	{
-		$$ = NULL;
-	}
-	|
-	'*'
-	{
-		$$ = NULL;
-	}
-	|
-	'*' type_qualifer_list pointer
-	{
-		$$ = NULL;
-	}
-	|
-	'*' pointer
-	{
-		$$ = NULL;
-	}
-	;
-
-type_qualifer_list : type_qualifer
-	{
-		$$ = A_here::block.create<A_here::nodes::type_qualifer_list>();
-		$$->push_back($1);
-	}
-	|
-	type_qualifer_list type_qualifer
-	{
-		$$->push_back($2);
-	}
-	;
 
 compound_statement : '{' declaration_list statement_list '}'
     {
@@ -566,7 +467,7 @@ const_expression : LITERAL_CHAR
 	;
 
 
-storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+//storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
 
 type_specifier :
 	VOID
@@ -625,21 +526,6 @@ type_specifier :
 		//std::cout << "type_specifier : UNSIGNED\n";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::UNSIGNED;
-    }
-    |
-    struct_or_union_specifier
-    {
-        $$ = NULL;
-    }
-    |
-    enum_specifier
-    {
-        $$ = NULL;
-    }
-    |
-    typedef_name
-    {
-        $$ = NULL;
     }
     ;
 
@@ -826,9 +712,6 @@ instruction_int : INT literals_integer ';' {
 
 literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
-
-initializer_char : LITERAL_CHAR | ;
-initializer_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC ;
 
 registers_8b : 	AL 	{
 				//std::cout << "AL ";
