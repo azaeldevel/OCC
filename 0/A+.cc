@@ -116,10 +116,10 @@ Tokens integer_token(long long number)
 
     void declaration_specifiers::print()const
     {
-        if(type)
+        /*if(std::variant::get<type_specifier*>())
         {
             //std::cout << $$->specifer->type << "\n";
-            switch(type->type)
+            switch(get<type_specifier*>()->type)
             {
             case Tokens::VOID :
                 std::cout << "void";
@@ -150,7 +150,7 @@ Tokens integer_token(long long number)
 			default:
 				std::cout << "unknow";
             }
-        }
+        }*/
     }
     void direct_declarator::print()const
     {

@@ -27,7 +27,7 @@
 #include <filesystem>
 #include <list>
 #include <vector>
-
+#include <variant>
 #include <core/3/math.hh>
 
 //namespace core_here =  oct::core::v3;
@@ -453,6 +453,8 @@ namespace nodes
         unsigned int memory;
     };
 
+
+
     struct Rule
     {
 
@@ -512,18 +514,35 @@ namespace nodes
         pointer* point;
     };
 
+
+    struct identifer_list : public statement , public std::list<identifier*>
+    {
+
+    };
+
     struct direct_declarator : public statement
     {
         identifier* id;
+        direct_declarator* direct;
 
         void print()const;
     };
 
     struct direct_declarator_function : public direct_declarator
     {
-    	direct_declarator* funtion_id;
+    	std::list<identifer_list>* list;
+
         void print()const;
     };
+
+    //typedef std::variant<identifier*,declarator_function*>
+
+    /*struct direct_declarator : public statement, std::variant<identifier*,declarator_function*>
+    {
+        direct_declarator* direct;
+
+        void print()const;
+    };*/
 
     struct declarator : public statement
     {
@@ -533,18 +552,11 @@ namespace nodes
         void print()const;
     };
 
-    struct declarator_function : public declarator
-    {
-        std::list<identifier*>* identifiers;
-
-        void print()const;
-    };
-
     struct StorageSpecifiers : public statement
     {
     };
 
-    struct declaration_specifiers : public statement
+    /*struct declaration_specifiers : public statement
     {
         StorageSpecifiers* storage;
         type_specifier* type;
@@ -552,7 +564,16 @@ namespace nodes
         declaration_specifiers* declaration;
 
         void print()const;
+    };*/
+
+    struct declaration_specifiers : public std::variant<StorageSpecifiers*,type_specifier*,type_qualifer*>
+    {
+        declaration_specifiers* declaration;
+
+        void print()const;
     };
+
+    //typedef std::variant<StorageSpecifiers*,type_specifier*,type_qualifer*> dec_spce;
 
     struct function_implementation : public statement
     {
@@ -592,11 +613,6 @@ namespace nodes
     {
     	declaration_specifiers* specifiers;
     	init_declarator_list* list;
-    };
-
-    struct identifer_list : public statement , public std::list<identifier*>
-    {
-
     };
 
     struct type_qualifer_list : public statement , public std::list<type_qualifer*>

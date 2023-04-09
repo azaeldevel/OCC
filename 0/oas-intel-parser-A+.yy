@@ -218,7 +218,8 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $4;
         $$->declaration = $2;
-        std::cout << "Function 1\n";
+        //std::cout << "Function 1\n";
+        std::cout << $$->declaration->direct->id->name << "\n";
 	}
 	|
 	declaration_specifiers declarator compound_statement
@@ -228,7 +229,8 @@ function_implementation :
         $$->body = $3;
         $$->declaration = $2;
         $$->specifier = $1;
-        std::cout << "function_implementation - 2\n";
+        std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "function_implementation - 2\n";
         //$$->print();
 	}
 	|
@@ -238,7 +240,8 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $1;
-        std::cout << "Function 3\n";
+        std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "Function 3\n";
 	}
 	|
 	declarator compound_statement
@@ -247,26 +250,24 @@ function_implementation :
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $2;
         $$->declaration = $1;
-        std::cout << "Function 4\n";
+        std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "Function 4\n";
 	}
 	;
 
 declaration_specifiers :
-	type_specifier declaration_specifiers
+    type_specifier declaration_specifiers
 	{
-		//std::cout << "declaration_specifiers : storage_class_specifier declaration_specifiers\n";
-		$$ = NULL;
+		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
+		/*$2->declaration = A_here::block.create<A_here::nodes::declaration_specifiers>();
+        $2->declaration->declaration = $1*/
 	}
 	|
 	type_specifier
 	{
 		//std::cout << "declaration_specifiers : type_specifier\n";
-		$$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
-		$$->storage = NULL;
-		$$->type = $1;
-		$$->qualifer = NULL;
-		$$->declaration = NULL;
-		//std::cout << "declaration_specifiers 3\n";
+		/*$$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
+		$$->get<type_specifier*> = $1;*/
 	}
 	;
 
@@ -374,6 +375,7 @@ direct_declarator : IDENTIFIER
 		//std::cout << "direct_declarator : IDENTIFIER\n";
 		$$ = A_here::block.create<A_here::nodes::direct_declarator>();
 		$$->id = $1;
+		$$->direct = NULL;
 		std::cout << $$->id->name << " ";
 	}
 	|
@@ -400,9 +402,10 @@ direct_declarator : IDENTIFIER
 	direct_declarator '('  ')'
 	{
 		A_here::nodes::direct_declarator_function* id = A_here::block.create<A_here::nodes::direct_declarator_function>();
-		id->funtion_id = $1;
+		id->list = NULL;
+		id->direct = $$;
         $$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
-		std::cout << "direct_declarator : direct_declarator '('  ')'\n";
+		//std::cout << "direct_declarator : direct_declarator '('  ')'\n";
 	}
 	;
 
@@ -566,20 +569,30 @@ statement_list : statement
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-		$$->push_back($2);
+		//$$->push_back($2);
 	}
 	;
 
-statement : compound_statement
+statement :
+    compound_statement
     {
         $$ = $1;
     }
     |
-    instruction_mov {$$ = $1;}
+    instruction_mov
+    {
+        $$ = $1;
+    }
     |
-    instruction_int {$$ = $1;}
+    instruction_int
+    {
+        $$ = $1;
+    }
     |
-    statement_return  {$$ = $1;};
+    statement_return
+    {
+        $$ = $1;
+    };
 
 statement_return  :
 	RETURN ';'
