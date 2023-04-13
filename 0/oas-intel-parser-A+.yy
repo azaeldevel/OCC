@@ -207,6 +207,7 @@ external_declaration :
 	{
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
+		$1->print(std::cout);
 	}
 
 	;
@@ -231,7 +232,7 @@ function_implementation :
         //$$->specifier = $1;
         //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "function_implementation - 2\n";
-        $$->print();
+        $$->print(std::cout);
 	}
 	|
 	declarator declaration_list compound_statement
@@ -280,16 +281,15 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		//$$->specifiers = $1;
-		//$$->list = NULL;
+		$$->specifiers = $1;
+		$$->list = NULL;
 	}
 	|
 	declaration_specifiers init_declarator_list
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
-		//$$ = A_here::block.create<A_here::nodes::declaration>();
-		//$$->specifiers = $1;
-		//$$->list = $2;
+        $$ = A_here::block.create<A_here::nodes::declaration>();
+
 	}
 	;
 

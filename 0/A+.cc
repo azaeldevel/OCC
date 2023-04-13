@@ -118,20 +118,20 @@ namespace nodes
             }
         }*/
     }
-    void direct_declarator::print()const
+    void direct_declarator::print(std::ostream& out)const
     {
-        std::cout << id->name;
+        out << id->name;
     }
-    void declarator::print()const
+    void declarator::print(std::ostream& out)const
     {
-        if(direct) direct->print();
+        if(direct) direct->print(out);
     }
-    void function_implementation::print() const
+    void function_implementation::print(std::ostream& out) const
     {
         specifier->print();
-        std::cout << " ";
-        if(declaration) declaration->print();
-        std::cout << "\n{\n";
+        out << " ";
+        if(declaration) declaration->print(out);
+        out << "\n{\n";
         if(body->statement_list)
         {
             //std::cout << "statement_list\n";
@@ -143,20 +143,20 @@ namespace nodes
                     switch(((instruction*)stmt)->inst)
                     {
                     case Tokens::MOV :
-                        std::cout << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
-                        if(((move_8b_reg_byte*)stmt)->type == 'C') std::cout << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                        out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                        if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
                         break;
                     case Tokens::INT :
-                        std::cout << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                        out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
                         break;
 					default:
-						std::cout << "\n\tunknow";
+						out << "\n\tunknow";
                     }
                 }
                 stmt = stmt->next;
             }
         }
-        std::cout << "\n}";
+        out << "\n}";
     }
 
 
@@ -223,6 +223,39 @@ namespace nodes
 		out.write((char*)&instruction,2);
 
 		return true;
+    }
+
+    void initializer::print(std::ostream& out)const
+    {
+        if(specific)
+        {
+            if(data_type == Tokens::CHAR)
+            {
+                const initializer_literal<char>* literial = reinterpret_cast<const initializer_literal<char>*>(this);
+                literial->print(out);
+            }
+        }
+    }
+
+    void init_declarator::print(std::ostream& out)const
+    {
+        if(dec) dec->print(out);
+        if(value)
+        {
+            out << " = ";
+            value->print(out);
+        }
+    }
+
+    void declaration::print(std::ostream& out)const
+    {
+        init_declarator* dec = list;
+        while(dec)
+        {
+            dec->print(out);
+
+            dec = (init_declarator*)dec->next;
+        }
     }
 }
 

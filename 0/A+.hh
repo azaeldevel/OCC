@@ -428,7 +428,7 @@ Tokens integer_token(long long number);
 
 namespace nodes
 {
-
+    template<typename T> struct initializer_literal;
     const char* register_to_string();
 
     struct Symbol
@@ -532,7 +532,7 @@ namespace nodes
         identifier* id;
         direct_declarator* direct;
 
-        void print()const;
+        void print(std::ostream&)const;
     };
 
     struct direct_declarator_function : public direct_declarator
@@ -556,7 +556,7 @@ namespace nodes
         pointer* point;
         direct_declarator* direct;
 
-        void print()const;
+        void print(std::ostream&)const;
     };
 
     struct StorageSpecifiers : public statement
@@ -588,12 +588,15 @@ namespace nodes
         declarator* declaration;
         compound_statement* body;
 
-        void print()const;
+        void print(std::ostream&)const;
     };
 
     struct initializer : public statement
     {
 		Tokens data_type;
+		bool specific;
+
+		void print(std::ostream& out) const;
     };
 
     struct const_expression : public initializer
@@ -603,12 +606,22 @@ namespace nodes
     template<typename T> struct initializer_literal : public const_expression
     {
 		T value;
+
+		void print(std::ostream& out) const
+		{
+            if(data_type == Tokens::CHAR) out << "'" << char(value) << "'";
+
+		}
     };
+
+
 
     struct init_declarator : public statement
     {
 		declarator* dec;
 		initializer* value;
+
+        void print(std::ostream&)const;
     };
 
     struct init_declarator_list : public statement
@@ -619,7 +632,9 @@ namespace nodes
 	struct declaration : public statement
     {
     	declaration_specifiers* specifiers;
-    	init_declarator_list* list;
+    	init_declarator* list;
+
+        void print(std::ostream&)const;
     };
 
     struct type_qualifer_list : public statement , public std::list<type_qualifer*>
