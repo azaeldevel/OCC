@@ -50,7 +50,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 %{          /** Code executed at the beginning of yylex **/
 	yylval = lval;// A handy shortcut to the location held by the driver.
 	//yy::location& loc = driver.location;
-	//loc.step ();
+	loc->step ();
 %}
 
 

@@ -647,7 +647,7 @@ instruction_mov :
 	{
 		//std::cout << "int " << $2 << "\n";
 		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
-		//if($2 > 127) YYERROR("El parametro para la instruccion int dever ser un numero no mayo de de 128");
+		//if($2 > 127) yyerror(*loc,"El parametro para la instruccion int dever ser un numero no mayo de de 128");
 		serv->service = $2;
 		serv->inst = A_here::Tokens::INT;
 		serv->is_instruction = true;
