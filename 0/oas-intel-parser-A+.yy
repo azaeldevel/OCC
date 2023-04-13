@@ -568,8 +568,15 @@ statement_list : statement
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-		if($1) $1->next = $2;
-		$$ = $1;
+		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
+        if(stmt_last)
+        {
+            //std::cout << "static A_here::nodes::statement* stmt_last = NULL;\n";
+            stmt_last->next = $2;
+        }
+
+		stmt_last = $2;
+		$$ = initial;
 	}
 	;
 
