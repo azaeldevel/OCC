@@ -429,6 +429,8 @@ Tokens integer_token(long long number);
 namespace nodes
 {
 
+    const char* register_to_string();
+
     struct Symbol
     {
         Tokens token;
@@ -452,7 +454,6 @@ namespace nodes
         int line;
         unsigned int memory;
     };
-
 
 
     struct Rule
@@ -480,15 +481,8 @@ namespace nodes
     struct move_8b_reg_byte : public instruction_mov
     {
         Tokens registe;
-        unsigned char integer;
-
-        bool generate(std::fstream& ) const;
-    };
-
-    struct move_8b_reg_char : public instruction_mov
-    {
-        Tokens registe;
-        unsigned char integer;
+        unsigned char byte;
+        char type;//I : integer, C : char
 
         bool generate(std::fstream& ) const;
     };

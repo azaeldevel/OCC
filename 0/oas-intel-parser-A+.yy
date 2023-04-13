@@ -619,9 +619,10 @@ instruction_mov :
 		//std::cout << "mov register-8b integer\n";
         A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
         mv8->registe = (A_here::Tokens)$2;
-        mv8->integer = (unsigned char)$3;
+        mv8->byte = (unsigned char)$3;
         mv8->inst = A_here::Tokens::MOV;
         mv8->is_instruction = true;
+        mv8->type = 'I';
         $$ = mv8;
 	}
 	|
@@ -630,9 +631,10 @@ instruction_mov :
 		//std::cout << "mov register-8b char\n";
 		A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
         mv8->registe = (A_here::Tokens)$2;
-        mv8->integer = (unsigned char)$3;
+        mv8->byte = (unsigned char)$3;
         mv8->inst = A_here::Tokens::MOV;
         mv8->is_instruction = true;
+        mv8->type = 'C';
         $$ = mv8;
 	}
 	|
@@ -645,6 +647,7 @@ instruction_mov :
 	{
 		//std::cout << "int " << $2 << "\n";
 		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
+		//if($2 > 127) YYERROR("El parametro para la instruccion int dever ser un numero no mayo de de 128");
 		serv->service = $2;
 		serv->inst = A_here::Tokens::INT;
 		serv->is_instruction = true;

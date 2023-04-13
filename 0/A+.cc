@@ -55,60 +55,26 @@ const std::filesystem::path& File::get_filename() const
 
 namespace nodes
 {
-/*
-Tokens Integer::reduced_token() const
-{
-	//std::cout << "reduced_token : step 1 " << number << "\n";
-	if(0 > number)
-	{
-		if(std::numeric_limits<signed char>::min()  < number)
+    const char* register_to_string(Tokens tk)
+    {
+        switch(tk)
         {
-            if(format == 'D') return Tokens::LITERAL_INTEGER_DEC_SCHAR;
-            else if(format == 'H') return Tokens::LITERAL_INTEGER_HEX_UCHAR;
+            case Tokens::AL : return "AL";
+            case Tokens::AH : return "AH";
+            case Tokens::AX : return "AX";
+            case Tokens::BL : return "BL";
+            case Tokens::BH : return "BH";
+            case Tokens::BX : return "BX";
+            case Tokens::CL : return "CL";
+            case Tokens::CH : return "CH";
+            case Tokens::CX : return "CX";
+            case Tokens::DL : return "DL";
+            case Tokens::DH : return "DH";
+            case Tokens::DX : return "DX";
+            default:
+                return "no register";
         }
-		else if(std::numeric_limits<short>::min()  < number)
-        {
-            return Tokens::LITERAL_INTEGER_DEC_SHORT;
-        }
-		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
-		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
-		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-	}
-	else
-	{
-		if(std::numeric_limits<unsigned char>::max() > number) return Tokens::LITERAL_INTEGER_DEC_UCHAR;
-		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
-		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
-		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
-		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;
-	}
-
-	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-}*/
-
-
-/*
-Tokens integer_token(long long number)
-{
-	if(0 > number)
-	{
-		if(std::numeric_limits<signed char>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SCHAR;
-		else if(std::numeric_limits<short>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_SHORT;
-		else if(std::numeric_limits<int>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_INT;
-		else if(std::numeric_limits<long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONG;
-		else if(std::numeric_limits<long long>::min()  < number) return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-	}
-	else
-	{
-		if(std::numeric_limits<unsigned char>::max() > number) return Tokens::LITERAL_INTEGER_DEC_UCHAR;
-		else if(std::numeric_limits<unsigned short>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_USHORT;
-		else if(std::numeric_limits<unsigned int>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_UINT;
-		else if(std::numeric_limits<unsigned long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONG;
-		else if(std::numeric_limits<unsigned long long>::max()  > number) return Tokens::LITERAL_INTEGER_DEC_ULONGLONG;
-	}
-
-	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
-}*/
+    }
 
     statement::statement() : is_instruction(false),next(NULL)
     {
@@ -177,19 +143,20 @@ Tokens integer_token(long long number)
                     switch(((instruction*)stmt)->inst)
                     {
                     case Tokens::MOV :
-                        std::cout << "\tmove\n";
+                        std::cout << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                        if(((move_8b_reg_byte*)stmt)->type == 'C') std::cout << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
                         break;
                     case Tokens::INT :
-                        std::cout << "\tinterruption\n";
+                        std::cout << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
                         break;
 					default:
-						std::cout << "\tunknow\n";
+						std::cout << "\n\tunknow";
                     }
                 }
                 stmt = stmt->next;
             }
         }
-        std::cout << "}";
+        std::cout << "\n}";
     }
 
 
@@ -241,7 +208,7 @@ Tokens integer_token(long long number)
                 //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
                 break;
         }
-        instruction[1] = integer;
+        instruction[1] = byte;
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,2);
 
