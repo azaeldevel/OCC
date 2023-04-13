@@ -187,12 +187,12 @@
 
 translation_unit : external_declaration ENDOFFILE
 	{
-		std::cout << "external_declaration\n";
+		//std::cout << "external_declaration\n";
 	}
 	|
 	external_declaration translation_unit ENDOFFILE
 	{
-		std::cout << "external_declaration translation_unit\n";
+		//std::cout << "external_declaration translation_unit\n";
 	}
 
 	;
@@ -206,7 +206,7 @@ external_declaration :
 	declaration ';'
 	{
 		//std::cout << "storage_class_specifier : declaration ';'\n";
-		std::cout << ";\n";
+		//std::cout << ";\n";
 	}
 
 	;
@@ -216,20 +216,20 @@ function_implementation :
 	{
         std::cout << "function_implementation - 1\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        $$->body = $4;
-        $$->declaration = $2;
+        //$$->body = $4;
+        //$$->declaration = $2;
         //std::cout << "Function 1\n";
-        std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << $$->declaration->direct->id->name << "\n";
 	}
 	|
 	declaration_specifiers declarator compound_statement
 	{
-        std::cout << "function_implementation - 2\n";
+        //std::cout << "function_implementation - 2\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        $$->body = $3;
-        $$->declaration = $2;
-        $$->specifier = $1;
-        std::cout << $$->declaration->direct->id->name << "\n";
+        //$$->body = $3;
+        //$$->declaration = $2;
+        //$$->specifier = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "function_implementation - 2\n";
         //$$->print();
 	}
@@ -238,9 +238,9 @@ function_implementation :
 	{
         std::cout << "function_implementation - 3\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        $$->body = $3;
-        $$->declaration = $1;
-        std::cout << $$->declaration->direct->id->name << "\n";
+        //$$->body = $3;
+        //$$->declaration = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "Function 3\n";
 	}
 	|
@@ -248,9 +248,9 @@ function_implementation :
 	{
         std::cout << "function_implementation - 4\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        $$->body = $2;
-        $$->declaration = $1;
-        std::cout << $$->declaration->direct->id->name << "\n";
+        //$$->body = $2;
+        //$$->declaration = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "Function 4\n";
 	}
 	;
@@ -280,16 +280,16 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
-		$$->list = NULL;
+		//$$->specifiers = $1;
+		//$$->list = NULL;
 	}
 	|
 	declaration_specifiers init_declarator_list
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
-		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
-		$$->list = $2;
+		//$$ = A_here::block.create<A_here::nodes::declaration>();
+		//$$->specifiers = $1;
+		//$$->list = $2;
 	}
 	;
 
@@ -299,7 +299,7 @@ declaration :
 init_declarator_list : init_declarator
 	{
 		//std::cout << "init_declarator_list : init_declarator\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
+		//$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
 		//$$->push_back($1);
 		//std::cout << "init_declarator_list 1\n";
 	}
@@ -307,8 +307,8 @@ init_declarator_list : init_declarator
 	init_declarator_list ',' init_declarator
 	{
 		//std::cout << "init_declarator_list : init_declarator_list ',' init_declarator\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
-		$$->push_back($3);
+		//$$ = A_here::block.create<A_here::nodes::init_declarator_list>();
+		//$$->push_back($3);
 		//std::cout << "init_declarator_list 2\n";
 	}
 	;
@@ -316,18 +316,18 @@ init_declarator_list : init_declarator
 init_declarator : declarator
 	{
 		//std::cout << "init_declarator : declarator\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator>();
-		$$->dec = $1;
-		$$->value = NULL;
+		//$$ = A_here::block.create<A_here::nodes::init_declarator>();
+		//$$->dec = $1;
+		//$$->value = NULL;
 		//std::cout << "init_declarator 1\n";
 	}
 	|
 	declarator '=' initializer
 	{
 		//std::cout << "init_declarator : declarator '=' initializer\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator>();
-		$$->dec = $1;
-		$$->value = $3;
+		//$$ = A_here::block.create<A_here::nodes::init_declarator>();
+		//$$->dec = $1;
+		//$$->value = $3;
 		//std::cout << "init_declarator 2\n";
 	}
 	;
@@ -335,7 +335,7 @@ init_declarator : declarator
 //TODO : esta gramatica no es exacta para el estandar
 initializer : const_expression
 	{
-		$$ = reinterpret_cast<A_here::nodes::initializer*>($1);
+		//$$ = reinterpret_cast<A_here::nodes::initializer*>($1);
 	}
 	;
 
@@ -363,9 +363,9 @@ declarator :
 	direct_declarator
 	{
         //std::cout << "declarator : direct_declarator\n";
-        $$ = A_here::block.create<A_here::nodes::declarator>();
-        $$->point = NULL;
-        $$->direct = $1;
+        //$$ = A_here::block.create<A_here::nodes::declarator>();
+        //$$->point = NULL;
+        //$$->direct = $1;
         //std::cout << "declarator 2\n";
 	}
 	;
@@ -373,10 +373,10 @@ declarator :
 direct_declarator : IDENTIFIER
 	{
 		//std::cout << "direct_declarator : IDENTIFIER\n";
-		$$ = A_here::block.create<A_here::nodes::direct_declarator>();
-		$$->id = $1;
-		$$->direct = NULL;
-		std::cout << $$->id->name << " ";
+		//$$ = A_here::block.create<A_here::nodes::direct_declarator>();
+		//$$->id = $1;
+		//$$->direct = NULL;
+		//std::cout << $$->id->name << " ";
 	}
 	|
 	'(' declarator ')'
@@ -401,10 +401,10 @@ direct_declarator : IDENTIFIER
 	|
 	direct_declarator '('  ')'
 	{
-		A_here::nodes::direct_declarator_function* id = A_here::block.create<A_here::nodes::direct_declarator_function>();
-		id->list = NULL;
-		id->direct = $$;
-        $$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
+		//A_here::nodes::direct_declarator_function* id = A_here::block.create<A_here::nodes::direct_declarator_function>();
+		//id->list = NULL;
+		//id->direct = $$;
+        //$$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
 		//std::cout << "direct_declarator : direct_declarator '('  ')'\n";
 	}
 	;
@@ -412,14 +412,14 @@ direct_declarator : IDENTIFIER
 identifer_list : IDENTIFIER
 	{
 		//std::cout << "direct_declarator : IDENTIFIER\n";
-		$$ = A_here::block.create<A_here::nodes::identifer_list>();
-		$$->push_back($1);
+		//$$ = A_here::block.create<A_here::nodes::identifer_list>();
+		//$$->push_back($1);
 	}
 	|
 	identifer_list IDENTIFIER
 	{
 		//std::cout << "direct_declarator : IDENTIFIER\n";
-		$$->push_back($2);
+		//$$->push_back($2);
 	}
 	;
 
@@ -428,27 +428,27 @@ identifer_list : IDENTIFIER
 
 compound_statement : '{' declaration_list statement_list '}'
     {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $3;
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = $3;
     }
     |
 	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $2;
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = $2;
     }
     |
 	'{' declaration_list '}'
     {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = NULL;
     }
     |
 	'{' '}'
     {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = NULL;
     }
 	;
 
@@ -461,26 +461,26 @@ declaration_list : declaration |
 
 const_expression : LITERAL_CHAR
 	{
-		std::cout << "'" << (char)$1 << "' ";
-		$$ = A_here::block.create<A_here::nodes::initializer_literal<char>>();
-		reinterpret_cast<A_here::nodes::initializer_literal<char>*>($$)->value = $1;
-		$$->data_type = A_here::Tokens::LITERAL_CHAR;
+		//std::cout << "'" << (char)$1 << "' ";
+		//$$ = A_here::block.create<A_here::nodes::initializer_literal<char>>();
+		//reinterpret_cast<A_here::nodes::initializer_literal<char>*>($$)->value = $1;
+		//$$->data_type = A_here::Tokens::LITERAL_CHAR;
 	}
 	|
 	LITERAL_INTEGER_HEX
 	{
-		std::cout << $1 << " ";
-		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = A_here::Tokens::LITERAL_INTEGER_HEX;
+		//std::cout << $1 << " ";
+		//$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		//reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		//$$->data_type = A_here::Tokens::LITERAL_INTEGER_HEX;
 	}
 	|
 	LITERAL_INTEGER_DEC
 	{
-		std::cout << $1 << " ";
-		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = A_here::Tokens::LITERAL_INTEGER_DEC;
+		//std::cout << $1 << " ";
+		//$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		//reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		//$$->data_type = A_here::Tokens::LITERAL_INTEGER_DEC;
 	}
 	;
 
@@ -491,64 +491,64 @@ type_specifier :
 	VOID
     {
 		//std::cout << "type_specifier : VOID\n";
-		std::cout << "void ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::VOID;
+		//std::cout << "void ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::VOID;
     }
     |
     CHAR
     {
 		//std::cout << "type_specifier : CHAR\n";
-		std::cout << "char ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::CHAR;
+		//std::cout << "char ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::CHAR;
 		//std::cout << "type_specifier\n";
     }
     |
     SHORT
     {
 		//std::cout << "type_specifier : SHORT\n";
-		std::cout << "short ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::SHORT;
+		//std::cout << "short ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::SHORT;
     }
     |
     INT
     {
 		//std::cout << "type_specifier : INT\n";
-		std::cout << "int ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::INT;
+		//std::cout << "int ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::INT;
     }
     |
     FLOAT
     {
 		//std::cout << "type_specifier : FLOAT\n";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::FLOAT;
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::FLOAT;
     }
     |
     DOUBLE
     {
 		//std::cout << "type_specifier : DOUBLE\n";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::DOUBLE;
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::DOUBLE;
     }
     |
     SIGNED
     {
 		//std::cout << "type_specifier : SIGNED\n";
-		std::cout << "signed ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::SIGNED;
+		//std::cout << "signed ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::SIGNED;
     }
     |
     UNSIGNED
     {
 		//std::cout << "type_specifier : UNSIGNED\n";
-		std::cout << "unsigned ";
-        $$ = A_here::block.create<A_here::nodes::type_specifier>();
-        $$->type = A_here::Tokens::UNSIGNED;
+		//std::cout << "unsigned ";
+        //$$ = A_here::block.create<A_here::nodes::type_specifier>();
+        //$$->type = A_here::Tokens::UNSIGNED;
     }
     ;
 
@@ -562,8 +562,8 @@ type_specifier :
 statement_list : statement
 	{
 		//std::cout << "statement_list : statement\n";
-		$$ = A_here::block.create<A_here::nodes::statement_list>();
-		$$->push_back($1);
+		//$$ = A_here::block.create<A_here::nodes::statement_list>();
+		//$$->push_back($1);
 	}
 	|
 	statement_list statement
@@ -576,40 +576,40 @@ statement_list : statement
 statement :
     compound_statement
     {
-        $$ = $1;
+        //$$ = $1;
     }
     |
     instruction_mov
     {
-        $$ = $1;
+        //$$ = $1;
     }
     |
     instruction_int
     {
-        $$ = $1;
+        //$$ = $1;
     }
     |
     statement_return
     {
-        $$ = $1;
+        //$$ = $1;
     };
 
 statement_return  :
 	RETURN ';'
 	{
-        $$ = A_here::block.create<A_here::nodes::return_statement>();
+        //$$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
     |
 	RETURN literals_integer ';'
 	{
-        $$ = A_here::block.create<A_here::nodes::return_statement>();
+        //$$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
 	;
 
 instruction_mov :
 	MOV registers_8b literals_integer ';'
 	{
-		std::cout << "mov register-8b integer\n";
+		//sstd::cout << "mov register-8b integer\n";
 		//inmediate to register 8b
 							/*instruction[0] = 0b1011;//opcode
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
@@ -658,27 +658,28 @@ instruction_mov :
 							//std::cout << (int)instruction[0] << " register-8b integer\n";
 							outstream.write((char*)&instruction,2);*/
 
-			A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
+			/*A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
 			mv8->registe = (A_here::Tokens)$2;
 			mv8->integer = $3;
 			mv8->inst = A_here::Tokens::MOV;
 			mv8->is_instruction = true;
-			$$ = mv8;
+			$$ = mv8;*/
+			$$ = NULL;
 	}
 	|
 	MOV registers_8b LITERAL_CHAR ';'
 	{
-		std::cout << "mov register-8b char\n";
-							//inmediate to register 8b
-							/*instruction[0] = 0b1011;//opcode
-							//std::cout << (int)instruction[0] << " register-8b char\n";
-							instruction[0] = instruction[0] << 1;//w = one byte
-							//std::cout << (int)instruction[0] << " register-8b char\n";
-							switch($2)//reg
-							{
-							case token::token_kind_type::AL:
-								instruction[0] = instruction[0] << 3;
-								break;
+		//std::cout << "mov register-8b char\n";
+        //inmediate to register 8b
+        /*instruction[0] = 0b1011;//opcode
+        //std::cout << (int)instruction[0] << " register-8b char\n";
+        instruction[0] = instruction[0] << 1;//w = one byte
+        //std::cout << (int)instruction[0] << " register-8b char\n";
+        switch($2)//reg
+        {
+            case token::token_kind_type::AL:
+                instruction[0] = instruction[0] << 3;
+                break;
 							case token::token_kind_type::CL:
 								instruction[0] = instruction[0] << 3;
 								instruction[0] = instruction[0] + 0b001;
@@ -712,17 +713,18 @@ instruction_mov :
 								throw core_here::exception("El operando no es un registro de 8 bits valido.");
 								//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
 								break;
-							}
-							instruction[1] = $3;
-							//std::cout << (int)instruction[0] << " register-8b char\n";
-							outstream.write((char*)&instruction,2);*/
+        }
+        instruction[1] = $3;
+        //std::cout << (int)instruction[0] << " register-8b char\n";
+        outstream.write((char*)&instruction,2);*/
 
-		A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
+		/*A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
 		mv8->registe = (A_here::Tokens)$2;
 		mv8->integer = $3;
 		mv8->inst = A_here::Tokens::MOV;
 		mv8->is_instruction = true;
-		$$ = mv8;
+		$$ = mv8;*/
+        $$ = NULL;
 	}
 	|
 	MOV registers_16b literals_integer
@@ -730,18 +732,19 @@ instruction_mov :
 		$$ = NULL;
 	}
 	;
-instruction_int : INT literals_integer ';'
+	instruction_int : INT literals_integer ';'
 	{
-		std::cout << "int " << $2 << "\n";
-						/*instruction[0] = 0b11001101;//opcode
-						instruction[1] = $2;
-						outstream.write((char*)&instruction,2);*/
+		//std::cout << "int " << $2 << "\n";
+		/*instruction[0] = 0b11001101;//opcode
+		instruction[1] = $2;
+		outstream.write((char*)&instruction,2);*/
 
-						A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
-						serv->service = $2;
-                        serv->inst = A_here::Tokens::INT;
-                        serv->is_instruction = true;
-						$$ = serv;
+		/*A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
+		serv->service = $2;
+		serv->inst = A_here::Tokens::INT;
+		serv->is_instruction = true;
+		$$ = serv;*/
+        $$ = NULL;
 	}
 	;
 
@@ -783,8 +786,8 @@ registers_8b : 	AL 	{
 
 registers_16b : AX
 	{
-				//std::cout << "AX ";
-				$$ = token::token_kind_type::AX;
+        //std::cout << "AX ";
+        $$ = token::token_kind_type::AX;
 	};
 
 %%
