@@ -168,7 +168,7 @@
 %type <A_here::nodes::statement*> statement
 %type <A_here::nodes::instruction_mov*> instruction_mov
 %type <A_here::nodes::instruction_int*> instruction_int
-%type <A_here::nodes::statement_list*> statement_list
+%type <A_here::nodes::statement*> statement_list
 %type <A_here::nodes::return_statement*> statement_return
 %type <A_here::nodes::compound_statement*> compound_statement
 %type <A_here::nodes::function_implementation*> function_implementation
@@ -226,12 +226,12 @@ function_implementation :
 	{
         //std::cout << "function_implementation - 2\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $3;
+        $$->body = $3;
         //$$->declaration = $2;
         //$$->specifier = $1;
         //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "function_implementation - 2\n";
-        //$$->print();
+        $$->print();
 	}
 	|
 	declarator declaration_list compound_statement
@@ -428,15 +428,15 @@ identifer_list : IDENTIFIER
 
 compound_statement : '{' declaration_list statement_list '}'
     {
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = $3;
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $3;
     }
     |
 	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = $2;
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $2;
     }
     |
 	'{' declaration_list '}'
@@ -447,8 +447,8 @@ compound_statement : '{' declaration_list statement_list '}'
     |
 	'{' '}'
     {
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = NULL;
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
     }
 	;
 
@@ -562,169 +562,71 @@ type_specifier :
 statement_list : statement
 	{
 		//std::cout << "statement_list : statement\n";
-		//$$ = A_here::block.create<A_here::nodes::statement_list>();
-		//$$->push_back($1);
+		$$ = $1;
 	}
 	|
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-		//$$->push_back($2);
+		if($1) $1->next = $2;
+		$$ = $1;
 	}
 	;
 
 statement :
     compound_statement
     {
-        //$$ = $1;
+        $$ = $1;
     }
     |
     instruction_mov
     {
-        //$$ = $1;
+        $$ = $1;
     }
     |
     instruction_int
     {
-        //$$ = $1;
+        $$ = $1;
     }
     |
     statement_return
     {
-        //$$ = $1;
+        $$ = $1;
     };
 
 statement_return  :
 	RETURN ';'
 	{
-        //$$ = A_here::block.create<A_here::nodes::return_statement>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
     |
 	RETURN literals_integer ';'
 	{
-        //$$ = A_here::block.create<A_here::nodes::return_statement>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
 	;
 
 instruction_mov :
 	MOV registers_8b literals_integer ';'
 	{
-		//sstd::cout << "mov register-8b integer\n";
-		//inmediate to register 8b
-							/*instruction[0] = 0b1011;//opcode
-							//std::cout << (int)instruction[0] << " register-8b integer\n";
-							instruction[0] = instruction[0] << 1;//w = one byte
-							//std::cout << (int)instruction[0] << " register-8b integer\n";
-							switch($2)//reg
-							{
-							case token::token_kind_type::AL:
-								instruction[0] = instruction[0] << 3;
-								break;
-							case token::token_kind_type::CL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b001;
-								break;
-							case token::token_kind_type::DL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b010;
-								break;
-							case token::token_kind_type::BL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b011;
-								break;
-							case token::token_kind_type::AH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b100;
-								break;
-							case token::token_kind_type::CH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b101;
-								break;
-							case token::token_kind_type::DH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b110;
-								break;
-							case token::token_kind_type::BH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b111;
-								break;
-							default:
-								//error
-								throw core_here::exception("El operando no es un registro de 8 bits valido.");
-								//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-								break;
-							}
-							instruction[1] = $3;
-							//std::cout << (int)instruction[0] << " register-8b integer\n";
-							outstream.write((char*)&instruction,2);*/
-
-			/*A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
-			mv8->registe = (A_here::Tokens)$2;
-			mv8->integer = $3;
-			mv8->inst = A_here::Tokens::MOV;
-			mv8->is_instruction = true;
-			$$ = mv8;*/
-			$$ = NULL;
+		//std::cout << "mov register-8b integer\n";
+        A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
+        mv8->integer = (unsigned char)$3;
+        mv8->inst = A_here::Tokens::MOV;
+        mv8->is_instruction = true;
+        $$ = mv8;
 	}
 	|
 	MOV registers_8b LITERAL_CHAR ';'
 	{
 		//std::cout << "mov register-8b char\n";
-        //inmediate to register 8b
-        /*instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b char\n";
-        instruction[0] = instruction[0] << 1;//w = one byte
-        //std::cout << (int)instruction[0] << " register-8b char\n";
-        switch($2)//reg
-        {
-            case token::token_kind_type::AL:
-                instruction[0] = instruction[0] << 3;
-                break;
-							case token::token_kind_type::CL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b001;
-								break;
-							case token::token_kind_type::DL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b010;
-								break;
-							case token::token_kind_type::BL:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b011;
-								break;
-							case token::token_kind_type::AH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b100;
-								break;
-							case token::token_kind_type::CH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b101;
-								break;
-							case token::token_kind_type::DH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b110;
-								break;
-							case token::token_kind_type::BH:
-								instruction[0] = instruction[0] << 3;
-								instruction[0] = instruction[0] + 0b111;
-								break;
-							default:
-								//error
-								throw core_here::exception("El operando no es un registro de 8 bits valido.");
-								//std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-								break;
-        }
-        instruction[1] = $3;
-        //std::cout << (int)instruction[0] << " register-8b char\n";
-        outstream.write((char*)&instruction,2);*/
-
-		/*A_here::nodes::movei8b* mv8 = A_here::block.create<A_here::nodes::movei8b>();
-		mv8->registe = (A_here::Tokens)$2;
-		mv8->integer = $3;
-		mv8->inst = A_here::Tokens::MOV;
-		mv8->is_instruction = true;
-		$$ = mv8;*/
-        $$ = NULL;
+		A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
+        mv8->integer = (unsigned char)$3;
+        mv8->inst = A_here::Tokens::MOV;
+        mv8->is_instruction = true;
+        $$ = mv8;
 	}
 	|
 	MOV registers_16b literals_integer
@@ -735,16 +637,11 @@ instruction_mov :
 	instruction_int : INT literals_integer ';'
 	{
 		//std::cout << "int " << $2 << "\n";
-		/*instruction[0] = 0b11001101;//opcode
-		instruction[1] = $2;
-		outstream.write((char*)&instruction,2);*/
-
-		/*A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
+		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
 		serv->service = $2;
 		serv->inst = A_here::Tokens::INT;
 		serv->is_instruction = true;
-		$$ = serv;*/
-        $$ = NULL;
+		$$ = serv;
 	}
 	;
 

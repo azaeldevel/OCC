@@ -110,7 +110,7 @@ Tokens integer_token(long long number)
 	return Tokens::LITERAL_INTEGER_DEC_LONGLONG;
 }*/
 
-    statement::statement() : is_instruction(false)
+    statement::statement() : is_instruction(false),next(NULL)
     {
     }
 
@@ -169,8 +169,8 @@ Tokens integer_token(long long number)
         if(body->statement_list)
         {
             //std::cout << "statement_list\n";
-            std::list<statement*>* list = body->statement_list;
-            for(statement* stmt : *list)
+            statement* stmt = body->statement_list;
+            while(stmt)
             {
                 if(stmt->is_instruction)
                 {
@@ -186,12 +186,77 @@ Tokens integer_token(long long number)
 						std::cout << "\tunknow\n";
                     }
                 }
+                stmt = stmt->next;
             }
         }
         std::cout << "}";
     }
 
 
+
+
+    bool move_8b_reg_byte::generate(std::fstream& out) const
+    {
+        unsigned char instruction[2];
+        instruction[0] = 0b1011;//opcode
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        instruction[0] = instruction[0] << 1;//w = one byte
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        switch(registe)//reg
+        {
+            case Tokens::AL:
+                instruction[0] = instruction[0] << 3;
+                break;
+            case Tokens::CL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b001;
+                break;
+            case Tokens::DL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b010;
+                break;
+            case Tokens::BL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b011;
+                break;
+            case Tokens::AH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b100;
+                break;
+            case Tokens::CH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b101;
+                break;
+            case Tokens::DH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b110;
+                break;
+            case Tokens::BH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b111;
+                break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+        instruction[1] = integer;
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        out.write((char*)&instruction,2);
+
+        return true;
+    }
+
+    bool instruction_int::generate(std::fstream& out) const
+    {
+        unsigned char instruction[2];
+		instruction[0] = 0b11001101;//opcode
+		instruction[1] = service;
+		out.write((char*)&instruction,2);
+
+		return true;
+    }
 }
 
 }

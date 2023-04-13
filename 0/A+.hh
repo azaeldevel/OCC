@@ -463,6 +463,7 @@ namespace nodes
     struct statement : public Rule
     {
         bool is_instruction;
+        statement* next;
 
         statement();
     };
@@ -476,22 +477,34 @@ namespace nodes
     {
     };
 
-    struct movei8b : public instruction_mov
+    struct move_8b_reg_byte : public instruction_mov
     {
         Tokens registe;
         unsigned char integer;
+
+        bool generate(std::fstream& ) const;
+    };
+
+    struct move_8b_reg_char : public instruction_mov
+    {
+        Tokens registe;
+        unsigned char integer;
+
+        bool generate(std::fstream& ) const;
     };
 
     struct instruction_int : public instruction
     {
         unsigned char service;
+
+        bool generate(std::fstream& ) const;
     };
 
 
     struct compound_statement : public statement
     {
         //unsigned char service;
-        std::list<statement*>* statement_list;
+        statement* statement_list;
     };
 
     struct return_statement : public statement
