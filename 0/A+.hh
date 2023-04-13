@@ -611,7 +611,7 @@ namespace nodes
 		initializer* value;
     };
 
-    struct init_declarator_list : public statement , public std::list<init_declarator*>
+    struct init_declarator_list : public statement
     {
 
     };
