@@ -120,7 +120,7 @@ namespace nodes
     }
     void direct_declarator::print(std::ostream& out)const
     {
-        out << id->name;
+        if(id) out << id->name;
     }
     void declarator::print(std::ostream& out)const
     {
@@ -128,7 +128,7 @@ namespace nodes
     }
     void function_implementation::print(std::ostream& out) const
     {
-        specifier->print();
+        if(specifier) specifier->print();
         out << " ";
         if(declaration) declaration->print(out);
         out << "\n{\n";
@@ -232,6 +232,11 @@ namespace nodes
             if(data_type == Tokens::CHAR)
             {
                 const initializer_literal<char>* literial = reinterpret_cast<const initializer_literal<char>*>(this);
+                literial->print(out);
+            }
+            else if(data_type == Tokens::INT)
+            {
+                const initializer_literal<int>* literial = reinterpret_cast<const initializer_literal<int>*>(this);
                 literial->print(out);
             }
         }

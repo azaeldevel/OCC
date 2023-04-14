@@ -288,8 +288,9 @@ declaration :
 	declaration_specifiers init_declarator_list
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
-        $$ = A_here::block.create<A_here::nodes::declaration>();
-
+		$$ = A_here::block.create<A_here::nodes::declaration>();
+		$$->specifiers = $1;
+		$$->list = $2;
 	}
 	;
 
@@ -363,9 +364,9 @@ declarator :
 	direct_declarator
 	{
         //std::cout << "declarator : direct_declarator\n";
-        //$$ = A_here::block.create<A_here::nodes::declarator>();
-        //$$->point = NULL;
-        //$$->direct = $1;
+        $$ = A_here::block.create<A_here::nodes::declarator>();
+        $$->point = NULL;
+        $$->direct = $1;
         //std::cout << "declarator 2\n";
 	}
 	;
@@ -406,6 +407,7 @@ direct_declarator : IDENTIFIER
 		//id->direct = $$;
         //$$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
 		//std::cout << "direct_declarator : direct_declarator '('  ')'\n";
+		$$ = NULL;
 	}
 	;
 

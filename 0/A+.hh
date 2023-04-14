@@ -609,8 +609,7 @@ namespace nodes
 
 		void print(std::ostream& out) const
 		{
-            if(data_type == Tokens::CHAR) out << "'" << char(value) << "'";
-
+            out << T(value);
 		}
     };
 
