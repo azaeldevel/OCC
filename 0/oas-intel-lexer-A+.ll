@@ -6,7 +6,7 @@
 	#include <stdio.h>
 	#include <string.h>
 	//#include <core/3/math.hh>
-	#include <scanner.hh>
+	#include <A+-Scanner.hh>
 	#include <oas-intel-parser-A+.hh>
 	#include <A+.hh>
 	namespace A_here = oct::cc::v0::A;

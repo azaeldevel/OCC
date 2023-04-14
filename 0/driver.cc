@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 #include "driver.hh"
-#include "scanner.hh"
+#include "A+-Scanner.hh"
 #include <oas-intel-parser-A+.hh>
 
 

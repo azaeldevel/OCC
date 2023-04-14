@@ -37,7 +37,7 @@
 
 %code
 {
-    #include <scanner.hh>
+    #include <A+-Scanner.hh>
     #undef yylex
     #define yylex scanner.yylex
 }
