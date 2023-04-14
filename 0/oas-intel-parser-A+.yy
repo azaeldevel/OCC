@@ -175,12 +175,12 @@
 %type <A_here::nodes::direct_declarator*> direct_declarator
 %type <A_here::nodes::declarator*> declarator
 %type <A_here::nodes::type_specifier*> type_specifier
-%type <A_here::nodes::declaration_specifiers*> declaration_specifiers
+%type <A_here::nodes::type_specifier*> declaration_specifiers
 %type <A_here::nodes::identifer_list*> identifer_list
 %type <A_here::nodes::const_expression*> const_expression
 %type <A_here::nodes::init_declarator*> init_declarator
-%type <A_here::nodes::initializer*> initializer
 %type <A_here::nodes::init_declarator*> init_declarator_list
+%type <A_here::nodes::initializer*> initializer
 %type <A_here::nodes::declaration*> declaration
 
 %%
@@ -207,7 +207,7 @@ external_declaration :
 	{
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
-		$1->print(std::cout);
+		//$1->print(std::cout);
 	}
 
 	;
@@ -257,21 +257,55 @@ function_implementation :
 	;
 
 declaration_specifiers :
-    type_specifier declaration_specifiers
-	{
-		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
-		/*$2->declaration = A_here::block.create<A_here::nodes::declaration_specifiers>();
-        $2->declaration->declaration = $1*/
-	}
-	|
 	type_specifier
 	{
 		//std::cout << "declaration_specifiers : type_specifier\n";
-		/*$$ = A_here::block.create<A_here::nodes::declaration_specifiers>();
-		$$->get<type_specifier*> = $1;*/
+		$$ = $1;
+		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($1->type) << "\n";
+	}
+	|
+    declaration_specifiers type_specifier
+	{
+		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
+		static A_here::nodes::type_specifier  *stmt_last = $2, *initial = $2;
+        if(stmt_last)
+        {
+            stmt_last->next = $2;
+        }
+
+		stmt_last = $2;
+		$$ = initial;
+		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($2->type) << "\n";
 	}
 	;
-
+declaration_list : declaration |
+	declaration_list declaration
+	;
+compound_statement : '{' declaration_list statement_list '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $3;
+    }
+    |
+	'{' statement_list '}'
+    {
+		//std::cout << "compound_statement : '{' statement_list '}'\n";
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $2;
+    }
+    |
+	'{' declaration_list '}'
+    {
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = NULL;
+    }
+    |
+	'{' '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
+    }
+	;
 
 
 
@@ -281,7 +315,7 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = NULL;
+		$$->specifiers = $1;
 		$$->list = NULL;
 	}
 	|
@@ -289,12 +323,10 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = NULL;
+		$$->specifiers = $1;
 		$$->list = $2;
 	}
 	;
-
-
 
 
 init_declarator_list : init_declarator
@@ -315,6 +347,7 @@ init_declarator_list : init_declarator
 		$$ = initial;
 	}
 	;
+
 
 init_declarator : declarator
 	{
@@ -428,35 +461,8 @@ identifer_list : IDENTIFIER
 
 
 
-compound_statement : '{' declaration_list statement_list '}'
-    {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $3;
-    }
-    |
-	'{' statement_list '}'
-    {
-		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $2;
-    }
-    |
-	'{' declaration_list '}'
-    {
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = NULL;
-    }
-    |
-	'{' '}'
-    {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
-    }
-	;
 
-declaration_list : declaration |
-	declaration_list declaration
-	;
+
 
 
 
@@ -504,6 +510,7 @@ type_specifier :
 		//std::cout << "char ";
         $$ = A_here::block.create<A_here::nodes::type_specifier>();
         $$->type = A_here::Tokens::CHAR;
+        //$$->next = NULL;
 		//std::cout << "type_specifier\n";
     }
     |

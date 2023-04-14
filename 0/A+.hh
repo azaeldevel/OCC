@@ -428,17 +428,19 @@ Tokens integer_token(long long number);
 
 namespace nodes
 {
-    template<typename T> struct initializer_literal;
-    const char* register_to_string();
+    class declarator;
+    typedef unsigned int Line;
+    const char* register_to_string(Tokens);
+    const char* type_specifier_to_string(Tokens);
 
-    struct Symbol
+    struct Node
     {
         Tokens token;
-        std::vector<Symbol*> childs;
-        unsigned int line;
-        std::string strvalue;
+        //std::vector<Symbol*> childs;
+        Line line;
+        //std::string strvalue;
     };
-    struct Integer : public Symbol
+    struct Integer : public Node
     {
         long long number;
         char format;//Decimal, Hexadecimal
@@ -446,7 +448,7 @@ namespace nodes
         Tokens reduced_token()const;
 
     };
-    struct identifier : public Symbol
+    struct identifier : public Node
     {
         int number;
         std::string name;
@@ -495,11 +497,6 @@ namespace nodes
     };
 
 
-    struct compound_statement : public statement
-    {
-        //unsigned char service;
-        statement* statement_list;
-    };
 
     struct return_statement : public statement
     {
@@ -510,16 +507,6 @@ namespace nodes
         Tokens qualifer;
     };
 
-    struct type_specifier : public statement
-    {
-        Tokens type;
-    };
-
-    struct pointer : public statement
-    {
-        std::list<type_qualifer*>* qualifiers;
-        pointer* point;
-    };
 
 
     struct identifer_list : public statement , public std::list<identifier*>
@@ -527,20 +514,6 @@ namespace nodes
 
     };
 
-    struct direct_declarator : public statement
-    {
-        identifier* id;
-        direct_declarator* direct;
-
-        void print(std::ostream&)const;
-    };
-
-    struct direct_declarator_function : public direct_declarator
-    {
-    	std::list<identifer_list>* list;
-
-        void print()const;
-    };
 
     //typedef std::variant<identifier*,declarator_function*>
 
@@ -551,50 +524,15 @@ namespace nodes
         void print()const;
     };*/
 
-    struct declarator : public statement
-    {
-        pointer* point;
-        direct_declarator* direct;
-
-        void print(std::ostream&)const;
-    };
 
     struct StorageSpecifiers : public statement
     {
     };
 
-    /*struct declaration_specifiers : public statement
-    {
-        StorageSpecifiers* storage;
-        type_specifier* type;
-        type_qualifer* qualifer;
-        declaration_specifiers* declaration;
-
-        void print()const;
-    };*/
-
-    struct declaration_specifiers : public std::variant<StorageSpecifiers*,type_specifier*,type_qualifer*>
-    {
-        declaration_specifiers* declaration;
-
-        void print()const;
-    };
-
-    //typedef std::variant<StorageSpecifiers*,type_specifier*,type_qualifer*> dec_spce;
-
-    struct function_implementation : public statement
-    {
-        declaration_specifiers* specifier;
-        declarator* declaration;
-        compound_statement* body;
-
-        void print(std::ostream&)const;
-    };
 
     struct initializer : public statement
     {
 		Tokens data_type;
-		bool specific;
 
 		void print(std::ostream& out) const;
     };
@@ -616,6 +554,12 @@ namespace nodes
 
 
 
+
+
+
+
+
+
     struct init_declarator : public statement
     {
 		declarator* dec;
@@ -624,28 +568,60 @@ namespace nodes
         void print(std::ostream&)const;
     };
 
-    struct init_declarator_list : public statement
-    {
 
+    struct pointer : public statement
+    {
+        std::list<type_qualifer*>* qualifiers;
+        pointer* point;
     };
 
+    struct direct_declarator : public statement
+    {
+        identifier* id;
+        direct_declarator* direct;
+
+        void print(std::ostream&)const;
+    };
+
+
+    struct type_specifier : public statement
+    {
+        Tokens type;
+
+		void print(std::ostream& out) const;
+    };
+
+    struct declarator : public statement
+    {
+        pointer* point;
+        direct_declarator* direct;
+
+        void print(std::ostream&)const;
+    };
+
+    struct compound_statement : public statement
+    {
+        //unsigned char service;
+        statement* statement_list;
+    };
+
+    struct function_implementation : public statement
+    {
+        type_specifier* specifiers;
+        declarator* declaration;
+        compound_statement* body;
+
+        void print(std::ostream&)const;
+    };
 	struct declaration : public statement
     {
-    	declaration_specifiers* specifiers;
+    	type_specifier* specifiers;
     	init_declarator* list;
 
         void print(std::ostream&)const;
     };
 
-    struct type_qualifer_list : public statement , public std::list<type_qualifer*>
-    {
 
-    };
-
-    struct statement_list : public statement , public std::list<statement*>
-    {
-
-    };
 }
 
 

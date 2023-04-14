@@ -183,7 +183,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->format = 'H';
 				integer->token = A_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
-				integer->strvalue = yytext;
+				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
 				return token::LITERAL_INTEGER_HEX;
 			}
@@ -195,16 +195,16 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				integer->format = 'D';
 				integer->token = A_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
-				integer->strvalue = yytext;
+				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
 				return token::LITERAL_INTEGER_HEX;
 			}
 {LITERAL_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				A_here::nodes::Symbol* letter = A_here::block.create<A_here::nodes::Symbol>();
+				A_here::nodes::Node* letter = A_here::block.create<A_here::nodes::Node>();
 				letter->token = (A_here::Tokens)yytext[1];
 				letter->line = yylineno;
-				letter->strvalue = yytext;
+				//letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				yylval->build<char>(yytext[1]);
 				return token::LITERAL_CHAR;
