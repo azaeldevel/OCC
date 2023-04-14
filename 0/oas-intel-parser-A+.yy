@@ -21,7 +21,10 @@
 	//std::fstream outstream;
 
 	class Driver;
-	class Scanner;
+	namespace oct::cc::v0::A
+    {
+        class Scanner;
+	}
 
     # ifndef YY_NULLPTR
     #  if defined __cplusplus && 201103L <= __cplusplus
@@ -32,7 +35,7 @@
     # endif
 }
 
-%parse-param { Scanner& scanner }
+%parse-param { A_here::Scanner& scanner }
 %parse-param { Driver& driver }
 
 %code

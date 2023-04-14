@@ -1,6 +1,6 @@
 
-#ifndef OASI_SCANNER_HH
-#define OASI_SCANNER_HH
+#ifndef OCTETOT_CC_V0_AII
+#define OCTETOT_CC_V0_AII
 
 
 #if ! defined(yyFlexLexerOnce)
@@ -10,6 +10,8 @@
 #include <oas-intel-parser-A+.hh>
 //#include <oas-intel-A+.tab.h>
 //#include <location.hh>
+namespace oct::cc::v0::A
+{
 
 class Scanner : public yyFlexLexer
 {
@@ -24,5 +26,6 @@ private:
     yy::parser::semantic_type *yylval = nullptr;
 };
 
+}
 
 #endif

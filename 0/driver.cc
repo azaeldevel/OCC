@@ -47,7 +47,7 @@ bool Driver::parse(const std::filesystem::path& path)
 
 bool Driver::parse(std::ifstream* stream)
 {
-    Scanner scanner(stream);
+    A_here::Scanner scanner(stream);
     yy::parser parser(scanner,*this);
     if(parser.parse() != 0) return false;
     return true;
