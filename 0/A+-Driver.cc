@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "driver.hh"
+#include "A+-Driver.hh"
 #include "A+-Scanner.hh"
 #include <oas-intel-parser-A+.hh>
 

@@ -87,6 +87,12 @@
 			<Option target="occ" />
 			<Option target="develop-as" />
 		</Unit>
+		<Unit filename="0/A+-Driver.cc">
+			<Option target="oas-intel" />
+		</Unit>
+		<Unit filename="0/A+-Driver.hh">
+			<Option target="oas-intel" />
+		</Unit>
 		<Unit filename="0/A+-Scanner.cc">
 			<Option target="oas-intel" />
 		</Unit>
@@ -111,12 +117,6 @@
 		</Unit>
 		<Unit filename="0/develop-lexer-occ-c90.cc">
 			<Option target="developing" />
-		</Unit>
-		<Unit filename="0/driver.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/driver.hh">
-			<Option target="oas-intel" />
 		</Unit>
 		<Unit filename="0/main-occ-c90.cc">
 			<Option target="occ" />
