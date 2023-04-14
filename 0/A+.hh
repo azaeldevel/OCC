@@ -424,8 +424,6 @@ void add_identifier(int line,const char* filename,const char* word, int leng);
 Tokens integer_token(long long number);
 
 
-
-
 namespace nodes
 {
     struct declarator;
@@ -440,6 +438,23 @@ namespace nodes
         Line line;
         //std::string strvalue;
     };
+    struct statement
+    {
+        bool is_instruction;
+        statement* next;
+
+        statement();
+    };
+    struct instruction : public statement
+    {
+        Tokens inst;
+    };
+    struct assembler_instruction : public instruction
+    {
+    };
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
     struct Integer : public Node
     {
         long long number;
@@ -456,59 +471,6 @@ namespace nodes
         int line;
         unsigned int memory;
     };
-
-
-    struct Rule
-    {
-
-    };
-
-    struct statement : public Rule
-    {
-        bool is_instruction;
-        statement* next;
-
-        statement();
-    };
-    struct instruction : public statement
-    {
-        Tokens inst;
-    };
-    struct assembler_instruction : public instruction
-    {
-    };
-
-
-
-
-    struct type_qualifer : public statement
-    {
-        Tokens qualifer;
-    };
-
-
-
-    struct identifer_list : public statement , public std::list<identifier*>
-    {
-
-    };
-
-
-    //typedef std::variant<identifier*,declarator_function*>
-
-    /*struct direct_declarator : public statement, std::variant<identifier*,declarator_function*>
-    {
-        direct_declarator* direct;
-
-        void print()const;
-    };*/
-
-
-
-
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDERED
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
@@ -544,6 +506,11 @@ namespace nodes
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
 
+
+    struct type_qualifer : public statement
+    {
+        Tokens qualifer;
+    };
 
     struct initializer : public statement
     {

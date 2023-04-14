@@ -75,89 +75,46 @@ namespace nodes
                 return "unknow";
         }
     }
+    const char* type_specifier_to_string(Tokens type)
+    {
+        switch(type)
+        {
+            case Tokens::VOID :
+                return "void";
+            case Tokens::CHAR :
+                return "char";
+            case Tokens::SHORT :
+                return "short";
+            case Tokens::INT :
+                return "int";
+            case Tokens::LONG :
+                return "long";
+            case Tokens::FLOAT :
+                return "float";
+            case Tokens::DOUBLE :
+                return "double";
+            case Tokens::SIGNED :
+                return "signed";
+            case Tokens::UNSIGNED :
+                return "unsigned";
+			default:
+				return "unknow";
+        }
+    }
+
+
+
+
+
+
 
     statement::statement() : is_instruction(false),next(NULL)
     {
     }
 
-    /*void declaration_specifiers::print()const
-    {
-        if(std::variant::get<type_specifier*>())
-        {
-            //std::cout << $$->specifer->type << "\n";
-            switch(get<type_specifier*>()->type)
-            {
-            case Tokens::VOID :
-                std::cout << "void";
-                break;
-            case Tokens::CHAR :
-                std::cout << "char";
-                break;
-            case Tokens::SHORT :
-                std::cout << "short";
-                break;
-            case Tokens::INT :
-                std::cout << "int";
-                break;
-            case Tokens::LONG :
-                std::cout << "long";
-                break;
-            case Tokens::FLOAT :
-                std::cout << "float";
-                break;
-            case Tokens::DOUBLE :
-                std::cout << "double";
-                break;
-            case Tokens::SIGNED :
-                std::cout << "signed";
-                break;
-            case Tokens::UNSIGNED : std::cout << "unsigned";
-                break;
-			default:
-				std::cout << "unknow";
-            }
-        }
-    }*/
-    void direct_declarator::print(std::ostream& out)const
-    {
-        if(id) out << id->name;
-    }
-    void declarator::print(std::ostream& out)const
-    {
-        if(direct) direct->print(out);
-    }
-    void function_implementation::print(std::ostream& out) const
-    {
-        if(specifiers) specifiers->print(out);
 
-        if(declaration) declaration->print(out);
-        out << "\n{\n";
-        if(body->statement_list)
-        {
-            //std::cout << "statement_list\n";
-            statement* stmt = body->statement_list;
-            while(stmt)
-            {
-                if(stmt->is_instruction)
-                {
-                    switch(((instruction*)stmt)->inst)
-                    {
-                    case Tokens::MOV :
-                        out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
-                        if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
-                        break;
-                    case Tokens::INT :
-                        out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
-                        break;
-					default:
-						out << "\n\tunknow";
-                    }
-                }
-                stmt = stmt->next;
-            }
-        }
-        out << "\n}";
-    }
+
+
 
 
 
@@ -225,6 +182,18 @@ namespace nodes
 		return true;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     void initializer::print(std::ostream& out)const
     {
         if(data_type == Tokens::LITERAL_CHAR)
@@ -245,6 +214,7 @@ namespace nodes
         }
     }
 
+
     void init_declarator::print(std::ostream& out)const
     {
         if(dec) dec->print(out);
@@ -255,52 +225,17 @@ namespace nodes
         }
     }
 
-    void declaration::print(std::ostream& out)const
-    {
-        type_specifier* spec = specifiers;
-        while(spec)
-        {
-            spec->print(out);
-            if(spec->next) out << " ";
 
-            //spec = (type_specifier*)spec->next;
-        }
-        init_declarator* dec = list;
-        while(dec)
-        {
-            dec->print(out);
-            if(dec->next) out << ", ";
-
-            dec = (init_declarator*)dec->next;
-        }
-        out << ";\n";
-    }
-    const char* type_specifier_to_string(Tokens type)
+    void direct_declarator::print(std::ostream& out)const
     {
-        switch(type)
-        {
-            case Tokens::VOID :
-                return "void";
-            case Tokens::CHAR :
-                return "char";
-            case Tokens::SHORT :
-                return "short";
-            case Tokens::INT :
-                return "int";
-            case Tokens::LONG :
-                return "long";
-            case Tokens::FLOAT :
-                return "float";
-            case Tokens::DOUBLE :
-                return "double";
-            case Tokens::SIGNED :
-                return "signed";
-            case Tokens::UNSIGNED :
-                return "unsigned";
-			default:
-				return "unknow";
-        }
+        if(id) out << id->name;
     }
+
+    void declarator::print(std::ostream& out)const
+    {
+        if(direct) direct->print(out);
+    }
+
     void type_specifier::print(std::ostream& out)const
     {
         switch(type)
@@ -335,6 +270,59 @@ namespace nodes
 			default:
 				;
         }
+    }
+
+
+    void function_implementation::print(std::ostream& out) const
+    {
+        if(specifiers) specifiers->print(out);
+
+        if(declaration) declaration->print(out);
+        out << "\n{\n";
+        if(body->statement_list)
+        {
+            //std::cout << "statement_list\n";
+            statement* stmt = body->statement_list;
+            while(stmt)
+            {
+                if(stmt->is_instruction)
+                {
+                    switch(((instruction*)stmt)->inst)
+                    {
+                    case Tokens::MOV :
+                        out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                        if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                        break;
+                    case Tokens::INT :
+                        out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                        break;
+					default:
+						out << "\n\tunknow";
+                    }
+                }
+                stmt = stmt->next;
+            }
+        }
+        out << "\n}";
+    }
+    void declaration::print(std::ostream& out)const
+    {
+        type_specifier* spec = specifiers;
+        while(spec)
+        {
+            spec->print(out);
+            out << " ";
+            spec = (type_specifier*)spec->next;
+        }
+        init_declarator* dec = list;
+        while(dec)
+        {
+            dec->print(out);
+            if(dec->next) out << ", ";
+
+            dec = (init_declarator*)dec->next;
+        }
+        out << ";\n";
     }
 }
 

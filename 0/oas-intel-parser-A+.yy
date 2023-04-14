@@ -207,8 +207,6 @@ type_qualifer :
 
 //
 
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDERED
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>A+
 
 
@@ -595,15 +593,10 @@ declaration_specifiers :
     declaration_specifiers type_specifier
 	{
 		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
-		static A_here::nodes::type_specifier  *stmt_last = $2, *initial = $2;
-        if(stmt_last)
-        {
-            stmt_last->next = $2;
-        }
-
-		stmt_last = $2;
-		$$ = initial;
+		$1->next = $2;
+		$$ = $1;
 		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($2->type) << "\n";
+		//std::cout << "$$ : " << A_here::nodes::type_specifier_to_string($$->type) << "\n";
 	}
 	;
 declaration_list : declaration |
@@ -709,7 +702,7 @@ external_declaration :
 	{
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
-		//$1->print(std::cout);
+		$1->print(std::cout);
 	}
 	;
 
