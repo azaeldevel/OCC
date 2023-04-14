@@ -609,7 +609,8 @@ namespace nodes
 
 		void print(std::ostream& out) const
 		{
-            out << T(value);
+		    //std::cout << "Valor : \n";
+            out << value;
 		}
     };
 

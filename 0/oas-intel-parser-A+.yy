@@ -281,7 +281,7 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
+		$$->specifiers = NULL;
 		$$->list = NULL;
 	}
 	|
@@ -289,7 +289,7 @@ declaration :
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
 		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
+		$$->specifiers = NULL;
 		$$->list = $2;
 	}
 	;
@@ -336,7 +336,7 @@ init_declarator : declarator
 //TODO : esta gramatica no es exacta para el estandar
 initializer : const_expression
 	{
-		$$ = reinterpret_cast<A_here::nodes::initializer*>($1);
+		$$ = $1;
 	}
 	;
 
