@@ -250,6 +250,7 @@ namespace oct::cc::v0::A
 		//C-keywords
 		AUTO = 110200,
 		BREAK = 110202,
+		BYTE,
 		CASE,
 		CHAR,
 		CONST,

@@ -50,6 +50,7 @@
 
 //keywords
 %token AUTO 110200
+%token BYTE
 %token BREAK
 %token CASE
 %token CHAR

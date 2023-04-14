@@ -44,7 +44,7 @@ LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LITERAL_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
-
+IDENTIFIER_COMPOSED [::IDENTIFIER]+|IDENTIFIER[::IDENTIFIER]+
 
 %%
 %{          /** Code executed at the beginning of yylex **/
@@ -54,115 +54,48 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 %}
 
 
-"auto"		{
-				return token::AUTO;
-			}
-"break"		{
-				return token::BREAK;
-			}
-"case"		{
-				return token::CASE;
-			}
-"char"		{
-				return token::CHAR;
-			}
-"const"		{
-				return token::CONST;
-			}
-"continue"	{
-				return token::CONTINUE;
-			}
-"default"	{
-				return token::DEFAULT;
-			}
-"do"		{
-				return token::DO;
-			}
-"double"	{
-				return token::DOUBLE;
-			}
-"else"		{
-				return token::ELSE;
-			}
-"enum"		{
-				return token::ENUM;
-			}
-"extern"	{
-				return token::EXTERN;
-			}
-"float"		{
-				return token::FLOAT;
-			}
-"for"		{
-				return token::FOR;
-			}
-"goto"		{
-				return token::GOTO;
-			}
-"if"		{
-				return token::IF;
-			}
-"int"		{
-				return token::INT;
-			}
-"long"		{
-				return token::LONG;
-			}
-"register"	{
-				return token::REGISTER;
-			}
-"return"	{
-				return token::RETURN;
-			}
-"short"		{
-				return token::SHORT;
-			}
-"signed"	{
-				return token::SIGNED;
-			}
-"sizeof"	{
-				return token::SIZEOF;
-			}
-"static"	{
-				return token::STATIC;
-			}
-"struct"	{
-				return token::STRUCT;
-			}
-"switch"	{
-				return token::SWITCH;
-			}
-"typedef"	{
-				return token::TYPEDEF;
-			}
-"union"		{
-				return token::UNION;
-			}
-"unsigned"	{
-				return token::UNSIGNED;
-			}
-"void"		{
-				return token::VOID;
-			}
-"volatil"	{
-				return token::VOLATIL;
-			}
-"while"		{
-				return token::WHILE;
-			}
+"mov"   {return token::MOV;}
+"al"	return token::AL;
+"ah"	return token::AH;
 
-"mov"		{
-				return token::MOV;
-			}
 
-"al"	{
 
-				return token::AL;
-		}
-"ah"	{
+"byte"		return token::BYTE;
+"auto"		return token::AUTO;
+"char"		return token::CHAR;
 
-				return token::AH;
-		}
+"break"		return token::BREAK;
+"case"		return token::CASE;
+"const"		return token::CONST;
+"continue"	return token::CONTINUE;
+"default"	return token::DEFAULT;
+"do"		return token::DO;
+"double"	return token::DOUBLE;
+"else"		return token::ELSE;
+"enum"		return token::ENUM;
+"extern"	return token::EXTERN;
+"float"		return token::FLOAT;
+"for"		return token::FOR;
+"goto"		return token::GOTO;
+"if"		return token::IF;
+"int"		return token::INT;
+"long"		return token::LONG;
+"register"	return token::REGISTER;
+"return"	return token::RETURN;
+"short"		return token::SHORT;
+"signed"	return token::SIGNED;
+"sizeof"	return token::SIZEOF;
+"static"	return token::STATIC;
+"struct"	return token::STRUCT;
+"switch"	return token::SWITCH;
+"typedef"	return token::TYPEDEF;
+"union"		return token::UNION;
+"unsigned"	return token::UNSIGNED;
+"void"		return token::VOID;
+"volatil"	return token::VOLATIL;
+"while"		return token::WHILE;
+
+
 
 [[:space:]]			;
 
