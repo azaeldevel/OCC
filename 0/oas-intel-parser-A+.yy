@@ -176,208 +176,20 @@
 %type <A_here::nodes::declarator*> declarator
 %type <A_here::nodes::type_specifier*> type_specifier
 %type <A_here::nodes::type_specifier*> declaration_specifiers
-%type <A_here::nodes::identifer_list*> identifer_list
+%type <A_here::nodes::identifier*> identifier_list
 %type <A_here::nodes::const_expression*> const_expression
 %type <A_here::nodes::init_declarator*> init_declarator
 %type <A_here::nodes::init_declarator*> init_declarator_list
 %type <A_here::nodes::initializer*> initializer
 %type <A_here::nodes::declaration*> declaration
+%type <A_here::nodes::assembler_instruction*>assembler_instruction
 
+%start translation_unit
 %%
 
-translation_unit : external_declaration ENDOFFILE
-	{
-		//std::cout << "external_declaration\n";
-	}
-	|
-	external_declaration translation_unit ENDOFFILE
-	{
-		//std::cout << "external_declaration translation_unit\n";
-	}
-
-	;
-
-external_declaration :
-	function_implementation
-	{
-		//std::cout << "external_declaration : function_implementation\n";
-	}
-	|
-	declaration ';'
-	{
-		//std::cout << "storage_class_specifier : declaration ';'\n";
-		//std::cout << ";\n";
-		//$1->print(std::cout);
-	}
-
-	;
-
-function_implementation :
-	declaration_specifiers declarator declaration_list compound_statement
-	{
-        std::cout << "function_implementation - 1\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $4;
-        //$$->declaration = $2;
-        //std::cout << "Function 1\n";
-        //std::cout << $$->declaration->direct->id->name << "\n";
-	}
-	|
-	declaration_specifiers declarator compound_statement
-	{
-        //std::cout << "function_implementation - 2\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        $$->body = $3;
-        //$$->declaration = $2;
-        //$$->specifier = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
-        //std::cout << "function_implementation - 2\n";
-        $$->print(std::cout);
-	}
-	|
-	declarator declaration_list compound_statement
-	{
-        std::cout << "function_implementation - 3\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $3;
-        //$$->declaration = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
-        //std::cout << "Function 3\n";
-	}
-	|
-	declarator compound_statement
-	{
-        std::cout << "function_implementation - 4\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $2;
-        //$$->declaration = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
-        //std::cout << "Function 4\n";
-	}
-	;
-
-declaration_specifiers :
-	type_specifier
-	{
-		//std::cout << "declaration_specifiers : type_specifier\n";
-		$$ = $1;
-		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($1->type) << "\n";
-	}
-	|
-    declaration_specifiers type_specifier
-	{
-		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
-		static A_here::nodes::type_specifier  *stmt_last = $2, *initial = $2;
-        if(stmt_last)
-        {
-            stmt_last->next = $2;
-        }
-
-		stmt_last = $2;
-		$$ = initial;
-		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($2->type) << "\n";
-	}
-	;
-declaration_list : declaration |
-	declaration_list declaration
-	;
-compound_statement : '{' declaration_list statement_list '}'
-    {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $3;
-    }
-    |
-	'{' statement_list '}'
-    {
-		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $2;
-    }
-    |
-	'{' declaration_list '}'
-    {
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = NULL;
-    }
-    |
-	'{' '}'
-    {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
-    }
-	;
-
-
-
-//6.5
-declaration :
-	declaration_specifiers
-	{
-		//std::cout << "declaration : declaration_specifiers\n";
-		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
-		$$->list = NULL;
-	}
-	|
-	declaration_specifiers init_declarator_list
-	{
-		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
-		$$ = A_here::block.create<A_here::nodes::declaration>();
-		$$->specifiers = $1;
-		$$->list = $2;
-	}
-	;
-
-
-init_declarator_list : init_declarator
-	{
-		//std::cout << "init_declarator_list : init_declarator\n";
-		$$ = $1;
-	}
-	|
-	init_declarator_list ',' init_declarator
-	{
-		static A_here::nodes::init_declarator  *stmt_last = $3, *initial = $3;
-        if(stmt_last)
-        {
-            stmt_last->next = $3;
-        }
-
-		stmt_last = $3;
-		$$ = initial;
-	}
-	;
-
-
-init_declarator : declarator
-	{
-		//std::cout << "init_declarator : declarator\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator>();
-		$$->dec = $1;
-		$$->value = NULL;
-	}
-	|
-	declarator '=' initializer
-	{
-		//std::cout << "init_declarator : declarator '=' initializer\n";
-		$$ = A_here::block.create<A_here::nodes::init_declarator>();
-		$$->dec = $1;
-		$$->value = $3;
-	}
-	;
-
-//TODO : esta gramatica no es exacta para el estandar
-initializer : const_expression
-	{
-		$$ = $1;
-	}
-	;
-
-
-
-
-
 /*
+storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+
 type_qualifer :
     CONST
     {
@@ -392,6 +204,176 @@ type_qualifer :
     }
     ;
 */
+
+//
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDERED
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>A+
+
+
+registers_8b :
+    AL
+    {
+        $$ = token::token_kind_type::AL;
+    }
+    |
+    AH
+    {
+        $$ = token::token_kind_type::AH;
+    }
+    |
+    BL
+    {
+        $$ = token::token_kind_type::BL;
+    }
+    |
+    BH
+    {
+        $$ = token::token_kind_type::BH;
+    }
+    |
+    CL
+    {
+        $$ = token::token_kind_type::CL;
+    }
+    |
+    CH
+    {
+        $$ = token::token_kind_type::CH;
+    }
+    |
+    DL
+    {
+        $$ = token::token_kind_type::DL;
+    }
+    |
+    DH
+    {
+        $$ = token::token_kind_type::DH;
+    }
+    ;
+
+
+literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+
+registers_16b :
+    AX
+	{
+        $$ = token::token_kind_type::AX;
+	}
+	;
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
+
+
+
+instruction_mov :
+	MOV registers_8b literals_integer ';'
+	{
+		//std::cout << "mov register-8b integer\n";
+        A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
+        mv8->byte = (unsigned char)$3;
+        mv8->inst = A_here::Tokens::MOV;
+        mv8->is_instruction = true;
+        mv8->type = 'I';
+        $$ = mv8;
+	}
+	|
+	MOV registers_8b LITERAL_CHAR ';'
+	{
+		//std::cout << "mov register-8b char\n";
+		A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
+        mv8->byte = (unsigned char)$3;
+        mv8->inst = A_here::Tokens::MOV;
+        mv8->is_instruction = true;
+        mv8->type = 'C';
+        $$ = mv8;
+	}
+	|
+	MOV registers_16b literals_integer
+	{
+		$$ = NULL;
+	}
+	;
+
+
+instruction_int : INT literals_integer ';'
+	{
+		//std::cout << "int " << $2 << "\n";
+		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
+		//if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
+		serv->service = $2;
+		serv->inst = A_here::Tokens::INT;
+		serv->is_instruction = true;
+		$$ = serv;
+	}
+	;
+
+assembler_instruction :
+    instruction_mov
+    {
+        $$ = $1;
+    }
+    |
+    instruction_int
+    {
+        $$ = $1;
+    }
+    ;
+
+
+
+statement_return  :
+	RETURN ';'
+	{
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
+	}
+    |
+	RETURN literals_integer ';'
+	{
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
+	}
+	;
+
+
+statement :
+    compound_statement
+    {
+        $$ = $1;
+    }
+    |
+    assembler_instruction
+    {
+        $$ = $1;
+    }
+    |
+    statement_return
+    {
+        $$ = $1;
+    }
+    ;
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
+
+
+
+
+identifier_list : IDENTIFIER
+	{
+        $$ = NULL;
+	}
+	|
+	identifier_list IDENTIFIER
+	{
+		$$ = NULL;
+	}
+	;
+
 
 declarator :
 	direct_declarator
@@ -428,7 +410,7 @@ direct_declarator : IDENTIFIER
         $$ = NULL;
 	}
 	|
-	direct_declarator '(' identifer_list ')'
+	direct_declarator '(' identifier_list ')'
 	{
         $$ = NULL;
 	}
@@ -444,27 +426,34 @@ direct_declarator : IDENTIFIER
 	}
 	;
 
-identifer_list : IDENTIFIER
+
+statement_list : statement
 	{
-		//std::cout << "direct_declarator : IDENTIFIER\n";
-		//$$ = A_here::block.create<A_here::nodes::identifer_list>();
-		//$$->push_back($1);
+		//std::cout << "statement_list : statement\n";
+		$$ = $1;
 	}
 	|
-	identifer_list IDENTIFIER
+	statement_list statement
 	{
-		//std::cout << "direct_declarator : IDENTIFIER\n";
-		//$$->push_back($2);
+		//std::cout << "statement_list : statement_list statement\n";
+		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
+        if(stmt_last)
+        {
+            //std::cout << "static A_here::nodes::statement* stmt_last = NULL;\n";
+            stmt_last->next = $2;
+        }
+
+		stmt_last = $2;
+		$$ = initial;
 	}
 	;
 
 
-
-
-
-
-
-
+initializer : const_expression
+	{
+		$$ = $1;
+	}
+	;
 
 
 const_expression : LITERAL_CHAR
@@ -492,8 +481,41 @@ const_expression : LITERAL_CHAR
 	}
 	;
 
+init_declarator_list : init_declarator
+	{
+		//std::cout << "init_declarator_list : init_declarator\n";
+		$$ = $1;
+	}
+	|
+	init_declarator_list ',' init_declarator
+	{
+		static A_here::nodes::init_declarator  *stmt_last = $3, *initial = $3;
+        if(stmt_last)
+        {
+            stmt_last->next = $3;
+        }
 
-//storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
+		stmt_last = $3;
+		$$ = initial;
+	}
+	;
+init_declarator : declarator
+	{
+		//std::cout << "init_declarator : declarator\n";
+		$$ = A_here::block.create<A_here::nodes::init_declarator>();
+		$$->dec = $1;
+		$$->value = NULL;
+	}
+	|
+	declarator '=' initializer
+	{
+		//std::cout << "init_declarator : declarator '=' initializer\n";
+		$$ = A_here::block.create<A_here::nodes::init_declarator>();
+		$$->dec = $1;
+		$$->value = $3;
+	}
+	;
+
 
 type_specifier :
 	VOID
@@ -562,150 +584,147 @@ type_specifier :
     ;
 
 
-
-
-
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C
-statement_list : statement
+declaration_specifiers :
+	type_specifier
 	{
-		//std::cout << "statement_list : statement\n";
+		//std::cout << "declaration_specifiers : type_specifier\n";
 		$$ = $1;
+		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($1->type) << "\n";
 	}
 	|
-	statement_list statement
+    declaration_specifiers type_specifier
 	{
-		//std::cout << "statement_list : statement_list statement\n";
-		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
+		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
+		static A_here::nodes::type_specifier  *stmt_last = $2, *initial = $2;
         if(stmt_last)
         {
-            //std::cout << "static A_here::nodes::statement* stmt_last = NULL;\n";
             stmt_last->next = $2;
         }
 
 		stmt_last = $2;
 		$$ = initial;
+		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($2->type) << "\n";
 	}
 	;
-
-statement :
-    compound_statement
-    {
-        $$ = $1;
-    }
-    |
-    instruction_mov
-    {
-        $$ = $1;
-    }
-    |
-    instruction_int
-    {
-        $$ = $1;
-    }
-    |
-    statement_return
-    {
-        $$ = $1;
-    };
-
-statement_return  :
-	RETURN ';'
-	{
-        $$ = A_here::block.create<A_here::nodes::return_statement>();
-	}
-    |
-	RETURN literals_integer ';'
-	{
-        $$ = A_here::block.create<A_here::nodes::return_statement>();
-	}
+declaration_list : declaration |
+	declaration_list declaration
 	;
-
-instruction_mov :
-	MOV registers_8b literals_integer ';'
+compound_statement : '{' declaration_list statement_list '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $3;
+    }
+    |
+	'{' statement_list '}'
+    {
+		//std::cout << "compound_statement : '{' statement_list '}'\n";
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = $2;
+    }
+    |
+	'{' declaration_list '}'
+    {
+        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
+        //$$->statement_list = NULL;
+    }
+    |
+	'{' '}'
+    {
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
+        $$->statement_list = NULL;
+    }
+	;
+//6.5
+declaration :
+	declaration_specifiers
 	{
-		//std::cout << "mov register-8b integer\n";
-        A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
-        mv8->registe = (A_here::Tokens)$2;
-        mv8->byte = (unsigned char)$3;
-        mv8->inst = A_here::Tokens::MOV;
-        mv8->is_instruction = true;
-        mv8->type = 'I';
-        $$ = mv8;
+		//std::cout << "declaration : declaration_specifiers\n";
+		$$ = A_here::block.create<A_here::nodes::declaration>();
+		$$->specifiers = $1;
+		$$->list = NULL;
 	}
 	|
-	MOV registers_8b LITERAL_CHAR ';'
+	declaration_specifiers init_declarator_list
 	{
-		//std::cout << "mov register-8b char\n";
-		A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
-        mv8->registe = (A_here::Tokens)$2;
-        mv8->byte = (unsigned char)$3;
-        mv8->inst = A_here::Tokens::MOV;
-        mv8->is_instruction = true;
-        mv8->type = 'C';
-        $$ = mv8;
+		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
+		$$ = A_here::block.create<A_here::nodes::declaration>();
+		$$->specifiers = $1;
+		$$->list = $2;
+	}
+	;
+
+
+function_implementation :
+	declaration_specifiers declarator declaration_list compound_statement
+	{
+        std::cout << "function_implementation - 1\n";
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
+        //$$->body = $4;
+        //$$->declaration = $2;
+        //std::cout << "Function 1\n";
+        //std::cout << $$->declaration->direct->id->name << "\n";
 	}
 	|
-	MOV registers_16b literals_integer
+	declaration_specifiers declarator compound_statement
 	{
-		$$ = NULL;
+        //std::cout << "function_implementation - 2\n";
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
+        $$->body = $3;
+        //$$->declaration = $2;
+        //$$->specifier = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "function_implementation - 2\n";
+        $$->print(std::cout);
+	}
+	|
+	declarator declaration_list compound_statement
+	{
+        std::cout << "function_implementation - 3\n";
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
+        //$$->body = $3;
+        //$$->declaration = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "Function 3\n";
+	}
+	|
+	declarator compound_statement
+	{
+        std::cout << "function_implementation - 4\n";
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
+        //$$->body = $2;
+        //$$->declaration = $1;
+        //std::cout << $$->declaration->direct->id->name << "\n";
+        //std::cout << "Function 4\n";
 	}
 	;
-	instruction_int : INT literals_integer ';'
+
+
+external_declaration :
+	function_implementation
 	{
-		//std::cout << "int " << $2 << "\n";
-		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
-		//if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
-		serv->service = $2;
-		serv->inst = A_here::Tokens::INT;
-		serv->is_instruction = true;
-		$$ = serv;
+		//std::cout << "external_declaration : function_implementation\n";
+	}
+	|
+	declaration ';'
+	{
+		//std::cout << "storage_class_specifier : declaration ';'\n";
+		//std::cout << ";\n";
+		//$1->print(std::cout);
 	}
 	;
 
-literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
-
-registers_8b : 	AL 	{
-				//std::cout << "AL ";
-				$$ = token::token_kind_type::AL;
-			}|
-		AH 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::AH;
-			}|
-		BL 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::BL;
-			}|
-		BH 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::BH;
-			}|
-		CL 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::CL;
-			}|
-		CH 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::CH;
-			}|
-		DL 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::DL;
-			}|
-		DH 	{
-				//std::cout <<"AH ";
-				$$ = token::token_kind_type::DH;
-			};
-
-registers_16b : AX
+translation_unit : external_declaration ENDOFFILE
 	{
-        //std::cout << "AX ";
-        $$ = token::token_kind_type::AX;
-	};
+		//std::cout << "external_declaration\n";
+	}
+	|
+	external_declaration translation_unit ENDOFFILE
+	{
+		//std::cout << "external_declaration translation_unit\n";
+	}
 
+	;
 %%
 
 void yy::parser::error (const location_type& l, const std::string& m)

@@ -428,7 +428,7 @@ Tokens integer_token(long long number);
 
 namespace nodes
 {
-    class declarator;
+    struct declarator;
     typedef unsigned int Line;
     const char* register_to_string(Tokens);
     const char* type_specifier_to_string(Tokens);
@@ -470,37 +470,16 @@ namespace nodes
 
         statement();
     };
-
     struct instruction : public statement
     {
         Tokens inst;
     };
-
-    struct instruction_mov : public instruction
+    struct assembler_instruction : public instruction
     {
     };
 
-    struct move_8b_reg_byte : public instruction_mov
-    {
-        Tokens registe;
-        unsigned char byte;
-        char type;//I : integer, C : char
-
-        bool generate(std::fstream& ) const;
-    };
-
-    struct instruction_int : public instruction
-    {
-        unsigned char service;
-
-        bool generate(std::fstream& ) const;
-    };
 
 
-
-    struct return_statement : public statement
-    {
-    };
 
     struct type_qualifer : public statement
     {
@@ -525,9 +504,45 @@ namespace nodes
     };*/
 
 
-    struct StorageSpecifiers : public statement
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDERED
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
+
+
+
+    struct instruction_mov : public assembler_instruction
     {
     };
+
+    struct move_8b_reg_byte : public instruction_mov
+    {
+        Tokens registe;
+        unsigned char byte;
+        char type;//I : integer, C : char
+
+        bool generate(std::fstream& ) const;
+    };
+
+    struct instruction_int : public assembler_instruction
+    {
+        unsigned char service;
+
+        bool generate(std::fstream& ) const;
+    };
+
+    struct return_statement : public statement
+    {
+    };
+
+
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
 
 
     struct initializer : public statement
@@ -537,10 +552,10 @@ namespace nodes
 		void print(std::ostream& out) const;
     };
 
+
     struct const_expression : public initializer
     {
     };
-
     template<typename T> struct initializer_literal : public const_expression
     {
 		T value;
@@ -551,13 +566,6 @@ namespace nodes
             out << value;
 		}
     };
-
-
-
-
-
-
-
 
 
     struct init_declarator : public statement
@@ -584,13 +592,6 @@ namespace nodes
     };
 
 
-    struct type_specifier : public statement
-    {
-        Tokens type;
-
-		void print(std::ostream& out) const;
-    };
-
     struct declarator : public statement
     {
         pointer* point;
@@ -599,9 +600,16 @@ namespace nodes
         void print(std::ostream&)const;
     };
 
+
+    struct type_specifier : public statement
+    {
+        Tokens type;
+
+		void print(std::ostream& out) const;
+    };
+
     struct compound_statement : public statement
     {
-        //unsigned char service;
         statement* statement_list;
     };
 
