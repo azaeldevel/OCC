@@ -13,6 +13,7 @@
 #include <location.hh>
 //#include "scanner.hh"
 
+namespace A_here = oct::cc::v0::A;
 namespace oct::cc::v0::A
 {
 
@@ -23,7 +24,7 @@ public:
 	~Driver ();
 
 	bool parse(const std::filesystem::path& sources);
-	location loc;
+	A_here::location loc;
 
 private:
     bool parse(std::ifstream*);
