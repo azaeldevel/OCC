@@ -426,24 +426,20 @@ direct_declarator : IDENTIFIER
 	;
 
 
-statement_list : statement
+statement_list :
+    statement
 	{
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
+		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
 	}
 	|
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
-        if(stmt_last)
-        {
-            //std::cout << "static A_here::nodes::statement* stmt_last = NULL;\n";
-            stmt_last->next = $2;
-        }
-
-		stmt_last = $2;
-		$$ = initial;
+		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
+		$1->next = $2;
+		$$ = $1;
 	}
 	;
 
@@ -586,18 +582,13 @@ type_specifier :
 declaration_specifiers :
 	type_specifier
 	{
-		//std::cout << "declaration_specifiers : type_specifier\n";
 		$$ = $1;
-		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($1->type) << "\n";
 	}
 	|
     declaration_specifiers type_specifier
 	{
-		//std::cout << "declaration_specifiers : type_specifier declaration_specifiers\n";
 		$1->next = $2;
 		$$ = $1;
-		//std::cout << "type_specifier : " << A_here::nodes::type_specifier_to_string($2->type) << "\n";
-		//std::cout << "$$ : " << A_here::nodes::type_specifier_to_string($$->type) << "\n";
 	}
 	;
 declaration_list : declaration |
