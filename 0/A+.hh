@@ -489,6 +489,7 @@ namespace nodes
         char type;//I : integer, C : char
 
         bool generate(std::fstream& ) const;
+        void print(std::ostream&)const;
     };
 
     struct instruction_int : public assembler_instruction
@@ -496,6 +497,7 @@ namespace nodes
         unsigned char service;
 
         bool generate(std::fstream& ) const;
+        void print(std::ostream&)const;
     };
 
     struct return_statement : public statement

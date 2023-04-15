@@ -668,7 +668,6 @@ function_implementation :
         $$->specifiers = $1;
         //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "function_implementation - 2\n";
-        $$->print(std::cout);
 	}
 	|
 	declarator declaration_list compound_statement
@@ -697,6 +696,7 @@ external_declaration :
 	function_implementation
 	{
 		//std::cout << "external_declaration : function_implementation\n";
+        $1->print(std::cout);
 	}
 	|
 	declaration ';'

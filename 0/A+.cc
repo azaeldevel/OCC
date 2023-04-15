@@ -171,6 +171,11 @@ namespace nodes
 
         return true;
     }
+    void move_8b_reg_byte::print(std::ostream& out) const
+    {
+        out << "\n\tmov " << register_to_string(registe) << " ";
+        out << "'" << (char)byte << "'";
+    }
 
     bool instruction_int::generate(std::fstream& out) const
     {
@@ -180,6 +185,10 @@ namespace nodes
 		out.write((char*)&instruction,2);
 
 		return true;
+    }
+    void instruction_int::print(std::ostream& out) const
+    {
+        out << "\n\tint " << int(service) << "";
     }
 
 
@@ -290,11 +299,13 @@ namespace nodes
                     switch(((instruction*)stmt)->inst)
                     {
                     case Tokens::MOV :
-                        out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
-                        if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                        //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                        //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                        ((move_8b_reg_byte*)stmt)->print(out);
                         break;
                     case Tokens::INT :
-                        out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                        //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                        ((instruction_int*)stmt)->print(out);
                         break;
 					default:
 						out << "\n\tunknow";
