@@ -111,11 +111,18 @@ namespace nodes
     statement::statement() : is_instruction(false),next(NULL)
     {
     }
+    void statement::print(std::ostream&)const
+    {
+        ;
+    }
 
 
 
 
-
+    void instruction_mov::print(std::ostream&)const
+    {
+        ;
+    }
 
 
 
@@ -174,7 +181,8 @@ namespace nodes
     void move_8b_reg_byte::print(std::ostream& out) const
     {
         out << "\n\tmov " << register_to_string(registe) << " ";
-        out << "'" << (char)byte << "'";
+        if(type == 'C') out << "'" << (char)byte << "'";
+        else if(type == 'I') out << (int)byte;
     }
 
     bool instruction_int::generate(std::fstream& out) const
@@ -291,7 +299,7 @@ namespace nodes
         if(body->statement_list)
         {
             //std::cout << "statement_list\n";
-            statement* stmt = body->statement_list;
+            const statement* stmt = body->statement_list;
             while(stmt)
             {
                 if(stmt->is_instruction)
@@ -318,7 +326,7 @@ namespace nodes
     }
     void declaration::print(std::ostream& out)const
     {
-        type_specifier* spec = specifiers;
+        const type_specifier* spec = specifiers;
         while(spec)
         {
             spec->print(out);
@@ -326,7 +334,7 @@ namespace nodes
             spec = (type_specifier*)spec->next;
         }
 
-        init_declarator* dec = list;
+        const init_declarator* dec = list;
         while(dec)
         {
             dec->print(out);

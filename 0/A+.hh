@@ -442,9 +442,11 @@ namespace nodes
     struct statement
     {
         bool is_instruction;
-        statement* next;
+        const statement* next;
 
         statement();
+
+        void print(std::ostream&)const;
     };
     struct instruction : public statement
     {
@@ -480,6 +482,15 @@ namespace nodes
 
     struct instruction_mov : public assembler_instruction
     {
+        enum class type_operand : unsigned char
+        {
+            none,
+            integer,
+            letter,
+        };
+
+        //unsigned char size;//8-bits, 16-bits
+        void print(std::ostream&)const;
     };
 
     struct move_8b_reg_byte : public instruction_mov
@@ -540,8 +551,8 @@ namespace nodes
 
     struct init_declarator : public statement
     {
-		declarator* dec;
-		initializer* value;
+		const declarator* dec;
+		const initializer* value;
 
         void print(std::ostream&)const;
     };
@@ -550,14 +561,14 @@ namespace nodes
     struct pointer : public statement
     {
         std::list<type_qualifer*>* qualifiers;
-        pointer* point;
+        const pointer* point;
     };
 
     struct direct_declarator : public statement
     {
-        identifier* id;
-        direct_declarator* direct;
-        identifier* identifier_list;
+        const identifier* id;
+        const direct_declarator* direct;
+        const identifier* identifier_list;
 
         void print(std::ostream&)const;
     };
@@ -565,8 +576,8 @@ namespace nodes
 
     struct declarator : public statement
     {
-        pointer* point;
-        direct_declarator* direct;
+        const pointer* point;
+        const direct_declarator* direct;
 
         void print(std::ostream&)const;
     };
@@ -581,21 +592,21 @@ namespace nodes
 
     struct compound_statement : public statement
     {
-        statement* statement_list;
+        const statement* statement_list;
     };
 
     struct function_implementation : public statement
     {
-        type_specifier* specifiers;
-        declarator* declaration;
-        compound_statement* body;
+        const type_specifier* specifiers;
+        const declarator* declaration;
+        const compound_statement* body;
 
         void print(std::ostream&)const;
     };
 	struct declaration : public statement
     {
-    	type_specifier* specifiers;
-    	init_declarator* list;
+    	const type_specifier* specifiers;
+    	const init_declarator* list;
 
         void print(std::ostream&)const;
     };
