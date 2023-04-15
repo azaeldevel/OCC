@@ -14,10 +14,10 @@
 	core_here::Block A_here::block;
 
     #undef  YY_DECL
-    #define YY_DECL int A_here::Scanner::yylex( yy::parser::semantic_type * const lval, yy::parser::location_type *loc)
+    #define YY_DECL int A_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
 
     /* typedef to make the returns for the tokens shorter */
-    using token = yy::parser::token;
+    using token = A_here::parser::token;
 
     /* define yyterminate as this instead of NULL */
     #define yyterminate() return( token::END )

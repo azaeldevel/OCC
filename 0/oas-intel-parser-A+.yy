@@ -2,7 +2,7 @@
 %skeleton "lalr1.cc"
 %require  "3.8"
 %defines
-%define api.namespace {yy}
+%define api.namespace {oct::cc::v0::A}
 %define api.parser.class {parser}
 
 %define parse.trace
@@ -724,7 +724,7 @@ translation_unit : external_declaration ENDOFFILE
 	;
 %%
 
-void yy::parser::error (const location_type& l, const std::string& m)
+void A_here::parser::error (const location_type& l, const std::string& m)
 {
     std::cerr << l << ": " << m << '\n';
     //std::cerr << m << '\n';

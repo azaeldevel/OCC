@@ -23,7 +23,7 @@ public:
 	~Driver ();
 
 	bool parse(const std::filesystem::path& sources);
-	yy::location location;
+	location loc;
 
 private:
     bool parse(std::ifstream*);

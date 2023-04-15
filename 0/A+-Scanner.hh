@@ -20,10 +20,10 @@ public:
     ~Scanner();
 
     using FlexLexer::yylex;
-    int yylex(yy::parser::semantic_type * const lval, yy::parser::location_type *loc);
+    int yylex(parser::semantic_type * const lval, parser::location_type *loc);
 
 private:
-    yy::parser::semantic_type *yylval = nullptr;
+    parser::semantic_type *yylval = nullptr;
 };
 
 }
