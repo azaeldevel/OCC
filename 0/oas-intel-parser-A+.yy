@@ -409,22 +409,19 @@ direct_declarator : IDENTIFIER
 	|
 	direct_declarator '['  ']'
 	{
-        $$ = NULL;
+        $$ = $1;
 	}
 	|
 	direct_declarator '(' identifier_list ')'
 	{
         $$ = NULL;
+		$$->identifier_list = NULL;
 	}
 	|
 	direct_declarator '('  ')'
 	{
-		//A_here::nodes::direct_declarator_function* id = A_here::block.create<A_here::nodes::direct_declarator_function>();
-		//id->list = NULL;
-		//id->direct = $$;
-        //$$ = reinterpret_cast<A_here::nodes::direct_declarator*>(id);
-		//std::cout << "direct_declarator : direct_declarator '('  ')'\n";
-		$$ = NULL;
+		$$ = $1;
+		$$->identifier_list = NULL;
 	}
 	;
 
@@ -667,8 +664,8 @@ function_implementation :
         //std::cout << "function_implementation - 2\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
-        //$$->declaration = $2;
-        //$$->specifier = $1;
+        $$->declaration = $2;
+        $$->specifiers = $1;
         //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "function_implementation - 2\n";
         $$->print(std::cout);

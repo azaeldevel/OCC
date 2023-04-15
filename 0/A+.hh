@@ -555,6 +555,7 @@ namespace nodes
     {
         identifier* id;
         direct_declarator* direct;
+        identifier* identifier_list;
 
         void print(std::ostream&)const;
     };

@@ -276,9 +276,9 @@ namespace nodes
     void function_implementation::print(std::ostream& out) const
     {
         if(specifiers) specifiers->print(out);
-
+        out << " ";
         if(declaration) declaration->print(out);
-        out << "\n{\n";
+        out << "()\n{\n";
         if(body->statement_list)
         {
             //std::cout << "statement_list\n";
@@ -314,6 +314,7 @@ namespace nodes
             out << " ";
             spec = (type_specifier*)spec->next;
         }
+
         init_declarator* dec = list;
         while(dec)
         {
