@@ -24,7 +24,8 @@
 #include "A+-Scanner.hh"
 #include <oas-intel-parser-A+.hh>
 
-
+namespace oct::cc::v0::A
+{
 Driver::~Driver()
 {
     for(Source& s : sources)
@@ -33,6 +34,7 @@ Driver::~Driver()
         delete s.stream;
     }
 }
+
 
 bool Driver::parse(const std::filesystem::path& path)
 {
@@ -51,4 +53,6 @@ bool Driver::parse(std::ifstream* stream)
     yy::parser parser(scanner,*this);
     if(parser.parse() != 0) return false;
     return true;
+}
+
 }

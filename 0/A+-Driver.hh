@@ -13,6 +13,9 @@
 #include <location.hh>
 //#include "scanner.hh"
 
+namespace oct::cc::v0::A
+{
+
 class Driver
 {
 public:
@@ -34,6 +37,6 @@ private:
     std::list<Source> sources;
 
 };
-
+}
 
 #endif

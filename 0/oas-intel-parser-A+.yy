@@ -20,10 +20,10 @@
 	//unsigned char instruction[6];
 	//std::fstream outstream;
 
-	class Driver;
 	namespace oct::cc::v0::A
     {
         class Scanner;
+        class Driver;
 	}
 
     # ifndef YY_NULLPTR
@@ -36,7 +36,7 @@
 }
 
 %parse-param { A_here::Scanner& scanner }
-%parse-param { Driver& driver }
+%parse-param { A_here::Driver& driver }
 
 %code
 {

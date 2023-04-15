@@ -44,7 +44,6 @@ LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
 LITERAL_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
-IDENTIFIER_COMPOSED [::IDENTIFIER]+|IDENTIFIER[::IDENTIFIER]+
 
 %%
 %{          /** Code executed at the beginning of yylex **/
