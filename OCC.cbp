@@ -6,55 +6,6 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/OCC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/OCC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-			<Target title="developing">
-				<Option output="bin/Debug/OCC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="occ">
-				<Option output="bin/Debug/OCC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option parameters="src/main-c90.c" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="develop-as">
-				<Option output="bin/Debug/OCC" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
 			<Target title="oas-intel">
 				<Option output="bin/Debug/oas-intel" prefix_auto="1" extension_auto="1" />
 				<Option object_output="bin/Debug/" />
@@ -77,59 +28,35 @@
 			<Add directory="../../octetos" />
 		</Compiler>
 		<Unit filename="../core/3/Lexer-TTA.hh">
-			<Option target="develop-as" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../core/3/Lexer-TTB.hh">
-			<Option target="develop-as" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../core/3/Lexer.hh">
-			<Option target="developing" />
-			<Option target="occ" />
-			<Option target="develop-as" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/A+-Driver.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/A+-Driver.hh">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/A+-Scanner.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/A+-Scanner.hh">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/A+.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/A+.hh">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="0/C90.hh">
-			<Option target="developing" />
-			<Option target="occ" />
-		</Unit>
+		<Unit filename="0/A+-Driver.cc" />
+		<Unit filename="0/A+-Driver.hh" />
+		<Unit filename="0/A+-Scanner.cc" />
+		<Unit filename="0/A+-Scanner.hh" />
+		<Unit filename="0/A+.cc" />
+		<Unit filename="0/A+.hh" />
 		<Unit filename="0/OAS.hh">
-			<Option target="develop-as" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/develop-lexer-oas.cc">
-			<Option target="develop-as" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/develop-lexer-occ-c90.cc">
-			<Option target="developing" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/main-occ-c90.cc">
-			<Option target="occ" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/oas-main.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc">
-			<Option target="oas-intel" />
-		</Unit>
-		<Unit filename="bin/Debug/oas-intel-parser-A+.cc">
-			<Option target="oas-intel" />
-		</Unit>
+		<Unit filename="0/oas-main.cc" />
+		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc" />
+		<Unit filename="bin/Debug/oas-intel-parser-A+.cc" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
