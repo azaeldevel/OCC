@@ -54,6 +54,8 @@
 		<Unit filename="0/main-occ-c90.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="0/oas-intel-lexer-A+.ll" />
+		<Unit filename="0/oas-intel-parser-A+.yy" />
 		<Unit filename="0/oas-main.cc" />
 		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc" />
 		<Unit filename="bin/Debug/oas-intel-parser-A+.cc" />
