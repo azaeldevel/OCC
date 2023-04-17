@@ -438,8 +438,14 @@ statement_list :
 	{
 		//std::cout << "statement_list : statement_list statement\n";
 		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
-		$1->next = $2;
-		$$ = $1;
+		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
+        if(stmt_last)
+        {
+            stmt_last->next = $2;
+        }
+
+		stmt_last = $2;
+		$$ = initial;
 	}
 	;
 
@@ -591,26 +597,13 @@ declaration_specifiers :
 		$$ = $1;
 	}
 	;
-declaration_list : declaration |
-	declaration_list declaration
-	;
-compound_statement : '{' declaration_list statement_list '}'
-    {
-        $$ = A_here::block.create<A_here::nodes::compound_statement>();
-        $$->statement_list = $3;
-    }
-    |
+
+compound_statement :
 	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
         $$ = A_here::block.create<A_here::nodes::compound_statement>();
         $$->statement_list = $2;
-    }
-    |
-	'{' declaration_list '}'
-    {
-        //$$ = A_here::block.create<A_here::nodes::compound_statement>();
-        //$$->statement_list = NULL;
     }
     |
 	'{' '}'
@@ -640,16 +633,6 @@ declaration :
 
 
 function_implementation :
-	declaration_specifiers declarator declaration_list compound_statement
-	{
-        std::cout << "function_implementation - 1\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $4;
-        //$$->declaration = $2;
-        //std::cout << "Function 1\n";
-        //std::cout << $$->declaration->direct->id->name << "\n";
-	}
-	|
 	declaration_specifiers declarator compound_statement
 	{
         //std::cout << "function_implementation - 2\n";
@@ -661,7 +644,7 @@ function_implementation :
         //std::cout << "function_implementation - 2\n";
 	}
 	|
-	declarator declaration_list compound_statement
+	declarator compound_statement
 	{
         std::cout << "function_implementation - 3\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
@@ -669,16 +652,6 @@ function_implementation :
         //$$->declaration = $1;
         //std::cout << $$->declaration->direct->id->name << "\n";
         //std::cout << "Function 3\n";
-	}
-	|
-	declarator compound_statement
-	{
-        std::cout << "function_implementation - 4\n";
-        $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $2;
-        //$$->declaration = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
-        //std::cout << "Function 4\n";
 	}
 	;
 
