@@ -17,8 +17,6 @@
 	#include <fstream>
 	namespace AII_here = oct::cc::v0::AII;
 	namespace core_here = oct::core::v3;
-	//unsigned char instruction[6];
-	//std::fstream outstream;
 
 	namespace oct::cc::v0::AII
     {

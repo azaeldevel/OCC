@@ -7,7 +7,7 @@
 	#include <string.h>
 	//#include <core/3/math.hh>
 	#include <A+-Scanner.hh>
-	#include <oas-intel-parser-A+.hh>
+	//#include <oas-intel-parser-A+.hh>
 	#include <A+.hh>
 	namespace AII_here = oct::cc::v0::AII;
 	namespace core_here = oct::core::v3;
@@ -34,7 +34,6 @@
 %option yyclass="oct::cc::v0::AII::Scanner"
 %option noyywrap
 %option c++
-%option prefix="AII"
 
 
 DIGIT_DEC [[:digit:]]
@@ -47,7 +46,8 @@ LITERAL_CHAR '{CHAR}'
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 %%
-%{          /** Code executed at the beginning of yylex **/
+%{
+    /** Code executed at the beginning of yylex **/
 	yylval = lval;// A handy shortcut to the location held by the driver.
 	//yy::location& loc = driver.location;
 	loc->step ();

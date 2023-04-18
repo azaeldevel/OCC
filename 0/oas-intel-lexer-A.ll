@@ -13,9 +13,6 @@
 	namespace core_here = oct::core::v3;
 	core_here::Block AI_here::block;
 
-    #undef yyFlexLexer
-    #define yyFlexLexer AIFlexLexer
-
     #undef  YY_DECL
     #define YY_DECL int AI_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
 
@@ -32,7 +29,6 @@
     #define YY_USER_ACTION loc->step(); loc->columns(yyleng);
 %}
 
-%option prefix="AI"
 %option debug
 %option nodefault
 %option yyclass="oct::cc::v0::AI::Scanner"
