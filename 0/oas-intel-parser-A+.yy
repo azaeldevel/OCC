@@ -431,21 +431,40 @@ statement_list :
 	{
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
+		//std::cout << "Singular $1 = " << $1 << "\n";
 		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
 	}
 	|
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
-		static A_here::nodes::statement  *stmt_last = $2, *initial = $2;
-        if(stmt_last)
+        //if($$) if(reinterpret_cast<const A_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
+        /*
+        if($1) if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV)
         {
-            stmt_last->next = $2;
+            std::cout << "$1 : ";
+            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
         }
+        if($2) if(reinterpret_cast<const A_here::nodes::instruction*>($2)->inst == Tokens::MOV)
+        {
+            std::cout << "$2 : ";
+            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($2)->print(std::cout);
+        }
+        std::cout << "\n--\n";
+        */
 
-		stmt_last = $2;
-		$$ = initial;
+        static A_here::nodes::statement *statement_prev = NULL;
+		std::cout << "$$ = " << $$ << "\n";
+		std::cout << "$1 = " << $1 << "\n";
+		std::cout << "$2 = " << $2 << "\n";
+		std::cout << "statement_prev = " << statement_prev << "\n";
+
+		$$ = $1;
+        if(not statement_prev) statement_prev = $1;
+		statement_prev->next = $2;
+
+
+		statement_prev = $2;
 	}
 	;
 
