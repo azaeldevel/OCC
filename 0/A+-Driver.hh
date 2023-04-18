@@ -13,8 +13,8 @@
 #include <location.hh>
 //#include "scanner.hh"
 
-namespace A_here = oct::cc::v0::A;
-namespace oct::cc::v0::A
+namespace AII_here = oct::cc::v0::AII;
+namespace oct::cc::v0::AII
 {
 
 class Driver
@@ -27,7 +27,7 @@ public:
 	void print(std::ostream&)const;
 	bool generate(std::ostream&)const;
 
-	A_here::location loc;
+	AII_here::location loc;
 
 private:
     bool parse(std::ifstream*);

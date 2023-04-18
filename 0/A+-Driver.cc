@@ -24,7 +24,7 @@
 #include "A+-Scanner.hh"
 #include <oas-intel-parser-A+.hh>
 
-namespace oct::cc::v0::A
+namespace oct::cc::v0::AII
 {
     Driver::~Driver()
     {

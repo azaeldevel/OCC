@@ -29,7 +29,7 @@
 #include "A+.hh"
 
 
-namespace A_here = oct::cc::v0::A;
+namespace AII_here = oct::cc::v0::AII;
 
 
 
@@ -55,7 +55,7 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	A_here::SymbolTable symbols;
+	AII_here::SymbolTable symbols;
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
@@ -74,7 +74,7 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-	A_here::Driver driver;
+	AII_here::Driver driver;
 	for(const std::filesystem::path& path : inputs)
 	{
         driver.parse(path);

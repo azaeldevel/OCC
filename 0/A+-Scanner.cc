@@ -1,7 +1,7 @@
 #include "A+-Scanner.hh"
 
 
-namespace oct::cc::v0::A
+namespace oct::cc::v0::AII
 {
 Scanner::Scanner(std::ifstream *in) : yyFlexLexer(in)
 {
