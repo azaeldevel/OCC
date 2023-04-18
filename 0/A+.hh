@@ -612,6 +612,14 @@ namespace nodes
     };
 
 
+	struct external_declaration : public statement
+    {
+    	const function_implementation* func;
+    	const declaration* decl;
+
+        void print(std::ostream&)const;
+    };
+
 }
 
 

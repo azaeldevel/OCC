@@ -26,33 +26,54 @@
 
 namespace oct::cc::v0::A
 {
-Driver::~Driver()
-{
-    for(Source& s : sources)
+    Driver::Driver(std::filesystem::path op) : outpath(op)
     {
-        s.stream->close();
-        delete s.stream;
     }
-}
+
+    Driver::~Driver()
+    {
+        for(Source& s : sources)
+        {
+            s.stream->close();
+            delete s.stream;
+        }
+        if(outstream.is_open()) outstream.close();
+    }
 
 
-bool Driver::parse(const std::filesystem::path& path)
-{
-    sources.push_back({&path,NULL});
-    Source* source = &sources.back();
-    source->path = &path;
-    source->stream = new std::ifstream(path);
-    //location.initialize(path.string());
-    if(not source->stream->good()) return false;
-    return parse(source->stream);
-}
 
-bool Driver::parse(std::ifstream* stream)
-{
-    Scanner scanner(stream);
-    parser parser(scanner,*this);
-    if(parser.parse() != 0) return false;
-    return true;
-}
+    bool Driver::parse(const std::filesystem::path& path)
+    {
+        sources.push_back({&path,NULL});
+        Source* source = &sources.back();
+        source->path = &path;
+        source->stream = new std::ifstream(path);
+        //location.initialize(path.string());
+        if(not source->stream->good()) return false;
+        return parse(source->stream);
+    }
 
+    bool Driver::parse(std::ifstream* stream)
+    {
+        Scanner scanner(stream);
+        unit = NULL;
+        parser parser(scanner,*this,&unit);
+        if(parser.parse() != 0) return false;
+        return true;
+    }
+
+
+
+
+    void Driver::print(std::ostream& out) const
+    {
+        const nodes::external_declaration* ext = unit;
+        while(ext)
+        {
+            ext->print(out);
+            if(ext->next) out << "\n";
+
+            ext = (nodes::external_declaration*)ext->next;
+        }
+    }
 }

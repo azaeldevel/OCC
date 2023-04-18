@@ -37,6 +37,7 @@
 
 %parse-param { A_here::Scanner& scanner }
 %parse-param { A_here::Driver& driver }
+%parse-param { const A_here::nodes::external_declaration** unit}
 
 %code
 {
@@ -187,6 +188,9 @@
 %type <A_here::nodes::initializer*> initializer
 %type <A_here::nodes::declaration*> declaration
 %type <A_here::nodes::assembler_instruction*>assembler_instruction
+%type <A_here::nodes::external_declaration*> external_declaration
+%type <A_here::nodes::external_declaration*> translation_unit
+
 
 %start translation_unit
 %%
@@ -511,7 +515,7 @@ init_declarator_list : init_declarator
 	|
 	init_declarator_list ',' init_declarator
 	{
-        A_here::nodes::init_declarator* statement_prev = NULL;
+        static A_here::nodes::init_declarator* statement_prev = NULL;
 		$$ = $1;
         if(not statement_prev) statement_prev = $1;
 		statement_prev->next = $3;
@@ -613,7 +617,7 @@ declaration_specifiers :
 	|
     declaration_specifiers type_specifier
 	{
-        A_here::nodes::type_specifier* statement_prev = NULL;
+        static A_here::nodes::type_specifier* statement_prev = NULL;
 		$$ = $1;
         if(not statement_prev) statement_prev = $1;
 		statement_prev->next = $2;
@@ -673,9 +677,9 @@ function_implementation :
 	{
         std::cout << "function_implementation - 3\n";
         $$ = A_here::block.create<A_here::nodes::function_implementation>();
-        //$$->body = $3;
-        //$$->declaration = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
+        $$->body = $2;
+        $$->declaration = $1;
+        $$->specifiers = NULL;
         //std::cout << "Function 3\n";
 	}
 	;
@@ -685,28 +689,44 @@ external_declaration :
 	function_implementation
 	{
 		//std::cout << "external_declaration : function_implementation\n";
-        $1->print(std::cout);
+        //$1->print(std::cout);
+        $$ = A_here::block.create<A_here::nodes::external_declaration>();
+        $$->func = $1;
+        $$->decl = NULL;
 	}
 	|
 	declaration ';'
 	{
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
-		$1->print(std::cout);
+		//$1->print(std::cout);
+        $$ = A_here::block.create<A_here::nodes::external_declaration>();
+        $$->func = NULL;
+        $$->decl = $1;
 	}
 	;
 
 
-translation_unit : external_declaration ENDOFFILE
+translation_unit :
+    external_declaration
 	{
 		//std::cout << "external_declaration\n";
+		$$ = $1;
+		*unit = $1;
 	}
 	|
-	external_declaration translation_unit ENDOFFILE
+	translation_unit external_declaration
 	{
 		//std::cout << "external_declaration translation_unit\n";
-	}
+        static A_here::nodes::external_declaration* statement_prev = NULL;
+		$$ = $1;
+		//$2->print(std::cout);
+        if(not statement_prev) statement_prev = $1;
+		statement_prev->next = $2;
 
+
+		statement_prev = $2;
+	}
 	;
 %%
 

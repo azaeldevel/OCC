@@ -342,7 +342,14 @@ namespace nodes
 
             dec = (init_declarator*)dec->next;
         }
-        out << ";\n";
+        out << ";";
+    }
+
+
+    void external_declaration::print(std::ostream& out) const
+    {
+        if(decl) decl->print(out);
+        if(func) func->print(out);
     }
 }
 

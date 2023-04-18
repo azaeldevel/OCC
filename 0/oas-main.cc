@@ -71,12 +71,12 @@ int main (int argc, char* argv[])
 	//outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
 
 
-	A_here::Driver driver;
+	A_here::Driver driver(outfile);
 	for(const std::filesystem::path& path : inputs)
 	{
         driver.parse(path);
 	}
-
+    driver.print(std::cout);
 
 	//outstream.close();
 	return EXIT_SUCCESS;
