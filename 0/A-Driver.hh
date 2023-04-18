@@ -1,20 +1,19 @@
 
-#ifndef OCTETOS_CC_V0_AII_DRIVER_HH
-#define OCTETOS_CC_V0_AII_DRIVER_HH
+#ifndef OCTETOT_CC_V0_AI_DRIVER_HH
+#define OCTETOT_CC_V0_AI_DRIVER_HH
 #include <string>
 #include <fstream>
 #include <list>
-#include <oas-intel-parser-A+.hh>
-//#include <oas-intel-A+.tab.h>
+#include <AI/oas-intel-parser-A.hh>
+#include <AI.hh>
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>
 #endif
-#include <location.hh>
-//#include "scanner.hh"
+#include <AI/location.hh>
 
-namespace AII_here = oct::cc::v0::AII;
-namespace oct::cc::v0::AII
+namespace AI_here = oct::cc::v0::AI;
+namespace oct::cc::v0::AI
 {
 
 class Driver
@@ -27,7 +26,7 @@ public:
 	void print(std::ostream&)const;
 	bool generate(std::ostream&)const;
 
-	AII_here::location loc;
+	AI_here::location loc;
 
 private:
     bool parse(std::ifstream*);
@@ -42,6 +41,7 @@ private:
     const nodes::external_declaration* unit;
 
 };
+
 }
 
 #endif

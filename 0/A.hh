@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_CC_A_HH
-#define OCTETOS_CC_A_HH
+#ifndef OCTETOS_CC_V0_A_HH
+#define OCTETOS_CC_V0_A_HH
 
 
 /*
@@ -25,54 +25,81 @@
 #include <string>
 #include <stdio.h>
 #include <filesystem>
+#include <list>
+#include <vector>
+#include <variant>
+#include <core/3/math.hh>
 
+
+namespace oct::core::v3
+{
+    class Block
+    {
+    public:
+        Block() : page_size(1024),actual(NULL)
+        {
+            actual = malloc(page_size);
+            blocks.push_back(actual);
+        }
+        Block(size_t size) : page_size(size),actual(NULL)
+        {
+            actual = malloc(page_size);
+            blocks.push_back(actual);
+        }
+        ~Block()
+        {
+            for(void* m : blocks)
+            {
+                free(m);
+            }
+        }
+
+        template<typename T> T* create()
+        {
+            //std::cout << "Block::create begin\n";
+            if((long)actual >= (long)page_size)
+            {
+                //std::cout << "Block::create malloc\n";
+                actual = malloc(page_size);
+                blocks.push_back(actual);
+            }
+            void* now = actual;
+            char* newptr = static_cast<char*>(actual);
+            //std::cout << "Block::create actual : " << (long)actual << "\n";
+            newptr += sizeof(T) + 1;
+            //std::cout << "Block::create newptr : " << (long)newptr << "\n";
+            //std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
+            actual = (void*)newptr;
+            //std::cout << "Block::create end\n";
+            return (T*)now;
+        }
+    protected:
+        size_t page_size;
+        void* actual;//last block memory assignable
+        //size_t index;//firs posistion usable in actual block memory
+        std::list<void*> blocks;
+        std::list<void*>::iterator it;
+
+    private:
+
+
+    };
+
+}
 
 
 namespace oct::cc::v0::A
 {
-//namespace core_here = oct::core::v3;
-void add_identifier(int line,const char* filename,const char* word, int leng);
+    namespace core_here = oct::core::v3;
+    typedef int Tokens;
 
-class File
-{
-public:
-	File();
-	~File();
+    namespace nodes
+    {
 
-	void* get_scanner();
-
-	const std::filesystem::path& get_filename()const;
-	bool open(const std::filesystem::path& file);
-protected:
-	
-private:
-	FILE* file;
-	std::filesystem::path filename;
-	void* buffer;
-	void* scanner;
-};
+    }
 
 
-class SymbolTable
-{
-public:
 
-	 int add(int line, const char filename,char* string, size_t leng);
-	 
-protected:
-
-private:
-	 
-};
-
-struct Token
-{
-	int number;
-	std::string text;
-};
-
-
-extern File current_file;
 }
 
 

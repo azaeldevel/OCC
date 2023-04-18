@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_CC_V0_AII_HH
-#define OCTETOS_CC_V0_AII_HH
+#ifndef OCTETOS_CC_V0_AI_HH
+#define OCTETOS_CC_V0_AI_HH
 
 
 /*
@@ -32,7 +32,8 @@
 
 #include "A.hh"
 
-namespace oct::cc::v0::AII
+
+namespace oct::cc::v0::AI
 {
 	namespace core_here = oct::core::v3;
 	enum class Tokens : int
@@ -566,6 +567,7 @@ namespace nodes
         void print(std::ostream&)const;
         void generate(std::ostream&) const;
     };
+
 }
 
 
@@ -605,7 +607,6 @@ private:
 	void* scanner;
 	SymbolTable* symbols;
 };
-
 
 
     extern core_here::Block block;

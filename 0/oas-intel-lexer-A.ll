@@ -6,18 +6,21 @@
 	#include <stdio.h>
 	#include <string.h>
 	//#include <core/3/math.hh>
-	#include <A+-Scanner.hh>
-	#include <oas-intel-parser-A+.hh>
-	#include <A+.hh>
-	namespace AII_here = oct::cc::v0::AII;
+	#include <A-Scanner.hh>
+	#include <AI/oas-intel-parser-A.hh>
+	#include <AI.hh>
+	namespace AI_here = oct::cc::v0::AI;
 	namespace core_here = oct::core::v3;
-	core_here::Block AII_here::block;
+	core_here::Block AI_here::block;
+
+    #undef yyFlexLexer
+    #define yyFlexLexer AIFlexLexer
 
     #undef  YY_DECL
-    #define YY_DECL int AII_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
+    #define YY_DECL int AI_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
 
     /* typedef to make the returns for the tokens shorter */
-    using token = AII_here::parser::token;
+    using token = AI_here::parser::token;
 
     /* define yyterminate as this instead of NULL */
     #define yyterminate() return( token::END )
@@ -29,13 +32,12 @@
     #define YY_USER_ACTION loc->step(); loc->columns(yyleng);
 %}
 
+%option prefix="AI"
 %option debug
 %option nodefault
-%option yyclass="oct::cc::v0::AII::Scanner"
+%option yyclass="oct::cc::v0::AI::Scanner"
 %option noyywrap
 %option c++
-%option prefix="AII"
-
 
 DIGIT_DEC [[:digit:]]
 DIGIT_HEX [[:xdigit:]]
@@ -101,20 +103,20 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 {IDENTIFIER}	{
 			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-			AII_here::nodes::identifier* identifer = AII_here::block.create<AII_here::nodes::identifier>();
+			AI_here::nodes::identifier* identifer = AI_here::block.create<AI_here::nodes::identifier>();
 			identifer->line = yylineno;
 			identifer->name = yytext;
-			yylval->build<AII_here::nodes::identifier*>(identifer);
+			yylval->build<AI_here::nodes::identifier*>(identifer);
             return token::IDENTIFIER;
 		}
 
 {LITERAL_INTEGER_HEX}	{
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-				AII_here::nodes::Integer* integer = AII_here::block.create<AII_here::nodes::Integer>();
-				//AII_here::symbol_current = (AII_here::nodes::Symbol*)integer;
+				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
+				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
 				integer->line = yylineno;
 				integer->format = 'H';
-				integer->token = AII_here::Tokens::LITERAL_INTEGER_HEX;
+				integer->token = AI_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
 				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
@@ -122,11 +124,11 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 {LITERAL_INTEGER_DEC}	{
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-				AII_here::nodes::Integer* integer = AII_here::block.create<AII_here::nodes::Integer>();
-				//AII_here::symbol_current = (AII_here::nodes::Symbol*)integer;
+				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
+				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
 				integer->line = yylineno;
 				integer->format = 'D';
-				integer->token = AII_here::Tokens::LITERAL_INTEGER_DEC;
+				integer->token = AI_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
 				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
@@ -134,8 +136,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 {LITERAL_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				AII_here::nodes::Node* letter = AII_here::block.create<AII_here::nodes::Node>();
-				letter->token = (AII_here::Tokens)yytext[1];
+				AI_here::nodes::Node* letter = AI_here::block.create<AI_here::nodes::Node>();
+				letter->token = (AI_here::Tokens)yytext[1];
 				letter->line = yylineno;
 				//letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";

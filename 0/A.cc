@@ -19,9 +19,10 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <oas-intel-parser.hh>
-#include <oas-intel.tab.h>
 
+#include <limits>
+#include <core/3/Exception.hh>
+#include <core/3/math.hh>
 
 #include "A.hh"
 
@@ -30,74 +31,20 @@
 namespace oct::cc::v0::A
 {
 
-
-void add_identifier(int l,const char* f,const char* w, int leng)
-{
-	//printf("%s:%i %s\n",f,l,w);
-	std::string str;
-	str.insert(0,w,leng);
-	std::cout << f << ":" << l << " " << str << "\n";
-}
+    namespace nodes
+    {
 
 
 
 
 
 
-File::File() : file(NULL),buffer(NULL),scanner(NULL)
-{
-}
-File::~File()
-{
-	if(buffer)
-	{
-		yy_delete_buffer ((YY_BUFFER_STATE)buffer, scanner);
-		buffer = NULL;
-	}
-	if(scanner)
-	{
-		yylex_destroy (scanner);
-		scanner = NULL;
-	}
-	if(file)
-	{
-		fclose(file);
-		file = NULL;
-	}
-}
 
 
-void* File::get_scanner()
-{
-	return scanner;
-}
-
-bool File::open(const std::filesystem::path& fn)
-{
-	if(file) return false;
-	if(buffer) return false;
-	if(not filename.empty()) return false;
-	if(fn.empty()) return false;
-	//std::cout << "Loading file " << fn << "..\n";
-	
-	filename = fn;
-	file = fopen(filename.string().c_str(), "r");
-	if(not file) return false;
-	//std::cout << "Create file " << fn << "..\n";
-	
-	yylex_init (&scanner);
-	//std::cout << "Creating scanner..\n";
-	buffer = yy_create_buffer(file, YY_BUF_SIZE, scanner);
-    yy_switch_to_buffer((YY_BUFFER_STATE)buffer,(yyscan_t)scanner);
-	
-	return true;
-}
-
-const std::filesystem::path& File::get_filename() const
-{
-	return filename;
-}
 
 
+
+
+    }
 
 }

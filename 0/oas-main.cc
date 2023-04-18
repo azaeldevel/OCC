@@ -31,8 +31,6 @@
 
 namespace AII_here = oct::cc::v0::AII;
 
-
-
 int main (int argc, char* argv[])
 {
     std::fstream outstream;
