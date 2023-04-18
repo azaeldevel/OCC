@@ -125,8 +125,7 @@ namespace nodes
     }
 
 
-
-    bool move_8b_reg_byte::generate(std::fstream& out) const
+    void move_8b_reg_byte::generate(std::ostream& out) const
     {
         unsigned char instruction[2];
         instruction[0] = 0b1011;//opcode
@@ -175,8 +174,6 @@ namespace nodes
         instruction[1] = byte;
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,2);
-
-        return true;
     }
     void move_8b_reg_byte::print(std::ostream& out) const
     {
@@ -185,14 +182,12 @@ namespace nodes
         else if(type == 'I') out << (int)byte;
     }
 
-    bool instruction_int::generate(std::fstream& out) const
+    void instruction_int::generate(std::ostream& out) const
     {
         unsigned char instruction[2];
 		instruction[0] = 0b11001101;//opcode
 		instruction[1] = service;
 		out.write((char*)&instruction,2);
-
-		return true;
     }
     void instruction_int::print(std::ostream& out) const
     {
@@ -252,6 +247,10 @@ namespace nodes
     {
         if(direct) direct->print(out);
     }
+    void declarator::generate(std::ostream& out) const
+    {
+        ;
+    }
 
     void type_specifier::print(std::ostream& out)const
     {
@@ -287,6 +286,10 @@ namespace nodes
 			default:
 				;
         }
+    }
+    void type_specifier::generate(std::ostream& out) const
+    {
+        ;
     }
 
 
@@ -324,6 +327,37 @@ namespace nodes
         }
         out << "\n}";
     }
+    void function_implementation::generate(std::ostream& out) const
+    {
+        if(specifiers) specifiers->generate(out);
+        if(declaration) declaration->generate(out);
+        if(body->statement_list)
+        {
+            //std::cout << "statement_list\n";
+            const statement* stmt = body->statement_list;
+            while(stmt)
+            {
+                if(stmt->is_instruction)
+                {
+                    switch(((instruction*)stmt)->inst)
+                    {
+                    case Tokens::MOV :
+                        //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                        //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                        ((move_8b_reg_byte*)stmt)->generate(out);
+                        break;
+                    case Tokens::INT :
+                        //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                        ((instruction_int*)stmt)->generate(out);
+                        break;
+					default:
+                        ;
+                    }
+                }
+                stmt = stmt->next;
+            }
+        }
+    }
     void declaration::print(std::ostream& out)const
     {
         const type_specifier* spec = specifiers;
@@ -344,12 +378,21 @@ namespace nodes
         }
         out << ";";
     }
+    void declaration::generate(std::ostream& out) const
+    {
+        ;
+    }
 
 
     void external_declaration::print(std::ostream& out) const
     {
         if(decl) decl->print(out);
         if(func) func->print(out);
+    }
+    void external_declaration::generate(std::ostream& out) const
+    {
+        if(decl) decl->generate(out);
+        if(func) func->generate(out);
     }
 }
 

@@ -21,11 +21,11 @@ class Driver
 {
 public:
 	Driver () = default;
-	Driver (std::filesystem::path outpath);
 	~Driver ();
 
 	bool parse(const std::filesystem::path& sources);
 	void print(std::ostream&)const;
+	bool generate(std::ostream&)const;
 
 	A_here::location loc;
 
@@ -39,8 +39,6 @@ private:
         std::ifstream *stream;
     };
     std::list<Source> sources;
-    std::filesystem::path outpath;
-    std::ofstream outstream;
     const nodes::external_declaration* unit;
 
 };

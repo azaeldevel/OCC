@@ -32,17 +32,18 @@
 namespace A_here = oct::cc::v0::A;
 
 
-//extern std::fstream outstream;
-std::filesystem::path outfile;
-std::list<std::filesystem::path> inputs;
 
 int main (int argc, char* argv[])
 {
+    std::fstream outstream;
+    std::filesystem::path outpath;
+    std::list<std::filesystem::path> inputs;
+
 	for(size_t i = 0; i < (size_t)argc; i++)
 	{
 		if(strcmp(argv[i],"--output") == 0)
 		{
-			outfile = argv[++i];
+			outpath = argv[++i];
 		}
 		else if(argv[i][0] == '-')
 		{
@@ -55,28 +56,33 @@ int main (int argc, char* argv[])
 	}
 
 	A_here::SymbolTable symbols;
-	//A_here::File current_file(symbols);
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
 		return EXIT_FAILURE;
 	}
-	/*
-	if(outfile.empty())
+
+	if(outpath.empty())
 	{
-		std::cout << "Indique el archivo de resultado.";
+		std::cerr << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
 	}
-	*/
-	//outstream.open(outfile, std::ios_base::out | std::ios_base::binary);
+	outstream.open(outpath, std::ios_base::out | std::ios_base::binary);
+    if(not outstream.is_open())
+    {
+		std::cerr << "Fallo al abrir el archivo de resultado.";
+		return EXIT_FAILURE;
+    }
 
-
-	A_here::Driver driver(outfile);
+	A_here::Driver driver;
 	for(const std::filesystem::path& path : inputs)
 	{
         driver.parse(path);
 	}
-    driver.print(std::cout);
+    //driver.print(std::cout);
+    driver.generate(outstream);
+    outstream.flush();
+    outstream.close();
 
 	//outstream.close();
 	return EXIT_SUCCESS;

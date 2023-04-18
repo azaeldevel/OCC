@@ -26,10 +26,6 @@
 
 namespace oct::cc::v0::A
 {
-    Driver::Driver(std::filesystem::path op) : outpath(op)
-    {
-    }
-
     Driver::~Driver()
     {
         for(Source& s : sources)
@@ -37,7 +33,6 @@ namespace oct::cc::v0::A
             s.stream->close();
             delete s.stream;
         }
-        if(outstream.is_open()) outstream.close();
     }
 
 
@@ -75,5 +70,17 @@ namespace oct::cc::v0::A
 
             ext = (nodes::external_declaration*)ext->next;
         }
+    }
+    bool Driver::generate(std::ostream& out) const
+    {
+        const nodes::external_declaration* ext = unit;
+        while(ext)
+        {
+            ext->generate(out);
+
+            ext = (nodes::external_declaration*)ext->next;
+        }
+
+        return true;
     }
 }

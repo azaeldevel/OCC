@@ -499,7 +499,7 @@ namespace nodes
         unsigned char byte;
         char type;//I : integer, C : char
 
-        bool generate(std::fstream& ) const;
+        void generate(std::ostream& ) const;
         void print(std::ostream&)const;
     };
 
@@ -507,7 +507,7 @@ namespace nodes
     {
         unsigned char service;
 
-        bool generate(std::fstream& ) const;
+        void generate(std::ostream& ) const;
         void print(std::ostream&)const;
     };
 
@@ -580,6 +580,7 @@ namespace nodes
         const direct_declarator* direct;
 
         void print(std::ostream&)const;
+        void generate(std::ostream&)const;
     };
 
 
@@ -588,6 +589,7 @@ namespace nodes
         Tokens type;
 
 		void print(std::ostream& out) const;
+        void generate(std::ostream&)const;
     };
 
     struct compound_statement : public statement
@@ -602,6 +604,8 @@ namespace nodes
         const compound_statement* body;
 
         void print(std::ostream&)const;
+        void generate(std::ostream&)const;
+
     };
 	struct declaration : public statement
     {
@@ -609,6 +613,7 @@ namespace nodes
     	const init_declarator* list;
 
         void print(std::ostream&)const;
+        void generate(std::ostream&)const;
     };
 
 
@@ -618,6 +623,7 @@ namespace nodes
     	const declaration* decl;
 
         void print(std::ostream&)const;
+        void generate(std::ostream&) const;
     };
 
 }
