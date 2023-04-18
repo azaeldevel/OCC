@@ -454,10 +454,12 @@ statement_list :
         */
 
         static A_here::nodes::statement *statement_prev = NULL;
+        /*
 		std::cout << "$$ = " << $$ << "\n";
 		std::cout << "$1 = " << $1 << "\n";
 		std::cout << "$2 = " << $2 << "\n";
 		std::cout << "statement_prev = " << statement_prev << "\n";
+		*/
 
 		$$ = $1;
         if(not statement_prev) statement_prev = $1;
@@ -509,14 +511,13 @@ init_declarator_list : init_declarator
 	|
 	init_declarator_list ',' init_declarator
 	{
-		static A_here::nodes::init_declarator  *stmt_last = $3, *initial = $3;
-        if(stmt_last)
-        {
-            stmt_last->next = $3;
-        }
+        A_here::nodes::init_declarator* statement_prev = NULL;
+		$$ = $1;
+        if(not statement_prev) statement_prev = $1;
+		statement_prev->next = $3;
 
-		stmt_last = $3;
-		$$ = initial;
+
+		statement_prev = $3;
 	}
 	;
 init_declarator : declarator
@@ -612,8 +613,13 @@ declaration_specifiers :
 	|
     declaration_specifiers type_specifier
 	{
-		$1->next = $2;
+        A_here::nodes::type_specifier* statement_prev = NULL;
 		$$ = $1;
+        if(not statement_prev) statement_prev = $1;
+		statement_prev->next = $2;
+
+
+		statement_prev = $2;
 	}
 	;
 
