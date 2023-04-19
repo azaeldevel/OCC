@@ -5,13 +5,11 @@
 #include <fstream>
 #include <list>
 #include <oas-intel-parser-A+.hh>
-//#include <oas-intel-A+.tab.h>
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>
 #endif
 #include <location.hh>
-//#include "scanner.hh"
 
 namespace AII_here = oct::cc::v0::AII;
 namespace oct::cc::v0::AII

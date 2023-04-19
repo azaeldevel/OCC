@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <oas-intel-parser-A+.hh>
+//#include <oas-intel-parser-A+.hh>
 #include <stdio.h>  // printf.
 #include <stdlib.h> // getenv.
 #include <iostream>
@@ -27,9 +27,13 @@
 #include <fstream>
 #include <list>
 #include "A+.hh"
+#include "A+-Driver.hh"
+#include "AI.hh"
+#include "A-Driver.hh"
 
 
 namespace AII_here = oct::cc::v0::AII;
+namespace AI_here = oct::cc::v0::AI;
 
 int main (int argc, char* argv[])
 {
@@ -73,6 +77,7 @@ int main (int argc, char* argv[])
     }
 
 	AII_here::Driver driver;
+	//AI_here::Driver driver;
 	for(const std::filesystem::path& path : inputs)
 	{
         driver.parse(path);

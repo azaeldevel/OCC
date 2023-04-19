@@ -2,16 +2,17 @@
 #ifndef OCTETOT_CC_V0_AI_SCANNER
 #define OCTETOT_CC_V0_AI_SCANNER
 
-#include <FlexLexer.h>
+#if ! defined(yyFlexLexerOnce)
+    #include <FlexLexer.h>
+#endif
 
 #include <AI/oas-intel-parser-A.hh>
-//#include <oas-intel-A+.tab.h>
-//#include <location.hh>
+
 namespace oct::cc::v0::AI
 {
 
 
-class Scanner : public AIScanner
+class Scanner : public yyFlexLexer
 {
 public:
     Scanner(std::ifstream *in);
