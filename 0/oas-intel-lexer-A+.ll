@@ -11,7 +11,7 @@
 	#include <A+.hh>
 	namespace AII_here = oct::cc::v0::AII;
 	namespace core_here = oct::core::v3;
-	core_here::Block AII_here::block;
+	core_here::Block A_here::block;
 
     #undef  YY_DECL
     #define YY_DECL int AII_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
@@ -39,9 +39,9 @@
 DIGIT_DEC [[:digit:]]
 DIGIT_HEX [[:xdigit:]]
 CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]
-LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
-LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
-LITERAL_CHAR '{CHAR}'
+CONSTANT_INTEGER_DEC [+-]?{DIGIT_DEC}+
+CONSTANT_INTEGER_HEX 0x{DIGIT_HEX}+
+CONSTANT_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
@@ -101,46 +101,33 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 {IDENTIFIER}	{
 			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-			AII_here::nodes::identifier* identifer = AII_here::block.create<AII_here::nodes::identifier>();
+			A_here::nodes::identifier* identifer = A_here::block.create<A_here::nodes::identifier>();
 			identifer->line = yylineno;
 			identifer->name = yytext;
-			yylval->build<AII_here::nodes::identifier*>(identifer);
+			yylval->build<A_here::nodes::identifier*>(identifer);
             return token::IDENTIFIER;
 		}
 
-{LITERAL_INTEGER_HEX}	{
+{CONSTANT_INTEGER_HEX}	{
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-				AII_here::nodes::Integer* integer = AII_here::block.create<AII_here::nodes::Integer>();
-				//AII_here::symbol_current = (AII_here::nodes::Symbol*)integer;
-				integer->line = yylineno;
+				A_here::nodes::Integer* integer = A_here::block.create<A_here::nodes::Integer>();
 				integer->format = 'H';
-				integer->token = AII_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
-				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
-				return token::LITERAL_INTEGER_HEX;
+				return token::CONSTANT_INTEGER_HEX;
 			}
-{LITERAL_INTEGER_DEC}	{
+{CONSTANT_INTEGER_DEC}	{
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-				AII_here::nodes::Integer* integer = AII_here::block.create<AII_here::nodes::Integer>();
-				//AII_here::symbol_current = (AII_here::nodes::Symbol*)integer;
-				integer->line = yylineno;
+				A_here::nodes::Integer* integer = A_here::block.create<A_here::nodes::Integer>();
 				integer->format = 'D';
-				integer->token = AII_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
-				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
-				return token::LITERAL_INTEGER_HEX;
+				return token::CONSTANT_INTEGER_HEX;
 			}
-{LITERAL_CHAR}		{
+{CONSTANT_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				AII_here::nodes::Node* letter = AII_here::block.create<AII_here::nodes::Node>();
-				letter->token = (AII_here::Tokens)yytext[1];
-				letter->line = yylineno;
-				//letter->strvalue = yytext;
-				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				yylval->build<char>(yytext[1]);
-				return token::LITERAL_CHAR;
+				return token::CONSTANT_CHAR;
 			}
 
 

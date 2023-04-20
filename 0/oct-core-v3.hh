@@ -87,20 +87,4 @@ namespace oct::core::v3
 
 }
 
-
-namespace oct::cc::v0::A
-{
-    namespace core_here = oct::core::v3;
-    typedef int Tokens;
-
-    namespace nodes
-    {
-
-    }
-
-
-
-}
-
-
 #endif

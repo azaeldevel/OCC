@@ -62,23 +62,23 @@ namespace oct::cc::v0::AII
 
     void Driver::print(std::ostream& out) const
     {
-        const nodes::external_declaration* ext = unit;
+        const A_here::nodes::external_declaration* ext = unit;
         while(ext)
         {
             ext->print(out);
             if(ext->next) out << "\n";
 
-            ext = (nodes::external_declaration*)ext->next;
+            ext = (A_here::nodes::external_declaration*)ext->next;
         }
     }
     bool Driver::generate(std::ostream& out) const
     {
-        const nodes::external_declaration* ext = unit;
+        const A_here::nodes::external_declaration* ext = unit;
         while(ext)
         {
             ext->generate(out);
 
-            ext = (nodes::external_declaration*)ext->next;
+            ext = (A_here::nodes::external_declaration*)ext->next;
         }
 
         return true;

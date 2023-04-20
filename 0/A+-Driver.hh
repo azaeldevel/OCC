@@ -26,7 +26,7 @@ public:
 	void print(std::ostream&)const;
 	bool generate(std::ostream&)const;
 
-	//AII_here::location loc;
+	//A_here::location loc;
 
 private:
     bool parse(std::ifstream*);
@@ -38,7 +38,7 @@ private:
         std::ifstream *stream;
     };
     std::list<Source> sources;
-    const nodes::external_declaration* unit;
+    const A_here::nodes::external_declaration* unit;
 
 };
 }

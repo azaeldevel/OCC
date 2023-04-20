@@ -35,7 +35,7 @@
 
 %parse-param { AII_here::Scanner& scanner }
 %parse-param { AII_here::Driver& driver }
-%parse-param { const AII_here::nodes::external_declaration** unit}
+%parse-param { const A_here::nodes::external_declaration** unit}
 
 %code
 {
@@ -144,7 +144,7 @@
 %token ES
 
 //
-%token <long long> LITERAL_INTEGER_DEC
+%token <long long> CONSTANT_INTEGER_DEC
 %token LITERAL_INTEGER_DEC_SCHAR
 %token LITERAL_INTEGER_DEC_UCHAR
 %token LITERAL_INTEGER_DEC_SHORT
@@ -153,7 +153,7 @@
 %token LITERAL_INTEGER_DEC_UNIT
 %token LITERAL_INTEGER_DEC_LONG
 %token LITERAL_INTEGER_DEC_ULONG
-%token <long long> LITERAL_INTEGER_HEX
+%token <long long> CONSTANT_INTEGER_HEX
 %token LITERAL_INTEGER_HEX_SCHAR
 %token <signed char>LITERAL_INTEGER_HEX_UCHAR
 %token LITERAL_INTEGER_HEX_SHORT
@@ -162,32 +162,32 @@
 %token <unsigned int>LITERAL_INTEGER_HEX_UINT
 %token LITERAL_INTEGER_HEX_LONG
 %token LITERAL_INTEGER_HEX_ULONG
-%token <char> LITERAL_CHAR
-%token <AII_here::nodes::identifier*> IDENTIFIER
+%token <char> CONSTANT_CHAR
+%token <A_here::nodes::identifier*> IDENTIFIER
 %type <int> registers_8b
 %type <int> registers_16b
 %type <long long>literals_integer
 
-%type <AII_here::nodes::statement*> statement
-%type <AII_here::nodes::instruction_mov*> instruction_mov
-%type <AII_here::nodes::instruction_int*> instruction_int
-%type <AII_here::nodes::statement*> statement_list
-%type <AII_here::nodes::return_statement*> statement_return
-%type <AII_here::nodes::compound_statement*> compound_statement
-%type <AII_here::nodes::function_implementation*> function_implementation
-%type <AII_here::nodes::direct_declarator*> direct_declarator
-%type <AII_here::nodes::declarator*> declarator
-%type <AII_here::nodes::type_specifier*> type_specifier
-%type <AII_here::nodes::type_specifier*> declaration_specifiers
-%type <AII_here::nodes::identifier*> identifier_list
-%type <AII_here::nodes::const_expression*> const_expression
-%type <AII_here::nodes::init_declarator*> init_declarator
-%type <AII_here::nodes::init_declarator*> init_declarator_list
-%type <AII_here::nodes::initializer*> initializer
-%type <AII_here::nodes::declaration*> declaration
-%type <AII_here::nodes::assembler_instruction*>assembler_instruction
-%type <AII_here::nodes::external_declaration*> external_declaration
-%type <AII_here::nodes::external_declaration*> translation_unit
+%type <A_here::nodes::statement*> statement
+%type <A_here::nodes::instruction_mov*> instruction_mov
+%type <A_here::nodes::instruction_int*> instruction_int
+%type <A_here::nodes::statement*> statement_list
+%type <A_here::nodes::return_statement*> statement_return
+%type <A_here::nodes::compound_statement*> compound_statement
+%type <A_here::nodes::function_implementation*> function_implementation
+%type <A_here::nodes::direct_declarator*> direct_declarator
+%type <A_here::nodes::declarator*> declarator
+%type <A_here::nodes::type_specifier*> type_specifier
+%type <A_here::nodes::type_specifier*> declaration_specifiers
+%type <A_here::nodes::identifier*> identifier_list
+%type <A_here::nodes::const_expression*> const_expression
+%type <A_here::nodes::init_declarator*> init_declarator
+%type <A_here::nodes::init_declarator*> init_declarator_list
+%type <A_here::nodes::initializer*> initializer
+%type <A_here::nodes::declaration*> declaration
+%type <A_here::nodes::assembler_instruction*>assembler_instruction
+%type <A_here::nodes::external_declaration*> external_declaration
+%type <A_here::nodes::external_declaration*> translation_unit
 
 
 %start translation_unit
@@ -199,14 +199,14 @@ storage_class_specifier : TYPEDEF | EXTERN | STATIC | AUTO | REGISTER ;
 type_qualifer :
     CONST
     {
-        $$ = AII_here::block.create<AII_here::nodes::type_qualifer>();
-        $$->qualifer = AII_here::Tokens::CONST;
+        $$ = A_here::block.create<A_here::nodes::type_qualifer>();
+        $$->qualifer = A_here::Tokens::CONST;
     }
     |
     VOLATIL
     {
-        $$ = AII_here::block.create<AII_here::nodes::type_qualifer>();
-        $$->qualifer = AII_here::Tokens::VOLATIL;
+        $$ = A_here::block.create<A_here::nodes::type_qualifer>();
+        $$->qualifer = A_here::Tokens::VOLATIL;
     }
     ;
 */
@@ -259,7 +259,7 @@ registers_8b :
     ;
 
 
-literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+literals_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
 
 registers_16b :
     AX
@@ -277,22 +277,22 @@ instruction_mov :
 	MOV registers_8b literals_integer ';'
 	{
 		//std::cout << "mov register-8b integer\n";
-        AII_here::nodes::move_8b_reg_byte* mv8 = AII_here::block.create<AII_here::nodes::move_8b_reg_byte>();
-        mv8->registe = (AII_here::Tokens)$2;
+        A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
         mv8->byte = (unsigned char)$3;
-        mv8->inst = AII_here::Tokens::MOV;
+        mv8->inst = A_here::Tokens::MOV;
         mv8->is_instruction = true;
         mv8->type = 'I';
         $$ = mv8;
 	}
 	|
-	MOV registers_8b LITERAL_CHAR ';'
+	MOV registers_8b CONSTANT_CHAR ';'
 	{
 		//std::cout << "mov register-8b char\n";
-		AII_here::nodes::move_8b_reg_byte* mv8 = AII_here::block.create<AII_here::nodes::move_8b_reg_byte>();
-        mv8->registe = (AII_here::Tokens)$2;
+		A_here::nodes::move_8b_reg_byte* mv8 = A_here::block.create<A_here::nodes::move_8b_reg_byte>();
+        mv8->registe = (A_here::Tokens)$2;
         mv8->byte = (unsigned char)$3;
-        mv8->inst = AII_here::Tokens::MOV;
+        mv8->inst = A_here::Tokens::MOV;
         mv8->is_instruction = true;
         mv8->type = 'C';
         $$ = mv8;
@@ -308,10 +308,10 @@ instruction_mov :
 instruction_int : INT literals_integer ';'
 	{
 		//std::cout << "int " << $2 << "\n";
-		AII_here::nodes::instruction_int* serv = AII_here::block.create<AII_here::nodes::instruction_int>();
+		A_here::nodes::instruction_int* serv = A_here::block.create<A_here::nodes::instruction_int>();
 		//if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
 		serv->service = $2;
-		serv->inst = AII_here::Tokens::INT;
+		serv->inst = A_here::Tokens::INT;
 		serv->is_instruction = true;
 		$$ = serv;
 	}
@@ -334,12 +334,12 @@ assembler_instruction :
 statement_return  :
 	RETURN ';'
 	{
-        $$ = AII_here::block.create<AII_here::nodes::return_statement>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
     |
 	RETURN literals_integer ';'
 	{
-        $$ = AII_here::block.create<AII_here::nodes::return_statement>();
+        $$ = A_here::block.create<A_here::nodes::return_statement>();
 	}
 	;
 
@@ -383,7 +383,7 @@ declarator :
 	direct_declarator
 	{
         //std::cout << "declarator : direct_declarator\n";
-        $$ = AII_here::block.create<AII_here::nodes::declarator>();
+        $$ = A_here::block.create<A_here::nodes::declarator>();
         $$->point = NULL;
         $$->direct = $1;
         //std::cout << "declarator 2\n";
@@ -393,7 +393,7 @@ declarator :
 direct_declarator : IDENTIFIER
 	{
 		//std::cout << "direct_declarator : IDENTIFIER\n";
-		$$ = AII_here::block.create<AII_here::nodes::direct_declarator>();
+		$$ = A_here::block.create<A_here::nodes::direct_declarator>();
 		$$->id = $1;
 		$$->direct = NULL;
 		//std::cout << $$->id->name << " ";
@@ -434,28 +434,28 @@ statement_list :
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
 		//std::cout << "Singular $1 = " << $1 << "\n";
-		//if(reinterpret_cast<const AII_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const AII_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
+		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
 	}
 	|
 	statement_list statement
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-        //if($$) if(reinterpret_cast<const AII_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const AII_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
+        //if($$) if(reinterpret_cast<const A_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
         /*
-        if($1) if(reinterpret_cast<const AII_here::nodes::instruction*>($1)->inst == Tokens::MOV)
+        if($1) if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV)
         {
             std::cout << "$1 : ";
-            reinterpret_cast<const AII_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
+            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
         }
-        if($2) if(reinterpret_cast<const AII_here::nodes::instruction*>($2)->inst == Tokens::MOV)
+        if($2) if(reinterpret_cast<const A_here::nodes::instruction*>($2)->inst == Tokens::MOV)
         {
             std::cout << "$2 : ";
-            reinterpret_cast<const AII_here::nodes::move_8b_reg_byte*>($2)->print(std::cout);
+            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($2)->print(std::cout);
         }
         std::cout << "\n--\n";
         */
 
-        static AII_here::nodes::statement *statement_prev = NULL;
+        static A_here::nodes::statement *statement_prev = NULL;
         /*
 		std::cout << "$$ = " << $$ << "\n";
 		std::cout << "$1 = " << $1 << "\n";
@@ -480,28 +480,28 @@ initializer : const_expression
 	;
 
 
-const_expression : LITERAL_CHAR
+const_expression : CONSTANT_CHAR
 	{
 		//std::cout << "'" << (char)$1 << "' ";
-		$$ = AII_here::block.create<AII_here::nodes::initializer_literal<char>>();
-		reinterpret_cast<AII_here::nodes::initializer_literal<char>*>($$)->value = $1;
-		$$->data_type = AII_here::Tokens::LITERAL_CHAR;
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<char>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<char>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::CONSTANT_CHAR;
 	}
 	|
-	LITERAL_INTEGER_HEX
+	CONSTANT_INTEGER_HEX
 	{
 		//std::cout << $1 << " ";
-		$$ = AII_here::block.create<AII_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<AII_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AII_here::Tokens::LITERAL_INTEGER_HEX;
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::CONSTANT_INTEGER_HEX;
 	}
 	|
-	LITERAL_INTEGER_DEC
+	CONSTANT_INTEGER_DEC
 	{
 		//std::cout << $1 << " ";
-		$$ = AII_here::block.create<AII_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<AII_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AII_here::Tokens::LITERAL_INTEGER_DEC;
+		$$ = A_here::block.create<A_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<A_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = A_here::Tokens::CONSTANT_INTEGER_DEC;
 	}
 	;
 
@@ -513,7 +513,7 @@ init_declarator_list : init_declarator
 	|
 	init_declarator_list ',' init_declarator
 	{
-        static AII_here::nodes::init_declarator* statement_prev = NULL;
+        static A_here::nodes::init_declarator* statement_prev = NULL;
 		$$ = $1;
         if(not statement_prev) statement_prev = $1;
 		statement_prev->next = $3;
@@ -525,7 +525,7 @@ init_declarator_list : init_declarator
 init_declarator : declarator
 	{
 		//std::cout << "init_declarator : declarator\n";
-		$$ = AII_here::block.create<AII_here::nodes::init_declarator>();
+		$$ = A_here::block.create<A_here::nodes::init_declarator>();
 		$$->dec = $1;
 		$$->value = NULL;
 	}
@@ -533,7 +533,7 @@ init_declarator : declarator
 	declarator '=' initializer
 	{
 		//std::cout << "init_declarator : declarator '=' initializer\n";
-		$$ = AII_here::block.create<AII_here::nodes::init_declarator>();
+		$$ = A_here::block.create<A_here::nodes::init_declarator>();
 		$$->dec = $1;
 		$$->value = $3;
 	}
@@ -545,16 +545,16 @@ type_specifier :
     {
 		//std::cout << "type_specifier : VOID\n";
 		//std::cout << "void ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::VOID;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::VOID;
     }
     |
     CHAR
     {
 		//std::cout << "type_specifier : CHAR\n";
 		//std::cout << "char ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::CHAR;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::CHAR;
         //$$->next = NULL;
 		//std::cout << "type_specifier\n";
     }
@@ -563,46 +563,46 @@ type_specifier :
     {
 		//std::cout << "type_specifier : SHORT\n";
 		//std::cout << "short ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::SHORT;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SHORT;
     }
     |
     INT
     {
 		//std::cout << "type_specifier : INT\n";
 		//std::cout << "int ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::INT;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::INT;
     }
     |
     FLOAT
     {
 		//std::cout << "type_specifier : FLOAT\n";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::FLOAT;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::FLOAT;
     }
     |
     DOUBLE
     {
 		//std::cout << "type_specifier : DOUBLE\n";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::DOUBLE;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::DOUBLE;
     }
     |
     SIGNED
     {
 		//std::cout << "type_specifier : SIGNED\n";
 		//std::cout << "signed ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::SIGNED;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::SIGNED;
     }
     |
     UNSIGNED
     {
 		//std::cout << "type_specifier : UNSIGNED\n";
 		//std::cout << "unsigned ";
-        $$ = AII_here::block.create<AII_here::nodes::type_specifier>();
-        $$->type = AII_here::Tokens::UNSIGNED;
+        $$ = A_here::block.create<A_here::nodes::type_specifier>();
+        $$->type = A_here::Tokens::UNSIGNED;
     }
     ;
 
@@ -615,7 +615,7 @@ declaration_specifiers :
 	|
     declaration_specifiers type_specifier
 	{
-        static AII_here::nodes::type_specifier* statement_prev = NULL;
+        static A_here::nodes::type_specifier* statement_prev = NULL;
 		$$ = $1;
         if(not statement_prev) statement_prev = $1;
 		statement_prev->next = $2;
@@ -629,13 +629,13 @@ compound_statement :
 	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = AII_here::block.create<AII_here::nodes::compound_statement>();
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
         $$->statement_list = $2;
     }
     |
 	'{' '}'
     {
-        $$ = AII_here::block.create<AII_here::nodes::compound_statement>();
+        $$ = A_here::block.create<A_here::nodes::compound_statement>();
         $$->statement_list = NULL;
     }
 	;
@@ -644,7 +644,7 @@ declaration :
 	declaration_specifiers
 	{
 		//std::cout << "declaration : declaration_specifiers\n";
-		$$ = AII_here::block.create<AII_here::nodes::declaration>();
+		$$ = A_here::block.create<A_here::nodes::declaration>();
 		$$->specifiers = $1;
 		$$->list = NULL;
 	}
@@ -652,7 +652,7 @@ declaration :
 	declaration_specifiers init_declarator_list
 	{
 		//std::cout << "declaration : declaration_specifiers init_declarator_list\n";
-		$$ = AII_here::block.create<AII_here::nodes::declaration>();
+		$$ = A_here::block.create<A_here::nodes::declaration>();
 		$$->specifiers = $1;
 		$$->list = $2;
 	}
@@ -663,7 +663,7 @@ function_implementation :
 	declaration_specifiers declarator compound_statement
 	{
         //std::cout << "function_implementation - 2\n";
-        $$ = AII_here::block.create<AII_here::nodes::function_implementation>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
         $$->specifiers = $1;
@@ -674,7 +674,7 @@ function_implementation :
 	declarator compound_statement
 	{
         std::cout << "function_implementation - 3\n";
-        $$ = AII_here::block.create<AII_here::nodes::function_implementation>();
+        $$ = A_here::block.create<A_here::nodes::function_implementation>();
         $$->body = $2;
         $$->declaration = $1;
         $$->specifiers = NULL;
@@ -688,7 +688,7 @@ external_declaration :
 	{
 		//std::cout << "external_declaration : function_implementation\n";
         //$1->print(std::cout);
-        $$ = AII_here::block.create<AII_here::nodes::external_declaration>();
+        $$ = A_here::block.create<A_here::nodes::external_declaration>();
         $$->func = $1;
         $$->decl = NULL;
 	}
@@ -698,7 +698,7 @@ external_declaration :
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
 		//$1->print(std::cout);
-        $$ = AII_here::block.create<AII_here::nodes::external_declaration>();
+        $$ = A_here::block.create<A_here::nodes::external_declaration>();
         $$->func = NULL;
         $$->decl = $1;
 	}
@@ -716,7 +716,7 @@ translation_unit :
 	translation_unit external_declaration
 	{
 		//std::cout << "external_declaration translation_unit\n";
-        static AII_here::nodes::external_declaration* statement_prev = NULL;
+        static A_here::nodes::external_declaration* statement_prev = NULL;
 		$$ = $1;
 		//$2->print(std::cout);
         if(not statement_prev) statement_prev = $1;
