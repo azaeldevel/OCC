@@ -188,13 +188,13 @@ namespace nodes
 
     void initializer::print(std::ostream& out)const
     {
-        if(data_type == Tokens::LITERAL_CHAR)
+        if(data_type == Tokens::CONSTANT_CHAR)
         {
             //std::cout << "Tokens::LITERAL_CHAR\n";
             const initializer_literal<char>* literial = reinterpret_cast<const initializer_literal<char>*>(this);
             literial->print(out);
         }
-        else if(data_type == Tokens::LITERAL_INTEGER_HEX or data_type == Tokens::LITERAL_INTEGER_DEC)
+        else if(data_type == Tokens::CONSTANT_INTEGER_HEX or data_type == Tokens::CONSTANT_INTEGER_DEC)
         {
             //std::cout << "Tokens::LITERAL_..\n";
             const initializer_literal<long long>* literial = reinterpret_cast<const initializer_literal<long long>*>(this);

@@ -30,12 +30,10 @@
 %option noyywrap
 %option c++
 
-DIGIT_DEC [[:digit:]]
-DIGIT_HEX [[:xdigit:]]
 CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]
-LITERAL_INTEGER_DEC [+-]?{DIGIT_DEC}+
-LITERAL_INTEGER_HEX 0x{DIGIT_HEX}+
-LITERAL_CHAR '{CHAR}'
+CONSTANT_INTEGER_DEC [+-]?[[:digit:]]+
+CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+
+CONSTANT_CHAR '{CHAR}'
 
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
@@ -101,31 +99,23 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
             return token::IDENTIFIER;
 		}
 
-{LITERAL_INTEGER_HEX}	{
+{CONSTANT_INTEGER_HEX}	{
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
 				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
-				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
-				//integer->line = yylineno;
 				integer->format = 'H';
-				//integer->token = AI_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
-				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
-				return token::LITERAL_INTEGER_HEX;
+				return token::CONSTANT_INTEGER_HEX;
 			}
-{LITERAL_INTEGER_DEC}	{
+{CONSTANT_INTEGER_DEC}	{
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
 				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
-				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
-				//integer->line = yylineno;
 				integer->format = 'D';
-				//integer->token = AI_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
-				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
-				return token::LITERAL_INTEGER_HEX;
+				return token::CONSTANT_INTEGER_HEX;
 			}
-{LITERAL_CHAR}		{
+{CONSTANT_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
 				//AI_here::nodes::Node* letter = AI_here::block.create<AI_here::nodes::Node>();
 				//letter->token = (AI_here::Tokens)yytext[1];
@@ -133,7 +123,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				//letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				yylval->build<char>(yytext[1]);
-				return token::LITERAL_CHAR;
+				return token::CONSTANT_CHAR;
 			}
 
 

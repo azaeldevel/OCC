@@ -143,7 +143,7 @@
 %token ES
 
 //
-%token <long long> LITERAL_INTEGER_DEC
+%token <long long> CONSTANT_INTEGER_DEC
 %token LITERAL_INTEGER_DEC_SCHAR
 %token LITERAL_INTEGER_DEC_UCHAR
 %token LITERAL_INTEGER_DEC_SHORT
@@ -152,7 +152,7 @@
 %token LITERAL_INTEGER_DEC_UNIT
 %token LITERAL_INTEGER_DEC_LONG
 %token LITERAL_INTEGER_DEC_ULONG
-%token <long long> LITERAL_INTEGER_HEX
+%token <long long> CONSTANT_INTEGER_HEX
 %token LITERAL_INTEGER_HEX_SCHAR
 %token <signed char>LITERAL_INTEGER_HEX_UCHAR
 %token LITERAL_INTEGER_HEX_SHORT
@@ -161,7 +161,7 @@
 %token <unsigned int>LITERAL_INTEGER_HEX_UINT
 %token LITERAL_INTEGER_HEX_LONG
 %token LITERAL_INTEGER_HEX_ULONG
-%token <char> LITERAL_CHAR
+%token <char> CONSTANT_CHAR
 %token <AI_here::nodes::identifier*> IDENTIFIER
 %type <int> registers_8b
 %type <int> registers_16b
@@ -258,7 +258,7 @@ registers_8b :
     ;
 
 
-literals_integer : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
+literals_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
 
 registers_16b :
     AX
@@ -285,7 +285,7 @@ instruction_mov :
         $$ = mv8;
 	}
 	|
-	MOV registers_8b LITERAL_CHAR ';'
+	MOV registers_8b CONSTANT_CHAR ';'
 	{
 		//std::cout << "mov register-8b char\n";
 		AI_here::nodes::move_8b_reg_byte* mv8 = AI_here::block.create<AI_here::nodes::move_8b_reg_byte>();
@@ -479,28 +479,28 @@ initializer : const_expression
 	;
 
 
-const_expression : LITERAL_CHAR
+const_expression : CONSTANT_CHAR
 	{
 		//std::cout << "'" << (char)$1 << "' ";
 		$$ = AI_here::block.create<AI_here::nodes::initializer_literal<char>>();
 		reinterpret_cast<AI_here::nodes::initializer_literal<char>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::LITERAL_CHAR;
+		$$->data_type = AI_here::Tokens::CONSTANT_CHAR;
 	}
 	|
-	LITERAL_INTEGER_HEX
+	CONSTANT_INTEGER_HEX
 	{
 		//std::cout << $1 << " ";
 		$$ = AI_here::block.create<AI_here::nodes::initializer_literal<long long>>();
 		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::LITERAL_INTEGER_HEX;
+		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_HEX;
 	}
 	|
-	LITERAL_INTEGER_DEC
+	CONSTANT_INTEGER_DEC
 	{
 		//std::cout << $1 << " ";
 		$$ = AI_here::block.create<AI_here::nodes::initializer_literal<long long>>();
 		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::LITERAL_INTEGER_DEC;
+		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;
 	}
 	;
 
