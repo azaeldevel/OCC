@@ -11,7 +11,7 @@
 
 %code requires
 {
-    #include <AI.hh>
+    #include <A.hh>
     #include <A-Driver.hh>
 	#include <core/3/Exception.hh>
 	namespace AI_here = oct::cc::v0::AI;

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <list>
 #include <A/oas-intel-parser.hh>
-#include <AI.hh>
+#include <A.hh>
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>
