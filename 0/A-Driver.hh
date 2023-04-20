@@ -19,7 +19,8 @@ namespace oct::cc::v0::AI
 class Driver
 {
 public:
-	Driver () = default;
+	Driver ();
+	Driver (core_here::Block& memory);
 	~Driver ();
 
 	bool parse(const std::filesystem::path& sources);
@@ -39,7 +40,8 @@ private:
     };
     std::list<Source> sources;
     const nodes::external_declaration* unit;
-
+    core_here::Block* block;
+    bool block_new;
 };
 
 }

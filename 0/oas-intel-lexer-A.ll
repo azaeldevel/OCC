@@ -6,7 +6,6 @@
 
 	namespace AI_here = oct::cc::v0::AI;
 	namespace core_here = oct::core::v3;
-	core_here::Block AI_here::block;
 
     #undef  YY_DECL
     #define YY_DECL int AI_here::Scanner::yylex( parser::semantic_type * const lval, parser::location_type *loc)
@@ -92,7 +91,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 {IDENTIFIER}	{
 			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-			AI_here::nodes::identifier* identifer = AI_here::block.create<AI_here::nodes::identifier>();
+			AI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();
 			identifer->line = yylineno;
 			identifer->name = yytext;
 			yylval->build<AI_here::nodes::identifier*>(identifer);
@@ -101,7 +100,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 {CONSTANT_INTEGER_HEX}	{
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
+				AI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();
 				integer->format = 'H';
 				integer->number = std::stoll(yytext, nullptr, 16);
 				yylval->build<long long>(integer->number);
@@ -109,7 +108,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 {CONSTANT_INTEGER_DEC}	{
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
+				AI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();
 				integer->format = 'D';
 				integer->number = std::stoll(yytext);
 				yylval->build<long long>(integer->number);
@@ -117,7 +116,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 {CONSTANT_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				//AI_here::nodes::Node* letter = AI_here::block.create<AI_here::nodes::Node>();
+				//AI_here::nodes::Node* letter = block.create<AI_here::nodes::Node>();
 				//letter->token = (AI_here::Tokens)yytext[1];
 				//letter->line = yylineno;
 				//letter->strvalue = yytext;

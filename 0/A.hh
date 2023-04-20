@@ -575,7 +575,7 @@ namespace oct::cc::v0::AI
     };
 
 
-    extern core_here::Block block;
+    //extern core_here::Block block;
 }
 
 

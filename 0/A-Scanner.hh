@@ -15,7 +15,7 @@ namespace oct::cc::v0::AI
 class Scanner : public yyFlexLexer
 {
 public:
-    Scanner(std::ifstream *in);
+    Scanner(std::ifstream *in,core_here::Block&);
     ~Scanner();
 
     using FlexLexer::yylex;
@@ -23,6 +23,7 @@ public:
 
 private:
     parser::semantic_type *yylval = nullptr;
+    core_here::Block& block;
 };
 
 }

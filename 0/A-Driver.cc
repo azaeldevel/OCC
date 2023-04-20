@@ -26,12 +26,23 @@
 
 namespace oct::cc::v0::AI
 {
+    Driver::Driver() : block(new core_here::Block),block_new(true)
+    {
+    }
+    Driver::Driver(core_here::Block& b) : block(&b),block_new(false)
+    {
+    }
     Driver::~Driver()
     {
         for(Source& s : sources)
         {
             s.stream->close();
             delete s.stream;
+        }
+        if(block_new)
+        {
+            delete block;
+            block = NULL;
         }
     }
 
@@ -50,9 +61,9 @@ namespace oct::cc::v0::AI
 
     bool Driver::parse(std::ifstream* stream)
     {
-        Scanner scanner(stream);
+        Scanner scanner(stream,*block);
         unit = NULL;
-        parser parser(scanner,*this,&unit);
+        parser parser(scanner,*this,&unit,*block);
         if(parser.parse() != 0) return false;
         return true;
     }

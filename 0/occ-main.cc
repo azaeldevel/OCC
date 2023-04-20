@@ -34,6 +34,7 @@ int main (int argc, char* argv[])
     std::fstream outstream;
     std::filesystem::path outpath;
     std::list<std::filesystem::path> inputs;
+    core_here::Block block;
 
 	for(size_t i = 0; i < (size_t)argc; i++)
 	{

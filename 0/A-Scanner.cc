@@ -3,7 +3,7 @@
 
 namespace oct::cc::v0::AI
 {
-Scanner::Scanner(std::ifstream *in) : yyFlexLexer(in)
+Scanner::Scanner(std::ifstream *in,core_here::Block& b) : yyFlexLexer(in),block(b)
 {
     //loc = new yy::location_type();
 }
