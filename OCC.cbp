@@ -18,7 +18,7 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
+					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A.ll" />
 				</ExtraCommands>
 			</Target>

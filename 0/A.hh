@@ -527,21 +527,6 @@ namespace oct::cc::v0::AI
             void generate(std::ostream&)const;
         };
 
-        struct compound_statement : public statement
-        {
-            const statement* statement_list;
-        };
-
-        struct function_implementation : public statement
-        {
-            const type_specifier* specifiers;
-            const declarator* declaration;
-            const compound_statement* body;
-
-            void print(std::ostream&)const;
-            void generate(std::ostream&)const;
-
-        };
         struct declaration : public statement
         {
             const type_specifier* specifiers;
@@ -552,13 +537,13 @@ namespace oct::cc::v0::AI
         };
 
 
-        struct external_declaration : public statement
+        struct translation_unit : public statement
         {
-            const function_implementation* func;
-            const declaration* decl;
+            const declaration* declarations;
+            const instruction* instructions;
 
             void print(std::ostream&)const;
-            void generate(std::ostream&) const;
+            void generate(std::ostream&)const;
         };
 
     }

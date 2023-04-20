@@ -29,7 +29,37 @@ namespace oct::cc::v0::AII
     namespace core_here = oct::core::v3;
 
 
-    extern core_here::Block block;
+    namespace nodes
+    {
+
+
+        struct compound_statement : public statement
+        {
+            const statement* statement_list;
+        };
+
+
+        struct function_implementation : public statement
+        {
+            const type_specifier* specifiers;
+            const declarator* declaration;
+            const compound_statement* body;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+
+        };
+
+
+        struct external_declaration : public statement
+        {
+            const function_implementation* func;
+            const declaration* decl;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&) const;
+        };
+    }
 }
 
 

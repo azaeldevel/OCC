@@ -34,7 +34,7 @@
 
 %parse-param { AI_here::Scanner& scanner }
 %parse-param { AI_here::Driver& driver }
-%parse-param { const AI_here::nodes::external_declaration** unit}
+%parse-param { const AI_here::nodes::translation_unit** unit}
 %parse-param { core_here::Block& block}
 
 %code
@@ -168,13 +168,8 @@
 %type <int> registers_16b
 %type <long long>literals_integer
 
-%type <AI_here::nodes::statement*> statement
 %type <AI_here::nodes::instruction_mov*> instruction_mov
 %type <AI_here::nodes::instruction_int*> instruction_int
-%type <AI_here::nodes::statement*> statement_list
-%type <AI_here::nodes::return_statement*> statement_return
-%type <AI_here::nodes::compound_statement*> compound_statement
-%type <AI_here::nodes::function_implementation*> function_implementation
 %type <AI_here::nodes::direct_declarator*> direct_declarator
 %type <AI_here::nodes::declarator*> declarator
 %type <AI_here::nodes::type_specifier*> type_specifier
@@ -185,10 +180,10 @@
 %type <AI_here::nodes::init_declarator*> init_declarator_list
 %type <AI_here::nodes::initializer*> initializer
 %type <AI_here::nodes::declaration*> declaration
-%type <AI_here::nodes::assembler_instruction*>assembler_instruction
-%type <AI_here::nodes::external_declaration*> external_declaration
-%type <AI_here::nodes::external_declaration*> translation_unit
-
+%type <AI_here::nodes::assembler_instruction*> assembler_instruction
+%type <AI_here::nodes::assembler_instruction*> instruction_list
+%type <AI_here::nodes::translation_unit*> translation_unit
+type <AI_here::nodes::declaration*> declaration_list
 
 %start translation_unit
 %%
@@ -331,35 +326,8 @@ assembler_instruction :
 
 
 
-statement_return  :
-	RETURN ';'
-	{
-        $$ = block.create<AI_here::nodes::return_statement>();
-	}
-    |
-	RETURN literals_integer ';'
-	{
-        $$ = block.create<AI_here::nodes::return_statement>();
-	}
-	;
 
 
-statement :
-    compound_statement
-    {
-        $$ = $1;
-    }
-    |
-    assembler_instruction
-    {
-        $$ = $1;
-    }
-    |
-    statement_return
-    {
-        $$ = $1;
-    }
-    ;
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
@@ -428,8 +396,8 @@ direct_declarator : IDENTIFIER
 	;
 
 
-statement_list :
-    statement
+instruction_list :
+    assembler_instruction
 	{
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
@@ -437,7 +405,7 @@ statement_list :
 		//if(reinterpret_cast<const AI_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
 	}
 	|
-	statement_list statement
+	instruction_list assembler_instruction
 	{
 		//std::cout << "statement_list : statement_list statement\n";
         //if($$) if(reinterpret_cast<const AI_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
@@ -625,21 +593,7 @@ declaration_specifiers :
 	}
 	;
 
-compound_statement :
-	'{' statement_list '}'
-    {
-		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = block.create<AI_here::nodes::compound_statement>();
-        $$->statement_list = $2;
-    }
-    |
-	'{' '}'
-    {
-        $$ = block.create<AI_here::nodes::compound_statement>();
-        $$->statement_list = NULL;
-    }
-	;
-//6.5
+
 declaration :
 	declaration_specifiers
 	{
@@ -659,71 +613,28 @@ declaration :
 	;
 
 
-function_implementation :
-	declaration_specifiers declarator compound_statement
-	{
-        //std::cout << "function_implementation - 2\n";
-        $$ = block.create<AI_here::nodes::function_implementation>();
-        $$->body = $3;
-        $$->declaration = $2;
-        $$->specifiers = $1;
-        //std::cout << $$->declaration->direct->id->name << "\n";
-        //std::cout << "function_implementation - 2\n";
-	}
-	|
-	declarator compound_statement
-	{
-        std::cout << "function_implementation - 3\n";
-        $$ = block.create<AI_here::nodes::function_implementation>();
-        $$->body = $2;
-        $$->declaration = $1;
-        $$->specifiers = NULL;
-        //std::cout << "Function 3\n";
-	}
-	;
 
-
-external_declaration :
-	function_implementation
-	{
-		//std::cout << "external_declaration : function_implementation\n";
-        //$1->print(std::cout);
-        $$ = block.create<AI_here::nodes::external_declaration>();
-        $$->func = $1;
-        $$->decl = NULL;
-	}
-	|
-	declaration ';'
-	{
-		//std::cout << "storage_class_specifier : declaration ';'\n";
-		//std::cout << ";\n";
-		//$1->print(std::cout);
-        $$ = block.create<AI_here::nodes::external_declaration>();
-        $$->func = NULL;
-        $$->decl = $1;
-	}
-	;
-
-
-translation_unit :
-    external_declaration
-	{
-		//std::cout << "external_declaration\n";
+declaration_list :
+    declaration
+    {
 		$$ = $1;
-		*unit = $1;
-	}
-	|
-	translation_unit external_declaration
-	{
-		//std::cout << "external_declaration translation_unit\n";
-        static AI_here::nodes::external_declaration* statement_prev = NULL;
+    }
+    |
+    declaration_list declaration
+    {
+        static AI_here::nodes::declaration* statement_prev = NULL;
 		$$ = $1;
-		//$2->print(std::cout);
         if(not statement_prev) statement_prev = $1;
 		statement_prev->next = $2;
 
 
 		statement_prev = $2;
+    }
+    ;
+
+translation_unit :
+    declaration_list instruction_list
+	{
 	}
 	;
 %%

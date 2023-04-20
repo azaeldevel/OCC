@@ -32,4 +32,85 @@
 namespace oct::cc::v0::AII
 {
 
+    namespace nodes
+    {
+        void function_implementation::print(std::ostream& out) const
+        {
+            if(specifiers) specifiers->print(out);
+            out << " ";
+            if(declaration) declaration->print(out);
+            out << "()\n{\n";
+            if(body->statement_list)
+            {
+                //std::cout << "statement_list\n";
+                const statement* stmt = body->statement_list;
+                while(stmt)
+                {
+                    if(stmt->is_instruction)
+                    {
+                        switch(((instruction*)stmt)->inst)
+                        {
+                        case Tokens::MOV :
+                            //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                            //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                            ((move_8b_reg_byte*)stmt)->print(out);
+                            break;
+                        case Tokens::INT :
+                            //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                            ((instruction_int*)stmt)->print(out);
+                            break;
+                        default:
+                            out << "\n\tunknow";
+                        }
+                    }
+                    stmt = (const statement*)stmt->next;
+                }
+            }
+            out << "\n}";
+        }
+        void function_implementation::generate(std::ostream& out) const
+        {
+            if(specifiers) specifiers->generate(out);
+            if(declaration) declaration->generate(out);
+            if(body->statement_list)
+            {
+                //std::cout << "statement_list\n";
+                const statement* stmt = body->statement_list;
+                while(stmt)
+                {
+                    if(stmt->is_instruction)
+                    {
+                        switch(((instruction*)stmt)->inst)
+                        {
+                        case Tokens::MOV :
+                            //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
+                            //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
+                            ((move_8b_reg_byte*)stmt)->generate(out);
+                            break;
+                        case Tokens::INT :
+                            //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
+                            ((instruction_int*)stmt)->generate(out);
+                            break;
+                        default:
+                            ;
+                        }
+                    }
+                    stmt = (const statement*)stmt->next;
+                }
+            }
+        }
+
+
+
+        void external_declaration::print(std::ostream& out) const
+        {
+            if(decl) decl->print(out);
+            if(func) func->print(out);
+        }
+        void external_declaration::generate(std::ostream& out) const
+        {
+            if(decl) decl->generate(out);
+            if(func) func->generate(out);
+        }
+    }
 }
