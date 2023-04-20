@@ -51,7 +51,7 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	AII_here::SymbolTable symbols;
+	A_here::SymbolTable symbols;
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
