@@ -4,12 +4,12 @@
 #include <string>
 #include <fstream>
 #include <list>
-#include <oas-intel-parser-A+.hh>
+#include <A+/oas-intel-parser.hh>
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>
 #endif
-#include <location.hh>
+#include <A+/location.hh>
 
 namespace AII_here = oct::cc::v0::AII;
 namespace oct::cc::v0::AII

@@ -22,7 +22,7 @@
 
 #include "A-Driver.hh"
 #include "A-Scanner.hh"
-#include <AI/oas-intel-parser-A.hh>
+#include <A/oas-intel-parser.hh>
 
 namespace oct::cc::v0::AI
 {

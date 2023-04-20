@@ -22,9 +22,9 @@
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
-			<Target title="liboctetos-cc-AI">
-				<Option output="bin/Debug/octetos-cc-AI" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/Debug/" />
+			<Target title="liboctetos-cc-A+">
+				<Option output="bin/Debug/octetos-cc-A+" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/AI" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="0/main.a+ --output bin/Debug/boot.bin" />
@@ -34,8 +34,6 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bison  --report-file=$(TARGET_OUTPUT_DIR)reposrt.txt -o $(TARGET_OUTPUT_DIR)oas-intel-parser-A+.cc  $(PROJECT_DIR)0/oas-intel-parser-A+.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)oas-intel-A+.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A+.ll" />
 					<Add before="bison  --report-file=$(TARGET_OUTPUT_DIR)reposrt.txt -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser-A.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)AI/oas-intel-A.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A.ll" />
 				</ExtraCommands>
@@ -57,9 +55,9 @@
 					<Add before="flex++ -PAI -o $(TARGET_OUTPUT_DIR)AI/oas-intel-A.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A.ll" />
 				</ExtraCommands>
 			</Target>
-			<Target title="liboctetos-cc-AII">
-				<Option output="bin/Debug/octetos-cc-AII" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/Debug/" />
+			<Target title="liboctetos-cc-A++">
+				<Option output="bin/Debug/octetos-cc-A++" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/AII" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="0/main.a+ --output bin/Debug/boot.bin" />
@@ -69,10 +67,8 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bison  --report-file=$(TARGET_OUTPUT_DIR)reposrt.txt -o $(TARGET_OUTPUT_DIR)oas-intel-parser-A+.cc  $(PROJECT_DIR)0/oas-intel-parser-A+.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)oas-intel-A+.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A+.ll" />
-					<Add before="bison  --report-file=$(TARGET_OUTPUT_DIR)reposrt.txt -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser-A.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)AI/oas-intel-A.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A.ll" />
+					<Add before="bison  --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)AII/report.txt -o $(TARGET_OUTPUT_DIR)AII/oas-intel-parser-A+.cc  $(PROJECT_DIR)0/oas-intel-parser-A+.yy" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)AII/oas-intel-A+.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A+.ll" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -92,59 +88,59 @@
 		</Unit>
 		<Unit filename="0/A+-Driver.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A+-Driver.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A+-Scanner.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A+-Scanner.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A+.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A+.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/A-Driver.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A-Driver.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A-Scanner.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A-Scanner.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/AI.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/AI.hh">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
@@ -160,19 +156,19 @@
 		</Unit>
 		<Unit filename="0/oas-intel-lexer-A+.ll">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/oas-intel-lexer-A.ll">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/oas-intel-parser-A+.yy">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Unit filename="0/oas-intel-parser-A.yy">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/oas-main.cc">
 			<Option target="oas-intel-dbg" />
@@ -180,19 +176,19 @@
 		</Unit>
 		<Unit filename="bin/Debug/AI/oas-intel-A.lexer.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="bin/Debug/AI/oas-intel-parser-A.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AI" />
+			<Option target="liboctetos-cc-A+" />
 		</Unit>
-		<Unit filename="bin/Debug/oas-intel-A+.lexer.cc">
+		<Unit filename="bin/Debug/AII/oas-intel-A+.lexer.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
-		<Unit filename="bin/Debug/oas-intel-parser-A+.cc">
+		<Unit filename="bin/Debug/AII/oas-intel-parser-A+.cc">
 			<Option target="oas-intel-devel" />
-			<Option target="liboctetos-cc-AII" />
+			<Option target="liboctetos-cc-A++" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

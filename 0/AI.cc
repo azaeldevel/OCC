@@ -19,7 +19,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <AI/oas-intel-parser-A.hh>
+#include <A/oas-intel-parser.hh>
 
 #include <limits>
 #include <core/3/Exception.hh>

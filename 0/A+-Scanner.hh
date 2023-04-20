@@ -5,7 +5,7 @@
 #if ! defined(yyFlexLexerOnce)
     #include <FlexLexer.h>
 #endif
-#include <oas-intel-parser-A+.hh>
+#include <A+/oas-intel-parser.hh>
 
 namespace oct::cc::v0::AII
 {

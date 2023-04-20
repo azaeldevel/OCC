@@ -7,7 +7,7 @@
 	#include <string.h>
 	//#include <core/3/math.hh>
 	#include <A-Scanner.hh>
-	#include <AI/oas-intel-parser-A.hh>
+	#include <A/oas-intel-parser.hh>
 	#include <AI.hh>
 	namespace AI_here = oct::cc::v0::AI;
 	namespace core_here = oct::core::v3;

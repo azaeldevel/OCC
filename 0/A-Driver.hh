@@ -4,13 +4,13 @@
 #include <string>
 #include <fstream>
 #include <list>
-#include <AI/oas-intel-parser-A.hh>
+#include <A/oas-intel-parser.hh>
 #include <AI.hh>
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>
 #endif
-#include <AI/location.hh>
+#include <A/location.hh>
 
 namespace AI_here = oct::cc::v0::AI;
 namespace oct::cc::v0::AI
@@ -26,7 +26,7 @@ public:
 	void print(std::ostream&)const;
 	bool generate(std::ostream&)const;
 
-	AI_here::location loc;
+	//location loc;
 
 private:
     bool parse(std::ifstream*);
