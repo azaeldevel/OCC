@@ -21,14 +21,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#include <core/3/math.hh>
+#include <core/3/math.hh>
 #include <iostream>
 #include <string>
-#include <stdio.h>
-#include <filesystem>
 #include <list>
-#include <vector>
-#include <variant>
-#include <core/3/math.hh>
+
 
 #include "oct-core-v3.hh"
 
@@ -361,252 +360,219 @@ namespace oct::cc::v0::AI
 
 		return std::to_string((int)t);
 	}
-void add_identifier(int line,const char* filename,const char* word, int leng);
 
-
-Tokens integer_token(long long number);
-
-
-namespace nodes
-{
-    struct declarator;
-    typedef unsigned int Line;
-    const char* register_to_string(Tokens);
-    const char* type_specifier_to_string(Tokens);
-
-    struct Node
+    namespace nodes
     {
-        Tokens token;
-        //std::vector<Symbol*> childs;
-        Line line;
-        //std::string strvalue;
-    };
-    struct statement
-    {
-        bool is_instruction;
-        const statement* next;
+        struct declarator;
+        typedef unsigned int Line;
+        const char* register_to_string(Tokens);
+        const char* type_specifier_to_string(Tokens);
 
-        statement();
-
-        void print(std::ostream&)const;
-    };
-    struct instruction : public statement
-    {
-        Tokens inst;
-    };
-    struct assembler_instruction : public instruction
-    {
-    };
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
-    struct Integer : public Node
-    {
-        long long number;
-        char format;//Decimal, Hexadecimal
-
-        Tokens reduced_token()const;
-
-    };
-    struct identifier : public Node
-    {
-        int number;
-        std::string name;
-        long long llvalue;
-        int line;
-        unsigned int memory;
-    };
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
-
-
-
-    struct instruction_mov : public assembler_instruction
-    {
-        enum class type_operand : unsigned char
+        struct Node
         {
-            none,
-            integer,
-            letter,
+            const Node* next;
+
+            Node();
         };
 
-        //unsigned char size;//8-bits, 16-bits
-        void print(std::ostream&)const;
-    };
+        struct statement : public Node
+        {
+            bool is_instruction;
 
-    struct move_8b_reg_byte : public instruction_mov
+            statement();
+
+            void print(std::ostream&)const;
+        };
+        struct instruction : public statement
+        {
+            Tokens inst;
+        };
+        struct assembler_instruction : public instruction
+        {
+        };
+
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
+        struct Integer : public Node
+        {
+            long long number;
+            char format;//Decimal, Hexadecimal
+
+            Tokens reduced_token()const;
+
+        };
+        struct identifier : public Node
+        {
+            int number;
+            std::string name;
+            long long llvalue;
+            int line;
+            unsigned int memory;
+        };
+
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
+
+
+
+        struct instruction_mov : public assembler_instruction
+        {
+            enum class type_operand : unsigned char
+            {
+                none,
+                integer,
+                letter,
+            };
+
+            //unsigned char size;//8-bits, 16-bits
+            void print(std::ostream&)const;
+        };
+
+        struct move_8b_reg_byte : public instruction_mov
+        {
+            Tokens registe;
+            unsigned char byte;
+            char type;//I : integer, C : char
+
+            void generate(std::ostream& ) const;
+            void print(std::ostream&)const;
+        };
+
+        struct instruction_int : public assembler_instruction
+        {
+            unsigned char service;
+
+            void generate(std::ostream& ) const;
+            void print(std::ostream&)const;
+        };
+
+        struct return_statement : public statement
+        {
+        };
+
+
+
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
+
+
+        struct type_qualifer : public statement
+        {
+            Tokens qualifer;
+        };
+
+        struct initializer : public statement
+        {
+            Tokens data_type;
+
+            void print(std::ostream& out) const;
+        };
+
+
+        struct const_expression : public initializer
+        {
+        };
+        template<typename T> struct initializer_literal : public const_expression
+        {
+            T value;
+
+            void print(std::ostream& out) const
+            {
+                //std::cout << "Valor : \n";
+                out << value;
+            }
+        };
+
+
+        struct init_declarator : public statement
+        {
+            const declarator* dec;
+            const initializer* value;
+
+            void print(std::ostream&)const;
+        };
+
+
+        struct pointer : public statement
+        {
+            std::list<type_qualifer*>* qualifiers;
+            const pointer* point;
+        };
+
+        struct direct_declarator : public statement
+        {
+            const identifier* id;
+            const direct_declarator* direct;
+            const identifier* identifier_list;
+
+            void print(std::ostream&)const;
+        };
+
+
+        struct declarator : public statement
+        {
+            const pointer* point;
+            const direct_declarator* direct;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+        };
+
+
+        struct type_specifier : public statement
+        {
+            Tokens type;
+
+            void print(std::ostream& out) const;
+            void generate(std::ostream&)const;
+        };
+
+        struct compound_statement : public statement
+        {
+            const statement* statement_list;
+        };
+
+        struct function_implementation : public statement
+        {
+            const type_specifier* specifiers;
+            const declarator* declaration;
+            const compound_statement* body;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+
+        };
+        struct declaration : public statement
+        {
+            const type_specifier* specifiers;
+            const init_declarator* list;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+        };
+
+
+        struct external_declaration : public statement
+        {
+            const function_implementation* func;
+            const declaration* decl;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&) const;
+        };
+
+    }
+
+    class SymbolTable : public std::list<nodes::identifier*>
     {
-        Tokens registe;
-        unsigned char byte;
-        char type;//I : integer, C : char
 
-        void generate(std::ostream& ) const;
-        void print(std::ostream&)const;
-    };
+    public:
 
-    struct instruction_int : public assembler_instruction
-    {
-        unsigned char service;
+    protected:
 
-        void generate(std::ostream& ) const;
-        void print(std::ostream&)const;
-    };
-
-    struct return_statement : public statement
-    {
-    };
-
-
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
-
-
-    struct type_qualifer : public statement
-    {
-        Tokens qualifer;
-    };
-
-    struct initializer : public statement
-    {
-		Tokens data_type;
-
-		void print(std::ostream& out) const;
-    };
-
-
-    struct const_expression : public initializer
-    {
-    };
-    template<typename T> struct initializer_literal : public const_expression
-    {
-		T value;
-
-		void print(std::ostream& out) const
-		{
-		    //std::cout << "Valor : \n";
-            out << value;
-		}
-    };
-
-
-    struct init_declarator : public statement
-    {
-		const declarator* dec;
-		const initializer* value;
-
-        void print(std::ostream&)const;
-    };
-
-
-    struct pointer : public statement
-    {
-        std::list<type_qualifer*>* qualifiers;
-        const pointer* point;
-    };
-
-    struct direct_declarator : public statement
-    {
-        const identifier* id;
-        const direct_declarator* direct;
-        const identifier* identifier_list;
-
-        void print(std::ostream&)const;
-    };
-
-
-    struct declarator : public statement
-    {
-        const pointer* point;
-        const direct_declarator* direct;
-
-        void print(std::ostream&)const;
-        void generate(std::ostream&)const;
-    };
-
-
-    struct type_specifier : public statement
-    {
-        Tokens type;
-
-		void print(std::ostream& out) const;
-        void generate(std::ostream&)const;
-    };
-
-    struct compound_statement : public statement
-    {
-        const statement* statement_list;
-    };
-
-    struct function_implementation : public statement
-    {
-        const type_specifier* specifiers;
-        const declarator* declaration;
-        const compound_statement* body;
-
-        void print(std::ostream&)const;
-        void generate(std::ostream&)const;
+    private:
 
     };
-	struct declaration : public statement
-    {
-    	const type_specifier* specifiers;
-    	const init_declarator* list;
-
-        void print(std::ostream&)const;
-        void generate(std::ostream&)const;
-    };
-
-
-	struct external_declaration : public statement
-    {
-    	const function_implementation* func;
-    	const declaration* decl;
-
-        void print(std::ostream&)const;
-        void generate(std::ostream&) const;
-    };
-
-}
-
-
-
-
-
-
-class SymbolTable : public std::list<nodes::identifier*>
-{
-
-public:
-
-protected:
-
-private:
-
-};
-
-class File
-{
-public:
-	File(SymbolTable& symbols);
-	~File();
-
-	FILE* get_file();
-	void* get_scanner();
-
-	const std::filesystem::path& get_filename()const;
-	bool open(const std::filesystem::path& file);
-protected:
-
-private:
-	FILE* file;
-	std::filesystem::path filename;
-	void* buffer;
-	size_t index;
-	void* scanner;
-	SymbolTable* symbols;
-};
 
 
     extern core_here::Block block;

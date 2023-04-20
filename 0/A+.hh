@@ -21,16 +21,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <filesystem>
-#include <list>
-#include <vector>
-#include <variant>
-#include <core/3/math.hh>
 
-#include "oct-core-v3.hh"
+#include "A.hh"
 
 namespace oct::cc::v0::AII
 {

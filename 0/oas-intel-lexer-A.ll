@@ -1,14 +1,9 @@
 
 %{
-	#include <assert.h>
-	#include <limits.h>
-	#include <stdlib.h>
-	#include <stdio.h>
-	#include <string.h>
-	//#include <core/3/math.hh>
+	#include <A.hh>
 	#include <A-Scanner.hh>
 	#include <A/oas-intel-parser.hh>
-	#include <A.hh>
+
 	namespace AI_here = oct::cc::v0::AI;
 	namespace core_here = oct::core::v3;
 	core_here::Block AI_here::block;
@@ -110,9 +105,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
 				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
 				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
-				integer->line = yylineno;
+				//integer->line = yylineno;
 				integer->format = 'H';
-				integer->token = AI_here::Tokens::LITERAL_INTEGER_HEX;
+				//integer->token = AI_here::Tokens::LITERAL_INTEGER_HEX;
 				integer->number = std::stoll(yytext, nullptr, 16);
 				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
@@ -122,9 +117,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				//std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
 				AI_here::nodes::Integer* integer = AI_here::block.create<AI_here::nodes::Integer>();
 				//AI_here::symbol_current = (AI_here::nodes::Symbol*)integer;
-				integer->line = yylineno;
+				//integer->line = yylineno;
 				integer->format = 'D';
-				integer->token = AI_here::Tokens::LITERAL_INTEGER_DEC;
+				//integer->token = AI_here::Tokens::LITERAL_INTEGER_DEC;
 				integer->number = std::stoll(yytext);
 				//integer->strvalue = yytext;
 				yylval->build<long long>(integer->number);
@@ -132,9 +127,9 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 			}
 {LITERAL_CHAR}		{
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-				AI_here::nodes::Node* letter = AI_here::block.create<AI_here::nodes::Node>();
-				letter->token = (AI_here::Tokens)yytext[1];
-				letter->line = yylineno;
+				//AI_here::nodes::Node* letter = AI_here::block.create<AI_here::nodes::Node>();
+				//letter->token = (AI_here::Tokens)yytext[1];
+				//letter->line = yylineno;
 				//letter->strvalue = yytext;
 				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "  " << letter->strvalue << "\n";
 				yylval->build<char>(yytext[1]);

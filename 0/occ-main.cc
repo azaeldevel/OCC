@@ -17,19 +17,13 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//#include <oas-intel-parser-A+.hh>
-#include <stdio.h>  // printf.
-#include <stdlib.h> // getenv.
-#include <iostream>
-#include <fstream>
 #include <string.h>
 #include <iostream>
 #include <fstream>
 #include <list>
-#include "A+.hh"
-#include "A+-Driver.hh"
-#include "AI.hh"
+
 #include "A-Driver.hh"
+#include "A+-Driver.hh"
 
 
 namespace AII_here = oct::cc::v0::AII;
@@ -87,7 +81,8 @@ int main (int argc, char* argv[])
     outstream.flush();
     outstream.close();
 
-	//outstream.close();
+	std::cout << "Todo correcto\n";
+
 	return EXIT_SUCCESS;
 }
 

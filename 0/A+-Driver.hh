@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <list>
+#include <A+.hh>
 #include <A+/oas-intel-parser.hh>
 
 #if ! defined(yyFlexLexerOnce)
@@ -25,7 +26,7 @@ public:
 	void print(std::ostream&)const;
 	bool generate(std::ostream&)const;
 
-	AII_here::location loc;
+	//AII_here::location loc;
 
 private:
     bool parse(std::ifstream*);

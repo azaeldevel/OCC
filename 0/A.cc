@@ -33,26 +33,6 @@ namespace oct::cc::v0::AI
 {
 
 
-File::File(SymbolTable& s) : file(NULL),buffer(NULL),scanner(NULL),symbols(&s)
-{
-}
-
-void* File::get_scanner()
-{
-	return scanner;
-}
-FILE* File::get_file()
-{
-	return file;
-}
-
-
-const std::filesystem::path& File::get_filename() const
-{
-	return filename;
-}
-
-
 namespace nodes
 {
     const char* register_to_string(Tokens tk)
@@ -104,11 +84,11 @@ namespace nodes
 
 
 
+    Node::Node() : next(NULL)
+    {
+    }
 
-
-
-
-    statement::statement() : is_instruction(false),next(NULL)
+    statement::statement() : is_instruction(false)
     {
     }
     void statement::print(std::ostream&)const
@@ -322,7 +302,7 @@ namespace nodes
 						out << "\n\tunknow";
                     }
                 }
-                stmt = stmt->next;
+                stmt = (const statement*)stmt->next;
             }
         }
         out << "\n}";
@@ -354,7 +334,7 @@ namespace nodes
                         ;
                     }
                 }
-                stmt = stmt->next;
+                stmt = (const statement*)stmt->next;
             }
         }
     }
