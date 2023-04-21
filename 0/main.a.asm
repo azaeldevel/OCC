@@ -48,6 +48,9 @@ boot:
 	mov al 'z';
 	mov ah 0x0e;
 	int 0x10;
+	mov al 'a';
+	mov ah 0x0e;
+	int 0x10;
 	mov al 'e';
 	mov ah 0x0e;
 	int 0x10;

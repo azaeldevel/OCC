@@ -263,6 +263,9 @@ namespace nodes
             case Tokens::UNSIGNED :
                 out << "unsigned";
                 break;
+            case Tokens::BYTE :
+                out << "byte";
+                break;
 			default:
 				;
         }
@@ -303,12 +306,56 @@ namespace nodes
 
     void translation_unit::print(std::ostream& out)const
     {
-        if(declarations) declarations->print(out);
-        if(instructions) instructions->print(out);
+        const declaration* dec = declarations;
+        while(dec)
+        {
+            dec->print(out);
+            if(dec->next) out << "\n";
+
+            dec = (const declaration*)dec->next;
+        }
+
+        const instruction* inst = instructions;
+        while(inst)
+        {
+            if(inst->is_instruction)
+            {
+                switch(((instruction*)inst)->inst)
+                {
+                    case Tokens::MOV :
+                        ((move_8b_reg_byte*)inst)->print(out);
+                        break;
+                    case Tokens::INT :
+                        ((instruction_int*)inst)->print(out);
+                        break;
+                    default:
+                        ;
+                }
+            }
+            inst = (const instruction*)inst->next;
+        }
     }
     void translation_unit::generate(std::ostream& out) const
     {
-        ;
+        const instruction* inst = instructions;
+        while(inst)
+        {
+            if(inst->is_instruction)
+            {
+                switch(((instruction*)inst)->inst)
+                {
+                    case Tokens::MOV :
+                        ((move_8b_reg_byte*)inst)->generate(out);
+                        break;
+                    case Tokens::INT :
+                        ((instruction_int*)inst)->generate(out);
+                        break;
+                    default:
+                        ;
+                }
+            }
+            inst = (const instruction*)inst->next;
+        }
     }
 }
 
