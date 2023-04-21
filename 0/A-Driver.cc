@@ -73,14 +73,7 @@ namespace oct::cc::v0::AI
 
     void Driver::print(std::ostream& out) const
     {
-        /*const nodes::translation_unit* ext = unit;
-        while(ext)
-        {
-            ext->print(out);
-            if(ext->next) out << "\n";
-
-            ext = (nodes::translation_unit*)ext->next;
-        }*/
+        if(unit) unit->print(out);
     }
     bool Driver::generate(std::ostream& out) const
     {

@@ -168,8 +168,8 @@
 %type <int> registers_16b
 %type <long long>literals_integer
 
-%type <AI_here::nodes::instruction_mov*> instruction_mov
-%type <AI_here::nodes::instruction_int*> instruction_int
+
+
 %type <AI_here::nodes::direct_declarator*> direct_declarator
 %type <AI_here::nodes::declarator*> declarator
 %type <AI_here::nodes::type_specifier*> type_specifier
@@ -180,10 +180,14 @@
 %type <AI_here::nodes::init_declarator*> init_declarator_list
 %type <AI_here::nodes::initializer*> initializer
 %type <AI_here::nodes::declaration*> declaration
-%type <AI_here::nodes::assembler_instruction*> assembler_instruction
 %type <AI_here::nodes::assembler_instruction*> instruction_list
 %type <AI_here::nodes::translation_unit*> translation_unit
-type <AI_here::nodes::declaration*> declaration_list
+%type <AI_here::nodes::assembler_instruction*> assembler_instruction
+%type <AI_here::nodes::instruction_label*> instruction_label
+%type <AI_here::nodes::instruction_mov*> instruction_mov
+%type <AI_here::nodes::instruction_int*> instruction_int
+
+%type <AI_here::nodes::declaration*> declaration_list
 
 %start translation_unit
 %%
@@ -312,6 +316,14 @@ instruction_int : INT literals_integer ';'
 	}
 	;
 
+
+instruction_label : IDENTIFIER ':'
+	{
+		$$ = block.create<AI_here::nodes::instruction_label>();
+		$$->id = $1;
+	}
+	;
+
 assembler_instruction :
     instruction_mov
     {
@@ -319,6 +331,11 @@ assembler_instruction :
     }
     |
     instruction_int
+    {
+        $$ = $1;
+    }
+    |
+    instruction_label
     {
         $$ = $1;
     }
@@ -498,12 +515,12 @@ init_declarator : declarator
 		$$->value = NULL;
 	}
 	|
-	declarator '=' initializer
+	declarator  initializer
 	{
 		//std::cout << "init_declarator : declarator '=' initializer\n";
 		$$ = block.create<AI_here::nodes::init_declarator>();
 		$$->dec = $1;
-		$$->value = $3;
+		$$->value = $2;
 	}
 	;
 
@@ -543,6 +560,14 @@ type_specifier :
         $$->type = AI_here::Tokens::INT;
     }
     |
+    LONG
+    {
+		//std::cout << "type_specifier : INT\n";
+		//std::cout << "int ";
+        $$ = block.create<AI_here::nodes::type_specifier>();
+        $$->type = AI_here::Tokens::LONG;
+    }
+    |
     FLOAT
     {
 		//std::cout << "type_specifier : FLOAT\n";
@@ -571,6 +596,12 @@ type_specifier :
 		//std::cout << "unsigned ";
         $$ = block.create<AI_here::nodes::type_specifier>();
         $$->type = AI_here::Tokens::UNSIGNED;
+    }
+    |
+    BYTE
+    {
+        $$ = block.create<AI_here::nodes::type_specifier>();
+        $$->type = AI_here::Tokens::BYTE;
     }
     ;
 
@@ -615,12 +646,12 @@ declaration :
 
 
 declaration_list :
-    declaration
+    declaration ';'
     {
 		$$ = $1;
     }
     |
-    declaration_list declaration
+    declaration_list declaration ';'
     {
         static AI_here::nodes::declaration* statement_prev = NULL;
 		$$ = $1;
@@ -635,6 +666,9 @@ declaration_list :
 translation_unit :
     declaration_list instruction_list
 	{
+        $$ = block.create<AI_here::nodes::translation_unit>();
+        $$->declarations = $1;
+        $$->instructions = $2;
 	}
 	;
 %%

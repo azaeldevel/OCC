@@ -35,7 +35,7 @@
 
 %parse-param { AII_here::Scanner& scanner }
 %parse-param { AII_here::Driver& driver }
-%parse-param { const A_here::nodes::external_declaration** unit}
+%parse-param { const AII_here::nodes::external_declaration** unit}
 %parse-param { core_here::Block& block}
 
 %code
@@ -174,8 +174,8 @@
 %type <A_here::nodes::instruction_int*> instruction_int
 %type <A_here::nodes::statement*> statement_list
 %type <A_here::nodes::return_statement*> statement_return
-%type <A_here::nodes::compound_statement*> compound_statement
-%type <A_here::nodes::function_implementation*> function_implementation
+%type <AII_here::nodes::compound_statement*> compound_statement
+%type <AII_here::nodes::function_implementation*> function_implementation
 %type <A_here::nodes::direct_declarator*> direct_declarator
 %type <A_here::nodes::declarator*> declarator
 %type <A_here::nodes::type_specifier*> type_specifier
@@ -187,8 +187,8 @@
 %type <A_here::nodes::initializer*> initializer
 %type <A_here::nodes::declaration*> declaration
 %type <A_here::nodes::assembler_instruction*>assembler_instruction
-%type <A_here::nodes::external_declaration*> external_declaration
-%type <A_here::nodes::external_declaration*> translation_unit
+%type <AII_here::nodes::external_declaration*> external_declaration
+%type <AII_here::nodes::external_declaration*> translation_unit
 
 
 %start translation_unit
@@ -630,13 +630,13 @@ compound_statement :
 	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
-        $$ = block.create<A_here::nodes::compound_statement>();
+        $$ = block.create<AII_here::nodes::compound_statement>();
         $$->statement_list = $2;
     }
     |
 	'{' '}'
     {
-        $$ = block.create<A_here::nodes::compound_statement>();
+        $$ = block.create<AII_here::nodes::compound_statement>();
         $$->statement_list = NULL;
     }
 	;
@@ -664,7 +664,7 @@ function_implementation :
 	declaration_specifiers declarator compound_statement
 	{
         //std::cout << "function_implementation - 2\n";
-        $$ = block.create<A_here::nodes::function_implementation>();
+        $$ = block.create<AII_here::nodes::function_implementation>();
         $$->body = $3;
         $$->declaration = $2;
         $$->specifiers = $1;
@@ -675,7 +675,7 @@ function_implementation :
 	declarator compound_statement
 	{
         std::cout << "function_implementation - 3\n";
-        $$ = block.create<A_here::nodes::function_implementation>();
+        $$ = block.create<AII_here::nodes::function_implementation>();
         $$->body = $2;
         $$->declaration = $1;
         $$->specifiers = NULL;
@@ -689,7 +689,7 @@ external_declaration :
 	{
 		//std::cout << "external_declaration : function_implementation\n";
         //$1->print(std::cout);
-        $$ = block.create<A_here::nodes::external_declaration>();
+        $$ = block.create<AII_here::nodes::external_declaration>();
         $$->func = $1;
         $$->decl = NULL;
 	}
@@ -699,7 +699,7 @@ external_declaration :
 		//std::cout << "storage_class_specifier : declaration ';'\n";
 		//std::cout << ";\n";
 		//$1->print(std::cout);
-        $$ = block.create<A_here::nodes::external_declaration>();
+        $$ = block.create<AII_here::nodes::external_declaration>();
         $$->func = NULL;
         $$->decl = $1;
 	}
@@ -717,7 +717,7 @@ translation_unit :
 	translation_unit external_declaration
 	{
 		//std::cout << "external_declaration translation_unit\n";
-        static A_here::nodes::external_declaration* statement_prev = NULL;
+        static AII_here::nodes::external_declaration* statement_prev = NULL;
 		$$ = $1;
 		//$2->print(std::cout);
         if(not statement_prev) statement_prev = $1;

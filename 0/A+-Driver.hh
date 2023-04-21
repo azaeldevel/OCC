@@ -39,7 +39,7 @@ private:
         std::ifstream *stream;
     };
     std::list<Source> sources;
-    const A_here::nodes::external_declaration* unit;
+    const nodes::external_declaration* unit;
     core_here::Block* block;
     bool block_new;
 

@@ -48,16 +48,16 @@ namespace oct::cc::v0::AII
                 {
                     if(stmt->is_instruction)
                     {
-                        switch(((instruction*)stmt)->inst)
+                        switch(((A_here::nodes::instruction*)stmt)->inst)
                         {
-                        case Tokens::MOV :
+                        case A_here::Tokens::MOV :
                             //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
                             //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
-                            ((move_8b_reg_byte*)stmt)->print(out);
+                            ((A_here::nodes::move_8b_reg_byte*)stmt)->print(out);
                             break;
-                        case Tokens::INT :
+                        case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
-                            ((instruction_int*)stmt)->print(out);
+                            ((A_here::nodes::instruction_int*)stmt)->print(out);
                             break;
                         default:
                             out << "\n\tunknow";
@@ -80,16 +80,16 @@ namespace oct::cc::v0::AII
                 {
                     if(stmt->is_instruction)
                     {
-                        switch(((instruction*)stmt)->inst)
+                        switch(((A_here::nodes::instruction*)stmt)->inst)
                         {
-                        case Tokens::MOV :
+                        case A_here::Tokens::MOV :
                             //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
                             //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
-                            ((move_8b_reg_byte*)stmt)->generate(out);
+                            ((A_here::nodes::move_8b_reg_byte*)stmt)->generate(out);
                             break;
-                        case Tokens::INT :
+                        case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
-                            ((instruction_int*)stmt)->generate(out);
+                            ((A_here::nodes::instruction_int*)stmt)->generate(out);
                             break;
                         default:
                             ;

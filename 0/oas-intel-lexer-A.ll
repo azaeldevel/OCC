@@ -90,13 +90,13 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 [[:space:]]			;
 
 {IDENTIFIER}	{
-			//std::cout << "Line IDENTIFIER : " << yylineno << "\n";
-			AI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();
-			identifer->line = yylineno;
-			identifer->name = yytext;
-			yylval->build<AI_here::nodes::identifier*>(identifer);
-            return token::IDENTIFIER;
-		}
+                    std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
+                    AI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();
+                    identifer->line = yylineno;
+                    identifer->name = yytext;
+                    yylval->build<AI_here::nodes::identifier*>(identifer);
+                    return token::IDENTIFIER;
+                }
 
 {CONSTANT_INTEGER_HEX}	{
 				//std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
@@ -115,7 +115,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 				return token::CONSTANT_INTEGER_HEX;
 			}
 {CONSTANT_CHAR}		{
-				//std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
+				std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
 				//AI_here::nodes::Node* letter = block.create<AI_here::nodes::Node>();
 				//letter->token = (AI_here::Tokens)yytext[1];
 				//letter->line = yylineno;

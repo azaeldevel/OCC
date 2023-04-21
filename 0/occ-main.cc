@@ -52,7 +52,7 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	A_here::SymbolTable symbols;
+	AI_here::SymbolTable symbols;
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
@@ -71,13 +71,13 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-	AII_here::Driver driver;
-	//AI_here::Driver driver;
+	//AII_here::Driver driver;
+	AI_here::Driver driver;
 	for(const std::filesystem::path& path : inputs)
 	{
         driver.parse(path);
 	}
-    //driver.print(std::cout);
+    driver.print(std::cout);
     driver.generate(outstream);
     outstream.flush();
     outstream.close();

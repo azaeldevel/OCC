@@ -446,6 +446,11 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };
 
+        struct instruction_label : public assembler_instruction
+        {
+            const identifier* id;
+        };
+
         struct return_statement : public statement
         {
         };

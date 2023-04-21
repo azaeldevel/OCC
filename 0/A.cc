@@ -298,6 +298,18 @@ namespace nodes
         ;
     }
 
+
+
+
+    void translation_unit::print(std::ostream& out)const
+    {
+        if(declarations) declarations->print(out);
+        if(instructions) instructions->print(out);
+    }
+    void translation_unit::generate(std::ostream& out) const
+    {
+        ;
+    }
 }
 
 }
