@@ -10,13 +10,13 @@
 
 %code requires
 {
-    #include <A.hh>
-    #include <A-Driver.hh>
+    #include <##NAME####SUCCESSOR_ORNAMENT##.hh>
+    #include <##NAME####SUCCESSOR_ORNAMENT##-Driver.hh>
 	#include <core/3/Exception.hh>
 	namespace ##NAME####SUCCESSOR_DINASTI##_here = oct::cc::v0::##NAME####SUCCESSOR_DINASTI##;
 	namespace core_here = oct::core::v3;
 
-	namespace oct::cc::v0::AI
+	namespace oct::cc::v0::##NAME####SUCCESSOR_DINASTI##
     {
         class Scanner;
         class Driver;
@@ -38,7 +38,7 @@
 
 %code
 {
-    #include <A-Scanner.hh>
+    #include <##NAME####SUCCESSOR_ORNAMENT##-Scanner.hh>
     #undef yylex
     #define yylex scanner.yylex
 }
