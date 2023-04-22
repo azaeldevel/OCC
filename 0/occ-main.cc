@@ -25,6 +25,16 @@
 #include "A-Driver.hh"
 #include "A+-Driver.hh"
 
+bool extension(const std::filesystem::path& path, std::string ext)
+{
+    if(ext.size() >= path.string().size()) return false;
+    for(size_t i = 0; i < ext.size(); i++)
+    {
+        if(path.string()[path.string().size() - i] != ext[ext.size() - i]) return false;
+    }
+
+    return true;
+}
 
 namespace AII_here = oct::cc::v0::AII;
 namespace AI_here = oct::cc::v0::AI;
@@ -71,18 +81,35 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-	//AII_here::Driver driver;
-	AI_here::Driver driver;
+    AI_here::Driver driverI;
+	AII_here::Driver driverII;
 	for(const std::filesystem::path& path : inputs)
 	{
-        driver.parse(path);
+	    if(not std::filesystem::exists(path))
+        {
+            std::cerr << "No existe el archivo fuente " << path << "\n";
+            return EXIT_FAILURE;
+        }
+        if(extension(path,"a.asm"))
+        {
+            driverI.parse(path);
+            driverI.print(std::cout);
+            driverI.generate(outstream);
+        }
+        else if(extension(path,"a+.asm"))
+        {
+            driverII.parse(path);
+            driverII.print(std::cout);
+            driverII.generate(outstream);
+        }
+        else
+        {
+            //std::cerr << "El archivo " << path << ", no se reconoce como un archivo fuente.\n";
+            std::cerr << "La extencion " << path.extension() << ", no se reconoce como un archivo fuente.\n";
+        }
 	}
-    driver.print(std::cout);
-    driver.generate(outstream);
     outstream.flush();
     outstream.close();
-
-	std::cout << "Todo correcto\n";
 
 	return EXIT_SUCCESS;
 }

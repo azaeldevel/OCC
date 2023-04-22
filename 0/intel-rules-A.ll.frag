@@ -53,16 +53,16 @@
 
 {IDENTIFIER}	{
                     //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
-                    ##NAME####SUCCESSOR##_here::nodes::identifier* identifer = block.create<##NAME####SUCCESSOR##_here::nodes::identifier>();
+                    AI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();
                     identifer->line = yylineno;
                     identifer->name = yytext;
-                    yylval->build<##NAME####SUCCESSOR##_here::nodes::identifier*>(identifer);
+                    yylval->build<AI_here::nodes::identifier*>(identifer);
                     return token::IDENTIFIER;
                 }
 
 {CONSTANT_INTEGER_HEX}  {
                             //std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-                            ##NAME####SUCCESSOR##_here::nodes::Integer* integer = block.create<##NAME####SUCCESSOR##_here::nodes::Integer>();
+                            AI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();
                             integer->format = 'H';
                             integer->number = std::stoll(yytext, nullptr, 16);
                             yylval->build<long long>(integer->number);
@@ -70,7 +70,7 @@
                         }
 {CONSTANT_INTEGER_DEC}  {
                             //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-                            ##NAME####SUCCESSOR##_here::nodes::Integer* integer = block.create<##NAME####SUCCESSOR##_here::nodes::Integer>();
+                            AI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();
                             integer->format = 'D';
                             integer->number = std::stoll(yytext);
                             yylval->build<long long>(integer->number);
