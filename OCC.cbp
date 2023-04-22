@@ -18,9 +18,10 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="sed -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR##/I/g&apos; $(PROJECT_DIR)0/intel-lexer.ll.template &gt; $(TARGET_OUTPUT_DIR)A/oas-intel-lexer-A.ll" />
+					<Add before="cat $(PROJECT_DIR)0/intel-dec.ll.frag $(PROJECT_DIR)0/intel-rules-A.ll.frag $(PROJECT_DIR)0/intel-rules-A-graph.ll.frag $(PROJECT_DIR)0/intel-rules-A-end.ll.frag &gt; $(TARGET_OUTPUT_DIR)A/intel.ll" />
+					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR##/I/g&apos; $(TARGET_OUTPUT_DIR)A/intel.ll" />
 					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/oas-intel-lexer-A.ll" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.ll" />
 				</ExtraCommands>
 			</Target>
 			<Target title="liboctetos-cc-A+">
@@ -109,15 +110,28 @@
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/intel-lexer.ll.template">
+		<Unit filename="0/intel-dec.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/intel-funct.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/intel-rules-A-end.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/intel-rules-A-graph.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/intel-rules-A.ll.frag">
 			<Option target="liboctetos-cc-A" />
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/oas-intel-lexer-A+.ll">
 			<Option target="liboctetos-cc-A+" />
-		</Unit>
-		<Unit filename="0/oas-intel-lexer-A.ll">
-			<Option target="liboctetos-cc-A" />
 		</Unit>
 		<Unit filename="0/oas-intel-parser-A+.yy">
 			<Option target="liboctetos-cc-A+" />
