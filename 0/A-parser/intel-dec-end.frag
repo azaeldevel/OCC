@@ -1,0 +1,4 @@
+
+%start translation_unit
+%%
+
