@@ -27,12 +27,14 @@
 
 bool extension(const std::filesystem::path& path, std::string ext)
 {
+    //std::cout << "\n\n";
     if(ext.size() >= path.string().size()) return false;
     for(size_t i = 0; i < ext.size(); i++)
     {
-        if(path.string()[path.string().size() - i] != ext[ext.size() - i]) return false;
+        if(path.string()[path.string().size() - i - 1] != ext[ext.size() - i - 1]) return false;
+        //std::cout << path.string()[path.string().size() - i - 1] << " == " << ext[ext.size() - i - 1] << "\n";
     }
-
+    //std::cout << "El archivo " << path << ", tinen extecion '" << ext << "'\n";
     return true;
 }
 
