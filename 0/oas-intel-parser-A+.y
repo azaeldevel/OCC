@@ -219,12 +219,28 @@
 
 %%
 
-translation_unit : external_declaration ENDOFFILE |
+translation_unit : 
+	external_declaration ENDOFFILE 
+	{
+		$$ = $1;
+	}
+	|
 	external_declaration translation_unit ENDOFFILE
+	{
+		$$ = $1;
+	}
 	;
 
-external_declaration : function_implementation |
+external_declaration : 
+function_implementation 
+	{
+		$$ = $1;
+	}
+	|
 	declaration ';'
+	{
+		$$ = $1;
+	}
 	;
 
 function_implementation :

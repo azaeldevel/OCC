@@ -164,29 +164,31 @@
 %token LITERAL_INTEGER_HEX_LONG
 %token LITERAL_INTEGER_HEX_ULONG
 %token <char> CONSTANT_CHAR
-%token <A_here::nodes::identifier*> IDENTIFIER
+%token <AI_here::nodes::identifier*> IDENTIFIER
 %type <int> registers_8b
 %type <int> registers_16b
 %type <long long>consts_integer
 
 %type <A_here::nodes::statement*> statement
-%type <A_here::nodes::instruction_mov*> instruction_mov
-%type <A_here::nodes::instruction_int*> instruction_int
-%type <A_here::nodes::statement*> statement_list
-%type <A_here::nodes::return_statement*> statement_return
+%type <AI_here::nodes::instruction_mov*> instruction_mov
+%type <AI_here::nodes::instruction_int*> instruction_int
+%type <AI_here::nodes::instruction_label*> instruction_label
+%type <AI_here::nodes::assembler_instruction*> assembler_instruction
+%type <AI_here::nodes::assembler_instruction*> instruction_list
+%type <AI_here::nodes::direct_declarator*> direct_declarator
+%type <AI_here::nodes::declarator*> declarator
+%type <AI_here::nodes::type_specifier*> type_specifier
+%type <AI_here::nodes::type_specifier*> declaration_specifiers
+%type <AI_here::nodes::identifier*> identifier_list
+%type <AI_here::nodes::const_expression*> const_expression
+%type <AI_here::nodes::init_declarator*> init_declarator
+%type <AI_here::nodes::init_declarator*> init_declarator_list
+%type <AI_here::nodes::initializer*> initializer
+%type <AI_here::nodes::declaration*> declaration
+
+%type <AI_here::nodes::return_statement*> statement_return
 %type <AII_here::nodes::compound_statement*> compound_statement
 %type <AII_here::nodes::function_implementation*> function_implementation
-%type <A_here::nodes::direct_declarator*> direct_declarator
-%type <A_here::nodes::declarator*> declarator
-%type <A_here::nodes::type_specifier*> type_specifier
-%type <A_here::nodes::type_specifier*> declaration_specifiers
-%type <A_here::nodes::identifier*> identifier_list
-%type <A_here::nodes::const_expression*> const_expression
-%type <A_here::nodes::init_declarator*> init_declarator
-%type <A_here::nodes::init_declarator*> init_declarator_list
-%type <A_here::nodes::initializer*> initializer
-%type <A_here::nodes::declaration*> declaration
-%type <A_here::nodes::assembler_instruction*>assembler_instruction
 %type <AII_here::nodes::external_declaration*> external_declaration
 %type <AII_here::nodes::external_declaration*> translation_unit
 
@@ -318,6 +320,15 @@ instruction_int : INT consts_integer ';'
 	}
 	;
 
+
+instruction_label : IDENTIFIER ':'
+	{
+		$$ = block.create<AI_here::nodes::instruction_label>();
+		$$->id = $1;
+	}
+	;
+
+
 assembler_instruction :
     instruction_mov
     {
@@ -345,22 +356,23 @@ statement_return  :
 	;
 
 
-statement :
-    compound_statement
+assembler_instruction :
+    instruction_mov
     {
         $$ = $1;
     }
     |
-    assembler_instruction
+    instruction_int
     {
         $$ = $1;
     }
     |
-    statement_return
+    instruction_label
     {
         $$ = $1;
     }
     ;
+
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
@@ -429,34 +441,35 @@ direct_declarator : IDENTIFIER
 	;
 
 
-statement_list :
-    statement
+
+instruction_list :
+    assembler_instruction
 	{
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
 		//std::cout << "Singular $1 = " << $1 << "\n";
-		//if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
+		//if(reinterpret_cast<const AI_here::nodes::instruction*>($1)->inst == Tokens::MOV) reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
 	}
 	|
-	statement_list statement
+	instruction_list assembler_instruction
 	{
 		//std::cout << "statement_list : statement_list statement\n";
-        //if($$) if(reinterpret_cast<const A_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
+        //if($$) if(reinterpret_cast<const AI_here::nodes::instruction*>($$)->inst == Tokens::MOV) reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($$)->print(std::cout);
         /*
-        if($1) if(reinterpret_cast<const A_here::nodes::instruction*>($1)->inst == Tokens::MOV)
+        if($1) if(reinterpret_cast<const AI_here::nodes::instruction*>($1)->inst == Tokens::MOV)
         {
             std::cout << "$1 : ";
-            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
+            reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($1)->print(std::cout);
         }
-        if($2) if(reinterpret_cast<const A_here::nodes::instruction*>($2)->inst == Tokens::MOV)
+        if($2) if(reinterpret_cast<const AI_here::nodes::instruction*>($2)->inst == Tokens::MOV)
         {
             std::cout << "$2 : ";
-            reinterpret_cast<const A_here::nodes::move_8b_reg_byte*>($2)->print(std::cout);
+            reinterpret_cast<const AI_here::nodes::move_8b_reg_byte*>($2)->print(std::cout);
         }
         std::cout << "\n--\n";
         */
 
-        static A_here::nodes::statement *statement_prev = NULL;
+        static AI_here::nodes::statement *statement_prev = NULL;
         /*
 		std::cout << "$$ = " << $$ << "\n";
 		std::cout << "$1 = " << $1 << "\n";
@@ -627,7 +640,7 @@ declaration_specifiers :
 	;
 
 compound_statement :
-	'{' statement_list '}'
+	'{' instruction_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
         $$ = block.create<AII_here::nodes::compound_statement>();

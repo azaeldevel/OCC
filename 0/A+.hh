@@ -23,7 +23,10 @@
 
 
 #include "A.hh"
+
 namespace A_here = oct::cc::v0::AI;
+namespace AI_here = oct::cc::v0::AI;
+
 namespace oct::cc::v0::AII
 {
     namespace core_here = oct::core::v3;

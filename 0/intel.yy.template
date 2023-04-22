@@ -180,16 +180,46 @@
 %type <AI_here::nodes::initializer*> initializer
 %type <AI_here::nodes::declaration*> declaration
 %type <AI_here::nodes::assembler_instruction*> instruction_list
-%type <AI_here::nodes::translation_unit*> translation_unit
 %type <AI_here::nodes::assembler_instruction*> assembler_instruction
 %type <AI_here::nodes::instruction_label*> instruction_label
 %type <AI_here::nodes::instruction_mov*> instruction_mov
 %type <AI_here::nodes::instruction_int*> instruction_int
 %type <AI_here::nodes::declaration*> declaration_list
 
+%type <AI_here::nodes::translation_unit*> translation_unit
+
 %start translation_unit
 %%
 
+
+consts_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
+
+
+const_expression : CONSTANT_CHAR
+	{
+		//std::cout << "'" << (char)$1 << "' ";
+		$$ = block.create<AI_here::nodes::initializer_literal<char>>();
+		reinterpret_cast<AI_here::nodes::initializer_literal<char>*>($$)->value = $1;
+		$$->data_type = AI_here::Tokens::CONSTANT_CHAR;
+	}
+	|
+	CONSTANT_INTEGER_HEX
+	{
+		//std::cout << $1 << " ";
+		$$ = block.create<AI_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_HEX;
+	}
+	|
+	CONSTANT_INTEGER_DEC
+	{
+		//std::cout << $1 << " ";
+		$$ = block.create<AI_here::nodes::initializer_literal<long long>>();
+		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
+		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;
+	}
+	;
+	
 registers_8b :
     AL
     {
@@ -233,7 +263,6 @@ registers_8b :
     ;
 
 
-consts_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
 
 registers_16b :
     AX
@@ -434,30 +463,6 @@ initializer : const_expression
 	;
 
 
-const_expression : CONSTANT_CHAR
-	{
-		//std::cout << "'" << (char)$1 << "' ";
-		$$ = block.create<AI_here::nodes::initializer_literal<char>>();
-		reinterpret_cast<AI_here::nodes::initializer_literal<char>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::CONSTANT_CHAR;
-	}
-	|
-	CONSTANT_INTEGER_HEX
-	{
-		//std::cout << $1 << " ";
-		$$ = block.create<AI_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_HEX;
-	}
-	|
-	CONSTANT_INTEGER_DEC
-	{
-		//std::cout << $1 << " ";
-		$$ = block.create<AI_here::nodes::initializer_literal<long long>>();
-		reinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;
-		$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;
-	}
-	;
 
 init_declarator_list : init_declarator
 	{
