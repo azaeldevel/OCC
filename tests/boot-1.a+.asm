@@ -1,10 +1,10 @@
 
-char actual = 'A';
+char actual 'A';
 char actual2 ;
-unsigned char actual3 = 122;
-signed char actual4 = -126;
-short counter = 1309;
-short flag2 = -21598;
+unsigned char actual3 122;
+signed char actual4 -126;
+short counter 1309;
+short flag2 -21598;
 
 int main()
 {

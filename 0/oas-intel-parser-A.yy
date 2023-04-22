@@ -166,7 +166,7 @@
 %token <AI_here::nodes::identifier*> IDENTIFIER
 %type <int> registers_8b
 %type <int> registers_16b
-%type <long long>literals_integer
+%type <long long>consts_integer
 
 
 
@@ -258,7 +258,7 @@ registers_8b :
     ;
 
 
-literals_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
+consts_integer : CONSTANT_INTEGER_HEX | CONSTANT_INTEGER_DEC;
 
 registers_16b :
     AX
@@ -273,7 +273,7 @@ registers_16b :
 
 
 instruction_mov :
-	MOV registers_8b literals_integer ';'
+	MOV registers_8b consts_integer ';'
 	{
 		//std::cout << "mov register-8b integer\n";
         AI_here::nodes::move_8b_reg_byte* mv8 = block.create<AI_here::nodes::move_8b_reg_byte>();
@@ -297,14 +297,14 @@ instruction_mov :
         $$ = mv8;
 	}
 	|
-	MOV registers_16b literals_integer
+	MOV registers_16b consts_integer
 	{
 		$$ = NULL;
 	}
 	;
 
 
-instruction_int : INT literals_integer ';'
+instruction_int : INT consts_integer ';'
 	{
 		//std::cout << "int " << $2 << "\n";
 		AI_here::nodes::instruction_int* serv = block.create<AI_here::nodes::instruction_int>();

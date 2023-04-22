@@ -25,7 +25,7 @@
 #include "A-Driver.hh"
 #include "A+-Driver.hh"
 
-bool extension(const std::filesystem::path& path, std::string ext)
+bool extension(const std::filesystem::path& path, const std::string& ext)
 {
     //std::cout << "\n\n";
     if(ext.size() >= path.string().size()) return false;

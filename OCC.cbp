@@ -18,9 +18,10 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="cat $(PROJECT_DIR)0/intel-dec.ll.frag $(PROJECT_DIR)0/intel-rules-A.ll.frag $(PROJECT_DIR)0/intel-rules-A-graph.ll.frag $(PROJECT_DIR)0/intel-rules-A-end.ll.frag &gt; $(TARGET_OUTPUT_DIR)A/intel.ll" />
-					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR##/I/g&apos; $(TARGET_OUTPUT_DIR)A/intel.ll" />
-					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(PROJECT_DIR)0/oas-intel-parser-A.yy" />
+					<Add before="cat $(PROJECT_DIR)0/intel-dec-code-A.ll.frag $(PROJECT_DIR)0/intel-dec.ll.frag $(PROJECT_DIR)0/intel-rules-A.ll.frag $(PROJECT_DIR)0/intel-rules-A-graph.ll.frag $(PROJECT_DIR)0/intel-rules-A-end.ll.frag &gt; $(TARGET_OUTPUT_DIR)A/intel.ll" />
+					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR_DINASTI##/I/g&apos; -e &apos;s/##SUCCESSOR_ORNAMENT##//g&apos; $(TARGET_OUTPUT_DIR)A/intel.ll" />
+					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR_DINASTI##/I/g&apos; -e &apos;s/##SUCCESSOR_ORNAMENT##//g&apos; $(PROJECT_DIR)0/intel.yy.template &gt; $(TARGET_OUTPUT_DIR)A/intel.yy" />
+					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.yy" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.ll" />
 				</ExtraCommands>
 			</Target>
@@ -36,8 +37,10 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
+					<Add before="cat $(PROJECT_DIR)0/intel-dec-code-A+.ll.frag $(PROJECT_DIR)0/intel-dec.ll.frag $(PROJECT_DIR)0/intel-rules-A.ll.frag $(PROJECT_DIR)0/intel-rules-A+-graph.ll.frag $(PROJECT_DIR)0/intel-rules-A-end.ll.frag &gt; $(TARGET_OUTPUT_DIR)A+/intel.ll" />
+					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR_DINASTI##/II/g&apos; -e &apos;s/##SUCCESSOR_ORNAMENT##/+/g&apos; $(TARGET_OUTPUT_DIR)A+/intel.ll" />
 					<Add before="bison  --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)A+/report.txt -o $(TARGET_OUTPUT_DIR)A+/oas-intel-parser.cc  $(PROJECT_DIR)0/oas-intel-parser-A+.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A+/oas-intel.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer-A+.ll" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A+/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A+/intel.ll" />
 				</ExtraCommands>
 			</Target>
 			<Target title="occ-dbg">
@@ -45,7 +48,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="0/main.a.asm  --output bin/Debug/boot.bin" />
+				<Option parameters="tests/boot-1.a.asm  --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -110,11 +113,19 @@
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="0/intel-dec-code-A+.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/intel-dec-code-A.ll.frag">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+		</Unit>
 		<Unit filename="0/intel-dec.ll.frag">
 			<Option target="liboctetos-cc-A" />
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
-		<Unit filename="0/intel-funct.ll.frag">
+		<Unit filename="0/intel-rules-A+-graph.ll.frag">
 			<Option target="liboctetos-cc-A" />
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
@@ -128,9 +139,6 @@
 		</Unit>
 		<Unit filename="0/intel-rules-A.ll.frag">
 			<Option target="liboctetos-cc-A" />
-			<Option target="liboctetos-cc-A+" />
-		</Unit>
-		<Unit filename="0/oas-intel-lexer-A+.ll">
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/oas-intel-parser-A+.yy">
