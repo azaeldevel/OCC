@@ -20,7 +20,6 @@ namespace oct::cc::v0::tools
     public:
         Parser(Language l);
 
-
         virtual void declaration(std::ostream& out) const;
         virtual void declaration_code_required(std::ostream& out) const;
         virtual void rules(std::ostream& out) const;
