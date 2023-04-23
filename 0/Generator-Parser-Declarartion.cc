@@ -20,14 +20,14 @@ namespace oct::cc::v0::tools
         declaration_code_required(out);
 
         out << "\n";
-        out << "%parse-param { AI_here::Scanner& scanner }\n";
-        out << "%parse-param { AI_here::Driver& driver }\n";
-        out << "%parse-param { const AI_here::nodes::translation_unit** unit}\n";
-        out << "%parse-param { core_here::Block& block}\n";
+        out << "%parse-param {" << space() << "_here::Scanner& scanner}\n";
+        out << "%parse-param {" << space() << "_here::Driver& driver}\n";
+        out << "%parse-param {const " << space() << "_here::nodes::" << tree_node() << "** unit}\n";
+        out << "%parse-param {core_here::Block& block}\n";
 
         out << "%code\n";
         out << "{\n";
-            out << "\t#include <A-Scanner.hh>\n";
+            out << "\t#include <" << language(true) << "-Scanner.hh>\n";
             out << "\t#undef yylex\n";
             out << "\t#define yylex scanner.yylex\n";
         out << "}\n\n";
@@ -260,8 +260,17 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
         out << "%type <AI_here::nodes::declaration*> declaration_list\n";
 
-        out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
-
+        switch(lang)
+        {
+        case Language::AI:
+            out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
+            break;
+        case Language::AII:
+            declaration_types_AII(out);
+            break;
+        default:
+            ;
+        }
 
         out << "%start translation_unit\n";
     }
@@ -273,10 +282,10 @@ namespace oct::cc::v0::tools
             out << "\t#include <" << header_file() << ">\n";
             out << "\t#include <" << language(true) << "-Driver.hh>\n";
             out << "\t#include <core/3/Exception.hh>\n";
-            out << "\tnamespace AI_here = oct::cc::v0::AI;\n";
+            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
             out << "\tnamespace core_here = oct::core::v3;\n";
 
-            out << "\tnamespace oct::cc::v0::AI\n";
+            out << "\tnamespace oct::cc::v0::" << space() << "\n";
             out << "\t{\n";
                 out << "\t\tclass Scanner;\n";
                 out << "\t\tclass Driver;\n";
@@ -290,6 +299,15 @@ namespace oct::cc::v0::tools
             out << "\t#  endif\n";
             out << "\t# endif\n";
         out << "}\n";
+
+    }
+    void Parser::declaration_types_AII(std::ostream& out) const
+    {
+        out << "%type <AI_here::nodes::return_statement*> statement_return\n";
+        out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
+        out << "%type <AII_here::nodes::function_implementation*> function_implementation\n";
+        out << "%type <AII_here::nodes::external_declaration*> external_declaration\n";
+        out << "%type <AII_here::nodes::external_declaration*> translation_unit\n";
 
     }
 

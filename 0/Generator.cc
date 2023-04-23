@@ -4,21 +4,12 @@
 namespace oct::cc::v0::tools
 {
 
-    Parser::Parser(Language l) : lang(l)
+    Generator::Generator(Language l) : lang(l)
     {
-
-    }
-    void Parser::save(std::ostream& out) const
-    {
-        declaration(out);
-        out << "\n%%\n";
-        rules(out);
-        out << "\n%%\n";
-        functions(out);
     }
 
 
-    const char* Parser::header_file() const
+    const char* Generator::header_file() const
     {
         switch(lang)
         {
@@ -34,7 +25,7 @@ namespace oct::cc::v0::tools
 
         return "?";
     }
-    const char* Parser::space() const
+    const char* Generator::space() const
     {
         switch(lang)
         {
@@ -50,8 +41,23 @@ namespace oct::cc::v0::tools
 
         return "?";
     }
+    const char* Generator::tree_node() const
+    {
+        switch(lang)
+        {
+        case Language::AI:
+                return "translation_unit";
+            break;
+        case Language::AII:
+                return "external_declaration";
+            break;
+        default:
+            ;
+        }
 
-    const char* Parser::language(bool ornament) const
+        return "?";
+    }
+    const char* Generator::language(bool ornament) const
     {
         switch(lang)
         {
@@ -67,5 +73,38 @@ namespace oct::cc::v0::tools
 
         return "?";
     }
+
+
+
+    Lexer::Lexer(Language l) : Generator(l)
+    {
+    }
+    void Lexer::save(std::ostream& out) const
+    {
+        declaration(out);
+        out << "\n%%\n";
+        rules(out);
+        out << "\n%%\n";
+        functions(out);
+    }
+
+    void Lexer::functions(std::ostream& out) const
+    {
+    }
+
+
+    Parser::Parser(Language l) : Generator(l)
+    {
+    }
+    void Parser::save(std::ostream& out) const
+    {
+        declaration(out);
+        out << "\n%%\n";
+        rules(out);
+        out << "\n%%\n";
+        functions(out);
+    }
+
+
 }
 

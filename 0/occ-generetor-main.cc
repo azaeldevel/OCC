@@ -26,17 +26,14 @@
 namespace cc_here = oct::cc::v0;
 namespace tools_here = oct::cc::v0::tools;
 
-cc_here::Language language(const std::string& lang)
-{
-    if(lang.compare("A") == 0 or lang.compare("AI") == 0) return cc_here::Language::AI;
-    else if(lang.compare("AI") == 0 or lang.compare("A+") == 0) return cc_here::Language::AII;
+cc_here::Language language(const std::string& lang);
+bool lexer();
+bool parser();
 
-    return cc_here::Language::none;
-}
+std::filesystem::path outpath;
+std::string lang,comp;
 int main (int argc, char* argv[])
 {
-    std::filesystem::path outpath;
-    std::string lang;
 
 	for(size_t i = 1; i < (size_t)argc; i++)
 	{
@@ -48,18 +45,77 @@ int main (int argc, char* argv[])
 		{
 			lang = argv[++i];
 		}
+		else if(strcmp(argv[i],"--comp") == 0)
+		{
+			comp = argv[++i];
+		}
 		else
 		{
 		    std::cout << "Comando desconocido : " << argv[i] << "\n";
 		}
 	}
 
+	if(comp.empty())
+	{
+		std::cerr << "Indique el Componente";
+		return EXIT_FAILURE;
+	}
 	if(lang.empty())
 	{
-		std::cerr << "Indique el Lenguaje del Parser.";
+		std::cerr << "Indique el Lenguaje del Componente.";
 		return EXIT_FAILURE;
 	}
 
+    if(comp.compare("lexer") == 0)
+    {
+        if(not lexer()) return EXIT_FAILURE;
+    }
+    else if(comp.compare("parser") == 0)
+    {
+        if(not parser()) return EXIT_FAILURE;
+    }
+    else
+    {
+        std::cerr << "Componente desconocido : " << comp << "\n";
+    }
+
+	return EXIT_SUCCESS;
+}
+
+cc_here::Language language(const std::string& lang)
+{
+    if(lang.compare("A") == 0 or lang.compare("AI") == 0) return cc_here::Language::AI;
+    else if(lang.compare("AII") == 0 or lang.compare("A+") == 0) return cc_here::Language::AII;
+
+    return cc_here::Language::none;
+}
+bool lexer()
+{
+    tools_here::Lexer generator(language(lang));
+	if(outpath.empty())
+    {
+        generator.save(std::cout);
+    }
+    else
+	{
+        std::fstream outstream;
+
+		if(std::filesystem::exists(outpath)) std::filesystem::remove(outpath);
+        outstream.open(outpath,std::ios::app);
+        if(not outstream.is_open())
+        {
+            std::cerr << "Fallo al abrir el archivo " << outpath << "\n";
+            return false;
+        }
+        generator.save(outstream);
+        outstream.flush();
+        outstream.close();
+	}
+
+    return true;
+}
+bool parser()
+{
     tools_here::Parser generator(language(lang));
 	if(outpath.empty())
     {
@@ -74,13 +130,12 @@ int main (int argc, char* argv[])
         if(not outstream.is_open())
         {
             std::cerr << "Fallo al abrir el archivo " << outpath << "\n";
-            return EXIT_FAILURE;
+            return false;
         }
         generator.save(outstream);
         outstream.flush();
         outstream.close();
 	}
 
-	return EXIT_SUCCESS;
+	return true;
 }
-

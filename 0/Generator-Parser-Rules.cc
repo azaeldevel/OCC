@@ -7,8 +7,19 @@ namespace oct::cc::v0::tools
     {
         rules_finals(out);
         rules_instructios(out);
+        if(lang == Language::AII) rules_statement_AII(out);
         rules_declaration(out);
-        rules_unit(out);
+        switch(lang)
+        {
+        case Language::AI:
+            rules_unit_AI(out);
+            break;
+        case Language::AII:
+            rules_unit_AII(out);
+            break;
+        default:
+            ;
+        }
     }
     void Parser::rules_finals(std::ostream& out) const
     {
@@ -144,23 +155,17 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
-
-        out << "statement_instruction :\n";
-            out << "\tinstruction_mov\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tinstruction_int\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tinstruction_label\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
+        switch(lang)
+        {
+        case Language::AI :
+            rules_instructios_statment_AI(out);
+            break;
+        case Language::AII :
+            rules_instructios_statment_AII(out);
+            break;
+        default:
+            ;
+        }
 
 
 
@@ -185,6 +190,64 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
 
+    }
+    void Parser::rules_statement_AII(std::ostream& out) const
+    {
+        out << "statement_return : \n";
+            out << "\tRETURN ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<A_here::nodes::return_statement>();\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tRETURN consts_integer ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<A_here::nodes::return_statement>();\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
+    void Parser::rules_instructios_statment_AI(std::ostream& out) const
+    {
+        out << "statement_instruction :\n";
+            out << "\tinstruction_mov\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_int\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_label\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+    }
+    void Parser::rules_instructios_statment_AII(std::ostream& out) const
+    {
+        out << "statement_instruction :\n";
+            out << "\tinstruction_mov\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_int\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_label\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstatement_return\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
     }
     void Parser::rules_declaration(std::ostream& out) const
     {
@@ -424,7 +487,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
     }
-    void Parser::rules_unit(std::ostream& out) const
+    void Parser::rules_unit_AI(std::ostream& out) const
     {
         out << "translation_unit :\n";
             out << "\tdeclaration_list statement_list\n";
@@ -433,6 +496,87 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->declarations = $1;\n";
                 out << "\t\t$$->instructions = $2;\n";
                 out << "\t\t*unit = $$;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+    void Parser::rules_unit_AII(std::ostream& out) const
+    {
+
+        out << "compound_statement :\n";
+            out << "\t'{' statement_list '}'\n";
+            out << "\t{\n";
+                //std::cout << "compound_statement : '{' statement_list '}'\n";
+                out << "\t\t$$ = block.create<AII_here::nodes::compound_statement>();\n";
+                out << "\t\t$$->statement_list = $2;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'{' '}'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<AII_here::nodes::compound_statement>();\n";
+                out << "\t\t$$->statement_list = NULL;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "function_implementation :\n";
+            out << "\tdeclaration_specifiers declarator compound_statement\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<AII_here::nodes::function_implementation>();\n";
+                out << "\t\t$$->body = $3;\n";
+                out << "\t\t$$->declaration = $2;\n";
+                out << "\t\t$$->specifiers = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclarator compound_statement\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<AII_here::nodes::function_implementation>();\n";
+                out << "\t\t$$->body = $2;\n";
+                out << "\t\t$$->declaration = $1;\n";
+                out << "\t\t$$->specifiers = NULL;\n";
+                //std::cout << "Function 3\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "external_declaration :\n";
+            out << "\tfunction_implementation\n";
+            out << "\t{\n";
+                //std::cout << "external_declaration : function_implementation\n";
+                //$1->print(std::cout);
+                out << "\t\t$$ = block.create<AII_here::nodes::external_declaration>();\n";
+                out << "\t\t$$->func = $1;\n";
+                out << "\t\t$$->decl = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclaration ';'\n";
+            out << "\t{\n";
+                //std::cout << "storage_class_specifier : declaration ';'\n";
+                //std::cout << ";\n";
+                //$1->print(std::cout);
+                out << "\t\t$$ = block.create<AII_here::nodes::external_declaration>();\n";
+                out << "\t\t$$->func = NULL;\n";
+                out << "\t\t$$->decl = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "translation_unit :\n";
+            out << "\texternal_declaration\n";
+            out << "\t{\n";
+                //std::cout << "external_declaration\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\t*unit = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttranslation_unit external_declaration\n";
+            out << "\t{\n";
+                //std::cout << "external_declaration translation_unit\n";
+                out << "\t\tstatic AII_here::nodes::external_declaration* statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                //$2->print(std::cout);
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+                out << "\t\tstatement_prev = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
     }
