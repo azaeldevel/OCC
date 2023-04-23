@@ -489,6 +489,35 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_unit_AI(std::ostream& out) const
     {
+
+        out << "function :\n";
+            out << "\tIDENTIFIER ':' statement_list RET ';'\n";
+            out << "\t{\n";
+
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tIDENTIFIER ':' statement_list IRET ';'\n";
+            out << "\t{\n";
+
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "function_list :\n";
+            out << "\tfunction ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tfunction_list function ';'\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::function* statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+                out << "\t\tstatement_prev = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
         out << "translation_unit :\n";
             out << "\tdeclaration_list statement_list\n";
             out << "\t{\n";

@@ -555,6 +555,15 @@ namespace oct::cc::v0::AI
         };
 
 
+        struct instruction_ret : public assembler_instruction
+        {
+        };
+        struct instruction_iret : public assembler_instruction
+        {
+        };
+
+
+
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
@@ -638,6 +647,16 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
+        };
+
+        struct function : public statement
+        {
+            const identifier* name;
+            const statement* body_list;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+
         };
 
 
