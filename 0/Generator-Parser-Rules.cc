@@ -427,14 +427,14 @@ namespace oct::cc::v0::tools
     void Parser::rules_unit(std::ostream& out) const
     {
         out << "translation_unit :\n";
-            out << "declaration_list statement_list\n";
-            out << "{\n";
-                out << "$$ = block.create<AI_here::nodes::translation_unit>();\n";
-                out << "$$->declarations = $1;\n";
-                out << "$$->instructions = $2;\n";
-                out << "*unit = $$;\n";
-            out << "}\n";            out << ";\n";
-
+            out << "\tdeclaration_list statement_list\n";
+            out << "\t{\n";
+                out << "\t\t$$ = block.create<AI_here::nodes::translation_unit>();\n";
+                out << "\t\t$$->declarations = $1;\n";
+                out << "\t\t$$->instructions = $2;\n";
+                out << "\t\t*unit = $$;\n";
+            out << "\t}\n";
+            out << "\t;\n";
     }
 }
 

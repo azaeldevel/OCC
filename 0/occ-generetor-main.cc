@@ -26,44 +26,60 @@
 namespace cc_here = oct::cc::v0;
 namespace tools_here = oct::cc::v0::tools;
 
+cc_here::Language language(const std::string& lang)
+{
+    if(lang.compare("A") == 0 or lang.compare("AI") == 0) return cc_here::Language::AI;
+    else if(lang.compare("AI") == 0 or lang.compare("A+") == 0) return cc_here::Language::AII;
+
+    return cc_here::Language::none;
+}
 int main (int argc, char* argv[])
 {
-    std::fstream outstream;
     std::filesystem::path outpath;
+    std::string lang;
 
-	for(size_t i = 0; i < (size_t)argc; i++)
+	for(size_t i = 1; i < (size_t)argc; i++)
 	{
 		if(strcmp(argv[i],"--output") == 0)
 		{
 			outpath = argv[++i];
 		}
-		else if(argv[i][0] == '-')
+		else if(strcmp(argv[i],"--lang") == 0)
 		{
-			std::cout << "Comando desconocido\n";
+			lang = argv[++i];
 		}
 		else
 		{
+		    std::cout << "Comando desconocido : " << argv[i] << "\n";
 		}
 	}
 
-	if(outpath.empty())
+	if(lang.empty())
 	{
-		std::cerr << "Indique el archivo de resultado.";
+		std::cerr << "Indique el Lenguaje del Parser.";
 		return EXIT_FAILURE;
 	}
-	if(std::filesystem::exists(outpath)) std::filesystem::remove(outpath);
-	outstream.open(outpath,std::ios::app);
-    if(not outstream.is_open())
+
+    tools_here::Parser generator(language(lang));
+	if(outpath.empty())
     {
-		std::cerr << "Fallo al abrir el archivo " << outpath << "\n";
-		return EXIT_FAILURE;
+        generator.save(std::cout);
     }
+    else
+	{
+        std::fstream outstream;
 
-    tools_here::Parser generator(cc_here::Language::AI);
-    generator.save(outpath.empty() ? std::cout : outstream);
-
-    outstream.flush();
-    outstream.close();
+		if(std::filesystem::exists(outpath)) std::filesystem::remove(outpath);
+        outstream.open(outpath,std::ios::app);
+        if(not outstream.is_open())
+        {
+            std::cerr << "Fallo al abrir el archivo " << outpath << "\n";
+            return EXIT_FAILURE;
+        }
+        generator.save(outstream);
+        outstream.flush();
+        outstream.close();
+	}
 
 	return EXIT_SUCCESS;
 }
