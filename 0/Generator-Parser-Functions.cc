@@ -7,7 +7,7 @@ namespace oct::cc::v0::tools
     {
         out << "void AI_here::parser::error (const location_type& l, const std::string& m)\n";
         out << "{\n";
-            out << "std::cerr << l << \": \" << m << '\\n';\n";
+            out << "\tstd::cerr << l << \": \" << m << '\\n';\n";
         out << "}\n";
     }
 }
