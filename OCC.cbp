@@ -63,7 +63,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--lang A --comp lexer" />
+				<Option parameters="--lang A --comp parser" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
