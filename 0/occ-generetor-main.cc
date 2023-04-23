@@ -52,10 +52,10 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 	if(std::filesystem::exists(outpath)) std::filesystem::remove(outpath);
-	outstream.open(outpath);
+	outstream.open(outpath,std::ios::app);
     if(not outstream.is_open())
     {
-		std::cerr << "Fallo al abrir el archivo de resultado.";
+		std::cerr << "Fallo al abrir el archivo " << outpath << "\n";
 		return EXIT_FAILURE;
     }
 
