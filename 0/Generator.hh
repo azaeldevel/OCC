@@ -23,6 +23,10 @@ namespace oct::cc::v0::tools
         virtual void declaration(std::ostream& out) const;
         virtual void declaration_code_required(std::ostream& out) const;
         virtual void rules(std::ostream& out) const;
+        virtual void rules_finals(std::ostream& out) const;
+        virtual void rules_instructios(std::ostream& out) const;
+        virtual void rules_declaration(std::ostream& out) const;
+        virtual void rules_unit(std::ostream& out) const;
         virtual void functions(std::ostream& out) const;
         virtual void save(std::ostream& out) const;
 

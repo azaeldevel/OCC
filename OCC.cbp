@@ -187,6 +187,15 @@
 		<Unit filename="0/A.hh">
 			<Option target="liboctetos-cc-A" />
 		</Unit>
+		<Unit filename="0/Generator-Parser-Declarartion.cc">
+			<Option target="occ-tool-dbg" />
+		</Unit>
+		<Unit filename="0/Generator-Parser-Functions.cc">
+			<Option target="occ-tool-dbg" />
+		</Unit>
+		<Unit filename="0/Generator-Parser-Rules.cc">
+			<Option target="occ-tool-dbg" />
+		</Unit>
 		<Unit filename="0/Generator.cc">
 			<Option target="occ-tool-dbg" />
 		</Unit>
