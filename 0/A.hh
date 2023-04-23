@@ -32,6 +32,20 @@
 #include "oct-core-v3.hh"
 
 
+
+namespace oct::cc::v0
+{
+	enum class Language
+	{
+	    none,
+	    AI,
+	    AII,
+	    AIII,
+	    C,
+	    CPP,
+	};
+}
+
 namespace oct::cc::v0::AI
 {
 	namespace core_here = oct::core::v3;
