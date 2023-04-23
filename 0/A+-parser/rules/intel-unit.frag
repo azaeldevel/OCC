@@ -1,7 +1,20 @@
 
 
+statement_return  :
+	RETURN ';'
+	{
+        $$ = block.create<A_here::nodes::return_statement>();
+	}
+    |
+	RETURN consts_integer ';'
+	{
+        $$ = block.create<A_here::nodes::return_statement>();
+	}
+	;
+
+
 compound_statement :
-	'{' instruction_list '}'
+	'{' statement_list '}'
     {
 		//std::cout << "compound_statement : '{' statement_list '}'\n";
         $$ = block.create<AII_here::nodes::compound_statement>();
@@ -14,7 +27,7 @@ compound_statement :
         $$->statement_list = NULL;
     }
 	;
-	
+
 
 function_implementation :
 	declaration_specifiers declarator compound_statement

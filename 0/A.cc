@@ -315,7 +315,7 @@ namespace nodes
             dec = (const declaration*)dec->next;
         }
 
-        const instruction* inst = instructions;
+        const statement* inst = instructions;
         while(inst)
         {
             if(inst->is_instruction)
@@ -332,12 +332,12 @@ namespace nodes
                         ;
                 }
             }
-            inst = (const instruction*)inst->next;
+            inst = (const statement*)inst->next;
         }
     }
     void translation_unit::generate(std::ostream& out) const
     {
-        const instruction* inst = instructions;
+        const statement* inst = instructions;
         while(inst)
         {
             if(inst->is_instruction)
@@ -354,7 +354,7 @@ namespace nodes
                         ;
                 }
             }
-            inst = (const instruction*)inst->next;
+            inst = (const statement*)inst->next;
         }
     }
 }

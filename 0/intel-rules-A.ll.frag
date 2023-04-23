@@ -31,6 +31,8 @@
 "mov"   return token::MOV;
 "al"	return token::AL;
 "ah"	return token::AH;
+"ret"   return token::RET;
+"iret"   return token::IRET;
 
 
 "break"		return token::BREAK;
