@@ -100,21 +100,3 @@ instruction_label : IDENTIFIER ':'
 		$$->id = $1;
 	}
 	;
-
-assembler_instruction :
-    instruction_mov
-    {
-        $$ = $1;
-    }
-    |
-    instruction_int
-    {
-        $$ = $1;
-    }
-    |
-    instruction_label
-    {
-        $$ = $1;
-    }
-    ;
-

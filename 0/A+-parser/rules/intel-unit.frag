@@ -1,17 +1,5 @@
 
 
-statement_return  :
-	RETURN ';'
-	{
-        $$ = block.create<A_here::nodes::return_statement>();
-	}
-    |
-	RETURN consts_integer ';'
-	{
-        $$ = block.create<A_here::nodes::return_statement>();
-	}
-	;
-
 
 compound_statement :
 	'{' statement_list '}'

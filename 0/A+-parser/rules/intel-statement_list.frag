@@ -1,13 +1,13 @@
 
 
 statement_list :
-    assembler_instruction
+    statement_instruction
 	{
 		//std::cout << "statement_list : statement\n";
 		$$ = $1;
 	}
 	|
-	statement_list assembler_instruction
+	statement_list statement_instruction
 	{
         static AI_here::nodes::statement *statement_prev = NULL;
 
