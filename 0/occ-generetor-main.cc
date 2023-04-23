@@ -51,6 +51,7 @@ int main (int argc, char* argv[])
 		std::cerr << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
 	}
+	if(std::filesystem::exists(outpath)) std::filesystem::remove(outpath);
 	outstream.open(outpath);
     if(not outstream.is_open())
     {
@@ -59,7 +60,7 @@ int main (int argc, char* argv[])
     }
 
     tools_here::Parser generator(cc_here::Language::AI);
-    generator.save(std::cout);
+    generator.save(outpath.empty() ? std::cout : outstream);
 
     outstream.flush();
     outstream.close();

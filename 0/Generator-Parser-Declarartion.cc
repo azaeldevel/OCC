@@ -6,15 +6,15 @@ namespace oct::cc::v0::tools
     void Parser::declaration(std::ostream& out) const
     {
         out << "%skeleton \"lalr1.cc\"\n";
-        out << "%skeleton \%require  \"3.8\"\n";
-        out << "%skeleton \%defines\n";
-        out << "%skeleton \%define api.namespace {oct::cc::v0::" << space() << "}\n";
-        out << "%skeleton \%define api.parser.class {parser}\n";
+        out << "%require  \"3.8\"\n";
+        out << "%defines\n";
+        out << "%define api.namespace {oct::cc::v0::" << space() << "}\n";
+        out << "%define api.parser.class {parser}\n";
         out << "\n";
 
-        out << "%skeleton \%define parse.trace\n";
-        out << "%skeleton \%define parse.error detailed\n";
-        out << "%skeleton \%define parse.lac full\n";
+        out << "%define parse.trace\n";
+        out << "%define parse.error detailed\n";
+        out << "%define parse.lac full\n";
         out << "\n";
 
         declaration_code_required(out);
