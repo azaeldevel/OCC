@@ -19,8 +19,7 @@
 				<ExtraCommands>
 					<Add before="cat $(PROJECT_DIR)0/intel-dec-code-A.ll.frag $(PROJECT_DIR)0/intel-dec.ll.frag $(PROJECT_DIR)0/intel-rules-A.ll.frag $(PROJECT_DIR)0/intel-rules-A-graph.ll.frag $(PROJECT_DIR)0/intel-rules-A-end.ll.frag &gt; $(TARGET_OUTPUT_DIR)A/intel.ll" />
 					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR_DINASTI##/I/g&apos; -e &apos;s/##SUCCESSOR_ORNAMENT##//g&apos; $(TARGET_OUTPUT_DIR)A/intel.ll" />
-					<Add before="cat $(PROJECT_DIR)0/A-parser/decs/intel.frag $(PROJECT_DIR)0/A-parser/decs/intel-types-base.frag  $(PROJECT_DIR)0/A-parser/decs/intel-types.frag $(PROJECT_DIR)0/A-parser/decs/intel-end.frag $(PROJECT_DIR)0/A-parser/rules/intel-consts.frag $(PROJECT_DIR)0/A-parser/rules/intel-insts.frag $(PROJECT_DIR)0/A-parser/rules/intel-statement_instruction.frag $(PROJECT_DIR)0/A-parser/rules/intel-statement_list.frag $(PROJECT_DIR)0/A-parser/rules/intel-declaration.frag $(PROJECT_DIR)0/A-parser/rules/intel-unit.frag $(PROJECT_DIR)0/A-parser/functs/intel.frag &gt; $(TARGET_OUTPUT_DIR)A/intel.yy" />
-					<Add before="sed -i -e &apos;s/##NAME##/A/g&apos; -e &apos;s/##SUCCESSOR_DINASTI##/I/g&apos; -e &apos;s/##SUCCESSOR_ORNAMENT##//g&apos; -e &apos;s/##UNIT##/translation_unit/g&apos; $(TARGET_OUTPUT_DIR)A/intel.yy" />
+					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.yy" />
 					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.yy" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.ll" />
 				</ExtraCommands>
@@ -60,8 +59,8 @@
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
-			<Target title="occ-tool-dbg">
-				<Option output="bin/Debug/occ-tool" prefix_auto="1" extension_auto="1" />
+			<Target title="gen-dbg">
+				<Option output="bin/Debug/gen" prefix_auto="1" extension_auto="1" />
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -71,8 +70,6 @@
 					<Add directory="0" />
 				</Compiler>
 				<Linker>
-					<Add library="octetos-cc-A" />
-					<Add library="octetos-cc-A+" />
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
@@ -188,19 +185,19 @@
 			<Option target="liboctetos-cc-A" />
 		</Unit>
 		<Unit filename="0/Generator-Parser-Declarartion.cc">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/Generator-Parser-Functions.cc">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/Generator-Parser-Rules.cc">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/Generator.cc">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/Generator.hh">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
@@ -234,7 +231,7 @@
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/occ-generetor-main.cc">
-			<Option target="occ-tool-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/occ-main.cc">
 			<Option target="occ-dbg" />
