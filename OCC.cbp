@@ -46,13 +46,14 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/boot-1.a.asm  --output bin/Debug/boot.bin" />
+				<Option parameters="tests/boot-1.a+.asm  --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
 				</Compiler>
 				<Linker>
 					<Add library="octetos-cc-A" />
+					<Add library="octetos-cc-A+" />
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
@@ -152,6 +153,18 @@
 		</Unit>
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="0/cc.cc">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+			<Option target="occ-dbg" />
+			<Option target="gen-dbg" />
+		</Unit>
+		<Unit filename="0/cc.hh">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+			<Option target="occ-dbg" />
+			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/developing.cc">
 			<Option target="developing" />
