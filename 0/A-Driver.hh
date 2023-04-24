@@ -7,10 +7,7 @@
 #include <A/oas-intel-parser.hh>
 #include <A.hh>
 
-#if ! defined(yyFlexLexerOnce)
-#include <FlexLexer.h>
-#endif
-#include <A/location.hh>
+//#include <A/location.hh>
 
 namespace AI_here = oct::cc::v0::AI;
 namespace oct::cc::v0::AI
@@ -30,15 +27,9 @@ public:
 	//location loc;
 
 private:
-    bool parse(std::ifstream*);
 
 private:
-    struct Source
-    {
-        const std::filesystem::path* path;
-        std::ifstream *stream;
-    };
-    std::list<Source> sources;
+    File file;
     const nodes::translation_unit* unit;
     core_here::Block* block;
     bool block_new;

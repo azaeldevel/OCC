@@ -414,6 +414,25 @@ namespace oct::cc::v0::AI
 
 	};
 
+	class File
+    {
+    public:
+        File();
+        ~File();
+
+        void* get_scanner();
+
+        const std::filesystem::path& get_filename()const;
+        bool open(const std::filesystem::path& file);
+    protected:
+
+    private:
+        FILE* file;
+        std::filesystem::path filename;
+        void* buffer;
+        void* scanner;
+    };
+
 
 	template<typename Token> std::string to_string(Token t)
 	{
