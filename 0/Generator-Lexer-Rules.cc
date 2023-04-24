@@ -52,32 +52,32 @@ namespace oct::cc::v0::tools
 
         out << "{IDENTIFIER}	{\n";
                             //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
-                            out << "\t\t/*AI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();\n";
+                            out << "\t\tAI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();\n";
                             out << "\t\tidentifer->line = yylineno;\n";
                             out << "\t\tidentifer->name = yytext;\n";
-                            out << "\t\tyylval->build<AI_here::nodes::identifier*>(identifer);*/\n";
+                            out << "\t\tyylval->IDENTIFIER = identifer;\n";
                             out << "\t\treturn IDENTIFIER;\n";
                         out << "\t\t}\n";
 
         out << "{CONSTANT_INTEGER_HEX}  {\n";
                                     //std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-                                    out << "\t\t/*tAI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
                                     out << "\t\tinteger->format = 'H';\n";
                                     out << "\t\tinteger->number = std::stoll(yytext, nullptr, 16);\n";
-                                    out << "\t\tyylval->build<long long>(integer->number);*/\n";
+                                    out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
                                 out << "\t\t}\n";
         out << "{CONSTANT_INTEGER_DEC}  {\n";
                                     //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-                                    out << "\t\t/*AI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
                                     out << "\t\tinteger->format = 'D';\n";
                                     out << "\t\tinteger->number = std::stoll(yytext);\n";
-                                    out << "\t\tyylval->build<long long>(integer->number);*/\n";
+                                    out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
                                 out << "\t\t}\n";
         out << "{CONSTANT_CHAR} {\n";
                             //std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
-                            out << "\t\t//tyylval->build<char>(yytext[1]);\n";
+                            out << "\t\tyylval->CONSTANT_CHAR = yytext[1];\n";
                             out << "\t\treturn CONSTANT_CHAR;\n";
                         out << "\t\t}\n";
 
