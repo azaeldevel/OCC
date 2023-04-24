@@ -34,9 +34,9 @@ namespace oct::cc::v0::tools
         out << "{\n";
         // Tell Flex the expected prototype of yylex.
         // The scanner argument must be named yyscanner.
-        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res, const AI_here::nodes::translation_unit** unit,core_here::Block& block)\n";
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block)\n";
             out << "\tYY_DECL;\n";
-            out << "\tvoid yyerror(yyscan_t scanner, result *res, const AI_here::nodes::translation_unit** unit,core_here::Block& block, const char *msg, ...);\n";
+            out << "\tvoid yyerror(yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, ...);\n";
         out << "}\n";
 
         // Emitted on top of the implementation file.
@@ -66,7 +66,7 @@ namespace oct::cc::v0::tools
         out << "//%locations\n";
 
         // Scanner and error count are exchanged between main, yyparse and yylex.
-        out << "%param {yyscan_t scanner}{result *res}{const AI_here::nodes::translation_unit** unit}{core_here::Block& block}\n";
+        out << "%param {yyscan_t scanner}{result *res}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";
 
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";

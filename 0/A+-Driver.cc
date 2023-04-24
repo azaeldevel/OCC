@@ -21,7 +21,6 @@
 #include <stdlib.h>
 
 #include "A+-Driver.hh"
-#include "A+-Scanner.hh"
 #include <A+/oas-intel-parser.hh>
 
 namespace oct::cc::v0::AII
@@ -34,11 +33,6 @@ namespace oct::cc::v0::AII
     }
     Driver::~Driver()
     {
-        for(Source& s : sources)
-        {
-            s.stream->close();
-            delete s.stream;
-        }
         if(block_new)
         {
             delete block;
@@ -50,22 +44,8 @@ namespace oct::cc::v0::AII
 
     bool Driver::parse(const std::filesystem::path& path)
     {
-        sources.push_back({&path,NULL});
-        Source* source = &sources.back();
-        source->path = &path;
-        source->stream = new std::ifstream(path);
-        //location.initialize(path.string());
-        if(not source->stream->good()) return false;
-        return parse(source->stream);
-    }
 
-    bool Driver::parse(std::ifstream* stream)
-    {
-        Scanner scanner(stream,*block);
-        unit = NULL;
-        parser parser(scanner,*this,&unit,*block);
-        if(parser.parse() != 0) return false;
-        return true;
+        return false;
     }
 
 

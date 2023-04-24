@@ -10,7 +10,6 @@
 				<Option output="bin/Debug/octetos-cc-A" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
 				<Option object_output="bin/Debug/A" />
 				<Option external_deps="bin/Debug/gen;bin/Debug/gen;" />
-				<Option additional_output="bin/Debug/liboctetos-cc-A.so;bin/Debug/liboctetos-cc-A+.so;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -36,10 +35,10 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.ll --lang AII --comp lexer" />
-					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.yy --lang AII --comp parser" />
-					<Add before="bison  --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)A+/report.txt -o $(TARGET_OUTPUT_DIR)A+/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A+/intel.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A+/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A+/intel.ll" />
+					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.l --lang AII --comp lexer" />
+					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.y --lang AII --comp parser" />
+					<Add before="bison  --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)A+/report.txt -o $(TARGET_OUTPUT_DIR)A+/oas-intel-parser.cc  --header=$(TARGET_OUTPUT_DIR)A+/oas-intel-parser.hh $(TARGET_OUTPUT_DIR)A+/intel.y" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A+/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A+/intel.l" />
 				</ExtraCommands>
 			</Target>
 			<Target title="occ-dbg">
@@ -54,16 +53,15 @@
 				</Compiler>
 				<Linker>
 					<Add library="octetos-cc-A" />
-					<Add library="octetos-cc-A+" />
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
 			<Target title="gen-dbg">
 				<Option output="bin/Debug/gen" prefix_auto="1" extension_auto="1" />
-				<Option object_output="c" />
+				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--lang A --comp lexer" />
+				<Option parameters="--lang AII --comp parser" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -107,17 +105,14 @@
 		<Unit filename="0/A+-Driver.hh">
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
-		<Unit filename="0/A+-Scanner.cc">
-			<Option target="liboctetos-cc-A+" />
-		</Unit>
-		<Unit filename="0/A+-Scanner.hh">
-			<Option target="liboctetos-cc-A+" />
-		</Unit>
 		<Unit filename="0/A+.cc">
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
 		<Unit filename="0/A+.hh">
 			<Option target="liboctetos-cc-A+" />
+		</Unit>
+		<Unit filename="0/A-Driver.cc">
+			<Option target="liboctetos-cc-A" />
 		</Unit>
 		<Unit filename="0/A-Driver.hh">
 			<Option target="liboctetos-cc-A" />
@@ -132,6 +127,9 @@
 			<Option target="liboctetos-cc-A" />
 		</Unit>
 		<Unit filename="0/Generator-Lexer-Declarartion.cc">
+			<Option target="gen-dbg" />
+		</Unit>
+		<Unit filename="0/Generator-Lexer-Functions.cc">
 			<Option target="gen-dbg" />
 		</Unit>
 		<Unit filename="0/Generator-Lexer-Rules.cc">
