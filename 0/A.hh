@@ -667,7 +667,7 @@ namespace oct::cc::v0::AI
         struct translation_unit : public statement
         {
             const declaration* declarations;
-            const statement* instructions;
+            const function* functions;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;

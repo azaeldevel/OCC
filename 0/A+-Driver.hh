@@ -19,7 +19,7 @@ namespace oct::cc::v0::AII
 class Driver : public cc_here::Driver
 {
 public:
-	Driver ();
+	Driver () = default;
 	Driver (core_here::Block& memory);
 	virtual ~Driver ();
 
@@ -30,12 +30,10 @@ public:
 	//A_here::location loc;
 
 private:
-    AI::File file;
 
 private:
+    AI::File file;
     const nodes::external_declaration* unit;
-    core_here::Block* block;
-    bool block_new;
 
 };
 }

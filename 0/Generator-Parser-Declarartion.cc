@@ -291,12 +291,12 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::instruction_mov*> instruction_mov\n";
         out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
         out << "%type <AI_here::nodes::declaration*> declaration_list\n";
-        out << "%type <AI_here::nodes::function*> function\n";
-        out << "%type <AI_here::nodes::function*> function_list\n";
 
         switch(lang)
         {
         case Language::AI:
+            out << "%type <AI_here::nodes::function*> function\n";
+            out << "%type <AI_here::nodes::function*> function_list\n";
             out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
             break;
         case Language::AII:

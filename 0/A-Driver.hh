@@ -18,7 +18,7 @@ namespace oct::cc::v0::AI
 class Driver : public cc_here::Driver
 {
 public:
-	Driver ();
+	Driver () = default;
 	Driver (core_here::Block& memory);
 	virtual ~Driver ();
 
@@ -33,8 +33,6 @@ private:
 private:
     File file;
     const nodes::translation_unit* unit;
-    core_here::Block* block;
-    bool block_new;
 };
 
 }

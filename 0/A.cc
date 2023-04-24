@@ -323,18 +323,9 @@ namespace nodes
 
 
 
-    void translation_unit::print(std::ostream& out)const
+    void function::print(std::ostream& out)const
     {
-        const declaration* dec = declarations;
-        while(dec)
-        {
-            dec->print(out);
-            if(dec->next) out << "\n";
-
-            dec = (const declaration*)dec->next;
-        }
-
-        const statement* inst = instructions;
+        const statement* inst = (const statement*)body_list;
         while(inst)
         {
             if(inst->is_instruction)
@@ -354,9 +345,9 @@ namespace nodes
             inst = (const statement*)inst->next;
         }
     }
-    void translation_unit::generate(std::ostream& out) const
+    void function::generate(std::ostream& out) const
     {
-        const statement* inst = instructions;
+        const function* inst = (const function*)body_list;
         while(inst)
         {
             if(inst->is_instruction)
@@ -373,8 +364,30 @@ namespace nodes
                         ;
                 }
             }
-            inst = (const statement*)inst->next;
+            inst = (const function*)inst->next;
         }
+    }
+
+    void translation_unit::print(std::ostream& out)const
+    {
+
+        const declaration* dec = declarations;
+        while(dec)
+        {
+            dec->print(out);
+            if(dec->next) out << "\n";
+
+            dec = (const declaration*)dec->next;
+        }
+
+        if(functions) functions->print(out);
+
+        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
+    }
+    void translation_unit::generate(std::ostream& out) const
+    {
+        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
+        if(functions) functions->generate(out);
     }
 }
 

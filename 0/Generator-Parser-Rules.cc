@@ -474,11 +474,13 @@ namespace oct::cc::v0::tools
         out << "declaration_list :\n";
             out << "\tdeclaration ';'\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"declaration\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tdeclaration_list declaration ';'\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"declaration\";\n";
                 out << "\t\tstatic AI_here::nodes::declaration* statement_prev = NULL;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
@@ -491,25 +493,28 @@ namespace oct::cc::v0::tools
     {
 
         out << "function :\n";
-            out << "\tIDENTIFIER ':' statement_list RET ';'\n";
+            out << "\tIDENTIFIER ':' statement_list \n";
             out << "\t{\n";
-
+                out << "\t\t$$ = block.create<AI_here::nodes::function>();\n";
+                out << "\t\t$$->name = $1;\n";
+                out << "\t\t$$->body_list = $3;\n";
             out << "\t}\n";
-            out << "\t|\n";
+            /*out << "\t|\n";
             out << "\tIDENTIFIER ':' statement_list IRET ';'\n";
             out << "\t{\n";
-
-            out << "\t}\n";
+            out << "\t}\n";*/
             out << "\t;\n";
 
         out << "function_list :\n";
-            out << "\tfunction ';'\n";
+            out << "\tfunction\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"function\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tfunction_list function ';'\n";
+            out << "\tfunction_list function\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"function\";\n";
                 out << "\t\tstatic AI_here::nodes::function* statement_prev = NULL;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
@@ -519,11 +524,11 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
         out << "translation_unit :\n";
-            out << "\tdeclaration_list statement_list\n";
+            out << "\tdeclaration_list function_list\n";
             out << "\t{\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::translation_unit>();\n";
                 out << "\t\t$$->declarations = $1;\n";
-                out << "\t\t$$->instructions = $2;\n";
+                out << "\t\t$$->functions = $2;\n";
                 out << "\t\t*unit = $$;\n";
             out << "\t}\n";
             out << "\t;\n";

@@ -5,7 +5,13 @@ namespace oct::cc::v0::tools
 {
     void Lexer::rules(std::ostream& out) const
     {
+        //Ensablador
+        out << "\"mov\"         return MOV;\n";
+        out << "\"al\"	        return AL;\n";
+        out << "\"ah\"	        return AH;\n";
+        out << "\"ret\"	        {std::cout << \"ret\";return RET;}\n";
 
+        //C keyword
         out << "\"auto\"		return AUTO;\n";
         out << "\"byte\"		return BYTE;\n";
         out << "\"const\"		return CONST;\n";
@@ -26,11 +32,6 @@ namespace oct::cc::v0::tools
         out << "\"int\"		    return INT;\n";
         out << "\"long\"		return LONG;\n";
         out << "\"default\"	    return DEFAULT;\n";
-
-        out << "\"mov\"         return MOV;\n";
-        out << "\"al\"	        return AL;\n";
-        out << "\"ah\"	        return AH;\n";
-
 
         out << "\"break\"		return BREAK;\n";
         out << "\"case\"		return CASE;\n";
