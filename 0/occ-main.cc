@@ -23,7 +23,7 @@
 #include <list>
 
 #include "A-Driver.hh"
-//#include "A+-Driver.hh"
+#include "A+-Driver.hh"
 
 bool extension(const std::filesystem::path& path, const std::string& ext)
 {
@@ -38,7 +38,7 @@ bool extension(const std::filesystem::path& path, const std::string& ext)
     return true;
 }
 
-//namespace AII_here = oct::cc::v0::AII;
+namespace AII_here = oct::cc::v0::AII;
 namespace AI_here = oct::cc::v0::AI;
 
 int main (int argc, char* argv[])
@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
     }
 
     AI_here::Driver driverI;
-	//AII_here::Driver driverII;
+	AII_here::Driver driverII;
 	for(const std::filesystem::path& path : inputs)
 	{
 	    if(not std::filesystem::exists(path))
@@ -98,12 +98,12 @@ int main (int argc, char* argv[])
             driverI.print(std::cout);
             driverI.generate(outstream);
         }
-        /*else if(extension(path,"a+.asm"))
+        else if(extension(path,"a+.asm"))
         {
             driverII.parse(path);
             driverII.print(std::cout);
             driverII.generate(outstream);
-        }*/
+        }
         else
         {
             //std::cerr << "El archivo " << path << ", no se reconoce como un archivo fuente.\n";

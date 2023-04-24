@@ -27,6 +27,7 @@ public:
 	//A_here::location loc;
 
 private:
+    AI::File file;
 
 private:
     const nodes::external_declaration* unit;

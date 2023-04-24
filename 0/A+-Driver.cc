@@ -44,7 +44,9 @@ namespace oct::cc::v0::AII
 
     bool Driver::parse(const std::filesystem::path& path)
     {
-
+        file.open(path);
+        result res;
+        if(yyparse(file.get_scanner(),&res,&unit,*block) == 0) return true;
         return false;
     }
 
