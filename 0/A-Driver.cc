@@ -57,10 +57,8 @@ namespace oct::cc::v0::AI
     {
         if(unit) unit->print(out);
     }
-    bool Driver::generate(std::ostream& out) const
+    void Driver::generate(std::ostream& out) const
     {
         if(unit) unit->generate(out);
-
-        return true;
     }
 }

@@ -22,7 +22,7 @@ public:
 
 	bool parse(const std::filesystem::path& sources);
 	void print(std::ostream&)const;
-	bool generate(std::ostream&)const;
+	void generate(std::ostream&)const;
 
 	//location loc;
 

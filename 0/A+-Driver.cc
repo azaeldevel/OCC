@@ -64,7 +64,7 @@ namespace oct::cc::v0::AII
             ext = (nodes::external_declaration*)ext->next;
         }
     }
-    bool Driver::generate(std::ostream& out) const
+    void Driver::generate(std::ostream& out) const
     {
         const nodes::external_declaration* ext = unit;
         while(ext)
@@ -74,6 +74,5 @@ namespace oct::cc::v0::AII
             ext = (nodes::external_declaration*)ext->next;
         }
 
-        return true;
     }
 }
