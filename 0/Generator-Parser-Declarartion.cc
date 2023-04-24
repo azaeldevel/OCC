@@ -5,36 +5,68 @@ namespace oct::cc::v0::tools
 {
     void Parser::declaration(std::ostream& out) const
     {
-        out << "%skeleton \"lalr1.cc\"\n";
-        out << "%require  \"3.8\"\n";
-        out << "%defines\n";
-        out << "%define api.namespace {oct::cc::v0::" << space() << "}\n";
-        out << "%define api.parser.class {parser}\n";
-        out << "\n";
 
-        out << "%define parse.trace\n";
-        out << "%define parse.error detailed\n";
-        out << "%define parse.lac full\n";
-        out << "\n";
-
-        declaration_code_required(out);
-
-        out << "\n";
-        out << "%parse-param {" << space() << "_here::Scanner& scanner}\n";
-        out << "%parse-param {" << space() << "_here::Driver& driver}\n";
-        out << "%parse-param {const " << space() << "_here::nodes::" << tree_node() << "** unit}\n";
-        out << "%parse-param {core_here::Block& block}\n";
-
-        out << "%code\n";
+        // Emitted in the header file, before the definition of YYSTYPE.
+        out << "%code requires\n";
         out << "{\n";
-            out << "\t#include <" << language(true) << "-Scanner.hh>\n";
-            out << "\t#undef yylex\n";
-            out << "\t#define yylex scanner.yylex\n";
-        out << "}\n\n";
+          out << "\t#ifndef YY_TYPEDEF_YY_SCANNER_T\n";
+          out << "\t# define YY_TYPEDEF_YY_SCANNER_T\n";
+          out << "\ttypedef void* yyscan_t;\n";
+          out << "\t#endif\n";
 
-        out << "%define api.value.type variant\n";
-        out << "%define parse.assert\n";
-        out << "%locations\n";
+          out << "\ttypedef struct\n";
+          out << "\t{\n";
+            // Whether to print the intermediate results.
+            out << "\t\tint verbose;\n";
+            // Value of the last computation.
+            out << "\t\tint value;\n";
+            // Number of errors.
+            out << "\t\tint nerrs;\n";
+          out << "\t} result;\n";
+            out << "\t#include <" << header_file() << ">\n";
+            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
+            out << "\tnamespace core_here = oct::core::v3;\n";
+            out << "\t//extern " << space() << "_here::File A_here::current_file;\n";
+        out << "}\n";
+
+        // Emitted in the header file, after the definition of YYSTYPE.
+        out << "%code provides\n";
+        out << "{\n";
+        // Tell Flex the expected prototype of yylex.
+        // The scanner argument must be named yyscanner.
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res, const AI_here::nodes::translation_unit** unit,core_here::Block& block)\n";
+            out << "\tYY_DECL;\n";
+            out << "\tvoid yyerror(yyscan_t scanner, result *res, const AI_here::nodes::translation_unit** unit,core_here::Block& block, const char *msg, ...);\n";
+        out << "}\n";
+
+        // Emitted on top of the implementation file.
+        out << "%code top\n";
+        out << "{\n";
+            out << "#include <stdarg.h>\n";
+            out << "#include <stdio.h> \n";
+            out << "#include <stdlib.h>\n";
+        out << "}\n";
+
+
+        // Don't share global variables between the scanner and the parser.
+        out << "%define api.pure full\n";
+
+        // Generate YYSTYPE from the types assigned to symbols.
+        out << "%define api.value.type union\n";
+
+        // Error messages with "unexpected XXX, expected XXX...".
+        out << "%define parse.error detailed\n";
+
+        // Enable run-time traces (yydebug).
+        out << "%define parse.trace\n";
+
+        // Generate the parser description file (parse.output).
+        out << "%verbose\n";
+
+        out << "//%locations\n";
+
+        // Scanner and error count are exchanged between main, yyparse and yylex.
+        out << "%param {yyscan_t scanner}{result *res}{const AI_here::nodes::translation_unit** unit}{core_here::Block& block}\n";
 
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";

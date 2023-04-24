@@ -17,9 +17,9 @@
     // Number of errors.
     int nerrs;
   } result;
-	#include <A.hh>	
-	namespace A_here = oct::cc::v0::A;
-	extern A_here::File A_here::current_file;
+	#include <A.hh>
+	namespace A_here = oct::cc::v0::AI;
+	//extern A_here::File A_here::current_file;
 }
 
 // Emitted in the header file, after the definition of YYSTYPE.
@@ -85,7 +85,7 @@
 %token <long long>LITERAL_INTEGER_HEX
 %token <char>LITERAL_CHAR
 %token ENDOFFILE 0  "end-of-file"
-%type <long long> literals_integers 
+%type <long long> literals_integers
 
 %%
 
@@ -95,24 +95,24 @@ decls : decl | decl decls;
 insts : inst | inst insts;
 
 inst : inst_mov | inst_int | label;
-inst_mov : keyword_mov literals keyword_al ';' |		
-		keyword_mov literals keyword_ah ';';		
+inst_mov : keyword_mov literals keyword_al ';' |
+		keyword_mov literals keyword_ah ';';
 
 inst_int : keyword_int literals_integers ';';
 
 label : IDENTIFIER ':';
 
 decl :
-	keyword_byte IDENTIFIER ';' 					{printf("byte %s;\n",$2);}|
-	keyword_byte IDENTIFIER literals_integers ';'	{printf("byte %s %i;\n",$2,$3);}|
-	keyword_char IDENTIFIER ';' 					{printf("char %s;\n",$2);}|
-	keyword_char IDENTIFIER LITERAL_CHAR ';' 		{printf("char %s '%c';\n",$2,$3);}|
-	keyword_short IDENTIFIER ';' 					{printf("short %s;\n",$2);}|
-	keyword_short IDENTIFIER literals_integers ';' 	{printf("short %s %i';\n",$2,$3);}|
-	keyword_long IDENTIFIER ';' 					{printf("long %s;\n",$2);}|
-	keyword_long IDENTIFIER literals_integers ';' 	{printf("long %s %i';\n",$2,$3);}|
-	keyword_int IDENTIFIER ';'						{printf("int %s;\n",$2);}|
-	keyword_int IDENTIFIER literals_integers ';'	{printf("int %s %i';\n",$2,$3);}
+	keyword_byte IDENTIFIER ';' 					|
+	keyword_byte IDENTIFIER literals_integers ';'	|
+	keyword_char IDENTIFIER ';' 					|
+	keyword_char IDENTIFIER LITERAL_CHAR ';' 		|
+	keyword_short IDENTIFIER ';' 					|
+	keyword_short IDENTIFIER literals_integers ';' 	|
+	keyword_long IDENTIFIER ';' 					|
+	keyword_long IDENTIFIER literals_integers ';' 	|
+	keyword_int IDENTIFIER ';'						|
+	keyword_int IDENTIFIER literals_integers ';'
 ;
 
 
@@ -120,7 +120,10 @@ literals : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC | LITERAL_CHAR;
 literals_integers : LITERAL_INTEGER_HEX | LITERAL_INTEGER_DEC;
 
 %%
+void yyerror(yyscan_t scanner, result *res, const char *msg, ...)
+{
 
+}
 
 
 

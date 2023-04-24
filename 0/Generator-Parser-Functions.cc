@@ -5,9 +5,8 @@ namespace oct::cc::v0::tools
 {
     void Parser::functions(std::ostream& out) const
     {
-        out << "void " << space() << "_here::parser::error (const location_type& l, const std::string& m)\n";
+        out << "void yyerror(yyscan_t scanner, result *res, const AI_here::nodes::translation_unit** unit,core_here::Block& block, const char *msg, ...)\n";
         out << "{\n";
-            out << "\tstd::cerr << l << \": \" << m << '\\n';\n";
         out << "}\n";
     }
 }

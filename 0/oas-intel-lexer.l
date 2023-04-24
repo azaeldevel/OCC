@@ -1,5 +1,5 @@
 
-%option noyywrap reentrant bison-bridge yylineno
+%option noyywrap nounput reentrant bison-bridge yylineno
 
 %{
 	#include <assert.h>
@@ -10,11 +10,11 @@
 	//#include <core/3/math.hh>
 
 
-	#include <A.hh>	
-	namespace A_here = oct::cc::v0::A;
-	A_here::File A_here::current_file;
+	#include <A.hh>
+	namespace A_here = oct::cc::v0::AI;
+	//A_here::File A_here::current_file;
 
-	#include "oas-intel-parser.hh"
+	#include "A/oas-intel-parser.hh"
 %}
 
 DIGIT_DEC [0-9]
@@ -56,7 +56,7 @@ IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 {LIETRAL_INTEGER_HEX}		{return LITERAL_INTEGER_HEX;}
 {LITERAL_INTEGER_DEC}		{
 								const char* num = new char[yyleng+1];
-								memcpy((void*)num,(const void*)yytext,yyleng);								
+								memcpy((void*)num,(const void*)yytext,yyleng);
 								yylval->LITERAL_INTEGER_DEC = std::stoll(num);
 								return LITERAL_INTEGER_DEC;
 							}

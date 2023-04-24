@@ -19,10 +19,10 @@
 					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.ll --lang AI --comp lexer" />
-					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.yy --lang AI --comp parser" />
-					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.yy" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.ll" />
+					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.l --lang AI --comp lexer" />
+					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.y --lang AI --comp parser" />
+					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt --header=$(TARGET_OUTPUT_DIR)A/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.y" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.l" />
 				</ExtraCommands>
 			</Target>
 			<Target title="liboctetos-cc-A+">
@@ -60,10 +60,10 @@
 			</Target>
 			<Target title="gen-dbg">
 				<Option output="bin/Debug/gen" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/Debug/" />
+				<Option object_output="c" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--lang A --comp parser" />
+				<Option parameters="--lang A --comp lexer" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -71,6 +71,20 @@
 				<Linker>
 					<Add directory="bin/Debug" />
 				</Linker>
+			</Target>
+			<Target title="developing">
+				<Option output="bin/Debug/developing" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="0" />
+					<Add directory="bin/Debug" />
+				</Compiler>
+				<ExtraCommands>
+					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  --header=$(TARGET_OUTPUT_DIR)A/oas-intel-parser.hh $(PROJECT_DIR)0/oas-intel-parser.y" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer.l" />
+				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>
@@ -105,13 +119,7 @@
 		<Unit filename="0/A+.hh">
 			<Option target="liboctetos-cc-A+" />
 		</Unit>
-		<Unit filename="0/A-Driver.cc">
-			<Option target="liboctetos-cc-A" />
-		</Unit>
 		<Unit filename="0/A-Driver.hh">
-			<Option target="liboctetos-cc-A" />
-		</Unit>
-		<Unit filename="0/A-Scanner.cc">
 			<Option target="liboctetos-cc-A" />
 		</Unit>
 		<Unit filename="0/A-Scanner.hh">
@@ -146,6 +154,17 @@
 		</Unit>
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="0/developing.cc">
+			<Option target="developing" />
+		</Unit>
+		<Unit filename="0/oas-intel-lexer.l">
+			<Option compile="1" />
+			<Option target="developing" />
+		</Unit>
+		<Unit filename="0/oas-intel-parser.y">
+			<Option compile="1" />
+			<Option target="developing" />
 		</Unit>
 		<Unit filename="0/occ-generetor-main.cc">
 			<Option target="gen-dbg" />
