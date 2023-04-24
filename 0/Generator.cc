@@ -88,10 +88,6 @@ namespace oct::cc::v0::tools
         functions(out);
     }
 
-    void Lexer::functions(std::ostream& out) const
-    {
-    }
-
 
     Parser::Parser(Language l) : Generator(l)
     {
