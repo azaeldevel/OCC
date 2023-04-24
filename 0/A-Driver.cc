@@ -25,19 +25,11 @@
 
 namespace oct::cc::v0::AI
 {
-    Driver::Driver() : block(new core_here::Block),block_new(true)
-    {
-    }
-    Driver::Driver(core_here::Block& b) : block(&b),block_new(false)
+    Driver::Driver(core_here::Block& b) : cc_here::Driver(b)
     {
     }
     Driver::~Driver()
     {
-        if(block_new)
-        {
-            delete block;
-            block = NULL;
-        }
     }
 
 

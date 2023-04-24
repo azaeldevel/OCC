@@ -43,7 +43,7 @@ namespace oct::cc::v0
         virtual ~Driver ();
 
         virtual bool parse(const std::filesystem::path& source) = 0;
-        virtual bool parse(const std::list<std::filesystem::path>& sources) = 0;
+        virtual bool parse(const std::list<std::filesystem::path>& sources);
         virtual void generate(std::ostream&)const = 0;
 
         //location loc;

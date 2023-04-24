@@ -42,5 +42,13 @@ namespace oct::cc::v0
         }
     }
 
+    bool Driver::parse(const std::list<std::filesystem::path>& sources)
+    {
+        for(const std::filesystem::path& p : sources)
+        {
+            if(not parse(p)) return false;
+        }
 
+        return true;
+    }
 }

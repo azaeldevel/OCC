@@ -10,19 +10,21 @@
 //#include <A/location.hh>
 
 namespace AI_here = oct::cc::v0::AI;
+namespace cc_here = oct::cc::v0;
+
 namespace oct::cc::v0::AI
 {
 
-class Driver
+class Driver : public cc_here::Driver
 {
 public:
 	Driver ();
 	Driver (core_here::Block& memory);
-	~Driver ();
+	virtual ~Driver ();
 
-	bool parse(const std::filesystem::path& sources);
-	void print(std::ostream&)const;
-	void generate(std::ostream&)const;
+	virtual bool parse(const std::filesystem::path& sources);
+	virtual void print(std::ostream&)const;
+	virtual void generate(std::ostream&)const;
 
 	//location loc;
 
