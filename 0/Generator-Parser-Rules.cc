@@ -509,7 +509,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->list = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
-        /*out << "declaration_list :\n";
+        out << "declaration_list :\n";
             out << "\tdeclaration ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";
@@ -525,7 +525,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
             out << "\t}\n";
-            out << "\t;\n";*/
+            out << "\t;\n";
     }
     void Parser::rules_unit_AI(std::ostream& out) const
     {

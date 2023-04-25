@@ -14,8 +14,8 @@ namespace oct::cc::v0::tools
 
         out << "void yyerror(YYLTYPE* yylloc,yyscan_t scanner," << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...)\n";
         out << "{\n";
-          out << "\tYYLOCATION_PRINT (stderr, yylloc);\n";
-          out << "\tfprintf (stderr, \": %s\", msg);\n";
+          //out << "\tYYLOCATION_PRINT (stderr, yylloc);\n";
+          out << "\tfprintf (stderr, \"%i : %s\", yylloc->last_line, msg);\n";
         out << "}\n";
 
         out << "bool oct::cc::v0::" << space() << "::Driver::parse(const std::filesystem::path& path)\n";
