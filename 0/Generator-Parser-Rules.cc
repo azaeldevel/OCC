@@ -148,6 +148,17 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
+        out << "instruction_ret : \n";
+            out << "\tRET ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"RET 1\";\n";
+                out << "\t\tAI_here::nodes::instruction* ret = block.create<AI_here::nodes::instruction>();\n";
+                out << "\t\tret->inst = AI_here::Tokens::RET;\n";
+                out << "\t\tret->is_instruction = true;\n";
+                out << "\t\t$$ = ret;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
         out << "instruction_label : IDENTIFIER ':'\n";
             out << "\t{\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::instruction_label>();\n";
@@ -203,7 +214,11 @@ namespace oct::cc::v0::tools
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
-                //out << "\t\tif(statement_prev->is_instruction) if(((AI_here::nodes::instruction*)statement_prev)->inst == AI_here::Tokens::RET) YYACCEPT;\n";
+                out << "\t\tif(((AI_here::nodes::instruction*)$2)->inst == AI_here::Tokens::RET) \n";
+                out << "\t\t{\n";
+                //out << "\t\t\tstd::cout << \"RET\";\n";
+                //out << "\t\t\tYYACCEPT;\n";
+                out << "\t\t}\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
@@ -237,6 +252,11 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t|\n";
             out << "\tinstruction_label\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_ret\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";

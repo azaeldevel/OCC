@@ -10,7 +10,7 @@ namespace oct::cc::v0::tools
         out << "\"ah\"	        return AH;\n";
         out << "\"byte\"		return BYTE;\n";
         out << "\"mov\"         return MOV;\n";
-        out << "\"ret\"	        {std::cout << \"ret\";return RET;}\n";
+        out << "\"ret\"	        return RET;\n";
 
 
         //C keyword

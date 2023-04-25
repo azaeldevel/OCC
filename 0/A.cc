@@ -342,6 +342,9 @@ namespace nodes
                     case Tokens::INT :
                         ((instruction_int*)inst)->print(out);
                         break;
+                    case Tokens::RET :
+                        out << "\n\tret;\n";
+                        break;
                     default:
                         ;
                 }
@@ -390,8 +393,18 @@ namespace nodes
         }
 
         //std::cout << "Step 2\n";
+        const function* func = functions;
+        while(func)
+        {
+            //::cout << "Step 1.1\n";
+            func->print(out);
+           // std::cout << "Step 1.2\n";
+            if(func->next) out << "\n";
+            //std::cout << "Step 1.3\n";
 
-        if(functions) functions->print(out);
+            func = (const function*)func->next;
+            //std::cout << "Step 1.4\n";
+        }
 
         //std::cout << "Step 3\n";
     }
