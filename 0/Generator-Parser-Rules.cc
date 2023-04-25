@@ -148,17 +148,6 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "instruction_ret : \n";
-            out << "\tRET ';'\n";
-            out << "\t{\n";
-                //out << "\t\tstd::cout << \"RET 1\";\n";
-                out << "\t\tAI_here::nodes::instruction* ret = tray->block.create<AI_here::nodes::instruction>();\n";
-                out << "\t\tret->inst = AI_here::Tokens::RET;\n";
-                out << "\t\tret->is_instruction = true;\n";
-                out << "\t\t$$ = ret;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
         out << "instruction_label : IDENTIFIER ':'\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::instruction_label>();\n";
@@ -226,6 +215,17 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
     {
+
+        out << "instruction_ret : \n";
+            out << "\tRET ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"RET 1\";\n";
+                out << "\t\tAI_here::nodes::instruction* ret = tray->block.create<AI_here::nodes::instruction>();\n";
+                out << "\t\tret->inst = AI_here::Tokens::RET;\n";
+                out << "\t\tret->is_instruction = true;\n";
+                out << "\t\t$$ = ret;\n";
+            out << "\t}\n";
+            out << "\t;\n";
 
         out << "statement_list :\n";
             out << "\tstatement_instruction\n";
@@ -509,6 +509,9 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->list = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
+    }
+    void Parser::rules_unit_AI(std::ostream& out) const
+    {
         out << "declaration_list :\n";
             out << "\tdeclaration ';'\n";
             out << "\t{\n";
@@ -526,9 +529,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tstatement_prev = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
-    }
-    void Parser::rules_unit_AI(std::ostream& out) const
-    {
+
         out << "function :\n";
             out << "\tIDENTIFIER ':' statement_list_body RET ';'\n";
             out << "\t{\n";
