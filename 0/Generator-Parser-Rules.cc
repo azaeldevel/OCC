@@ -201,11 +201,11 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            /*out << "\t|\n";
+            out << "\t|\n";
             out << "\tinstruction_label\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
-            out << "\t}\n";*/
+            out << "\t}\n";
             /*out << "\t|\n";
             out << "\tinstruction_ret\n";
             out << "\t{\n";

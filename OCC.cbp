@@ -20,7 +20,7 @@
 				<ExtraCommands>
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.l --lang AI --comp lexer" />
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.y --lang AI --comp parser" />
-					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt --header=$(TARGET_OUTPUT_DIR)A/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.y" />
+					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt --header=$(TARGET_OUTPUT_DIR)A/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)A/intel.y" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A/intel.l" />
 				</ExtraCommands>
 			</Target>
@@ -37,7 +37,7 @@
 				<ExtraCommands>
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.l --lang AII --comp lexer" />
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.y --lang AII --comp parser" />
-					<Add before="bison  --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)A+/report.txt -o $(TARGET_OUTPUT_DIR)A+/oas-intel-parser.cc  --header=$(TARGET_OUTPUT_DIR)A+/oas-intel-parser.hh $(TARGET_OUTPUT_DIR)A+/intel.y" />
+					<Add before="bison  --warning=all --debug --report=cex,solved --report-file=$(TARGET_OUTPUT_DIR)A+/report.txt -o $(TARGET_OUTPUT_DIR)A+/oas-intel-parser.cc  --header=$(TARGET_OUTPUT_DIR)A+/oas-intel-parser.hh $(TARGET_OUTPUT_DIR)A+/intel.y" />
 					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A+/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)A+/intel.l" />
 				</ExtraCommands>
 			</Target>
@@ -46,7 +46,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/boot-1.a.asm  --output bin/Debug/boot.bin" />
+				<Option parameters="tests/boot-1.a+.asm  --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
