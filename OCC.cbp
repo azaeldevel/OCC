@@ -142,17 +142,6 @@
 		</Unit>
 		<Unit filename="0/cc.cc" />
 		<Unit filename="0/cc.hh" />
-		<Unit filename="0/developing.cc">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="0/oas-intel-lexer.l">
-			<Option compile="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="0/oas-intel-parser.y">
-			<Option compile="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="0/occ-generetor-main.cc">
 			<Option target="gen-dbg" />
 		</Unit>
