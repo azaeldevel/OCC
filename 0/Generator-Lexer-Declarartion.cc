@@ -23,6 +23,11 @@ namespace oct::cc::v0::tools
             out << "\t//" << space() << "_here::File " << space() << "_here::current_file;\n";
 
             out << "\t#include \"" << language(true) << "/oas-intel-parser.hh\"\n";
+
+            // Each time a rule is matched, advance the end cursor/position.
+            out << "\t#define YY_USER_ACTION  yylloc->last_column += (int) yyleng;\n";
+            out << "\t#define LOCATION_STEP() do {yylloc->first_line = yylloc->last_line;yylloc->first_column = yylloc->last_column;} while (0)\n";
+
         out << "%}\n";
 
         out << "CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]\n";

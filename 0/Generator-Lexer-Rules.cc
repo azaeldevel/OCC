@@ -15,6 +15,7 @@ namespace oct::cc::v0::tools
 
         //C keyword
         //out << "\"auto\"		return AUTO;\n";
+        out << "\"char\"		return CHAR;\n";
         //out << "\"break\"		return BREAK;\n";
         //out << "\"case\"		return CASE;\n";
         //out << "\"const\"		return CONST;\n";
@@ -47,7 +48,8 @@ namespace oct::cc::v0::tools
         //out << "\"while\"		return WHILE;\n";
 
 
-        out << "[[:space:]]			;\n";
+        out << "\"\\n\"    yylloc->last_line++; yylloc->last_column = 1;\n";
+        out << "[ \t]+   LOCATION_STEP (); continue;\n";
 
         out << "{IDENTIFIER}	{\n";
                             //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
@@ -93,7 +95,7 @@ namespace oct::cc::v0::tools
         out << "<<EOF>>  return ENDOFFILE;\n";
 
 
-        out << ".       yyerror(yyscanner,res,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
+        out << ".       yyerror(yylloc,yyscanner,res,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
 
     }
 

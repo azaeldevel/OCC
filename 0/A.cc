@@ -297,7 +297,7 @@ namespace nodes
 
     void declaration::print(std::ostream& out)const
     {
-        std::cout << "void declaration::print(std::ostream& out)const\n";
+        //std::cout << "void declaration::print(std::ostream& out)const\n";
         const type_specifier* spec = specifiers;
         while(spec)
         {
@@ -326,7 +326,10 @@ namespace nodes
 
     void function::print(std::ostream& out)const
     {
+        if(not body_list) return;
+        if(id) out << "\n" << id->name << ":";
         const statement* inst = (const statement*)body_list;
+
         while(inst)
         {
             if(inst->is_instruction)
@@ -371,30 +374,30 @@ namespace nodes
 
     void translation_unit::print(std::ostream& out)const
     {
-        std::cout << "void translation_unit::print(std::ostream& out)const\n";
-        std::cout << "Step 1\n";
+        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
+        //std::cout << "Step 1\n";
         const declaration* dec = declarations;
         while(dec)
         {
-            std::cout << "Step 1.1\n";
+            //::cout << "Step 1.1\n";
             dec->print(out);
-            std::cout << "Step 1.2\n";
+           // std::cout << "Step 1.2\n";
             if(dec->next) out << "\n";
-            std::cout << "Step 1.3\n";
+            //std::cout << "Step 1.3\n";
 
             dec = (const declaration*)dec->next;
-            std::cout << "Step 1.4\n";
+            //std::cout << "Step 1.4\n";
         }
 
-        std::cout << "Step 2\n";
+        //std::cout << "Step 2\n";
 
         if(functions) functions->print(out);
 
-        std::cout << "Step 3\n";
+        //std::cout << "Step 3\n";
     }
     void translation_unit::generate(std::ostream& out) const
     {
-        std::cout << "void translation_unit::print(std::ostream& out)const\n";
+        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
         if(functions) functions->generate(out);
     }
 }

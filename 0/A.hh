@@ -655,7 +655,7 @@ namespace oct::cc::v0::AI
 
         struct function : public statement
         {
-            const identifier* name;
+            const identifier* id;
             const statement* body_list;
 
             void print(std::ostream&)const;

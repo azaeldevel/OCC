@@ -513,7 +513,7 @@ namespace oct::cc::v0::tools
             out << "\tIDENTIFIER ':' statement_list_body\n";
             out << "\t{\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::function>();\n";
-                out << "\t\t$$->name = $1;\n";
+                out << "\t\t$$->id = $1;\n";
                 out << "\t\t$$->body_list = $3;\n";
             out << "\t}\n";
             /*
@@ -617,6 +617,7 @@ namespace oct::cc::v0::tools
             out << "\texternal_declaration\n";
             out << "\t{\n";
                 //std::cout << "external_declaration\n";
+                out << "\tyylineno = 1;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\t*unit = $1;\n";
             out << "\t}\n";
