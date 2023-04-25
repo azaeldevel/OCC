@@ -189,6 +189,23 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
+        out << "statement_list_body :\n";
+            out << "\tstatement_instruction\n";
+            out << "\t{\n";
+                //out << "\tstd::cout << \"statement_list : statement\"\n" << "\n" ;
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstatement_list_body statement_instruction\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::statement *statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+                out << "\t\tstatement_prev = $2;\n";
+                //out << "\t\tif(statement_prev->is_instruction) if(((AI_here::nodes::instruction*)statement_prev)->inst == AI_here::Tokens::RET) YYACCEPT;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
 
     }
     void Parser::rules_statement_AII(std::ostream& out) const
@@ -493,16 +510,18 @@ namespace oct::cc::v0::tools
     {
 
         out << "function :\n";
-            out << "\tIDENTIFIER ':' statement_list \n";
+            out << "\tIDENTIFIER ':' statement_list_body\n";
             out << "\t{\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::function>();\n";
                 out << "\t\t$$->name = $1;\n";
                 out << "\t\t$$->body_list = $3;\n";
             out << "\t}\n";
-            /*out << "\t|\n";
+            /*
+            out << "\t|\n";
             out << "\tIDENTIFIER ':' statement_list IRET ';'\n";
             out << "\t{\n";
-            out << "\t}\n";*/
+            out << "\t}\n";
+            */
             out << "\t;\n";
 
         out << "function_list :\n";

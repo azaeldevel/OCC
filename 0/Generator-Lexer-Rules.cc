@@ -6,47 +6,45 @@ namespace oct::cc::v0::tools
     void Lexer::rules(std::ostream& out) const
     {
         //Ensablador
-        out << "\"mov\"         return MOV;\n";
         out << "\"al\"	        return AL;\n";
         out << "\"ah\"	        return AH;\n";
+        out << "\"byte\"		return BYTE;\n";
+        out << "\"mov\"         return MOV;\n";
         out << "\"ret\"	        {std::cout << \"ret\";return RET;}\n";
 
+
         //C keyword
-        out << "\"auto\"		return AUTO;\n";
-        out << "\"byte\"		return BYTE;\n";
-        out << "\"const\"		return CONST;\n";
-        out << "\"char\"		return CHAR;\n";
-        out << "\"double\"	    return DOUBLE;\n";
+        //out << "\"auto\"		return AUTO;\n";
+        //out << "\"break\"		return BREAK;\n";
+        //out << "\"case\"		return CASE;\n";
+        //out << "\"const\"		return CONST;\n";
+        //out << "\"continue\"	return CONTINUE;\n";
+        //out << "\"default\"	return DEFAULT;\n";
+        //out << "\"do\"		return DO;\n";
+        out << "\"double\"	return DOUBLE;\n";
+        //out << "\"else\"		return ELSE;\n";
+        //out << "\"enum\"		return ENUM;\n";
+        //out << "\"extern\"	return EXTERN;\n";
         out << "\"float\"		return FLOAT;\n";
+        //out << "\"for\"		return FOR;\n";
+        //out << "\"goto\"		return GOTO;\n";
+        //out << "\"if\"		return IF;\n";
+        out << "\"int\"		return INT;\n";
+        out << "\"long\"		return LONG;\n";
         out << "\"register\"	return REGISTER;\n";
+        //out << "\"return\"	return RETURN;\n";
         out << "\"short\"		return SHORT;\n";
-        out << "\"signed\"	    return SIGNED;\n";
-        out << "\"sizeof\"	    return SIZEOF;\n";
-        out << "\"static\"	    return STATIC;\n";
-        out << "\"typedef\"	    return TYPEDEF;\n";
+        out << "\"signed\"	return SIGNED;\n";
+        out << "\"sizeof\"	return SIZEOF;\n";
+        //out << "\"static\"	return STATIC;\n";
+        //out << "\"struct\"	return STRUCT;\n";
+        //out << "\"switch\"	return SWITCH;\n";
+        //out << "\"typedef\"	return TYPEDEF;\n";
+        //out << "\"union\"		return UNION;\n";
         out << "\"unsigned\"	return UNSIGNED;\n";
         out << "\"void\"		return VOID;\n";
-        out << "\"volatil\"	    return VOLATIL;\n";
-        out << "\"extern\"	    return EXTERN;\n";
-        out << "\"goto\"		return GOTO;\n";
-        out << "\"int\"		    return INT;\n";
-        out << "\"long\"		return LONG;\n";
-        out << "\"default\"	    return DEFAULT;\n";
-
-        out << "\"break\"		return BREAK;\n";
-        out << "\"case\"		return CASE;\n";
-        out << "\"continue\"	return CONTINUE;\n";
-        out << "\"do\"		    return DO;\n";
-        out << "\"else\"		return ELSE;\n";
-        out << "\"enum\"		return ENUM;\n";
-        out << "\"for\"		    return FOR;\n";
-        out << "\"if\"		return IF;\n";
-        out << "\"return\"	return RETURN;\n";
-        out << "\"struct\"	return STRUCT;\n";
-        out << "\"switch\"	return SWITCH;\n";
-        out << "\"union\"		return UNION;\n";
-        out << "\"while\"		return WHILE;\n";
-
+        //out << "\"volatil\"	return VOLATIL;\n";
+        //out << "\"while\"		return WHILE;\n";
 
 
         out << "[[:space:]]			;\n";
@@ -95,7 +93,7 @@ namespace oct::cc::v0::tools
         out << "<<EOF>>  return ENDOFFILE;\n";
 
 
-        out << ".	;\n";
+        out << ".       yyerror(yyscanner,res,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
 
     }
 

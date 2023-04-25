@@ -36,7 +36,11 @@ namespace oct::cc::v0::tools
         // The scanner argument must be named yyscanner.
         out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param, yyscan_t yyscanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block)\n";
             out << "\tYY_DECL;\n";
-            out << "\tvoid yyerror(yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, ...);\n";
+
+            out << "\tvoid yyerror(yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg);\n";
+            out << "\tvoid yyerror(yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, char);\n";
+            out << "\tvoid yyerror(yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, yytoken_kind_t);\n";
+
         out << "}\n";
 
         // Emitted on top of the implementation file.
@@ -287,6 +291,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::declaration*> declaration\n";
         out << "%type <AI_here::nodes::statement*> statement_list\n";
         out << "%type <AI_here::nodes::statement*> statement_instruction\n";
+        out << "%type <AI_here::nodes::statement*> statement_list_body\n";
         out << "%type <AI_here::nodes::instruction_label*> instruction_label\n";
         out << "%type <AI_here::nodes::instruction_mov*> instruction_mov\n";
         out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
@@ -295,9 +300,7 @@ namespace oct::cc::v0::tools
         switch(lang)
         {
         case Language::AI:
-            out << "%type <AI_here::nodes::function*> function\n";
-            out << "%type <AI_here::nodes::function*> function_list\n";
-            out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
+            declaration_types_AI(out);
             break;
         case Language::AII:
             declaration_types_AII(out);
@@ -334,6 +337,12 @@ namespace oct::cc::v0::tools
             out << "\t# endif\n";
         out << "}\n";
 
+    }
+    void Parser::declaration_types_AI(std::ostream& out) const
+    {
+        out << "%type <AI_here::nodes::function*> function\n";
+        out << "%type <AI_here::nodes::function*> function_list\n";
+        out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
     }
     void Parser::declaration_types_AII(std::ostream& out) const
     {
