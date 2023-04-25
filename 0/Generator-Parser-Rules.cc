@@ -106,7 +106,7 @@ namespace oct::cc::v0::tools
         out << "instruction_mov :\n";
             out << "\tMOV registers_8b consts_integer ';'\n";
             out << "\t{\n";
-                //std::cout << "mov register-8b integer\n";
+                //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::move_8b_reg_byte* mv8 = block.create<AI_here::nodes::move_8b_reg_byte>();\n";
                 out << "\t\tmv8->registe = (AI_here::Tokens)$2;\n";
                 out << "\t\tmv8->byte = (unsigned char)$3;\n";
@@ -118,7 +118,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV registers_8b CONSTANT_CHAR ';'\n";
             out << "\t{\n";
-                //std::cout << "mov register-8b char\n";
+                //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::move_8b_reg_byte* mv8 = block.create<AI_here::nodes::move_8b_reg_byte>();\n";
                 out << "\t\tmv8->registe = (AI_here::Tokens)$2;\n";
                 out << "\t\tmv8->byte = (unsigned char)$3;\n";
@@ -138,7 +138,7 @@ namespace oct::cc::v0::tools
         out << "instruction_int : \n";
             out << "\tINT consts_integer ';'\n";
             out << "\t{\n";
-                //std::cout << "int " << $2 << "\n";
+                //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::instruction_int* serv = block.create<AI_here::nodes::instruction_int>();\n";
                 //if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
                 out << "\t\tserv->service = $2;\n";
@@ -214,11 +214,6 @@ namespace oct::cc::v0::tools
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
-                /*out << "\t\tif(((AI_here::nodes::instruction*)$2)->inst == AI_here::Tokens::RET) \n";
-                out << "\t\t{\n";
-                out << "\t\t\tstd::cout << \"RET\";\n";
-                out << "\t\t\tYYACCEPT;\n";
-                out << "\t\t}\n";*/
             out << "\t}\n";
             out << "\t;\n\n";
 
@@ -531,6 +526,7 @@ namespace oct::cc::v0::tools
         out << "function :\n";
             out << "\tIDENTIFIER ':' statement_list_body RET ';'\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << $1->name << \":\\n\";\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::function>();\n";
                 out << "\t\t$$->id = $1;\n";
                 out << "\t\t$$->body_list = $3;\n";
@@ -636,7 +632,6 @@ namespace oct::cc::v0::tools
             out << "\texternal_declaration\n";
             out << "\t{\n";
                 //std::cout << "external_declaration\n";
-                out << "\tyylineno = 1;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\t*unit = $1;\n";
             out << "\t}\n";
