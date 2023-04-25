@@ -214,11 +214,11 @@ namespace oct::cc::v0::tools
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
-                out << "\t\tif(((AI_here::nodes::instruction*)$2)->inst == AI_here::Tokens::RET) \n";
+                /*out << "\t\tif(((AI_here::nodes::instruction*)$2)->inst == AI_here::Tokens::RET) \n";
                 out << "\t\t{\n";
-                //out << "\t\t\tstd::cout << \"RET\";\n";
-                //out << "\t\t\tYYACCEPT;\n";
-                out << "\t\t}\n";
+                out << "\t\t\tstd::cout << \"RET\";\n";
+                out << "\t\t\tYYACCEPT;\n";
+                out << "\t\t}\n";*/
             out << "\t}\n";
             out << "\t;\n\n";
 
@@ -250,16 +250,16 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t|\n";
+            /*out << "\t|\n";
             out << "\tinstruction_label\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
+            out << "\t}\n";*/
+            /*out << "\t|\n";
             out << "\tinstruction_ret\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
+            out << "\t}\n";*/
             out << "\t;\n\n";
     }
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
@@ -528,9 +528,8 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_unit_AI(std::ostream& out) const
     {
-
         out << "function :\n";
-            out << "\tIDENTIFIER ':' statement_list_body\n";
+            out << "\tIDENTIFIER ':' statement_list_body RET ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = block.create<AI_here::nodes::function>();\n";
                 out << "\t\t$$->id = $1;\n";

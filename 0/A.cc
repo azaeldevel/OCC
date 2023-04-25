@@ -329,7 +329,6 @@ namespace nodes
         if(not body_list) return;
         if(id) out << "\n" << id->name << ":";
         const statement* inst = (const statement*)body_list;
-
         while(inst)
         {
             if(inst->is_instruction)
@@ -396,9 +395,9 @@ namespace nodes
         const function* func = functions;
         while(func)
         {
-            //::cout << "Step 1.1\n";
+            //std::cout << "Step 1.1\n";
             func->print(out);
-           // std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.2\n";
             if(func->next) out << "\n";
             //std::cout << "Step 1.3\n";
 
