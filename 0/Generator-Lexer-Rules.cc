@@ -56,7 +56,7 @@ namespace oct::cc::v0::tools
 
         out << "{IDENTIFIER}	{\n";
                             //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
-                            out << "\t\tAI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();\n";
+                            out << "\t\tAI_here::nodes::identifier* identifer = tray->block.create<AI_here::nodes::identifier>();\n";
                             out << "\t\tidentifer->line = yylineno;\n";
                             out << "\t\tidentifer->string = yytext;\n";
                             out << "\t\tyylval->IDENTIFIER = identifer;\n";
@@ -65,7 +65,7 @@ namespace oct::cc::v0::tools
 
         out << "{CONSTANT_INTEGER_HEX}  {\n";
                                     //std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
-                                    out << "\t\tAI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
                                     out << "\t\tinteger->format = 'H';\n";
                                     out << "\t\tinteger->number = std::stoll(yytext, nullptr, 16);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
@@ -73,7 +73,7 @@ namespace oct::cc::v0::tools
                                 out << "\t\t}\n";
         out << "{CONSTANT_INTEGER_DEC}  {\n";
                                     //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
-                                    out << "\t\tAI_here::nodes::Integer* integer = block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
                                     out << "\t\tinteger->format = 'D';\n";
                                     out << "\t\tinteger->number = std::stoll(yytext);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
@@ -98,7 +98,7 @@ namespace oct::cc::v0::tools
         out << "<<EOF>>  return ENDOFFILE;\n";
 
 
-        out << ".       yyerror(yylloc,yyscanner,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
+        out << ".       yyerror(yylloc,yyscanner,tray,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
 
     }
 

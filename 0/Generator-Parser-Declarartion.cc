@@ -34,11 +34,11 @@ namespace oct::cc::v0::tools
         out << "{\n";
         // Tell Flex the expected prototype of yylex.
         // The scanner argument must be named yyscanner.
-        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block)\n";
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, " << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray)\n";
             out << "\tYY_DECL;\n";
 
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg);\n";
-            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, ...);\n";
+            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, " << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, char);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, yytoken_kind_t);\n";
 
@@ -76,8 +76,8 @@ namespace oct::cc::v0::tools
         out << "%locations\n";
 
         // Scanner and error count are exchanged between main, yyparse and yylex.
-        out << "%param {yyscan_t scanner}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";
-        //out << "%param {yyscan_t scanner}{result *res}{" << space() << "_here::Tray<" << tree_node() << ">* unit}\n";
+        //out << "%param {yyscan_t scanner}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";
+        out << "%param {yyscan_t scanner}{" << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray}\n";
 
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";

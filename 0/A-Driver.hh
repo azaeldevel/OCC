@@ -18,10 +18,7 @@ namespace oct::cc::v0::AI
 class Driver : public cc_here::Driver
 {
 public:
-	Driver ();
-	Driver (core_here::Block& memory);
-	Driver (core_here::Block& memory,SymbolTable&);
-	Driver (SymbolTable&);
+	Driver (Tray<nodes::translation_unit>&);
 	virtual ~Driver ();
 
 	virtual bool parse(const std::filesystem::path& sources);
@@ -34,10 +31,7 @@ private:
 
 private:
     File file;
-    const nodes::translation_unit* unit;
-    SymbolTable* symbols;
-    bool symbols_new;
-    Tray<nodes::translation_unit> tray;
+    Tray<nodes::translation_unit>* tray;
 };
 
 }

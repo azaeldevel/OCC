@@ -25,25 +25,11 @@
 
 namespace oct::cc::v0::AI
 {
-    Driver::Driver() : symbols(new SymbolTable),symbols_new(true)
-    {
-    }
-    Driver::Driver(core_here::Block& b) : cc_here::Driver(b),symbols(new SymbolTable),symbols_new(true)
-    {
-    }
-    Driver::Driver(core_here::Block& b,SymbolTable& s) : cc_here::Driver(b),symbols(&s),symbols_new(false)
-    {
-    }
-    Driver::Driver(SymbolTable& s) : symbols(&s),symbols_new(false)
+    Driver::Driver(Tray<nodes::translation_unit>& t) : cc_here::Driver(t.block),tray(&t)
     {
     }
     Driver::~Driver()
     {
-        if(symbols_new) if(symbols)
-        {
-            delete symbols;
-            symbols = NULL;
-        }
     }
 
 
@@ -54,10 +40,10 @@ namespace oct::cc::v0::AI
 
     void Driver::print(std::ostream& out) const
     {
-        if(unit) unit->print(out);
+        if(tray->unit) tray->unit->print(out);
     }
     void Driver::generate(std::ostream& out) const
     {
-        if(unit) unit->generate(out);
+        if(tray->unit) tray->unit->generate(out);
     }
 }

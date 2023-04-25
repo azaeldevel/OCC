@@ -82,8 +82,8 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-	AI_here::SymbolTable symbols;
-    AI_here::Driver driverI(symbols);
+	AI_here::Tray<AI_here::nodes::translation_unit> trayI;
+    AI_here::Driver driverI(trayI);
 	AII_here::Driver driverII;
 	for(const std::filesystem::path& path : inputs)
 	{
