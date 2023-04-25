@@ -684,10 +684,11 @@ namespace oct::cc::v0::AI
 
     //typedef std::variant<nodes::identifier*> element;
 
-    class SymbolTable : protected nodes::space
+    class SymbolTable : public nodes::space
     {
     public:
         void add(nodes::declaration*);
+        void add(nodes::declarator*);
         void add(nodes::space*);
         void add(nodes::function*);
 

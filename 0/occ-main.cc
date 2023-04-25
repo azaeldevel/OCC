@@ -116,6 +116,11 @@ int main (int argc, char* argv[])
     outstream.flush();
     outstream.close();
 
+    for (auto const& [key, val] : trayI.symbols)
+    {
+        std::cout << key << "->" << val << "\n";
+    }
+
 	return EXIT_SUCCESS;
 }
 

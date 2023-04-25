@@ -303,6 +303,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::declarator>();\n";
                 out << "\t\t$$->point = NULL;\n";
                 out << "\t\t$$->direct = $1;\n";
+                out << "\t\ttray->symbols.add(&&);\n";
                 //std::cout << "declarator 2\n";
             out << "\t}\n";
             out << "\t;\n";
