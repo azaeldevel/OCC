@@ -21,7 +21,9 @@ namespace oct::cc::v0::tools
 
     protected:
         const char* header_file() const;
+        const char* header_file(int) const;
         const char* space() const;
+        const char* space(int) const;
         const char* tree_node() const;
         /*
         *\brief Retorna el nombre del lenguaje

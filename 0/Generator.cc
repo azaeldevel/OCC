@@ -14,11 +14,23 @@ namespace oct::cc::v0::tools
         switch(lang)
         {
         case Language::AI:
-                return "A.hh";
-            break;
+            return "A.hh";
         case Language::AII:
-                return "A+.hh";
-            break;
+            return "A+.hh";
+        default:
+            ;
+        }
+
+        return "?";
+    }
+    const char* Generator::header_file(int g) const
+    {
+        switch(g)
+        {
+        case 1:
+            return "A.hh";
+        case 2:
+            return "A+.hh";
         default:
             ;
         }
@@ -30,11 +42,23 @@ namespace oct::cc::v0::tools
         switch(lang)
         {
         case Language::AI:
-                return "AI";
-            break;
+            return "AI";
         case Language::AII:
-                return "AII";
-            break;
+            return "AII";
+        default:
+            ;
+        }
+
+        return "?";
+    }
+    const char* Generator::space(int g) const
+    {
+        switch(g)
+        {
+        case 1:
+            return "AI";
+        case 2:
+            return "AII";
         default:
             ;
         }

@@ -177,29 +177,14 @@ namespace oct::cc::v0::tools
         default:
             ;
         }
+    }
 
+    void Parser::rules_statement_AII(std::ostream& out) const
+    {
+    }
 
-
-        out << "statement_list :\n";
-            out << "\tstatement_instruction\n";
-            out << "\t{\n";
-                //std::cout << "statement_list : statement\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tstatement_list statement_instruction\n";
-            out << "\t{\n";
-                out << "\t\tstatic AI_here::nodes::statement *statement_prev = NULL;\n";
-
-                out << "\t\t$$ = $1;\n";
-                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
-                out << "\t\tstatement_prev->next = $2;\n";
-
-
-                out << "\t\tstatement_prev = $2;\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-
+    void Parser::rules_instructios_statment_AI(std::ostream& out) const
+    {
         out << "statement_list_body :\n";
             out << "\tstatement_instruction\n";
             out << "\t{\n";
@@ -217,24 +202,6 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-    }
-    void Parser::rules_statement_AII(std::ostream& out) const
-    {
-        out << "statement_return : \n";
-            out << "\tRETURN ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tRETURN consts_integer ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
-            out << "\t}\n";
-            out << "\t;\n";
-    }
-
-    void Parser::rules_instructios_statment_AI(std::ostream& out) const
-    {
         out << "statement_instruction :\n";
             out << "\tinstruction_mov\n";
             out << "\t{\n";
@@ -259,6 +226,39 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
     {
+
+        out << "statement_list :\n";
+            out << "\tstatement_instruction\n";
+            out << "\t{\n";
+                //std::cout << "statement_list : statement\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstatement_list statement_instruction\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::statement *statement_prev = NULL;\n";
+
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+
+
+                out << "\t\tstatement_prev = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "statement_return : \n";
+            out << "\tRETURN ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tRETURN consts_integer ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
         out << "statement_instruction :\n";
             out << "\tinstruction_mov\n";
             out << "\t{\n";
@@ -271,6 +271,11 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t|\n";
             out << "\tinstruction_label\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinstruction_ret\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
@@ -303,7 +308,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::declarator>();\n";
                 out << "\t\t$$->point = NULL;\n";
                 out << "\t\t$$->direct = $1;\n";
-                out << "\t\ttray->symbols.add(&&);\n";
+                out << "\t\ttray->symbols.add($$);\n";
                 //std::cout << "declarator 2\n";
             out << "\t}\n";
             out << "\t;\n";
@@ -504,7 +509,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->list = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
-        out << "declaration_list :\n";
+        /*out << "declaration_list :\n";
             out << "\tdeclaration ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";
@@ -520,7 +525,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
             out << "\t}\n";
-            out << "\t;\n";
+            out << "\t;\n";*/
     }
     void Parser::rules_unit_AI(std::ostream& out) const
     {

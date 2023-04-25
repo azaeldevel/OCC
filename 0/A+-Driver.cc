@@ -26,7 +26,7 @@
 namespace oct::cc::v0::AII
 {
 
-    Driver::Driver(core_here::Block& b): cc_here::Driver(b)
+    Driver::Driver(AI_here::Tray<nodes::external_declaration>& t) : cc_here::Driver(t.block),tray(&t)
     {
     }
     Driver::~Driver()
@@ -35,20 +35,9 @@ namespace oct::cc::v0::AII
 
 
 
-    bool Driver::parse(const std::filesystem::path& path)
-    {
-        file.open(path);
-        result res;
-        if(yyparse(file.get_scanner(),&res,&unit,*block) == 0) return true;
-        return false;
-    }
-
-
-
-
     void Driver::print(std::ostream& out) const
     {
-        const nodes::external_declaration* ext = unit;
+        const nodes::external_declaration* ext = tray->unit;
         while(ext)
         {
             ext->print(out);
@@ -59,7 +48,7 @@ namespace oct::cc::v0::AII
     }
     void Driver::generate(std::ostream& out) const
     {
-        const nodes::external_declaration* ext = unit;
+        const nodes::external_declaration* ext = tray->unit;
         while(ext)
         {
             ext->generate(out);

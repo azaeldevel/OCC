@@ -83,8 +83,9 @@ int main (int argc, char* argv[])
     }
 
 	AI_here::Tray<AI_here::nodes::translation_unit> trayI;
+	AI_here::Tray<AII_here::nodes::external_declaration> trayII;
     AI_here::Driver driverI(trayI);
-	AII_here::Driver driverII;
+	AII_here::Driver driverII(trayII);
 	for(const std::filesystem::path& path : inputs)
 	{
 	    if(not std::filesystem::exists(path))
@@ -103,8 +104,11 @@ int main (int argc, char* argv[])
         }
         else if(extension(path,"a+.asm"))
         {
+            //std::cout << "Parsing ...\n";
             driverII.parse(path);
+            //std::cout << "Printing ...\n";
             driverII.print(std::cout);
+            //std::cout << "Generating ...\n";
             driverII.generate(outstream);
         }
         else

@@ -34,11 +34,11 @@ namespace oct::cc::v0::tools
         out << "{\n";
         // Tell Flex the expected prototype of yylex.
         // The scanner argument must be named yyscanner.
-        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, " << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray)\n";
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray)\n";
             out << "\tYY_DECL;\n";
 
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg);\n";
-            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, " << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...);\n";
+            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, char);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, yytoken_kind_t);\n";
 
@@ -54,34 +54,28 @@ namespace oct::cc::v0::tools
             out << "\t#include <" << header_file() << ">\n";
             out << "\t#include <" << language(true) << "-Driver.hh>\n";
             out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
-            out << "\tstatic AI_here::nodes::statement *statement_list_body = NULL;\n";
+            if(lang == Language::AI) out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
         out << "}\n";
 
 
         // Don't share global variables between the scanner and the parser.
         out << "%define api.pure full\n";
-
         // Generate YYSTYPE from the types assigned to symbols.
         out << "%define api.value.type union\n";
-
         // Error messages with "unexpected XXX, expected XXX...".
         out << "%define parse.error detailed\n";
-
         // Enable run-time traces (yydebug).
-        out << "%define parse.trace\n";
-
+        //out << "%define parse.trace\n";
         // Generate the parser description file (parse.output).
         out << "%verbose\n";
-
         out << "%locations\n";
 
         // Scanner and error count are exchanged between main, yyparse and yylex.
         //out << "%param {yyscan_t scanner}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";
-        out << "%param {yyscan_t scanner}{" << space() << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray}\n";
+        out << "%param {yyscan_t scanner}{" << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray}\n";
 
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";
-
         //keywords
         out << "%token AUTO 110200\n";
         out << "%token BYTE\n";
@@ -298,12 +292,11 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::declaration*> declaration\n";
         out << "%type <AI_here::nodes::statement*> statement_list\n";
         out << "%type <AI_here::nodes::statement*> statement_instruction\n";
-        out << "%type <AI_here::nodes::statement*> statement_list_body\n";
         out << "%type <AI_here::nodes::instruction_label*> instruction_label\n";
         out << "%type <AI_here::nodes::instruction_mov*> instruction_mov\n";
         out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
         out << "%type <AI_here::nodes::instruction*> instruction_ret\n";
-        out << "%type <AI_here::nodes::declaration*> declaration_list\n";
+        //out << "%type <AI_here::nodes::declaration*> declaration_list\n";
 
         switch(lang)
         {
@@ -348,6 +341,7 @@ namespace oct::cc::v0::tools
     }
     void Parser::declaration_types_AI(std::ostream& out) const
     {
+        out << "%type <AI_here::nodes::statement*> statement_list_body\n";
         out << "%type <AI_here::nodes::function*> function\n";
         out << "%type <AI_here::nodes::function*> function_list\n";
         out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";

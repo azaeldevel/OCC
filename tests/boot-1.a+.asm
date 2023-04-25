@@ -69,3 +69,5 @@ int main()
 	return 0;
 }
 
+int flag3 1598;
+

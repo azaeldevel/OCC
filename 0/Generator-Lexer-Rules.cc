@@ -38,7 +38,7 @@ namespace oct::cc::v0::tools
         out << "\"int\"		return INT;\n";
         out << "\"long\"		return LONG;\n";
         out << "\"register\"	return REGISTER;\n";
-        //out << "\"return\"	return RETURN;\n";
+        if(lang == Language::AII) out << "\"return\"	return RETURN;\n";
         out << "\"short\"		return SHORT;\n";
         out << "\"signed\"	return SIGNED;\n";
         out << "\"sizeof\"	return SIZEOF;\n";
@@ -55,7 +55,7 @@ namespace oct::cc::v0::tools
 
 
         out << "{IDENTIFIER}	{\n";
-                            //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
+                            //out << "\t\tstd::cout << \"Line IDENTIFIER : \" << yylloc->last_line << \" : \" << yytext << \"\\n\";\n";
                             out << "\t\tAI_here::nodes::identifier* identifer = tray->block.create<AI_here::nodes::identifier>();\n";
                             out << "\t\tidentifer->line = yylineno;\n";
                             out << "\t\tidentifer->string = yytext;\n";

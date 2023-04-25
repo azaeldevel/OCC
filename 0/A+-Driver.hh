@@ -19,8 +19,7 @@ namespace oct::cc::v0::AII
 class Driver : public cc_here::Driver
 {
 public:
-	Driver () = default;
-	Driver (core_here::Block& memory);
+	Driver (AI_here::Tray<nodes::external_declaration>&);
 	virtual ~Driver ();
 
 	virtual bool parse(const std::filesystem::path& sources);
@@ -33,7 +32,7 @@ private:
 
 private:
     AI::File file;
-    const nodes::external_declaration* unit;
+    AI_here::Tray<nodes::external_declaration>* tray;
 
 };
 }
