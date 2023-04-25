@@ -12,7 +12,7 @@ namespace oct::cc::v0::tools
         out << "}\n";
         */
 
-        out << "void yyerror(YYLTYPE* yylloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, ...)\n";
+        out << "void yyerror(YYLTYPE* yylloc,yyscan_t scanner, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, ...)\n";
         out << "{\n";
           out << "\tYYLOCATION_PRINT (stderr, yylloc);\n";
           out << "\tfprintf (stderr, \": %s\", msg);\n";
@@ -21,8 +21,7 @@ namespace oct::cc::v0::tools
         out << "bool oct::cc::v0::" << space() << "::Driver::parse(const std::filesystem::path& path)\n";
         out << "{\n";
             out << "\tfile.open(path);\n";
-            out << "\tresult res;\n";
-            out << "\tif(yyparse(file.get_scanner(),&res,&unit,*block) == 0) return true;\n";
+            out << "\tif(yyparse(file.get_scanner(),&unit,*block) == 0) return true;\n";
             out << "\treturn false;\n";
         out << "}\n";
 

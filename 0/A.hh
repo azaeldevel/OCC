@@ -697,6 +697,15 @@ namespace oct::cc::v0::AI
 
     };
 
+    template<class UNIT>
+    struct Tray
+    {
+        core_here::Block* block;
+        SymbolTable* symbols;
+        UNIT* unit;
+        void* yyscanner;
+    };
+
 
     //extern core_here::Block block;
 }

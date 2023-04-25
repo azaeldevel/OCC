@@ -83,7 +83,7 @@ int main (int argc, char* argv[])
     }
 
 	AI_here::SymbolTable symbols;
-    AI_here::Driver driverI;
+    AI_here::Driver driverI(symbols);
 	AII_here::Driver driverII;
 	for(const std::filesystem::path& path : inputs)
 	{

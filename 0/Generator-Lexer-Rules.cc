@@ -98,7 +98,7 @@ namespace oct::cc::v0::tools
         out << "<<EOF>>  return ENDOFFILE;\n";
 
 
-        out << ".       yyerror(yylloc,yyscanner,res,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
+        out << ".       yyerror(yylloc,yyscanner,unit,block,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
 
     }
 
