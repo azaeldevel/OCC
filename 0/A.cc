@@ -239,7 +239,7 @@ namespace nodes
 
     void direct_declarator::print(std::ostream& out)const
     {
-        if(id) out << id->name;
+        if(id) out << id->string;
     }
 
     void declarator::print(std::ostream& out)const
@@ -327,7 +327,7 @@ namespace nodes
     void function::print(std::ostream& out)const
     {
         if(not body_list) return;
-        if(id) out << "\n" << id->name << ":";
+        if(id) out << "\n" << id->string << ":";
         const statement* inst = (const statement*)body_list;
         while(inst)
         {
@@ -353,7 +353,7 @@ namespace nodes
     }
     void function::generate(std::ostream& out) const
     {
-        const function* inst = (const function*)body_list;
+        const statement* inst = (const statement*)body_list;
         while(inst)
         {
             if(inst->is_instruction)
@@ -366,11 +366,14 @@ namespace nodes
                     case Tokens::INT :
                         ((instruction_int*)inst)->generate(out);
                         break;
+                    case Tokens::RET :
+                        ;
+                        break;
                     default:
                         ;
                 }
             }
-            inst = (const function*)inst->next;
+            inst = (const statement*)inst->next;
         }
     }
 
@@ -413,5 +416,21 @@ namespace nodes
         if(functions) functions->generate(out);
     }
 }
+
+    void SymbolTable::add(nodes::declaration* d)
+    {
+        insert(std::pair(d->list->dec->direct->id->string.c_str(),d));
+    }
+
+    void SymbolTable::add(nodes::space* s)
+    {
+        insert(std::pair(s->name->string.c_str(),s));
+    }
+
+    void SymbolTable::add(nodes::function* f)
+    {
+        insert(std::pair(f->id->string.c_str(),f));
+    }
+
 
 }

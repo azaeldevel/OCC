@@ -27,6 +27,8 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <map>
+#include <variant>
 
 #include "cc.hh"
 
@@ -507,10 +509,15 @@ namespace oct::cc::v0::AI
         struct identifier : public Node
         {
             int number;
-            std::string name;
-            long long llvalue;
+            std::string string;
             int line;
             unsigned int memory;
+        };
+
+
+        struct space : public Node, std::map<const char*,nodes::Node*>
+        {
+            identifier* name;
         };
 
 
@@ -653,7 +660,7 @@ namespace oct::cc::v0::AI
             void generate(std::ostream&)const;
         };
 
-        struct function : public statement
+        struct function : public space //public statement
         {
             const identifier* id;
             const statement* body_list;
@@ -675,10 +682,14 @@ namespace oct::cc::v0::AI
 
     }
 
-    class SymbolTable : public std::list<nodes::identifier*>
-    {
+    //typedef std::variant<nodes::identifier*> element;
 
+    class SymbolTable : protected nodes::space
+    {
     public:
+        void add(nodes::declaration*);
+        void add(nodes::space*);
+        void add(nodes::function*);
 
     protected:
 

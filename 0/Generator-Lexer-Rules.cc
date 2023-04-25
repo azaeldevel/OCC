@@ -58,7 +58,7 @@ namespace oct::cc::v0::tools
                             //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";
                             out << "\t\tAI_here::nodes::identifier* identifer = block.create<AI_here::nodes::identifier>();\n";
                             out << "\t\tidentifer->line = yylineno;\n";
-                            out << "\t\tidentifer->name = yytext;\n";
+                            out << "\t\tidentifer->string = yytext;\n";
                             out << "\t\tyylval->IDENTIFIER = identifer;\n";
                             out << "\t\treturn IDENTIFIER;\n";
                         out << "\t\t}\n";

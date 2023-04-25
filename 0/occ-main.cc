@@ -64,7 +64,6 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	AI_here::SymbolTable symbols;
 	if(inputs.empty())
 	{
 		std::cout << "Indique almenos un archivo para compilar.";
@@ -83,6 +82,7 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
+	AI_here::SymbolTable symbols;
     AI_here::Driver driverI;
 	AII_here::Driver driverII;
 	for(const std::filesystem::path& path : inputs)
@@ -99,7 +99,7 @@ int main (int argc, char* argv[])
             //std::cout << "Printing ...\n";
             driverI.print(std::cout);
             //std::cout << "Generating ...\n";
-            //driverI.generate(outstream);
+            driverI.generate(outstream);
         }
         else if(extension(path,"a+.asm"))
         {
