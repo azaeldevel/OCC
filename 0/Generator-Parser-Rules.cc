@@ -203,17 +203,17 @@ namespace oct::cc::v0::tools
         out << "statement_list_body :\n";
             out << "\tstatement_instruction\n";
             out << "\t{\n";
-                //out << "\tstd::cout << \"statement_list : statement\"\n" << "\n" ;
+                //out << "\tstd::cout << \"statement_list : statement\"\n" << "\n";
                 out << "\t\t$$ = $1;\n";
+                out << "\t\tstatement_list_body = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tstatement_list_body statement_instruction\n";
             out << "\t{\n";
-                out << "\t\tstatic AI_here::nodes::statement *statement_prev = NULL;\n";
                 out << "\t\t$$ = $1;\n";
-                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
-                out << "\t\tstatement_prev->next = $2;\n";
-                out << "\t\tstatement_prev = $2;\n";
+                out << "\t\tif(not statement_list_body) statement_list_body = $1;\n";
+                out << "\t\tstatement_list_body->next = $2;\n";
+                out << "\t\tstatement_list_body = $2;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 

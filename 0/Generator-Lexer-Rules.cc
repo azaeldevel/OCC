@@ -5,7 +5,12 @@ namespace oct::cc::v0::tools
 {
     void Lexer::rules(std::ostream& out) const
     {
-        //Ensablador
+
+        out << "\\n    yylloc->last_line++; yylloc->last_column = 1;\n";
+        out << "[ \\t]+   LOCATION_STEP (); continue;\n";
+
+
+        //Ensamblador
         out << "\"al\"	        return AL;\n";
         out << "\"ah\"	        return AH;\n";
         out << "\"byte\"		return BYTE;\n";
@@ -48,8 +53,6 @@ namespace oct::cc::v0::tools
         //out << "\"while\"		return WHILE;\n";
 
 
-        out << "\"\\n\"    yylloc->last_line++; yylloc->last_column = 1;\n";
-        out << "[ \t]+   LOCATION_STEP (); continue;\n";
 
         out << "{IDENTIFIER}	{\n";
                             //std::cout << "Line IDENTIFIER : " << yylineno << " : " << yytext << "\n";

@@ -24,9 +24,9 @@ namespace oct::cc::v0::tools
             out << "\t\tint nerrs;\n";
           out << "\t} result;\n";
             out << "\t#include <" << header_file() << ">\n";
+            out << "\t#include <" << language(true) << "-Driver.hh>\n";
             out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
             out << "\tnamespace core_here = oct::core::v3;\n";
-            //out << "\textern int yylineno;\n";
         out << "}\n";
 
         // Emitted in the header file, after the definition of YYSTYPE.
@@ -51,6 +51,10 @@ namespace oct::cc::v0::tools
             out << "#include <stdarg.h>\n";
             out << "#include <stdio.h> \n";
             out << "#include <stdlib.h>\n";
+            out << "\t#include <" << header_file() << ">\n";
+            out << "\t#include <" << language(true) << "-Driver.hh>\n";
+            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
+            out << "\tstatic AI_here::nodes::statement *statement_list_body = NULL;\n";
         out << "}\n";
 
 
