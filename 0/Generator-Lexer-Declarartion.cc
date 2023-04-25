@@ -30,10 +30,10 @@ namespace oct::cc::v0::tools
 
         out << "%}\n";
 
-        out << "CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]\n";
+        //out << "CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]\n";
         out << "CONSTANT_INTEGER_DEC [+-]?[[:digit:]]+\n";
         out << "CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+\n";
-        out << "CONSTANT_CHAR '{CHAR}'\n";
+        out << "CONSTANT_CHAR '.'\n";
 
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
     }

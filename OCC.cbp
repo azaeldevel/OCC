@@ -46,7 +46,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/boot-1.a+.asm  --output bin/Debug/boot.bin" />
+				<Option parameters="tests/boot-2.a.asm  --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -62,7 +62,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--lang AII --comp parser" />
+				<Option parameters="--lang AI --comp parser --output bin/Debug/comp.ll" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -70,20 +70,6 @@
 				<Linker>
 					<Add directory="bin/Debug" />
 				</Linker>
-			</Target>
-			<Target title="developing">
-				<Option output="bin/Debug/developing" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add directory="0" />
-					<Add directory="bin/Debug" />
-				</Compiler>
-				<ExtraCommands>
-					<Add before="bison  --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)A/reposrt.txt -o $(TARGET_OUTPUT_DIR)A/oas-intel-parser.cc  --header=$(TARGET_OUTPUT_DIR)A/oas-intel-parser.hh $(PROJECT_DIR)0/oas-intel-parser.y" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)A/oas-intel.lexer.cc  $(PROJECT_DIR)0/oas-intel-lexer.l" />
-				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>
@@ -154,28 +140,18 @@
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/cc.cc">
-			<Option target="liboctetos-cc-A" />
-			<Option target="liboctetos-cc-A+" />
-			<Option target="occ-dbg" />
-			<Option target="gen-dbg" />
-		</Unit>
-		<Unit filename="0/cc.hh">
-			<Option target="liboctetos-cc-A" />
-			<Option target="liboctetos-cc-A+" />
-			<Option target="occ-dbg" />
-			<Option target="gen-dbg" />
-		</Unit>
+		<Unit filename="0/cc.cc" />
+		<Unit filename="0/cc.hh" />
 		<Unit filename="0/developing.cc">
-			<Option target="developing" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/oas-intel-lexer.l">
 			<Option compile="1" />
-			<Option target="developing" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/oas-intel-parser.y">
 			<Option compile="1" />
-			<Option target="developing" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="0/occ-generetor-main.cc">
 			<Option target="gen-dbg" />
