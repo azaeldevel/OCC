@@ -147,7 +147,15 @@ namespace nodes
         switch(word_size)
         {
         case 8:
-            generate_8b_inmediate(out);
+            switch(op_type)
+            {
+            case regiter_integer:
+            case regiter_char:
+                generate_8b_inmediate(out);
+                break;
+            default:
+                ;
+            }
             break;
         default:
             ;
