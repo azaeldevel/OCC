@@ -275,9 +275,9 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_HEX_ULONG\n";
         out << "%token <char> CONSTANT_CHAR\n";
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
-        out << "%type <int> registers_8b\n";
-        out << "%type <int> registers_16b\n";
-        out << "%type <long long>consts_integer\n";
+        out << "%type <AI_here::Tokens> registers_8b\n";
+        out << "%type <AI_here::Tokens> registers_16b\n";
+        out << "%type <AI_here::integer> consts_integer\n";
 
 
         out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
@@ -291,7 +291,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::initializer*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
         out << "%type <AI_here::nodes::statement*> statement_instruction\n";
-        out << "%type <AI_here::nodes::instruction_mov*> instruction_mov\n";
+        out << "%type <AI_here::nodes::Move*> instruction_mov\n";
         out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
         out << "%type <AI_here::nodes::instruction_label*> instruction_label\n";
 

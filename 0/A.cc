@@ -112,18 +112,102 @@ namespace nodes
     }
     void statement::print(std::ostream&)const
     {
-        ;
     }
 
 
 
 
-    void instruction_mov::print(std::ostream&)const
+    void Move::print(std::ostream& out)const
     {
-        ;
+        //out << "void Move::print(std::ostream& out)const\n";
+        switch(op_type)
+        {
+        case operands_type::regiter_integer:
+            {
+                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
+                auto source = reinterpret_cast<Token<integer>*>(this->source);
+                out << "\n\tmov " << register_to_string(destine->token) << " ";
+                out << source->token;
+            }
+            break;
+        case operands_type::regiter_char:
+            {
+                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
+                auto source = reinterpret_cast<Token<char>*>(this->source);
+                out << "\n\tmov " << register_to_string(destine->token) << " ";
+                out << "'" << source->token << "'";
+            }
+            break;
+        default:
+            ;//error
+        }
+    }
+    void Move::generate(std::ostream& out)const
+    {
+        switch(word_size)
+        {
+        case 8:
+            generate_8b_inmediate(out);
+            break;
+        default:
+            ;
+        }
+    }
+    void Move::generate_8b_inmediate(std::ostream& out)const
+    {
+        auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
+        auto source = reinterpret_cast<Token<char>*>(this->source);
+
+        unsigned char instruction[2];
+        instruction[0] = 0b1011;//opcode
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        instruction[0] = instruction[0] << 1;//w = one byte
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        switch(destine->token)//reg
+        {
+            case Tokens::AL:
+                instruction[0] = instruction[0] << 3;
+                break;
+            case Tokens::CL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b001;
+                break;
+            case Tokens::DL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b010;
+                break;
+            case Tokens::BL:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b011;
+                break;
+            case Tokens::AH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b100;
+                break;
+            case Tokens::CH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b101;
+                break;
+            case Tokens::DH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b110;
+                break;
+            case Tokens::BH:
+                instruction[0] = instruction[0] << 3;
+                instruction[0] = instruction[0] + 0b111;
+                break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+        instruction[1] = source->token;
+        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        out.write((char*)&instruction,2);
     }
 
-
+    /*
     void move_8b_reg_byte::generate(std::ostream& out) const
     {
         unsigned char instruction[2];
@@ -180,6 +264,7 @@ namespace nodes
         if(type == 'C') out << "'" << (char)byte << "'";
         else if(type == 'I') out << (int)byte;
     }
+    */
 
     void instruction_int::generate(std::ostream& out) const
     {
@@ -336,7 +421,7 @@ namespace nodes
                 switch(((instruction*)inst)->inst)
                 {
                     case Tokens::MOV :
-                        ((move_8b_reg_byte*)inst)->print(out);
+                        ((Move*)inst)->print(out);
                         break;
                     case Tokens::INT :
                         ((instruction_int*)inst)->print(out);
@@ -361,7 +446,7 @@ namespace nodes
                 switch(((instruction*)inst)->inst)
                 {
                     case Tokens::MOV :
-                        ((move_8b_reg_byte*)inst)->generate(out);
+                        ((Move*)inst)->generate(out);
                         break;
                     case Tokens::INT :
                         ((instruction_int*)inst)->generate(out);

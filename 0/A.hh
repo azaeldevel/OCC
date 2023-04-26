@@ -23,7 +23,6 @@
 
 
 #include <core/3/math.hh>
-#include <core/3/math.hh>
 #include <iostream>
 #include <string>
 #include <list>
@@ -420,6 +419,8 @@ namespace oct::cc::v0::AI
         void* scanner;
     };
 
+    typedef long long integer;
+
 
 	template<typename Token> std::string to_string(Token t)
 	{
@@ -472,12 +473,25 @@ namespace oct::cc::v0::AI
         typedef unsigned int Line;
         const char* register_to_string(Tokens);
         const char* type_specifier_to_string(Tokens);
+        enum class source_type : unsigned char
+        {
+            none,
+            inmediate,
+            registers,
+            memory,
+        };
 
         struct Node
         {
             const Node* next;
 
             Node();
+        };
+
+        template<class T>
+        struct Token : public Node
+        {
+            T token;
         };
 
         struct statement : public Node
@@ -491,6 +505,7 @@ namespace oct::cc::v0::AI
         struct instruction : public statement
         {
             Tokens inst;
+            unsigned char word_size;
         };
         struct assembler_instruction : public instruction
         {
@@ -525,20 +540,31 @@ namespace oct::cc::v0::AI
 
 
 
-        struct instruction_mov : public assembler_instruction
+        struct Move : public assembler_instruction
         {
-            enum class type_operand : unsigned char
+            enum class operands_type : unsigned char
             {
                 none,
-                integer,
-                letter,
+                //regiter_inmediate,
+                regiter_integer,
+                regiter_char,
             };
 
-            //unsigned char size;//8-bits, 16-bits
+
+            unsigned char word_size;
+            operands_type op_type;
+            char data_type;//I : integer, C : char
+            Node* destine;
+            Node* source;
+
+            void generate(std::ostream&) const;
             void print(std::ostream&)const;
+
+        private:
+            void generate_8b_inmediate(std::ostream&) const;//source inmediate
         };
 
-        struct move_8b_reg_byte : public instruction_mov
+        /*struct move_8b_reg_byte : public Move
         {
             Tokens registe;
             unsigned char byte;
@@ -546,7 +572,7 @@ namespace oct::cc::v0::AI
 
             void generate(std::ostream& ) const;
             void print(std::ostream&)const;
-        };
+        };*/
 
         struct instruction_int : public assembler_instruction
         {

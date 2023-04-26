@@ -53,7 +53,7 @@ namespace oct::cc::v0::AII
                         case A_here::Tokens::MOV :
                             //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
                             //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
-                            ((A_here::nodes::move_8b_reg_byte*)stmt)->print(out);
+                            ((A_here::nodes::Move*)stmt)->print(out);
                             break;
                         case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
@@ -85,7 +85,7 @@ namespace oct::cc::v0::AII
                         case A_here::Tokens::MOV :
                             //out << "\n\tmov " << register_to_string(((move_8b_reg_byte*)stmt)->registe) << " ";
                             //if(((move_8b_reg_byte*)stmt)->type == 'C') out << "'" << (char)((move_8b_reg_byte*)stmt)->byte << "'";
-                            ((A_here::nodes::move_8b_reg_byte*)stmt)->generate(out);
+                            ((A_here::nodes::Move*)stmt)->generate(out);
                             break;
                         case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
