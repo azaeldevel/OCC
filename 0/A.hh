@@ -553,7 +553,7 @@ namespace oct::cc::v0::AI
 
             unsigned char word_size;
             operands_type op_type;
-            char data_type;//I : integer, C : char
+            //char data_type;//I : integer, C : char
             Node* destine;
             Node* source;
 

@@ -149,8 +149,8 @@ namespace nodes
         case 8:
             switch(op_type)
             {
-            case regiter_integer:
-            case regiter_char:
+            case operands_type::regiter_integer:
+            case operands_type::regiter_char:
                 generate_8b_inmediate(out);
                 break;
             default:
