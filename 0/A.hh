@@ -507,9 +507,9 @@ namespace oct::cc::v0::AI
             Tokens inst;
             unsigned char word_size;
         };
-        struct assembler_instruction : public instruction
+        /*struct assembler_instruction : public instruction
         {
-        };
+        };*/
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
@@ -540,7 +540,7 @@ namespace oct::cc::v0::AI
 
 
 
-        struct Move : public assembler_instruction
+        struct Move : public instruction
         {
             enum class operands_type : unsigned char
             {
@@ -574,7 +574,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };*/
 
-        struct instruction_int : public assembler_instruction
+        struct instruction_int : public instruction
         {
             unsigned char service;
 
@@ -582,7 +582,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };
 
-        struct instruction_label : public assembler_instruction
+        struct instruction_label : public instruction
         {
             const identifier* id;
         };
@@ -592,10 +592,10 @@ namespace oct::cc::v0::AI
         };
 
 
-        struct instruction_ret : public assembler_instruction
+        struct instruction_ret : public instruction
         {
         };
-        struct instruction_iret : public assembler_instruction
+        struct instruction_iret : public instruction
         {
         };
 
