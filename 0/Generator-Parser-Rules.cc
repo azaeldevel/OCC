@@ -9,7 +9,6 @@ namespace oct::cc::v0::tools
         rules_instructios(out);
 
         rules_declarations(out);
-        rules_declarator(out);
 
         switch(lang)
         {
@@ -627,6 +626,7 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_declarations(std::ostream& out) const
     {
+        out << "\n//6.5\n";
         out << "declaration :\n";
             out << "\tdeclaration_specifiers ';'\n";
             out << "\t{\n";
@@ -645,6 +645,21 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
+        out << "declaration_specifiers :\n";
+            out << "\ttype_specifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclaration_specifiers type_specifier\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::type_specifier* statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+                out << "\t\tstatement_prev = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
 
         out << "init_declarator_list : \n";
             out << "\tinit_declarator\n";
@@ -682,7 +697,8 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
 
-
+        //6.5.2
+        out << "\n\n//6.5.2\n";
         out << "type_specifier :\n";
             out << "\tVOID\n";
             out << "\t{\n";
@@ -772,23 +788,10 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
+        //6.5.4
+        rules_declarator(out);
 
-        out << "declaration_specifiers :\n";
-            out << "\ttype_specifier\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tdeclaration_specifiers type_specifier\n";
-            out << "\t{\n";
-                out << "\t\tstatic AI_here::nodes::type_specifier* statement_prev = NULL;\n";
-                out << "\t\t$$ = $1;\n";
-                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
-                out << "\t\tstatement_prev->next = $2;\n";
-                out << "\t\tstatement_prev = $2;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
+        //6.5.7
         out << "initializer : \n";
         //esta seccion no es parte del estandar C
         {
