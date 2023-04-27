@@ -191,7 +191,6 @@ namespace oct::cc::v0::AI
 		//C-keywords
 		AUTO = 110200,
 		BREAK = 110202,
-		BYTE,
 		CASE,
 		CHAR,
 		CONST,
@@ -365,8 +364,10 @@ namespace oct::cc::v0::AI
 		SS,
 		ES,
 
+        BYTE,
+		TINY,
 
-		//leterals
+		//consttantes
 		CONSTANT_INTEGER_DEC,
 		LITERAL_INTEGER_DEC_SCHAR,
 		LITERAL_INTEGER_DEC_UCHAR,

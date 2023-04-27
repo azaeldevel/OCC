@@ -78,7 +78,6 @@ namespace oct::cc::v0::tools
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";
         //keywords
         out << "%token AUTO 110200\n";
-        out << "%token BYTE\n";
         out << "%token BREAK\n";
         out << "%token CASE\n";
         out << "%token CHAR\n";
@@ -254,7 +253,11 @@ namespace oct::cc::v0::tools
         out << "%token SS\n";
         out << "%token ES\n";
 
-        //
+
+        out << "%token BYTE\n";
+        out << "%token TINY\n";
+
+                //
         out << "%token <AI_here::integer> CONSTANT_INTEGER_DEC\n";
         out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
@@ -286,7 +289,7 @@ namespace oct::cc::v0::tools
         //out << "%type <char> const_char\n";
         out << "%type <AI_here::nodes::statement*> instructions\n";
 
-        out << "%type <AI_here::nodes::const_expression*> const_expression\n";
+        //out << "%type <AI_here::nodes::const_expression*> const_expression\n";
         out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
         out << "%type <AI_here::nodes::declarator*> declarator\n";
         out << "%type <AI_here::nodes::type_specifier*> type_specifier\n";
@@ -296,7 +299,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::initializer*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
 
-        out << "%type <AI_here::nodes::identifier*> identifier_list\n";
+        //out << "%type <AI_here::nodes::identifier*> identifier_list\n";
 
         switch(lang)
         {

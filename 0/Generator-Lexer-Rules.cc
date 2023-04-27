@@ -13,9 +13,13 @@ namespace oct::cc::v0::tools
         //Ensamblador
         out << "\"al\"	        return AL;\n";
         out << "\"ah\"	        return AH;\n";
-        out << "\"byte\"		return BYTE;\n";
         out << "\"mov\"         return MOV;\n";
         out << "\"ret\"	        return RET;\n";
+        if(is_disnastic_A())
+        {
+            out << "\"byte\"		return BYTE;\n";
+            out << "\"tiny\"		return TINY;\n";
+        }
 
 
         //C keyword
@@ -38,7 +42,7 @@ namespace oct::cc::v0::tools
         out << "\"int\"		return INT;\n";
         out << "\"long\"		return LONG;\n";
         out << "\"register\"	return REGISTER;\n";
-        if(lang == Language::AII) out << "\"return\"	return RETURN;\n";
+        if(has_return_statement()) out << "\"return\"	return RETURN;\n";
         out << "\"short\"		return SHORT;\n";
         out << "\"signed\"	return SIGNED;\n";
         out << "\"sizeof\"	return SIZEOF;\n";

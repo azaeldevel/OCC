@@ -97,6 +97,49 @@ namespace oct::cc::v0::tools
 
         return "?";
     }
+    bool Generator::is_disnastic_A()const
+    {
+        switch(lang)
+        {
+        case Language::AI:
+        case Language::AII:
+        case Language::AIII:
+            return true;
+        default:
+            return false;
+        }
+
+        return false;
+    }
+    bool Generator::has_assignment_operator()const
+    {
+        switch(lang)
+        {
+        case Language::AI:
+        case Language::AII:
+        case Language::AIII:
+            return false;
+        default:
+            return true;
+        }
+
+        return true;
+    }
+    bool Generator::has_return_statement()const
+    {
+        switch(lang)
+        {
+        case Language::AII:
+        case Language::AIII:
+        case Language::C:
+        case Language::CPP:
+            return true;
+        default:
+            return false;
+        }
+
+        return false;
+    }
 
 
 

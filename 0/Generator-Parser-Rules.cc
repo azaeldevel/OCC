@@ -5,17 +5,19 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        rules_finals(out);
+        out << "const_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
         rules_instructios(out);
 
-        rules_declaration(out);
+        rules_declarations(out);
+        rules_declarator(out);
+
         switch(lang)
         {
         case Language::AI:
-            rules_unit_AI(out);
+            rules_translation_unit_AI(out);
             break;
         case Language::AII:
-            rules_unit_AII(out);
+            rules_translation_unit_AII(out);
             break;
         default:
             ;
@@ -23,7 +25,7 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_finals(std::ostream& out) const
     {
-        out << "const_expression : CONSTANT_CHAR\n";
+        /*out << "const_expression : CONSTANT_CHAR\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::initializer_literal<char>>();\n";
                 out << "\t\treinterpret_cast<AI_here::nodes::initializer_literal<char>*>($$)->value = $1;\n";
@@ -43,9 +45,9 @@ namespace oct::cc::v0::tools
                 out << "\t\treinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;\n";
                 out << "\t\t$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;\n";
             out << "\t}\n";
-            out << "\t;\n";
+            out << "\t;\n";*/
 
-        out << "const_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
+
         //out << "const_char : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
 
     }
@@ -366,11 +368,41 @@ namespace oct::cc::v0::tools
 
 
         out << "initializer : \n";
-            out << "\tconst_expression\n";
+            out << "\tassignment_expression\n";
             out << "\t{\n";
-                out << "\t$$ = $1;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
+
+        out << "assignment_expression : \n";
+            out << "\tunary_expression '=' const_integer\n";
+            out << "\t{\n";
+                out << "\t\t\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "unary_expression : \n";
+            out << "\tposfix_expression\n";
+            out << "\t{\n";
+                out << "\t\t\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "posfix_expression : \n";
+            out << "\tprimary_expression\n";
+            out << "\t{\n";
+                out << "\t\t\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "primary_expression : \n";
+            out << "\tIDENTIFIER\n";
+            out << "\t{\n";
+                out << "\t\t\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
 
 
 
@@ -524,16 +556,282 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
     }
-    void Parser::rules_unit_AI(std::ostream& out) const
+    void Parser::rules_declarator(std::ostream& out) const
+    {
+        out << "declarator :\n";
+            out << "\tdirect_declarator\n";
+            out << "\t{\n";
+                //std::cout << "declarator : direct_declarator\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::declarator>();\n";
+                out << "\t\t$$->point = NULL;\n";
+                out << "\t\t$$->direct = $1;\n";
+                out << "\t\ttray->symbols.add($$);\n";
+                //std::cout << "declarator 2\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "direct_declarator : IDENTIFIER\n";
+            out << "\t{\n";
+                //std::cout << "direct_declarator : IDENTIFIER\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::direct_declarator>();\n";
+                out << "\t\t$$->id = $1;\n";
+                out << "\t\t$$->direct = NULL;\n";
+                //std::cout << $$->id->name << " ";
+            out << "\t}\n";
+            /*
+            out << "\t|\n";
+            out << "\t'(' declarator ')'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator '[' const_expression ']'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator '['  ']'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator '(' identifier_list ')'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+                out << "\t\t$$->identifier_list = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator '('  ')'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\t$$->identifier_list = NULL;\n";
+            out << "\t}\n";
+            */
+            out << "\t;\n\n";
+        /*
+        out << " : \n";
+            out << "\t\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << " : \n";
+            out << "\t\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+        */
+    }
+    void Parser::rules_declarations(std::ostream& out) const
+    {
+        out << "declaration :\n";
+            out << "\tdeclaration_specifiers ';'\n";
+            out << "\t{\n";
+                //std::cout << "declaration : declaration_specifiers\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::declaration>();\n";
+                out << "\t\t$$->specifiers = $1;\n";
+                out << "\t\t$$->list = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclaration_specifiers init_declarator_list ';'\n";
+            out << "\t{\n";
+                //std::cout << "declaration : declaration_specifiers init_declarator_list\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::declaration>();\n";
+                out << "\t\t$$->specifiers = $1;\n";
+                out << "\t\t$$->list = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "init_declarator_list : \n";
+            out << "\tinit_declarator\n";
+            out << "\t{\n";
+                //std::cout << "init_declarator_list : init_declarator\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinit_declarator_list ',' init_declarator\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::init_declarator* statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $3;\n";
+                out << "\t\tstatement_prev = $3;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "init_declarator : \n";
+            out << "\tdeclarator\n";
+            out << "\t{\n";
+                //std::cout << "init_declarator : declarator\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::init_declarator>();\n";
+                out << "\t\t$$->dec = $1;\n";
+                out << "\t\t$$->value = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclarator" << (has_assignment_operator() ? " '=' " : " " )<< "initializer\n";
+            out << "\t{\n";
+                //std::cout << "init_declarator : declarator '=' initializer\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::init_declarator>();\n";
+                out << "\t\t$$->dec = $1;\n";
+                out << "\t\t$$->value = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+
+        out << "type_specifier :\n";
+            out << "\tVOID\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : VOID\n";
+                //std::cout << "void ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::VOID;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCHAR\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : CHAR\n";
+                //std::cout << "char ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::CHAR;\n";
+                //$$->next = NULL;
+                //std::cout << "type_specifier\n";
+            out << "\t}\n";
+            if(is_disnastic_A())
+            {
+                out << "\t|\n";
+                out << "\tBYTE\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                    out << "\t\t$$->type = AI_here::Tokens::BYTE;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tTINY\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                    out << "\t\t$$->type = AI_here::Tokens::TINY;\n";
+                out << "\t}\n";
+            }
+            out << "\t|\n";
+            out << "\tSHORT\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : SHORT\n";
+                //std::cout << "short ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::SHORT;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINT\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : INT\n";
+                //std::cout << "int ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::INT;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tLONG\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : INT\n";
+                //std::cout << "int ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::LONG;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tFLOAT\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : FLOAT\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::FLOAT;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDOUBLE\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : DOUBLE\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::DOUBLE;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSIGNED\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : SIGNED\n";
+                //std::cout << "signed ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::SIGNED;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tUNSIGNED\n";
+            out << "\t{\n";
+                //std::cout << "type_specifier : UNSIGNED\n";
+                //std::cout << "unsigned ";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
+                out << "\t\t$$->type = AI_here::Tokens::UNSIGNED;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "declaration_specifiers :\n";
+            out << "\ttype_specifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclaration_specifiers type_specifier\n";
+            out << "\t{\n";
+                out << "\t\tstatic AI_here::nodes::type_specifier* statement_prev = NULL;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not statement_prev) statement_prev = $1;\n";
+                out << "\t\tstatement_prev->next = $2;\n";
+                out << "\t\tstatement_prev = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "initializer : \n";
+        //esta seccion no es parte del estandar C
+        {
+            out << "\tconst_integer\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCHAR\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+        }
+
+        /*
+        out << " : \n";
+            out << "\t\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << " : \n";
+            out << "\t\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+        */
+    }
+
+    void Parser::rules_translation_unit_AI(std::ostream& out) const
     {
         out << "declaration_list :\n";
-            out << "\tdeclaration ';'\n";
+            out << "\tdeclaration\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tdeclaration_list declaration ';'\n";
+            out << "\tdeclaration_list declaration\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";
                 out << "\t\tstatic AI_here::nodes::declaration* statement_prev = NULL;\n";
@@ -588,7 +886,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
     }
-    void Parser::rules_unit_AII(std::ostream& out) const
+    void Parser::rules_translation_unit_AII(std::ostream& out) const
     {
 
         out << "compound_statement :\n";
@@ -637,7 +935,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->decl = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tdeclaration ';'\n";
+            out << "\tdeclaration\n";
             out << "\t{\n";
                 //std::cout << "storage_class_specifier : declaration ';'\n";
                 //std::cout << ";\n";

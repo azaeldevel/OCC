@@ -25,7 +25,16 @@ namespace oct::cc::v0::tools
         const char* space() const;
         const char* space(int) const;
         const char* tree_node() const;
-        /*
+        bool is_disnastic_A()const;
+        /**
+        *\brief true si la gramática del lenguaje tiene operador de asignación, false en otro caso.
+        */
+        bool has_assignment_operator()const;
+        /**
+        *\brief true si la gramática del lenguaje tiene operador de asignación, false en otro caso.
+        */
+        bool has_return_statement()const;
+        /**
         *\brief Retorna el nombre del lenguaje
         *\param ornament si es true, returno el nombre del lenguaje con adorno de otra forma retorna el nombre formal.
         */
@@ -60,8 +69,10 @@ namespace oct::cc::v0::tools
         virtual void rules_instructios_statment_AI(std::ostream& out) const;
         virtual void rules_instructios_statment_AII(std::ostream& out) const;
         virtual void rules_declaration(std::ostream& out) const;
-        virtual void rules_unit_AI(std::ostream& out) const;
-        virtual void rules_unit_AII(std::ostream& out) const;
+        virtual void rules_declarations(std::ostream& out) const;
+        virtual void rules_declarator(std::ostream& out) const;
+        virtual void rules_translation_unit_AI(std::ostream& out) const;
+        virtual void rules_translation_unit_AII(std::ostream& out) const;
         virtual void functions(std::ostream& out) const;
         virtual void save(std::ostream& out) const;
 
