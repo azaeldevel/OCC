@@ -255,7 +255,7 @@ namespace oct::cc::v0::tools
         out << "%token ES\n";
 
         //
-        out << "%token <long long> CONSTANT_INTEGER_DEC\n";
+        out << "%token <AI_here::integer> CONSTANT_INTEGER_DEC\n";
         out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_SHORT\n";
@@ -264,7 +264,7 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_DEC_UNIT\n";
         out << "%token LITERAL_INTEGER_DEC_LONG\n";
         out << "%token LITERAL_INTEGER_DEC_ULONG\n";
-        out << "%token <long long> CONSTANT_INTEGER_HEX\n";
+        out << "%token <AI_here::integer> CONSTANT_INTEGER_HEX\n";
         out << "%token LITERAL_INTEGER_HEX_SCHAR\n";
         out << "%token <signed char>LITERAL_INTEGER_HEX_UCHAR\n";
         out << "%token LITERAL_INTEGER_HEX_SHORT\n";
