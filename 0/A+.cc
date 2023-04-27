@@ -34,7 +34,7 @@ namespace oct::cc::v0::AII
 
     namespace nodes
     {
-        void function_implementation::print(std::ostream& out) const
+        void function_definition::print(std::ostream& out) const
         {
             if(specifiers) specifiers->print(out);
             out << " ";
@@ -68,7 +68,7 @@ namespace oct::cc::v0::AII
             }
             out << "\n}";
         }
-        void function_implementation::generate(std::ostream& out) const
+        void function_definition::generate(std::ostream& out) const
         {
             if(specifiers) specifiers->generate(out);
             if(declaration) declaration->generate(out);

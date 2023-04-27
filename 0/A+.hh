@@ -42,7 +42,7 @@ namespace oct::cc::v0::AII
         };
 
 
-        struct function_implementation : public A_here::nodes::statement
+        struct function_definition : public A_here::nodes::statement
         {
             const A_here::nodes::type_specifier* specifiers;
             const A_here::nodes::declarator* declaration;
@@ -56,7 +56,7 @@ namespace oct::cc::v0::AII
 
         struct external_declaration : public A_here::nodes::statement
         {
-            const function_implementation* func;
+            const function_definition* func;
             const A_here::nodes::declaration* decl;
 
             void print(std::ostream&)const;

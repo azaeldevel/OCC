@@ -607,10 +607,10 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
 
-        out << "function_implementation :\n";
+        out << "function_definition :\n";
             out << "\tdeclaration_specifiers declarator compound_statement\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AII_here::nodes::function_implementation>();\n";
+                out << "\t\t$$ = tray->block.create<AII_here::nodes::function_definition>();\n";
                 out << "\t\t$$->body = $3;\n";
                 out << "\t\t$$->declaration = $2;\n";
                 out << "\t\t$$->specifiers = $1;\n";
@@ -618,7 +618,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tdeclarator compound_statement\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AII_here::nodes::function_implementation>();\n";
+                out << "\t\t$$ = tray->block.create<AII_here::nodes::function_definition>();\n";
                 out << "\t\t$$->body = $2;\n";
                 out << "\t\t$$->declaration = $1;\n";
                 out << "\t\t$$->specifiers = NULL;\n";
@@ -628,7 +628,7 @@ namespace oct::cc::v0::tools
 
 
         out << "external_declaration :\n";
-            out << "\tfunction_implementation\n";
+            out << "\tfunction_definition\n";
             out << "\t{\n";
                 //std::cout << "external_declaration : function_implementation\n";
                 //$1->print(std::cout);

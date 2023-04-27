@@ -275,25 +275,28 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_HEX_ULONG\n";
         out << "%token <char> CONSTANT_CHAR\n";
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
+
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
-
-        out << "%type <AI_here::integer> const_integer\n";
-        out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
-        out << "%type <AI_here::nodes::declarator*> declarator\n";
-        out << "%type <AI_here::nodes::type_specifier*> type_specifier\n";
-        out << "%type <AI_here::nodes::type_specifier*> declaration_specifiers\n";
-        out << "%type <AI_here::nodes::identifier*> identifier_list\n";
-        out << "%type <AI_here::nodes::const_expression*> const_expression\n";
-        out << "%type <AI_here::nodes::init_declarator*> init_declarator\n";
-        out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
-        out << "%type <AI_here::nodes::initializer*> initializer\n";
-        out << "%type <AI_here::nodes::declaration*> declaration\n";
-        out << "%type <AI_here::nodes::statement*> instructions\n";
         out << "%type <AI_here::nodes::Move*> move\n";
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";
         out << "%type <AI_here::nodes::Return*> ret\n";
+        out << "%type <AI_here::integer> const_integer\n";
+        //out << "%type <char> const_char\n";
+        out << "%type <AI_here::nodes::statement*> instructions\n";
+
+        out << "%type <AI_here::nodes::const_expression*> const_expression\n";
+        out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
+        out << "%type <AI_here::nodes::declarator*> declarator\n";
+        out << "%type <AI_here::nodes::type_specifier*> type_specifier\n";
+        out << "%type <AI_here::nodes::type_specifier*> declaration_specifiers\n";
+        out << "%type <AI_here::nodes::init_declarator*> init_declarator\n";
+        out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
+        out << "%type <AI_here::nodes::initializer*> initializer\n";
+        out << "%type <AI_here::nodes::declaration*> declaration\n";
+
+        out << "%type <AI_here::nodes::identifier*> identifier_list\n";
 
         switch(lang)
         {
@@ -348,9 +351,8 @@ namespace oct::cc::v0::tools
     {
         out << "%type <AI_here::nodes::statement*> statement_list\n";
         out << "%type <AI_here::nodes::statement*> statements\n";
-        out << "%type <AI_here::nodes::return_statement*> statement_return\n";
         out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
-        out << "%type <AII_here::nodes::function_implementation*> function_implementation\n";
+        out << "%type <AII_here::nodes::function_definition*> function_definition\n";
         out << "%type <AII_here::nodes::external_declaration*> external_declaration\n";
         out << "%type <AII_here::nodes::external_declaration*> translation_unit\n";
         out << "%type <AI_here::nodes::Return*> Return\n";
