@@ -587,11 +587,9 @@ namespace oct::cc::v0::AI
             const identifier* id;
         };
 
-        struct return_statement : public statement
-        {
-        };
-
-
+        /**
+        *\brief is usada por el ensambalador con RET, IRET y en C con return keywork, solo cambia respectivo valor de token.
+        */
         struct Return : public instruction
         {
         };

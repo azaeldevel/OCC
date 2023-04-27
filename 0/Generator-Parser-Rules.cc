@@ -7,7 +7,7 @@ namespace oct::cc::v0::tools
     {
         rules_finals(out);
         rules_instructios(out);
-        if(lang == Language::AII) rules_statement_AII(out);
+
         rules_declaration(out);
         switch(lang)
         {
@@ -192,6 +192,28 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
+        out << "instructions :\n";
+            out << "\tmove\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinterruption\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tlabel\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tret\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
         switch(lang)
         {
         case Language::AI :
@@ -205,21 +227,17 @@ namespace oct::cc::v0::tools
         }
     }
 
-    void Parser::rules_statement_AII(std::ostream& out) const
-    {
-    }
-
     void Parser::rules_instructios_statment_AI(std::ostream& out) const
     {
         out << "instructions_list :\n";
-            out << "\tstatement_instruction\n";
+            out << "\tinstructions\n";
             out << "\t{\n";
                 //out << "\tstd::cout << \"statement_list : statement\"\n" << "\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tstatement_list_body = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstructions_list statement_instruction\n";
+            out << "\tinstructions_list instructions\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_list_body) statement_list_body = $1;\n";
@@ -228,39 +246,18 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "statement_instruction :\n";
-            out << "\tmove\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tinterruption\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tlabel\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tret\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
     }
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
     {
 
         out << "statement_list :\n";
-            out << "\tstatement_instruction\n";
+            out << "\tstatements\n";
             out << "\t{\n";
                 //std::cout << "statement_list : statement\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tstatement_list statement_instruction\n";
+            out << "\tstatement_list statements\n";
             out << "\t{\n";
                 out << "\t\tstatic AI_here::nodes::statement *statement_prev = NULL;\n";
 
@@ -273,40 +270,31 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "statement_return : \n";
+        out << "Return : \n";
             out << "\tRETURN ';'\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
+                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::Return>();\n";
+                out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";
+                out << "\t\tret->is_instruction = false;\n";
+                out << "\t\t$$ = ret;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tRETURN consts_integer ';'\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<A_here::nodes::return_statement>();\n";
+                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::Return>();\n";
+                out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";
+                out << "\t\tret->is_instruction = false;\n";
+                out << "\t\t$$ = ret;\n";
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "statement_instruction :\n";
-            out << "\tmove\n";
+        out << "statements :\n";
+            out << "\tinstructions\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinterruption\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tlabel\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tret\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tstatement_return\n";
+            out << "\tReturn\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";

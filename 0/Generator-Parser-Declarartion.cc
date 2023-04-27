@@ -290,7 +290,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
         out << "%type <AI_here::nodes::initializer*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
-        out << "%type <AI_here::nodes::statement*> statement_instruction\n";
+        out << "%type <AI_here::nodes::statement*> instructions\n";
         out << "%type <AI_here::nodes::Move*> move\n";
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";
@@ -348,11 +348,13 @@ namespace oct::cc::v0::tools
     void Parser::declaration_types_AII(std::ostream& out) const
     {
         out << "%type <AI_here::nodes::statement*> statement_list\n";
+        out << "%type <AI_here::nodes::statement*> statements\n";
         out << "%type <AI_here::nodes::return_statement*> statement_return\n";
         out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
         out << "%type <AII_here::nodes::function_implementation*> function_implementation\n";
         out << "%type <AII_here::nodes::external_declaration*> external_declaration\n";
         out << "%type <AII_here::nodes::external_declaration*> translation_unit\n";
+        out << "%type <AI_here::nodes::Return*> Return\n";
 
     }
 
