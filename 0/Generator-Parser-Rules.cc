@@ -45,8 +45,8 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "consts_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
-
+        out << "const_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
+        //out << "const_char : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
 
     }
 
@@ -104,7 +104,7 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
         out << "move :\n";
-            out << "\tMOV registers_8b consts_integer ';'\n";
+            out << "\tMOV registers_8b const_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
                 /*out << "\t\tAI_here::nodes::move_8b_reg_byte* mv8 = tray->block.create<AI_here::nodes::move_8b_reg_byte>();\n";
@@ -153,7 +153,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_16b consts_integer\n";
+            out << "\tMOV registers_16b const_integer\n";
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";
@@ -161,7 +161,7 @@ namespace oct::cc::v0::tools
 
 
         out << "interruption : \n";
-            out << "\tINT consts_integer ';'\n";
+            out << "\tINT const_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::Interruption* serv = tray->block.create<AI_here::nodes::Interruption>();\n";
@@ -279,7 +279,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = ret;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tRETURN consts_integer ';'\n";
+            out << "\tRETURN const_integer ';'\n";
             out << "\t{\n";
                 out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";

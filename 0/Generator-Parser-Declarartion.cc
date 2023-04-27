@@ -277,9 +277,8 @@ namespace oct::cc::v0::tools
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
-        out << "%type <AI_here::integer> consts_integer\n";
 
-
+        out << "%type <AI_here::integer> const_integer\n";
         out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
         out << "%type <AI_here::nodes::declarator*> declarator\n";
         out << "%type <AI_here::nodes::type_specifier*> type_specifier\n";
