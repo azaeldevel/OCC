@@ -682,7 +682,7 @@ namespace oct::cc::v0::AI
             void generate(std::ostream&)const;
         };
 
-        struct function : public space //public statement
+        struct function : public statement //public statement
         {
             const identifier* id;
             const statement* body_list;
