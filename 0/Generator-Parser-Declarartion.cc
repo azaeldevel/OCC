@@ -291,9 +291,9 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::initializer*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
         out << "%type <AI_here::nodes::statement*> statement_instruction\n";
-        out << "%type <AI_here::nodes::Move*> instruction_mov\n";
-        out << "%type <AI_here::nodes::instruction_int*> instruction_int\n";
-        out << "%type <AI_here::nodes::instruction_label*> instruction_label\n";
+        out << "%type <AI_here::nodes::Move*> move\n";
+        out << "%type <AI_here::nodes::Interruption*> interruption\n";
+        out << "%type <AI_here::nodes::Label*> label\n";
 
         switch(lang)
         {
@@ -347,7 +347,7 @@ namespace oct::cc::v0::tools
     void Parser::declaration_types_AII(std::ostream& out) const
     {
         out << "%type <AI_here::nodes::statement*> statement_list\n";
-        out << "%type <AI_here::nodes::instruction*> instruction_ret\n";
+        out << "%type <AI_here::nodes::instruction*> ret\n";
         out << "%type <AI_here::nodes::return_statement*> statement_return\n";
         out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
         out << "%type <AII_here::nodes::function_implementation*> function_implementation\n";

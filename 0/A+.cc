@@ -57,7 +57,7 @@ namespace oct::cc::v0::AII
                             break;
                         case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
-                            ((A_here::nodes::instruction_int*)stmt)->print(out);
+                            ((A_here::nodes::Interruption*)stmt)->print(out);
                             break;
                         default:
                             out << "\n\tunknow";
@@ -89,7 +89,7 @@ namespace oct::cc::v0::AII
                             break;
                         case A_here::Tokens::INT :
                             //out << "\n\tint " << int(((instruction_int*)stmt)->service) << "";
-                            ((A_here::nodes::instruction_int*)stmt)->generate(out);
+                            ((A_here::nodes::Interruption*)stmt)->generate(out);
                             break;
                         default:
                             ;

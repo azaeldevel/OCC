@@ -274,14 +274,14 @@ namespace nodes
     }
     */
 
-    void instruction_int::generate(std::ostream& out) const
+    void Interruption::generate(std::ostream& out) const
     {
         unsigned char instruction[2];
 		instruction[0] = 0b11001101;//opcode
 		instruction[1] = service;
 		out.write((char*)&instruction,2);
     }
-    void instruction_int::print(std::ostream& out) const
+    void Interruption::print(std::ostream& out) const
     {
         out << "\n\tint " << int(service) << "";
     }
@@ -432,7 +432,7 @@ namespace nodes
                         ((Move*)inst)->print(out);
                         break;
                     case Tokens::INT :
-                        ((instruction_int*)inst)->print(out);
+                        ((Interruption*)inst)->print(out);
                         break;
                     case Tokens::RET :
                         out << "\n\tret;\n";
@@ -457,7 +457,7 @@ namespace nodes
                         ((Move*)inst)->generate(out);
                         break;
                     case Tokens::INT :
-                        ((instruction_int*)inst)->generate(out);
+                        ((Interruption*)inst)->generate(out);
                         break;
                     case Tokens::RET :
                         ;

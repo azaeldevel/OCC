@@ -103,7 +103,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "instruction_mov :\n";
+        out << "move :\n";
             out << "\tMOV registers_8b consts_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
@@ -160,11 +160,11 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
 
-        out << "instruction_int : \n";
+        out << "interruption : \n";
             out << "\tINT consts_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
-                out << "\t\tAI_here::nodes::instruction_int* serv = tray->block.create<AI_here::nodes::instruction_int>();\n";
+                out << "\t\tAI_here::nodes::Interruption* serv = tray->block.create<AI_here::nodes::Interruption>();\n";
                 //if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
                 out << "\t\tserv->service = $2;\n";
                 out << "\t\tserv->inst = AI_here::Tokens::INT;\n";
@@ -173,9 +173,9 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "instruction_label : IDENTIFIER ':'\n";
+        out << "label : IDENTIFIER ':'\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::instruction_label>();\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::Label>();\n";
                 out << "\t\t$$->id = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
@@ -217,17 +217,17 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
         out << "statement_instruction :\n";
-            out << "\tinstruction_mov\n";
+            out << "\tmove\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstruction_int\n";
+            out << "\tinterruption\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstruction_label\n";
+            out << "\tlabel\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
@@ -241,7 +241,7 @@ namespace oct::cc::v0::tools
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
     {
 
-        out << "instruction_ret : \n";
+        out << "ret : \n";
             out << "\tRET ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"RET 1\";\n";
@@ -285,22 +285,22 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
         out << "statement_instruction :\n";
-            out << "\tinstruction_mov\n";
+            out << "\tmove\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstruction_int\n";
+            out << "\tinterruption\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstruction_label\n";
+            out << "\tlabel\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tinstruction_ret\n";
+            out << "\tret\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";

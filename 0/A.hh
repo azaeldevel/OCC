@@ -574,7 +574,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };*/
 
-        struct instruction_int : public instruction
+        struct Interruption : public instruction
         {
             unsigned char service;
 
@@ -582,7 +582,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };
 
-        struct instruction_label : public instruction
+        struct Label : public instruction
         {
             const identifier* id;
         };
