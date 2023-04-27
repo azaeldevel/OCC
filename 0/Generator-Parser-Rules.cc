@@ -797,7 +797,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCHAR\n";
+            out << "\tCONSTANT_CHAR\n";
             out << "\t{\n";
                 out << "\t\t;\n";
             out << "\t}\n";
