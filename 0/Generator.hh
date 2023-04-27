@@ -68,7 +68,7 @@ namespace oct::cc::v0::tools
         virtual void rules_instructios(std::ostream& out) const;
         virtual void rules_instructios_statment_AI(std::ostream& out) const;
         virtual void rules_instructios_statment_AII(std::ostream& out) const;
-        virtual void rules_declaration(std::ostream& out) const;
+        //virtual void rules_declaration(std::ostream& out) const;
         virtual void rules_declarations(std::ostream& out) const;
         virtual void rules_declarator(std::ostream& out) const;
         virtual void rules_translation_unit_AI(std::ostream& out) const;
