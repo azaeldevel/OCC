@@ -592,10 +592,7 @@ namespace oct::cc::v0::AI
         };
 
 
-        struct instruction_ret : public instruction
-        {
-        };
-        struct instruction_iret : public instruction
+        struct Return : public instruction
         {
         };
 

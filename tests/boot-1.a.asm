@@ -8,6 +8,7 @@ int flag2 1598;
 
 
 main:
+{
 	mov al 'B';
 	mov ah 0x0e;
 	int 0x10;
@@ -66,5 +67,6 @@ main:
 	mov ah 0x0e;
 	int 0x10;
 	ret;
+}
 
 	

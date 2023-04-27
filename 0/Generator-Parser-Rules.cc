@@ -180,6 +180,18 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n";
 
+
+        out << "ret : \n";
+            out << "\tRET ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"RET 1\";\n";
+                out << "\t\tAI_here::nodes::Return* ret = tray->block.create<AI_here::nodes::Return>();\n";
+                out << "\t\tret->inst = AI_here::Tokens::RET;\n";
+                out << "\t\tret->is_instruction = true;\n";
+                out << "\t\t$$ = ret;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
         switch(lang)
         {
         case Language::AI :
@@ -199,7 +211,7 @@ namespace oct::cc::v0::tools
 
     void Parser::rules_instructios_statment_AI(std::ostream& out) const
     {
-        out << "statement_list_body :\n";
+        out << "instructions_list :\n";
             out << "\tstatement_instruction\n";
             out << "\t{\n";
                 //out << "\tstd::cout << \"statement_list : statement\"\n" << "\n";
@@ -207,7 +219,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tstatement_list_body = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tstatement_list_body statement_instruction\n";
+            out << "\tinstructions_list statement_instruction\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_list_body) statement_list_body = $1;\n";
@@ -231,26 +243,15 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            /*out << "\t|\n";
-            out << "\tinstruction_ret\n";
+            out << "\t|\n";
+            out << "\tret\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
-            out << "\t}\n";*/
+            out << "\t}\n";
             out << "\t;\n\n";
     }
     void Parser::rules_instructios_statment_AII(std::ostream& out) const
     {
-
-        out << "ret : \n";
-            out << "\tRET ';'\n";
-            out << "\t{\n";
-                //out << "\t\tstd::cout << \"RET 1\";\n";
-                out << "\t\tAI_here::nodes::instruction* ret = tray->block.create<AI_here::nodes::instruction>();\n";
-                out << "\t\tret->inst = AI_here::Tokens::RET;\n";
-                out << "\t\tret->is_instruction = true;\n";
-                out << "\t\t$$ = ret;\n";
-            out << "\t}\n";
-            out << "\t;\n";
 
         out << "statement_list :\n";
             out << "\tstatement_instruction\n";
@@ -556,12 +557,12 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
         out << "function :\n";
-            out << "\tIDENTIFIER ':' statement_list_body RET ';'\n";
+            out << "\tIDENTIFIER ':' '{' instructions_list '}'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << $1->name << \":\\n\";\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::function>();\n";
                 out << "\t\t$$->id = $1;\n";
-                out << "\t\t$$->body_list = $3;\n";
+                out << "\t\t$$->body_list = $4;\n";
             out << "\t}\n";
             /*
             out << "\t|\n";

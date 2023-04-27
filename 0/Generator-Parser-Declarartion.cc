@@ -294,6 +294,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::Move*> move\n";
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";
+        out << "%type <AI_here::nodes::Return*> ret\n";
 
         switch(lang)
         {
@@ -339,7 +340,7 @@ namespace oct::cc::v0::tools
     void Parser::declaration_types_AI(std::ostream& out) const
     {
         out << "%type <AI_here::nodes::declaration*> declaration_list\n";
-        out << "%type <AI_here::nodes::statement*> statement_list_body\n";
+        out << "%type <AI_here::nodes::statement*> instructions_list\n";
         out << "%type <AI_here::nodes::function*> function\n";
         out << "%type <AI_here::nodes::function*> function_list\n";
         out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
@@ -347,7 +348,6 @@ namespace oct::cc::v0::tools
     void Parser::declaration_types_AII(std::ostream& out) const
     {
         out << "%type <AI_here::nodes::statement*> statement_list\n";
-        out << "%type <AI_here::nodes::instruction*> ret\n";
         out << "%type <AI_here::nodes::return_statement*> statement_return\n";
         out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
         out << "%type <AII_here::nodes::function_implementation*> function_implementation\n";
