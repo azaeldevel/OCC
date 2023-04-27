@@ -6,7 +6,7 @@ namespace oct::cc::v0::tools
     void Parser::rules(std::ostream& out) const
     {
         out << "const_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
-        rules_instructios(out);
+        rules_instructions(out);
 
         rules_declarations(out);
 
@@ -51,7 +51,7 @@ namespace oct::cc::v0::tools
 
     }
 
-    void Parser::rules_instructios(std::ostream& out) const
+    void Parser::rules_instructions(std::ostream& out) const
     {
 
         out << "registers_8b :\n";
@@ -218,17 +218,17 @@ namespace oct::cc::v0::tools
         switch(lang)
         {
         case Language::AI :
-            rules_instructios_statment_AI(out);
+            rules_instructions_AI(out);
             break;
         case Language::AII :
-            rules_instructios_statment_AII(out);
+            rules_instructions_AII(out);
             break;
         default:
             ;
         }
     }
 
-    void Parser::rules_instructios_statment_AI(std::ostream& out) const
+    void Parser::rules_instructions_AI(std::ostream& out) const
     {
         out << "instructions_list :\n";
             out << "\tinstructions\n";
@@ -248,7 +248,7 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
     }
-    void Parser::rules_instructios_statment_AII(std::ostream& out) const
+    void Parser::rules_instructions_AII(std::ostream& out) const
     {
 
         out << "statement_list :\n";
