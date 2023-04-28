@@ -253,30 +253,42 @@ namespace nodes
 
     void function::print(std::ostream& out)const
     {
+        //std::cout << "void function::print(std::ostream& out)const\n";
+        //std::cout << "Step 1\n";
         if(not body_list) return;
+        //std::cout << "Step 2\n";
         if(id) out << "\n" << id->string << ":";
+        //std::cout << "Step 3\n";
         const statement* inst = (const statement*)body_list;
+        //std::cout << "Step 4\n";
         while(inst)
         {
+            //std::cout << "Step 4.1\n";
             if(inst->is_instruction)
             {
                 switch(((instruction*)inst)->inst)
                 {
                     case Tokens::MOV :
-                        ((Move*)inst)->print(out);
+                        //std::cout << "Step 4.1.1\n";
+                        ((instruction*)inst)->print(out);
                         break;
                     case Tokens::INT :
-                        ((Interruption*)inst)->print(out);
+                        //std::cout << "Step 4.1.2\n";
+                        ((instruction*)inst)->print(out);
                         break;
                     case Tokens::RET :
+                        std::cout << "Step 4.1.3\n";
                         out << "\n\tret;\n";
                         break;
                     default:
                         ;
                 }
             }
+            //std::cout << "Step 4.2\n";
             inst = (const statement*)inst->next;
+            //std::cout << "Step 4.3\n";
         }
+        //std::cout << "Step 5\n";
     }
     void function::generate(std::ostream& out) const
     {
@@ -311,9 +323,9 @@ namespace nodes
         const declaration* dec = declarations;
         while(dec)
         {
-            //::cout << "Step 1.1\n";
+            //std::cout << "Step 1.1\n";
             dec->print(out);
-           // std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.2\n";
             if(dec->next) out << "\n";
             //std::cout << "Step 1.3\n";
 

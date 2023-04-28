@@ -24,31 +24,6 @@ namespace oct::cc::v0::tools
     }
     void Parser::rules_finals(std::ostream& out) const
     {
-        /*out << "const_expression : CONSTANT_CHAR\n";
-            out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::initializer_literal<char>>();\n";
-                out << "\t\treinterpret_cast<AI_here::nodes::initializer_literal<char>*>($$)->value = $1;\n";
-                out << "\t\t$$->data_type = AI_here::Tokens::CONSTANT_CHAR;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "CONSTANT_INTEGER_HEX\n";
-            out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::initializer_literal<long long>>();\n";
-                out << "\t\treinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;\n";
-                out << "\t\t$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_HEX;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tCONSTANT_INTEGER_DEC\n";
-            out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::initializer_literal<long long>>();\n";
-                out << "\t\treinterpret_cast<AI_here::nodes::initializer_literal<long long>*>($$)->value = $1;\n";
-                out << "\t\t$$->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;\n";
-            out << "\t}\n";
-            out << "\t;\n";*/
-
-
-        //out << "const_char : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
-
     }
 
     void Parser::rules_instructions(std::ostream& out) const
@@ -116,7 +91,8 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv8->type = 'I';\n";
                 out << "\t\t$$ = mv8;\n";*/
                 //
-                out << "\t\tAI_here::nodes::Move* mv = tray->block.create<AI_here::nodes::Move>();\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                //out << "\t\t$$ = new(mv) AI_here::nodes::intel::i8086::Move;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
@@ -140,7 +116,9 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv8->is_instruction = true;\n";
                 out << "\t\tmv8->type = 'C';\n";
                 out << "\t\t$$ = mv8;\n";*/
-                out << "\t\tAI_here::nodes::Move* mv = tray->block.create<AI_here::nodes::Move>();\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                //out << "\t\t$$ = new(mv) AI_here::nodes::intel::i8086::Move;\n";
+                //out << "\t\tAI_here::nodes::intel::i8086::Move* mv = oct_here::new AI_here::nodes::intel::i8086::Move;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
@@ -165,7 +143,8 @@ namespace oct::cc::v0::tools
             out << "\tINT const_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
-                out << "\t\tAI_here::nodes::Interruption* serv = tray->block.create<AI_here::nodes::Interruption>();\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Interruption* serv = tray->block.create<AI_here::nodes::intel::i8086::Interruption>();\n";
+                //out << "\t\t$$ = new(serv) AI_here::nodes::intel::i8086::Interruption;\n";
                 //if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
                 out << "\t\tserv->service = $2;\n";
                 out << "\t\tserv->inst = AI_here::Tokens::INT;\n";
@@ -176,7 +155,7 @@ namespace oct::cc::v0::tools
 
         out << "label : IDENTIFIER ':'\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::Label>();\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::intel::i8086::Label>();\n";
                 out << "\t\t$$->id = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
@@ -186,7 +165,7 @@ namespace oct::cc::v0::tools
             out << "\tRET ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"RET 1\";\n";
-                out << "\t\tAI_here::nodes::Return* ret = tray->block.create<AI_here::nodes::Return>();\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Return* ret = tray->block.create<AI_here::nodes::intel::i8086::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RET;\n";
                 out << "\t\tret->is_instruction = true;\n";
                 out << "\t\t$$ = ret;\n";
@@ -274,7 +253,7 @@ namespace oct::cc::v0::tools
         out << "Return : \n";
             out << "\tRETURN ';'\n";
             out << "\t{\n";
-                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::Return>();\n";
+                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::C::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";
                 out << "\t\tret->is_instruction = false;\n";
                 out << "\t\t$$ = ret;\n";
@@ -282,7 +261,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tRETURN const_integer ';'\n";
             out << "\t{\n";
-                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::Return>();\n";
+                out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::C::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";
                 out << "\t\tret->is_instruction = false;\n";
                 out << "\t\t$$ = ret;\n";

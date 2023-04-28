@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_CC_V0_A_HH
-#define OCTETOS_CC_V0_A_HH
+#ifndef OCTETOS_CORE_V3_OCC_HH
+#define OCTETOS_CORE_V3_OCC_HH
 
 
 /*
@@ -64,14 +64,33 @@ namespace oct::core::v3
                 blocks.push_back(actual);
             }
             void* now = actual;
-            char* newptr = static_cast<char*>(actual);
+            char* newptr = reinterpret_cast<char*>(actual);
             //std::cout << "Block::create actual : " << (long)actual << "\n";
             newptr += sizeof(T) + 1;
             //std::cout << "Block::create newptr : " << (long)newptr << "\n";
             //std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
             actual = (void*)newptr;
             //std::cout << "Block::create end\n";
-            return (T*)now;
+            return new(now) T;
+        }
+        void* create(std::size_t s)
+        {
+            //std::cout << "Block::create begin\n";
+            if((long)actual >= (long)page_size)
+            {
+                //std::cout << "Block::create malloc\n";
+                actual = malloc(page_size);
+                blocks.push_back(actual);
+            }
+            void* now = actual;
+            char* newptr = reinterpret_cast<char*>(actual);
+            //std::cout << "Block::create actual : " << (long)actual << "\n";
+            newptr += s + 1;
+            //std::cout << "Block::create newptr : " << (long)newptr << "\n";
+            //std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
+            actual = (void*)newptr;
+            //std::cout << "Block::create end\n";
+            return now;
         }
     protected:
         size_t page_size;

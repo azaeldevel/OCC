@@ -555,9 +555,6 @@ namespace oct::cc::v0::AI
             Node* destine;
             Node* source;
 
-            //void generate(std::ostream&) const;
-            //void print(std::ostream&)const;
-
         };
 
         /*struct move_8b_reg_byte : public Move
@@ -573,9 +570,6 @@ namespace oct::cc::v0::AI
         struct Interruption : public instruction
         {
             unsigned char service;
-
-            //void generate(std::ostream& ) const;
-            //void print(std::ostream&)const;
         };
 
         struct Label : public instruction
@@ -722,7 +716,23 @@ namespace oct::cc::v0::AI
                     virtual void print(std::ostream&)const;
                     virtual void generate(std::ostream&) const;
                 };
+                struct Return : nodes::Return
+                {
+
+                    virtual void print(std::ostream&)const;
+                    virtual void generate(std::ostream&) const;
+                };
             }
+        }
+        namespace C
+        {
+            struct Return : nodes::Return
+            {
+
+                virtual void print(std::ostream&)const{};
+                virtual void generate(std::ostream&) const{};
+            };
+
         }
     }
 

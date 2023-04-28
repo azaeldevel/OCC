@@ -197,7 +197,28 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
     }
     void Interruption::print(std::ostream& out) const
     {
+        //out << "void Interruption::print(std::ostream& out) const\n";
         out << "\n\tint " << int(service) << "";
     }
 
+
+
+    void Label::generate(std::ostream& out) const
+    {
+    }
+    void Label::print(std::ostream& out) const
+    {
+        //out << "void Label::print(std::ostream& out) const\n";
+    }
+
+
+
+
+    void Return::generate(std::ostream& out) const
+    {
+    }
+    void Return::print(std::ostream& out) const
+    {
+        //out << "void Return::print(std::ostream& out) const\n";
+    }
 }
