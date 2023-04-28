@@ -1,4 +1,4 @@
-/* Driver for calc++.   -*- C++ -*-
+/*
 
    Copyright (C) 2005-2015, 2018-2021 Free Software Foundation, Inc.
 
@@ -15,7 +15,8 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>

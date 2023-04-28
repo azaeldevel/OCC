@@ -117,174 +117,6 @@ namespace nodes
 
 
 
-    void Move::print(std::ostream& out)const
-    {
-        //out << "void Move::print(std::ostream& out)const\n";
-        switch(op_type)
-        {
-        case operands_type::regiter_integer:
-            {
-                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-                auto source = reinterpret_cast<Token<integer>*>(this->source);
-                out << "\n\tmov " << register_to_string(destine->token) << " ";
-                out << source->token;
-            }
-            break;
-        case operands_type::regiter_char:
-            {
-                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-                auto source = reinterpret_cast<Token<char>*>(this->source);
-                out << "\n\tmov " << register_to_string(destine->token) << " ";
-                out << "'" << source->token << "'";
-            }
-            break;
-        default:
-            ;//error
-        }
-    }
-    void Move::generate(std::ostream& out)const
-    {
-        switch(word_size)
-        {
-        case 8:
-            switch(op_type)
-            {
-            case operands_type::regiter_integer:
-            case operands_type::regiter_char:
-                generate_8b_inmediate(out);
-                break;
-            default:
-                ;
-            }
-            break;
-        default:
-            ;
-        }
-    }
-    void Move::generate_8b_inmediate(std::ostream& out)const
-    {
-        auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-        auto source = reinterpret_cast<Token<char>*>(this->source);
-
-        unsigned char instruction[2];
-        instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        instruction[0] = instruction[0] << 1;//w = one byte
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        switch(destine->token)//reg
-        {
-            case Tokens::AL:
-                instruction[0] = instruction[0] << 3;
-                break;
-            case Tokens::CL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b001;
-                break;
-            case Tokens::DL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b010;
-                break;
-            case Tokens::BL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b011;
-                break;
-            case Tokens::AH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b100;
-                break;
-            case Tokens::CH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b101;
-                break;
-            case Tokens::DH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b110;
-                break;
-            case Tokens::BH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b111;
-                break;
-            default:
-                //error
-                throw core_here::exception("El operando no es un registro de 8 bits valido.");
-                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-                break;
-        }
-        instruction[1] = source->token;
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,2);
-    }
-
-    /*
-    void move_8b_reg_byte::generate(std::ostream& out) const
-    {
-        unsigned char instruction[2];
-        instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        instruction[0] = instruction[0] << 1;//w = one byte
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        switch(registe)//reg
-        {
-            case Tokens::AL:
-                instruction[0] = instruction[0] << 3;
-                break;
-            case Tokens::CL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b001;
-                break;
-            case Tokens::DL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b010;
-                break;
-            case Tokens::BL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b011;
-                break;
-            case Tokens::AH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b100;
-                break;
-            case Tokens::CH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b101;
-                break;
-            case Tokens::DH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b110;
-                break;
-            case Tokens::BH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b111;
-                break;
-            default:
-                //error
-                throw core_here::exception("El operando no es un registro de 8 bits valido.");
-                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-                break;
-        }
-        instruction[1] = byte;
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,2);
-    }
-    void move_8b_reg_byte::print(std::ostream& out) const
-    {
-        out << "\n\tmov " << register_to_string(registe) << " ";
-        if(type == 'C') out << "'" << (char)byte << "'";
-        else if(type == 'I') out << (int)byte;
-    }
-    */
-
-    void Interruption::generate(std::ostream& out) const
-    {
-        unsigned char instruction[2];
-		instruction[0] = 0b11001101;//opcode
-		instruction[1] = service;
-		out.write((char*)&instruction,2);
-    }
-    void Interruption::print(std::ostream& out) const
-    {
-        out << "\n\tint " << int(service) << "";
-    }
 
 
 
@@ -300,6 +132,7 @@ namespace nodes
 
     void initializer::print(std::ostream& out)const
     {
+        //std::cout << "void init_declarator::print(std::ostream& out)const\n";
         if(data_type == Tokens::CONSTANT_CHAR)
         {
             //std::cout << "Tokens::LITERAL_CHAR\n";
@@ -321,6 +154,7 @@ namespace nodes
 
     void init_declarator::print(std::ostream& out)const
     {
+        //std::cout << "void init_declarator::print(std::ostream& out)const\n";
         if(dec) dec->print(out);
         if(value)
         {
@@ -510,7 +344,8 @@ namespace nodes
     }
 }
 
-    void SymbolTable::add(nodes::declaration* d)
+
+    void SymbolTable::add(const nodes::declaration* d)
     {
         insert(std::pair(d->list->dec->direct->id->string.c_str(),d));
     }
@@ -522,12 +357,12 @@ namespace nodes
     }
     */
 
-    void SymbolTable::add(nodes::space* s)
+    void SymbolTable::add(const space* s)
     {
         insert(std::pair(s->name->string.c_str(),s));
     }
 
-    void SymbolTable::add(nodes::function* f)
+    void SymbolTable::add(const nodes::function* f)
     {
         insert(std::pair(f->id->string.c_str(),f));
     }

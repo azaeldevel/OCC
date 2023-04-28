@@ -34,12 +34,19 @@ namespace oct::cc::v0
 	    C,
 	    CPP,
 	};
+	enum class CPU
+	{
+	    none,
+	    intel_8088,
+	    intel_8086,
+        arduino,
+	};
 
 	class Driver
     {
     public:
         Driver () = default;
-        virtual ~Driver ();
+        virtual ~Driver();
 
         virtual bool parse(const std::filesystem::path& source) = 0;
         virtual bool parse(const std::list<std::filesystem::path>& sources);

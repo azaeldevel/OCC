@@ -507,6 +507,9 @@ namespace oct::cc::v0::AI
         {
             Tokens inst;
             unsigned char word_size;
+
+            virtual void generate(std::ostream& ) const = 0;
+            virtual void print(std::ostream&) const = 0;
         };
         /*struct assembler_instruction : public instruction
         {
@@ -514,6 +517,7 @@ namespace oct::cc::v0::AI
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
+
         struct Integer : public Node
         {
             long long number;
@@ -529,13 +533,6 @@ namespace oct::cc::v0::AI
             int line;
             unsigned int memory;
         };
-
-
-        struct space : public Node, std::map<const char*,nodes::Node*>
-        {
-            identifier* name;
-        };
-
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
 
@@ -558,11 +555,9 @@ namespace oct::cc::v0::AI
             Node* destine;
             Node* source;
 
-            void generate(std::ostream&) const;
-            void print(std::ostream&)const;
+            //void generate(std::ostream&) const;
+            //void print(std::ostream&)const;
 
-        private:
-            void generate_8b_inmediate(std::ostream&) const;//source inmediate
         };
 
         /*struct move_8b_reg_byte : public Move
@@ -579,8 +574,8 @@ namespace oct::cc::v0::AI
         {
             unsigned char service;
 
-            void generate(std::ostream& ) const;
-            void print(std::ostream&)const;
+            //void generate(std::ostream& ) const;
+            //void print(std::ostream&)const;
         };
 
         struct Label : public instruction
@@ -697,22 +692,56 @@ namespace oct::cc::v0::AI
         {
             const declaration* declarations;
             const function* functions;
+            CPU cpu;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
         };
 
+        namespace intel
+        {
+            namespace i8086
+            {
+                struct Move : nodes::Move
+                {
+
+                    virtual void print(std::ostream&)const;
+                    virtual void generate(std::ostream&) const;
+                private:
+                    void generate_8b_inmediate(std::ostream&) const;//source inmediate
+                };
+                struct Interruption : nodes::Interruption
+                {
+
+                    virtual void print(std::ostream&)const;
+                    virtual void generate(std::ostream&) const;
+                };
+                struct Label : nodes::Label
+                {
+
+                    virtual void print(std::ostream&)const;
+                    virtual void generate(std::ostream&) const;
+                };
+            }
+        }
     }
+
+
+
+    struct space : public nodes::Node, std::map<const char*,const nodes::Node*>
+    {
+        const nodes::identifier* name;
+    };
 
     //typedef std::variant<nodes::identifier*> element;
 
-    class SymbolTable : public nodes::space
+    class SymbolTable : public space
     {
     public:
-        void add(nodes::declaration*);
+        void add(const nodes::declaration*);
         //void add(nodes::declarator*);
-        void add(nodes::space*);
-        void add(nodes::function*);
+        void add(const space*);
+        void add(const nodes::function*);
 
     protected:
 
