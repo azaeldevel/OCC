@@ -515,10 +515,12 @@ namespace nodes
         insert(std::pair(d->list->dec->direct->id->string.c_str(),d));
     }
 
+    /*
     void SymbolTable::add(nodes::declarator* d)
     {
         insert(std::pair(d->direct->id->string.c_str(),d));
     }
+    */
 
     void SymbolTable::add(nodes::space* s)
     {

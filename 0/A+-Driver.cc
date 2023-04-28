@@ -26,7 +26,7 @@
 namespace oct::cc::v0::AII
 {
 
-    Driver::Driver(AI_here::Tray<nodes::external_declaration>& t) : cc_here::Driver(t.block),tray(&t)
+    Driver::Driver(AI_here::Tray<nodes::external_declaration>& t) : tray(&t)
     {
     }
     Driver::~Driver()

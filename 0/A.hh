@@ -710,7 +710,7 @@ namespace oct::cc::v0::AI
     {
     public:
         void add(nodes::declaration*);
-        void add(nodes::declarator*);
+        //void add(nodes::declarator*);
         void add(nodes::space*);
         void add(nodes::function*);
 
@@ -725,7 +725,7 @@ namespace oct::cc::v0::AI
     {
         core_here::Block block;
         SymbolTable symbols;
-        UNIT* unit;
+        const UNIT* unit;
     };
 
 

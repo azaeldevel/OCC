@@ -38,20 +38,18 @@ namespace oct::cc::v0
 	class Driver
     {
     public:
-        Driver ();
-        Driver (core_here::Block& memory);
+        Driver () = default;
         virtual ~Driver ();
 
         virtual bool parse(const std::filesystem::path& source) = 0;
         virtual bool parse(const std::list<std::filesystem::path>& sources);
-        virtual void generate(std::ostream&)const = 0;
-
-        //location loc;
+        virtual void generate(std::ostream&) const = 0;
 
     protected:
-        core_here::Block* block;
-        bool block_new;
+
     };
+
+
 }
 
 #endif

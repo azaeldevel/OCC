@@ -25,7 +25,7 @@
 
 namespace oct::cc::v0::AI
 {
-    Driver::Driver(Tray<nodes::translation_unit>& t) : cc_here::Driver(t.block),tray(&t)
+    Driver::Driver(Tray<nodes::translation_unit>& t) : tray(&t)
     {
     }
     Driver::~Driver()

@@ -27,19 +27,8 @@
 namespace oct::cc::v0
 {
 
-    Driver::Driver() : block(new core_here::Block),block_new(true)
-    {
-    }
-    Driver::Driver(core_here::Block& b) : block(&b),block_new(false)
-    {
-    }
     Driver::~Driver()
     {
-        if(block_new)
-        {
-            delete block;
-            block = NULL;
-        }
     }
 
     bool Driver::parse(const std::list<std::filesystem::path>& sources)
