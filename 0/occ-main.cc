@@ -95,12 +95,12 @@ int main (int argc, char* argv[])
         }
         if(extension(path,"a.asm"))
         {
-            std::cout << "Parsing ...\n";
+            //std::cout << "Parsing ...\n";
             driverI.parse(path);
-            std::cout << "Printing ...\n";
+            //std::cout << "Printing ...\n";
             driverI.print(std::cout);
-            std::cout << "Generating ...\n";
-            //driverI.generate(outstream);
+            //std::cout << "Generating ...\n";
+            driverI.generate(outstream);
         }
         else if(extension(path,"a+.asm"))
         {
@@ -109,7 +109,7 @@ int main (int argc, char* argv[])
             //std::cout << "Printing ...\n";
             driverII.print(std::cout);
             //std::cout << "Generating ...\n";
-            //driverII.generate(outstream);
+            driverII.generate(outstream);
         }
         else
         {
