@@ -324,14 +324,13 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
                 out << "\t\t$$->identifier_list = NULL;\n";
-            out << "\t}\n";
+            out << "\t}\n";*/
             out << "\t|\n";
             out << "\tdirect_declarator '('  ')'\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\t$$->identifier_list = NULL;\n";
             out << "\t}\n";
-            */
             out << "\t;\n\n";
         /*
         out << " : \n";
