@@ -415,7 +415,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tdeclarator" << (has_assignment_operator() ? " '=' " : " " ) << "initializer\n";
             out << "\t{\n";
-                //std::cout << "init_declarator : declarator '=' initializer\n";
+                //out << "\t\tstd::cout << \"init_declarator : declarator '=' initializer\\n\";\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::init_declarator>();\n";
                 out << "\t\t$$->dec = $1;\n";
                 out << "\t\t$$->value = $2;\n";
