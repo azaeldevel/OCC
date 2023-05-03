@@ -112,5 +112,44 @@ namespace oct::cc::v0::AII
             if(decl) decl->generate(out);
             if(func) func->generate(out);
         }
+
+        const AI_here::nodes::translation_unit* external_declaration::translate(AI_here::Tray<nodes::external_declaration>* tray)
+        {
+            A_here::nodes::declaration* last_dec = NULL;
+            function_definition* last_funt = NULL;
+            external_declaration* ext = this;
+            AI_here::nodes::translation_unit* unit = tray->block.create<AI_here::nodes::translation_unit>();
+
+            while(ext)
+            {
+                if(ext->func)
+                {
+                    if(last_funt) last_funt->next = ext->func;
+                    else if(not func)
+                    {
+                        func = ext->func;
+                    }
+                    last_funt = ext->func;
+                    //std::cout << "Funcion\n";
+                }
+                else if(ext->decl)
+                {
+                    if(last_dec) last_dec->next = ext->decl;
+                    else if(not decl)
+                    {
+                        decl = ext->decl;
+                    }
+                    last_dec = ext->decl;
+                    //std::cout << "Declaracion\n";
+                }
+                else
+                {
+                }
+
+                ext = (external_declaration*)ext->next;
+            }
+
+            return unit;
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace oct::cc::v0::AII
     Driver::Driver(AI_here::Tray<nodes::external_declaration>& t) : tray(&t)
     {
     }
+
     Driver::~Driver()
     {
     }
@@ -58,4 +59,10 @@ namespace oct::cc::v0::AII
         }
 
     }
+	const AI_here::nodes::translation_unit* Driver::translate()
+	{
+	    if(not tray->unit) return NULL;
+
+        return tray->unit->translate(tray);
+	}
 }

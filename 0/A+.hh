@@ -38,15 +38,15 @@ namespace oct::cc::v0::AII
 
         struct compound_statement : public A_here::nodes::statement
         {
-            const statement* statement_list;
+            statement* statement_list;
         };
 
 
         struct function_definition : public A_here::nodes::statement
         {
-            const A_here::nodes::type_specifier* specifiers;
-            const A_here::nodes::declarator* declaration;
-            const compound_statement* body;
+            A_here::nodes::type_specifier* specifiers;
+            A_here::nodes::declarator* declaration;
+            compound_statement* body;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
@@ -56,11 +56,13 @@ namespace oct::cc::v0::AII
 
         struct external_declaration : public A_here::nodes::statement
         {
-            const function_definition* func;
-            const A_here::nodes::declaration* decl;
+            function_definition* func;
+            A_here::nodes::declaration* decl;
 
             void print(std::ostream&)const;
             void generate(std::ostream&) const;
+
+            const AI_here::nodes::translation_unit* translate(AI_here::Tray<nodes::external_declaration>*);
         };
     }
 }

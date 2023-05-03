@@ -5,6 +5,7 @@
 #include <fstream>
 #include <list>
 #include <A+.hh>
+#include <A-Driver.hh>
 //#include <A+/oas-intel-parser.hh>
 //#include <A+/location.hh>
 
@@ -25,15 +26,13 @@ public:
 	virtual bool parse(const std::filesystem::path& sources);
 	virtual void print(std::ostream&)const;
 	virtual void generate(std::ostream&)const;
-
-	//A_here::location loc;
+	virtual const AI_here::nodes::translation_unit* translate();
 
 private:
 
 private:
     AI::File file;
     AI_here::Tray<nodes::external_declaration>* tray;
-
 };
 }
 

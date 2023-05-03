@@ -109,7 +109,8 @@ int main (int argc, char* argv[])
             //std::cout << "Printing ...\n";
             driverII.print(std::cout);
             //std::cout << "Generating ...\n";
-            driverII.generate(outstream);
+            //driverII.generate(outstream);
+            driverII.translate();
         }
         else
         {

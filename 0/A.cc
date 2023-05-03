@@ -354,6 +354,7 @@ namespace nodes
         //std::cout << "void translation_unit::print(std::ostream& out)const\n";
         if(functions) functions->generate(out);
     }
+
 }
 
 

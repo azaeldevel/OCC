@@ -764,7 +764,7 @@ namespace oct::cc::v0::AI
     {
         core_here::Block block;
         SymbolTable symbols;
-        const UNIT* unit;
+        UNIT* unit;
     };
 
 
