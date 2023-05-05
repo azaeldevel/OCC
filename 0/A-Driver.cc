@@ -43,8 +43,18 @@ namespace oct::cc::v0::AI
     {
         if(tray->unit) tray->unit->print(out);
     }
+    void Driver::print(std::ostream& out,const nodes::translation_unit* tree) const
+    {
+        //std::cout << "Imprimiendo apartir de arbol semantico\n";
+        tree->print(out);
+    }
     void Driver::generate(std::ostream& out) const
     {
         if(tray->unit) tray->unit->generate(out);
+    }
+    void Driver::generate(std::ostream& out,const nodes::translation_unit* tree)const
+    {
+        //std::cout << "Generando apartir de arbol semantico\n";
+        if(tree) tree->generate(out);
     }
 }

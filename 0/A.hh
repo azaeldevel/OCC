@@ -574,7 +574,7 @@ namespace oct::cc::v0::AI
 
         struct Label : public instruction
         {
-            const identifier* id;
+            identifier* id;
         };
 
         /**
@@ -621,8 +621,8 @@ namespace oct::cc::v0::AI
 
         struct init_declarator : public statement
         {
-            const declarator* dec;
-            const initializer* value;
+            declarator* dec;
+            initializer* value;
 
             void print(std::ostream&)const;
         };
@@ -631,14 +631,14 @@ namespace oct::cc::v0::AI
         struct pointer : public statement
         {
             std::list<type_qualifer*>* qualifiers;
-            const pointer* point;
+            pointer* point;
         };
 
         struct direct_declarator : public statement
         {
-            const identifier* id;
-            const direct_declarator* direct;
-            const identifier* identifier_list;
+            identifier* id;
+            direct_declarator* direct;
+            identifier* identifier_list;
 
             void print(std::ostream&)const;
         };
@@ -646,11 +646,13 @@ namespace oct::cc::v0::AI
 
         struct declarator : public statement
         {
-            const pointer* point;
-            const direct_declarator* direct;
+            pointer* point;
+            direct_declarator* direct;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
+
+            identifier* get_name() const;
         };
 
 
@@ -664,8 +666,8 @@ namespace oct::cc::v0::AI
 
         struct declaration : public statement
         {
-            const type_specifier* specifiers;
-            const init_declarator* list;
+            type_specifier* specifiers;
+            init_declarator* list;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
@@ -673,8 +675,8 @@ namespace oct::cc::v0::AI
 
         struct function : public statement //public statement
         {
-            const identifier* id;
-            const statement* body_list;
+            identifier* id;
+            statement* body_list;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
@@ -684,8 +686,8 @@ namespace oct::cc::v0::AI
 
         struct translation_unit : public statement
         {
-            const declaration* declarations;
-            const function* functions;
+            declaration* declarations;
+            function* functions;
             CPU cpu;
 
             void print(std::ostream&)const;
@@ -740,7 +742,7 @@ namespace oct::cc::v0::AI
 
     struct space : public nodes::Node, std::map<const char*,const nodes::Node*>
     {
-        const nodes::identifier* name;
+        nodes::identifier* name;
     };
 
     //typedef std::variant<nodes::identifier*> element;

@@ -111,11 +111,12 @@ int main (int argc, char* argv[])
             //std::cout << "Parsing ...\n";
             if(driverII.parse(path))
             {
+                const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
-                driverII.print(std::cout);
+                //driverII.print(std::cout);
+                if(tree) driverI.print(std::cout,tree);
                 //std::cout << "Generating ...\n";
-                //driverII.generate(outstream);
-                driverII.translate();
+                if(tree) driverI.generate(outstream,tree);
             }
         }
         else

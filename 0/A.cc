@@ -158,7 +158,7 @@ namespace nodes
         if(dec) dec->print(out);
         if(value)
         {
-            out << " = ";
+            out << " ";
             value->print(out);
         }
     }
@@ -166,6 +166,9 @@ namespace nodes
 
     void direct_declarator::print(std::ostream& out)const
     {
+        //std::cout << "void direct_declarator::print(std::ostream& out)const\n";
+        //std::cout << " id : " << id << "\n";
+        //std::cout << " id : " << id->string << "\n";
         if(id) out << id->string;
     }
 
@@ -176,6 +179,10 @@ namespace nodes
     void declarator::generate(std::ostream& out) const
     {
         ;
+    }
+    identifier* declarator::get_name() const
+    {
+        return direct->id;
     }
 
     void type_specifier::print(std::ostream& out)const
@@ -225,7 +232,8 @@ namespace nodes
     void declaration::print(std::ostream& out)const
     {
         //std::cout << "void declaration::print(std::ostream& out)const\n";
-        const type_specifier* spec = specifiers;
+        //std::cout << "Step 1\n";
+        type_specifier* spec = specifiers;
         while(spec)
         {
             spec->print(out);
@@ -233,7 +241,8 @@ namespace nodes
             spec = (type_specifier*)spec->next;
         }
 
-        const init_declarator* dec = list;
+        //std::cout << "Step 2\n";
+        init_declarator* dec = list;
         while(dec)
         {
             dec->print(out);
@@ -242,6 +251,7 @@ namespace nodes
             dec = (init_declarator*)dec->next;
         }
         out << ";";
+        //std::cout << "Step 3\n";
     }
     void declaration::generate(std::ostream& out) const
     {
@@ -259,7 +269,7 @@ namespace nodes
         //std::cout << "Step 2\n";
         if(id) out << "\n" << id->string << ":";
         //std::cout << "Step 3\n";
-        const statement* inst = (const statement*)body_list;
+        statement* inst = (statement*)body_list;
         //std::cout << "Step 4\n";
         while(inst)
         {
@@ -285,14 +295,14 @@ namespace nodes
                 }
             }
             //std::cout << "Step 4.2\n";
-            inst = (const statement*)inst->next;
+            inst = (statement*)inst->next;
             //std::cout << "Step 4.3\n";
         }
         //std::cout << "Step 5\n";
     }
     void function::generate(std::ostream& out) const
     {
-        const statement* inst = (const statement*)body_list;
+        statement* inst = (statement*)body_list;
         while(inst)
         {
             if(inst->is_instruction)
@@ -312,7 +322,7 @@ namespace nodes
                         ;
                 }
             }
-            inst = (const statement*)inst->next;
+            inst = (statement*)inst->next;
         }
     }
 
@@ -320,7 +330,7 @@ namespace nodes
     {
         //std::cout << "void translation_unit::print(std::ostream& out)const\n";
         //std::cout << "Step 1\n";
-        const declaration* dec = declarations;
+        declaration* dec = declarations;
         while(dec)
         {
             //std::cout << "Step 1.1\n";
@@ -329,12 +339,12 @@ namespace nodes
             if(dec->next) out << "\n";
             //std::cout << "Step 1.3\n";
 
-            dec = (const declaration*)dec->next;
+            dec = (declaration*)dec->next;
             //std::cout << "Step 1.4\n";
         }
 
         //std::cout << "Step 2\n";
-        const function* func = functions;
+        function* func = functions;
         while(func)
         {
             //std::cout << "Step 1.1\n";
@@ -343,7 +353,7 @@ namespace nodes
             if(func->next) out << "\n";
             //std::cout << "Step 1.3\n";
 
-            func = (const function*)func->next;
+            func = (function*)func->next;
             //std::cout << "Step 1.4\n";
         }
 

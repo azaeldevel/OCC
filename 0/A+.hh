@@ -62,7 +62,10 @@ namespace oct::cc::v0::AII
             void print(std::ostream&)const;
             void generate(std::ostream&) const;
 
-            const AI_here::nodes::translation_unit* translate(AI_here::Tray<nodes::external_declaration>*);
+            const AI_here::nodes::translation_unit* translate(AI_here::Tray<nodes::external_declaration>*)const ;
+
+            AI_here::nodes::function* convert(AI_here::Tray<nodes::external_declaration>*,function_definition*)const;
+            AI_here::nodes::declaration* convert(AI_here::Tray<nodes::external_declaration>*,A_here::nodes::declaration*)const;
         };
     }
 }

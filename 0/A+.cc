@@ -113,33 +113,29 @@ namespace oct::cc::v0::AII
             if(func) func->generate(out);
         }
 
-        const AI_here::nodes::translation_unit* external_declaration::translate(AI_here::Tray<nodes::external_declaration>* tray)
+        const AI_here::nodes::translation_unit* external_declaration::translate(AI_here::Tray<nodes::external_declaration>* tray)const
         {
-            A_here::nodes::declaration* last_dec = NULL;
-            function_definition* last_funt = NULL;
-            external_declaration* ext = this;
+            A_here::nodes::declaration* last_dec = NULL,*first_dec = NULL,*actual_dec = NULL;
+            AI_here::nodes::function *last_funt = NULL,*first_funt = NULL,*actual_funt = NULL;
+            const external_declaration* ext = this;
             AI_here::nodes::translation_unit* unit = tray->block.create<AI_here::nodes::translation_unit>();
 
             while(ext)
             {
                 if(ext->func)
                 {
-                    if(last_funt) last_funt->next = ext->func;
-                    else if(not func)
-                    {
-                        func = ext->func;
-                    }
-                    last_funt = ext->func;
+                    actual_funt = convert(tray,ext->func);
+                    if(last_funt) last_funt->next = actual_funt;
+                    last_funt = actual_funt;
+                    if(not first_funt) first_funt = actual_funt;
                     //std::cout << "Funcion\n";
                 }
                 else if(ext->decl)
                 {
-                    if(last_dec) last_dec->next = ext->decl;
-                    else if(not decl)
-                    {
-                        decl = ext->decl;
-                    }
-                    last_dec = ext->decl;
+                    actual_dec = convert(tray,ext->decl);
+                    if(last_dec) last_dec->next = actual_dec;
+                    last_dec = actual_dec;
+                    if(not first_dec) first_dec = actual_dec;
                     //std::cout << "Declaracion\n";
                 }
                 else
@@ -149,7 +145,26 @@ namespace oct::cc::v0::AII
                 ext = (external_declaration*)ext->next;
             }
 
+            unit->declarations = first_dec;
+            unit->functions = first_funt;
+
             return unit;
+        }
+        AI_here::nodes::function* external_declaration::convert(AI_here::Tray<nodes::external_declaration>* tray,function_definition* def)const
+        {
+            //if(def->declaration->get_name()) std::cout << "convirtiendo "  << def->declaration->get_name()->string << "\n";
+            AI_here::nodes::function* fun = tray->block.create<AI_here::nodes::function>();
+            fun->id = def->declaration->get_name();
+            fun->body_list = def->body->statement_list;
+
+            return fun;
+        }
+        AI_here::nodes::declaration* external_declaration::convert(AI_here::Tray<nodes::external_declaration>* tray,AI_here::nodes::declaration* d)const
+        {
+            AI_here::nodes::declaration* dec = tray->block.create<AI_here::nodes::declaration>();
+            *dec = *d;
+
+            return dec;
         }
     }
 }
