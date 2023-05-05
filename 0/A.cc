@@ -292,8 +292,8 @@ namespace nodes
                         ((instruction*)inst)->print(out);
                         break;
                     case Tokens::RET :
-                        std::cout << "Step 4.1.3\n";
-                        out << "\n\tret;\n";
+                        //std::cout << "Step 4.1.3\n";
+                        out << "\n\tRET;\n";
                         break;
                     default:
                         ;

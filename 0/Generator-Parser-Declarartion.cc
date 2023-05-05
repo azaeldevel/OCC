@@ -276,11 +276,18 @@ namespace oct::cc::v0::tools
         out << "%token <unsigned int>LITERAL_INTEGER_HEX_UINT\n";
         out << "%token LITERAL_INTEGER_HEX_LONG\n";
         out << "%token LITERAL_INTEGER_HEX_ULONG\n";
+        out << "%token <AI_here::integer> CONSTANT_INTEGER_OCT\n";
         out << "%token <char> CONSTANT_CHAR\n";
+        out << "%token <const char*> LITERAL_STRING\n";
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
 
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
+        out << "%type <AI_here::Tokens> registers\n";
+        out << "%type <AI_here::Tokens> segments\n";
+        out << "%type <AI_here::Tokens> index_array\n";
+
+
         out << "%type <AI_here::nodes::Move*> move\n";
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";

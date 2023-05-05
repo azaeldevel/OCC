@@ -26,6 +26,88 @@ namespace oct::cc::v0::tools
     {
     }
 
+
+
+    void Parser::rules_constants(std::ostream& out) const
+    {
+        out << "\n\n//6.1.3\n";
+        out << "constant :\n";
+            out << "\tinteger_constant\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tcharter_constant\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+
+        out << "integer_constant :\n";
+            out << "\tdecimal_constant integer_suffix\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdecimal_constant\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\toctal_constant integer_suffix\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\toctal_constant\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\thexadecimal_constant integer_suffix\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\thexadecimal_constant\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+    }
+    void Parser::rules_primary_expression(std::ostream& out) const
+    {
+        out << "\n\n//6.3.1\n";
+        out << "primary_expression :\n";
+            out << "\tIDENTIFIER\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCONSTANT_INTEGER_HEX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCONSTANT_INTEGER_DEC\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCONSTANT_CHAR\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+
+            out << "\t|\n";
+            out << "\t'(' primary_expression ')' \n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+    }
+
     void Parser::rules_instructions(std::ostream& out) const
     {
 
@@ -77,22 +159,73 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = AI_here::Tokens::AX;\n";
             out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::BX;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::CX;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::DX;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+    out << "registers :\n";
+            out << "\tregisters_16b\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tregisters_8b\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+    out << "index_array :\n";
+            out << "\tregisters\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tsegments\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "segments :\n";
+            out << "\tES\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::ES;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCS\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::CS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSS\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::SS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDS\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::DS;\n";
+            out << "\t}\n";
             out << "\t;\n\n";
 
         out << "move :\n";
             out << "\tMOV registers_8b ',' const_integer ';'\n";
             out << "\t{\n";
-                //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
-                /*out << "\t\tAI_here::nodes::move_8b_reg_byte* mv8 = tray->block.create<AI_here::nodes::move_8b_reg_byte>();\n";
-                out << "\t\tmv8->registe = (AI_here::Tokens)$2;\n";
-                out << "\t\tmv8->byte = (unsigned char)$3;\n";
-                out << "\t\tmv8->inst = AI_here::Tokens::MOV;\n";
-                out << "\t\tmv8->is_instruction = true;\n";
-                out << "\t\tmv8->type = 'I';\n";
-                out << "\t\t$$ = mv8;\n";*/
-                //
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
-                //out << "\t\t$$ = new(mv) AI_here::nodes::intel::i8086::Move;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
@@ -108,17 +241,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV registers_8b ',' CONSTANT_CHAR ';'\n";
             out << "\t{\n";
-                //out << "\t\tstd::cout << \"mov register-8b \" << $3 << \"\\n\";\n";
-                /*out << "\t\tAI_here::nodes::move_8b_reg_byte* mv8 = tray->block.create<AI_here::nodes::move_8b_reg_byte>();\n";
-                out << "\t\tmv8->registe = (AI_here::Tokens)$2;\n";
-                out << "\t\tmv8->byte = (unsigned char)$3;\n";
-                out << "\t\tmv8->inst = AI_here::Tokens::MOV;\n";
-                out << "\t\tmv8->is_instruction = true;\n";
-                out << "\t\tmv8->type = 'C';\n";
-                out << "\t\t$$ = mv8;\n";*/
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
-                //out << "\t\t$$ = new(mv) AI_here::nodes::intel::i8086::Move;\n";
-                //out << "\t\tAI_here::nodes::intel::i8086::Move* mv = oct_here::new AI_here::nodes::intel::i8086::Move;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
@@ -132,10 +255,97 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_16b ',' const_integer\n";
+            out << "\tMOV registers_16b ',' const_integer ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV segments ',' const_integer ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV registers_16b ',' segments ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV segments ',' registers_16b ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV segments ',' IDENTIFIER ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV IDENTIFIER ',' segments ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV IDENTIFIER ',' registers_8b ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV registers_8b ','  IDENTIFIER ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV IDENTIFIER ',' registers_16b ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV registers_16b ',' IDENTIFIER ';'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            {//MAYBE:operaciones con arreglos
+                out << "\t|\n";
+                out << "\tMOV registers_8b ',' IDENTIFIER '['  index_array ']' ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV IDENTIFIER '['  index_array ']' ',' registers_8b ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV registers_16b ',' IDENTIFIER '['  index_array ']' ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV IDENTIFIER '['  index_array ']' ',' registers_16b ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV IDENTIFIER '['  index_array ']' ',' segments ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV segments ',' IDENTIFIER '['  index_array ']' ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV segments ',' '&' IDENTIFIER  ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tMOV registers ',' '&' IDENTIFIER  ';'\n";
+                out << "\t{\n";
+                    out << "\t\t$$ = NULL;\n";
+                out << "\t}\n";
+            }
             out << "\t;\n\n";
 
 

@@ -11,12 +11,26 @@ namespace oct::cc::v0::tools
 
 
         //Ensamblador
-        out << "\"al\"	        return AL;\n";
-        out << "\"ah\"	        return AH;\n";
-        out << "\"mov\"         return MOV;\n";
-        out << "\"ret\"	        return RET;\n";
         if(is_disnastic_A())
         {
+            out << "\"AL\"	        return AL;\n";
+            out << "\"AH\"	        return AH;\n";
+            out << "\"BL\"	        return BL;\n";
+            out << "\"BH\"	        return BH;\n";
+            out << "\"CL\"	        return CL;\n";
+            out << "\"CH\"	        return CH;\n";
+            out << "\"DL\"	        return DL;\n";
+            out << "\"DH\"	        return DH;\n";
+
+            out << "\"ES\"	        return ES;\n";
+            out << "\"CS\"	        return CS;\n";
+            out << "\"SS\"	        return SS;\n";
+            out << "\"DS\"	        return DS;\n";
+
+            out << "\"MOV\"         return MOV;\n";
+            out << "\"RET\"	        return RET;\n";
+            out << "\"IRET\"	    return IRET;\n";
+
             out << "\"byte\"		return BYTE;\n";
             out << "\"tiny\"		return TINY;\n";
         }
@@ -82,6 +96,14 @@ namespace oct::cc::v0::tools
                                     out << "\t\tinteger->number = std::stoll(yytext);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
+                                out << "\t\t}\n";
+        out << "{CONSTANT_INTEGER_OCT}  {\n";
+                                    //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
+                                    out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tinteger->format = 'D';\n";
+                                    out << "\t\tinteger->number = std::stoll(yytext);\n";
+                                    out << "\t\tyylval->CONSTANT_INTEGER_OCT = integer->number;\n";
+                                    out << "\t\treturn CONSTANT_INTEGER_OCT;\n";
                                 out << "\t\t}\n";
         out << "{CONSTANT_CHAR} {\n";
                             //std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";

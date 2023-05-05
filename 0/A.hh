@@ -388,16 +388,17 @@ namespace oct::cc::v0::AI
 		LITERAL_INTEGER_HEX_UINT,
 		LITERAL_INTEGER_HEX_LONG,
 		LITERAL_INTEGER_HEX_ULONG,
+		CONSTANT_INTEGER_OCT,
 		CONSTANT_CHAR,
 		LITERAL_STRING,
-		LITERAL_FLOAT,
-		LITERAL_DOUBLE,
-		LITERAL_LONGDOUBLE,
+		//LITERAL_FLOAT,
+		//LITERAL_DOUBLE,
+		//LITERAL_LONGDOUBLE,
 
-		new_line,
+		//new_line,
 
 		identifier,
-		integer,
+		//integer,
 
 	};
 
@@ -511,9 +512,36 @@ namespace oct::cc::v0::AI
             virtual void generate(std::ostream& ) const = 0;
             virtual void print(std::ostream&) const = 0;
         };
-        /*struct assembler_instruction : public instruction
+
+        template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
+        template <class T> concept charater_type = std::is_same_v<T, char>;
+        struct constant : public Node
         {
-        };*/
+        };
+        template<integer_type T> struct integer_constant : public constant
+        {
+            enum class Format
+            {
+                none,
+                decimal,
+                hexadecimal,
+                octal,
+                binary,
+            };
+
+            T value;
+            Format format;
+            std::string string;
+            bool suffix_u;
+            bool suffix_l;
+
+            bool is_data_8b() const;
+            bool is_data_16b() const;
+        };
+        template<charater_type T> struct charater_constant : public constant
+        {
+            T letter;
+        };
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
@@ -589,6 +617,14 @@ namespace oct::cc::v0::AI
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
+
+        class primary_expression : public std::variant<identifier*,charater_constant<char>* ,integer_constant<integer>* ,primary_expression*>
+        {
+        public:
+
+        private:
+
+        };
 
 
         struct type_qualifer : public statement

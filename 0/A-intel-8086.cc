@@ -36,7 +36,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             {
                 auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
                 auto source = reinterpret_cast<Token<integer>*>(this->source);
-                out << "\n\tmov " << register_to_string(destine->token) << " ";
+                out << "\n\tMOV " << register_to_string(destine->token) << " ";
                 out << source->token;
             }
             break;
@@ -44,7 +44,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             {
                 auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
                 auto source = reinterpret_cast<Token<char>*>(this->source);
-                out << "\n\tmov " << register_to_string(destine->token) << " ";
+                out << "\n\tMOV " << register_to_string(destine->token) << " ";
                 out << "'" << source->token << "'";
             }
             break;
@@ -198,7 +198,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
     void Interruption::print(std::ostream& out) const
     {
         //out << "void Interruption::print(std::ostream& out) const\n";
-        out << "\n\tint " << int(service) << "";
+        out << "\n\tINT " << int(service) << "";
     }
 
 
