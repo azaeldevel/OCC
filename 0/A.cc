@@ -117,7 +117,18 @@ namespace nodes
 
 
 
+    template<> void integer_constant<integer>::convert(const std::string& string)
+    {
 
+    }
+    template<> bool integer_constant<integer>::is_data_8b() const
+    {
+        return false;
+    }
+    template<> bool integer_constant<integer>::is_data_16b() const
+    {
+        return false;
+    }
 
 
 

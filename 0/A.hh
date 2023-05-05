@@ -515,9 +515,11 @@ namespace oct::cc::v0::AI
 
         template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
         template <class T> concept charater_type = std::is_same_v<T, char>;
+
         struct constant : public Node
         {
         };
+
         template<integer_type T> struct integer_constant : public constant
         {
             enum class Format
@@ -528,19 +530,30 @@ namespace oct::cc::v0::AI
                 octal,
                 binary,
             };
-
-            T value;
+            enum class Types
+            {
+                none,
+                CHAR,
+                SHORT,
+                INT,
+                LONG,
+            };
             Format format;
             std::string string;
             bool suffix_u;
             bool suffix_l;
+            Types types;
+            T value;
 
             bool is_data_8b() const;
             bool is_data_16b() const;
+            void convert(const std::string& string);
+
         };
+
         template<charater_type T> struct charater_constant : public constant
         {
-            T letter;
+            T value;
         };
 
 
@@ -617,8 +630,7 @@ namespace oct::cc::v0::AI
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
-
-        class primary_expression : public std::variant<identifier*,charater_constant<char>* ,integer_constant<integer>* ,primary_expression*>
+        class primary_expression : public std::variant<identifier*,charater_constant<char>* ,integer_constant<integer>* , primary_expression*>
         {
         public:
 
