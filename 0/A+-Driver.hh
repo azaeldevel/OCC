@@ -25,6 +25,7 @@ public:
 
 	virtual bool parse(const std::filesystem::path& sources);
 	virtual void print(std::ostream&)const;
+	virtual bool semantic()const;
 	virtual void generate(std::ostream&)const;
 	virtual const AI_here::nodes::translation_unit* translate();
 

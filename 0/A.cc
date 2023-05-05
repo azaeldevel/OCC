@@ -257,6 +257,11 @@ namespace nodes
     {
         ;
     }
+    bool declaration::semantic()const
+    {
+
+        return true;
+    }
 
 
 
@@ -324,6 +329,11 @@ namespace nodes
             }
             inst = (statement*)inst->next;
         }
+    }
+    bool function::semantic()const
+    {
+
+        return true;
     }
 
     void translation_unit::print(std::ostream& out)const

@@ -100,10 +100,16 @@ int main (int argc, char* argv[])
             //std::cout << "Parsing ...\n";
             if(driverI.parse(path))
             {
+                if(not driverI.semantic())
+                {
+
+                }
                 //std::cout << "Printing ...\n";
                 driverI.print(std::cout);
                 //std::cout << "Generating ...\n";
                 driverI.generate(outstream);
+                outstream.flush();
+                outstream.close();
             }
         }
         else if(extension(path,".a+.asm"))
@@ -111,12 +117,18 @@ int main (int argc, char* argv[])
             //std::cout << "Parsing ...\n";
             if(driverII.parse(path))
             {
+                if(not driverII.semantic())
+                {
+
+                }
                 const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
                 //driverII.print(std::cout);
                 if(tree) driverI.print(std::cout,tree);
                 //std::cout << "Generating ...\n";
                 if(tree) driverI.generate(outstream,tree);
+                outstream.flush();
+                outstream.close();
             }
         }
         else
@@ -125,8 +137,6 @@ int main (int argc, char* argv[])
             std::cerr << "La extencion " << path.extension() << ", no se reconoce como un archivo fuente.\n";
         }
 	}
-    outstream.flush();
-    outstream.close();
 
     for (auto const& [key, val] : trayI.symbols)
     {

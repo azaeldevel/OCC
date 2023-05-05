@@ -671,6 +671,8 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
+
+            bool semantic()const;
         };
 
         struct function : public statement //public statement
@@ -681,6 +683,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
 
+            bool semantic()const;
         };
 
 

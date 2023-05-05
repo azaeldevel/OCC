@@ -65,4 +65,10 @@ namespace oct::cc::v0::AII
 
         return tray->unit->translate(tray);
 	}
+    bool Driver::semantic() const
+    {
+
+
+        return true;
+    }
 }
