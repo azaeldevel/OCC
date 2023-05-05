@@ -520,8 +520,9 @@ namespace oct::cc::v0::AI
         {
         };
 
-        template<integer_type T> struct integer_constant : public constant
+        template<integer_type T> class integer_constant : public constant
         {
+        public:
             enum class Format
             {
                 none,
@@ -530,9 +531,16 @@ namespace oct::cc::v0::AI
                 octal,
                 binary,
             };
+        public:
+            integer_constant() = default;
+            void set(const std::string&,Format);
+
+            bool is(Tokens) const;
+
+        private:
             enum class Types
             {
-                none,
+                NONE,
                 CHAR,
                 SHORT,
                 INT,
@@ -544,10 +552,6 @@ namespace oct::cc::v0::AI
             bool suffix_l;
             Types types;
             T value;
-
-            bool is_data_8b() const;
-            bool is_data_16b() const;
-            void convert(const std::string& string);
 
         };
 

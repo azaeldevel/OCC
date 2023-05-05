@@ -39,6 +39,7 @@ namespace oct::cc::v0::tools
 
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg);\n";
             out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...);\n";
+            out << "\tvoid yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, char);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, char);\n";
             //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, yytoken_kind_t);\n";
 
@@ -283,9 +284,9 @@ namespace oct::cc::v0::tools
 
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
-        out << "%type <AI_here::Tokens> registers\n";
+        //out << "%type <AI_here::Tokens> registers\n";
         out << "%type <AI_here::Tokens> segments\n";
-        out << "%type <AI_here::Tokens> index_array\n";
+        //out << "%type <AI_here::Tokens> index_array\n";
 
 
         out << "%type <AI_here::nodes::Move*> move\n";

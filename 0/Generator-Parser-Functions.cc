@@ -15,7 +15,13 @@ namespace oct::cc::v0::tools
         out << "void yyerror(YYLTYPE* yylloc,yyscan_t scanner," << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...)\n";
         out << "{\n";
           //out << "\tYYLOCATION_PRINT (stderr, yylloc);\n";
-          out << "\tfprintf (stderr, \"%i : %s\", yylloc->last_line, msg);\n";
+          out << "\tfprintf (stderr, \"%i : %s\\n\", yylloc->last_line, msg);\n";
+        out << "}\n";
+
+        out << "void yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner," << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, char c)\n";
+        out << "{\n";
+          //out << "\tYYLOCATION_PRINT (stderr, yylloc);\n";
+          out << "\tfprintf (stderr, \"%i : El caracter '%c', no es parte de lenguaje.\\n\", yylloc->last_line, c);\n";
         out << "}\n";
 
         out << "bool oct::cc::v0::" << space() << "::Driver::parse(const std::filesystem::path& path)\n";

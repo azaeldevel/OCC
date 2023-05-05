@@ -176,7 +176,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-    out << "registers :\n";
+    /*out << "registers :\n";
             out << "\tregisters_16b\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -186,9 +186,9 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n\n";
+            out << "\t;\n\n";*/
 
-    out << "index_array :\n";
+    /*out << "index_array :\n";
             out << "\tregisters\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -198,7 +198,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n\n";
+            out << "\t;\n\n";*/
 
         out << "segments :\n";
             out << "\tES\n";
@@ -304,7 +304,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";
-            {//MAYBE:operaciones con arreglos
+            /*{//MAYBE:operaciones con arreglos
                 out << "\t|\n";
                 out << "\tMOV registers_8b ',' IDENTIFIER '['  index_array ']' ';'\n";
                 out << "\t{\n";
@@ -345,7 +345,7 @@ namespace oct::cc::v0::tools
                 out << "\t{\n";
                     out << "\t\t$$ = NULL;\n";
                 out << "\t}\n";
-            }
+            }*/
             out << "\t;\n\n";
 
 

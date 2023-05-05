@@ -117,18 +117,44 @@ namespace nodes
 
 
 
-    template<> void integer_constant<integer>::convert(const std::string& string)
+
+
+    template<> void integer_constant<integer>::set(const std::string& s,Format f)
+    {
+        string = s;
+        format = f;
+
+        suffix_u = false;
+        suffix_l = false;
+        for(size_t i = string.size()  - 1; i >= 0; i--)
+        {
+            switch(string[i])
+            {
+            case 'u':
+            case 'U':
+                suffix_u = true;
+                break;
+            case 'l':
+            case 'L':
+                suffix_l = true;
+                break;
+            default:
+                goto end;
+                break;
+            }
+        }
+
+        end:
+            ;
+    }
+
+    template<> bool integer_constant<integer>::is(Tokens tk) const
     {
 
-    }
-    template<> bool integer_constant<integer>::is_data_8b() const
-    {
+
         return false;
     }
-    template<> bool integer_constant<integer>::is_data_16b() const
-    {
-        return false;
-    }
+
 
 
 

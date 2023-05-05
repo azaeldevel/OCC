@@ -31,11 +31,12 @@ namespace oct::cc::v0::tools
         out << "%}\n";
 
         //out << "CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]\n";
+        out << "SUFFIX_INTEGER ['u''U']?['l''L']?|['l''L']?['u''U']?\n";
         out << "CONSTANT_INTEGER_OCT 0[0-7]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
-        out << "CONSTANT_INTEGER_DEC [+-]?[1-9][[:digit:]]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
+        out << "CONSTANT_INTEGER_DEC [+-]?([1-9][[:digit:]]*|0)(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
         out << "CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
         out << "CONSTANT_CHAR '.'\n";
-        out << "LITERAL_STRING \\\"(\\\\.|[^\"\\\\])*\\\"\n";
+        //out << "LITERAL_STRING \\\"(\\\\.|[^\"\\\\])*\\\"\n";
 
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
 

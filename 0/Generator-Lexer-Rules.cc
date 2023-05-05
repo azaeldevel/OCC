@@ -13,23 +13,23 @@ namespace oct::cc::v0::tools
         //Ensamblador
         if(is_disnastic_A())
         {
-            out << "\"AL\"	        return AL;\n";
-            out << "\"AH\"	        return AH;\n";
-            out << "\"BL\"	        return BL;\n";
-            out << "\"BH\"	        return BH;\n";
-            out << "\"CL\"	        return CL;\n";
-            out << "\"CH\"	        return CH;\n";
-            out << "\"DL\"	        return DL;\n";
-            out << "\"DH\"	        return DH;\n";
+            out << "\"al\"	        return AL;\n";
+            out << "\"ah\"	        return AH;\n";
+            out << "\"bl\"	        return BL;\n";
+            out << "\"bh\"	        return BH;\n";
+            out << "\"cl\"	        return CL;\n";
+            out << "\"ch\"	        return CH;\n";
+            out << "\"dl\"	        return DL;\n";
+            out << "\"dh\"	        return DH;\n";
 
-            out << "\"ES\"	        return ES;\n";
-            out << "\"CS\"	        return CS;\n";
-            out << "\"SS\"	        return SS;\n";
-            out << "\"DS\"	        return DS;\n";
+            out << "\"es\"	        return ES;\n";
+            out << "\"cs\"	        return CS;\n";
+            out << "\"ss\"	        return SS;\n";
+            out << "\"ds\"	        return DS;\n";
 
-            out << "\"MOV\"         return MOV;\n";
-            out << "\"RET\"	        return RET;\n";
-            out << "\"IRET\"	    return IRET;\n";
+            out << "\"mov\"         return MOV;\n";
+            out << "\"ret\"	        return RET;\n";
+            out << "\"iret\"	    return IRET;\n";
 
             out << "\"byte\"		return BYTE;\n";
             out << "\"tiny\"		return TINY;\n";
@@ -92,6 +92,8 @@ namespace oct::cc::v0::tools
         out << "{CONSTANT_INTEGER_DEC}  {\n";
                                     //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
                                     out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::integer_constant<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::integer_constant<AI_here::integer>>();\n";
+                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::integer_constant<AI_here::integer>::Format::decimal);\n";
                                     out << "\t\tinteger->format = 'D';\n";
                                     out << "\t\tinteger->number = std::stoll(yytext);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = integer->number;\n";
@@ -124,7 +126,7 @@ namespace oct::cc::v0::tools
         out << "<<EOF>>  return ENDOFFILE;\n";
 
 
-        out << ".       yyerror(yylloc,yyscanner,tray,\"El caracter '%c' no es parte del lenguaje.\",yytext[0]);\n";
+        out << ".       yyerror_unknow_symbol(yylloc,yyscanner,tray,yytext[0]);\n";
 
     }
 
