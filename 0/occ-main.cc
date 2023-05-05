@@ -93,24 +93,30 @@ int main (int argc, char* argv[])
             std::cerr << "No existe el archivo fuente " << path << "\n";
             return EXIT_FAILURE;
         }
-        if(extension(path,"a.asm"))
+
+        //
+        if(extension(path,".a.asm"))
         {
             //std::cout << "Parsing ...\n";
-            driverI.parse(path);
-            //std::cout << "Printing ...\n";
-            driverI.print(std::cout);
-            //std::cout << "Generating ...\n";
-            driverI.generate(outstream);
+            if(driverI.parse(path))
+            {
+                //std::cout << "Printing ...\n";
+                driverI.print(std::cout);
+                //std::cout << "Generating ...\n";
+                driverI.generate(outstream);
+            }
         }
-        else if(extension(path,"a+.asm"))
+        else if(extension(path,".a+.asm"))
         {
             //std::cout << "Parsing ...\n";
-            driverII.parse(path);
-            //std::cout << "Printing ...\n";
-            driverII.print(std::cout);
-            //std::cout << "Generating ...\n";
-            //driverII.generate(outstream);
-            driverII.translate();
+            if(driverII.parse(path))
+            {
+                //std::cout << "Printing ...\n";
+                driverII.print(std::cout);
+                //std::cout << "Generating ...\n";
+                //driverII.generate(outstream);
+                driverII.translate();
+            }
         }
         else
         {
