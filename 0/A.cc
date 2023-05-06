@@ -256,7 +256,7 @@ namespace nodes
 
 
 
-    void initializer::print(std::ostream& out)const
+    /*void initializer::print(std::ostream& out)const
     {
         //std::cout << "void init_declarator::print(std::ostream& out)const\n";
         if(data_type == Tokens::CONSTANT_CHAR)
@@ -275,7 +275,7 @@ namespace nodes
         {
                 //std::cout << "no se encotro constate\n";
         }
-    }
+    }*/
 
 
     void init_declarator::print(std::ostream& out)const

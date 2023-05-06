@@ -485,16 +485,31 @@ namespace oct::cc::v0::AI
 
         struct Node
         {
-            const Node* next;
+            Node* next;
 
             Node();
         };
 
+        /**
+        *\brief solo para agregaqr el token como un nodo, cuando a demas de un token pueder recibir un algun statem mas complejo
+        *
+        */
         template<class T>
         struct Token : public Node
         {
             T token;
         };
+
+
+
+        struct identifier : public Node
+        {
+            int number;
+            std::string string;
+            int line;
+            unsigned int memory;
+        };
+
 
         struct statement : public Node
         {
@@ -515,6 +530,8 @@ namespace oct::cc::v0::AI
 
         template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
         template <class T> concept charater_type = std::is_same_v<T, char>;
+
+
 
         struct constant : public Node
         {
@@ -585,6 +602,7 @@ namespace oct::cc::v0::AI
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
 
+        /*
         struct Integer : public Node
         {
             long long number;
@@ -593,13 +611,7 @@ namespace oct::cc::v0::AI
             Tokens reduced_token()const;
 
         };
-        struct identifier : public Node
-        {
-            int number;
-            std::string string;
-            int line;
-            unsigned int memory;
-        };
+        */
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
 
@@ -670,7 +682,7 @@ namespace oct::cc::v0::AI
             Tokens qualifer;
         };
 
-        struct initializer : public statement
+        /*struct initializer : public statement
         {
             Tokens data_type;
 
@@ -690,7 +702,7 @@ namespace oct::cc::v0::AI
                 //std::cout << "Valor : \n";
                 out << value;
             }
-        };
+        };*/
 
 
         struct init_declarator : public statement
