@@ -5,7 +5,8 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        out << "const_integer : CONSTANT_INTEGER_HEX {$$ = $1;}| CONSTANT_INTEGER_DEC {$$ = $1;};\n";
+        out << "constant_integer : CONSTANT_INTEGER_HEX {$$ = $1;} | CONSTANT_INTEGER_DEC {$$ = $1;} | CONSTANT_INTEGER_OCT {$$ = $1;};\n";
+
         rules_instructions(out);
 
         rules_declarations(out);
@@ -223,15 +224,15 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
         out << "move :\n";
-            out << "\tMOV registers_8b ',' const_integer ';'\n";
+            out << "\tMOV registers_8b ',' constant_integer ';'\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
-                out << "\t\tAI_here::nodes::Token<AI_here::integer>* source = tray->block.create<AI_here::nodes::Token<AI_here::integer>>();\n";
-                out << "\t\tsource->token = $4;\n";
-                out << "\t\tmv->source = source;\n";
+                //out << "\t\tAI_here::nodes::Token<AI_here::integer>* source = tray->block.create<AI_here::nodes::Token<AI_here::integer>>();\n";
+                //out << "\t\tsource->token = $4;\n";
+                out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
                 out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::regiter_integer;\n";
@@ -245,9 +246,9 @@ namespace oct::cc::v0::tools
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
-                out << "\t\tAI_here::nodes::Token<char>* source = tray->block.create<AI_here::nodes::Token<char>>();\n";
-                out << "\t\tsource->token = $4;\n";
-                out << "\t\tmv->source = source;\n";
+                //out << "\t\tAI_here::nodes::Token<char>* source = tray->block.create<AI_here::nodes::Token<char>>();\n";
+                //out << "\t\tsource->token = $4;\n";
+                out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
                 out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::regiter_char;\n";
@@ -255,12 +256,12 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_16b ',' const_integer ';'\n";
+            out << "\tMOV registers_16b ',' constant_integer ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV segments ',' const_integer ';'\n";
+            out << "\tMOV segments ',' constant_integer ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";
@@ -350,7 +351,7 @@ namespace oct::cc::v0::tools
 
 
         out << "interruption : \n";
-            out << "\tINT const_integer ';'\n";
+            out << "\tINT constant_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Interruption* serv = tray->block.create<AI_here::nodes::intel::i8086::Interruption>();\n";
@@ -469,7 +470,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = ret;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tRETURN const_integer ';'\n";
+            out << "\tRETURN constant_integer ';'\n";
             out << "\t{\n";
                 out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::C::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";

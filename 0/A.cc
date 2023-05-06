@@ -144,8 +144,26 @@ namespace nodes
             }
         }
 
-        end:
-            ;
+    end:
+        switch(format)
+        {
+        case Format::decimal:
+            value = std::stoll(string);
+            break;
+        case Format::hexadecimal:
+            value = std::stoll(string,nullptr,16);
+            break;
+        case Format::octal:
+            value = std::stoll(string,nullptr,8);
+            break;
+        case Format::binary:
+            value = std::stoll(string,nullptr,2);
+            break;
+        default:
+            value = 0;
+        }
+
+
     }
 
     template<> bool integer_constant<integer>::is(Tokens tk) const
@@ -153,6 +171,14 @@ namespace nodes
 
 
         return false;
+    }
+    template<> std::size_t integer_constant<integer>::size(Tokens) const
+    {
+        if(suffix_l) return sizeof(long);
+
+
+
+        return 0;
     }
 
 
@@ -330,7 +356,7 @@ namespace nodes
                         break;
                     case Tokens::RET :
                         //std::cout << "Step 4.1.3\n";
-                        out << "\n\tRET;\n";
+                        out << "\n\tret;\n";
                         break;
                     default:
                         ;

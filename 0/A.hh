@@ -531,26 +531,28 @@ namespace oct::cc::v0::AI
                 octal,
                 binary,
             };
+
         public:
             integer_constant() = default;
             void set(const std::string&,Format);
 
             bool is(Tokens) const;
+            std::size_t size(Tokens) const;
+            Format get_format()const
+            {
+                return format;
+            }
+            T get_value()const
+            {
+                return value;
+            }
+
 
         private:
-            enum class Types
-            {
-                NONE,
-                CHAR,
-                SHORT,
-                INT,
-                LONG,
-            };
             Format format;
             std::string string;
             bool suffix_u;
             bool suffix_l;
-            Types types;
             T value;
 
         };

@@ -258,8 +258,8 @@ namespace oct::cc::v0::tools
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
-                //
-        out << "%token <AI_here::integer> CONSTANT_INTEGER_DEC\n";
+        //
+        out << "%token <AI_here::nodes::integer_constant<AI_here::integer>*> CONSTANT_INTEGER_DEC\n";
         out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_SHORT\n";
@@ -268,7 +268,7 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_DEC_UNIT\n";
         out << "%token LITERAL_INTEGER_DEC_LONG\n";
         out << "%token LITERAL_INTEGER_DEC_ULONG\n";
-        out << "%token <AI_here::integer> CONSTANT_INTEGER_HEX\n";
+        out << "%token <AI_here::nodes::integer_constant<AI_here::integer>*> CONSTANT_INTEGER_HEX\n";
         out << "%token LITERAL_INTEGER_HEX_SCHAR\n";
         out << "%token <signed char>LITERAL_INTEGER_HEX_UCHAR\n";
         out << "%token LITERAL_INTEGER_HEX_SHORT\n";
@@ -277,7 +277,7 @@ namespace oct::cc::v0::tools
         out << "%token <unsigned int>LITERAL_INTEGER_HEX_UINT\n";
         out << "%token LITERAL_INTEGER_HEX_LONG\n";
         out << "%token LITERAL_INTEGER_HEX_ULONG\n";
-        out << "%token <AI_here::integer> CONSTANT_INTEGER_OCT\n";
+        out << "%token <AI_here::nodes::integer_constant<AI_here::integer>*> CONSTANT_INTEGER_OCT\n";
         out << "%token <char> CONSTANT_CHAR\n";
         out << "%token <const char*> LITERAL_STRING\n";
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
@@ -293,7 +293,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";
         out << "%type <AI_here::nodes::Return*> ret\n";
-        out << "%type <AI_here::integer> const_integer\n";
+        out << "%type <AI_here::nodes::integer_constant<AI_here::integer>*> constant_integer\n";
         //out << "%type <char> const_char\n";
         out << "%type <AI_here::nodes::statement*> instructions\n";
 
