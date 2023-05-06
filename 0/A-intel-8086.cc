@@ -67,6 +67,17 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 ;
             }
             break;
+        case 16:
+            switch(op_type)
+            {
+            case operands_type::regiter_integer:
+            case operands_type::regiter_char:
+                generate_16b_inmediate(out);
+                break;
+            default:
+                ;
+            }
+            break;
         default:
             ;
         }
