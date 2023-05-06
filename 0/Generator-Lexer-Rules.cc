@@ -84,8 +84,8 @@ namespace oct::cc::v0::tools
         out << "{CONSTANT_INTEGER_HEX}  {\n";
                                     //std::cout << "Line LIETRAL_INTEGER_HEX : " << yylineno << "\n";
                                     //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
-                                    out << "\t\tAI_here::nodes::integer_constant<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::integer_constant<AI_here::integer>>();\n";
-                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::integer_constant<AI_here::integer>::Format::hexadecimal);\n";
+                                    out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::constant_integer<AI_here::integer>>();\n";
+                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::constant_integer<AI_here::integer>::Format::hexadecimal);\n";
                                     //out << "\t\tinteger->format = 'H';\n";
                                     //out << "\t\tinteger->number = std::stoll(yytext, nullptr, 16);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = const_integer;\n";
@@ -94,8 +94,8 @@ namespace oct::cc::v0::tools
         out << "{CONSTANT_INTEGER_DEC}  {\n";
                                     //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
                                     //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
-                                    out << "\t\tAI_here::nodes::integer_constant<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::integer_constant<AI_here::integer>>();\n";
-                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::integer_constant<AI_here::integer>::Format::decimal);\n";
+                                    out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::constant_integer<AI_here::integer>>();\n";
+                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);\n";
                                     //out << "\t\tstd::cout << \"number = \" << const_integer->get_value() << \"\\n\";\n";
                                     //out << "\t\tinteger->format = 'D';\n";
                                     //out << "\t\tinteger->number = std::stoll(yytext);\n";
@@ -105,8 +105,8 @@ namespace oct::cc::v0::tools
         out << "{CONSTANT_INTEGER_OCT}  {\n";
                                     //std::cout << "Line LITERAL_INTEGER_DEC : " << yylineno << "\n";
                                     //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
-                                    out << "\t\tAI_here::nodes::integer_constant<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::integer_constant<AI_here::integer>>();\n";
-                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::integer_constant<AI_here::integer>::Format::octal);\n";
+                                    out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::constant_integer<AI_here::integer>>();\n";
+                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::constant_integer<AI_here::integer>::Format::octal);\n";
                                     //out << "\t\tinteger->format = 'D';\n";
                                     //out << "\t\tinteger->number = std::stoll(yytext);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_OCT = const_integer;\n";

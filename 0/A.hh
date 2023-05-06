@@ -521,7 +521,7 @@ namespace oct::cc::v0::AI
             virtual void print(std::ostream& out) const = 0;
         };
 
-        template<integer_type T> class integer_constant : public constant
+        template<integer_type T> class constant_integer : public constant
         {
         public:
 
@@ -536,12 +536,11 @@ namespace oct::cc::v0::AI
             };
 
         public:
-            integer_constant() = default;
+            constant_integer() = default;
             void set(const std::string&,Format);
 
             bool is(Tokens) const;
-            std::size_t size(Tokens) const;
-            Format get_format()const
+            Format get_format() const
             {
                 return format;
             }
@@ -555,12 +554,21 @@ namespace oct::cc::v0::AI
                 out << value;
             }
 
+            bool is_data_8b()const;
+            bool is_data_16b()const;
+            unsigned char data_size()const;
+
+        private:
+            void sizes();
+
         private:
             Format format;
             std::string string;
             bool suffix_u;
             bool suffix_l;
             T value;
+            Tokens type;
+            unsigned char word_size;
 
         };
         template<charater_type T> struct charater_constant : public constant
@@ -628,7 +636,7 @@ namespace oct::cc::v0::AI
 
         struct Interruption : public instruction
         {
-            integer_constant<integer>* service;
+            constant_integer<integer>* service;
         };
 
         struct Label : public instruction
@@ -648,7 +656,7 @@ namespace oct::cc::v0::AI
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
-        class primary_expression : public std::variant<identifier*,charater_constant<char>* ,integer_constant<integer>* , primary_expression*>
+        class primary_expression : public std::variant<identifier*,charater_constant<char>* ,constant_integer<integer>* , primary_expression*>
         {
         public:
 

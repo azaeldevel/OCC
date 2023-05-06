@@ -226,12 +226,11 @@ namespace oct::cc::v0::tools
         out << "move :\n";
             out << "\tMOV registers_8b ',' constant_integer ';'\n";
             out << "\t{\n";
+                out << "\t\tif(not $4->is_data_8b()) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
                 out << "\t\tmv->destine = destine;\n";
-                //out << "\t\tAI_here::nodes::Token<AI_here::integer>* source = tray->block.create<AI_here::nodes::Token<AI_here::integer>>();\n";
-                //out << "\t\tsource->token = $4;\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";

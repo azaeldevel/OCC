@@ -24,6 +24,8 @@
 #include <limits>
 #include <core/3/Exception.hh>
 #include <core/3/math.hh>
+#include <limits>
+
 
 #include "A.hh"
 
@@ -119,7 +121,70 @@ namespace nodes
 
 
 
-    template<> void integer_constant<integer>::set(const std::string& s,Format f)
+    template<> void constant_integer<integer>::sizes()
+    {
+        if(suffix_l)
+        {
+            word_size =  8 * sizeof(long);
+            return;
+        }
+
+        if(value < 0)
+        {
+            if(std::numeric_limits<signed char>::min() > value)
+            {
+                word_size = 8;
+                type = Tokens::CHAR;
+                return;
+            }
+            else if(std::numeric_limits<signed short>::min() > value)
+            {
+                word_size =  8 * sizeof(signed int);
+                type = Tokens::SHORT;
+                return;
+            }
+            else if(std::numeric_limits<signed int>::min() > value)
+            {
+                word_size =  8 * sizeof(signed int);
+                type = Tokens::INT;
+                return;
+            }
+            else if(std::numeric_limits<signed long>::min() > value)
+            {
+                word_size =  8 * sizeof(signed long);
+                type = Tokens::LONG;
+                return;
+            }
+        }
+        else
+        {
+            if(std::numeric_limits<char>::max() > value)
+            {
+                word_size = 8;
+                type = Tokens::CHAR;
+                return;
+            }
+            else if(std::numeric_limits<short>::max() > value)
+            {
+                word_size =  8 * sizeof(int);
+                type = Tokens::SHORT;
+                return;
+            }
+            else if(std::numeric_limits<int>::max() > value)
+            {
+                word_size =  8 * sizeof(int);
+                type = Tokens::INT;
+                return;
+            }
+            else if(std::numeric_limits<long>::max() > value)
+            {
+                word_size =  8 * sizeof(long);
+                type = Tokens::LONG;
+                return;
+            }
+        }
+    }
+    template<> void constant_integer<integer>::set(const std::string& s,Format f)
     {
         string = s;
         format = f;
@@ -163,24 +228,22 @@ namespace nodes
             value = 0;
         }
 
-
+        sizes();
     }
 
-    template<> bool integer_constant<integer>::is(Tokens tk) const
+
+    template<> bool constant_integer<integer>::is_data_8b()const
     {
-
-
-        return false;
+        return word_size == 8;
     }
-    template<> std::size_t integer_constant<integer>::size(Tokens) const
+    template<> bool constant_integer<integer>::is_data_16b()const
     {
-        if(suffix_l) return sizeof(long);
-
-
-
-        return 0;
+        return word_size == 16;
     }
-
+    template<> unsigned char constant_integer<integer>::data_size()const
+    {
+        return word_size;
+    }
 
 
 
