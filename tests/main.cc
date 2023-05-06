@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		return CU_get_error();
 	}
 
-	if ((NULL == CU_add_test(pSuite_AI_v0, "A constants ..", v0_A_consts)))
+	if ((NULL == CU_add_test(pSuite_AI_v0, "A constants ..", v0_AI_constans)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

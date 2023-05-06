@@ -140,6 +140,22 @@ namespace oct::cc::v0::tools
 
         return false;
     }
+    const char* Generator::prefix() const
+    {
+        switch(lang)
+        {
+        case Language::AI:
+            return "a";
+        case Language::AII:
+            return "ai";
+        case Language::AIII:
+            return "aii";
+        default:
+            ;
+        }
+
+        return "?";
+    }
 
 
 

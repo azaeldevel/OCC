@@ -70,6 +70,7 @@ namespace oct::cc::v0::tools
         // Generate the parser description file (parse.output).
         out << "%verbose\n";
         out << "%locations\n";
+        //out << "%define api.prefix {" << prefix() << "}\n";
 
         // Scanner and error count are exchanged between main, yyparse and yylex.
         //out << "%param {yyscan_t scanner}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";

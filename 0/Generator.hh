@@ -39,6 +39,10 @@ namespace oct::cc::v0::tools
         *\param ornament si es true, returno el nombre del lenguaje con adorno de otra forma retorna el nombre formal.
         */
         const char* language(bool ornament) const;
+        /**
+        *\brief Retorna el prefijo que se agrega para el opcion de flex/bison
+        */
+        const char* prefix() const;
     };
 
 

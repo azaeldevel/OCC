@@ -7,6 +7,7 @@ namespace oct::cc::v0::tools
     {
 
         out << "%option noyywrap nounput reentrant bison-bridge yylineno\n";
+        //out << "%option prefix = \"" << prefix() << "\"\n";
 
         out << "%{\n";
             out << "\t#include <assert.h>\n";

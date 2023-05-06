@@ -13,9 +13,12 @@ void v0_AI_developing()
 
 }
 
+void v0_AI_components()
+{
 
+}
 
-void v0_A_consts()
+void v0_AI_constans()
 {
 	CU_ASSERT((int)AI_here::Tokens::AUTO == (int)yytoken_kind_t::AUTO);
 	//std::cout << "AUTO : " << (int)A_here::Tokens::AUTO << " " << (int)yytoken_kind_t::AUTO << "\n";
