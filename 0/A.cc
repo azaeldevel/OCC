@@ -128,6 +128,15 @@ namespace nodes
             word_size =  8 * sizeof(long);
             return;
         }
+        if(format == Format::hexadecimal)
+        {
+            word_size = string.size() - 2;//cantidad ed nibbles
+            if(suffix_l) word_size--;
+            if(suffix_u) word_size--;
+            word_size /= 2;
+
+            return;
+        }
 
         if(value < 0)
         {

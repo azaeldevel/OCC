@@ -21,6 +21,10 @@ namespace oct::cc::v0::tools
             out << "\"ch\"	        return CH;\n";
             out << "\"dl\"	        return DL;\n";
             out << "\"dh\"	        return DH;\n";
+            out << "\"ax\"	        return AX;\n";
+            out << "\"bx\"	        return BX;\n";
+            out << "\"dx\"	        return DX;\n";
+            out << "\"cx\"	        return CX;\n";
 
             out << "\"es\"	        return ES;\n";
             out << "\"cs\"	        return CS;\n";
