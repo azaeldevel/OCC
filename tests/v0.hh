@@ -4,14 +4,12 @@
 #define OCTETOS_CC_TESTS_V0_HH
 
 #include <CUnit/Basic.h>
+#include <CUnit/CUnit.h>
 
 int v0_init(void);
 int v0_clean(void);
-void v0_developing();
-void v0_performance();
-void v0_AFD_A();
-void v0_AFD_B();
-void v0_AFD_C();
-void v0_AA();
+void v0_AI_developing();
+void v0_AII_developing();
+void v0_A_consts();
 
 #endif
