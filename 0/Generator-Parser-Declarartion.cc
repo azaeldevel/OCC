@@ -278,7 +278,7 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_HEX_LONG\n";
         out << "%token LITERAL_INTEGER_HEX_ULONG\n";
         out << "%token <AI_here::nodes::integer_constant<AI_here::integer>*> CONSTANT_INTEGER_OCT\n";
-        out << "%token <char> CONSTANT_CHAR\n";
+        out << "%token <AI_here::nodes::charater_constant<char>*> CONSTANT_CHAR\n";
         out << "%token <const char*> LITERAL_STRING\n";
         out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
 
@@ -304,7 +304,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::type_specifier*> declaration_specifiers\n";
         out << "%type <AI_here::nodes::init_declarator*> init_declarator\n";
         out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
-        out << "%type <AI_here::nodes::initializer*> initializer\n";
+        out << "%type <AI_here::nodes::constant*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
 
         //out << "%type <AI_here::nodes::identifier*> identifier_list\n";

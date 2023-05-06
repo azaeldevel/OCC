@@ -192,13 +192,13 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
     {
         unsigned char instruction[2];
 		instruction[0] = 0b11001101;//opcode
-		instruction[1] = service;
+		instruction[1] = (unsigned char)service->get_value();
 		out.write((char*)&instruction,2);
     }
     void Interruption::print(std::ostream& out) const
     {
         //out << "void Interruption::print(std::ostream& out) const\n";
-        out << "\n\tint " << int(service) << "";
+        out << "\n\tint " << service->get_value() << "";
     }
 
 

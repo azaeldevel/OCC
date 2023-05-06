@@ -734,26 +734,17 @@ namespace oct::cc::v0::tools
         {
             out << "\tCONSTANT_INTEGER_DEC\n";
             out << "\t{\n";
-                out << "\t\tAI_here::nodes::initializer_literal<AI_here::integer>* data = tray->block.create<AI_here::nodes::initializer_literal<AI_here::integer>>();\n";
-                out << "\t\tdata->value = $1;\n";
-                out << "\t\tdata->data_type = AI_here::Tokens::CONSTANT_INTEGER_DEC;\n";
-                out << "\t\t$$ = data;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tCONSTANT_INTEGER_HEX\n";
             out << "\t{\n";
-                out << "\t\tAI_here::nodes::initializer_literal<AI_here::integer>* data = tray->block.create<AI_here::nodes::initializer_literal<AI_here::integer>>();\n";
-                out << "\t\tdata->value = $1;\n";
-                out << "\t\tdata->data_type = AI_here::Tokens::CONSTANT_INTEGER_HEX;\n";
-                out << "\t\t$$ = data;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tCONSTANT_CHAR\n";
             out << "\t{\n";
-                out << "\t\tAI_here::nodes::initializer_literal<char>* data = tray->block.create<AI_here::nodes::initializer_literal<char>>();\n";
-                out << "\t\tdata->value = $1;\n";
-                out << "\t\t$$ = data;\n";
-                out << "\t\tdata->data_type = AI_here::Tokens::CONSTANT_CHAR;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
         }

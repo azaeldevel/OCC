@@ -518,10 +518,13 @@ namespace oct::cc::v0::AI
 
         struct constant : public Node
         {
+            virtual void print(std::ostream& out) const = 0;
         };
 
         template<integer_type T> class integer_constant : public constant
         {
+        public:
+
         public:
             enum class Format
             {
@@ -547,6 +550,10 @@ namespace oct::cc::v0::AI
                 return value;
             }
 
+            virtual void print(std::ostream& out) const
+            {
+                out << value;
+            }
 
         private:
             Format format;
@@ -556,10 +563,15 @@ namespace oct::cc::v0::AI
             T value;
 
         };
-
         template<charater_type T> struct charater_constant : public constant
         {
             T value;
+
+
+            virtual void print(std::ostream& out) const
+            {
+                out << value;
+            }
         };
 
 
@@ -616,7 +628,7 @@ namespace oct::cc::v0::AI
 
         struct Interruption : public instruction
         {
-            unsigned char service;
+            integer_constant<integer>* service;
         };
 
         struct Label : public instruction
@@ -676,7 +688,7 @@ namespace oct::cc::v0::AI
         struct init_declarator : public statement
         {
             declarator* dec;
-            initializer* value;
+            constant* value;
 
             void print(std::ostream&)const;
         };
