@@ -794,6 +794,7 @@ namespace oct::cc::v0::AI
                     virtual void generate(std::ostream&) const;
                 private:
                     void generate_8b_inmediate(std::ostream&) const;//source inmediate
+                    void generate_16b_inmediate(std::ostream&) const;//source inmediate
                 };
                 struct Interruption : nodes::Interruption
                 {

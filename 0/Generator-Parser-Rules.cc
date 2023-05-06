@@ -226,7 +226,7 @@ namespace oct::cc::v0::tools
         out << "move :\n";
             out << "\tMOV registers_8b ',' constant_integer ';'\n";
             out << "\t{\n";
-                out << "\t\tif(not $4->is_data_8b()) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
+                out << "\t\tif($4->data_size() > 8) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
@@ -257,7 +257,17 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV registers_16b ',' constant_integer ';'\n";
             out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
+                out << "\t\tif($4->data_size() > 16) yyerror(&yylloc,scanner,tray,\"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis\");\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tdestine->token = $2;\n";//registro
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = $4;\n";
+                out << "\t\tmv->word_size = 16;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::regiter_integer;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV segments ',' constant_integer ';'\n";
