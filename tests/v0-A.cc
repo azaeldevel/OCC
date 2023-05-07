@@ -17,80 +17,136 @@ void v0_AI_developing()
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("127",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("128",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::UNSIGNED);
 
     const1.set("255",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::UNSIGNED);
 
 
     const1.set("-12",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("-127",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("-128",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("256",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("-129",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("257",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("300",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("-257",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("-300",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
-
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
     const1.set("32767",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";
     CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
+
+    const1.set("-32768",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
+
+    const1.set("35000",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::UNSIGNED);
+
+    const1.set("65535",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::SHORT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::UNSIGNED);
+
+    const1.set("65536",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 32);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::INT);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
+
 }
 
 void v0_AI_components()

@@ -577,6 +577,14 @@ namespace oct::cc::v0::AI
             {
                 return data_size;
             }
+            Tokens get_type_data()const
+            {
+                return type_data;
+            }
+            Tokens get_type_singed()const
+            {
+                return type_singed;
+            }
 
         private:
             void sizes();
