@@ -662,7 +662,6 @@ namespace oct::cc::v0::AI
                 regiter_char,
             };
 
-
             //unsigned char word_size;
             operands_type op_type;
             //char data_type;//I : integer, C : char
@@ -827,7 +826,9 @@ namespace oct::cc::v0::AI
                     virtual void print(std::ostream&)const;
                     virtual void generate(std::ostream&) const;
                 private:
-                    void generate_8b_inmediate(std::ostream&) const;//source inmediate
+                    //void generate_8b_inmediate(std::ostream&) const;//source inmediate
+                    void generate_reg_char(std::ostream&) const;//source inmediate
+                    void generate_reg_integer(std::ostream&) const;//source inmediate
                     void generate_16b_inmediate(std::ostream&) const;//source inmediate
                 };
                 struct Interruption : nodes::Interruption

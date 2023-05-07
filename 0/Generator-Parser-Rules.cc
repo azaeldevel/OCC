@@ -230,6 +230,8 @@ namespace oct::cc::v0::tools
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
+                //out << "\t\tstd::cout << \"Registro : \" << AI_here::nodes::register_to_string($2) << \"\\n\";\n";//registro
+                //out << "\t\tstd::cout << \"Value : \" << $4->get_value() << \"\\n\";\n";//registro
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
@@ -247,6 +249,8 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv->destine = destine;\n";
                 //out << "\t\tAI_here::nodes::Token<char>* source = tray->block.create<AI_here::nodes::Token<char>>();\n";
                 //out << "\t\tsource->token = $4;\n";
+                out << "\t\tstd::cout << \"Value : \" << $4->value << \"\\n\";\n";
+                out << "\t\tstd::cout << \"Pointer : \" << (void*)$4 << \"\\n\";\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
