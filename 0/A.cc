@@ -123,75 +123,142 @@ namespace nodes
 
     template<> void constant_integer<integer>::sizes()
     {
+        //std::cout << "template<> void constant_integer<integer>::sizes()\n";
+        //std::cout << "Step 1\n";
         if(suffix_l)
         {
-            word_size =  8 * sizeof(long);
+            std::cout << "sufijo long\n";
+            data_size =  8 * sizeof(long);
             return;
         }
+        //std::cout << "Step 2\n";
         if(format == Format::hexadecimal)
         {
-            word_size = string.size() - 2;//cantidad ed nibbles
-            if(suffix_l) word_size--;
-            if(suffix_u) word_size--;
-            word_size /= 2;
+            //std::cout << "Format hexadecimal\n";
+            data_size = string.size() - 2;//cantidad ed nibbles
+            if(suffix_l) data_size--;
+            if(suffix_u) data_size--;
+            data_size /= 2;
 
             return;
         }
+        //std::cout << "Step 3\n";
 
-        if(value < 0)
+        if(value < integer(0))
         {
-            if(std::numeric_limits<signed char>::min() > value)
+            if((integer)std::numeric_limits<signed char>::min() <= value)
             {
-                word_size = 8;
-                type = Tokens::CHAR;
+                //std::cout << "type : signed char\n";
+                data_size = 8;
+                type_data = Tokens::CHAR;
+                type_singed = Tokens::SIGNED;
                 return;
             }
-            else if(std::numeric_limits<signed short>::min() > value)
+            else if((integer)std::numeric_limits<short>::min() <= value)
             {
-                word_size =  8 * sizeof(signed int);
-                type = Tokens::SHORT;
+                //std::cout << "type : short\n";
+                data_size =  8 * sizeof(short);
+                type_singed = Tokens::SIGNED;
+                type_data = Tokens::SHORT;
                 return;
             }
-            else if(std::numeric_limits<signed int>::min() > value)
+            else if((integer)std::numeric_limits<int>::min() <= value)
             {
-                word_size =  8 * sizeof(signed int);
-                type = Tokens::INT;
+                //std::cout << "type : int\n";
+                data_size =  8 * sizeof(int);
+                type_data = Tokens::INT;
+                type_singed = Tokens::SIGNED;
                 return;
             }
-            else if(std::numeric_limits<signed long>::min() > value)
+            else if(std::numeric_limits<long>::min() <= value)
             {
-                word_size =  8 * sizeof(signed long);
-                type = Tokens::LONG;
+                //std::cout << "type : long\n";
+                data_size =  8 * sizeof(signed long);
+                type_data = Tokens::LONG;
+                type_singed = Tokens::SIGNED;
                 return;
+            }
+        }
+        else if(value > integer(0))
+        {
+            if((integer)std::numeric_limits<signed char>::max() >= value)
+            {
+                //std::cout << "type : signed char\n";
+                data_size = 8;
+                type_data = Tokens::CHAR;
+                type_singed = Tokens::SIGNED;
+                //std::cout << "type : signed char : " << data_size << "\n";
+                return;
+            }
+            else if(integer(std::numeric_limits<unsigned char>::max()) >= value)
+            {
+                //std::cout << "type : unsigned char\n";
+                data_size =  8;
+                type_data = Tokens::CHAR;
+                type_singed = Tokens::UNSIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<short>::max()) >= value)
+            {
+                //std::cout << "type : short\n";
+                data_size =  8 * sizeof(short);
+                type_data = Tokens::SHORT;
+                type_singed = Tokens::SIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<unsigned short>::max()) >= value)
+            {
+                //std::cout << "type : short\n";
+                data_size =  8 * sizeof(short);
+                type_data = Tokens::SHORT;
+                type_singed = Tokens::UNSIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<int>::max()) >= value)
+            {
+                //std::cout << "type : int\n";
+                data_size =  8 * sizeof(int);
+                type_data = Tokens::INT;
+                type_singed = Tokens::SIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<unsigned int>::max()) >= value)
+            {
+                //std::cout << "type : int\n";
+                data_size =  8 * sizeof(int);
+                type_data = Tokens::INT;
+                type_singed = Tokens::UNSIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<long>::max()) >= value)
+            {
+                //std::cout << "type : long\n";
+                data_size =  8 * sizeof(long);
+                type_data = Tokens::LONG;
+                type_singed = Tokens::SIGNED;
+                return;
+            }
+            else if(integer(std::numeric_limits<unsigned long>::max()) >= value)
+            {
+                //std::cout << "type : long\n";
+                data_size =  8 * sizeof(long);
+                type_data = Tokens::LONG;
+                type_singed = Tokens::UNSIGNED;
+                return;
+            }
+            else
+            {
+                //std::cout << "type : unknow\n";
             }
         }
         else
         {
-            if(std::numeric_limits<char>::max() > value)
-            {
-                word_size = 8;
-                type = Tokens::CHAR;
-                return;
-            }
-            else if(std::numeric_limits<short>::max() > value)
-            {
-                word_size =  8 * sizeof(int);
-                type = Tokens::SHORT;
-                return;
-            }
-            else if(std::numeric_limits<int>::max() > value)
-            {
-                word_size =  8 * sizeof(int);
-                type = Tokens::INT;
-                return;
-            }
-            else if(std::numeric_limits<long>::max() > value)
-            {
-                word_size =  8 * sizeof(long);
-                type = Tokens::LONG;
-                return;
-            }
+            //std::cout << "type : signed char\n";
+            data_size = 8;
+            type_data = Tokens::CHAR;
         }
+
+        //std::cout << "Step 4\n";
     }
     template<> void constant_integer<integer>::set(const std::string& s,Format f)
     {
@@ -243,16 +310,13 @@ namespace nodes
 
     template<> bool constant_integer<integer>::is_data_8b()const
     {
-        return word_size == 8;
+        return data_size == 8;
     }
     template<> bool constant_integer<integer>::is_data_16b()const
     {
-        return word_size == 16;
+        return data_size == 16;
     }
-    template<> unsigned char constant_integer<integer>::data_size()const
-    {
-        return word_size;
-    }
+
 
 
 

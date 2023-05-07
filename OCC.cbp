@@ -45,7 +45,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/boot-1.a.asm  --output bin/Debug/boot.bin" />
+				<Option parameters="tests/boot-1.a+.asm  --output bin/Debug/boot.bin" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 					<Add directory="0" />
@@ -70,11 +70,25 @@
 					<Add directory="bin/Debug" />
 				</Linker>
 			</Target>
+			<Target title="tests-v0">
+				<Option output="bin/Debug/v0" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DOCTETOS_CC_V0" />
+					<Add directory="bin/Debug" />
+				</Compiler>
+				<Linker>
+					<Add library="cunit" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall --std=c++20" />
 			<Add option="-DIDE_CODEBLOCKS" />
 			<Add directory="../../octetos" />
+			<Add directory="0" />
 		</Compiler>
 		<Unit filename="../core/3/Lexer-TTA.hh">
 			<Option target="&lt;{~None~}&gt;" />
@@ -143,8 +157,18 @@
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/cc.cc" />
-		<Unit filename="0/cc.hh" />
+		<Unit filename="0/cc.cc">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+			<Option target="occ-dbg" />
+			<Option target="gen-dbg" />
+		</Unit>
+		<Unit filename="0/cc.hh">
+			<Option target="liboctetos-cc-A" />
+			<Option target="liboctetos-cc-A+" />
+			<Option target="occ-dbg" />
+			<Option target="gen-dbg" />
+		</Unit>
 		<Unit filename="0/occ-generetor-main.cc">
 			<Option target="gen-dbg" />
 		</Unit>
@@ -166,6 +190,18 @@
 		</Unit>
 		<Unit filename="bin/Debug/A/oas-intel.lexer.cc">
 			<Option target="liboctetos-cc-A" />
+		</Unit>
+		<Unit filename="tests/main.cc">
+			<Option target="tests-v0" />
+		</Unit>
+		<Unit filename="tests/v0-A+.cc">
+			<Option target="tests-v0" />
+		</Unit>
+		<Unit filename="tests/v0-A.cc">
+			<Option target="tests-v0" />
+		</Unit>
+		<Unit filename="tests/v0.hh">
+			<Option target="tests-v0" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

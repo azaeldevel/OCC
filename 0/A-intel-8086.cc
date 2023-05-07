@@ -71,7 +71,6 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             switch(op_type)
             {
             case operands_type::regiter_integer:
-            case operands_type::regiter_char:
                 generate_16b_inmediate(out);
                 break;
             default:
@@ -85,13 +84,11 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
     void Move::generate_8b_inmediate(std::ostream& out)const
     {
         auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-        auto source = reinterpret_cast<Token<char>*>(this->source);
+        auto source = reinterpret_cast<constant_integer<integer>*>(this->source);
 
         unsigned char instruction[2];
         instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        instruction[0] = instruction[0] << 1;//w = one byte
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
+        instruction[0] = instruction[0] << 1;//w = 0;one byte
         switch(destine->token)//reg
         {
             case Tokens::AL:
@@ -131,21 +128,19 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
                 break;
         }
-        instruction[1] = source->token;
+        instruction[1] = (unsigned char)source->get_value();
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,2);
     }
     void Move::generate_16b_inmediate(std::ostream& out)const
     {
         auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-        auto source = reinterpret_cast<Token<integer>*>(this->source);
+        auto source = reinterpret_cast<constant_integer<integer>*>(this->source);
 
         unsigned char instruction[3];
         instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
         instruction[0] = instruction[0] << 1;
         instruction[0]++;//w = 1;one byte
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
         switch(destine->token)//reg
         {
             case Tokens::AX:
@@ -187,7 +182,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         }
         //instruction[1] = source->token;
         short *data = (short*)&instruction[1];
-        *data = source->token;
+        *data = (short)source->get_value();
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,3);
     }

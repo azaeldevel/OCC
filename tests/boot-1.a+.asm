@@ -66,7 +66,6 @@ int main()
 	mov ah , 0x0e;
 	int 0x10;
 	
-	mov ax , 0x0e459a;
 	
 	
 	return 0;

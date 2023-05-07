@@ -573,7 +573,10 @@ namespace oct::cc::v0::AI
 
             bool is_data_8b()const;
             bool is_data_16b()const;
-            unsigned char data_size()const;
+            short get_data_size()const
+            {
+                return data_size;
+            }
 
         private:
             void sizes();
@@ -584,8 +587,9 @@ namespace oct::cc::v0::AI
             bool suffix_u;
             bool suffix_l;
             T value;
-            Tokens type;
-            unsigned char word_size;
+            Tokens type_data;
+            Tokens type_singed;
+            short data_size;
 
         };
         template<charater_type T> struct charater_constant : public constant

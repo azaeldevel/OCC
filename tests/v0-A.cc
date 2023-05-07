@@ -10,7 +10,87 @@ namespace AI_here = oct::cc::v0::AI;
 
 void v0_AI_developing()
 {
+    AI_here::nodes::constant_integer<AI_here::integer> const1;
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::min() << "\n";
 
+    const1.set("12",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("127",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("128",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("255",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+
+    const1.set("-12",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("-127",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("-128",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+
+    const1.set("256",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+    const1.set("-129",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size data : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    //std::cout << "max : "<< (AI_here::integer)std::numeric_limits<signed char>::max() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+    const1.set("257",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+    const1.set("300",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+    const1.set("-257",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+    const1.set("-300",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
+
+
+    const1.set("32767",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
+    //std::cout << "size : " << const1.get_data_size() << "\n";
+    //std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 16);
 }
 
 void v0_AI_components()
