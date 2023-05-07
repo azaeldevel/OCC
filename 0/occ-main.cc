@@ -102,7 +102,6 @@ int main (int argc, char* argv[])
             {
                 if(not driverI.semantic())
                 {
-
                 }
                 //std::cout << "Printing ...\n";
                 //driverI.print(std::cout);
@@ -110,6 +109,7 @@ int main (int argc, char* argv[])
                 driverI.generate(outstream);
                 outstream.flush();
                 outstream.close();
+                std::cout << "Completdo.\n";
             }
         }
         else if(extension(path,".a+.asm"))
@@ -119,7 +119,6 @@ int main (int argc, char* argv[])
             {
                 if(not driverII.semantic())
                 {
-
                 }
                 const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
@@ -129,6 +128,7 @@ int main (int argc, char* argv[])
                 if(tree) driverI.generate(outstream,tree);
                 outstream.flush();
                 outstream.close();
+                std::cout << "Completdo.\n";
             }
         }
         else
@@ -138,10 +138,10 @@ int main (int argc, char* argv[])
         }
 	}
 
-    for (auto const& [key, val] : trayI.symbols)
+    /*for (auto const& [key, val] : trayI.symbols)
     {
         std::cout << key << "->" << val << "\n";
-    }
+    }*/
 
 	return EXIT_SUCCESS;
 }
