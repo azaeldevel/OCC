@@ -585,6 +585,29 @@ namespace oct::cc::v0::AI
             {
                 return type_singed;
             }
+            /*auto get_value_type()const
+            {
+                if(type_data == Tokens::CHAR and type_singed == Tokens::SIGNED)
+                {
+                    return (signed char)value;
+                }
+                else if(type_data == Tokens::CHAR and type_singed == Tokens::UNSIGNED)
+                {
+                    return (unsigned char)value;
+                }
+                else if(type_data == Tokens::SHORT and type_singed == Tokens::SIGNED)
+                {
+                    return (short)value;
+                }
+                else if(type_data == Tokens::SHORT and type_singed == Tokens::UNSIGNED)
+                {
+                    return (unsigned short)value;
+                }
+                else
+                {
+                    return integer(value);
+                }
+            }*/
 
         private:
             void sizes();
@@ -612,6 +635,7 @@ namespace oct::cc::v0::AI
         };
 
 
+
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
 
         /*
@@ -626,7 +650,6 @@ namespace oct::cc::v0::AI
         */
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
-
 
 
         struct Move : public instruction
@@ -789,7 +812,6 @@ namespace oct::cc::v0::AI
         {
             declaration* declarations;
             function* functions;
-            CPU cpu;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;

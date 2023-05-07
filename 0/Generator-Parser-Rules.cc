@@ -226,7 +226,7 @@ namespace oct::cc::v0::tools
         out << "move :\n";
             out << "\tMOV registers_8b ',' constant_integer ';'\n";
             out << "\t{\n";
-                out << "\t\tif($4->data_size() > 8) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
+                out << "\t\tif($4->get_data_size() > 8) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
@@ -258,8 +258,8 @@ namespace oct::cc::v0::tools
             out << "\tMOV registers_16b ',' constant_integer ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV registers_16b ',' constant_integer ';'\\n\";\n";
-                out << "\t\tstd::string err = \"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis pero es de \" + std::to_string($4->data_size());\n";
-                out << "\t\tif($4->data_size() > 16) yyerror(&yylloc,scanner,tray,err.c_str());\n";
+                out << "\t\tstd::string err = \"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis pero es de \" + std::to_string($4->get_data_size());\n";
+                out << "\t\tif($4->get_data_size() > 16) yyerror(&yylloc,scanner,tray,err.c_str());\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";//registro
