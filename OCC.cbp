@@ -107,9 +107,11 @@
 		</Unit>
 		<Unit filename="0/A+.cc">
 			<Option target="liboctetos-cc-A+" />
+			<Option target="tests-v0" />
 		</Unit>
 		<Unit filename="0/A+.hh">
 			<Option target="liboctetos-cc-A+" />
+			<Option target="tests-v0" />
 		</Unit>
 		<Unit filename="0/A-Driver.cc">
 			<Option target="liboctetos-cc-A" />
@@ -126,9 +128,11 @@
 		</Unit>
 		<Unit filename="0/A.cc">
 			<Option target="liboctetos-cc-A" />
+			<Option target="tests-v0" />
 		</Unit>
 		<Unit filename="0/A.hh">
 			<Option target="liboctetos-cc-A" />
+			<Option target="tests-v0" />
 		</Unit>
 		<Unit filename="0/Generator-Lexer-Declarartion.cc">
 			<Option target="gen-dbg" />
@@ -157,18 +161,8 @@
 		<Unit filename="0/OAS.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="0/cc.cc">
-			<Option target="liboctetos-cc-A" />
-			<Option target="liboctetos-cc-A+" />
-			<Option target="occ-dbg" />
-			<Option target="gen-dbg" />
-		</Unit>
-		<Unit filename="0/cc.hh">
-			<Option target="liboctetos-cc-A" />
-			<Option target="liboctetos-cc-A+" />
-			<Option target="occ-dbg" />
-			<Option target="gen-dbg" />
-		</Unit>
+		<Unit filename="0/cc.cc" />
+		<Unit filename="0/cc.hh" />
 		<Unit filename="0/occ-generetor-main.cc">
 			<Option target="gen-dbg" />
 		</Unit>
