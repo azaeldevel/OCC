@@ -475,13 +475,6 @@ namespace oct::cc::v0::AI
         typedef unsigned int Line;
         const char* register_to_string(Tokens);
         const char* type_specifier_to_string(Tokens);
-        enum class source_type : unsigned char
-        {
-            none,
-            inmediate,
-            registers,
-            memory,
-        };
 
         struct Node
         {
@@ -491,7 +484,7 @@ namespace oct::cc::v0::AI
         };
 
         /**
-        *\brief solo para agregaqr el token como un nodo, cuando a demas de un token pueder recibir un algun statem mas complejo
+        *\brief solo para agregar el token como un nodo, cuando a demas de un token pueder recibir un algun statem mas complejo
         *
         */
         template<class T>
@@ -499,7 +492,6 @@ namespace oct::cc::v0::AI
         {
             T token;
         };
-
 
 
         struct identifier : public Node
@@ -510,7 +502,6 @@ namespace oct::cc::v0::AI
             unsigned int memory;
         };
 
-
         struct statement : public Node
         {
             bool is_instruction;
@@ -519,6 +510,8 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
         };
+
+
         struct instruction : public statement
         {
             Tokens inst;
@@ -528,16 +521,14 @@ namespace oct::cc::v0::AI
             virtual void print(std::ostream&) const = 0;
         };
 
+
+
         template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
         template <class T> concept charater_type = std::is_same_v<T, char>;
-
-
-
         struct constant : public Node
         {
             virtual void print(std::ostream& out) const = 0;
         };
-
         template<integer_type T> class constant_integer : public constant
         {
         public:
@@ -585,29 +576,6 @@ namespace oct::cc::v0::AI
             {
                 return type_singed;
             }
-            /*auto get_value_type()const
-            {
-                if(type_data == Tokens::CHAR and type_singed == Tokens::SIGNED)
-                {
-                    return (signed char)value;
-                }
-                else if(type_data == Tokens::CHAR and type_singed == Tokens::UNSIGNED)
-                {
-                    return (unsigned char)value;
-                }
-                else if(type_data == Tokens::SHORT and type_singed == Tokens::SIGNED)
-                {
-                    return (short)value;
-                }
-                else if(type_data == Tokens::SHORT and type_singed == Tokens::UNSIGNED)
-                {
-                    return (unsigned short)value;
-                }
-                else
-                {
-                    return integer(value);
-                }
-            }*/
 
         private:
             void sizes();
@@ -636,21 +604,6 @@ namespace oct::cc::v0::AI
 
 
 
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Nodes
-
-        /*
-        struct Integer : public Node
-        {
-            long long number;
-            char format;//Decimal, Hexadecimal
-
-            Tokens reduced_token()const;
-
-        };
-        */
-
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Not C statment
-
 
         struct Move : public instruction
         {
@@ -662,23 +615,11 @@ namespace oct::cc::v0::AI
                 regiter_char,
             };
 
-            //unsigned char word_size;
             operands_type op_type;
-            //char data_type;//I : integer, C : char
             Node* destine;
             Node* source;
 
         };
-
-        /*struct move_8b_reg_byte : public Move
-        {
-            Tokens registe;
-            unsigned char byte;
-            char type;//I : integer, C : char
-
-            void generate(std::ostream& ) const;
-            void print(std::ostream&)const;
-        };*/
 
         struct Interruption : public instruction
         {
@@ -716,29 +657,6 @@ namespace oct::cc::v0::AI
             Tokens qualifer;
         };
 
-        /*struct initializer : public statement
-        {
-            Tokens data_type;
-
-            void print(std::ostream& out) const;
-        };
-
-
-        struct const_expression : public initializer
-        {
-        };
-        template<typename T> struct initializer_literal : public const_expression
-        {
-            T value;
-
-            void print(std::ostream& out) const
-            {
-                //std::cout << "Valor : \n";
-                out << value;
-            }
-        };*/
-
-
         struct init_declarator : public statement
         {
             declarator* dec;
@@ -746,7 +664,6 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
         };
-
 
         struct pointer : public statement
         {
@@ -795,7 +712,7 @@ namespace oct::cc::v0::AI
             bool semantic()const;
         };
 
-        struct function : public statement //public statement
+        struct function : public statement
         {
             identifier* id;
             statement* body_list;
@@ -870,8 +787,6 @@ namespace oct::cc::v0::AI
         nodes::identifier* name;
     };
 
-    //typedef std::variant<nodes::identifier*> element;
-
     class SymbolTable : public space
     {
     public:
@@ -894,8 +809,6 @@ namespace oct::cc::v0::AI
         UNIT* unit;
     };
 
-
-    //extern core_here::Block block;
 }
 
 

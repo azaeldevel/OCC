@@ -102,6 +102,7 @@ int main (int argc, char* argv[])
             {
                 if(not driverI.semantic())
                 {
+
                 }
                 //std::cout << "Printing ...\n";
                 //driverI.print(std::cout);
@@ -119,6 +120,7 @@ int main (int argc, char* argv[])
             {
                 if(not driverII.semantic())
                 {
+
                 }
                 const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
