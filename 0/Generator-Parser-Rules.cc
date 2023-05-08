@@ -229,9 +229,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tif($4->get_data_size() > 8) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
-                out << "\t\tdestine->token = $2;\n";//registro
-                //out << "\t\tstd::cout << \"Registro : \" << AI_here::nodes::register_to_string($2) << \"\\n\";\n";//registro
-                //out << "\t\tstd::cout << \"Value : \" << $4->get_value() << \"\\n\";\n";//registro
+                out << "\t\tdestine->token = $2;\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
@@ -245,12 +243,8 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
-                out << "\t\tdestine->token = $2;\n";//registro
+                out << "\t\tdestine->token = $2;\n";
                 out << "\t\tmv->destine = destine;\n";
-                //out << "\t\tAI_here::nodes::Token<char>* source = tray->block.create<AI_here::nodes::Token<char>>();\n";
-                //out << "\t\tsource->token = $4;\n";
-                //out << "\t\tstd::cout << \"Value : \" << $4->value << \"\\n\";\n";
-                //out << "\t\tstd::cout << \"Pointer : \" << (void*)$4 << \"\\n\";\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 8;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
@@ -261,12 +255,11 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV registers_16b ',' constant_integer ';'\n";
             out << "\t{\n";
-                //out << "\t\tstd::cout << \"MOV registers_16b ',' constant_integer ';'\\n\";\n";
                 out << "\t\tstd::string err = \"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis pero es de \" + std::to_string($4->get_data_size());\n";
                 out << "\t\tif($4->get_data_size() > 16) yyerror(&yylloc,scanner,tray,err.c_str());\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
-                out << "\t\tdestine->token = $2;\n";//registro
+                out << "\t\tdestine->token = $2;\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = $4;\n";
                 out << "\t\tmv->word_size = 16;\n";
@@ -276,17 +269,24 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV segments ',' constant_integer ';'\n";
+            out << "\tMOV segments ',' registers_16b ';'\n";
             out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
+                out << "\t\tstd::cout << \"MOV segments ',' registers_16b ';'\\n\";\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tdestine->token = $2;\n";
+                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tsource->token = $4;\n";
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = source;\n";
+                out << "\t\tmv->word_size = 16;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::segment_register;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV registers_16b ',' segments ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV segments ',' registers_16b ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
             out << "\t}\n";

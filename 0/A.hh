@@ -474,6 +474,7 @@ namespace oct::cc::v0::AI
         struct declarator;
         typedef unsigned int Line;
         const char* register_to_string(Tokens);
+        const char* segment_to_string(Tokens);
         const char* type_specifier_to_string(Tokens);
 
         struct Node
@@ -547,18 +548,18 @@ namespace oct::cc::v0::AI
             constant_integer() = default;
             void set(const std::string&,Format);
 
-            bool is(Tokens) const;
             Format get_format() const
             {
                 return format;
             }
-            T get_value()const
+            T get_value() const
             {
                 return value;
             }
 
             virtual void print(std::ostream& out) const
             {
+                //std::cout << "value : " << value << "\n";
                 out << value;
             }
 
@@ -610,9 +611,9 @@ namespace oct::cc::v0::AI
             enum class operands_type : unsigned char
             {
                 none,
-                //regiter_inmediate,
                 regiter_integer,
                 regiter_char,
+                segment_register,
             };
 
             operands_type op_type;
@@ -744,9 +745,10 @@ namespace oct::cc::v0::AI
                     virtual void generate(std::ostream&) const;
                 private:
                     //void generate_8b_inmediate(std::ostream&) const;//source inmediate
-                    void generate_reg_char(std::ostream&) const;//source inmediate
-                    void generate_reg_integer(std::ostream&) const;//source inmediate
-                    void generate_16b_inmediate(std::ostream&) const;//source inmediate
+                    void generate_reg_char(std::ostream&) const;
+                    void generate_reg_integer(std::ostream&) const;
+                    void generate_segment_register(std::ostream&) const;
+                    void generate_16b_register_integer(std::ostream&) const;//source inmediate
                 };
                 struct Interruption : nodes::Interruption
                 {

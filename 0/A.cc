@@ -76,6 +76,18 @@ namespace nodes
                 return "unknow";
         }
     }
+    const char* segment_to_string(Tokens tk)
+    {
+        switch(tk)
+        {
+            case Tokens::ES : return "ES";
+            case Tokens::CS : return "CS";
+            case Tokens::SS : return "SS";
+            case Tokens::DS : return "DS";
+            default:
+                return "unknow";
+        }
+    }
     const char* type_specifier_to_string(Tokens type)
     {
         switch(type)
@@ -127,7 +139,7 @@ namespace nodes
         //std::cout << "Step 1\n";
         if(suffix_l)
         {
-            std::cout << "sufijo long\n";
+            //std::cout << "sufijo long\n";
             data_size =  8 * sizeof(long);
             return;
         }
@@ -136,9 +148,11 @@ namespace nodes
         {
             //std::cout << "Format hexadecimal\n";
             data_size = string.size() - 2;//cantidad ed nibbles
+            //std::cout << "Format hexadecimal : " << data_size << "\n";
             if(suffix_l) data_size--;
             if(suffix_u) data_size--;
             data_size /= 2;
+            data_size *= 8;
 
             return;
         }

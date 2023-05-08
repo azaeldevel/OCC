@@ -20,6 +20,13 @@ void v0_AI_developing()
     CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
     CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
+    const1.set("0x0e",AI_here::nodes::constant_integer<AI_here::integer>::Format::hexadecimal);
+    std::cout << "size data : " << const1.get_data_size() << "\n";
+    std::cout << "value : " << const1.get_value() << "\n";
+    CU_ASSERT(const1.get_data_size() == 8);
+    CU_ASSERT(const1.get_type_data() == AI_here::Tokens::CHAR);
+    CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
+
     const1.set("127",AI_here::nodes::constant_integer<AI_here::integer>::Format::decimal);
     //std::cout << "size data : " << const1.get_data_size() << "\n";
     //std::cout << "value : " << const1.get_value() << "\n";

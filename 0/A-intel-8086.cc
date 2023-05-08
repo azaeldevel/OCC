@@ -34,18 +34,28 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         {
         case operands_type::regiter_integer:
             {
-                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-                auto source = reinterpret_cast<Token<integer>*>(this->source);
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<constant_integer<integer>*>(this->source);
                 out << "\n\tmov " << register_to_string(destine->token) << " ";
-                out << source->token;
+                source->print(out);
             }
             break;
         case operands_type::regiter_char:
             {
-                auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-                auto source = reinterpret_cast<Token<char>*>(this->source);
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<charater_constant<char>*>(this->source);
                 out << "\n\tmov " << register_to_string(destine->token) << " ";
-                out << "'" << source->token << "'";
+                out << "'";
+                source->print(out);
+                out << "'";
+            }
+            break;
+        case operands_type::segment_register:
+            {
+                //out << "operands_type::segment_register\n";
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<Token<Tokens>*>(this->source);
+                out << "\n\tmov " << segment_to_string(destine->token) << " " << register_to_string(source->token);
             }
             break;
         default:
@@ -73,7 +83,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             switch(op_type)
             {
             case operands_type::regiter_integer:
-                //generate_16b_inmediate(out);
+                generate_16b_register_integer(out);
                 break;
             default:
                 ;
@@ -83,57 +93,6 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             ;
         }
     }
-    /*void Move::generate_8b_inmediate(std::ostream& out)const
-    {
-        auto destine = reinterpret_cast<Token<Tokens>*>(this->destine);
-        auto source = reinterpret_cast<constant_integer<integer>*>(this->source);
-
-        char instruction[2];
-        instruction[0] = 0b1011;//opcode
-        instruction[0] = instruction[0] << 1;//w = 0;one byte
-        switch(destine->token)//reg
-        {
-            case Tokens::AL:
-                instruction[0] = instruction[0] << 3;
-                break;
-            case Tokens::CL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b001;
-                break;
-            case Tokens::DL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b010;
-                break;
-            case Tokens::BL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b011;
-                break;
-            case Tokens::AH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b100;
-                break;
-            case Tokens::CH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b101;
-                break;
-            case Tokens::DH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b110;
-                break;
-            case Tokens::BH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b111;
-                break;
-            default:
-                //error
-                throw core_here::exception("El operando no es un registro de 8 bits valido.");
-                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-                break;
-        }
-        instruction[1] = (char)source->get_value();
-        //sstd::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,2);
-    }*/
     void Move::generate_reg_integer(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
@@ -237,7 +196,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //std::cout << "Pointer : '" << (void*)source << "'\n";
         out.write((char*)&instruction,2);
     }
-    void Move::generate_16b_inmediate(std::ostream& out)const
+    void Move::generate_16b_register_integer(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<constant_integer<integer>*>(this->source);
@@ -291,46 +250,52 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,3);
     }
-    /*
-    void move_8b_reg_byte::generate(std::ostream& out) const
+    void Move::generate_segment_register(std::ostream& out)const
     {
-        unsigned char instruction[2];
-        instruction[0] = 0b1011;//opcode
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        instruction[0] = instruction[0] << 1;//w = one byte
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        switch(registe)//reg
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Token<Tokens>*>(this->source);
+
+        char opcode = 0b10001100;
+        char opinfo = 0;
+        opinfo = opinfo << 2;//mod = 0b11
+        opinfo += 0b11;
+        opinfo = opinfo << 1;//add 0b0
+        switch(destine->token)
         {
-            case Tokens::AL:
-                instruction[0] = instruction[0] << 3;
+        case Tokens::ES:
+            opinfo = opinfo << 2;//ES 0b00
+            break;
+        case Tokens::CS:
+            opinfo = opinfo << 2;//CS 0b01
+            opinfo += 0b01;
+            break;
+        case Tokens::SS:
+            opinfo = opinfo << 2;//SS 0b10
+            opinfo += 0b10;
+            break;
+        case Tokens::DS:
+            opinfo = opinfo << 2;//DS 0b11
+            opinfo += 0b11;
+            break;
+        default:
+            ;
+        }
+        switch(source->token)//reg
+        {
+            case Tokens::AX:
+                opinfo = opinfo << 3;
                 break;
-            case Tokens::CL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b001;
+            case Tokens::CX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b001;
                 break;
-            case Tokens::DL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b010;
+            case Tokens::DX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b010;
                 break;
-            case Tokens::BL:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b011;
-                break;
-            case Tokens::AH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b100;
-                break;
-            case Tokens::CH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b101;
-                break;
-            case Tokens::DH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b110;
-                break;
-            case Tokens::BH:
-                instruction[0] = instruction[0] << 3;
-                instruction[0] = instruction[0] + 0b111;
+            case Tokens::BX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b011;
                 break;
             default:
                 //error
@@ -338,17 +303,11 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
                 break;
         }
-        instruction[1] = byte;
-        //std::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,2);
+
+        out.write((char*)&opcode,1);
+        out.write((char*)&opinfo,1);
     }
-    void move_8b_reg_byte::print(std::ostream& out) const
-    {
-        out << "\n\tmov " << register_to_string(registe) << " ";
-        if(type == 'C') out << "'" << (char)byte << "'";
-        else if(type == 'I') out << (int)byte;
-    }
-    */
+
 
 
 
