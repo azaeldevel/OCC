@@ -175,6 +175,26 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = AI_here::Tokens::DX;\n";
             out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::SP;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::BP;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::SI;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+                out << "\t\t$$ = AI_here::Tokens::DI;\n";
+            out << "\t}\n";
             out << "\t;\n\n";
 
     /*out << "registers :\n";

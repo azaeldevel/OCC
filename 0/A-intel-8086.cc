@@ -296,21 +296,37 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         }
         switch(source->token)//reg
         {
-            case Tokens::AX:
-                opinfo = opinfo << 3;
-                break;
-            case Tokens::CX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b001;
-                break;
-            case Tokens::DX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b010;
-                break;
-            case Tokens::BX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b011;
-                break;
+        case Tokens::AX:
+            opinfo = opinfo << 3;
+            break;
+        case Tokens::CX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b001;
+            break;
+        case Tokens::DX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b010;
+            break;
+        case Tokens::BX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b011;
+            break;
+        case Tokens::SP:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b100;
+            break;
+        case Tokens::BP:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b101;
+            break;
+        case Tokens::SI:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b110;
+            break;
+        case Tokens::DI:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b111;
+            break;
             default:
                 //error
                 throw core_here::exception("El operando no es un registro de 8 bits valido.");
@@ -332,23 +348,39 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //opinfo += 0b11;
         opinfo = opinfo << 1;//add 0b0
 
-        switch(destine->token)//reg
+        switch(source->token)//reg
         {
-            case Tokens::AX:
-                opinfo = opinfo << 3;
-                break;
-            case Tokens::CX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b001;
-                break;
-            case Tokens::DX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b010;
-                break;
-            case Tokens::BX:
-                opinfo = opinfo << 3;
-                opinfo = opinfo + 0b011;
-                break;
+        case Tokens::AX:
+            opinfo = opinfo << 3;
+            break;
+        case Tokens::CX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b001;
+            break;
+        case Tokens::DX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b010;
+            break;
+        case Tokens::BX:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b011;
+            break;
+        case Tokens::SP:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b100;
+            break;
+        case Tokens::BP:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b101;
+            break;
+        case Tokens::SI:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b110;
+            break;
+        case Tokens::DI:
+            opinfo = opinfo << 3;
+            opinfo = opinfo + 0b111;
+            break;
             default:
                 //error
                 throw core_here::exception("El operando no es un registro de 8 bits valido.");
