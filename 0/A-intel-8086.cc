@@ -348,7 +348,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //opinfo += 0b11;
         opinfo = opinfo << 1;//add 0b0
 
-        switch(source->token)//reg
+        switch(destine->token)//reg
         {
         case Tokens::AX:
             opinfo = opinfo << 3;

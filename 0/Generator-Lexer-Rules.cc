@@ -75,6 +75,8 @@ namespace oct::cc::v0::tools
         //out << "\"while\"		return WHILE;\n";
 
 
+        out << "\"//\".*		;\n";
+
 
         out << "{IDENTIFIER}	{\n";
                             //out << "\t\tstd::cout << \"Line IDENTIFIER : \" << yylloc->last_line << \" : \" << yytext << \"\\n\";\n";
