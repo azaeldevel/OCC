@@ -58,6 +58,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 out << "\n\tmov " << segment_to_string(destine->token) << " " << register_to_string(source->token);
             }
             break;
+        case operands_type::register_segment:
+            {
+                //out << "operands_type::segment_register\n";
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<Token<Tokens>*>(this->source);
+                out << "\n\tmov " << register_to_string(destine->token) << " " << segment_to_string(source->token);
+            }
+            break;
         default:
             ;//error
         }
@@ -84,6 +92,12 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             {
             case operands_type::regiter_integer:
                 generate_16b_register_integer(out);
+                break;
+            case operands_type::segment_register:
+                generate_segment_register(out);
+                break;
+            case operands_type::register_segment:
+                generate_register_segment(out);
                 break;
             default:
                 ;
@@ -258,7 +272,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char opcode = 0b10001100;
         char opinfo = 0;
         opinfo = opinfo << 2;//mod = 0b11
-        opinfo += 0b11;
+        //opinfo += 0b11;
         opinfo = opinfo << 1;//add 0b0
         switch(destine->token)
         {
@@ -307,7 +321,64 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         out.write((char*)&opcode,1);
         out.write((char*)&opinfo,1);
     }
+    void Move::generate_register_segment(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Token<Tokens>*>(this->source);
 
+        char opcode = 0b10001110;
+        char opinfo = 0;
+        opinfo = opinfo << 2;//mod = 0b11
+        //opinfo += 0b11;
+        opinfo = opinfo << 1;//add 0b0
+
+        switch(destine->token)//reg
+        {
+            case Tokens::AX:
+                opinfo = opinfo << 3;
+                break;
+            case Tokens::CX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b001;
+                break;
+            case Tokens::DX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b010;
+                break;
+            case Tokens::BX:
+                opinfo = opinfo << 3;
+                opinfo = opinfo + 0b011;
+                break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+        switch(source->token)
+        {
+        case Tokens::ES:
+            opinfo = opinfo << 2;//ES 0b00
+            break;
+        case Tokens::CS:
+            opinfo = opinfo << 2;//CS 0b01
+            opinfo += 0b01;
+            break;
+        case Tokens::SS:
+            opinfo = opinfo << 2;//SS 0b10
+            opinfo += 0b10;
+            break;
+        case Tokens::DS:
+            opinfo = opinfo << 2;//DS 0b11
+            opinfo += 0b11;
+            break;
+        default:
+            ;
+        }
+        //std::cout << "void Move::generate_register_segment(std::ostream& out)const\n";
+        out.write((char*)&opcode,1);
+        out.write((char*)&opinfo,1);
+    }
 
 
 
