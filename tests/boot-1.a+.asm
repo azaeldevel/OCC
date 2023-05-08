@@ -65,6 +65,15 @@ int main()
 	mov al , '.';
 	mov ah , 0x0e;
 	int 0x10;
+	mov al , ' ';
+	mov ah , 0x0e;
+	int 0x10;
+	mov al , 'M';
+	mov ah , 0x0e;
+	int 0x10;
+	mov al , '.';
+	mov ah , 0x0e;
+	int 0x10;
 	
 	
 	

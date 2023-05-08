@@ -110,7 +110,7 @@ int main (int argc, char* argv[])
                 driverI.generate(outstream);
                 outstream.flush();
                 outstream.close();
-                std::cout << "Completdo.\n";
+                std::cout << "\n\nCompletdo.\n";
             }
         }
         else if(extension(path,".a+.asm"))
@@ -130,7 +130,7 @@ int main (int argc, char* argv[])
                 if(tree) driverI.generate(outstream,tree);
                 outstream.flush();
                 outstream.close();
-                std::cout << "Completdo.\n";
+                std::cout << "\n\nCompletdo.\n";
             }
         }
         else
