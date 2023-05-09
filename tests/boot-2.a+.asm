@@ -83,7 +83,7 @@ int main()
 	
 	mov ax, 0x0000;
 	mov ax, ds;
-	//int 0x10;
+	int 0x10;
 	
 	return 0;
 }

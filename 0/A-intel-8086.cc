@@ -264,122 +264,73 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,3);
     }
-    void Move::generate_segment_register(std::ostream& out)const
-    {
-        auto destine = static_cast<Token<Tokens>*>(this->destine);
-        auto source = static_cast<Token<Tokens>*>(this->source);
-
-        char opcode = 0b10001100;
-        char opinfo = 0;
-        opinfo = opinfo << 2;//mod = 0b11
-        //opinfo += 0b11;
-        opinfo = opinfo << 1;//add 0b0
-        switch(destine->token)
-        {
-        case Tokens::ES:
-            opinfo = opinfo << 2;//ES 0b00
-            break;
-        case Tokens::CS:
-            opinfo = opinfo << 2;//CS 0b01
-            opinfo += 0b01;
-            break;
-        case Tokens::SS:
-            opinfo = opinfo << 2;//SS 0b10
-            opinfo += 0b10;
-            break;
-        case Tokens::DS:
-            opinfo = opinfo << 2;//DS 0b11
-            opinfo += 0b11;
-            break;
-        default:
-            ;
-        }
-        switch(source->token)//reg
-        {
-        case Tokens::AX:
-            opinfo = opinfo << 3;
-            break;
-        case Tokens::CX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b001;
-            break;
-        case Tokens::DX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b010;
-            break;
-        case Tokens::BX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b011;
-            break;
-        case Tokens::SP:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b100;
-            break;
-        case Tokens::BP:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b101;
-            break;
-        case Tokens::SI:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b110;
-            break;
-        case Tokens::DI:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b111;
-            break;
-            default:
-                //error
-                throw core_here::exception("El operando no es un registro de 8 bits valido.");
-                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-                break;
-        }
-
-        out.write((char*)&opcode,1);
-        out.write((char*)&opinfo,1);
-    }
     void Move::generate_register_segment(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char opcode = 0b10001110;
-        char opinfo = 0;
-        opinfo = opinfo << 2;//mod = 0b11
-        //opinfo += 0b11;
-        opinfo = opinfo << 1;//add 0b0
+        char inst[2];
+        inst[0] = 0b10001110;
+        inst[1] = 0;
+        inst[1] += 0b11;//mod
+        inst[1] = inst[1] << 1;//add 0b0
 
-        switch(destine->token)//reg
+        generate_16b_fill_register(inst[1],destine);
+        generate_16b_fill_segment(inst[1],source);
+
+        out.write(inst,2);
+    }
+    void Move::generate_segment_register(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Token<Tokens>*>(this->source);
+
+        char inst[2];
+        inst[0] = 0b10001100;
+        inst[1] = 0;
+        inst[1] += 0b11;//mod
+        inst[1] = inst[1] << 1;//add 0b0
+
+        generate_16b_fill_segment(inst[1],destine);
+        generate_16b_fill_register(inst[1],source);
+
+        out.write(inst,2);
+    }
+
+    void Move::generate_16b_fill_register(char& data,Token<Tokens>* token) const
+    {
+        switch(token->token)//reg
         {
         case Tokens::AX:
-            opinfo = opinfo << 3;
+            data = data << 3;
             break;
         case Tokens::CX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b001;
+            data = data << 3;
+            data = data + 0b001;
             break;
         case Tokens::DX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b010;
+            data = data << 3;
+            data = data + 0b010;
             break;
         case Tokens::BX:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b011;
+            data = data << 3;
+            data = data + 0b011;
             break;
         case Tokens::SP:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b100;
+            data = data << 3;
+            data = data + 0b100;
             break;
         case Tokens::BP:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b101;
+            data = data << 3;
+            data = data + 0b101;
             break;
         case Tokens::SI:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b110;
+            data = data << 3;
+            data = data + 0b110;
             break;
         case Tokens::DI:
-            opinfo = opinfo << 3;
-            opinfo = opinfo + 0b111;
+            data = data << 3;
+            data = data + 0b111;
             break;
             default:
                 //error
@@ -387,31 +338,30 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
                 break;
         }
-        switch(source->token)
+    }
+    void Move::generate_16b_fill_segment(char& data,Token<Tokens>* token) const
+    {
+        switch(token->token)
         {
         case Tokens::ES:
-            opinfo = opinfo << 2;//ES 0b00
+            data = data << 2;//ES 0b00
             break;
         case Tokens::CS:
-            opinfo = opinfo << 2;//CS 0b01
-            opinfo += 0b01;
+            data = data << 2;//CS 0b01
+            data += 0b01;
             break;
         case Tokens::SS:
-            opinfo = opinfo << 2;//SS 0b10
-            opinfo += 0b10;
+            data = data << 2;//SS 0b10
+            data += 0b10;
             break;
         case Tokens::DS:
-            opinfo = opinfo << 2;//DS 0b11
-            opinfo += 0b11;
+            data = data << 2;//DS 0b11
+            data += 0b11;
             break;
         default:
             ;
         }
-        //std::cout << "void Move::generate_register_segment(std::ostream& out)const\n";
-        out.write((char*)&opcode,1);
-        out.write((char*)&opinfo,1);
     }
-
 
 
 
