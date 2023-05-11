@@ -90,6 +90,9 @@ int main()
 	mov ax, ds;//mov es, bx
 	int 0x10;
 	
+	mov bx, ax;
+	mov cx, ax;
+	
 	return 0;
 }
 

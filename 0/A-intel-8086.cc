@@ -66,6 +66,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 out << "\n\tmov " << register_to_string(destine->token) << " " << segment_to_string(source->token);
             }
             break;
+        case operands_type::register_register:
+            {
+                //out << "operands_type::segment_register\n";
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<Token<Tokens>*>(this->source);
+                out << "\n\tmov " << register_to_string(destine->token) << " " << register_to_string(source->token);
+            }
+            break;
         default:
             ;//error
         }
@@ -98,6 +106,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
             case operands_type::register_segment:
                 generate_register_segment(out);
+                break;
+            case operands_type::register_register:
+                generate_16b_register_register(out);
                 break;
             default:
                 ;
@@ -283,6 +294,22 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         default:
             ;
         }
+    }
+    void Move::generate_16b_register_register(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Token<Tokens>*>(this->source);
+
+        char inst[2];
+        inst[0] = 0b100010;//1)opecode
+        inst[0] = inst[0] << 1;//d? que es?, pero se que deve ser 0
+        inst[0] = inst[0] << 1;
+        inst[0]++; // w = 1
+        inst[1] = 0;
+        inst[1] += 0b11;//mod
+        generate_16b_fill_register(inst[1],source);
+        generate_16b_fill_register(inst[1],destine);
+        out.write(inst,2);
     }
 
 
