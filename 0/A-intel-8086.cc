@@ -91,6 +91,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             case operands_type::regiter_char:
                 generate_reg_char(out);
                 break;
+            case operands_type::register_register:
+                generate_8b_register_register(out);
+                break;
             default:
                 ;
             }
@@ -309,6 +312,21 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] += 0b11;//mod
         generate_16b_fill_register(inst[1],source);
         generate_16b_fill_register(inst[1],destine);
+        out.write(inst,2);
+    }
+    void Move::generate_8b_register_register(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Token<Tokens>*>(this->source);
+
+        char inst[2];
+        inst[0] = 0b100010;//1)opecode
+        inst[0] = inst[0] << 1;//d? que es?, pero se que deve ser 0
+        inst[0] = inst[0] << 1;// w = 0
+        inst[1] = 0;
+        inst[1] += 0b11;//mod
+        generate_8b_fill_register(inst[1],source);
+        generate_8b_fill_register(inst[1],destine);
         out.write(inst,2);
     }
 

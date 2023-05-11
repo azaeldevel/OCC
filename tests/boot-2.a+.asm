@@ -92,6 +92,8 @@ int main()
 	
 	mov bx, ax;
 	mov cx, ax;
+	mov dh,al;
+	mov dl,ah;
 	
 	return 0;
 }
