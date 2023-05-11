@@ -78,12 +78,12 @@ int main()
 	mov ax, 0x0e21;
 	int 0x10;
 	
-	mov ax, 0x0e21;
-	mov ds, ax;
+	mov ax, 0x0e21;//<< bien
+	mov ds, ax;//mov ax,ds
 	
-	mov ax, 0x0000;
-	mov ax, ds;
-	int 0x10;
+	mov ax, 0x0000;//
+	mov ax, ds;//mov es, bx
+	//int 0x10;
 	
 	return 0;
 }

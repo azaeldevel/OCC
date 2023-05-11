@@ -752,6 +752,7 @@ namespace oct::cc::v0::AI
                     void generate_register_segment(std::ostream&) const;
                     void generate_16b_register_integer(std::ostream&) const;//source inmediate
                     void generate_16b_form_6_7(std::ostream&) const;//source inmediate
+                    void generate_8b_fill_register(char& ,Token<Tokens>*) const;
                     void generate_16b_fill_register(char& ,Token<Tokens>*) const;//source inmediate
                     void generate_16b_fill_segment(char& ,Token<Tokens>*) const;//source inmediate
                 };
