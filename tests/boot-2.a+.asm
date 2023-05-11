@@ -8,6 +8,11 @@ short flag2 -21598;
 
 int main()
 {
+	mov ax,1;
+	mov bx,2;
+	mov cx,3;
+	mov dx,4;
+	
 	mov al , 'B';
 	mov ah , 0x0e;
 	int 0x10;
@@ -83,7 +88,7 @@ int main()
 	
 	mov ax, 0x0000;//
 	mov ax, ds;//mov es, bx
-	//int 0x10;
+	int 0x10;
 	
 	return 0;
 }

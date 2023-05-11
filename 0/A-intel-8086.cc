@@ -149,7 +149,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //std::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,3);
     }
-    void Move::generate_register_segment(std::ostream& out)const
+    void Move::generate_segment_register(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
@@ -159,13 +159,11 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] = 0;
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
-
-        generate_16b_fill_register(inst[1],destine);
-        generate_16b_fill_segment(inst[1],source);
-
+        generate_16b_fill_segment(inst[1],destine);
+        generate_16b_fill_register(inst[1],source);
         out.write(inst,2);
     }
-    void Move::generate_segment_register(std::ostream& out)const
+    void Move::generate_register_segment(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
@@ -175,10 +173,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] = 0;
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
-
-        generate_16b_fill_segment(inst[1],destine);
-        generate_16b_fill_register(inst[1],source);
-
+        generate_16b_fill_segment(inst[1],source);
+        generate_16b_fill_register(inst[1],destine);
         out.write(inst,2);
     }
     void Move::generate_8b_fill_register(char& data,Token<Tokens>* token) const
