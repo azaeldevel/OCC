@@ -98,6 +98,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 out << "\n\tmov " << destine->to_string() << ", " << source->get_value();
             }
             break;
+        case operands_type::memory_char:
+            {
+                //out << "operands_type::segment_register\n";
+                auto destine = static_cast<Memory*>(this->destine);
+                auto source = static_cast<charater_constant<char>*>(this->source);
+                out << "\n\tmov " << destine->to_string() << ", '" << source->value << "'";
+            }
+            break;
         default:
             ;//error
         }
@@ -117,6 +125,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
             case operands_type::register_register:
                 generate_8b_register_register(out);
+                break;
+            case operands_type::memory_char:
+                generate_8b_memory_char(out);
                 break;
             default:
                 ;
@@ -419,6 +430,24 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& dat = (short&)inst[4];
         dat = (short)source->get_value();
         out.write(inst,6);
+    }
+    void Move::generate_8b_memory_char(std::ostream& out)const
+    {
+        auto destine = static_cast<Memory*>(this->destine);
+        auto source = static_cast<charater_constant<char>*>(this->source);
+
+        char inst[5];
+        inst[0] = 0b11000110;//1)opecode
+        inst[1] = 0;
+        inst[1] += 0b00;//mod
+        inst[1] = inst[1] << 3; //000
+        inst[1] = inst[1] << 3;
+        inst[1] += 0b110;//r/m
+        short& mem = (short&)inst[2];
+        mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
+        inst[4] = source->value;
+
+        out.write(inst,5);
     }
 
 
