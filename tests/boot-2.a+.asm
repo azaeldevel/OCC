@@ -112,6 +112,7 @@ int main()
 	
 	mov bx, [ 0x2390 ];
 	mov ss, [ 0x2390 ];
+	mov [ 0x2395 ], ss;
 	
 	return 0;
 }

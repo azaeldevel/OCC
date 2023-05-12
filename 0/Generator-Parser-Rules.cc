@@ -462,7 +462,7 @@ namespace oct::cc::v0::tools
             }
             {//acumulator to memory
             }
-            {
+            {//register/memory to segment
             out << "\t|\n";
             out << "\tMOV segments ',' registers_16b ';'\n";
             out << "\t{\n";
@@ -497,6 +497,8 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv->is_instruction = true;\n";
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
+            }
+            {//segment to register/memory
             out << "\t|\n";
             out << "\tMOV registers_16b ',' segments ';'\n";
             out << "\t{\n";
@@ -511,6 +513,23 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv->word_size = 16;\n";
                 out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
                 out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::register_segment;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV '[' memory ']' ',' segments ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' registers_16b ';'\\n\";\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tdestine = $3;\n";
+                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tsource->token = $6;\n";
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = source;\n";
+                out << "\t\tmv->word_size = 16;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::memory_segment;\n";
                 out << "\t\tmv->is_instruction = true;\n";
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
