@@ -111,6 +111,7 @@ int main()
 	mov [ 0x2391 ], 'a';
 	
 	mov bx, [ 0x2390 ];
+	mov ss, [ 0x2390 ];
 	
 	return 0;
 }
