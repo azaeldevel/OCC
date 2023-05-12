@@ -95,8 +95,14 @@ int main()
 	mov dh, al;
 	mov dl, ah;
 	
+	mov ax,12345;
+	mov bx,0;
+	mov cx,0;
+	mov dx,0;
+	
 	//mov dx, [ bx + si ];	
 	//mov dx, [ bp + si ];	
+	mov [ 0x2369 ], ax;
 	mov cx, [ 0x2369 ];
 	
 	return 0;
