@@ -54,6 +54,7 @@ namespace oct::core::v3
             }
         }
 
+        /*
         template<typename T> T* create()
         {
             //std::cout << "Block::create begin\n";
@@ -72,6 +73,39 @@ namespace oct::core::v3
             actual = (void*)newptr;
             //std::cout << "Block::create end\n";
             return new(now) T;
+        }
+        */
+        void* create(size_t s)
+        {
+            //std::cout << "Block::create begin\n";
+            if((long)actual >= (long)page_size)
+            {
+                //std::cout << "Block::create malloc\n";
+                actual = malloc(page_size);
+                blocks.push_back(actual);
+            }
+            void* now = actual;
+            char* newptr = reinterpret_cast<char*>(actual);
+            //std::cout << "Block::create actual : " << (long)actual << "\n";
+            newptr += s + 1;
+            //std::cout << "Block::create newptr : " << (long)newptr << "\n";
+            //std::cout << "Block::create sizeof(T) : " << sizeof(T) << "\n";
+            actual = (void*)newptr;
+            //std::cout << "Block::create end\n";
+            return now;
+        }
+        template<typename T> T* create()
+        {
+            return new(create(sizeof(T))) T;
+        }
+        template<typename T, size_t S> T* create()
+        {
+            T* arr = (T*)create(sizeof(T) * S);
+            for(size_t i = 0; i < S; i++)
+            {
+                new (&arr[i]) T;
+            }
+            return arr;
         }
     protected:
         size_t page_size;

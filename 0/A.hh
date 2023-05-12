@@ -530,7 +530,7 @@ namespace oct::cc::v0::AI
         {
             virtual void print(std::ostream& out) const = 0;
         };
-        template<integer_type T> class constant_integer : public constant
+        template<integer_type T = integer> class constant_integer : public constant
         {
         public:
 
@@ -616,6 +616,7 @@ namespace oct::cc::v0::AI
                 segment_register,
                 register_segment,
                 register_register,
+                register_memory,
             };
 
             operands_type op_type;
@@ -642,6 +643,13 @@ namespace oct::cc::v0::AI
         };
 
 
+        struct Memory : public statement
+        {
+            Node* address;
+            unsigned char mod,rm;
+
+            void set(unsigned char mod, unsigned char rm,core_here::Block& );
+        };
 
 
 
