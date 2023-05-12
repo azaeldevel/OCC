@@ -416,7 +416,43 @@ namespace nodes
             break;
         }
     }
+    const char* Memory::to_string() const
+    {
+        switch(mod)
+        {
+        case 0:
+            switch(rm)
+            {
+            case 0:
+                return "[ BX + SI ]";
+            case 1:
+                return "[ BX + DI ]";
+            case 2:
+                return "[ BP + SI ]";
+            case 3:
+                return "[ BP + DI ]";
+            case 4:
+                return "[ SI ]";
+            case 5:
+                return "[ DI ]";
+                break;
+            case 6:
+                return "[ driect address ]";
+            case 7:
+                return "[ BX ]";
+            }
+        case 1:
+            return "Unknow";
+        case 2:
+            return "Unknow";
+        case 3:
+            return "Unknow";
+        default:
+            return "Unknow";
+        }
 
+        return "Unknow";
+    }
 
 
 

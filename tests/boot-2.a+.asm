@@ -105,6 +105,9 @@ int main()
 	mov [ 0x2369 ], ax;
 	mov cx, [ 0x2369 ];
 	
+	mov [ 0x2380 ], 0x1234;
+	mov dx, [ 0x2380 ];
+	
 	return 0;
 }
 

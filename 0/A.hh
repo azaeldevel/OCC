@@ -619,12 +619,13 @@ namespace oct::cc::v0::AI
                 register_memory,
                 segment_memory,
                 memory_register,
+                memory_integer,
+                memory_char,
             };
 
             operands_type op_type;
             Node* destine;
             Node* source;
-
         };
 
         struct Interruption : public instruction
@@ -651,6 +652,8 @@ namespace oct::cc::v0::AI
             unsigned char mod,rm;
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
+
+            const char* to_string() const;
         };
 
 
@@ -770,6 +773,7 @@ namespace oct::cc::v0::AI
                     void generate_8b_register_register(std::ostream&) const;
                     void generate_16b_register_memory(std::ostream&) const;
                     void generate_16b_memory_register(std::ostream&) const;
+                    void generate_16b_memory_integer(std::ostream&) const;
                 };
                 struct Interruption : nodes::Interruption
                 {

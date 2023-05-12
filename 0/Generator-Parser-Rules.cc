@@ -305,6 +305,7 @@ namespace oct::cc::v0::tools
             out << "\t;\n\n";
 
         out << "move :\n";
+            {//1) register/memory to/from register
             out << "\tMOV registers_8b ',' registers_8b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' registers_16b ';'\\n\";\n";
@@ -358,7 +359,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV '[' memory ']' ',' registers_16b ';'\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tdestine = $3;\n";
@@ -372,6 +373,43 @@ namespace oct::cc::v0::tools
                 out << "\t\tmv->is_instruction = true;\n";
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
+            }
+            {//2) inmediate to resgister/memory
+            out << "\t|\n";
+            out << "\tMOV '[' memory ']' ',' constant_integer ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tdestine = $3;\n";
+                //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                //out << "\t\tsource->token = $6;\n";
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = $6;\n";
+                out << "\t\tmv->word_size = 16;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::memory_integer;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV '[' memory ']' ',' CONSTANT_CHAR ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tdestine = $3;\n";
+                //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                //out << "\t\tsource->token = $6;\n";
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = $6;\n";
+                out << "\t\tmv->word_size = 8;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::memory_char;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
+            out << "\t}\n";
+            }
             out << "\t|\n";
             out << "\tMOV registers_8b ',' constant_integer ';'\n";
             out << "\t{\n";
