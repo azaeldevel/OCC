@@ -31,6 +31,11 @@ namespace oct::cc::v0::tools
             out << "\"ss\"	        return SS;\n";
             out << "\"ds\"	        return DS;\n";
 
+            out << "\"si\"	        return SI;\n";
+            out << "\"di\"	        return DI;\n";
+            out << "\"bp\"	        return BP;\n";
+            out << "\"sp\"	        return SP;\n";
+
             out << "\"mov\"         return MOV;\n";
             out << "\"ret\"	        return RET;\n";
             out << "\"iret\"	    return IRET;\n";

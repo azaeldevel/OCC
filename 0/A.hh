@@ -617,6 +617,7 @@ namespace oct::cc::v0::AI
                 register_segment,
                 register_register,
                 register_memory,
+                segment_memory,
             };
 
             operands_type op_type;
@@ -766,6 +767,7 @@ namespace oct::cc::v0::AI
                     void generate_16b_fill_segment(char& ,Token<Tokens>*) const;
                     void generate_16b_register_register(std::ostream&) const;
                     void generate_8b_register_register(std::ostream&) const;
+                    void generate_16b_register_memory(std::ostream&) const;
                 };
                 struct Interruption : nodes::Interruption
                 {

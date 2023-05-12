@@ -74,6 +74,55 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 out << "\n\tmov " << register_to_string(destine->token) << " " << register_to_string(source->token);
             }
             break;
+            case operands_type::register_memory:
+            {
+                //out << "operands_type::segment_register\n";
+                auto destine = static_cast<Token<Tokens>*>(this->destine);
+                auto source = static_cast<Memory*>(this->source);
+                out << "\n\tmov " << register_to_string(destine->token) << ", ";
+                switch(source->mod)
+                {
+                case 0:
+                    switch(source->rm)
+                    {
+                    case 0:
+                        out << " [ BX + SI ]";
+                        break;
+                    case 1:
+                        out << " [ BX + DI ]";
+                        break;
+                    case 2:
+                        out << " [ BP + SI ]";
+                        break;
+                    case 3:
+                        out << " [ BP + DI ]";
+                        break;
+                    case 4:
+                        out << " [ SI ]";
+                        break;
+                    case 5:
+                        out << " [ DI ]";
+                        break;
+                    case 6:
+                        out << " [ driect address ]";
+                        break;
+                    case 7:
+                        out << " [ BX ]";
+                        break;
+                    }
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                }
+            }
+            break;
         default:
             ;//error
         }
@@ -112,6 +161,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
             case operands_type::register_register:
                 generate_16b_register_register(out);
+                break;
+            case operands_type::register_memory:
+                generate_16b_register_memory(out);
                 break;
             default:
                 ;
@@ -328,6 +380,27 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         generate_8b_fill_register(inst[1],source);
         generate_8b_fill_register(inst[1],destine);
         out.write(inst,2);
+    }
+    void Move::generate_16b_register_memory(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Memory*>(this->source);
+
+        char inst[4];
+        inst[0] = 0b10001011;//1)opecode
+        inst[1] = 0;
+        inst[1] += 0b00;//mod
+
+        generate_16b_fill_register(inst[1],destine);
+
+        inst[1] = inst[1] << 3;
+        inst[1] += 0b110;//r/m
+
+
+        short& mem = (short&)inst[2];
+        mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
+
+        out.write(inst,4);
     }
 
 
