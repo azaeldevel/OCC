@@ -145,6 +145,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             case operands_type::memory_char:
                 generate_8b_memory_char(out);
                 break;
+            case operands_type::register_memory:
+                generate_8b_register_memory(out);
+                break;
             default:
                 ;
             }
@@ -414,6 +417,66 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
 
         out.write(inst,get_size_memory());
+    }
+    void Move::generate_8b_register_memory(std::ostream& out)const
+    {
+        auto destine = static_cast<Token<Tokens>*>(this->destine);
+        auto source = static_cast<Memory*>(this->source);
+
+        char inst[get_size_memory()];
+        inst[0] = 0b10001010;//1)opecode
+        inst[1] = 0;
+        inst[1] += 0b00;//mod
+
+        generate_8b_fill_register(inst[1],destine);
+        generate_16b_fill_memory(inst[1],source);
+
+        //short& mem = (short&)inst[2];
+        //mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
+
+        out.write(inst,get_size_memory());
+    }
+    void Move::generate_16b_fill_memory(char& data,const Memory* m) const
+    {
+        switch(m->rm)//reg
+        {
+        case 0:
+            data = data << 3;
+            break;
+        case 1:
+            data = data << 3;
+            data = data + 0b001;
+            break;
+        case 2:
+            data = data << 3;
+            data = data + 0b010;
+            break;
+        case 3:
+            data = data << 3;
+            data = data + 0b011;
+            break;
+        case 4:
+            data = data << 3;
+            data = data + 0b100;
+            break;
+        case 5:
+            data = data << 3;
+            data = data + 0b101;
+            break;
+        case 6:
+            data = data << 3;
+            data = data + 0b110;
+            break;
+        case 7:
+            data = data << 3;
+            data = data + 0b111;
+            break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
     }
     void Move::generate_16b_memory_register(std::ostream& out)const
     {

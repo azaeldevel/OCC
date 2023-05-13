@@ -357,6 +357,23 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
+            out << "\tMOV registers_8b ',' '[' memory ']' ';'\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
+                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
+                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tdestine->token = $2;\n";
+                out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tsource = $5;\n";
+                out << "\t\tmv->destine = destine;\n";
+                out << "\t\tmv->source = source;\n";
+                out << "\t\tmv->word_size = 8;\n";
+                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
+                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::register_memory;\n";
+                out << "\t\tmv->is_instruction = true;\n";
+                out << "\t\t$$ = mv;\n";
+            out << "\t}\n";
+            out << "\t|\n";
             out << "\tMOV '[' memory ']' ',' registers_16b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
@@ -1028,6 +1045,12 @@ namespace oct::cc::v0::tools
     void Parser::rules_translation_unit_AI(std::ostream& out) const
     {
         out << "declaration_list :\n";
+            out << "\t\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"declaration\";\n";
+                out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
             out << "\tdeclaration\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";

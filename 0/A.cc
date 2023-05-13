@@ -73,6 +73,10 @@ namespace nodes
             case Tokens::DL : return "DL";
             case Tokens::DH : return "DH";
             case Tokens::DX : return "DX";
+            case Tokens::SP : return "SP";
+            case Tokens::BP : return "BP";
+            case Tokens::SI : return "SI";
+            case Tokens::DI : return "DI";
             default:
                 return "unknow";
         }
@@ -357,7 +361,9 @@ namespace nodes
         case operands_type::register_register:
             return 2;
         case operands_type::register_memory:
-            return 4;
+            if(word_size == 8) return 2;
+            else if(word_size == 16) return 4;
+            return 0;
         case operands_type::memory_register:
             return 4;
         case operands_type::memory_integer:
