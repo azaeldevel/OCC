@@ -3,7 +3,6 @@ char actual 'A';
 char actual2 ;
 short counter 0;
 long valor2 5;
-byte test 1;
 int flag2 1598;
 
 

@@ -516,10 +516,11 @@ namespace oct::cc::v0::AI
         {
             Tokens inst;
             unsigned char word_size;
-            unsigned char size_instruction;
 
             virtual void generate(std::ostream& ) const = 0;
             virtual void print(std::ostream&) const = 0;
+
+            virtual size_t get_size_memory()const;
         };
 
 
@@ -628,12 +629,13 @@ namespace oct::cc::v0::AI
             Node* destine;
             Node* source;
 
-            size_t get_size_memory()const;
+            virtual size_t get_size_memory()const;
         };
 
         struct Interruption : public instruction
         {
             constant_integer<integer>* service;
+            virtual size_t get_size_memory()const;
         };
 
         struct Label : public instruction
@@ -646,6 +648,7 @@ namespace oct::cc::v0::AI
         */
         struct Return : public instruction
         {
+            virtual size_t get_size_memory()const;
         };
 
 
@@ -848,10 +851,17 @@ namespace oct::cc::v0::AI
         size_t get_size_of(Tokens) const;
         Tokens get_data_type(nodes::declaration*) const;
 
+        /**
+        *\brief Generara las direcciones como estaran finalmente en el archivo objeto,¿no ejecutalbe?
+        **/
+        void generate_memory();
+
+        void print() const;
+
     protected:
 
     private:
-        size_t last_id,last_memory_varibale,last_memory_function;
+        size_t last_id;
 
         /**
         *\brief
@@ -859,6 +869,7 @@ namespace oct::cc::v0::AI
         **/
         bool add(nodes::Node*);
 
+        nodes::function* input_funtion;
     };
 
     template<class UNIT>

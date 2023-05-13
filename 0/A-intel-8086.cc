@@ -541,9 +541,11 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
     void Return::generate(std::ostream& out) const
     {
+        char instruction = 0b11000011;
+		out.write(&instruction,1);
     }
     void Return::print(std::ostream& out) const
     {
-        //out << "void Return::print(std::ostream& out) const\n";
+        out << "ret\n";
     }
 }

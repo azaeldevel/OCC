@@ -198,27 +198,9 @@ int main (int argc, char* argv[])
         }
 	}
 
-	std::cout << "Size table simbols : " << symbols.size() << "\n" ;
-	unsigned dat1 = 0;
-	AI_here::nodes::declaration* dec;
-	AI_here::nodes::function* fun;
-    for (auto const& [key, val] : symbols)
-    {
-        dat1++;
-        std::cout << dat1 << ".- " << key;
-        if(val->symbol_type == 'D')
-        {
-            dec = (AI_here::nodes::declaration*)val;
-            std::cout << " " << dec->list->dec->direct->id->number << " " << dec->list->dec->direct->id->memory << "\n";
-        }
-        else if(val->symbol_type == 'F')
-        {
-            fun = (AI_here::nodes::function*)val;
-            std::cout << " " << fun->id->number << " " << fun->id->memory << "\n";
-        }
+	symbols.generate_memory();
+    symbols.print();
 
-        std::cout << "\n";
-    }
     //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";
     //std::cout << "sizeof(signed) = " << sizeof(signed) << "\n";
 

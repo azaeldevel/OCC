@@ -40,8 +40,8 @@ namespace oct::cc::v0::tools
             out << "\"ret\"	        return RET;\n";
             out << "\"iret\"	    return IRET;\n";
 
-            out << "\"byte\"		return BYTE;\n";
-            out << "\"tiny\"		return TINY;\n";
+            //out << "\"byte\"		return BYTE;\n";
+            //out << "\"tiny\"		return TINY;\n";
         }
 
 

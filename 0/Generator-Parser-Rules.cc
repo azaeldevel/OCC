@@ -912,7 +912,7 @@ namespace oct::cc::v0::tools
                 //$$->next = NULL;
                 //std::cout << "type_specifier\n";
             out << "\t}\n";
-            if(is_disnastic_A())
+            /*if(is_disnastic_A())
             {
                 out << "\t|\n";
                 out << "\tBYTE\n";
@@ -926,7 +926,7 @@ namespace oct::cc::v0::tools
                     out << "\t\t$$ = tray->block.create<AI_here::nodes::type_specifier>();\n";
                     out << "\t\t$$->type = AI_here::Tokens::TINY;\n";
                 out << "\t}\n";
-            }
+            }*/
             out << "\t|\n";
             out << "\tSHORT\n";
             out << "\t{\n";
@@ -1066,7 +1066,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"function\";\n";
                 out << "\t\t$$ = $1;\n";
-                out << "\t\ttray->symbols->add((AI_here::nodes::function*)$1);\n";
+                out << "\t\ttray->symbols->add($1);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tfunction_list function\n";
@@ -1077,7 +1077,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
-                out << "\t\ttray->symbols->add((AI_here::nodes::function*)$2);\n";
+                out << "\t\ttray->symbols->add($2);\n";
             out << "\t}\n";
             out << "\t;\n";
 

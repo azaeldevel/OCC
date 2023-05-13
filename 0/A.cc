@@ -25,6 +25,7 @@
 #include <core/3/Exception.hh>
 #include <core/3/math.hh>
 #include <limits>
+#include <cstring>
 
 
 #include "A.hh"
@@ -332,6 +333,11 @@ namespace nodes
     }
 
 
+    size_t instruction::get_size_memory()const
+    {
+        return 0;
+    }
+
 
     size_t Move::get_size_memory()const
     {
@@ -369,6 +375,19 @@ namespace nodes
         }
 
         return 0;
+    }
+
+
+    size_t Interruption::get_size_memory()const
+    {
+        return 2;
+    }
+
+
+
+    size_t Return::get_size_memory()const
+    {
+        return 1;
     }
 
 
@@ -691,7 +710,7 @@ namespace nodes
                         ((Interruption*)inst)->generate(out);
                         break;
                     case Tokens::RET :
-                        ;
+                        ((intel::i8086::Return*)inst)->generate(out);
                         break;
                     default:
                         ;
@@ -702,28 +721,32 @@ namespace nodes
     }
     bool function::semantic()
     {
+        //std::cout << "bool function::semantic()\n";
         id->size = 0;
-        statement* inst = (statement*)body_list;
-        while(inst)
+        statement* stmt = (statement*)body_list;
+        instruction* inst = NULL;
+        while(stmt)
         {
-            if(inst->is_instruction)
+            if(stmt->is_instruction)
             {
-                switch(((instruction*)inst)->inst)
+                inst = ((instruction*)stmt);
+                switch(inst->inst)
                 {
                     case Tokens::MOV :
                         id->size += ((Move*)inst)->get_size_memory();
+                        //std::cout << "id->size = " << id->size << "\n";
                         break;
                     case Tokens::INT :
-
+                        id->size += ((Interruption*)inst)->get_size_memory();
                         break;
                     case Tokens::RET :
-
+                        id->size += ((intel::i8086::Return*)inst)->get_size_memory();
                         break;
                     default:
                         core_here::exception("Instruccion desconocida");
                 }
             }
-            inst = (statement*)inst->next;
+            stmt = (statement*)stmt->next;
         }
 
         return true;
@@ -825,7 +848,7 @@ namespace nodes
 
 }
 
-    SymbolTable::SymbolTable() : last_id(1),last_memory_varibale(1),last_memory_function(0)
+    SymbolTable::SymbolTable() : last_id(1)
     {
     }
 
@@ -843,8 +866,8 @@ namespace nodes
         if(it != end())
         {
             id->size = get_size_of(get_data_type(d));
-            id->memory = last_memory_varibale;
-            last_memory_varibale += id->size + 1;//siguiente valor disponible
+            //id->memory = last_memory_varibale;
+            //last_memory_varibale += id->size + 1;//siguiente valor disponible
             id->number = last_id++;
             d->symbol_type = 'D';
             return true;
@@ -859,7 +882,9 @@ namespace nodes
     bool SymbolTable::add(nodes::function* f)
     {
         nodes::identifier* id = f->id;
-
+        //std::cout << "bool SymbolTable::add(nodes::function* f)\n";
+        //std::cout << "Function : " << id->string << "\n";
+        //std::cout << "Function size : " << id->size << "\n";
         std::map<const char*,nodes::Node*>::iterator it;
         it = find(id->string.c_str());
         if(it != end()) return false;
@@ -869,9 +894,9 @@ namespace nodes
         it = find(id->string.c_str());
         if(it != end())
         {
-            id->size = 1;//asignar durante el analisis semantica
-            id->memory = last_memory_function;
-            last_memory_function += id->size + 1;//asignar durante el analisis semantica
+            //id->size = 0;
+            //id->memory = 0;
+            //last_memory_function += id->size + 1;//asignar durante el analisis semantica
             id->number = last_id++;
             f->symbol_type = 'F';
             return true;
@@ -879,8 +904,6 @@ namespace nodes
 
         return false;
     }
-
-
     size_t SymbolTable::get_size_of(Tokens tk) const
     {
         switch(tk)
@@ -906,7 +929,6 @@ namespace nodes
         }
         return 0;
     }
-
     Tokens SymbolTable::get_data_type(nodes::declaration* d) const
     {
         nodes::type_specifier* spec = d->specifiers;
@@ -946,6 +968,72 @@ namespace nodes
             spec = (nodes::type_specifier*)spec->next;
         }
         return Tokens::VOID;
+    }
+    void SymbolTable::generate_memory()
+    {
+        size_t memory_pointer = 511;
+        size_t last_memory_function = 0;
+        std::map<const char*,nodes::Node*>::iterator it;
+        it = find("main");
+        if(it != end())
+        {
+            input_funtion = (AI_here::nodes::function*)it->second;
+            input_funtion->id->memory = 0;
+            last_memory_function += input_funtion->id->size + 1;
+        }
+        else
+        {
+            input_funtion = NULL;
+        }
+
+        AI_here::nodes::declaration* dec;
+        AI_here::nodes::function* fun;
+        for (auto const& [key, val] : *this)
+        {
+            if(last_memory_function >= memory_pointer)
+            {
+                std::cerr << "Sobrecarga de memoria: no hay espacio sufucentes para el programa.\n";
+                return;
+            }
+
+            if(val->symbol_type == 'D')
+            {
+                dec = (AI_here::nodes::declaration*)val;
+                memory_pointer -= dec->list->dec->direct->id->size;
+                dec->list->dec->direct->id->memory = memory_pointer;
+            }
+            else if(val->symbol_type == 'F')
+            {
+                //if(strcmp(key, "main") == 0) continue;
+                fun = (AI_here::nodes::function*)val;
+                fun->id->memory = last_memory_function;
+                last_memory_function += fun->id->size + 1;
+            }
+        }
+    }
+    void SymbolTable::print() const
+    {
+        std::cout << "Size table simbols : " << size() << "\n" ;
+        unsigned dat1 = 0;
+        AI_here::nodes::declaration* dec;
+        AI_here::nodes::function* fun;
+        for (auto const& [key, val] : *this)
+        {
+            dat1++;
+            std::cout << dat1 << ".- " << key;
+            if(val->symbol_type == 'D')
+            {
+                dec = (AI_here::nodes::declaration*)val;
+                std::cout << " " << dec->list->dec->direct->id->number << " " << dec->list->dec->direct->id->memory << " size : " << dec->list->dec->direct->id->size;
+            }
+            else if(val->symbol_type == 'F')
+            {
+                fun = (AI_here::nodes::function*)val;
+                std::cout << " " << fun->id->number << " " << fun->id->memory << " size : " << fun->id->size;
+            }
+
+            std::cout << "\n";
+        }
     }
 
 }
