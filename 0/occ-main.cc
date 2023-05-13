@@ -105,12 +105,13 @@ int main (int argc, char* argv[])
 		std::cout << "Indique almenos un archivo para compilar.";
 		return EXIT_FAILURE;
 	}
-
 	if(output_file.empty())
 	{
 		std::cerr << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
 	}
+
+
 	outstream.open(output_file, std::ios_base::out | std::ios_base::binary);
     if(not outstream.is_open())
     {
@@ -120,7 +121,7 @@ int main (int argc, char* argv[])
 
     if(target_cpu == cc_here::CPU::intel_8086)
     {
-        std::cout << "Compilando para intel 8086\n";
+        std::cout << "Compilando " << output_file << " para intel 8086\n";
     }
     else
     {
@@ -168,7 +169,7 @@ int main (int argc, char* argv[])
                 driverI.generate(outstream);
                 outstream.flush();
                 outstream.close();
-                std::cout << "\n\nCompletdo.\n";
+                std::cout << "\nCompletdo.\n";
             }
         }
         else if(extension(path,".a+.asm"))
@@ -183,12 +184,12 @@ int main (int argc, char* argv[])
                 const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
                 //driverII.print(std::cout);
-                if(tree) driverI.print(std::cout,tree);
+                //if(tree) driverI.print(std::cout,tree);
                 //std::cout << "Generating ...\n";
                 if(tree) driverI.generate(outstream,tree);
                 outstream.flush();
                 outstream.close();
-                std::cout << "\n\nCompletdo.\n";
+                std::cout << "\nCompletdo.\n";
             }
         }
         else
@@ -199,7 +200,7 @@ int main (int argc, char* argv[])
 	}
 
 	symbols.generate_memory();
-    symbols.print();
+    //symbols.print();
 
     //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";
     //std::cout << "sizeof(signed) = " << sizeof(signed) << "\n";
