@@ -41,6 +41,20 @@ namespace oct::cc::v0
 	    intel_8086,
         arduino,
 	};
+	enum class Environment
+	{
+	    none,
+	    freestanding,
+	    freestanding_boot,
+	    hosted
+	};
+	enum class OutputType
+	{
+        none,
+        runnable,
+        static_library,
+        dinamic_library,
+	};
 
 	class Driver
     {

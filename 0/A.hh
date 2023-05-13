@@ -480,6 +480,7 @@ namespace oct::cc::v0::AI
         struct Node
         {
             Node* next;
+            char symbol_type;//data para la tabla de simbolos: Declaration,Funtion,Space
 
             Node();
         };
@@ -494,13 +495,11 @@ namespace oct::cc::v0::AI
             T token;
         };
 
-
         struct identifier : public Node
         {
-            int number;
             std::string string;
             int line;
-            unsigned int memory;
+            size_t number, size, memory;
         };
 
         struct statement : public Node
@@ -517,6 +516,7 @@ namespace oct::cc::v0::AI
         {
             Tokens inst;
             unsigned char word_size;
+            unsigned char size_instruction;
 
             virtual void generate(std::ostream& ) const = 0;
             virtual void print(std::ostream&) const = 0;
@@ -627,6 +627,8 @@ namespace oct::cc::v0::AI
             operands_type op_type;
             Node* destine;
             Node* source;
+
+            size_t get_size_memory()const;
         };
 
         struct Interruption : public instruction
@@ -737,7 +739,7 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
 
-            bool semantic()const;
+            bool semantic();
         };
 
 
@@ -748,6 +750,8 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
+
+            bool semantic();
         };
 
         namespace intel
@@ -761,8 +765,8 @@ namespace oct::cc::v0::AI
                     virtual void generate(std::ostream&) const;
                 private:
                     //void generate_8b_inmediate(std::ostream&) const;//source inmediate
-                    void generate_reg_char(std::ostream&) const;
-                    void generate_reg_integer(std::ostream&) const;
+                    void generate_8b_register_char(std::ostream&) const;
+                    void generate_8b_register_integer(std::ostream&) const;
                     void generate_segment_register(std::ostream&) const;
                     void generate_register_segment(std::ostream&) const;
                     void generate_16b_register_integer(std::ostream&) const;
@@ -813,7 +817,7 @@ namespace oct::cc::v0::AI
 
 
 
-    struct space : public nodes::Node, std::map<const char*,const nodes::Node*>
+    struct space : public nodes::Node, std::map<const char*,nodes::Node*>
     {
         nodes::identifier* name;
     };
@@ -821,14 +825,39 @@ namespace oct::cc::v0::AI
     class SymbolTable : public space
     {
     public:
-        void add(const nodes::declaration*);
-        //void add(nodes::declarator*);
-        void add(const space*);
-        void add(const nodes::function*);
+        SymbolTable();
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        bool add(nodes::declaration*);
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        void add(space*);
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        bool add(nodes::function*);
+
+        size_t get_size_of(Tokens) const;
+        Tokens get_data_type(nodes::declaration*) const;
 
     protected:
 
     private:
+        size_t last_id,last_memory_varibale,last_memory_function;
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        bool add(nodes::Node*);
 
     };
 
@@ -836,7 +865,7 @@ namespace oct::cc::v0::AI
     struct Tray
     {
         core_here::Block block;
-        SymbolTable symbols;
+        SymbolTable* symbols;
         UNIT* unit;
     };
 

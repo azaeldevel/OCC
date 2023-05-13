@@ -24,7 +24,7 @@ public:
 	virtual bool parse(const std::filesystem::path& sources);
 	virtual void print(std::ostream&)const;
 	virtual void print(std::ostream&,const nodes::translation_unit*)const;
-	virtual bool semantic()const;
+	virtual bool semantic();
 	virtual void generate(std::ostream&)const;
 	virtual void generate(std::ostream&,const nodes::translation_unit*)const;
 

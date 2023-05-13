@@ -40,23 +40,59 @@ bool extension(const std::filesystem::path& path, const std::string& ext)
 
 namespace AII_here = oct::cc::v0::AII;
 namespace AI_here = oct::cc::v0::AI;
+namespace cc_here = oct::cc::v0;
 
 int main (int argc, char* argv[])
 {
     std::fstream outstream;
-    std::filesystem::path outpath;
+    std::filesystem::path output_file;
     std::list<std::filesystem::path> inputs;
     core_here::Block block;
+    std::string target_cpu_str,environment_str;
+    cc_here::CPU target_cpu;
+    cc_here::Environment environment;
 
 	for(size_t i = 0; i < (size_t)argc; i++)
 	{
-		if(strcmp(argv[i],"--output") == 0)
+		if(strcmp(argv[i],"--output-file") == 0)
 		{
-			outpath = argv[++i];
+			output_file = argv[++i];
+		}
+		else if(strcmp(argv[i] , "--target-cpu") == 0)
+		{
+		    target_cpu_str = argv[++i];
+			if(target_cpu_str.compare("intel-8086") == 0)
+            {
+                target_cpu = cc_here::CPU::intel_8086;
+            }
+            else
+            {
+                target_cpu = cc_here::CPU::none;
+            }
+		}
+		else if(strcmp(argv[i] , "--environment") == 0)
+		{
+		    environment_str = argv[++i];
+			if(environment_str.compare("freestanding") == 0)
+            {
+                environment = cc_here::Environment::freestanding;
+            }
+            else if(environment_str.compare("freestanding-boot") == 0)
+            {
+                environment = cc_here::Environment::freestanding_boot;
+            }
+            else
+            {
+                environment = cc_here::Environment::none;
+            }
+		}
+		else if(strcmp(argv[i] , "--output-type") == 0)
+		{
+
 		}
 		else if(argv[i][0] == '-')
 		{
-			std::cout << "Comando desconocido\n";
+			std::cout << "Comando desconocido \"" <<  argv[i] << "\" \n";
 		}
 		else
 		{//posibles archivos input
@@ -70,20 +106,42 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 
-	if(outpath.empty())
+	if(output_file.empty())
 	{
 		std::cerr << "Indique el archivo de resultado.";
 		return EXIT_FAILURE;
 	}
-	outstream.open(outpath, std::ios_base::out | std::ios_base::binary);
+	outstream.open(output_file, std::ios_base::out | std::ios_base::binary);
     if(not outstream.is_open())
     {
 		std::cerr << "Fallo al abrir el archivo de resultado.";
 		return EXIT_FAILURE;
     }
 
+    if(target_cpu == cc_here::CPU::intel_8086)
+    {
+        std::cout << "Compilando para intel 8086\n";
+    }
+    else
+    {
+        std::cerr << "Deve indicar el CPU objetivo";
+		return EXIT_FAILURE;
+    }
+    if(environment == cc_here::Environment::freestanding or environment == cc_here::Environment::freestanding_boot )
+    {
+        std::cout << "Working on free-standing\n";
+    }
+    else
+    {
+        std::cerr << "Deve indicar el ambiente";
+		return EXIT_FAILURE;
+    }
+
+    AI_here::SymbolTable symbols;
 	AI_here::Tray<AI_here::nodes::translation_unit> trayI;
 	AI_here::Tray<AII_here::nodes::external_declaration> trayII;
+	trayI.symbols = &symbols;
+	trayII.symbols = &symbols;
     AI_here::Driver driverI(trayI);
 	AII_here::Driver driverII(trayII);
 	for(const std::filesystem::path& path : inputs)
@@ -105,7 +163,7 @@ int main (int argc, char* argv[])
 
                 }
                 //std::cout << "Printing ...\n";
-                driverI.print(std::cout);
+                //driverI.print(std::cout);
                 //std::cout << "Generating ...\n";
                 driverI.generate(outstream);
                 outstream.flush();
@@ -140,10 +198,29 @@ int main (int argc, char* argv[])
         }
 	}
 
-    /*for (auto const& [key, val] : trayI.symbols)
+	std::cout << "Size table simbols : " << symbols.size() << "\n" ;
+	unsigned dat1 = 0;
+	AI_here::nodes::declaration* dec;
+	AI_here::nodes::function* fun;
+    for (auto const& [key, val] : symbols)
     {
-        std::cout << key << "->" << val << "\n";
-    }*/
+        dat1++;
+        std::cout << dat1 << ".- " << key;
+        if(val->symbol_type == 'D')
+        {
+            dec = (AI_here::nodes::declaration*)val;
+            std::cout << " " << dec->list->dec->direct->id->number << " " << dec->list->dec->direct->id->memory << "\n";
+        }
+        else if(val->symbol_type == 'F')
+        {
+            fun = (AI_here::nodes::function*)val;
+            std::cout << " " << fun->id->number << " " << fun->id->memory << "\n";
+        }
+
+        std::cout << "\n";
+    }
+    //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";
+    //std::cout << "sizeof(signed) = " << sizeof(signed) << "\n";
 
 	return EXIT_SUCCESS;
 }

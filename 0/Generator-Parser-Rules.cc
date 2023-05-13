@@ -837,10 +837,9 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::declaration>();\n";
                 out << "\t\t$$->specifiers = $1;\n";
                 out << "\t\t$$->list = $2;\n";
-                out << "\t\ttray->symbols.add($$);\n";
+                out << "\t\ttray->symbols->add($$);\n";
             out << "\t}\n";
             out << "\t;\n";
-
         out << "declaration_specifiers :\n";
             out << "\ttype_specifier\n";
             out << "\t{\n";
@@ -1067,6 +1066,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"function\";\n";
                 out << "\t\t$$ = $1;\n";
+                out << "\t\ttray->symbols->add((AI_here::nodes::function*)$1);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tfunction_list function\n";
@@ -1077,6 +1077,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
                 out << "\t\tstatement_prev->next = $2;\n";
                 out << "\t\tstatement_prev = $2;\n";
+                out << "\t\ttray->symbols->add((AI_here::nodes::function*)$2);\n";
             out << "\t}\n";
             out << "\t;\n";
 

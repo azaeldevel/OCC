@@ -134,10 +134,10 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             switch(op_type)
             {
             case operands_type::regiter_integer:
-                generate_reg_integer(out);
+                generate_8b_register_integer(out);
                 break;
             case operands_type::regiter_char:
-                generate_reg_char(out);
+                generate_8b_register_char(out);
                 break;
             case operands_type::register_register:
                 generate_8b_register_register(out);
@@ -187,39 +187,39 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             ;
         }
     }
-    void Move::generate_reg_integer(std::ostream& out)const
+    void Move::generate_8b_register_integer(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<constant_integer<integer>*>(this->source);
 
-        char instruction[2];
+        char instruction[get_size_memory()];
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;//w = 0;one byte
         generate_8b_fill_register(instruction[0],destine);
         instruction[1] = (char)source->get_value();
         //sstd::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,2);
+        out.write((char*)&instruction,get_size_memory());
     }
-    void Move::generate_reg_char(std::ostream& out)const
+    void Move::generate_8b_register_char(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<charater_constant<char>*>(this->source);
 
-        char instruction[2];
+        char instruction[get_size_memory()];
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;//w = 0;one byte
         generate_8b_fill_register(instruction[0],destine);
         instruction[1] = source->value;
         //std::cout << "Data : '" << source->value << "'\n";
         //std::cout << "Pointer : '" << (void*)source << "'\n";
-        out.write((char*)&instruction,2);
+        out.write((char*)&instruction,get_size_memory());
     }
     void Move::generate_16b_register_integer(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<constant_integer<integer>*>(this->source);
 
-        char instruction[3];
+        char instruction[get_size_memory()];
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;
         instruction[0]++;//w = 1;one byte
@@ -227,35 +227,35 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short *data = (short*)&instruction[1];
         *data = (short)source->get_value();
         //std::cout << (int)instruction[0] << " register-8b integer\n";
-        out.write((char*)&instruction,3);
+        out.write((char*)&instruction,get_size_memory());
     }
     void Move::generate_segment_register(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[2];
+        char inst[get_size_memory()];
         inst[0] = 0b10001110;
         inst[1] = 0;
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],destine);
         generate_16b_fill_register(inst[1],source);
-        out.write(inst,2);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_register_segment(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[2];
+        char inst[get_size_memory()];
         inst[0] = 0b10001100;
         inst[1] = 0;
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],source);
         generate_16b_fill_register(inst[1],destine);
-        out.write(inst,2);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_8b_fill_register(char& data,Token<Tokens>* token) const
     {
@@ -369,7 +369,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[2];
+        char inst[get_size_memory()];
         inst[0] = 0b100010;//1)opecode
         inst[0] = inst[0] << 1;//d? que es?, pero se que deve ser 0
         inst[0] = inst[0] << 1;
@@ -378,14 +378,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] += 0b11;//mod
         generate_16b_fill_register(inst[1],source);
         generate_16b_fill_register(inst[1],destine);
-        out.write(inst,2);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_8b_register_register(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[2];
+        char inst[get_size_memory()];
         inst[0] = 0b100010;//1)opecode
         inst[0] = inst[0] << 1;//d? que es?, pero se que deve ser 0
         inst[0] = inst[0] << 1;// w = 0
@@ -393,14 +393,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] += 0b11;//mod
         generate_8b_fill_register(inst[1],source);
         generate_8b_fill_register(inst[1],destine);
-        out.write(inst,2);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_16b_register_memory(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Memory*>(this->source);
 
-        char inst[4];
+        char inst[get_size_memory()];
         inst[0] = 0b10001011;//1)opecode
         inst[1] = 0;
         inst[1] += 0b00;//mod
@@ -413,14 +413,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
 
-        out.write(inst,4);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_16b_memory_register(std::ostream& out)const
     {
         auto destine = static_cast<Memory*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[4];
+        char inst[get_size_memory()];
         inst[0] = 0b10001001;//1)opecode
         inst[1] = 0;
         inst[1] += 0b00;//mod
@@ -433,7 +433,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
 
-        out.write(inst,4);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_16b_memory_integer(std::ostream& out)const
     {

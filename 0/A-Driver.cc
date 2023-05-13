@@ -57,40 +57,9 @@ namespace oct::cc::v0::AI
         //std::cout << "Generando apartir de arbol semantico\n";
         if(tree) tree->generate(out);
     }
-    bool Driver::semantic() const
+    bool Driver::semantic()
     {
-        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
-        //std::cout << "Step 1\n";
-        const nodes::declaration* dec = tray->unit->declarations;
-        while(dec)
-        {
-            //std::cout << "Step 1.1\n";
-            if(dec->semantic())
-            {
-
-            }
-            //std::cout << "Step 1.2\n";
-            //std::cout << "Step 1.3\n";
-            dec = (const nodes::declaration*)dec->next;
-            //std::cout << "Step 1.4\n";
-        }
-
-        //std::cout << "Step 2\n";
-        const nodes::function* func = tray->unit->functions;
-        while(func)
-        {
-            //std::cout << "Step 1.1\n";
-            if(func->semantic())
-            {
-
-            }
-            //std::cout << "Step 1.2\n";
-            //std::cout << "Step 1.3\n";
-            func = (const nodes::function*)func->next;
-            //std::cout << "Step 1.4\n";
-        }
-
-        return true;
+        return tray->unit->semantic();
     }
 
 }

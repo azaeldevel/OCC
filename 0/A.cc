@@ -117,7 +117,7 @@ namespace nodes
 
 
 
-    Node::Node() : next(NULL)
+    Node::Node() : next(NULL),symbol_type('\n')
     {
     }
 
@@ -332,6 +332,34 @@ namespace nodes
     }
 
 
+
+    size_t Move::get_size_memory()const
+    {
+        switch(op_type)
+        {
+        case operands_type::regiter_integer:
+            if(word_size == 8) return 2;
+            else if(word_size == 16) return 3;
+            return 0;
+        case operands_type::regiter_char:
+            if(word_size == 8) return 2;
+            return 0;
+        case operands_type::segment_register:
+            return 2;
+        case operands_type::register_segment:
+            return 2;
+        case operands_type::register_register:
+            return 2;
+        case operands_type::register_memory:
+            return 4;
+        case operands_type::memory_register:
+            return 4;
+        default:
+            return 0;
+        }
+
+        return 0;
+    }
 
 
 
@@ -662,8 +690,32 @@ namespace nodes
             inst = (statement*)inst->next;
         }
     }
-    bool function::semantic()const
+    bool function::semantic()
     {
+        id->size = 0;
+        statement* inst = (statement*)body_list;
+        while(inst)
+        {
+            if(inst->is_instruction)
+            {
+                id->size += ((instruction*)inst)->size_instruction;
+                switch(((instruction*)inst)->inst)
+                {
+                    case Tokens::MOV :
+
+                        break;
+                    case Tokens::INT :
+
+                        break;
+                    case Tokens::RET :
+
+                        break;
+                    default:
+                        core_here::exception("Instruccion desconocida");
+                }
+            }
+            inst = (statement*)inst->next;
+        }
 
         return true;
     }
@@ -704,33 +756,187 @@ namespace nodes
     void translation_unit::generate(std::ostream& out) const
     {
         //std::cout << "void translation_unit::print(std::ostream& out)const\n";
-        if(functions) functions->generate(out);
+        //std::cout << "Step 1\n";
+        declaration* dec = declarations;
+        while(dec)
+        {
+            //std::cout << "Step 1.1\n";
+            //std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.3\n";
+            dec = (declaration*)dec->next;
+            //std::cout << "Step 1.4\n";
+        }
+
+        //std::cout << "Step 2\n";
+        function* func = functions;
+        while(func)
+        {
+            //std::cout << "Step 1.1\n";
+            func->generate(out);
+            //std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.3\n";
+
+            func = (function*)func->next;
+            //std::cout << "Step 1.4\n";
+        }
+        //std::cout << "Step 3\n";
+    }
+
+    bool translation_unit::semantic()
+    {
+        //std::cout << "void translation_unit::print(std::ostream& out)const\n";
+        //std::cout << "Step 1\n";
+        declaration* dec = declarations;
+        while(dec)
+        {
+            //std::cout << "Step 1.1\n";
+            dec->semantic();
+            //std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.3\n";
+            dec = (declaration*)dec->next;
+            //std::cout << "Step 1.4\n";
+        }
+
+        //std::cout << "Step 2\n";
+        function* func = functions;
+        while(func)
+        {
+            //std::cout << "Step 1.1\n";
+            func->semantic();
+            //std::cout << "Step 1.2\n";
+            //std::cout << "Step 1.3\n";
+
+            func = (function*)func->next;
+            //std::cout << "Step 1.4\n";
+        }
+        //std::cout << "Step 3\n";
+
+        return true;
     }
 
 }
 
-
-    void SymbolTable::add(const nodes::declaration* d)
+    SymbolTable::SymbolTable() : last_id(1),last_memory_varibale(1),last_memory_function(0)
     {
-        insert(std::pair(d->list->dec->direct->id->string.c_str(),d));
     }
 
-    /*
-    void SymbolTable::add(nodes::declarator* d)
+    bool SymbolTable::add(nodes::declaration* d)
     {
-        insert(std::pair(d->direct->id->string.c_str(),d));
-    }
-    */
+        nodes::identifier* id = d->list->dec->direct->id;
 
-    void SymbolTable::add(const space* s)
+        std::map<const char*,nodes::Node*>::iterator it;
+        it = find(id->string.c_str());
+        if(it != end()) return false;
+
+        insert(std::pair<const char*,nodes::Node*>(id->string.c_str(),d));
+
+        it = find(id->string.c_str());
+        if(it != end())
+        {
+            id->size = get_size_of(get_data_type(d));
+            id->memory = last_memory_varibale;
+            last_memory_varibale += id->size + 1;//siguiente valor disponible
+            id->number = last_id++;
+            d->symbol_type = 'D';
+            return true;
+        }
+
+        return false;
+    }
+    void SymbolTable::add(space* s)
     {
         insert(std::pair(s->name->string.c_str(),s));
     }
-
-    void SymbolTable::add(const nodes::function* f)
+    bool SymbolTable::add(nodes::function* f)
     {
-        insert(std::pair(f->id->string.c_str(),f));
+        nodes::identifier* id = f->id;
+
+        std::map<const char*,nodes::Node*>::iterator it;
+        it = find(id->string.c_str());
+        if(it != end()) return false;
+
+        insert(std::pair<const char*,nodes::Node*>(id->string.c_str(),f));
+
+        it = find(id->string.c_str());
+        if(it != end())
+        {
+            id->size = 1;//asignar durante el analisis semantica
+            id->memory = last_memory_function;
+            last_memory_function += id->size + 1;//asignar durante el analisis semantica
+            id->number = last_id++;
+            f->symbol_type = 'F';
+            return true;
+        }
+
+        return false;
     }
 
+
+    size_t SymbolTable::get_size_of(Tokens tk) const
+    {
+        switch(tk)
+        {
+        case Tokens::VOID :
+            return 0;
+        case Tokens::CHAR :
+            return 1;
+        case Tokens::SHORT :
+            return 2;
+        case Tokens::SIGNED:
+        case Tokens::UNSIGNED:
+        case Tokens::INT :
+            return 4;
+        case Tokens::LONG :
+            return 8;
+        case Tokens::FLOAT :
+            return 8;
+        case Tokens::DOUBLE :
+            return 8;
+        default:
+            ;
+        }
+        return 0;
+    }
+
+    Tokens SymbolTable::get_data_type(nodes::declaration* d) const
+    {
+        nodes::type_specifier* spec = d->specifiers;
+        while(spec)
+        {
+            switch(spec->type)
+            {
+                case Tokens::VOID :
+                    return Tokens::VOID;
+                case Tokens::CHAR :
+                    return Tokens::CHAR;
+                case Tokens::SHORT :
+                    return Tokens::SHORT;
+                case Tokens::INT :
+                    return Tokens::INT;
+                case Tokens::LONG :
+                    return Tokens::LONG;
+                case Tokens::FLOAT :
+                    return Tokens::FLOAT;
+                case Tokens::DOUBLE :
+                    return Tokens::DOUBLE;
+                default:
+                    if(not spec->next)
+                    {
+                        switch(spec->type)
+                        {
+                            case Tokens::SIGNED :
+                                return Tokens::SIGNED;
+                            case Tokens::UNSIGNED :
+                                return Tokens::UNSIGNED;
+                            default:
+                                ;
+                        }
+                    }
+            }
+
+            spec = (nodes::type_specifier*)spec->next;
+        }
+        return Tokens::VOID;
+    }
 
 }
