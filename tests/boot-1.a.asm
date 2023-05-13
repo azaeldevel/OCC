@@ -7,7 +7,7 @@ byte test 1;
 int flag2 1598;
 
 
-main:
+main
 {
 	mov al , 'B';
 	mov ah , 0x0eu;

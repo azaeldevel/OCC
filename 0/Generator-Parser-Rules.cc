@@ -1047,12 +1047,12 @@ namespace oct::cc::v0::tools
             out << "\t;\n";
 
         out << "function :\n";
-            out << "\tIDENTIFIER ':' '{' instructions_list '}'\n";
+            out << "\tIDENTIFIER  '{' instructions_list '}'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << $1->name << \":\\n\";\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::function>();\n";
                 out << "\t\t$$->id = $1;\n";
-                out << "\t\t$$->body_list = $4;\n";
+                out << "\t\t$$->body_list = $3;\n";
             out << "\t}\n";
             /*
             out << "\t|\n";
