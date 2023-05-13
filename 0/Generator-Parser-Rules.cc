@@ -342,7 +342,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tMOV registers_16b ',' '[' memory ']' ';'\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
+                //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";

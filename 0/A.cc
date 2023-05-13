@@ -354,6 +354,16 @@ namespace nodes
             return 4;
         case operands_type::memory_register:
             return 4;
+        case operands_type::memory_integer:
+            if(word_size == 8) return 5;
+            else if(word_size == 16) return 6;
+            return 0;
+        case operands_type::memory_char:
+            if(word_size == 8) return 5;
+            return 0;
+        case operands_type::segment_memory:
+        case operands_type::memory_segment:
+            return 4;
         default:
             return 0;
         }
@@ -698,11 +708,10 @@ namespace nodes
         {
             if(inst->is_instruction)
             {
-                id->size += ((instruction*)inst)->size_instruction;
                 switch(((instruction*)inst)->inst)
                 {
                     case Tokens::MOV :
-
+                        id->size += ((Move*)inst)->get_size_memory();
                         break;
                     case Tokens::INT :
 

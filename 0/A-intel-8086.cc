@@ -440,7 +440,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         auto destine = static_cast<Memory*>(this->destine);
         auto source = static_cast<constant_integer<integer>*>(this->source);
 
-        char inst[6];
+        char inst[get_size_memory()];
         inst[0] = 0b11000111;//1)opecode
         inst[1] = 0;
         inst[1] += 0b00;//mod
@@ -452,14 +452,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& dat = (short&)inst[4];
         dat = (short)source->get_value();
 
-        out.write(inst,6);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_8b_memory_char(std::ostream& out)const
     {
         auto destine = static_cast<Memory*>(this->destine);
         auto source = static_cast<charater_constant<char>*>(this->source);
 
-        char inst[5];
+        char inst[get_size_memory()];
         inst[0] = 0b11000110;//1)opecode
         inst[1] = 0;
         inst[1] += 0b00;//mod
@@ -470,14 +470,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
         inst[4] = source->value;
 
-        out.write(inst,5);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_16b_segment_memory(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Memory*>(this->source);
 
-        char inst[4];
+        char inst[get_size_memory()];
         inst[0] = 0b10001110;
         inst[1] = 0;
         inst[1] = inst[1] << 2;//mod 00
@@ -488,14 +488,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
 
-        out.write(inst,4);
+        out.write(inst,get_size_memory());
     }
     void Move::generate_16b_memory_segment(std::ostream& out)const
     {
         auto destine = static_cast<Memory*>(this->destine);
         auto source = static_cast<Token<Tokens>*>(this->source);
 
-        char inst[4];
+        char inst[get_size_memory()];
         inst[0] = 0b10001100;
         inst[1] = 0;
         inst[1] = inst[1] << 2;//mod 0x00
@@ -507,7 +507,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
 
-        out.write(inst,4);
+        out.write(inst,get_size_memory());
     }
 
 
