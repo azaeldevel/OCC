@@ -40,7 +40,7 @@ namespace oct::cc::v0::tools
             //out << "CONSTANT_INTEGER_DEC_16b +?25[6-9]|+?[1-9][0-9]{3}|+?[12][0-9]{4}|+?3[12][0-7][0-6][0-7]|-12[89]\n";
             out << "CONSTANT_INTEGER_DEC_8b \t\t";
             {
-                out << "'+'";
+                out << "[+]";
                 out << "(";
                     out << "[1-9]|";
                     out << "[1-9][0-9]|";
@@ -55,7 +55,7 @@ namespace oct::cc::v0::tools
                     out << "25[0-5]";
                 out << ")";
                 out << "|";
-                out << "'-'(";
+                out << "[-](";
                     out << "[1-9]|";
                     out << "[1-9][0-9]|";
                     out << "12[0-7]";
@@ -65,7 +65,7 @@ namespace oct::cc::v0::tools
             }
             out << "CONSTANT_INTEGER_DEC_16b \t\t";
             {
-                out << "'+'";
+                out << "[+]";
                 out << "(";
                     out << "25[6-9]|";
                     out << "260|";
@@ -90,7 +90,7 @@ namespace oct::cc::v0::tools
                     out << "655[0-3][0-5]";
                 out << ")";
                 out << "|";
-                out << "'-'(";
+                out << "[-](";
                     out << "129|";
                     out << "1[3-9][0-9]|";
                     out << "[2-9][0-9]{2}|";
