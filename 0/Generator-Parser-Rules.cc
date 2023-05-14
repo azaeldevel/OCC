@@ -1045,12 +1045,6 @@ namespace oct::cc::v0::tools
     void Parser::rules_translation_unit_AI(std::ostream& out) const
     {
         out << "declaration_list :\n";
-            out << "\t\n";
-            out << "\t{\n";
-                //out << "\t\tstd::cout << \"declaration\";\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
             out << "\tdeclaration\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"declaration\";\n";
@@ -1110,6 +1104,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::translation_unit>();\n";
                 out << "\t\t$$->declarations = $1;\n";
                 out << "\t\t$$->functions = $2;\n";
+                out << "\t\ttray->unit = $$;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tfunction_list\n";
+            out << "\t{\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::translation_unit>();\n";
+                out << "\t\t$$->declarations = NULL;\n";
+                out << "\t\t$$->functions = $1;\n";
                 out << "\t\ttray->unit = $$;\n";
             out << "\t}\n";
             out << "\t;\n";

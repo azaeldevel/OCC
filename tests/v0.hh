@@ -12,6 +12,7 @@ int v0_clean(void);
 void v0_AI_developing();
 void v0_AI_constans();
 void v0_AI_components();
+void v0_AI_lexer();
 
 void v0_AII_developing();
 

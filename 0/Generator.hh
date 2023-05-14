@@ -26,6 +26,7 @@ namespace oct::cc::v0::tools
         const char* space(int) const;
         const char* tree_node() const;
         bool is_disnastic_A()const;
+        bool is_byte_based()const;
         /**
         *\brief true si la gramática del lenguaje tiene operador de asignación, false en otro caso.
         */

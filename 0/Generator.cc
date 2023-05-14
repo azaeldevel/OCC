@@ -157,6 +157,11 @@ namespace oct::cc::v0::tools
         return "?";
     }
 
+    bool Generator::is_byte_based()const
+    {
+        return true;
+    }
+
 
 
     Lexer::Lexer(Language l) : Generator(l)

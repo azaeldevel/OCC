@@ -29,6 +29,11 @@ int main(int argc, char *argv[])
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	if ((NULL == CU_add_test(pSuite_AI_v0, "A Lexer ..", v0_AI_lexer)))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 
 
 #endif

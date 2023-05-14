@@ -7,7 +7,6 @@
 namespace AI_here = oct::cc::v0::AI;
 
 
-
 void v0_AI_developing()
 {
     AI_here::nodes::constant_integer<AI_here::integer> const1;
