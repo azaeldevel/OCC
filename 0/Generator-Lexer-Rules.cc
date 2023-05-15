@@ -91,18 +91,6 @@ namespace oct::cc::v0::tools
                             out << "\t\tyylval->IDENTIFIER = identifer;\n";
                             out << "\t\treturn IDENTIFIER;\n";
                         out << "\t\t}\n";
-
-        out << "{CONSTANT_INTEGER_HEX}  {\n";
-                                    out << "\t\tstd::cout << \"Line LIETRAL_INTEGER_HEX : \\n\";\n";
-                                    //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
-                                    out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::constant_integer<AI_here::integer>>();\n";
-                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::constant_integer<AI_here::integer>::Format::hexadecimal);\n";
-                                    //out << "\t\tconst_integer->token = CONSTANT_INTEGER_DEC;\n";
-                                    //out << "\t\tinteger->format = 'H';\n";
-                                    //out << "\t\tinteger->number = std::stoll(yytext, nullptr, 16);\n";
-                                    out << "\t\tyylval->CONSTANT_INTEGER_HEX = const_integer;\n";
-                                    out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
-                                out << "\t\t}\n";
         if(is_byte_based())
         {
         out << "{CONSTANT_INTEGER_8b}  {\n";
@@ -133,6 +121,19 @@ namespace oct::cc::v0::tools
                                     //out << "\t\tinteger->number = std::stoll(yytext);\n";
                                     out << "\t\tyylval->CONSTANT_INTEGER_DEC = const_integer;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_DEC;\n";
+                                out << "\t\t}\n";
+
+
+        out << "{CONSTANT_INTEGER_HEX}  {\n";
+                                    out << "\t\tstd::cout << \"Line LIETRAL_INTEGER_HEX : \\n\";\n";
+                                    //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
+                                    out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* const_integer = tray->block.create<AI_here::nodes::constant_integer<AI_here::integer>>();\n";
+                                    out << "\t\tconst_integer->set(yytext,AI_here::nodes::constant_integer<AI_here::integer>::Format::hexadecimal);\n";
+                                    //out << "\t\tconst_integer->token = CONSTANT_INTEGER_DEC;\n";
+                                    //out << "\t\tinteger->format = 'H';\n";
+                                    //out << "\t\tinteger->number = std::stoll(yytext, nullptr, 16);\n";
+                                    out << "\t\tyylval->CONSTANT_INTEGER_HEX = const_integer;\n";
+                                    out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
                                 out << "\t\t}\n";
 
         }

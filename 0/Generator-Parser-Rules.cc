@@ -302,7 +302,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCONSTANT_INTEGER_HEX\n";
+            out << "\tCONSTANT_INTEGER_16b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(0,6,tray->block);\n";

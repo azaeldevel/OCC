@@ -33,13 +33,14 @@ namespace oct::cc::v0::tools
 
         //out << "CHAR [[:alpha:][:digit:][:punct:][:graph:][:blank:]]\n";
         out << "SUFFIX_INTEGER ['u''U']?['l''L']?|['l''L']?['u''U']?\n";
-        out << "CONSTANT_INTEGER_OCT 0[0-7]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
         if(is_byte_based())
         {
             //out << "CONSTANT_INTEGER_DEC_8b +?[1-9][0-9]?|1[0-9]{2}|2[0-5]{2}|-1[1-9][0-9]?|-12[0-7]\n";
             //out << "CONSTANT_INTEGER_DEC_16b +?25[6-9]|+?[1-9][0-9]{3}|+?[12][0-9]{4}|+?3[12][0-7][0-6][0-7]|-12[89]\n";
             out << "CONSTANT_INTEGER_8b \t\t";
             {
+                out << "0";
+                out << "|";
                 out << "[+]";
                 out << "(";
                     out << "[1-9]|";
@@ -59,6 +60,10 @@ namespace oct::cc::v0::tools
                     out << "[1-9]|";
                     out << "[1-9][0-9]|";
                     out << "12[0-7]";
+                out << ")";
+                out << "|";
+                out << "(0x|0X)(";
+                    out << "[[[:xdigit:]]{1,2}";
                 out << ")";
 
                 out << "\n";
@@ -101,6 +106,10 @@ namespace oct::cc::v0::tools
                     out << "327[0-5][0-9]";
                     out << "3276[0-7]";
                 out << ")";
+                out << "|";
+                out << "(0x|0X)(";
+                    out << "[[[:xdigit:]]{2,4}";
+                out << ")";
 
                 out << "\n";
             }
@@ -113,8 +122,9 @@ namespace oct::cc::v0::tools
         else
         {
             out << "CONSTANT_INTEGER_DEC [+-]?([1-9][[:digit:]]*|0)(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
+            out << "CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
         }
-        out << "CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
+            out << "CONSTANT_INTEGER_OCT 0[0-7]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
         out << "CONSTANT_CHAR '.'\n";
         //out << "LITERAL_STRING \\\"(\\\\.|[^\"\\\\])*\\\"\n";
 
