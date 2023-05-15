@@ -65,6 +65,10 @@ namespace oct::cc::v0::tools
                 out << "(0x|0X)(";
                     out << "[[[:xdigit:]]{1,2}";
                 out << ")";
+                out << "|";
+                out << "0(";
+                    out << "[0-7]{1,2}";
+                out << ")";
 
                 out << "\n";
             }
@@ -109,6 +113,10 @@ namespace oct::cc::v0::tools
                 out << "|";
                 out << "(0x|0X)(";
                     out << "[[[:xdigit:]]{2,4}";
+                out << ")";
+                out << "|";
+                out << "0(";
+                    out << "[0-7]{3,5}";
                 out << ")";
 
                 out << "\n";
