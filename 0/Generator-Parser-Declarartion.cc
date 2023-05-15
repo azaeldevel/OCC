@@ -260,9 +260,9 @@ namespace oct::cc::v0::tools
         out << "%token TINY\n";
 
         //
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_8b\n";
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_16b\n";
         out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_8b\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_16b\n";
         out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_SHORT\n";

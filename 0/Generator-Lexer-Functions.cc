@@ -55,7 +55,7 @@ namespace oct::cc::v0::tools
             out << "\tYYSTYPE yylval_test;\n";
             out << "\tYYLTYPE yylloc_test;\n";
             out << "\tyyscan_t yyscanner_test;\n";
-            out << "\tAI_here::Tray<AI_here::nodes::translation_unit> tray_test;\n";
+            out << "\t" << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << "> tray_test;\n";
 
             out << "\tstd::string numbers;\n";
             out << "\tYY_BUFFER_STATE bp;\n";
@@ -86,7 +86,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tyy_flush_buffer(bp,yyscanner_test);\n";
                 out << "\t\tyy_delete_buffer (bp,yyscanner_test);\n";
                 out << "\t\tyylex_destroy (yyscanner_test);\n";
-                out << "\t\tif(token == CONSTANT_INTEGER_DEC_8b)\n";
+                out << "\t\tif(token == CONSTANT_INTEGER_8b)\n";
                 out << "\t\t{\n";
                 out << "\t\t\t\n";
                 out << "\t\t}\n";

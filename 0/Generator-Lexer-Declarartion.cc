@@ -38,7 +38,7 @@ namespace oct::cc::v0::tools
         {
             //out << "CONSTANT_INTEGER_DEC_8b +?[1-9][0-9]?|1[0-9]{2}|2[0-5]{2}|-1[1-9][0-9]?|-12[0-7]\n";
             //out << "CONSTANT_INTEGER_DEC_16b +?25[6-9]|+?[1-9][0-9]{3}|+?[12][0-9]{4}|+?3[12][0-7][0-6][0-7]|-12[89]\n";
-            out << "CONSTANT_INTEGER_DEC_8b \t\t";
+            out << "CONSTANT_INTEGER_8b \t\t";
             {
                 out << "[+]";
                 out << "(";
@@ -63,7 +63,7 @@ namespace oct::cc::v0::tools
 
                 out << "\n";
             }
-            out << "CONSTANT_INTEGER_DEC_16b \t\t";
+            out << "CONSTANT_INTEGER_16b \t\t";
             {
                 out << "[+]";
                 out << "(";
