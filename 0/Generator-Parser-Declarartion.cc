@@ -297,7 +297,9 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::Interruption*> interruption\n";
         out << "%type <AI_here::nodes::Label*> label\n";
         out << "%type <AI_here::nodes::Return*> ret\n";
-        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer\n";
+        //out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer\n";
+        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer_8b\n";
+        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer_16b\n";
         //out << "%type <char> const_char\n";
         out << "%type <AI_here::nodes::statement*> instructions\n";
 

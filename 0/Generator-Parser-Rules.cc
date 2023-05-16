@@ -5,7 +5,9 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        out << "constant_integer : CONSTANT_INTEGER_HEX {$$ = $1;} | CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;} | CONSTANT_INTEGER_OCT {$$ = $1;};\n";
+        //out << "constant_integer : CONSTANT_INTEGER_HEX {$$ = $1;} | CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;} | CONSTANT_INTEGER_OCT {$$ = $1;};\n";
+        out << "constant_integer_8b : CONSTANT_INTEGER_8b {$$ = $1;};\n";
+        out << "constant_integer_16b : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
 
         rules_instructions(out);
 
@@ -474,23 +476,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_16b ',' CONSTANT_INTEGER_16b ';'\n";
-            out << "\t{\n";
-                out << "\t\tstd::string err = \"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis pero es de \" + std::to_string($4->get_data_size());\n";
-                out << "\t\tif($4->get_data_size() > 16) yyerror(&yylloc,scanner,tray,err.c_str());\n";
-                out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
-                out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
-                out << "\t\tdestine->token = $2;\n";
-                out << "\t\tmv->destine = destine;\n";
-                out << "\t\tmv->source = $4;\n";
-                out << "\t\tmv->word_size = 16;\n";
-                out << "\t\tmv->inst = AI_here::Tokens::MOV;\n";
-                out << "\t\tmv->op_type = AI_here::nodes::Move::operands_type::regiter_integer;\n";
-                out << "\t\tmv->is_instruction = true;\n";
-                out << "\t\t$$ = mv;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV registers_16b ',' CONSTANT_INTEGER_8b ';'\n";
+            out << "\tMOV registers_16b ',' constant_integer_16b ';'\n";
             out << "\t{\n";
                 out << "\t\tstd::string err = \"MOV registers_16b .. requiere que el valor de la fuente se de 16-btis pero es de \" + std::to_string($4->get_data_size());\n";
                 out << "\t\tif($4->get_data_size() > 16) yyerror(&yylloc,scanner,tray,err.c_str());\n";
@@ -659,7 +645,7 @@ namespace oct::cc::v0::tools
 
 
         out << "interruption : \n";
-            out << "\tINT constant_integer ';'\n";
+            out << "\tINT constant_integer_8b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Interruption* serv = tray->block.create<AI_here::nodes::intel::i8086::Interruption>();\n";
@@ -778,7 +764,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = ret;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tRETURN constant_integer ';'\n";
+            out << "\tRETURN constant_integer_16b ';'\n";
             out << "\t{\n";
                 out << "\t\tA_here::nodes::Return* ret = tray->block.create<A_here::nodes::C::Return>();\n";
                 out << "\t\tret->inst = AI_here::Tokens::RETURN;\n";
