@@ -121,7 +121,7 @@ int main (int argc, char* argv[])
 
     if(target_cpu == cc_here::CPU::intel_8086)
     {
-        std::cout << "Compilando " << output_file << " para intel 8086\n";
+        //std::cout << "Compilando para intel 8086\n";
     }
     else
     {
@@ -157,6 +157,7 @@ int main (int argc, char* argv[])
         if(extension(path,".a.asm"))
         {
             //std::cout << "Parsing ...\n";
+            std::cout << "Compilando " << path << " para intel 8086\n";
             if(driverI.parse(path))
             {
                 if(not driverI.semantic())
@@ -175,6 +176,7 @@ int main (int argc, char* argv[])
         else if(extension(path,".a+.asm"))
         {
             //std::cout << "Parsing ...\n";
+            std::cout << "Compilando " << path << " para intel 8086\n";
             if(driverII.parse(path))
             {
                 if(not driverII.semantic())

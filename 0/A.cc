@@ -403,80 +403,13 @@ namespace nodes
         mod = m;
         rm = r;
 
-        switch(mod)
+        if(mod == 0)
         {
-        case 0:
-            switch(rm)
-            {
-            case 0:
-                {
-                    address = block.create<Token<Tokens>,2>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::BX;
-                    address[1].token = AI_here::Tokens::SI;
-                }
-                break;
-            case 1:
-                {
-                    address = block.create<Token<Tokens>,2>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::BX;
-                    address[1].token = AI_here::Tokens::DI;
-                }
-                break;
-            case 2:
-                {
-                    address = block.create<Token<Tokens>,2>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::BP;
-                    address[1].token = AI_here::Tokens::SI;
-                }
-                break;
-            case 3:
-                {
-                    address = block.create<Token<Tokens>,2>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::BP;
-                    address[1].token = AI_here::Tokens::DI;
-                }
-                break;
-            case 4:
-                {
-                    address = block.create<Token<Tokens>>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::SI;
-                }
-                break;
-            case 5:
-                {
-                    address = block.create<Token<Tokens>>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::DI;
-                }
-                break;
-            case 6:
-                {
-                    address = block.create<constant_integer<integer>>();
-                }
-                break;
-            case 7:
-                {
-                    address = block.create<Token<Tokens>>();
-                    auto address = static_cast<Token<Tokens>*>(this->address);
-                    address[0].token = AI_here::Tokens::BX;
-                }
-                break;
-            }
-            break;
-        case 1:
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-
-            break;
+            if(rm == 6) address = block.create<constant_integer<integer>>();
+        }
+        else if(mod == 1 or mod == 2)
+        {
+            address = block.create<constant_integer<integer>>();
         }
     }
     const char* Memory::to_string() const

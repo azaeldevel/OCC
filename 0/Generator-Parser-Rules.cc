@@ -5,7 +5,7 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        //out << "constant_integer : CONSTANT_INTEGER_HEX {$$ = $1;} | CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;} | CONSTANT_INTEGER_OCT {$$ = $1;};\n";
+        //out << "constant_integer : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
         out << "constant_integer_8b : CONSTANT_INTEGER_8b {$$ = $1;};\n";
         out << "constant_integer_16b : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
 
@@ -269,10 +269,38 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
+            out << "\tBX '+' SI '+' CONSTANT_INTEGER_8b\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(1,0,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX '+' SI '+' CONSTANT_INTEGER_16b\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(2,0,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
             out << "\tBX '+' DI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(0,1,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX '+' DI '+' CONSTANT_INTEGER_8b\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(1,1,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX '+' DI '+' CONSTANT_INTEGER_16b\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(2,1,tray->block);\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
