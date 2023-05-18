@@ -58,7 +58,7 @@ namespace oct::cc::v0::tools
             if(lang == Language::AI)
             {
                 out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
-                out << "\tstatic " << space(1) << "_here::nodes::type_qualifier *type_qualifier_list = NULL;\n";
+                out << "\tstatic " << space(1) << "_here::nodes::type_qualifier *type_qualifier = NULL;\n";
             }
         out << "}\n";
 
