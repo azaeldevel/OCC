@@ -826,6 +826,15 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->direct = $1;\n";
                 //std::cout << "declarator 2\n";
             out << "\t}\n";
+            out << "\t|\n";
+            out << "\tpointer direct_declarator\n";
+            out << "\t{\n";
+                //std::cout << "declarator : direct_declarator\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::declarator>();\n";
+                out << "\t\t$$->point = NULL;\n";
+                out << "\t\t$$->direct = $1;\n";
+                //std::cout << "declarator 2\n";
+            out << "\t}\n";
             out << "\t;\n";
 
         out << "direct_declarator : IDENTIFIER\n";
@@ -857,7 +866,8 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = NULL;\n";
                 out << "\t\t$$->identifier_list = NULL;\n";
-            out << "\t}\n";*/
+            out << "\t}\n";
+            */
             out << "\t|\n";
             out << "\tdirect_declarator '('  ')'\n";
             out << "\t{\n";
@@ -865,6 +875,58 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$->identifier_list = NULL;\n";
             out << "\t}\n";
             out << "\t;\n\n";
+
+
+        out << "type_qualifier: \n";
+            out << "\tCONST\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tVOLATIL\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "type_qualifier_list: \n";
+            out << "\ttype_qualifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier_list type_qualifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tif(not type_qualifier_list) type_qualifier_list = $1;\n";
+                out << "\t\ttype_qualifier_list->next = $2;\n";
+                out << "\t\ttype_qualifier_list = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "pointer: \n";
+            out << "\t'*'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'*' type_qualifier_list\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'*' pointer\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'*' type_qualifier_list pointer\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
         /*
         out << " : \n";
             out << "\t\n";

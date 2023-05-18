@@ -50,7 +50,7 @@ namespace oct::cc::v0::tools
         out << "\"char\"		return CHAR;\n";
         //out << "\"break\"		return BREAK;\n";
         //out << "\"case\"		return CASE;\n";
-        //out << "\"const\"		return CONST;\n";
+        out << "\"const\"		return CONST;\n";
         //out << "\"continue\"	return CONTINUE;\n";
         //out << "\"default\"	return DEFAULT;\n";
         //out << "\"do\"		return DO;\n";
@@ -76,7 +76,7 @@ namespace oct::cc::v0::tools
         //out << "\"union\"		return UNION;\n";
         out << "\"unsigned\"	return UNSIGNED;\n";
         out << "\"void\"		return VOID;\n";
-        //out << "\"volatil\"	return VOLATIL;\n";
+        out << "\"volatil\"	return VOLATIL;\n";
         //out << "\"while\"		return WHILE;\n";
 
 

@@ -665,6 +665,16 @@ namespace oct::cc::v0::AI
             const char* to_string() const;
         };
 
+        struct pointer : public statement
+        {
+            Token<Tokens>* type_qualifier_list;
+            pointer* to;
+
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+
+            bool semantic();
+        };
 
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>C statment
@@ -690,12 +700,6 @@ namespace oct::cc::v0::AI
             void print(std::ostream&)const;
         };
 
-        struct pointer : public statement
-        {
-            std::list<type_qualifer*>* qualifiers;
-            pointer* point;
-        };
-
         struct direct_declarator : public statement
         {
             identifier* id;
@@ -704,7 +708,6 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
         };
-
 
         struct declarator : public statement
         {
