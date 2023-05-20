@@ -58,7 +58,8 @@ namespace oct::cc::v0::tools
             if(lang == Language::AI)
             {
                 out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
-                out << "\tstatic " << space(1) << "_here::nodes::type_qualifier *type_qualifier = NULL;\n";
+                out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *type_qualifier = NULL;\n";
+                out << "\tstatic " << space(1) << "_here::nodes::pointer *pointer = NULL;\n";
             }
         out << "}\n";
 
@@ -317,7 +318,7 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::constant*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
         out << "%type <AI_here::Tokens> type_qualifier\n";
-        out << "%type <AI_here::Tokens> type_qualifier_list\n";
+        out << "%type <AI_here::Tokens> type_qualifiers\n";
         out << "%type <AI_here::nodes::pointer*> pointer\n";
 
         //out << "%type <AI_here::nodes::identifier*> identifier_list\n";

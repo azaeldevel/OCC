@@ -667,8 +667,8 @@ namespace oct::cc::v0::AI
 
         struct pointer : public statement
         {
-            Token<Tokens>* type_qualifier_list;
-            pointer* to;
+            Token<Tokens>* list;
+            //pointer* to;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
