@@ -44,7 +44,7 @@ namespace oct::cc::v0::AII
 
         struct function_definition : public A_here::nodes::statement
         {
-            A_here::nodes::type_specifier* specifiers;
+            A_here::nodes::Token<AI_here::Tokens>* specifiers;
             A_here::nodes::declarator* declaration;
             compound_statement* body;
 

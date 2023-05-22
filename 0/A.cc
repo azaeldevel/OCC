@@ -561,12 +561,11 @@ namespace nodes
     {
         //std::cout << "void declaration::print(std::ostream& out)const\n";
         //std::cout << "Step 1\n";
-        type_specifier* spec = specifiers;
+        Token<Tokens>* spec = specifiers;
         while(spec)
         {
-            spec->print(out);
-            out << " ";
-            spec = (type_specifier*)spec->next;
+            out << type_specifier_to_string(spec->token) << " ";
+            spec = (Token<Tokens>*)spec->next;
         }
 
         //std::cout << "Step 2\n";
@@ -870,10 +869,10 @@ namespace nodes
     }
     Tokens SymbolTable::get_data_type(nodes::declaration* d) const
     {
-        nodes::type_specifier* spec = d->specifiers;
+        nodes::Token<Tokens>* spec = d->specifiers;
         while(spec)
         {
-            switch(spec->type)
+            switch(spec->token)
             {
                 case Tokens::VOID :
                     return Tokens::VOID;
@@ -892,7 +891,7 @@ namespace nodes
                 default:
                     if(not spec->next)
                     {
-                        switch(spec->type)
+                        switch(spec->token)
                         {
                             case Tokens::SIGNED :
                                 return Tokens::SIGNED;
@@ -904,7 +903,7 @@ namespace nodes
                     }
             }
 
-            spec = (nodes::type_specifier*)spec->next;
+            spec = (nodes::Token<Tokens>*)spec->next;
         }
         return Tokens::VOID;
     }

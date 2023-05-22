@@ -7,7 +7,8 @@ byte test 1;
 int flag2 1598;
 
 
-main:
+main
+{
 	mov al 'B';
 	mov ah 0x0e;
 	int 0x10;
@@ -66,10 +67,11 @@ main:
 	mov ah 0x0e;
 	int 0x10;
 	ret;
-	
+}	
 
 
-boot:
+boot
+{
 	mov al 'b';
 	mov ah 0x0e;
 	int 0x10;
@@ -128,4 +130,4 @@ boot:
 	mov ah 0x0e;
 	int 0x10;
 	ret;
-	
+}	

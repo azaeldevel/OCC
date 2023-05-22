@@ -55,12 +55,13 @@ namespace oct::cc::v0::tools
             out << "\t#include <" << header_file() << ">\n";
             out << "\t#include <" << language(true) << "-Driver.hh>\n";
             out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
-            if(lang == Language::AI)
+            //if(lang == Language::AI)
             {
                 out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
                 //out << "\tstatic " << space(1) << "_here::nodes::pointer *pointer = NULL;\n";
             }
             out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *type_qualifier = NULL;\n";
+            //out << "\tstatic " << space(1) << "_here::nodes::type_specifier *type_specifier = NULL;\n";
         out << "}\n";
 
 
@@ -311,8 +312,8 @@ namespace oct::cc::v0::tools
         //out << "%type <AI_here::nodes::const_expression*> const_expression\n";
         out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
         out << "%type <AI_here::nodes::declarator*> declarator\n";
-        out << "%type <AI_here::nodes::type_specifier*> type_specifier\n";
-        out << "%type <AI_here::nodes::type_specifier*> declaration_specifiers\n";
+        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_specifier\n";
+        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> declaration_specifiers\n";
         out << "%type <AI_here::nodes::init_declarator*> init_declarator\n";
         out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
         out << "%type <AI_here::nodes::constant*> initializer\n";

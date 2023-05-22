@@ -731,7 +731,7 @@ namespace oct::cc::v0::AI
 
         struct declaration : public statement
         {
-            type_specifier* specifiers;
+            Token<Tokens>* specifiers;
             init_declarator* list;
 
             void print(std::ostream&)const;

@@ -36,7 +36,7 @@ namespace oct::cc::v0::AII
     {
         void function_definition::print(std::ostream& out) const
         {
-            if(specifiers) specifiers->print(out);
+            if(specifiers) out << AI_here::nodes::type_specifier_to_string(specifiers->token);
             out << " ";
             if(declaration) declaration->print(out);
             out << "()\n{\n";
@@ -70,7 +70,7 @@ namespace oct::cc::v0::AII
         }
         void function_definition::generate(std::ostream& out) const
         {
-            if(specifiers) specifiers->generate(out);
+            //if(specifiers) specifiers->generate(out);
             if(declaration) declaration->generate(out);
             if(body->statement_list)
             {
