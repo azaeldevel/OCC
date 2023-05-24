@@ -406,7 +406,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001011;//1)opecode
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
+        generate_fill_mod(inst[1],source);
 
         generate_16b_fill_register(inst[1],destine);
 
@@ -426,7 +427,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001010;//1)opecode
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
+        generate_fill_mod(inst[1],destine);
 
         generate_8b_fill_register(inst[1],destine);
         generate_16b_fill_memory(inst[1],source);
@@ -486,7 +488,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001001;//1)opecode
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
+        generate_fill_mod(inst[1],destine);
 
         generate_16b_fill_register(inst[1],source);
 
@@ -506,7 +509,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b11000111;//1)opecode
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
+        generate_fill_mod(inst[1],destine);
         inst[1] = inst[1] << 3; //000
         inst[1] = inst[1] << 3;
         inst[1] += 0b110;//r/m
@@ -525,7 +529,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b11000110;//1)opecode
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
+        generate_fill_mod(inst[1],destine);
         inst[1] = inst[1] << 3; //000
         inst[1] = inst[1] << 3;
         inst[1] += 0b110;//r/m
@@ -543,7 +548,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001110;
         inst[1] = 0;
-        inst[1] = inst[1] << 2;//mod 00
+        //inst[1] = inst[1] << 2;//mod 00
+        generate_fill_mod(inst[1],source);
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],destine);
         inst[1] = inst[1] << 3;//preparando par rm
@@ -561,7 +567,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001100;
         inst[1] = 0;
-        inst[1] = inst[1] << 2;//mod 0x00
+        //inst[1] = inst[1] << 2;//mod 0x00
+        generate_fill_mod(inst[1],destine);
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],source);
 
@@ -572,7 +579,27 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
         out.write(inst,get_size_memory());
     }
-
+    void Move::generate_fill_mod(char& data,const Memory* mem)const
+    {
+        switch(mem->mod)
+        {
+        case 0:
+            data = data << 2;
+            break;
+        case 1:
+            data = data << 2;
+            data++;
+            break;
+        case 2:
+            data = data << 2;
+            data = data + 2;
+            break;
+        case 3:
+            data = data << 2;
+            data = data + 3;
+            break;
+        }
+    }
 
 
 

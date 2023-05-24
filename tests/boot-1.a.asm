@@ -3,14 +3,14 @@ char actual 'A';
 char actual2 ;
 short counter 0;
 long valor2 5;
-byte test 1;
+//byte test 1;
 int flag2 1598;
 
 
 main
 {
 	mov al , 'B';
-	mov ah , 0x0eu;
+	mov ah , 0x0e;
 	int 0x10;
 	mov al , 'o';
 	mov ah , 0x0e;

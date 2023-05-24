@@ -796,6 +796,7 @@ namespace oct::cc::v0::AI
                     void generate_16b_segment_memory(std::ostream&) const;
                     void generate_16b_memory_segment(std::ostream&) const;
                     void generate_16b_fill_memory(char& ,const Memory*) const;
+                    void generate_fill_mod(char& ,const Memory*) const;
                 };
                 struct Interruption : nodes::Interruption
                 {
