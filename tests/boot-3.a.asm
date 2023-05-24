@@ -1,4 +1,4 @@
-char* message;	
+const char* message;	
 
 main
 {	

@@ -478,6 +478,9 @@ namespace oct::cc::v0::AI
         const char* register_to_string(Tokens);
         const char* segment_to_string(Tokens);
         const char* type_specifier_to_string(Tokens);
+        bool is_type_specifier(Tokens);
+        const char* type_qualifier_to_string(Tokens);
+        bool is_type_qualifier(Tokens);
 
         struct Node
         {

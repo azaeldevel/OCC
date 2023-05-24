@@ -120,6 +120,52 @@ namespace nodes
         }
     }
 
+    bool is_type_specifier(Tokens type)
+    {
+        switch(type)
+        {
+            case Tokens::VOID :
+            case Tokens::CHAR :
+            case Tokens::SHORT :
+            case Tokens::INT :
+            case Tokens::LONG :
+            case Tokens::FLOAT :
+            case Tokens::DOUBLE :
+            case Tokens::SIGNED :
+            case Tokens::UNSIGNED :
+                return true;
+			default:
+				return false;
+        }
+
+        return false;
+    }
+
+    const char* type_qualifier_to_string(Tokens type)
+    {
+        switch(type)
+        {
+            case Tokens::CONST :
+                return "const";
+            case Tokens::VOLATIL :
+                return "volatil";
+			default:
+				return "unknow";
+        }
+    }
+    bool is_type_qualifier(Tokens type)
+    {
+        switch(type)
+        {
+            case Tokens::CONST :
+            case Tokens::VOLATIL :
+                return true;
+			default:
+				return false;
+        }
+
+        return false;
+    }
 
 
     Node::Node() : next(NULL),symbol_type('\n')
@@ -562,9 +608,23 @@ namespace nodes
         //std::cout << "void declaration::print(std::ostream& out)const\n";
         //std::cout << "Step 1\n";
         Token<Tokens>* spec = specifiers;
+        const char* str;
+
         while(spec)
         {
-            out << type_specifier_to_string(spec->token) << " ";
+            if(is_type_specifier(spec->token))
+            {
+                str = type_specifier_to_string(spec->token);
+            }
+            else if(is_type_qualifier(spec->token))
+            {
+                str = type_qualifier_to_string(spec->token);
+            }
+            else
+            {
+                str = "unknow";
+            }
+            out << str << " ";
             spec = (Token<Tokens>*)spec->next;
         }
 
