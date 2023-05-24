@@ -267,8 +267,8 @@ namespace oct::cc::v0::tools
         out << "%token TINY\n";
 
         //
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_8b\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_16b\n";
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_8b\n";
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_16b\n";
         out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC\n";
         out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
         out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
@@ -279,6 +279,8 @@ namespace oct::cc::v0::tools
         out << "%token LITERAL_INTEGER_DEC_LONG\n";
         out << "%token LITERAL_INTEGER_DEC_ULONG\n";
         out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX\n";
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX_8b\n";
+        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX_16b\n";
         out << "%token LITERAL_INTEGER_HEX_SCHAR\n";
         out << "%token <signed char>LITERAL_INTEGER_HEX_UCHAR\n";
         out << "%token LITERAL_INTEGER_HEX_SHORT\n";

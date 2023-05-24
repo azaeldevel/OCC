@@ -6,8 +6,8 @@ namespace oct::cc::v0::tools
     void Parser::rules(std::ostream& out) const
     {
         //out << "constant_integer : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
-        out << "constant_integer_8b : CONSTANT_INTEGER_8b {$$ = $1;};\n";
-        out << "constant_integer_16b : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
+        out << "constant_integer_8b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} ;\n";
+        out << "constant_integer_16b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} | CONSTANT_INTEGER_DEC_16b {$$ = $1;} | CONSTANT_INTEGER_HEX_16b {$$ = $1;} ;\n";
 
         rules_instructions(out);
 
@@ -95,12 +95,12 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             if(is_byte_based())
             {
-                out << "\tCONSTANT_INTEGER_8b\n";
+                out << "\tCONSTANT_INTEGER_DEC_DEC_8b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";
                 out << "\t|\n";
-                out << "\tCONSTANT_INTEGER_16b\n";
+                out << "\tCONSTANT_INTEGER_DEC_DEC_16b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";
@@ -269,14 +269,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' SI '+' CONSTANT_INTEGER_8b\n";
+            out << "\tBX '+' SI '+' CONSTANT_INTEGER_DEC_8b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(1,0,tray->block);\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' SI '+' CONSTANT_INTEGER_16b\n";
+            out << "\tBX '+' SI '+' CONSTANT_INTEGER_DEC_16b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(2,0,tray->block);\n";
@@ -290,14 +290,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' DI '+' CONSTANT_INTEGER_8b\n";
+            out << "\tBX '+' DI '+' CONSTANT_INTEGER_DEC_8b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(1,1,tray->block);\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' DI '+' CONSTANT_INTEGER_16b\n";
+            out << "\tBX '+' DI '+' CONSTANT_INTEGER_DEC_16b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(2,1,tray->block);\n";
@@ -332,7 +332,7 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCONSTANT_INTEGER_16b\n";
+            out << "\tconstant_integer_16b\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(0,6,tray->block);\n";
@@ -439,7 +439,7 @@ namespace oct::cc::v0::tools
             }
             {//2) inmediate to resgister/memory
             out << "\t|\n";
-            out << "\tMOV '[' memory ']' ',' CONSTANT_INTEGER_16b ';'\n";
+            out << "\tMOV '[' memory ']' ',' constant_integer_16b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
@@ -475,7 +475,7 @@ namespace oct::cc::v0::tools
             }
             {//inmediate to registerout << "\t|\n";
             out << "\t|\n";
-            out << "\tMOV registers_8b ',' CONSTANT_INTEGER_8b ';'\n";
+            out << "\tMOV registers_8b ',' constant_integer_8b ';'\n";
             out << "\t{\n";
                 out << "\t\tif($4->get_data_size() > 8) yyerror(&yylloc,scanner,tray,\"MOV registers_8b .. requiere que el valor de la fuente se de 8-btis\");\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
@@ -673,9 +673,9 @@ namespace oct::cc::v0::tools
 
 
         out << "interruption : \n";
-            out << "\tINT constant_integer_8b ';'\n";
+            out << "\tINT constant_integer_16b ';'\n";
             out << "\t{\n";
-                //out << "\t\tstd::cout << \"int \" << $2 << \"\\n\";\n";
+                //out << "\t\tstd::cout << \"int \" << $2->get_value() << \"\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Interruption* serv = tray->block.create<AI_here::nodes::intel::i8086::Interruption>();\n";
                 //out << "\t\t$$ = new(serv) AI_here::nodes::intel::i8086::Interruption;\n";
                 //if($2 > 127) yyerror("El parametro para la instruccion int dever ser un numero no mayo de de 128");
@@ -979,19 +979,19 @@ namespace oct::cc::v0::tools
         out << "declaration_specifiers :\n";
             out << "\ttype_specifier\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"specifier\\n\";\n";
+                //out << "\t\tstd::cout << \"specifier\\n\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_qualifier\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"qualifier\\n\";\n";
+                //out << "\t\tstd::cout << \"qualifier\\n\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_specifier declaration_specifiers\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"specifier\\n\";\n";
+                //out << "\t\tstd::cout << \"specifier\\n\";\n";
                 out << "\t\t$$ = $2;\n";
                 out << "\t\tif(not declaration_specifiers) declaration_specifiers = $2;\n";
                 out << "\t\tdeclaration_specifiers->next = $1;\n";
@@ -1000,7 +1000,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\ttype_qualifier declaration_specifiers\n";
             out << "\t{\n";
-                out << "\t\tstd::cout << \"qualifier\\n\";\n";
+                //out << "\t\tstd::cout << \"qualifier\\n\";\n";
                 out << "\t\t$$ = $2;\n";
                 out << "\t\tif(not declaration_specifiers) declaration_specifiers = $2;\n";
                 out << "\t\tdeclaration_specifiers->next = $1;\n";
@@ -1144,12 +1144,12 @@ namespace oct::cc::v0::tools
         {
             if(is_byte_based())
             {
-                out << "\tCONSTANT_INTEGER_8b\n";
+                out << "\tCONSTANT_INTEGER_DEC_8b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";
                 out << "\t|\n";
-                out << "\tCONSTANT_INTEGER_16b\n";
+                out << "\tCONSTANT_INTEGER_DEC_16b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";

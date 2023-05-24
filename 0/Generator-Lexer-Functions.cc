@@ -86,7 +86,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tyy_flush_buffer(bp,yyscanner_test);\n";
                 out << "\t\tyy_delete_buffer (bp,yyscanner_test);\n";
                 out << "\t\tyylex_destroy (yyscanner_test);\n";
-                out << "\t\tif(token == CONSTANT_INTEGER_8b)\n";
+                out << "\t\tif(token == CONSTANT_INTEGER_DEC_8b)\n";
                 out << "\t\t{\n";
                 out << "\t\t\t\n";
                 out << "\t\t}\n";

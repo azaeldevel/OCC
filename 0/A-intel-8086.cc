@@ -427,8 +427,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001010;//1)opecode
         inst[1] = 0;
-        //inst[1] += 0b00;//mod
-        generate_fill_mod(inst[1],destine);
+        inst[1] += 0b00;//mod
 
         generate_8b_fill_register(inst[1],destine);
         generate_16b_fill_memory(inst[1],source);
@@ -488,8 +487,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char inst[get_size_memory()];
         inst[0] = 0b10001001;//1)opecode
         inst[1] = 0;
-        //inst[1] += 0b00;//mod
-        generate_fill_mod(inst[1],destine);
+        inst[1] += 0b00;//mod
 
         generate_16b_fill_register(inst[1],source);
 
@@ -605,9 +603,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
     void Interruption::generate(std::ostream& out) const
     {
-        unsigned char instruction[2];
+        char instruction[2];
 		instruction[0] = 0b11001101;//opcode
-		instruction[1] = (unsigned char)service->get_value();
+		instruction[1] = (char)service->get_value();
 		out.write((char*)&instruction,2);
     }
     void Interruption::print(std::ostream& out) const

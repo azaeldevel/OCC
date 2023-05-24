@@ -327,6 +327,8 @@ namespace nodes
     }
     template<> void constant_integer<integer>::set(const std::string& s,Format f)
     {
+        //std::cout << "Step 1\n";
+        //std::cout << "Number : " << s << "\n";
         string = s;
         format = f;
 
@@ -368,6 +370,8 @@ namespace nodes
         default:
             value = 0;
         }
+
+        //std::cout << "Value : " << value << "\n";
 
         sizes();
     }
