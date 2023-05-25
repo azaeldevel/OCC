@@ -151,8 +151,6 @@ namespace oct::cc::v0::tools
                                     out << "\t\tyylval->CONSTANT_INTEGER_HEX = const_integer;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_HEX;\n";
                                 out << "\t\t}\n";
-
-        }
         out << "{CONSTANT_INTEGER_OCT}  {\n";
                                     out << "\t\tstd::cout << \"Line CONSTANT_INTEGER_OCT : \\n\";\n";
                                     //out << "\t\tAI_here::nodes::Integer* integer = tray->block.create<AI_here::nodes::Integer>();\n";
@@ -164,6 +162,8 @@ namespace oct::cc::v0::tools
                                     out << "\t\tyylval->CONSTANT_INTEGER_OCT = const_integer;\n";
                                     out << "\t\treturn CONSTANT_INTEGER_OCT;\n";
                                 out << "\t\t}\n";
+
+        }
         out << "{CONSTANT_CHAR} {\n";
                             //std::cout << "Line LIETRAL_CHAR : " << yylineno << "\n";
                             out << "\t\tAI_here::nodes::charater_constant<char>* const_char = tray->block.create<AI_here::nodes::charater_constant<char>>();\n";
@@ -172,9 +172,6 @@ namespace oct::cc::v0::tools
                             out << "\t\tyylval->CONSTANT_CHAR = const_char;\n";
                             out << "\t\treturn CONSTANT_CHAR;\n";
                         out << "\t\t}\n";
-
-
-
 
         out << "[[:punct:]]	{\n";
                         //std::cout << "Lexer(" << yytext[0] << ") ";

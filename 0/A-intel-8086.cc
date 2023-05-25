@@ -398,21 +398,24 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         generate_8b_fill_register(inst[1],destine);
         out.write(inst,get_size_memory());
     }
+    //>>memory
     void Move::generate_16b_register_memory(std::ostream& out)const
     {
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Memory*>(this->source);
 
         char inst[get_size_memory()];
-        inst[0] = 0b10001011;//1)opecode
+        inst[0] = 0b10001011;//1)opecode 0b1000101 d w
+        //generate_fill_word_size(inst[0],source);
         inst[1] = 0;
         //inst[1] += 0b00;//mod
         generate_fill_mod(inst[1],source);
 
         generate_16b_fill_register(inst[1],destine);
 
-        inst[1] = inst[1] << 3;
-        inst[1] += 0b110;//r/m
+        //inst[1] = inst[1] << 3;
+        //inst[1] += 0b110;//r/m
+        generate_fill_rm(inst[1],source);
 
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
@@ -431,6 +434,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
         generate_8b_fill_register(inst[1],destine);
         generate_16b_fill_memory(inst[1],source);
+        generate_fill_rm(inst[1],source);
 
         //short& mem = (short&)inst[2];
         //mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
@@ -491,8 +495,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
         generate_16b_fill_register(inst[1],source);
 
-        inst[1] = inst[1] << 3;
-        inst[1] += 0b110;//r/m
+        //inst[1] = inst[1] << 3;
+        //inst[1] += 0b110;//r/m
+        generate_fill_rm(inst[1],destine);
 
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
@@ -510,8 +515,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //inst[1] += 0b00;//mod
         generate_fill_mod(inst[1],destine);
         inst[1] = inst[1] << 3; //000
-        inst[1] = inst[1] << 3;
-        inst[1] += 0b110;//r/m
+        //inst[1] = inst[1] << 3;
+        //inst[1] += 0b110;//r/m
+        generate_fill_rm(inst[1],destine);
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
         short& dat = (short&)inst[4];
@@ -530,8 +536,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         //inst[1] += 0b00;//mod
         generate_fill_mod(inst[1],destine);
         inst[1] = inst[1] << 3; //000
-        inst[1] = inst[1] << 3;
-        inst[1] += 0b110;//r/m
+        //inst[1] = inst[1] << 3;
+        //inst[1] += 0b110;//r/m
+        generate_fill_rm(inst[1],destine);
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
         inst[4] = source->value;
@@ -550,8 +557,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         generate_fill_mod(inst[1],source);
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],destine);
-        inst[1] = inst[1] << 3;//preparando par rm
-        inst[1] += 0b110;//rm
+        //inst[1] = inst[1] << 3;//preparando par rm
+        //inst[1] += 0b110;//rm
+        generate_fill_rm(inst[1],source);
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
 
@@ -570,8 +578,10 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],source);
 
-        inst[1] = inst[1] << 3;//preparando par rm
-        inst[1] += 0b110;//rm
+        //inst[1] = inst[1] << 3;//preparando par rm
+        //inst[1] += 0b110;//rm
+        generate_fill_rm(inst[1],destine);
+
         short& mem = (short&)inst[2];
         mem = (short)static_cast<constant_integer<integer>*>(destine->address)->get_value();
 
@@ -596,6 +606,66 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             data = data << 2;
             data = data + 3;
             break;
+        }
+    }
+    void Move::generate_fill_rm(char& data,const Memory* m) const
+    {
+        switch(m->rm)
+        {
+        case 0:
+            data = data << 3;
+            break;
+        case 1:
+            data = data << 3;
+            data = data + 0b001;
+            break;
+        case 2:
+            data = data << 3;
+            data = data + 0b010;
+            break;
+        case 3:
+            data = data << 3;
+            data = data + 0b011;
+            break;
+        case 4:
+            data = data << 3;
+            data = data + 0b100;
+            break;
+        case 5:
+            data = data << 3;
+            data = data + 0b101;
+            break;
+        case 6:
+            data = data << 3;
+            data = data + 0b110;
+            break;
+        case 7:
+            data = data << 3;
+            data = data + 0b111;
+            break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+    }
+    void Move::generate_fill_word_size(char& data,const Memory* m) const
+    {
+        switch(m->word_size)
+        {
+        case 8:
+            data = data << 1;
+            break;
+        case 16:
+            data = data << 1;
+            data++;
+            break;
+        default:
+                //error
+                //throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
         }
     }
 

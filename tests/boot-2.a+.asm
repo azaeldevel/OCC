@@ -114,6 +114,7 @@ int main()
 	mov ss, [ 0x2390 ];
 	mov [ 0x2395 ], ss;
 	mov al, [si];
+	mov al, [bx + si + 125];
 	
 	return 0;
 }

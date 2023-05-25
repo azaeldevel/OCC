@@ -452,16 +452,23 @@ namespace nodes
     {
         mod = m;
         rm = r;
+        word_size = 0;
 
-        if(mod == 0)
+        /*if(mod == 0)
         {
             if(rm == 6) address = block.create<constant_integer<integer>>();
         }
         else if(mod == 1 or mod == 2)
         {
             address = block.create<constant_integer<integer>>();
-        }
+        }*/
     }
+    void Memory::set(unsigned char m, unsigned char r,core_here::Block& block,unsigned char wz)
+    {
+        word_size = wz;
+        set(m,r,block);
+    }
+
     const char* Memory::to_string() const
     {
         switch(mod)

@@ -663,9 +663,11 @@ namespace oct::cc::v0::AI
         struct Memory : public statement
         {
             Node* address;
-            unsigned char mod,rm;
+            unsigned char mod,rm,word_size;
+
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
+            void set(unsigned char mod, unsigned char rm,core_here::Block&, unsigned char wz);
 
             const char* to_string() const;
         };
@@ -799,6 +801,8 @@ namespace oct::cc::v0::AI
                     void generate_16b_memory_segment(std::ostream&) const;
                     void generate_16b_fill_memory(char& ,const Memory*) const;
                     void generate_fill_mod(char& ,const Memory*) const;
+                    void generate_fill_rm(char& ,const Memory*) const;
+                    void generate_fill_word_size(char& ,const Memory*) const;
                 };
                 struct Interruption : nodes::Interruption
                 {

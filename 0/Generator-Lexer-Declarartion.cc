@@ -61,10 +61,6 @@ namespace oct::cc::v0::tools
                     out << "[1-9][0-9]|";
                     out << "12[0-7]";
                 out << ")";
-                out << "|";
-                out << "0(";
-                    out << "[0-7]{1,2}";
-                out << ")";
 
                 out << "\n";
             }
@@ -105,10 +101,6 @@ namespace oct::cc::v0::tools
                     out << "32[0-6][0-9]{2}|";
                     out << "327[0-5][0-9]";
                     out << "3276[0-7]";
-                out << ")";
-                out << "|";
-                out << "0(";
-                    out << "[0-7]{3,5}";
                 out << ")";
 
                 out << "\n";
@@ -163,8 +155,8 @@ namespace oct::cc::v0::tools
         {
             out << "CONSTANT_INTEGER_DEC [+-]?([1-9][[:digit:]]*|0)(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
             out << "CONSTANT_INTEGER_HEX 0x[[:xdigit:]]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
-        }
             out << "CONSTANT_INTEGER_OCT 0[0-7]+(['u''U']?['l''L']?|['l''L']?['u''U']?)\n";
+        }
         out << "CONSTANT_CHAR '.'\n";
         //out << "LITERAL_STRING \\\"(\\\\.|[^\"\\\\])*\\\"\n";
 
