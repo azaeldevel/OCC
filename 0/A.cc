@@ -432,7 +432,46 @@ namespace nodes
 
         return 0;
     }
+    size_t Move::get_size_memory(const Memory* m)const
+    {
+        switch(op_type)
+        {
+        case operands_type::regiter_integer:
+            if(word_size == 8) return 2;
+            else if(word_size == 16) return 3;
+            return 0;
+        case operands_type::regiter_char:
+            if(word_size == 8) return 2;
+            return 0;
+        case operands_type::segment_register:
+            return 2;
+        case operands_type::register_segment:
+            return 2;
+        case operands_type::register_register:
+            return 2;
+        case operands_type::register_memory:
+            //if(m->mod == 1)
+            if(word_size == 8) return 2;
+            else if(word_size == 16) return 4;
+            return 0;
+        case operands_type::memory_register:
+            return 4;
+        case operands_type::memory_integer:
+            if(word_size == 8) return 5;
+            else if(word_size == 16) return 6;
+            return 0;
+        case operands_type::memory_char:
+            if(word_size == 8) return 5;
+            return 0;
+        case operands_type::segment_memory:
+        case operands_type::memory_segment:
+            return 4;
+        default:
+            return 0;
+        }
 
+        return 0;
+    }
 
     size_t Interruption::get_size_memory()const
     {
@@ -452,21 +491,14 @@ namespace nodes
     {
         mod = m;
         rm = r;
-        word_size = 16;
-
-        /*if(mod == 0)
-        {
-            if(rm == 6) address = block.create<constant_integer<integer>>();
-        }
-        else if(mod == 1 or mod == 2)
-        {
-            address = block.create<constant_integer<integer>>();
-        }*/
+        offset = false;
+        offset_size = 0;
     }
     void Memory::set(unsigned char m, unsigned char r,core_here::Block& block,unsigned char wz)
     {
-        word_size = wz;
         set(m,r,block);
+        offset = true;
+        offset_size = wz;
     }
 
     const char* Memory::to_string() const

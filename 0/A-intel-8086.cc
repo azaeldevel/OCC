@@ -651,7 +651,6 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
         }
     }
-
     void Move::generate_fill_rm_8b(char& data,const Token<Tokens>* token) const
     {
         switch(token->token)//reg
@@ -736,24 +735,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
         }
     }
-    void Move::generate_fill_w(char& data,const Memory* m) const
-    {
-        switch(m->word_size)
-        {
-        case 8:
-            data = data << 1;
-            break;
-        case 16:
-            data = data << 1;
-            data++;
-            break;
-        default:
-                //error
-                throw core_here::exception("No se asigno el Word size para la memoria indicada");
-                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
-                break;
-        }
-    }
+
 
 
 

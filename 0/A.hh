@@ -475,6 +475,7 @@ namespace oct::cc::v0::AI
 
     namespace nodes
     {
+        struct Memory;
         struct declarator;
         typedef unsigned int Line;
         const char* register_to_string(Tokens);
@@ -638,6 +639,7 @@ namespace oct::cc::v0::AI
             Node* source;
 
             virtual size_t get_size_memory()const;
+            virtual size_t get_size_memory(const Memory*)const;
         };
 
         struct Interruption : public instruction
@@ -663,8 +665,8 @@ namespace oct::cc::v0::AI
         struct Memory : public statement
         {
             Node* address;
-            unsigned char mod,rm,word_size;
-
+            unsigned char mod, rm, offset_size;
+            bool offset;
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
             void set(unsigned char mod, unsigned char rm,core_here::Block&, unsigned char wz);
@@ -804,7 +806,6 @@ namespace oct::cc::v0::AI
                     void generate_fill_rm(char& ,const Memory*) const;
                     void generate_fill_rm_8b(char& ,const Token<Tokens>*) const;
                     void generate_fill_rm_16b(char& ,const Token<Tokens>*) const;
-                    void generate_fill_w(char& ,const Memory*) const;
                 };
                 struct Interruption : nodes::Interruption
                 {
