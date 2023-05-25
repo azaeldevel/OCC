@@ -452,7 +452,7 @@ namespace nodes
     {
         mod = m;
         rm = r;
-        word_size = 0;
+        word_size = 16;
 
         /*if(mod == 0)
         {

@@ -802,7 +802,9 @@ namespace oct::cc::v0::AI
                     void generate_16b_fill_memory(char& ,const Memory*) const;
                     void generate_fill_mod(char& ,const Memory*) const;
                     void generate_fill_rm(char& ,const Memory*) const;
-                    void generate_fill_word_size(char& ,const Memory*) const;
+                    void generate_fill_rm_8b(char& ,const Token<Tokens>*) const;
+                    void generate_fill_rm_16b(char& ,const Token<Tokens>*) const;
+                    void generate_fill_w(char& ,const Memory*) const;
                 };
                 struct Interruption : nodes::Interruption
                 {

@@ -198,7 +198,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char instruction[get_size_memory()];
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;//w = 0;one byte
-        generate_8b_fill_register(instruction[0],destine);
+        generate_fill_rm_8b(instruction[0],destine);
         instruction[1] = (char)source->get_value();
         //sstd::cout << (int)instruction[0] << " register-8b integer\n";
         out.write((char*)&instruction,get_size_memory());
@@ -211,7 +211,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         char instruction[get_size_memory()];
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;//w = 0;one byte
-        generate_8b_fill_register(instruction[0],destine);
+        generate_fill_rm_8b(instruction[0],destine);
         instruction[1] = source->value;
         //std::cout << "Data : '" << source->value << "'\n";
         //std::cout << "Pointer : '" << (void*)source << "'\n";
@@ -226,7 +226,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         instruction[0] = 0b1011;//opcode
         instruction[0] = instruction[0] << 1;
         instruction[0]++;//w = 1;one byte
-        generate_16b_fill_register(instruction[0],destine);
+        generate_fill_rm_16b(instruction[0],destine);
         short *data = (short*)&instruction[1];
         *data = (short)source->get_value();
         //std::cout << (int)instruction[0] << " register-8b integer\n";
@@ -243,7 +243,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],destine);
-        generate_16b_fill_register(inst[1],source);
+        generate_fill_rm_16b(inst[1],source);
         out.write(inst,get_size_memory());
     }
     void Move::generate_register_segment(std::ostream& out)const
@@ -257,7 +257,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] += 0b11;//mod
         inst[1] = inst[1] << 1;//add 0b0
         generate_16b_fill_segment(inst[1],source);
-        generate_16b_fill_register(inst[1],destine);
+        generate_fill_rm_16b(inst[1],destine);
         out.write(inst,get_size_memory());
     }
     void Move::generate_8b_fill_register(char& data,Token<Tokens>* token) const
@@ -379,8 +379,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[0]++; // w = 1
         inst[1] = 0;
         inst[1] += 0b11;//mod
-        generate_16b_fill_register(inst[1],source);
-        generate_16b_fill_register(inst[1],destine);
+        generate_fill_rm_16b(inst[1],source);
+        generate_fill_rm_16b(inst[1],destine);
         out.write(inst,get_size_memory());
     }
     void Move::generate_8b_register_register(std::ostream& out)const
@@ -406,12 +406,12 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
         char inst[get_size_memory()];
         inst[0] = 0b10001011;//1)opecode 0b1000101 d w
-        //generate_fill_word_size(inst[0],source);
+        //generate_fill_w(inst[0],source);
         inst[1] = 0;
         //inst[1] += 0b00;//mod
         generate_fill_mod(inst[1],source);
 
-        generate_16b_fill_register(inst[1],destine);
+        generate_fill_rm_16b(inst[1],destine);
 
         //inst[1] = inst[1] << 3;
         //inst[1] += 0b110;//r/m
@@ -493,7 +493,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
         inst[1] = 0;
         inst[1] += 0b00;//mod
 
-        generate_16b_fill_register(inst[1],source);
+        generate_fill_rm_16b(inst[1],source);
 
         //inst[1] = inst[1] << 3;
         //inst[1] += 0b110;//r/m
@@ -587,6 +587,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
 
         out.write(inst,get_size_memory());
     }
+    //opcode data
     void Move::generate_fill_mod(char& data,const Memory* mem)const
     {
         switch(mem->mod)
@@ -650,7 +651,92 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 break;
         }
     }
-    void Move::generate_fill_word_size(char& data,const Memory* m) const
+
+    void Move::generate_fill_rm_8b(char& data,const Token<Tokens>* token) const
+    {
+        switch(token->token)//reg
+        {
+            case Tokens::AL:
+                data = data << 3;
+                break;
+            case Tokens::CL:
+                data = data << 3;
+                data = data + 0b001;
+                break;
+            case Tokens::DL:
+                data = data << 3;
+                data = data + 0b010;
+                break;
+            case Tokens::BL:
+                data = data << 3;
+                data = data + 0b011;
+                break;
+            case Tokens::AH:
+                data = data << 3;
+                data = data + 0b100;
+                break;
+            case Tokens::CH:
+                data = data << 3;
+                data = data + 0b101;
+                break;
+            case Tokens::DH:
+                data = data << 3;
+                data = data + 0b110;
+                break;
+            case Tokens::BH:
+                data = data << 3;
+                data = data + 0b111;
+                break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+    }
+    void Move::generate_fill_rm_16b(char& data,const Token<Tokens>* token) const
+    {
+        switch(token->token)//reg
+        {
+        case Tokens::AX:
+            data = data << 3;
+            break;
+        case Tokens::CX:
+            data = data << 3;
+            data = data + 0b001;
+            break;
+        case Tokens::DX:
+            data = data << 3;
+            data = data + 0b010;
+            break;
+        case Tokens::BX:
+            data = data << 3;
+            data = data + 0b011;
+            break;
+        case Tokens::SP:
+            data = data << 3;
+            data = data + 0b100;
+            break;
+        case Tokens::BP:
+            data = data << 3;
+            data = data + 0b101;
+            break;
+        case Tokens::SI:
+            data = data << 3;
+            data = data + 0b110;
+            break;
+        case Tokens::DI:
+            data = data << 3;
+            data = data + 0b111;
+            break;
+            default:
+                //error
+                throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
+                break;
+        }
+    }
+    void Move::generate_fill_w(char& data,const Memory* m) const
     {
         switch(m->word_size)
         {
@@ -663,7 +749,7 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             break;
         default:
                 //error
-                //throw core_here::exception("El operando no es un registro de 8 bits valido.");
+                throw core_here::exception("No se asigno el Word size para la memoria indicada");
                 //std::cout << "Error in regiter identifiecation, code " << (int)$2 << "\n";
                 break;
         }
