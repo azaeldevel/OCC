@@ -500,6 +500,47 @@ namespace nodes
         offset = true;
         offset_size = wz;
     }
+    void Memory::set(const Branch* b)
+    {
+        std::list<Node*>::const_iterator it = b->begin();
+        Token<Tokens>* token;
+
+        token = (Token<Tokens>*)(*it);
+        if(Tokens::BX == token->token)
+        {
+            it++;
+            token = (Token<Tokens>*)(*it);
+            if(Tokens::SI == token->token)
+            {
+
+            }
+            else if(Tokens::DI == token->token)
+            {
+
+            }
+            else if(Node::Type::constant_integer == token->type)
+            {
+
+            }
+        }
+        else if(Tokens::BP == token->token)
+        {
+            it++;
+            token = (Token<Tokens>*)(*it);
+            if(Tokens::SI == token->token)
+            {
+
+            }
+            else if(Tokens::DI == token->token)
+            {
+
+            }
+            else if(Node::Type::constant_integer == token->type)
+            {
+
+            }
+        }
+    }
 
     const char* Memory::to_string() const
     {

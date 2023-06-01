@@ -487,10 +487,24 @@ namespace oct::cc::v0::AI
 
         struct Node
         {
+            enum class Type
+            {
+                none,
+                statment_declaration,
+                statment_function,
+                space,
+
+                constant_integer,
+                registers,
+                segment,
+            };
             Node* next;
             char symbol_type;//data para la tabla de simbolos: Declaration,Funtion,Space
+            Type type;
 
             Node();
+
+            //virtual get_type() const = 0;
         };
 
         /**
@@ -501,6 +515,14 @@ namespace oct::cc::v0::AI
         struct Token : public Node
         {
             T token;
+        };
+
+        /**
+        *\brief
+        *
+        */
+        struct Branch : public Node, public std::list<Node*>
+        {
         };
 
         struct identifier : public Node
@@ -670,8 +692,10 @@ namespace oct::cc::v0::AI
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
             void set(unsigned char mod, unsigned char rm,core_here::Block&, unsigned char wz);
+            void set(const Branch* );
 
             const char* to_string() const;
+
         };
 
         struct pointer : public statement

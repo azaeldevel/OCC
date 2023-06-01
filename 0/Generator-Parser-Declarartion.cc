@@ -296,10 +296,10 @@ namespace oct::cc::v0::tools
 
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
-        //out << "%type <AI_here::Tokens> registers\n";
+        out << "%type <AI_here::Tokens> registers\n";
         out << "%type <AI_here::Tokens> segments\n";
         //out << "%type <AI_here::Tokens> index_array\n";
-        out << "%type <AI_here::nodes::Memory*> memory\n";
+        //out << "%type <AI_here::nodes::Memory*> memory\n";
 
 
         out << "%type <AI_here::nodes::Move*> move\n";
@@ -324,6 +324,14 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifier\n";
         out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifiers\n";
         out << "%type <AI_here::nodes::pointer*> pointer\n";
+
+
+        out << "%type <AI_here::nodes::Node*> primary_expression\n";
+        out << "%type <AI_here::nodes::Node*> postfix_expression\n";
+        out << "%type <AI_here::nodes::Node*> unary_expression\n";
+        out << "%type <AI_here::nodes::Node*> cast_expression\n";
+        out << "%type <AI_here::nodes::Node*> multiplicative_expression\n";
+        out << "%type <AI_here::nodes::Node*> additive_expression\n";
 
         //out << "%type <AI_here::nodes::identifier*> identifier_list\n";
 

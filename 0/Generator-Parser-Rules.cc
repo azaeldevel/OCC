@@ -5,11 +5,13 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        out << "constant_integer : constant_integer_8b {$$ = $1;} | constant_integer_16b {$$ = $1;};\n";
+        out << "constant_integer : constant_integer_16b {$$ = $1;};\n";
         out << "constant_integer_8b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} ;\n";
-        out << "constant_integer_16b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} | CONSTANT_INTEGER_DEC_16b {$$ = $1;} | CONSTANT_INTEGER_HEX_16b {$$ = $1;} ;\n";
+        out << "constant_integer_16b : constant_integer_8b | CONSTANT_INTEGER_DEC_16b {$$ = $1;} | CONSTANT_INTEGER_HEX_16b {$$ = $1;} ;\n";
 
         rules_instructions(out);
+
+        rules_expressions(out);
 
         rules_declarations(out);
 
@@ -79,10 +81,10 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
     }
-    void Parser::rules_primary_expression(std::ostream& out) const
+    void Parser::rules_expressions(std::ostream& out) const
     {
         out << "\n\n//6.3.1\n";
-        /*out << "primary_expression :\n";
+        out << "primary_expression :\n";
             out << "\tIDENTIFIER\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -100,34 +102,115 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\t'(' primary_expression ')' \n";
             out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
+                out << "\t\t$$ = $2;\n";
             out << "\t}\n";
-            out << "\t;\n\n";*/
+            if(is_disnastic_A())
+            {
+                out << "\t|\n";
+                out << "\tregisters\n";
+                out << "\t{\n";
+                out << "\t}\n";
+                out << "\t|\n";
+                out << "\tsegments";
+                out << "\t{\n";
+                out << "\t}\n";
+            }
+            out << "\t;\n\n";
 
-        out << "number_expression :\n";
-            out << "\tIDENTIFIER\n";
+        out << "postfix_expression :\n";
+            out << "\tprimary_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tconstant_integer\n";
+            out << "\tpostfix_expression '[' primary_expression ']' \n";
+            out << "\t{\n";
+            out << "\t}\n";
+
+            out << "\t;\n\n";
+
+
+        out << "unary_expression :\n";
+            out << "\tpostfix_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tregisters\n";
+            out << "\t\"++\" unary_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tsegments";
+            out << "\t\"--\" unary_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "cast_expression :\n";
+            out << "\tunary_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "multiplicative_expression :\n";
+            out << "\tcast_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmultiplicative_expression '*' cast_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmultiplicative_expression '/' cast_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmultiplicative_expression '%' cast_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
         out << "additive_expression :\n";
-            out << "\tnumber_expression\n";
+            out << "\tmultiplicative_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tadditive_expression '+' number_expression\n";
+            out << "\tadditive_expression '+' multiplicative_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tadditive_expression '-' multiplicative_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "memory_base :\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "memory_index :\n";
+            out << "\tSI\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDI\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "additive_expression_memory :\n";
+            out << "\tmultiplicative_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tadditive_expression '+' multiplicative_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tadditive_expression '-' multiplicative_expression\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t;\n\n";
@@ -221,7 +304,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-    /*out << "registers :\n";
+    out << "registers :\n";
             out << "\tregisters_16b\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -231,7 +314,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n\n";*/
+            out << "\t;\n\n";
 
     /*out << "index_array :\n";
             out << "\tregisters\n";
@@ -267,104 +350,6 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "memory_numbers :\n";
-            out << "\tBX\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBP\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tSI\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDI\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tconstant_integer_8b\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tconstant_integer_16b\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-
-
-        out << "memory :\n";
-            out << "\tmemory_numbers\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tmemory_additive '+' memory_numbers\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-
-/*
-        out << "memory :\n";
-            out << "\tBX '+' SI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,0,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX '+' DI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,1,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBP '+' SI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,2,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBP '+' DI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,3,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tSI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,4,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDI\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,5,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tconstant_integer_16b\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,6,tray->block);\n";
-                //out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* address = static_cast<AI_here::nodes::constant_integer<AI_here::integer>*>(mem->address);\n";                out << "\t\taddress = $1;\n";
-                //out << "\t\taddress;
-                out << "\t\tmem->address = $1;//para eliminar el error de compilacion, variable no usada\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(0,7,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t;\n\n";*/
 
         out << "move :\n";
             {//1) register/memory to/from register
@@ -402,14 +387,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_16b ',' '[' memory ']' ';'\n";
+            out << "\tMOV registers_16b ',' '[' additive_expression ']' ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";
                 out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tsource = $5;\n";
+                //out << "\t\tsource = $5;\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = source;\n";
                 out << "\t\tmv->word_size = 16;\n";
@@ -419,14 +404,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers_8b ',' '[' memory ']' ';'\n";
+            out << "\tMOV registers_8b ',' '[' additive_expression ']' ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";
                 out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tsource = $5;\n";
+                //out << "\t\tsource = $5;\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = source;\n";
                 out << "\t\tmv->word_size = 8;\n";
@@ -436,12 +421,12 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV '[' memory ']' ',' registers_16b ';'\n";
+            out << "\tMOV '[' additive_expression ']' ',' registers_16b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tdestine = $3;\n";
+                //out << "\t\tdestine = $3;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -455,12 +440,12 @@ namespace oct::cc::v0::tools
             }
             {//2) inmediate to resgister/memory
             out << "\t|\n";
-            out << "\tMOV '[' memory ']' ',' constant_integer_16b ';'\n";
+            out << "\tMOV '[' additive_expression ']' ',' constant_integer_16b ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tdestine = $3;\n";
+                //out << "\t\tdestine = $3;\n";
                 //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 //out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -472,12 +457,12 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV '[' memory ']' ',' CONSTANT_CHAR ';'\n";
+            out << "\tMOV '[' additive_expression ']' ',' CONSTANT_CHAR ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tdestine = $3;\n";
+                //out << "\t\tdestine = $3;\n";
                 //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 //out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -560,14 +545,14 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV segments ',' '[' memory ']' ';'\n";
+            out << "\tMOV segments ',' '[' additive_expression ']' ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' registers_16b ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";
                 out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tsource = $5;\n";
+                //out << "\t\tsource = $5;\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = source;\n";
                 out << "\t\tmv->word_size = 16;\n";
@@ -596,12 +581,12 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV '[' memory ']' ',' segments ';'\n";
+            out << "\tMOV '[' additive_expression ']' ',' segments ';'\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"MOV segments ',' registers_16b ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tdestine = $3;\n";
+                //out << "\t\tdestine = $3;\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -613,36 +598,6 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             }
-            out << "\t|\n";
-            out << "\tMOV segments ',' IDENTIFIER ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV IDENTIFIER ',' segments ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV IDENTIFIER ',' registers_8b ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV registers_8b ','  IDENTIFIER ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV IDENTIFIER ',' registers_16b ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV registers_16b ',' IDENTIFIER ';'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = NULL;\n";
-            out << "\t}\n";
             /*{//MAYBE:operaciones con arreglos
                 out << "\t|\n";
                 out << "\tMOV registers_8b ',' IDENTIFIER '['  index_array ']' ';'\n";
@@ -1158,28 +1113,7 @@ namespace oct::cc::v0::tools
         out << "initializer : \n";
         //esta seccion no es parte del estandar C
         {
-            /*if(is_byte_based())
-            {
-                out << "\tconstant_integer_8b\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-                out << "\tconstant_integer_16b\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-            }
-            else
-            {
-                out << "\tCONSTANT_INTEGER_DEC\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-            }
-            out << "\tCONSTANT_INTEGER_HEX\n";
+            out << "\tconstant_integer\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
@@ -1188,7 +1122,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n";*/
+            out << "\t;\n";
         }
 
         /*
