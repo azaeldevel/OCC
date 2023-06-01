@@ -5,7 +5,7 @@ namespace oct::cc::v0::tools
 {
     void Parser::rules(std::ostream& out) const
     {
-        //out << "constant_integer : CONSTANT_INTEGER_8b {$$ = $1;} | CONSTANT_INTEGER_16b {$$ = $1;};\n";
+        out << "constant_integer : constant_integer_8b {$$ = $1;} | constant_integer_16b {$$ = $1;};\n";
         out << "constant_integer_8b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} ;\n";
         out << "constant_integer_16b : CONSTANT_INTEGER_DEC_8b {$$ = $1;} | CONSTANT_INTEGER_HEX_8b {$$ = $1;} | CONSTANT_INTEGER_DEC_16b {$$ = $1;} | CONSTANT_INTEGER_HEX_16b {$$ = $1;} ;\n";
 
@@ -82,47 +82,53 @@ namespace oct::cc::v0::tools
     void Parser::rules_primary_expression(std::ostream& out) const
     {
         out << "\n\n//6.3.1\n";
-        out << "primary_expression :\n";
+        /*out << "primary_expression :\n";
             out << "\tIDENTIFIER\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCONSTANT_INTEGER_HEX\n";
+            out << "\tconstant_integer\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            if(is_byte_based())
-            {
-                out << "\tCONSTANT_INTEGER_DEC_DEC_8b\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-                out << "\tCONSTANT_INTEGER_DEC_DEC_16b\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-            }
-            else
-            {
-                out << "\tCONSTANT_INTEGER_DEC\n";
-                out << "\t{\n";
-                    out << "\t\t$$ = $1;\n";
-                out << "\t}\n";
-                out << "\t|\n";
-            }
             out << "\tCONSTANT_CHAR\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-
             out << "\t|\n";
             out << "\t'(' primary_expression ')' \n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";*/
+
+        out << "number_expression :\n";
+            out << "\tIDENTIFIER\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tconstant_integer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tregisters\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tsegments";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "additive_expression :\n";
+            out << "\tnumber_expression\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tadditive_expression '+' number_expression\n";
+            out << "\t{\n";
             out << "\t}\n";
             out << "\t;\n\n";
     }
@@ -261,6 +267,44 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
+        out << "memory_numbers :\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSI\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDI\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tconstant_integer_8b\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tconstant_integer_16b\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+
+        out << "memory :\n";
+            out << "\tmemory_numbers\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmemory_additive '+' memory_numbers\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+/*
         out << "memory :\n";
             out << "\tBX '+' SI\n";
             out << "\t{\n";
@@ -269,40 +313,10 @@ namespace oct::cc::v0::tools
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' SI '+' constant_integer_8b\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(1,0,tray->block);\n";
-                out << "\t\tmem->address = $5;//para eliminar el error de compilacion, variable no usada\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX '+' SI '+' constant_integer_16b\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(2,0,tray->block);\n";
-                out << "\t\tmem->address = $5;//para eliminar el error de compilacion, variable no usada\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
             out << "\tBX '+' DI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set(0,1,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX '+' DI '+' CONSTANT_INTEGER_DEC_8b\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(1,1,tray->block);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX '+' DI '+' CONSTANT_INTEGER_DEC_16b\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(2,1,tray->block);\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
@@ -350,7 +364,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tmem->set(0,7,tray->block);\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
-            out << "\t;\n\n";
+            out << "\t;\n\n";*/
 
         out << "move :\n";
             {//1) register/memory to/from register
@@ -1144,14 +1158,14 @@ namespace oct::cc::v0::tools
         out << "initializer : \n";
         //esta seccion no es parte del estandar C
         {
-            if(is_byte_based())
+            /*if(is_byte_based())
             {
-                out << "\tCONSTANT_INTEGER_DEC_8b\n";
+                out << "\tconstant_integer_8b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";
                 out << "\t|\n";
-                out << "\tCONSTANT_INTEGER_DEC_16b\n";
+                out << "\tconstant_integer_16b\n";
                 out << "\t{\n";
                     out << "\t\t$$ = $1;\n";
                 out << "\t}\n";
@@ -1174,7 +1188,7 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n";
+            out << "\t;\n";*/
         }
 
         /*
