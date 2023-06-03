@@ -521,9 +521,28 @@ namespace oct::cc::v0::AI
         *\brief
         *
         */
+        struct Number : public Node
+        {
+            char mode;//C:constant, Variable
+
+        };
+
+        /**
+        *\brief
+        *
+        */
         struct Branch : public Node, public std::list<Node*>
         {
         };
+
+
+        /**
+        *\brief
+        *
+        */
+        /*struct Mathematic : public Branch<Token<T>*>
+        {
+        };*/
 
         struct identifier : public Node
         {
@@ -557,7 +576,7 @@ namespace oct::cc::v0::AI
 
         template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
         template <class T> concept charater_type = std::is_same_v<T, char>;
-        struct constant : public Node
+        struct constant : public Number
         {
             virtual void print(std::ostream& out) const = 0;
         };
