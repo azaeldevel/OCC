@@ -497,6 +497,11 @@ namespace oct::cc::v0::AI
                 constant_integer,
                 registers,
                 segment,
+                suma,
+                rest,
+                mult,
+                div,
+                module,
             };
             Node* next;
             char symbol_type;//data para la tabla de simbolos: Declaration,Funtion,Space
@@ -521,7 +526,8 @@ namespace oct::cc::v0::AI
         *\brief
         *
         */
-        struct Number : public Node
+        template<class T>
+        struct Number : public Token<T>
         {
             char mode;//C:constant, Variable
 
@@ -540,9 +546,26 @@ namespace oct::cc::v0::AI
         *\brief
         *
         */
-        /*struct Mathematic : public Branch<Token<T>*>
+        struct Suma : public Branch
         {
-        };*/
+            Node** ops;
+
+            Suma();
+            void insert(Node* a, Node* b, core_here::Block& );
+        };
+
+
+        /**
+        *\brief
+        *
+        */
+        struct Rest : public Branch
+        {
+            Node** ops;
+
+            Rest();
+            void insert(Node* a, Node* b, core_here::Block& );
+        };
 
         struct identifier : public Node
         {
@@ -576,10 +599,12 @@ namespace oct::cc::v0::AI
 
         template <class T> concept integer_type = std::is_same_v<T, integer> or std::is_same_v<T, int> or std::is_same_v<T, unsigned int> or std::is_same_v<T, long> or std::is_same_v<T, unsigned long>;
         template <class T> concept charater_type = std::is_same_v<T, char>;
-        struct constant : public Number
+
+        struct constant : public Node
         {
             virtual void print(std::ostream& out) const = 0;
         };
+
         template<integer_type T = integer> class constant_integer : public constant
         {
         public:

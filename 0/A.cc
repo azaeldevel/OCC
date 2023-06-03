@@ -181,8 +181,31 @@ namespace nodes
 
 
 
+    Suma::Suma()
+    {
+        type = Node::Type::suma;
+    }
+    void Suma::insert(Node* a, Node* b, core_here::Block& block)
+    {
+        ops = block.create<Node*,2>();
+
+        ops[0] = a;
+        ops[1] = b;
+    }
 
 
+
+    Rest::Rest()
+    {
+        type = Node::Type::rest;
+    }
+    void Rest::insert(Node* a, Node* b, core_here::Block& block)
+    {
+        ops = block.create<Node*,2>();
+
+        ops[0] = a;
+        ops[1] = b;
+    }
 
     template<> void constant_integer<integer>::sizes()
     {
@@ -331,6 +354,7 @@ namespace nodes
         //std::cout << "Number : " << s << "\n";
         string = s;
         format = f;
+        Node::type = Node::Type::constant_integer;
 
         suffix_u = false;
         suffix_l = false;

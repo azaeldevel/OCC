@@ -109,6 +109,8 @@ namespace oct::cc::v0::tools
                 out << "\t|\n";
                 out << "\tregisters\n";
                 out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\t;\n";
                 out << "\t}\n";
                 out << "\t|\n";
                 out << "\tsegments";
@@ -181,39 +183,6 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "memory_base :\n";
-            out << "\tBX\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBP\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-
-        out << "memory_index :\n";
-            out << "\tSI\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDI\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-
-        out << "additive_expression_memory :\n";
-            out << "\tmultiplicative_expression\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tadditive_expression '+' multiplicative_expression\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tadditive_expression '-' multiplicative_expression\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
     }
 
     void Parser::rules_instructions(std::ostream& out) const
