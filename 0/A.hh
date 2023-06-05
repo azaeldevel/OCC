@@ -493,8 +493,6 @@ namespace oct::cc::v0::AI
                 statment_declaration,
                 statment_function,
                 space,
-
-
                 constant,
                 constant_integer,
                 constant_char,
@@ -561,6 +559,7 @@ namespace oct::cc::v0::AI
             Branch(Node::Type type);
             Node*& operator [](size_t );
             Node*& at(size_t );
+            const Node*& at(size_t )const;
 
             Node** create(size_t, core_here::Block&);
         };
@@ -636,6 +635,7 @@ namespace oct::cc::v0::AI
 
             Suma();
             void set(Node* a, Node* b, core_here::Block& , Expression::Operator);
+            void print(std::ostream&)const;
         };
 
         /**
@@ -838,10 +838,10 @@ namespace oct::cc::v0::AI
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
             void set(unsigned char mod, unsigned char rm,core_here::Block&, unsigned char wz);
-            void set(const Branch* );
+            void set(Suma*);
 
             const char* to_string() const;
-
+            void print(std::ostream&)const;
         };
 
         struct pointer : public statement

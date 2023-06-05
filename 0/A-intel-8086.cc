@@ -79,7 +79,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Token<Tokens>*>(this->destine);
                 auto source = static_cast<Memory*>(this->source);
-                out << "\n\tmov " << register_to_string(destine->token) << ", " << source->to_string();
+                out << "\n\tmov " << register_to_string(destine->token) << ", ";
+                source->print(out);
             }
             break;
         case operands_type::memory_register:
@@ -87,7 +88,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Memory*>(this->destine);
                 auto source = static_cast<Token<Tokens>*>(this->source);
-                out << "\n\tmov " << destine->to_string() << ", " << register_to_string(source->token);
+                out << "\n\tmov ";
+                destine->print(out);
+                out << ", " << register_to_string(source->token);
             }
             break;
         case operands_type::memory_integer:
@@ -95,7 +98,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Memory*>(this->destine);
                 auto source = static_cast<constant_integer<integer>*>(this->source);
-                out << "\n\tmov " << destine->to_string() << ", " << source->get_value();
+                out << "\n\tmov ";
+                destine->print(out);
+                out << ", " << source->get_value();
             }
             break;
         case operands_type::memory_char:
@@ -103,7 +108,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Memory*>(this->destine);
                 auto source = static_cast<charater_constant<char>*>(this->source);
-                out << "\n\tmov " << destine->to_string() << ", '" << source->value << "'";
+                out << "\n\tmov ";
+                destine->print(out);
+                out << ", '" << source->value << "'";
             }
             break;
         case operands_type::segment_memory:
@@ -111,7 +118,8 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Token<Tokens>*>(this->destine);
                 auto source = static_cast<Memory*>(this->source);
-                out << "\n\tmov " << segment_to_string(destine->token) << ", " << source->to_string();
+                out << "\n\tmov " << segment_to_string(destine->token) << ", ";
+                source->print(out);
             }
             break;
         case operands_type::memory_segment:
@@ -119,7 +127,9 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
                 //out << "operands_type::segment_register\n";
                 auto destine = static_cast<Memory*>(this->destine);
                 auto source = static_cast<Token<Tokens>*>(this->source);
-                out << "\n\tmov " << destine->to_string() << ", " << segment_to_string(source->token);
+                out << "\n\tmov ";
+                destine->print(out);
+                out << ", " << segment_to_string(source->token);
             }
             break;
         default:

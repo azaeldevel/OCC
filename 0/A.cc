@@ -230,6 +230,11 @@ namespace nodes
         Node** n = (Node**)next;
         return n[i];
     }
+    const Node*& Branch::at(size_t i)const
+    {
+        const Node** n = (const Node**)next;
+        return n[i];
+    }
     Node** Branch::create(size_t leng, core_here::Block& block)
     {
         Node::next = (Node*)block.array<Node*>(leng);
@@ -248,6 +253,33 @@ namespace nodes
 
         at(0) = a;
         at(1) = b;
+    }
+    void Suma::print(std::ostream& out)const
+    {
+        if(not at(0)) return;
+
+        //out << "Token : " << (int)at(0)->type << "\n";
+
+        switch(at(0)->type)
+        {
+        case Node::Type::constant_integer:
+                ((const constant_integer<integer>*)at(0))->print(out);
+            break;
+        case Node::Type::constant_char:
+
+            break;
+        case Node::Type::identifier:
+
+            break;
+        case Node::Type::registers:
+                out << register_to_string(((const Token<Tokens>*)at(0))->token);
+            break;
+        case Node::Type::segment:
+                out << segment_to_string(((const Token<Tokens>*)at(0))->token);
+            break;
+        default:
+                ;
+        }
     }
 
 
@@ -595,8 +627,12 @@ namespace nodes
         offset = true;
         offset_size = wz;
     }
-    void Memory::set(const Branch* b)
+    void Memory::set(Suma* m)
     {
+        //std::cout << "Detetando memoria\n";
+        //mod = 127;
+        //rm = 127;
+        address = m;
         /*std::list<Node*>::const_iterator it = b->begin();
         Token<Tokens>* token;
 
@@ -663,16 +699,20 @@ namespace nodes
                 return "[ BX ]";
             }
         case 1:
-            return "Unknow";
+            return "Unknow Memory";
         case 2:
-            return "Unknow";
+            return "Unknow Memory";
         case 3:
-            return "Unknow";
+            return "Unknow Memory";
         default:
-            return "Unknow";
+            return "Unknow Memory";
         }
 
-        return "Unknow";
+        return "Unknow Memory";
+    }
+    void Memory::print(std::ostream& out)const
+    {
+        if(address) ((Suma*)address)->print(out);
     }
 
 

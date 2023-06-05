@@ -326,20 +326,6 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-    /*
-    out << "index_array :\n";
-            out << "\tregisters\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tsegments\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t;\n\n";
-            */
-
         out << "segments :\n";
             out << "\tES\n";
             out << "\t{\n";
@@ -406,7 +392,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";
                 out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
-                //out << "\t\tsource = $5;\n";
+                out << "\t\tsource->set((AI_here::nodes::Suma*)$5);\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = source;\n";
                 out << "\t\tmv->word_size = 16;\n";
@@ -423,7 +409,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* destine = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tdestine->token = $2;\n";
                 out << "\t\tAI_here::nodes::Memory* source = tray->block.create<AI_here::nodes::Memory>();\n";
-                //out << "\t\tsource = $5;\n";
+                out << "\t\tsource->set((AI_here::nodes::Suma*)$5);\n";
                 out << "\t\tmv->destine = destine;\n";
                 out << "\t\tmv->source = source;\n";
                 out << "\t\tmv->word_size = 8;\n";
@@ -438,7 +424,7 @@ namespace oct::cc::v0::tools
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                //out << "\t\tdestine = $3;\n";
+                out << "\t\tdestine->set((AI_here::nodes::Suma*)$3);\n";
                 out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -457,7 +443,7 @@ namespace oct::cc::v0::tools
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                //out << "\t\tdestine = $3;\n";
+                out << "\t\tdestine->set((AI_here::nodes::Suma*)$3);\n";
                 //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 //out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
@@ -474,7 +460,7 @@ namespace oct::cc::v0::tools
                 //out << "\t\tstd::cout << \"MOV segments ',' '[' memory ']' ';'\\n\";\n";
                 out << "\t\tAI_here::nodes::intel::i8086::Move* mv = tray->block.create<AI_here::nodes::intel::i8086::Move>();\n";
                 out << "\t\tAI_here::nodes::Memory* destine = tray->block.create<AI_here::nodes::Memory>();\n";
-                //out << "\t\tdestine = $3;\n";
+                out << "\t\tdestine->set((AI_here::nodes::Suma*)$3);\n";
                 //out << "\t\tAI_here::nodes::Token<AI_here::Tokens>* source = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
                 //out << "\t\tsource->token = $6;\n";
                 out << "\t\tmv->destine = destine;\n";
