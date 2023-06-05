@@ -168,7 +168,41 @@ namespace nodes
     }
 
 
-    Node::Node() : next(NULL),symbol_type('\n')
+    Node::Node() : next(NULL),symbol_type('\n'),type(Node::Type::none)
+    {
+    }
+    Node::Node(Type t) : next(NULL),symbol_type('\n'),type(t)
+    {
+    }
+    Node* Node::get()
+    {
+        return Node::next;
+    }
+    void Node::set(Node* n)
+    {
+        Node::next = n;
+    }
+
+
+    Expression::Expression() : Branch(Node::Type::expression)
+    {
+    }
+    Expression::Expression(Type t) : Branch(t)
+    {
+    }
+
+
+
+    Parenthesis::Parenthesis() : Expression(Node::Type::parenthesis)
+    {
+    }
+
+    Unary::Unary() : Expression(Node::Type::unary)
+    {
+    }
+
+
+    Cast::Cast() : Expression(Node::Type::cast)
     {
     }
 
@@ -180,32 +214,69 @@ namespace nodes
     }
 
 
-
-    Suma::Suma()
+    Branch::Branch() : Node(Node::Type::none)
     {
-        type = Node::Type::suma;
     }
-    void Suma::insert(Node* a, Node* b, core_here::Block& block)
+    Branch::Branch(Node::Type t) : Node(t)
     {
-        ops = block.create<Node*,2>();
-
-        ops[0] = a;
-        ops[1] = b;
     }
-
-
-
-    Rest::Rest()
+    Node*& Branch::operator [](size_t i)
     {
-        type = Node::Type::rest;
+        Node** n = (Node**)next;
+        return n[i];
     }
-    void Rest::insert(Node* a, Node* b, core_here::Block& block)
+    Node*& Branch::at(size_t i)
     {
-        ops = block.create<Node*,2>();
-
-        ops[0] = a;
-        ops[1] = b;
+        Node** n = (Node**)next;
+        return n[i];
     }
+    Node** Branch::create(size_t leng, core_here::Block& block)
+    {
+        Node::next = (Node*)block.array<Node*>(leng);
+        return (Node**) Node::next;
+    }
+
+
+    Suma::Suma() : Expression(Node::Type::suma)
+    {
+    }
+    void Suma::set(Node* a, Node* b, core_here::Block& block, Expression::Operator)
+    {
+        next = (Node*)block.create<Node*,2>();
+        Branch::length = 2;
+        oper = Expression::Operator::suma;
+
+        at(0) = a;
+        at(1) = b;
+    }
+
+
+    Multiplication::Multiplication() : Expression(Node::Type::rest)
+    {
+    }
+    void Multiplication::set(Node* a, Node* b, core_here::Block& block, Expression::Operator)
+    {
+        next = (Node*)block.create<Node*,2>();
+        Branch::length = 2;
+        oper = Expression::Operator::mult;
+
+        at(0) = a;
+        at(1) = b;
+    }
+
+
+
+    identifier::identifier() : Node(Node::Type::identifier)
+    {
+    }
+
+    constant::constant() : Node(Node::Type::constant)
+    {
+    }
+    constant::constant(Node::Type t) : Node(t)
+    {
+    }
+
 
     template<> void constant_integer<integer>::sizes()
     {
@@ -526,7 +597,7 @@ namespace nodes
     }
     void Memory::set(const Branch* b)
     {
-        std::list<Node*>::const_iterator it = b->begin();
+        /*std::list<Node*>::const_iterator it = b->begin();
         Token<Tokens>* token;
 
         token = (Token<Tokens>*)(*it);
@@ -563,7 +634,7 @@ namespace nodes
             {
 
             }
-        }
+        }*/
     }
 
     const char* Memory::to_string() const
@@ -953,6 +1024,13 @@ namespace nodes
     }
 
 }
+
+    space::space() : nodes::Node(nodes::Node::Type::space)
+    {
+    }
+    space::space(nodes::Node::Type t) : nodes::Node(t)
+    {
+    }
 
     SymbolTable::SymbolTable() : last_id(1)
     {

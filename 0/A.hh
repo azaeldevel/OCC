@@ -494,7 +494,10 @@ namespace oct::cc::v0::AI
                 statment_function,
                 space,
 
+
+                constant,
                 constant_integer,
+                constant_char,
                 registers,
                 segment,
                 suma,
@@ -502,15 +505,28 @@ namespace oct::cc::v0::AI
                 mult,
                 div,
                 module,
+                identifier,
+                parenthesis,
+                unary,
+                expression,
+                cast,
+                multiplicative,
+                additive,
             };
             Node* next;
             char symbol_type;//data para la tabla de simbolos: Declaration,Funtion,Space
             Type type;
 
             Node();
+            Node(Type type);
+
+            void set(Node*);
+            Node* get();
 
             //virtual get_type() const = 0;
         };
+
+
 
         /**
         *\brief solo para agregar el token como un nodo, cuando a demas de un token pueder recibir un algun statem mas complejo
@@ -537,8 +553,16 @@ namespace oct::cc::v0::AI
         *\brief
         *
         */
-        struct Branch : public Node, public std::list<Node*>
+        struct Branch : public Node
         {
+            size_t length;
+
+            Branch();
+            Branch(Node::Type type);
+            Node*& operator [](size_t );
+            Node*& at(size_t );
+
+            Node** create(size_t, core_here::Block&);
         };
 
 
@@ -546,32 +570,102 @@ namespace oct::cc::v0::AI
         *\brief
         *
         */
-        struct Suma : public Branch
+        struct Expression : public Branch
         {
-            Node** ops;
+            enum class Operator : unsigned char
+            {
+                none,
+                suma,
+                rest,
+                mult,
+                div,
+                mod,
+                suma_1,
+                rest_1,
+            };
+
+
+            Expression();
+            Expression(Node::Type);
+
+            Operator oper;
+        };
+
+        /**
+        *\brief
+        *
+        */
+        struct Parenthesis : public Expression
+        {
+            Parenthesis();
+
+        };
+
+
+
+        /**
+        *\brief
+        *
+        */
+        struct Unary : public Expression
+        {
+            Unary();
+
+            //char op[2];
+        };
+
+
+
+        /**
+        *\brief
+        *
+        */
+        struct Cast : public Expression
+        {
+            Cast();
+
+            //char op[2];
+        };
+
+        /**
+        *\brief
+        *
+        */
+        struct Suma : public Expression
+        {
 
             Suma();
-            void insert(Node* a, Node* b, core_here::Block& );
+            void set(Node* a, Node* b, core_here::Block& , Expression::Operator);
         };
-
 
         /**
         *\brief
         *
         */
-        struct Rest : public Branch
+        struct Multiplication : public Expression
         {
-            Node** ops;
-
-            Rest();
-            void insert(Node* a, Node* b, core_here::Block& );
+            Multiplication();
+            void set(Node* a, Node* b, core_here::Block& , Expression::Operator);
         };
+
+        /**
+        *\brief
+        *
+        */
+        struct Division : public Branch
+        {
+            Division();
+            void set(Node* a, Node* b, core_here::Block& );
+        };
+
 
         struct identifier : public Node
         {
             std::string string;
             int line;
             size_t number, size, memory;
+
+            identifier();
         };
 
         struct statement : public Node
@@ -602,6 +696,8 @@ namespace oct::cc::v0::AI
 
         struct constant : public Node
         {
+            constant();
+            constant(Node::Type);
             virtual void print(std::ostream& out) const = 0;
         };
 
@@ -620,7 +716,10 @@ namespace oct::cc::v0::AI
             };
 
         public:
-            constant_integer() = default;
+            constant_integer() : constant(Node::Type::constant_integer)
+            {
+            }
+
             void set(const std::string&,Format);
 
             Format get_format() const
@@ -672,6 +771,9 @@ namespace oct::cc::v0::AI
             T value;
 
 
+            charater_constant() : constant(Node::Type::constant_char)
+            {
+            }
             virtual void print(std::ostream& out) const
             {
                 out << value;
@@ -912,6 +1014,9 @@ namespace oct::cc::v0::AI
     struct space : public nodes::Node, std::map<const char*,nodes::Node*>
     {
         nodes::identifier* name;
+
+        space();
+        space(nodes::Node::Type );
     };
 
     class SymbolTable : public space

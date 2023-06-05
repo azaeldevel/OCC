@@ -102,19 +102,27 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\t'(' primary_expression ')' \n";
             out << "\t{\n";
-                out << "\t\t$$ = $2;\n";
+                out << "\t\tauto expre = tray->block.create<AI_here::nodes::Parenthesis>();\n";
+                out << "\t\texpre->set($2);\n";
+                out << "\t\t$$ = expre;\n";
             out << "\t}\n";
             if(is_disnastic_A())
             {
                 out << "\t|\n";
                 out << "\tregisters\n";
                 out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-                out << "\t\t;\n";
+                out << "\t\tauto reg = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\treg->token = $1;\n";
+                out << "\t\treg->type = AI_here::nodes::Node::Type::registers;\n";
+                out << "\t\t$$ = reg;\n";
                 out << "\t}\n";
                 out << "\t|\n";
-                out << "\tsegments";
+                out << "\tsegments\n";
                 out << "\t{\n";
+                out << "\t\tauto seg = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\tseg->token = $1;\n";
+                out << "\t\tseg->type = AI_here::nodes::Node::Type::segment;\n";
+                out << "\t\t$$ = seg;\n";
                 out << "\t}\n";
             }
             out << "\t;\n\n";
@@ -122,10 +130,16 @@ namespace oct::cc::v0::tools
         out << "postfix_expression :\n";
             out << "\tprimary_expression\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tpostfix_expression '[' primary_expression ']' \n";
             out << "\t{\n";
+                out << "\t\tauto posfexpr = tray->block.create<AI_here::nodes::Branch>();\n";
+                out << "\t\tauto bs = posfexpr->create(2,tray->block);\n";
+                out << "\t\tbs[0] = $1;\n";
+                out << "\t\tbs[2] = $3;\n";
+                out << "\t\t$$ = posfexpr;\n";
             out << "\t}\n";
 
             out << "\t;\n\n";
@@ -134,52 +148,79 @@ namespace oct::cc::v0::tools
         out << "unary_expression :\n";
             out << "\tpostfix_expression\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t\"++\" unary_expression\n";
             out << "\t{\n";
+                out << "\t\tauto unexpr = tray->block.create<AI_here::nodes::Unary>();\n";
+                out << "\t\tunexpr->set($2);\n";
+                out << "\t\t$$ = unexpr;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t\"--\" unary_expression\n";
             out << "\t{\n";
+                out << "\t\tauto unexpr = tray->block.create<AI_here::nodes::Unary>();\n";
+                out << "\t\tunexpr->set($2);\n";
+                out << "\t\t$$ = unexpr;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
         out << "cast_expression :\n";
             out << "\tunary_expression\n";
             out << "\t{\n";
+                out << "\t\tauto unexpr = tray->block.create<AI_here::nodes::Unary>();\n";
+                out << "\t\tunexpr->set($1);\n";
+                out << "\t\t$$ = unexpr;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
         out << "multiplicative_expression :\n";
             out << "\tcast_expression\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tmultiplicative_expression '*' cast_expression\n";
             out << "\t{\n";
+                out << "\t\tauto mult = tray->block.create<AI_here::nodes::Multiplication>();\n";
+                out << "\t\tmult->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::mult);\n";
+                out << "\t\t$$ = mult;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tmultiplicative_expression '/' cast_expression\n";
             out << "\t{\n";
+                out << "\t\tauto mult = tray->block.create<AI_here::nodes::Multiplication>();\n";
+                out << "\t\tmult->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::div);\n";
+                out << "\t\t$$ = mult;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tmultiplicative_expression '%' cast_expression\n";
             out << "\t{\n";
+                out << "\t\tauto mult = tray->block.create<AI_here::nodes::Multiplication>();\n";
+                out << "\t\tmult->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::mod);\n";
+                out << "\t\t$$ = mult;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
         out << "additive_expression :\n";
             out << "\tmultiplicative_expression\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tadditive_expression '+' multiplicative_expression\n";
             out << "\t{\n";
+                out << "\t\tauto add = tray->block.create<AI_here::nodes::Suma>();\n";
+                out << "\t\tadd->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::suma);\n";
+                out << "\t\t$$ = add;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tadditive_expression '-' multiplicative_expression\n";
             out << "\t{\n";
+                out << "\t\tauto add = tray->block.create<AI_here::nodes::Suma>();\n";
+                out << "\t\tadd->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::rest);\n";
+                out << "\t\t$$ = add;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
@@ -285,7 +326,8 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-    /*out << "index_array :\n";
+    /*
+    out << "index_array :\n";
             out << "\tregisters\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -295,7 +337,8 @@ namespace oct::cc::v0::tools
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
-            out << "\t;\n\n";*/
+            out << "\t;\n\n";
+            */
 
         out << "segments :\n";
             out << "\tES\n";

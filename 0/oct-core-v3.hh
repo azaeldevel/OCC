@@ -107,6 +107,15 @@ namespace oct::core::v3
             }
             return arr;
         }
+        template<typename T> T* array(size_t S)
+        {
+            T* arr = (T*)create(sizeof(T) * S);
+            for(size_t i = 0; i < S; i++)
+            {
+                new (&arr[i]) T;
+            }
+            return arr;
+        }
     protected:
         size_t page_size;
         void* actual;//last block memory assignable
