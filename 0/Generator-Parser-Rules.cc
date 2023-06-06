@@ -206,11 +206,13 @@ namespace oct::cc::v0::tools
         out << "additive_expression :\n";
             out << "\tmultiplicative_expression\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"multiplicative_expression\\n\";\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tadditive_expression '+' multiplicative_expression\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"additive_expression '+' multiplicative_expression\\n\";\n";
                 out << "\t\tauto add = tray->block.create<AI_here::nodes::Suma>();\n";
                 out << "\t\tadd->set($1,$3,tray->block,AI_here::nodes::Expression::Operator::suma);\n";
                 out << "\t\t$$ = add;\n";

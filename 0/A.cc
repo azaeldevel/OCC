@@ -245,25 +245,26 @@ namespace nodes
     Suma::Suma() : Expression(Node::Type::suma)
     {
     }
-    void Suma::set(Node* a, Node* b, core_here::Block& block, Expression::Operator)
+    void Suma::set(Node* a, Node* b, core_here::Block& block, Expression::Operator op)
     {
         next = (Node*)block.create<Node*,2>();
         Branch::length = 2;
-        oper = Expression::Operator::suma;
+        oper = op;
 
+        std::cout << "at(0) -> " << at(0) << "\n";
+        std::cout << "at(1) -> " << at(1) << "\n";
         at(0) = a;
         at(1) = b;
+        std::cout << "at(0) -> " << at(0) << "\n";
+        std::cout << "at(1) -> " << at(1) << "\n";
     }
-    void Suma::print(std::ostream& out)const
+
+    void Suma::print(std::ostream& out,const Node* node)const
     {
-        if(not at(0)) return;
-
-        //out << "Token : " << (int)at(0)->type << "\n";
-
-        switch(at(0)->type)
+        switch(node->type)
         {
         case Node::Type::constant_integer:
-                ((const constant_integer<integer>*)at(0))->print(out);
+                ((const constant_integer<integer>*)node)->print(out);
             break;
         case Node::Type::constant_char:
 
@@ -272,28 +273,31 @@ namespace nodes
 
             break;
         case Node::Type::registers:
-                out << register_to_string(((const Token<Tokens>*)at(0))->token);
+                out << register_to_string(((const Token<Tokens>*)node)->token);
             break;
         case Node::Type::segment:
-                out << segment_to_string(((const Token<Tokens>*)at(0))->token);
+                out << segment_to_string(((const Token<Tokens>*)node)->token);
             break;
         default:
                 ;
         }
     }
+    void Suma::print(std::ostream& out)const
+    {
+        if(at(0)) print(out,at(0));
+        if(at(1)) print(out,at(1));
+    }
 
 
-    Multiplication::Multiplication() : Expression(Node::Type::rest)
+    Multiplication::Multiplication() : Expression(Node::Type::mult)
     {
     }
-    void Multiplication::set(Node* a, Node* b, core_here::Block& block, Expression::Operator)
+    void Multiplication::set(Node* a, Node* b, core_here::Block& block, Expression::Operator op)
     {
         next = (Node*)block.create<Node*,2>();
         Branch::length = 2;
-        oper = Expression::Operator::mult;
+        oper = op;
 
-        at(0) = a;
-        at(1) = b;
     }
 
 

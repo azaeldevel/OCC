@@ -636,6 +636,7 @@ namespace oct::cc::v0::AI
             Suma();
             void set(Node* a, Node* b, core_here::Block& , Expression::Operator);
             void print(std::ostream&)const;
+            void print(std::ostream&,const Node*)const;
         };
 
         /**
