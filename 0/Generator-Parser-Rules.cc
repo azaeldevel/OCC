@@ -350,6 +350,116 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
+        /*out << "memory_base :\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "memory_index :\n";
+            out << "\tSI\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDI\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "memory_offset :\n";
+            out << "\tconstant_integer_8b\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tconstant_integer_16b\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+        out << "memory :\n";
+            out << "\tmemory_base '+' memory_index\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmemory '+' memory_offset\n";
+            out << "\t{\n";
+                out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";*/
+
+        /*
+        out << "memory :\n";
+            out << "\tBX '+' SI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,0,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX '+' DI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,1,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' SI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,2,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' DI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,3,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,4,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,5,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tconstant_integer_16b\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,6,tray->block);\n";
+                //out << "\t\tAI_here::nodes::constant_integer<AI_here::integer>* address = static_cast<AI_here::nodes::constant_integer<AI_here::integer>*>(mem->address);\n";                out << "\t\taddress = $1;\n";
+                //out << "\t\taddress;
+                out << "\t\tmem->address = $1;//para eliminar el error de compilacion, variable no usada\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->set(0,7,tray->block);\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+        */
 
         out << "move :\n";
             {//1) register/memory to/from register
