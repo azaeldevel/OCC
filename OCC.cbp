@@ -14,7 +14,6 @@
 				<Compiler>
 					<Add option="-fPIC" />
 					<Add directory="bin/Debug" />
-					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A/intel.l --lang AI --comp lexer" />
@@ -31,7 +30,6 @@
 				<Compiler>
 					<Add option="-fPIC" />
 					<Add directory="bin/Debug" />
-					<Add directory="0" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="bin/Debug/gen --output $(TARGET_OUTPUT_DIR)A+/intel.l --lang AII --comp lexer" />
@@ -48,7 +46,6 @@
 				<Option parameters="tests/boot-3.a.asm  --output-file bin/Debug/boot.bin --target-cpu intel-8086 --environment freestanding-boot" />
 				<Compiler>
 					<Add directory="bin/Debug" />
-					<Add directory="0" />
 				</Compiler>
 				<Linker>
 					<Add library="octetos-cc-A" />
@@ -64,7 +61,6 @@
 				<Option parameters="--lang AI --comp parser --output bin/Debug/comp.ll" />
 				<Compiler>
 					<Add directory="bin/Debug" />
-					<Add directory="0" />
 				</Compiler>
 				<Linker>
 					<Add directory="bin/Debug" />

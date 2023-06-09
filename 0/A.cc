@@ -506,6 +506,11 @@ namespace nodes
 
         sizes();
     }
+    template<> void constant_integer<integer>::set(const std::string& s,Format f,Tokens t)
+    {
+        token = t;
+        set(s,f);
+    }
 
 
     template<> bool constant_integer<integer>::is_data_8b()const
@@ -631,52 +636,6 @@ namespace nodes
         offset = true;
         offset_size = wz;
     }
-    void Memory::set(Suma* m)
-    {
-        //std::cout << "Detetando memoria\n";
-        //mod = 127;
-        //rm = 127;
-        address = m;
-        /*std::list<Node*>::const_iterator it = b->begin();
-        Token<Tokens>* token;
-
-        token = (Token<Tokens>*)(*it);
-        if(Tokens::BX == token->token)
-        {
-            it++;
-            token = (Token<Tokens>*)(*it);
-            if(Tokens::SI == token->token)
-            {
-
-            }
-            else if(Tokens::DI == token->token)
-            {
-
-            }
-            else if(Node::Type::constant_integer == token->type)
-            {
-
-            }
-        }
-        else if(Tokens::BP == token->token)
-        {
-            it++;
-            token = (Token<Tokens>*)(*it);
-            if(Tokens::SI == token->token)
-            {
-
-            }
-            else if(Tokens::DI == token->token)
-            {
-
-            }
-            else if(Node::Type::constant_integer == token->type)
-            {
-
-            }
-        }*/
-    }
-
     const char* Memory::to_string() const
     {
         switch(mod)
@@ -703,9 +662,47 @@ namespace nodes
                 return "[ BX ]";
             }
         case 1:
-            return "Unknow Memory";
+            switch(rm)
+            {
+            case 0:
+                return "[ BX + SI + off_8b]";
+            case 1:
+                return "[ BX + DI + off_8b]";
+            case 2:
+                return "[ BP + SI + off_8b]";
+            case 3:
+                return "[ BP + DI + off_8b]";
+            case 4:
+                return "[ SI + off_8b]";
+            case 5:
+                return "[ DI + off_8b]";
+                break;
+            case 6:
+                return "[ BP + off_8b ]";
+            case 7:
+                return "[ BX + off_8b]";
+            }
         case 2:
-            return "Unknow Memory";
+            switch(rm)
+            {
+            case 0:
+                return "[ BX + SI + off_16b]";
+            case 1:
+                return "[ BX + DI + off_16b]";
+            case 2:
+                return "[ BP + SI + off_16b]";
+            case 3:
+                return "[ BP + DI + off_16b]";
+            case 4:
+                return "[ SI + off_16b]";
+            case 5:
+                return "[ DI + off_16b]";
+                break;
+            case 6:
+                return "[ BP + off_16b ]";
+            case 7:
+                return "[ BX + off_16b]";
+            }
         case 3:
             return "Unknow Memory";
         default:
@@ -714,10 +711,206 @@ namespace nodes
 
         return "Unknow Memory";
     }
-    void Memory::print(std::ostream& out)const
+    void Memory::print(std::ostream& out) const
     {
-        if(address) ((Suma*)address)->print(out);
+        switch(mod)
+        {
+        case 0:
+            switch(rm)
+            {
+            case 0:
+                out << "[ BX + SI ]";
+                break;
+            case 1:
+                out << "[ BX + DI ]";
+                break;
+            case 2:
+                out << "[ BP + SI ]";
+                break;
+            case 3:
+                out << "[ BP + DI ]";
+                break;
+            case 4:
+                out << "[ SI ]";
+                break;
+            case 5:
+                out << "[ DI ]";
+                break;
+            case 6:
+                out << "[ ";
+                ((constant_integer<integer>*)address)->print(out);
+                out << " ]";
+                break;
+            case 7:
+                out << "[ BX ]";
+                break;
+            }
+            break;
+        case 1:
+            switch(rm)
+            {
+            case 0:
+                out << "[ BX + SI + off_8b]";
+                break;
+            case 1:
+                out << "[ BX + DI + off_8b]";
+                break;
+            case 2:
+                out << "[ BP + SI + off_8b]";
+                break;
+            case 3:
+                out << "[ BP + DI + off_8b]";
+                break;
+            case 4:
+                out << "[ SI + off_8b]";
+                break;
+            case 5:
+                out << "[ DI + off_8b]";
+                break;
+            case 6:
+                out << "[ BP + off_8b ]";
+                break;
+            case 7:
+                out << "[ BX + off_8b]";
+                break;
+            }
+            break;
+        case 2:
+            switch(rm)
+            {
+            case 0:
+                out << "[ BX + SI + off_16b]";
+                break;
+            case 1:
+                out << "[ BX + DI + off_16b]";
+                break;
+            case 2:
+                out << "[ BP + SI + off_16b]";
+                break;
+            case 3:
+                out << "[ BP + DI + off_16b]";
+                break;
+            case 4:
+                out << "[ SI + off_16b]";
+                break;
+            case 5:
+                out << "[ DI + off_16b]";
+                break;
+            case 6:
+                out << "[ BP + off_16b ]";
+                break;
+            case 7:
+                out << "[ BX + off_16b]";
+                break;
+            }
+            break;
+        case 3:
+            out << "Unknow Memory";
+            break;
+        default:
+            out << "Unknow Memory";
+            break;
+        }
     }
+    void Memory::set(const Base* base)
+    {
+        //std::cout << "void Memory::set(const Base* base)\n";
+        mod = 0;
+        rm = get_rm(base);
+    }
+    void Memory::set(const Base* base,constant_integer<integer>* number)
+    {
+        //std::cout << "void Memory::set(const Base* base,constant_integer<integer>* number)\n";
+        if(number->is_data_8b()) mod = 1;
+        else if(number->is_data_16b()) mod = 2;
+
+        rm = get_rm(base);
+        address = number;
+    }
+    unsigned char Memory::get_rm(const Base* base) const
+    {
+        if(base->base == Tokens::BX)
+        {
+            if(base->index == Tokens::SI)
+            {
+                return 1;
+            }
+            else if(base->index == Tokens::DI)
+            {
+                return 2;
+            }
+        }
+        else if(base->base == Tokens::BP)
+        {
+            if(base->index == Tokens::SI)
+            {
+                return 3;
+            }
+            else if(base->index == Tokens::DI)
+            {
+                return 4;
+            }
+        }
+        if(base->index == Tokens::SI)
+        {
+            return 5;
+        }
+        else if(base->index == Tokens::DI)
+        {
+            return 6;
+        }
+        if(base->index == Tokens::BP)
+        {
+            return 7;
+        }
+        else if(base->index == Tokens::BX)
+        {
+            return 8;
+        }
+
+        return 127;
+    }
+    void Memory::set(Tokens t)
+    {
+        //std::cout << "void Memory::set(Tokens t)\n";
+        mod = 0;
+        rm = get_rm(t);
+    }
+    unsigned char Memory::get_rm(Tokens t) const
+    {
+        switch(t)
+        {
+        case Tokens::SI:
+            return 5;
+        case Tokens::DI:
+            return 6;
+        case Tokens::BP:
+            return 7;
+        case Tokens::BX:
+            return 8;
+        default:
+            return 127;
+        }
+
+        return 127;
+    }
+    void Memory::set(Tokens t,constant_integer<integer>* number)
+    {
+        //std::cout << "void Memory::set(Tokens t,constant_integer<integer>* number)\n";
+        if(number->is_data_8b()) mod = 1;
+        else if(number->is_data_16b()) mod = 2;
+
+        rm = get_rm(t);
+        address = number;
+    }
+    void Memory::set(constant_integer<integer>* number)
+    {
+        //std::cout << "void Memory::set(constant_integer<integer>* number)\n";
+        mod = 0;
+        rm = 6;
+        address = number;
+    }
+
 
 
 
@@ -829,7 +1022,7 @@ namespace nodes
     void declaration::print(std::ostream& out)const
     {
         //std::cout << "void declaration::print(std::ostream& out)const\n";
-        //std::cout << "Step 1\n";
+        //std::cout << "Step declaration 1\n";
         Token<Tokens>* spec = specifiers;
         const char* str;
 
@@ -851,7 +1044,7 @@ namespace nodes
             spec = (Token<Tokens>*)spec->next;
         }
 
-        //std::cout << "Step 2\n";
+        //std::cout << "Step declaration 2\n";
         init_declarator* dec = list;
         while(dec)
         {
@@ -895,7 +1088,7 @@ namespace nodes
                 {
                     case Tokens::MOV :
                         //std::cout << "Step 4.1.1\n";
-                        ((instruction*)inst)->print(out);
+                        ((Move*)inst)->print(out);
                         break;
                     case Tokens::INT :
                         //std::cout << "Step 4.1.2\n";
@@ -976,7 +1169,7 @@ namespace nodes
     void translation_unit::print(std::ostream& out)const
     {
         //std::cout << "void translation_unit::print(std::ostream& out)const\n";
-        //std::cout << "Step 1\n";
+        //std::cout << "Step translation_unit 1\n";
         declaration* dec = declarations;
         while(dec)
         {
@@ -990,7 +1183,7 @@ namespace nodes
             //std::cout << "Step 1.4\n";
         }
 
-        //std::cout << "Step 2\n";
+        //std::cout << "Step translation_unit 2\n";
         function* func = functions;
         while(func)
         {
@@ -1004,7 +1197,7 @@ namespace nodes
             //std::cout << "Step 1.4\n";
         }
 
-        //std::cout << "Step 3\n";
+        //std::cout << "Step translation_unit 3\n";
     }
     void translation_unit::generate(std::ostream& out) const
     {

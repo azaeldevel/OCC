@@ -722,6 +722,7 @@ namespace oct::cc::v0::AI
             }
 
             void set(const std::string&,Format);
+            void set(const std::string&,Format,Tokens);
 
             Format get_format() const
             {
@@ -765,6 +766,7 @@ namespace oct::cc::v0::AI
             Tokens type_data;
             Tokens type_singed;
             short data_size;
+            Tokens token;
 
         };
         template<charater_type T> struct charater_constant : public constant
@@ -833,15 +835,28 @@ namespace oct::cc::v0::AI
 
         struct Memory : public statement
         {
+            struct Base : public statement
+            {
+                Tokens base, index;
+
+            };
             Node* address;
             unsigned char mod, rm, offset_size;
             bool offset;
 
             void set(unsigned char mod, unsigned char rm,core_here::Block& );
             void set(unsigned char mod, unsigned char rm,core_here::Block&, unsigned char wz);
-            void set(Suma*);
+
+            //
+            void set(const Base*);
+            void set(const Base*,constant_integer<integer>*);
+            void set(constant_integer<integer>*);
+            void set(Tokens);
+            void set(Tokens,constant_integer<integer>*);
 
             const char* to_string() const;
+            unsigned char get_rm(const Base*) const;
+            unsigned char get_rm(Tokens) const;
             void print(std::ostream&)const;
         };
 

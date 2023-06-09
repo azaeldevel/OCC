@@ -17,7 +17,6 @@ print_string
 	mov si, [500];
 	mov al , [si];
 	mov ah , 0x0e;
-	mov ah , [bx + si];
 	int 0x10;
 	
 	ret;

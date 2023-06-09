@@ -167,10 +167,14 @@ int main (int argc, char* argv[])
                 //std::cout << "Printing ...\n";
                 driverI.print(std::cout);
                 //std::cout << "Generating ...\n";
-                driverI.generate(outstream);
-                outstream.flush();
-                outstream.close();
+                //driverI.generate(outstream);
+                //outstream.flush();
+                //outstream.close();
                 std::cout << "\nCompletdo.\n";
+            }
+            else
+            {
+                std::cout << "\nError sintactico..\n";
             }
         }
         else if(extension(path,".a+.asm"))
@@ -201,7 +205,7 @@ int main (int argc, char* argv[])
         }
 	}
 
-	symbols.generate_memory();
+	//symbols.generate_memory();
     //symbols.print();
 
     //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";

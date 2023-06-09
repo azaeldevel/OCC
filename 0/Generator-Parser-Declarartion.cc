@@ -58,6 +58,7 @@ namespace oct::cc::v0::tools
             if(lang == Language::AI)
             {
                 out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
+                out << "\tstatic " << space(1) << "_here::nodes::function *funcntion = NULL;\n";
                 //out << "\tstatic " << space(1) << "_here::nodes::pointer *pointer = NULL;\n";
             }
             out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *type_qualifier = NULL;\n";
@@ -296,10 +297,15 @@ namespace oct::cc::v0::tools
 
         out << "%type <AI_here::Tokens> registers_8b\n";
         out << "%type <AI_here::Tokens> registers_16b\n";
-        out << "%type <AI_here::Tokens> registers\n";
+        //out << "%type <AI_here::Tokens> registers\n";
         out << "%type <AI_here::Tokens> segments\n";
         //out << "%type <AI_here::Tokens> index_array\n";
-        //out << "%type <AI_here::nodes::Memory*> memory\n";
+        out << "%type <AI_here::nodes::Memory*> memory\n";
+        out << "%type <AI_here::nodes::Memory::Base*> memory_base\n";
+        out << "%type <AI_here::Tokens> memory_base_base\n";
+        out << "%type <AI_here::Tokens> memory_base_index\n";
+        //out << "%type <AI_here::Tokens> memory_base_1\n";
+        //out << "%type <AI_here::Tokens> memory_index\n";
 
 
         out << "%type <AI_here::nodes::Move*> move\n";
@@ -325,15 +331,9 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifiers\n";
         out << "%type <AI_here::nodes::pointer*> pointer\n";
 
-
-        out << "%type <AI_here::nodes::Node*> primary_expression\n";
-        out << "%type <AI_here::nodes::Node*> postfix_expression\n";
-        out << "%type <AI_here::nodes::Node*> unary_expression\n";
-        out << "%type <AI_here::nodes::Node*> cast_expression\n";
-        out << "%type <AI_here::nodes::Node*> multiplicative_expression\n";
-        out << "%type <AI_here::nodes::Node*> additive_expression\n";
-
         //out << "%type <AI_here::nodes::identifier*> identifier_list\n";
+
+        //rules_expressions_decs(out);
 
         switch(lang)
         {
@@ -348,6 +348,15 @@ namespace oct::cc::v0::tools
         }
 
         out << "%start translation_unit\n";
+    }
+    void Parser::rules_expressions_decs(std::ostream& out) const
+    {
+        out << "%type <AI_here::nodes::Node*> primary_expression\n";
+        out << "%type <AI_here::nodes::Node*> postfix_expression\n";
+        out << "%type <AI_here::nodes::Node*> unary_expression\n";
+        out << "%type <AI_here::nodes::Node*> cast_expression\n";
+        out << "%type <AI_here::nodes::Node*> multiplicative_expression\n";
+        out << "%type <AI_here::nodes::Node*> additive_expression\n";
     }
     void Parser::declaration_code_required(std::ostream& out) const
     {

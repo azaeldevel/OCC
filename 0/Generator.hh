@@ -71,7 +71,8 @@ namespace oct::cc::v0::tools
         virtual void rules(std::ostream& out) const;
         virtual void rules_finals(std::ostream& out) const;
         virtual void rules_constants(std::ostream& out) const;
-        virtual void rules_expressions(std::ostream& out) const;
+        virtual void rules_expressions_decs(std::ostream& out) const;
+        virtual void rules_expressions_rules(std::ostream& out) const;
         virtual void rules_instructions(std::ostream& out) const;
         virtual void rules_instructions_AI(std::ostream& out) const;
         virtual void rules_instructions_AII(std::ostream& out) const;

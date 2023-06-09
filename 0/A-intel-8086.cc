@@ -27,7 +27,7 @@
 namespace oct::cc::v0::AI::nodes::intel::i8086
 {
 
-    void Move::print(std::ostream& out)const
+    void Move::print(std::ostream& out) const
     {
         //out << "void Move::print(std::ostream& out)const\n";
         switch(op_type)
@@ -105,12 +105,14 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
             break;
         case operands_type::memory_char:
             {
-                //out << "operands_type::segment_register\n";
+                //out << "operands_type::memory_char\n";
                 auto destine = static_cast<Memory*>(this->destine);
                 auto source = static_cast<charater_constant<char>*>(this->source);
                 out << "\n\tmov ";
                 destine->print(out);
                 out << ", '" << source->value << "'";
+
+                //out << "operands_type::memory_char end\n";
             }
             break;
         case operands_type::segment_memory:
