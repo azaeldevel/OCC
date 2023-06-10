@@ -881,13 +881,13 @@ namespace nodes
         switch(t)
         {
         case Tokens::SI:
-            return 5;
+            return 4;
         case Tokens::DI:
-            return 6;
+            return 5;
         case Tokens::BP:
-            return 7;
+            return 6;
         case Tokens::BX:
-            return 8;
+            return 7;
         default:
             return 127;
         }

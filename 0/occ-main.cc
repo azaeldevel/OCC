@@ -187,14 +187,14 @@ int main (int argc, char* argv[])
                 {
 
                 }
-                const AI_here::nodes::translation_unit* tree = driverII.translate();
+                //const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
                 //driverII.print(std::cout);
                 //if(tree) driverI.print(std::cout,tree);
                 //std::cout << "Generating ...\n";
-                if(tree) driverI.generate(outstream,tree);
+                /*if(tree) driverI.generate(outstream,tree);
                 outstream.flush();
-                outstream.close();
+                outstream.close();*/
                 std::cout << "\nCompletdo.\n";
             }
         }

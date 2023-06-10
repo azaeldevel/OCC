@@ -436,22 +436,20 @@ namespace oct::cc::v0::AI::nodes::intel::i8086
     }
     void Move::generate_8b_register_memory(std::ostream& out)const
     {
+        const int size_opcode = 2;
+
         auto destine = static_cast<Token<Tokens>*>(this->destine);
         auto source = static_cast<Memory*>(this->source);
 
-        char inst[get_size_memory()];
-        inst[0] = 0b10001010;//1)opecode
+        char inst[size_opcode];
+        inst[0] = 0b10001010;//1)opecode 0b1000101 d w
         inst[1] = 0;
-        inst[1] += 0b00;//mod
+        //inst[1] += 0b00;//mod
 
         generate_8b_fill_register(inst[1],destine);
-        generate_16b_fill_memory(inst[1],source);
         generate_fill_rm(inst[1],source);
 
-        //short& mem = (short&)inst[2];
-        //mem = (short)static_cast<constant_integer<integer>*>(source->address)->get_value();
-
-        out.write(inst,get_size_memory());
+        out.write(inst,size_opcode);
     }
     void Move::generate_16b_fill_memory(char& data,const Memory* m) const
     {
