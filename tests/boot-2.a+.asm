@@ -116,7 +116,7 @@ int main()
 	mov al, [si];
 	mov al, [bx + si + 125];
 	
-	return 0;
+	//return 0;
 }
 
 int flag3 1598;

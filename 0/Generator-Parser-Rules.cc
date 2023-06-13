@@ -106,7 +106,7 @@ namespace oct::cc::v0::tools
                 out << "\t\texpre->set($2);\n";
                 out << "\t\t$$ = expre;\n";
             out << "\t}\n";
-            if(is_disnastic_A())
+            /*if(is_disnastic_A())
             {
                 out << "\t|\n";
                 out << "\tregisters\n";
@@ -124,7 +124,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tseg->type = AI_here::nodes::Node::Type::segment;\n";
                 out << "\t\t$$ = seg;\n";
                 out << "\t}\n";
-            }
+            }*/
             out << "\t;\n\n";
 
         out << "postfix_expression :\n";
@@ -1056,6 +1056,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tinit_declarator_list ',' init_declarator\n";
             out << "\t{\n";
+                //std::cout << "init_declarator_list ',' init_declarator\n";
                 out << "\t\tstatic AI_here::nodes::init_declarator* statement_prev = NULL;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
@@ -1335,7 +1336,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tdeclaration\n";
             out << "\t{\n";
-                //std::cout << "storage_class_specifier : declaration ';'\n";
+                //std::cout << "declaration ';'\n";
                 //std::cout << ";\n";
                 //$1->print(std::cout);
                 out << "\t\t$$ = tray->block.create<AII_here::nodes::external_declaration>();\n";
