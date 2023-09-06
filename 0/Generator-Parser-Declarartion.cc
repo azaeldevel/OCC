@@ -301,9 +301,9 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::Tokens> segments\n";
         //out << "%type <AI_here::Tokens> index_array\n";
         out << "%type <AI_here::nodes::Memory*> memory\n";
-        out << "%type <AI_here::nodes::Memory::Base*> memory_base\n";
-        out << "%type <AI_here::Tokens> memory_base_base\n";
-        out << "%type <AI_here::Tokens> memory_base_index\n";
+        out << "%type <AI_here::nodes::Memory*> memory_base\n";
+        //out << "%type <AI_here::Tokens> memory_base_base\n";
+        //out << "%type <AI_here::Tokens> memory_base_index\n";
         //out << "%type <AI_here::Tokens> memory_base_1\n";
         //out << "%type <AI_here::Tokens> memory_index\n";
 

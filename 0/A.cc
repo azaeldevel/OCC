@@ -815,7 +815,7 @@ namespace nodes
     void Memory::set(const Base* base)
     {
         //std::cout << "void Memory::set(const Base* base)\n";
-        mod = 0;
+        //mod = 0;
         rm = get_rm(base);
     }
     void Memory::set(const Base* base,constant_integer<integer>* number)
