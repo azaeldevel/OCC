@@ -855,7 +855,7 @@ namespace oct::cc::v0::AI
             void set(Tokens,constant_integer<integer>*);
 
             const char* to_string() const;
-            unsigned char get_rm(const Base*) const;
+            unsigned char get_rm(const Base*) const;//Todo<<<<<
             unsigned char get_rm(Tokens) const;
             void print(std::ostream&)const;
         };

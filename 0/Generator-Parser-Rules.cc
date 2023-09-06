@@ -379,15 +379,18 @@ namespace oct::cc::v0::tools
         out << "memory_base :\n";
             out << "\tmemory_base_base '+' memory_base_index\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"memory_base '+' constant_integer_16b\";\n";
                 out << "\t\tauto base = tray->block.create<AI_here::nodes::Memory::Base>();\n";
                 out << "\t\tbase->base = $1;\n";
                 out << "\t\tbase->index = $3;\n";
+                out << "\t\t$$ = base;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
         out << "memory :\n";
             out << "\tmemory_base\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"memory : \";\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
                 out << "\t\tmem->set($1);\n";
                 out << "\t\t$$ = mem;\n";
