@@ -43,7 +43,7 @@
 				<Option object_output="bin/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/boot-1.a.asm  --output-file bin/Debug/boot.bin --target-cpu intel-8086 --environment freestanding-boot" />
+				<Option parameters="tests/boot-3.a.asm  --output-file bin/Debug/boot.bin --target-cpu intel-8086 --environment freestanding-boot" />
 				<Compiler>
 					<Add directory="bin/Debug" />
 				</Compiler>

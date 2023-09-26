@@ -911,8 +911,30 @@ namespace nodes
         address = number;
     }
 
+    void type_qualifier::print(std::ostream& out)const
+    {
+        switch(token)
+        {
+        case Tokens::CONST:
+            out << "const";
+            break;
+        case Tokens::VOLATIL:
+            out << "volatil";
+            break;
+        default:
+            ;
+        }
+    }
 
 
+    void pointer::print(std::ostream& out) const
+    {
+        if(p)
+        {
+            out << "* ";
+            p->print(out);
+        }
+    }
 
 
 
@@ -1164,6 +1186,32 @@ namespace nodes
         }
 
         return true;
+    }
+    size_t function::size()const
+    {
+        statement* inst = (statement*)body_list;
+        while(inst)
+        {
+            if(inst->is_instruction)
+            {
+                switch(((instruction*)inst)->inst)
+                {
+                    case Tokens::MOV :
+                        //((Move*)inst)->generate(out);
+                        break;
+                    case Tokens::INT :
+                        //((Interruption*)inst)->generate(out);
+                        break;
+                    case Tokens::RET :
+                        //((intel::i8086::Return*)inst)->generate(out);
+                        break;
+                    default:
+                        ;
+                }
+            }
+            inst = (statement*)inst->next;
+        }
+        return 0;
     }
 
     void translation_unit::print(std::ostream& out)const

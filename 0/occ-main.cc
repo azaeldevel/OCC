@@ -205,8 +205,8 @@ int main (int argc, char* argv[])
         }
 	}
 
-	//symbols.generate_memory();
-    //symbols.print();
+	symbols.generate_memory();
+    symbols.print();
 
     //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";
     //std::cout << "sizeof(signed) = " << sizeof(signed) << "\n";

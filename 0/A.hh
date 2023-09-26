@@ -35,6 +35,7 @@
 namespace oct::cc::v0::AI
 {
 	namespace core_here = oct::core::v3;
+	namespace core_here = oct::core::v3;
 	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
 		command = -100,
@@ -664,7 +665,12 @@ namespace oct::cc::v0::AI
         {
             std::string string;
             int line;
-            size_t number, size, memory;
+
+            //posiscion en la tabla de simbols
+            size_t number;
+            //
+            size_t size;
+            size_t memory;
 
             identifier();
         };
@@ -859,11 +865,16 @@ namespace oct::cc::v0::AI
             unsigned char get_rm(Tokens) const;
             void print(std::ostream&)const;
         };
+        struct type_qualifier : public Token<Tokens>
+        {
+            void print(std::ostream&)const;
+            void generate(std::ostream&)const;
+        };
 
         struct pointer : public statement
         {
-            Token<Tokens>* list;
-            //pointer* to;
+            type_qualifier* tq;
+            pointer* p;
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
@@ -882,10 +893,12 @@ namespace oct::cc::v0::AI
         };
 
 
+        /*
         struct type_qualifer : public statement
         {
             Tokens qualifer;
         };
+        */
 
         struct init_declarator : public statement
         {
@@ -898,8 +911,9 @@ namespace oct::cc::v0::AI
         struct direct_declarator : public statement
         {
             identifier* id;
-            direct_declarator* direct;
-            identifier* identifier_list;
+            //direct_declarator* direct;
+            //identifier* identifier_list;
+            unsigned char nested;//1 : ( declarator ), 2 : direct_declarator [ consts_expre ],3 : direct_declarator( params_list ),4  : direct_declarator ( idemtifier_list-optional )
 
             void print(std::ostream&)const;
         };
@@ -942,6 +956,7 @@ namespace oct::cc::v0::AI
 
             void print(std::ostream&)const;
             void generate(std::ostream&)const;
+            size_t size()const;
 
             bool semantic();
         };
