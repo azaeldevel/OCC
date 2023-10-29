@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="OCC-v1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/OCC-v1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--lang AI --comp lexer --output bin/Debug/comp.ll" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/OCC-v1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Release/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="libOCC-AI-dbg">
+				<Option output="bin/Debug/libOCC-AI-1.so" imp_lib="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="0" extension_auto="0" />
+				<Option object_output="bin/Debug/obj" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option parameters="--lang AI --comp lexer --output bin/Debug/comp.ll" />
+				<Compiler>
+					<Add option="-g -fPIC" />
+				</Compiler>
+				<ExtraCommands>
+					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.l --lang AI --comp lexer" />
+					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.y --lang AI --comp parser" />
+					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)AI/reposrt.txt --header=$(TARGET_OUTPUT_DIR)AI/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)AI/intel.y" />
+					<Add before="flex  -o $(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
+				</ExtraCommands>
+			</Target>
+			<Target title="generator-dbg">
+				<Option output="bin/Debug/generator" prefix_auto="1" extension_auto="1" />
+				<Option object_output="bin/Debug/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--lang AI --comp lexer --output bin/Debug/comp.ll" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall -pedantic -std=c++20" />
+			<Add directory="../../octetos" />
+			<Add directory="1" />
+		</Compiler>
+		<Unit filename="1/A.cc" />
+		<Unit filename="1/A.hh" />
+		<Unit filename="1/A/Lexer/declarartion.cc" />
+		<Unit filename="1/A/Lexer/functions.cc" />
+		<Unit filename="1/A/Lexer/rules.cc" />
+		<Unit filename="1/A/Parser/declarartion.cc" />
+		<Unit filename="1/A/Parser/functions.cc" />
+		<Unit filename="1/A/Parser/rules.cc" />
+		<Unit filename="1/Generator.cc" />
+		<Unit filename="1/Generator.hh" />
+		<Unit filename="1/occ-generetor-main.cc">
+			<Option target="Debug" />
+			<Option target="Release" />
+			<Option target="generator-dbg" />
+		</Unit>
+		<Unit filename="1/occ.cc" />
+		<Unit filename="1/occ.hh" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
