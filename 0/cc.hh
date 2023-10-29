@@ -20,6 +20,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <map>
+
 #include "oct-core-v3.hh"
 
 namespace oct::cc::v0
@@ -70,6 +72,29 @@ namespace oct::cc::v0
 
     };
 
+    struct Key
+    {
+        const char* name;
+    };
+
+    template<class N>
+    class SymbolTable : public std::map<std::string,N*>
+    {
+    public:
+        SymbolTable();
+
+
+        void print() const;
+
+    protected:
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        bool add(N*);
+
+    };
 
 }
 

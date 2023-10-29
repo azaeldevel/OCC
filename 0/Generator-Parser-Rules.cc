@@ -106,7 +106,7 @@ namespace oct::cc::v0::tools
                 out << "\t\texpre->set($2);\n";
                 out << "\t\t$$ = expre;\n";
             out << "\t}\n";
-            if(is_disnastic_A())
+            /*if(is_disnastic_A())
             {
                 out << "\t|\n";
                 out << "\tregisters\n";
@@ -124,7 +124,7 @@ namespace oct::cc::v0::tools
                 out << "\t\tseg->type = AI_here::nodes::Node::Type::segment;\n";
                 out << "\t\t$$ = seg;\n";
                 out << "\t}\n";
-            }
+            }*/
             out << "\t;\n\n";
 
         out << "postfix_expression :\n";
@@ -352,7 +352,7 @@ namespace oct::cc::v0::tools
             out << "\t}\n";
             out << "\t;\n\n";
 
-        out << "memory_base_base :\n";
+        /*out << "memory_base_base :\n";
             out << "\tBX\n";
             out << "\t{\n";
                 out << "\t\t$$ = AI_here::Tokens::BX;\n";
@@ -379,60 +379,92 @@ namespace oct::cc::v0::tools
         out << "memory_base :\n";
             out << "\tmemory_base_base '+' memory_base_index\n";
             out << "\t{\n";
+                //out << "\t\tstd::cout << \"memory_base '+' constant_integer_16b\";\n";
                 out << "\t\tauto base = tray->block.create<AI_here::nodes::Memory::Base>();\n";
                 out << "\t\tbase->base = $1;\n";
                 out << "\t\tbase->index = $3;\n";
+                out << "\t\t$$ = base;\n";
             out << "\t}\n";
-            out << "\t;\n\n";
+            out << "\t;\n\n";*/
 
-        out << "memory :\n";
-            out << "\tmemory_base\n";
+        out << "memory_base :\n";
+            out << "\tBX '+' SI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set($1);\n";
+                out << "\t\tmem->rm = 0;\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tmemory_base '+' constant_integer_16b\n";
+            out << "\tBX '+' DI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set($1,$3);\n";
+                out << "\t\tmem->rm = 1;\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' SI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->rm = 2;\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' DI\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->rm = 3;\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tSI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(AI_here::Tokens::SI);\n";
+                out << "\t\tmem->rm = 4;\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tDI\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(AI_here::Tokens::DI);\n";
-                out << "\t\t$$ = mem;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX\n";
-            out << "\t{\n";
-                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(AI_here::Tokens::BX);\n";
+                out << "\t\tmem->rm = 5;\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tBP\n";
             out << "\t{\n";
                 out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set(AI_here::Tokens::BP);\n";
+                out << "\t\tmem->rm = 6;\n";
                 out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+                out << "\t\tAI_here::nodes::Memory* mem = tray->block.create<AI_here::nodes::Memory>();\n";
+                out << "\t\tmem->rm = 7;\n";
+                out << "\t\t$$ = mem;\n";
+            out << "\t}\n";
+            out << "\t;\n\n";
+
+    out << "memory :\n";
+            out << "\tmemory_base\n";
+            out << "\t{\n";
+                out << "\t\t$1->mod = 0;\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tmemory_base '+' constant_integer\n";
+            out << "\t{\n";
+                out << "\t\tif($3->is_data_8b())$1->mod = 1;\n";
+                out << "\t\telse if($3->is_data_16b())$1->mod = 2;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tconstant_integer_16b\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"Leyenbdo memoria directa\\n\";\n";
                 out << "\t\tauto mem = tray->block.create<AI_here::nodes::Memory>();\n";
-                out << "\t\tmem->set($1);\n";
+                out << "\t\tmem->rm = 6;\n";
+                out << "\t\tmem->address = $1;\n";
                 out << "\t\t$$ = mem;\n";
             out << "\t}\n";
             out << "\t;\n\n";
@@ -881,7 +913,8 @@ namespace oct::cc::v0::tools
                 //std::cout << "direct_declarator : IDENTIFIER\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::direct_declarator>();\n";
                 out << "\t\t$$->id = $1;\n";
-                out << "\t\t$$->direct = NULL;\n";
+                out << "\t\t$$->nested = 1;\n";
+                out << "\t\t$$->next = NULL;\n";
                 //std::cout << $$->id->name << " ";
             out << "\t}\n";
             /*
@@ -911,7 +944,8 @@ namespace oct::cc::v0::tools
             out << "\tdirect_declarator '('  ')'\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
-                out << "\t\t$$->identifier_list = NULL;\n";
+                //out << "\t\t$$->identifier_list = NULL;\n";
+                out << "\t\t$$->nested = 4;\n";
             out << "\t}\n";
             out << "\t;\n\n";
 
@@ -919,24 +953,24 @@ namespace oct::cc::v0::tools
         out << "type_qualifier: \n";
             out << "\tCONST\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_qualifier>();\n";
                 out << "\t\t$$->token = AI_here::Tokens::CONST;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tVOLATIL\n";
             out << "\t{\n";
-                out << "\t\t$$ = tray->block.create<AI_here::nodes::Token<AI_here::Tokens>>();\n";
+                out << "\t\t$$ = tray->block.create<AI_here::nodes::type_qualifier>();\n";
                 out << "\t\t$$->token = AI_here::Tokens::VOLATIL;\n";
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "type_qualifiers: \n";
+        out << "type_qualifier_list: \n";
             out << "\ttype_qualifier\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\ttype_qualifiers type_qualifier\n";
+            out << "\ttype_qualifier_list type_qualifier\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not type_qualifier) type_qualifier = $1;\n";
@@ -950,28 +984,28 @@ namespace oct::cc::v0::tools
             out << "\t'*'\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::pointer>();\n";
-                out << "\t\t$$->list = NULL;\n";
+                out << "\t\t$$->tq = NULL;\n";
                 out << "\t\t$$->next = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\t'*' type_qualifiers\n";
+            out << "\t'*' type_qualifier_list\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::pointer>();\n";
-                out << "\t\t$$->list = $2;\n";
+                out << "\t\t$$->tq = $2;\n";
                 out << "\t\t$$->next = NULL;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t'*' pointer\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::pointer>();\n";
-                out << "\t\t$$->list = NULL;\n";
+                out << "\t\t$$->tq = NULL;\n";
                 out << "\t\t$$->next = $2;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\t'*' type_qualifiers pointer\n";
+            out << "\t'*' type_qualifier_list pointer\n";
             out << "\t{\n";
                 out << "\t\t$$ = tray->block.create<AI_here::nodes::pointer>();\n";
-                out << "\t\t$$->list = $2;\n";
+                out << "\t\t$$->tq = $2;\n";
                 out << "\t\t$$->next = $3;\n";
             out << "\t}\n";
             out << "\t;\n";
@@ -1056,6 +1090,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tinit_declarator_list ',' init_declarator\n";
             out << "\t{\n";
+                //std::cout << "init_declarator_list ',' init_declarator\n";
                 out << "\t\tstatic AI_here::nodes::init_declarator* statement_prev = NULL;\n";
                 out << "\t\t$$ = $1;\n";
                 out << "\t\tif(not statement_prev) statement_prev = $1;\n";
@@ -1335,7 +1370,7 @@ namespace oct::cc::v0::tools
             out << "\t|\n";
             out << "\tdeclaration\n";
             out << "\t{\n";
-                //std::cout << "storage_class_specifier : declaration ';'\n";
+                //std::cout << "declaration ';'\n";
                 //std::cout << ";\n";
                 //$1->print(std::cout);
                 out << "\t\t$$ = tray->block.create<AII_here::nodes::external_declaration>();\n";

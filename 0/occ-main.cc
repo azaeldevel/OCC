@@ -189,7 +189,7 @@ int main (int argc, char* argv[])
                 }
                 const AI_here::nodes::translation_unit* tree = driverII.translate();
                 //std::cout << "Printing ...\n";
-                //driverII.print(std::cout);
+                driverII.print(std::cout);
                 //if(tree) driverI.print(std::cout,tree);
                 //std::cout << "Generating ...\n";
                 if(tree) driverI.generate(outstream,tree);
@@ -205,8 +205,8 @@ int main (int argc, char* argv[])
         }
 	}
 
-	//symbols.generate_memory();
-    //symbols.print();
+	symbols.generate_memory();
+    symbols.print();
 
     //std::cout << "sizeof(unsigned) = " << sizeof(unsigned) << "\n";
     //std::cout << "sizeof(signed) = " << sizeof(signed) << "\n";

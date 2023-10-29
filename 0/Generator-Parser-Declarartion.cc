@@ -301,9 +301,9 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::Tokens> segments\n";
         //out << "%type <AI_here::Tokens> index_array\n";
         out << "%type <AI_here::nodes::Memory*> memory\n";
-        out << "%type <AI_here::nodes::Memory::Base*> memory_base\n";
-        out << "%type <AI_here::Tokens> memory_base_base\n";
-        out << "%type <AI_here::Tokens> memory_base_index\n";
+        out << "%type <AI_here::nodes::Memory*> memory_base\n";
+        //out << "%type <AI_here::Tokens> memory_base_base\n";
+        //out << "%type <AI_here::Tokens> memory_base_index\n";
         //out << "%type <AI_here::Tokens> memory_base_1\n";
         //out << "%type <AI_here::Tokens> memory_index\n";
 
@@ -327,8 +327,8 @@ namespace oct::cc::v0::tools
         out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
         out << "%type <AI_here::nodes::constant*> initializer\n";
         out << "%type <AI_here::nodes::declaration*> declaration\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifier\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifiers\n";
+        out << "%type <AI_here::nodes::type_qualifier*> type_qualifier\n";
+        out << "%type <AI_here::nodes::type_qualifier*> type_qualifier_list\n";
         out << "%type <AI_here::nodes::pointer*> pointer\n";
 
         //out << "%type <AI_here::nodes::identifier*> identifier_list\n";

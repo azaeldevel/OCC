@@ -153,6 +153,57 @@ void v0_AI_developing()
     CU_ASSERT(const1.get_type_data() == AI_here::Tokens::INT);
     CU_ASSERT(const1.get_type_singed() == AI_here::Tokens::SIGNED);
 
+    oct::core::v3::Block block1;
+    int* data1 = (int*)block1.create(sizeof(int));
+    *data1 = 100;
+    int* data2 = (int*)block1.create(sizeof(int));
+    *data2 = 200;
+    int* data3 = (int*)block1.create(sizeof(int));
+    *data3 = 300;
+    CU_ASSERT(*data1 == 100);
+    CU_ASSERT(*data2 == 200);
+    CU_ASSERT(*data3 == 300);
+
+    //
+    int* data4 = block1.create<int>();
+    *data4 = 400;
+    int* data5 = block1.create<int>();
+    *data5 = 500;
+    int* data6 = block1.create<int>();
+    *data6 = 600;
+    CU_ASSERT(*data4 == 400);
+    CU_ASSERT(*data5 == 500);
+    CU_ASSERT(*data6 == 600);
+
+    int* array1 = block1.array<int>(6);
+    array1[0] = 100;
+    array1[1] = 200;
+    array1[2] = 300;
+    array1[3] = 400;
+    array1[4] = 500;
+    array1[5] = 600;
+    CU_ASSERT(array1[0] == 100);
+    CU_ASSERT(array1[1] == 200);
+    CU_ASSERT(array1[2] == 300);
+    CU_ASSERT(array1[3] == 400);
+    CU_ASSERT(array1[4] == 500);
+    CU_ASSERT(array1[5] == 600);
+
+
+
+
+    ///>>>>>
+    AI_here::nodes::Memory::Base* base1 = block1.create<AI_here::nodes::Memory::Base>();
+    base1->base = AI_here::Tokens::BX;
+    base1->index = AI_here::Tokens::DI;
+
+    AI_here::nodes::Memory* mem1 = block1.create<AI_here::nodes::Memory>();
+    mem1->set(base1);
+
+    AI_here::nodes::constant_integer<AI_here::integer>* const_integer1 = block1.create<AI_here::nodes::constant_integer<AI_here::integer>>();
+    const_integer1->set("0x5632",AI_here::nodes::constant_integer<AI_here::integer>::Format::hexadecimal,AI_here::Tokens::CONSTANT_INTEGER_HEX_16b);
+    AI_here::nodes::Memory* mem2 = block1.create<AI_here::nodes::Memory>();
+    mem2->set(base1,const_integer1);
 }
 
 void v0_AI_components()
