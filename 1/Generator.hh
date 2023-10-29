@@ -44,47 +44,40 @@ namespace oct::cc::v1
         *\brief Retorna el prefijo que se agrega para el opcion de flex/bison
         */
         const char* prefix() const;
+
+        virtual void keywords_c(std::ostream& out) const;
     };
 
 
-    class Lexer :  public Generator
+    namespace A
     {
-    public:
-        Lexer(Language l);
+        class Lexer :  public Generator
+        {
+        public:
+            Lexer(Language l);
 
-        virtual void declaration(std::ostream& out) const;
-        virtual void rules(std::ostream& out) const;
-        virtual void functions(std::ostream& out) const;
-        virtual void save(std::ostream& out) const;
+            virtual void declaration(std::ostream& out) const;
+            virtual void rules(std::ostream& out) const;
+            virtual void functions(std::ostream& out) const;
+            virtual void save(std::ostream& out) const;
 
-    };
 
-    class Parser :  public Generator
-    {
-    public:
-        Parser(Language l);
 
-        virtual void declaration(std::ostream& out) const;
-        virtual void declaration_code_required(std::ostream& out) const;
-        virtual void declaration_types_AI(std::ostream& out) const;
-        virtual void declaration_types_AII(std::ostream& out) const;
-        virtual void rules(std::ostream& out) const;
-        virtual void rules_finals(std::ostream& out) const;
-        virtual void rules_constants(std::ostream& out) const;
-        virtual void rules_expressions_decs(std::ostream& out) const;
-        virtual void rules_expressions_rules(std::ostream& out) const;
-        virtual void rules_instructions(std::ostream& out) const;
-        virtual void rules_instructions_AI(std::ostream& out) const;
-        virtual void rules_instructions_AII(std::ostream& out) const;
-        //virtual void rules_declaration(std::ostream& out) const;
-        virtual void rules_declarations(std::ostream& out) const;
-        virtual void rules_declarator(std::ostream& out) const;
-        virtual void rules_translation_unit_AI(std::ostream& out) const;
-        virtual void rules_translation_unit_AII(std::ostream& out) const;
-        virtual void functions(std::ostream& out) const;
-        virtual void save(std::ostream& out) const;
+        };
 
-    };
+        class Parser :  public Generator
+        {
+        public:
+            Parser(Language l);
+
+            virtual void declaration(std::ostream& out) const;
+            virtual void rules(std::ostream& out) const;
+            virtual void functions(std::ostream& out) const;
+            virtual void save(std::ostream& out) const;
+
+        };
+
+    }
 }
 
 

@@ -1,7 +1,7 @@
 
 #include "Generator.hh"
 
-namespace oct::cc::v1
+namespace oct::cc::v1::A
 {
     void Parser::declaration(std::ostream& out) const
     {
@@ -23,10 +23,6 @@ namespace oct::cc::v1
             // Number of errors.
             out << "\t\tint nerrs;\n";
           out << "\t} result;\n";
-            out << "\t#include <" << header_file() << ">\n";
-            out << "\t#include <" << language(true) << "-Driver.hh>\n";
-            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
-            out << "\tnamespace core_here = oct::core::v3;\n";
         out << "}\n";
 
         // Emitted in the header file, after the definition of YYSTYPE.
@@ -34,14 +30,10 @@ namespace oct::cc::v1
         out << "{\n";
         // Tell Flex the expected prototype of yylex.
         // The scanner argument must be named yyscanner.
-        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray)\n";
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, occ::AI::Tray* tray)\n";
             out << "\tYY_DECL;\n";
-
-            //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg);\n";
-            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, const char *msg, ...);\n";
-            out << "\tvoid yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner, " << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray, char);\n";
-            //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, char);\n";
-            //out << "\tvoid yyerror(YYLTYPE* yyalloc,yyscan_t scanner, result *res, const " << space() << "_here::nodes::" << tree_node() << "** unit,core_here::Block& block, const char *msg, yytoken_kind_t);\n";
+            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, occ::AI::Tray* tray, const char *msg, ...);\n";
+            out << "\tvoid yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner, occ::AI::::Tray* tray, char);\n";
 
 
         out << "}\n";
@@ -52,18 +44,7 @@ namespace oct::cc::v1
             out << "#include <stdarg.h>\n";
             out << "#include <stdio.h> \n";
             out << "#include <stdlib.h>\n";
-            out << "\t#include <" << header_file() << ">\n";
-            out << "\t#include <" << language(true) << "-Driver.hh>\n";
-            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
-            if(lang == Language::AI)
-            {
-                out << "\tstatic " << space(1) << "_here::nodes::statement *statement_list_body = NULL;\n";
-                out << "\tstatic " << space(1) << "_here::nodes::function *funcntion = NULL;\n";
-                //out << "\tstatic " << space(1) << "_here::nodes::pointer *pointer = NULL;\n";
-            }
-            out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *type_qualifier = NULL;\n";
-            //out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *type_specifier = NULL;\n";
-            out << "\tstatic " << space(1) << "_here::nodes::Token<" << space(1) << "_here::Tokens> *declaration_specifiers = NULL;\n";
+
         out << "}\n";
 
 
@@ -263,146 +244,12 @@ namespace oct::cc::v1
         out << "%token SS\n";
         out << "%token ES\n";
 
-
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
-        //
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_8b\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC_16b\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_DEC\n";
-        out << "%token LITERAL_INTEGER_DEC_SCHAR\n";
-        out << "%token LITERAL_INTEGER_DEC_UCHAR\n";
-        out << "%token LITERAL_INTEGER_DEC_SHORT\n";
-        out << "%token LITERAL_INTEGER_DEC_USHORT\n";
-        out << "%token LITERAL_INTEGER_DEC_INT\n";
-        out << "%token LITERAL_INTEGER_DEC_UNIT\n";
-        out << "%token LITERAL_INTEGER_DEC_LONG\n";
-        out << "%token LITERAL_INTEGER_DEC_ULONG\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX_8b\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_HEX_16b\n";
-        out << "%token LITERAL_INTEGER_HEX_SCHAR\n";
-        out << "%token <signed char>LITERAL_INTEGER_HEX_UCHAR\n";
-        out << "%token LITERAL_INTEGER_HEX_SHORT\n";
-        out << "%token <unsigned short>LITERAL_INTEGER_HEX_USHORT\n";
-        out << "%token LITERAL_INTEGER_HEX_INT\n";
-        out << "%token <unsigned int>LITERAL_INTEGER_HEX_UINT\n";
-        out << "%token LITERAL_INTEGER_HEX_LONG\n";
-        out << "%token LITERAL_INTEGER_HEX_ULONG\n";
-        out << "%token <AI_here::nodes::constant_integer<AI_here::integer>*> CONSTANT_INTEGER_OCT\n";
-        out << "%token <AI_here::nodes::charater_constant<char>*> CONSTANT_CHAR\n";
-        out << "%token <const char*> LITERAL_STRING\n";
-        out << "%token <AI_here::nodes::identifier*> IDENTIFIER\n";
 
-        out << "%type <AI_here::Tokens> registers_8b\n";
-        out << "%type <AI_here::Tokens> registers_16b\n";
-        //out << "%type <AI_here::Tokens> registers\n";
-        out << "%type <AI_here::Tokens> segments\n";
-        //out << "%type <AI_here::Tokens> index_array\n";
-        out << "%type <AI_here::nodes::Memory*> memory\n";
-        out << "%type <AI_here::nodes::Memory::Base*> memory_base\n";
-        out << "%type <AI_here::Tokens> memory_base_base\n";
-        out << "%type <AI_here::Tokens> memory_base_index\n";
-        //out << "%type <AI_here::Tokens> memory_base_1\n";
-        //out << "%type <AI_here::Tokens> memory_index\n";
-
-
-        out << "%type <AI_here::nodes::Move*> move\n";
-        out << "%type <AI_here::nodes::Interruption*> interruption\n";
-        out << "%type <AI_here::nodes::Label*> label\n";
-        out << "%type <AI_here::nodes::Return*> ret\n";
-        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer\n";
-        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer_8b\n";
-        out << "%type <AI_here::nodes::constant_integer<AI_here::integer>*> constant_integer_16b\n";
-        //out << "%type <char> const_char\n";
-        out << "%type <AI_here::nodes::statement*> instructions\n";
-
-        //out << "%type <AI_here::nodes::const_expression*> const_expression\n";
-        out << "%type <AI_here::nodes::direct_declarator*> direct_declarator\n";
-        out << "%type <AI_here::nodes::declarator*> declarator\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_specifier\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> declaration_specifiers\n";
-        out << "%type <AI_here::nodes::init_declarator*> init_declarator\n";
-        out << "%type <AI_here::nodes::init_declarator*> init_declarator_list\n";
-        out << "%type <AI_here::nodes::constant*> initializer\n";
-        out << "%type <AI_here::nodes::declaration*> declaration\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifier\n";
-        out << "%type <AI_here::nodes::Token<AI_here::Tokens>*> type_qualifiers\n";
-        out << "%type <AI_here::nodes::pointer*> pointer\n";
-
-        //out << "%type <AI_here::nodes::identifier*> identifier_list\n";
-
-        //rules_expressions_decs(out);
-
-        switch(lang)
-        {
-        case Language::AI:
-            declaration_types_AI(out);
-            break;
-        case Language::AII:
-            declaration_types_AII(out);
-            break;
-        default:
-            ;
-        }
 
         out << "%start translation_unit\n";
-    }
-    void Parser::rules_expressions_decs(std::ostream& out) const
-    {
-        out << "%type <AI_here::nodes::Node*> primary_expression\n";
-        out << "%type <AI_here::nodes::Node*> postfix_expression\n";
-        out << "%type <AI_here::nodes::Node*> unary_expression\n";
-        out << "%type <AI_here::nodes::Node*> cast_expression\n";
-        out << "%type <AI_here::nodes::Node*> multiplicative_expression\n";
-        out << "%type <AI_here::nodes::Node*> additive_expression\n";
-    }
-    void Parser::declaration_code_required(std::ostream& out) const
-    {
-
-        out << "%code requires\n";
-        out << "{\n";
-            out << "\t#include <" << header_file() << ">\n";
-            out << "\t#include <" << language(true) << "-Driver.hh>\n";
-            out << "\t#include <core/3/Exception.hh>\n";
-            out << "\tnamespace " << space() << "_here = oct::cc::v0::" << space() << ";\n";
-            out << "\tnamespace core_here = oct::core::v3;\n";
-
-            out << "\tnamespace oct::cc::v0::" << space() << "\n";
-            out << "\t{\n";
-                out << "\t\tclass Scanner;\n";
-                out << "\t\tclass Driver;\n";
-            out << "\t}\n";
-
-            out << "\t# ifndef YY_NULLPTR\n";
-            out << "\t#  if defined __cplusplus && 201103L <= __cplusplus\n";
-            out << "\t#   define YY_NULLPTR nullptr\n";
-            out << "\t#  else\n";
-            out << "\t#   define YY_NULLPTR 0\n";
-            out << "\t#  endif\n";
-            out << "\t# endif\n";
-        out << "}\n";
-
-    }
-    void Parser::declaration_types_AI(std::ostream& out) const
-    {
-        out << "%type <AI_here::nodes::declaration*> declaration_list\n";
-        out << "%type <AI_here::nodes::statement*> instructions_list\n";
-        out << "%type <AI_here::nodes::function*> function\n";
-        out << "%type <AI_here::nodes::function*> function_list\n";
-        out << "%type <AI_here::nodes::translation_unit*> translation_unit\n";
-    }
-    void Parser::declaration_types_AII(std::ostream& out) const
-    {
-        out << "%type <AI_here::nodes::statement*> statement_list\n";
-        out << "%type <AI_here::nodes::statement*> statements\n";
-        out << "%type <AII_here::nodes::compound_statement*> compound_statement\n";
-        out << "%type <AII_here::nodes::function_definition*> function_definition\n";
-        out << "%type <AII_here::nodes::external_declaration*> external_declaration\n";
-        out << "%type <AII_here::nodes::external_declaration*> translation_unit\n";
-        out << "%type <AI_here::nodes::Return*> Return\n";
-
     }
 
 }
