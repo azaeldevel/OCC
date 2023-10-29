@@ -1,11 +1,13 @@
 
+#ifndef OCTETOS_OCC_V1_A_HH
+#define OCTETOS_OCC_V1_A_HH
 
 
 /*
  * main.cc
  * Copyright (C) 2022 Azael Reyes <azael.devel@gmail.com>
  *
- * Octetos Compiler Collection is free software: you can redistribute it and/or modify it
+ * Octetos Compuler Collection is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -20,37 +22,16 @@
  */
 
 
+
+#include <iostream>
+
 #include "occ.hh"
 
 
-
-namespace oct::cc::v1
+namespace oct::cc::v1::A
 {
 
-    Driver::~Driver()
-    {
-    }
-
-    bool Driver::parse(const std::list<std::filesystem::path>& sources)
-    {
-        for(const std::filesystem::path& p : sources)
-        {
-            if(not parse(p)) return false;
-        }
-
-        return true;
-    }
-
-
-
-
-    File::File() : file(NULL),buffer(NULL),scanner(NULL)
-    {
-    }
-
-
-    void* File::get_scanner()
-    {
-        return scanner;
-    }
 }
+
+
+#endif

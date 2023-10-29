@@ -247,9 +247,13 @@ namespace oct::cc::v1::A
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
+        out << "%type <occ::A::I::Unit*> Unit\n";
+        out << "%type <void*> declarations\n";
+        out << "%type <void*> functions\n";
 
 
-        out << "%start translation_unit\n";
+
+        out << "%start Unit\n";
     }
 
 }

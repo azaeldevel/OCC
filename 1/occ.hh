@@ -22,6 +22,7 @@
 
 #include <filesystem>
 #include <list>
+#include <map>
 
 
 #include <core/3/tree.hh>
@@ -29,7 +30,6 @@
 
 namespace oct::cc::v1
 {
-    namespace core_here = oct::core::v3;
     namespace core = oct::core::v3;
 
 	enum class Language
@@ -78,6 +78,409 @@ namespace oct::cc::v1
     };
 
 
+
+	enum class Tokens : int
+	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
+		command = -100,
+		eoi,//end of input
+		none,
+		//ASCII>>>
+		NUL = 0,
+		SOH,
+		STX,
+		ETX,
+		EOT,
+		ENQ,
+		ACK,
+		BEL,
+		BS,
+		TAB,
+		LF,
+		VT,
+		FF,
+		CR,
+		SO,
+		SIC,//SI control char
+		DLE,
+		DC1,
+		DC2,
+		DC3,
+		DC4,
+		NAK,
+		SYN,
+		ETB,
+		CAN,
+		EM,
+		SUBSTITUTE,
+		ESCC,//ESC control char
+		FS,
+		GS,
+		RS,
+		US = 31,
+		space,
+		exclamation_mark,
+		double_quote,
+		symbol_numbers,
+		symbol_money,
+		percen,
+		ampersan,
+		single_quote,
+		parenthesis_open,
+		parenthesis_close,
+		asterisk,
+		plus,
+		minus,
+		dot,
+		symbol_diagonal,
+		digit_0 = 48,
+		digit_1,
+		digit_2,
+		digit_3,
+		digit_4,
+		digit_5,
+		digit_6,
+		digit_7,
+		digit_8,
+		digit_9,
+		symbol_column,
+		semicolumn,
+		less,
+		equal,
+		grater,
+		question,
+		arroba,
+		//>>upper case
+		char_A = 65,
+		char_B,
+		char_C,
+		char_D,
+		char_E,
+		char_F,
+		char_G,
+		char_H,
+		char_I,
+		char_J,
+		char_K,
+		char_L,
+		char_M,
+		char_N,
+		char_O,
+		char_P,
+		char_Q,
+		char_R,
+		char_S,
+		char_T,
+		char_U,
+		char_V,
+		char_W,
+		char_X,
+		char_Y,
+		char_Z,
+		//>>
+		brackets_open,
+		diagonal_inverted,
+		brackets_close,
+		hat,
+		guion_down,
+		//>>>
+		char_a = 97,
+		char_b,
+		char_c,
+		char_d,
+		char_e,
+		char_f,
+		char_g,
+		char_h,
+		char_i,
+		char_j,
+		char_k,
+		char_l,
+		char_m,
+		char_n,
+		char_o,
+		char_p,
+		char_q,
+		char_r,
+		char_s,
+		char_t,
+		char_u,
+		char_v,
+		char_w,
+		char_x,
+		char_y,
+		char_z,
+		curly_brackets_open,
+		bar,
+		curly_brackets_close,
+		umlaut,
+		EuroSign = 218,
+		//>>>Extended ASCII
+
+
+
+
+
+
+		y_Diaeresis = 255,//ÿ
+		//>>>UTF-8
+		a_Macron = 256,
+
+		s_Coptic = 999,
+		//Inicode >>>
+
+
+		//>>>Tokens
+		base = 0x110000,
+
+		//C-keywords
+		AUTO = 110200,
+		BREAK = 110202,
+		CASE,
+		CHAR,
+		CONST,
+		CONTINUE,
+		DEFAULT,
+		DO,
+		DOUBLE,
+		ELSE,
+		ENUM,
+		EXTERN,
+		FLOAT,
+		FOR,
+		GOTO,
+		IF,
+		INT,
+		LONG,
+		REGISTER,
+		RETURN,
+		SHORT,
+		SIGNED,
+		SIZEOF,
+		STATIC,
+		STRUCT,
+		SWITCH,
+		TYPEDEF,
+		UNION,
+		UNSIGNED,
+		VOID,
+		VOLATIL,
+		WHILE,
+
+		//Intel instruction set
+		AAA,
+		AAD,
+		AAM,
+		AAS,
+		ADC,
+		ADD,
+		AND,
+		CALL,
+		CBW,
+		CLC,
+		CLD,
+		CLI,
+		CMC,
+		CMP,
+		CMPS,
+		CWD,
+		DAA,
+		DAS,
+		DEC,
+		DIV,
+		ESC,
+		HLT,
+		IDIV,
+		IMUL,
+		IN,
+		INC,
+		INTR,
+		INTO,
+		IRET,
+		JA,
+		JNBE,
+		JAE,
+		JNB,
+		JB,
+		JNAE,
+		JBE,
+		JNA,
+		JC,
+		JCXZ,
+		JE,
+		JZ,
+		JG,
+		JNLE,
+		JGE,
+		JNL,
+		JL,
+		JNGE,
+		JLE,
+		JNG,
+		JMP,
+		JNC,
+		JNE,
+		JNZ,
+		JNO,
+		JNP,
+		JPO,
+		JNS,
+		JO,
+		JP,
+		JPE,
+		JS,
+		LAHF,
+		LDS,
+		LEA,
+		LES,
+		LOCK,
+		LODS,
+		LOOP,
+		LOOPE,
+		LOOPNE,
+		NMI,
+		MOV,
+		MOVS,
+		MOVSB,
+		MOVSW,
+		MUL,
+		NEG,
+		NOP,
+		NOT,
+		OR,
+		OUT,
+		POP,
+		POPF,
+		PUSH,
+		PUSHF,
+		RCL,
+		RCR,
+		REPE,
+		REPZ,
+		REPNE,
+		REPNZ,
+		RET,
+		ROL,
+		ROR,
+		SAHF,
+		SAL,
+		SHL,
+		SAR,
+		SBB,
+		SCAS,
+		SEGMENT,
+		SHR,
+		SINGLE,
+		STEP,
+		STC,
+		STD,
+		STI,
+		STOS,
+		SUB,
+		TEST,
+		WAIT,
+		XCHG,
+		XLAT,
+		XORG,
+
+		//intel registers
+		AL,
+		AH,
+		AX,
+		BL,
+		BH,
+		BX,
+		CL,
+		CH,
+		CX,
+		DL,
+		DH,
+		DX,
+
+		//Ponters
+		SP,
+		BP,
+		SI,
+		DI,
+
+		//Segments
+		CS,
+		DS,
+		SS,
+		ES,
+
+        BYTE,
+		TINY,
+
+		IDENTIFIER,
+
+		//consttantes
+		CONSTANT_INTEGER_DEC,
+		CONSTANT_INTEGER_HEX,
+		CONSTANT_INTEGER_OCT,
+		CONSTANT_INTEGER_BIN,
+		CONSTANT_CHAR,
+		CONSTANT_DECIMAL,//numero float and double
+		CONSTANT_DECIMAL_FLOAT,//numero float and double
+		CONSTANT_DECIMAL_DOUBLE,//numero float and double
+
+
+	};
+
+
+	class File
+    {
+    public:
+        File();
+        ~File();
+
+        void* get_scanner();
+
+        const std::filesystem::path& get_filename()const;
+        bool open(const std::filesystem::path& file);
+    protected:
+
+    private:
+        FILE* file;
+        std::filesystem::path filename;
+        void* buffer;
+        void* scanner;
+    };
+
+    /**
+    *\brief Crea un nodo
+    **/
+    class Node : public core::Node<Tokens>
+    {
+        Tokens type;
+
+    };
+
+    template<typename N>
+    class SymbolTable : public std::map<const char*,N*>
+    {
+    public:
+        SymbolTable();
+
+
+        void print() const;
+
+    protected:
+
+        /**
+        *\brief
+        *\return true si inserta el elemento, falso si ya existe
+        **/
+        bool add(N*);
+
+    };
+
+
+    template<class U,class N>
+    struct Tray
+    {
+        SymbolTable<N>* symbols;
+        U* unit;
+    };
 }
 
 #endif
