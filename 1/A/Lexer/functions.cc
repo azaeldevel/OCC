@@ -1,7 +1,7 @@
 
 #include "Generator.hh"
 
-namespace oct::cc::v1
+namespace oct::cc::v1::A
 {
     void Lexer::functions(std::ostream& out) const
     {
