@@ -459,7 +459,7 @@ namespace oct::cc::v1
     class SymbolTable : public std::map<const char*,N*>
     {
     public:
-        SymbolTable();
+        SymbolTable()= default;
 
 
         void print() const;

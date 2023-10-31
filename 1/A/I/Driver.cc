@@ -60,5 +60,10 @@ namespace oct::cc::v1::A::I
     {
         //return tray->unit->semantic();
     }
+    bool Driver::parse(const std::filesystem::path& sources)
+    {
+
+        return false;
+    }
 
 }

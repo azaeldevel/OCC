@@ -27,24 +27,11 @@
 namespace oct::cc::v1
 {
 
-    Driver::~Driver()
-    {
-    }
-
-    bool Driver::parse(const std::list<std::filesystem::path>& sources)
-    {
-        for(const std::filesystem::path& p : sources)
-        {
-            if(not parse(p)) return false;
-        }
-
-        return true;
-    }
-
-
-
-
     File::File() : file(NULL),buffer(NULL),scanner(NULL)
+    {
+    }
+
+    File::~File()
     {
     }
 

@@ -65,6 +65,10 @@
 					<Add option="-g" />
 					<Add option="-DOCTETOS_OCC_V1_A_HH_TDD" />
 				</Compiler>
+				<Linker>
+					<Add library="libOCC-AI-1" />
+					<Add directory="bin/Debug" />
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
