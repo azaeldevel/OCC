@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_OCC_V1_A_HH
-#define OCTETOS_OCC_V1_A_HH
+#ifndef OCTETOS_OCC_V1_A_A_HH
+#define OCTETOS_OCC_V1_A_A_HH
 
 
 /*
@@ -25,11 +25,34 @@
 
 #include <iostream>
 
-#include "occ.hh"
+#include "../occ.hh"
 
 
 namespace oct::cc::v1::A
 {
+
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Unit : public Node
+    {
+    };
+
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Identifier : public Node
+    {
+        std::string string;
+    };
+
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Function : public Node
+    {
+        Identifier* identifier;
+    };
 
 }
 

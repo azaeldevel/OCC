@@ -31,9 +31,6 @@ namespace oct::cc::v1
     {
     }
 
-    File::~File()
-    {
-    }
 
 
     void* File::get_scanner()

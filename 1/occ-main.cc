@@ -118,7 +118,7 @@ int main (int argc, char* argv[])
 
     if(target_cpu == occ::CPU::intel_8086)
     {
-        //std::cout << "Compilando para intel 8086\n";
+        std::cout << "Compilando para intel 8086\n";
     }
     else
     {
@@ -136,7 +136,7 @@ int main (int argc, char* argv[])
     }
 
     occ::SymbolTable<occ::Node> symbols;
-	occ::Tray<occ::A::I::Unit,occ::Node> trayI;
+	occ::A::I::Tray trayI;
 	trayI.symbols = &symbols;
     occ::A::I::Driver driverI(trayI);
 	for(const std::filesystem::path& path : inputs)
@@ -154,14 +154,14 @@ int main (int argc, char* argv[])
             std::cout << "Compilando " << path << " para intel 8086\n";
             if(driverI.parse(path))
             {
-                if(not driverI.semantic())
+                //if(not driverI.semantic())
                 {
 
                 }
                 //std::cout << "Printing ...\n";
-                driverI.print(std::cout);
+                //driverI.print(std::cout);
                 //std::cout << "Generating ...\n";
-                driverI.generate(outstream);
+                //driverI.generate(outstream);
                 outstream.flush();
                 outstream.close();
                 std::cout << "\nCompletdo.\n";

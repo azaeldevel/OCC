@@ -25,7 +25,7 @@
 
 namespace oct::cc::v1::A::I
 {
-    Driver::Driver(Tray<Unit,Node>& t)
+    Driver::Driver(Tray& t)
     {
     }
     Driver::~Driver()
@@ -40,7 +40,7 @@ namespace oct::cc::v1::A::I
 
     void Driver::print(std::ostream& out) const
     {
-        if(tray->unit) tray->unit->print(out);
+        tray->unit->print(out);
     }
     void Driver::print(std::ostream& out,const Unit* tree) const
     {
@@ -59,11 +59,6 @@ namespace oct::cc::v1::A::I
     bool Driver::semantic()
     {
         //return tray->unit->semantic();
-    }
-    bool Driver::parse(const std::filesystem::path& sources)
-    {
-
-        return false;
     }
 
 }

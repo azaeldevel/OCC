@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_OCC_V1_A_HH
-#define OCTETOS_OCC_V1_A_HH
+#ifndef OCTETOS_OCC_V1_A_I_A_HH
+#define OCTETOS_OCC_V1_A_I_A_HH
 
 
 /*
@@ -25,28 +25,28 @@
 
 #include <iostream>
 
-#include "occ.hh"
+#include "../A.hh"
 
 
 namespace oct::cc::v1::A::I
 {
-
     /**
     *\brief Nodo de unidad de tranlacion
     **/
-    class Unit : public Node
+    struct Unit : public occ::A::Unit
     {
-
-    private:
-        Tokens type;
-
-    public:
 #ifdef  OCTETOS_OCC_V1_A_HH_TDD
         virtual void print(std::ostream& out) const
         {
         }
 #endif
     };
+
+    struct Tray : public occ::Tray<Unit>
+    {
+    };
+
+
 }
 
 

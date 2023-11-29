@@ -23,6 +23,9 @@ namespace oct::cc::v1::A
             // Number of errors.
             out << "\t\tint nerrs;\n";
           out << "\t} result;\n";
+
+            out << "\t#include <A/I/A.hh>\n";
+            out << "\t#include <A/I/Driver.hh>\n";
         out << "}\n";
 
         // Emitted in the header file, after the definition of YYSTYPE.
@@ -30,11 +33,11 @@ namespace oct::cc::v1::A
         out << "{\n";
         // Tell Flex the expected prototype of yylex.
         // The scanner argument must be named yyscanner.
-        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, occ::AI::Tray* tray)\n";
+        out << "\t#define YY_DECL yytoken_kind_t yylex (YYSTYPE* yylval_param,YYLTYPE* yylloc, yyscan_t yyscanner, occ::A::I::Tray* tray)\n";
             out << "\tYY_DECL;\n";
-            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner, occ::AI::Tray* tray, const char *msg, ...);\n";
-            out << "\tvoid yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner, occ::AI::::Tray* tray, char);\n";
-
+            out << "\tvoid yyerror(YYLTYPE* yylloc,yyscan_t scanner,occ::A::I::Tray* tray, const char *msg, ...);\n";
+            out << "\tvoid yyerror_unknow_symbol(YYLTYPE* yylloc,yyscan_t scanner, occ::A::I::Tray* tray, char);\n";
+            //out << "using namespace occ = oct::cc::v1;\n";
 
         out << "}\n";
 
@@ -45,6 +48,7 @@ namespace oct::cc::v1::A
             out << "#include <stdio.h> \n";
             out << "#include <stdlib.h>\n";
 
+            //out << "\t\tstatic occ::A::I::Function* function_prev = NULL;\n";
         out << "}\n";
 
 
@@ -63,7 +67,7 @@ namespace oct::cc::v1::A
 
         // Scanner and error count are exchanged between main, yyparse and yylex.
         //out << "%param {yyscan_t scanner}{const " << space() << "_here::nodes::" << tree_node() << "** unit}{core_here::Block& block}\n";
-        out << "%param {yyscan_t scanner}{" << space(1) << "_here::Tray<" << space() << "_here::nodes::" << tree_node() << ">* tray}\n";
+        out << "%param {yyscan_t scanner}{occ::A::I::Tray* tray}\n";
 
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";
@@ -247,13 +251,14 @@ namespace oct::cc::v1::A
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
-        out << "%type <occ::A::I::Unit*> Unit\n";
-        out << "%type <void*> declarations\n";
-        out << "%type <void*> functions\n";
+        out << "%token <occ::A::Identifier*> IDENTIFIER\n";
 
+        out << "%type <occ::A::I::Unit*> unit\n";
+        //out << "%type <void*> declarations\n";
+        out << "%type <occ::A::Function*> function\n";
+        out << "%type <occ::A::Function*> functions\n";
 
-
-        out << "%start Unit\n";
+        //out << "%start Unit\n";
     }
 
 }

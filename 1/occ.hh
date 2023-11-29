@@ -449,10 +449,9 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    class Node : public core::Node<Tokens>
+    struct Node : public core::Node<Tokens>
     {
-        Tokens type;
-
+        Node* next;
     };
 
     template<typename N>
@@ -475,12 +474,15 @@ namespace oct::cc::v1
     };
 
 
-    template<class U,class N>
+    template<class U,class N = Node>
     struct Tray
     {
         SymbolTable<N>* symbols;
         U* unit;
     };
+
 }
+
+namespace occ = oct::cc::v1;
 
 #endif

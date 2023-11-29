@@ -6,8 +6,11 @@ namespace oct::cc::v1::A
     void Lexer::rules(std::ostream& out) const
     {
 
-        out << "\\n    yylloc->last_line++; yylloc->last_column = 1;\n";
-        out << "[ \\t]+   LOCATION_STEP (); continue;\n";
+        out << "\"//\".*		;\n";
+        out << "\\n             yylloc->last_line++; yylloc->last_column = 1;\n";
+        out << "\\t             ;\n";
+        out << "[[:space:]]     ;\n";
+
 
         {
             out << "\"al\"	        return AL;\n";
@@ -43,11 +46,11 @@ namespace oct::cc::v1::A
 
         keywords_c(out);
 
-        out << "\"//\".*		;\n";
-
-
         out << "{IDENTIFIER}	{\n";
-
+                            out << "\t\tyylval->IDENTIFIER = new occ::A::Identifier;\n";
+                            out << "\t\tyylval->IDENTIFIER->string = yytext;\n";
+                            //out << "\t\tstd::cout << yytext ;\n";
+                            out << "\t\treturn IDENTIFIER;\n";
         out << "\t\t}\n";
 
 

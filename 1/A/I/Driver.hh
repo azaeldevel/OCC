@@ -16,7 +16,7 @@ namespace oct::cc::v1::A::I
     class Driver
     {
     public:
-        Driver (Tray<Unit,Node>&);
+        Driver (Tray&);
         virtual ~Driver ();
 
         virtual bool parse(const std::filesystem::path& sources);
@@ -30,7 +30,7 @@ namespace oct::cc::v1::A::I
 
     private:
         File file;
-        Tray<Unit,Node>* tray;
+        Tray* tray;
     };
 
 }
