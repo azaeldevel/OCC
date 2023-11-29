@@ -25,7 +25,7 @@
 
 namespace oct::cc::v1::A::I
 {
-    Driver::Driver(Tray& t)
+    Driver::Driver(Tray& t) : tray(&t)
     {
     }
     Driver::~Driver()
@@ -40,6 +40,7 @@ namespace oct::cc::v1::A::I
 
     void Driver::print(std::ostream& out) const
     {
+        std::cout << "Imprimiendo fuente..\n";
         tray->unit->print(out);
     }
     void Driver::print(std::ostream& out,const Unit* tree) const

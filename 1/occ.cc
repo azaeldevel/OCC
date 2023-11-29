@@ -37,4 +37,12 @@ namespace oct::cc::v1
     {
         return scanner;
     }
+
+
+    Node::Node() : next(NULL)
+    {
+    }
+    Node::Node(size_t s) : core::Node<Tokens>(s),next(NULL)
+    {
+    }
 }

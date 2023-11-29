@@ -86,6 +86,9 @@
 			<Option target="Release" />
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
+		<Unit filename="1/A/I/A.cc">
+			<Option target="libOCC-AI-dbg" />
+		</Unit>
 		<Unit filename="1/A/I/A.hh">
 			<Option target="libOCC-AI-dbg" />
 		</Unit>

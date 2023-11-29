@@ -50,7 +50,7 @@ namespace oct::cc::v1::A
         out << "}\n";
 
         out << "\n";
-        out << "void v1_AI_lexer()\n";
+        /*out << "void v1_AI_lexer()\n";
         out << "{\n";
             out << "\tYYSTYPE yylval_test;\n";
             out << "\tYYLTYPE yylloc_test;\n";
@@ -60,7 +60,7 @@ namespace oct::cc::v1::A
             out << "\tstd::string numbers;\n";
             out << "\tYY_BUFFER_STATE bp;\n";
             out << "\tyylex_init (&yyscanner_test);\n";
-            out << "\tyytoken_kind_t token;\n";
+            //out << "\tyytoken_kind_t token;\n";
 
             out << "\tfor(int i = -128; i < 128; i++)\n";
             out << "\t{\n";
@@ -82,14 +82,14 @@ namespace oct::cc::v1::A
                 out << "\t\tyylex_init (&yyscanner_test);\n";
                 out << "\t\tbp = yy_scan_string(numbers.c_str(),yyscanner_test);\n";
                 out << "\t\tyy_switch_to_buffer(bp,yyscanner_test);\n";
-                out << "\t\ttoken = yylex(&yylval_test,&yylloc_test,yyscanner_test,&tray_test);\n";
+                //out << "\t\ttoken = yylex(&yylval_test,&yylloc_test,yyscanner_test,&tray_test);\n";
                 out << "\t\tyy_flush_buffer(bp,yyscanner_test);\n";
                 out << "\t\tyy_delete_buffer (bp,yyscanner_test);\n";
                 out << "\t\tyylex_destroy (yyscanner_test);\n";
 
             out << "\t}\n";
 
-        out << "}\n";
+        out << "}\n";*/
     }
 }
 

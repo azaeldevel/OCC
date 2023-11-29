@@ -24,30 +24,23 @@
 
 
 
-namespace oct::cc::v1::A
+namespace oct::cc::v1::A::I
 {
-    Unit::Unit(size_t s) : Node(s)
+    Unit::Unit() : occ::A::Unit(2)
+    {
+    }
+    Unit::Unit(size_t s) : occ::A::Unit(s)
     {
     }
 
-    void Unit::print(std::ostream&)const
+    void Unit::print(std::ostream& out)const
     {
+        Function* actual = (Function*)at(1);
+        while(actual)
+        {
+            actual->print(out);
+            actual = (Function*)actual->next;
+        }
     }
 
-
-
-    void Identifier::print(std::ostream& out)const
-    {
-        out << string;
-    }
-
-
-
-    void Function::print(std::ostream& out)const
-    {
-        if(identifier) identifier->print(out);
-        out << "\n";
-        out << "{\n";
-        out << "}\n";
-    }
 }

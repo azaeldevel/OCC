@@ -7,9 +7,9 @@ namespace oct::cc::v1::A
     {
         out << "unit : functions\n";
             out << "\t{\n";
-                out << "\t\t$$ = new occ::A::I::Unit;\n";
-                out << "\t\t$$->resize(2);\n";
-                out << "\t\t$$->at(1) = $1;;\n";
+                out << "\t\ttray->unit = new occ::A::I::Unit;\n";
+                out << "\t\ttray->unit->at(1) = $1;\n";
+                out << "\t\t$$ = tray->unit;\n";
             out << "\t}\n";
             out << "\t;\n";
 

@@ -159,7 +159,7 @@ int main (int argc, char* argv[])
 
                 }
                 //std::cout << "Printing ...\n";
-                //driverI.print(std::cout);
+                driverI.print(std::cout);
                 //std::cout << "Generating ...\n";
                 //driverI.generate(outstream);
                 outstream.flush();

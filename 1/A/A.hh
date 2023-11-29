@@ -36,6 +36,9 @@ namespace oct::cc::v1::A
     **/
     struct Unit : public Node
     {
+        Unit() = default;
+        Unit(size_t);
+        void print(std::ostream&)const;
     };
 
     /**
@@ -44,6 +47,8 @@ namespace oct::cc::v1::A
     struct Identifier : public Node
     {
         std::string string;
+
+        void print(std::ostream&)const;
     };
 
     /**
@@ -52,6 +57,8 @@ namespace oct::cc::v1::A
     struct Function : public Node
     {
         Identifier* identifier;
+
+        void print(std::ostream&)const;
     };
 
 }

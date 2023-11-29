@@ -451,6 +451,9 @@ namespace oct::cc::v1
     **/
     struct Node : public core::Node<Tokens>
     {
+        Node();
+        Node(size_t);
+
         Node* next;
     };
 

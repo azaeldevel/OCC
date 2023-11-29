@@ -35,11 +35,11 @@ namespace oct::cc::v1::A::I
     **/
     struct Unit : public occ::A::Unit
     {
-#ifdef  OCTETOS_OCC_V1_A_HH_TDD
-        virtual void print(std::ostream& out) const
-        {
-        }
-#endif
+        Unit();
+        Unit(size_t);
+
+
+        virtual void print(std::ostream& out) const;
     };
 
     struct Tray : public occ::Tray<Unit>
