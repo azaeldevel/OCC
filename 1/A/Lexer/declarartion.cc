@@ -9,12 +9,18 @@ namespace oct::cc::v1::A
         out << "%option noyywrap nounput reentrant bison-bridge yylineno\n";
         //out << "%option prefix = \"" << prefix() << "\"\n";
 
+        /*out << "%top{\n";
+            out << "\t#include \"oas-intel.lexer.hh\"\n";
+            out << "\t#include \"oas-intel-parser.hh\"\n";
+        out << "%}\n";*/
+
         out << "%{\n";
             out << "\t#include <assert.h>\n";
             out << "\t#include <limits.h>\n";
             out << "\t#include <stdlib.h>\n";
             out << "\t#include <stdio.h>\n";
             out << "\t#include <string.h>\n";
+            //out << "\t#include \"oas-intel.lexer.hh\"\n";
             out << "\t#include \"oas-intel-parser.hh\"\n";
 
 

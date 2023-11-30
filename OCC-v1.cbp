@@ -37,12 +37,13 @@
 				<Compiler>
 					<Add option="-g -fPIC" />
 					<Add option="-DOCTETOS_OCC_V1_A_HH_TDD" />
+					<Add directory="bin/Debug" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.l --lang AI --comp lexer" />
 					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.y --lang AI --comp parser" />
-					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)AI/reposrt.txt --header=$(TARGET_OUTPUT_DIR)AI/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)AI/intel.y" />
-					<Add before="flex  -o $(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
+					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)AI/report.txt --header=$(TARGET_OUTPUT_DIR)AI/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)AI/intel.y" />
+					<Add before="flex -o $(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
 				</ExtraCommands>
 			</Target>
 			<Target title="generator-dbg">
@@ -127,6 +128,12 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 			<Option target="generator-dbg" />
+		</Unit>
+		<Unit filename="1/Buffer.cc">
+			<Option target="libOCC-AI-dbg" />
+		</Unit>
+		<Unit filename="1/Buffer.hh">
+			<Option target="libOCC-AI-dbg" />
 		</Unit>
 		<Unit filename="1/Generator.cc">
 			<Option target="Debug" />

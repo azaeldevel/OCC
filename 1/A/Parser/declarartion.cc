@@ -24,8 +24,11 @@ namespace oct::cc::v1::A
             out << "\t\tint nerrs;\n";
           out << "\t} result;\n";
 
+            //out << "\t#include \"oas-intel.lexer.hh\"\n";
+            //out << "\t#include <Buffer.hh>\n";
             out << "\t#include <A/I/A.hh>\n";
             out << "\t#include <A/I/Driver.hh>\n";
+
         out << "}\n";
 
         // Emitted in the header file, after the definition of YYSTYPE.
@@ -47,6 +50,7 @@ namespace oct::cc::v1::A
             out << "#include <stdarg.h>\n";
             out << "#include <stdio.h> \n";
             out << "#include <stdlib.h>\n";
+            //out << "\t#include \"oas-intel.lexer.hh\"\n";
 
             //out << "\t\tstatic occ::A::I::Function* function_prev = NULL;\n";
         out << "}\n";
