@@ -1,13 +1,11 @@
 	
 print
-{
-	
-}
+
+ret;
 
 main
-{
-	
-}
+
+ret;
 
 	
 	

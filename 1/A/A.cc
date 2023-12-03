@@ -47,7 +47,6 @@ namespace oct::cc::v1::A
     {
         if(identifier) identifier->print(out);
         out << "\n";
-        out << "{\n";
-        out << "}\n";
+        out << "ret;\n";
     }
 }

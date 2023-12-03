@@ -43,7 +43,7 @@
 					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.l --lang AI --comp lexer" />
 					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.y --lang AI --comp parser" />
 					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)AI/report.txt --header=$(TARGET_OUTPUT_DIR)AI/oas-intel-parser.hh -o $(TARGET_OUTPUT_DIR)AI/oas-intel-parser.cc  $(TARGET_OUTPUT_DIR)AI/intel.y" />
-					<Add before="flex -o $(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
+					<Add before="flex --header-file=$(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.hh -o $(TARGET_OUTPUT_DIR)AI/oas-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
 				</ExtraCommands>
 			</Target>
 			<Target title="generator-dbg">

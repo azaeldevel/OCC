@@ -1,6 +1,6 @@
 
-#ifndef OCTETOS_OCC_V1_BUFFER_HH
-#define OCTETOS_OCC_V1_BUFFER_HH
+#ifndef OCTETOS_CC_V1_BUFFER_HH
+#define OCTETOS_CC_V1_BUFFER_HH
 
 /*
  *
@@ -19,9 +19,11 @@
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ //#undef YY_DECL
 
 #include <stdio.h>
 #include <filesystem>
+#include <AI/oas-intel-parser.hh>
 #include <AI/oas-intel.lexer.hh>
 
 namespace oct::cc::v1
@@ -30,7 +32,7 @@ namespace oct::cc::v1
     class Buffer
     {
     private:
-        void* buffer;
+        YY_BUFFER_STATE buffer;
         yyscan_t scanner;
         FILE* file;
         std::filesystem::path filename;

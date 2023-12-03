@@ -31,7 +31,7 @@ namespace oct::cc::v1::A
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "function : IDENTIFIER '{' '}'\n";
+        out << "function : IDENTIFIER  RET ';'\n";
             out << "\t{\n";
                 out << "\t\t$$ = new occ::A::Function;\n";
                 out << "\t\t$$->identifier = $1;\n";
