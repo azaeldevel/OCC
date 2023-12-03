@@ -19,8 +19,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <AI/oas-intel-parser.hh>
-#include <AI/oas-intel.lexer.hh>
+#include <AI/occ-intel.parser.hh>
+#include <AI/occ-intel.lexer.hh>
 
 #include "Buffer.hh"
 

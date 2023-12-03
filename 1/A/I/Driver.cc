@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <AI/oas-intel-parser.hh>
+#include <AI/occ-intel.parser.hh>
 
 #include "Driver.hh"
 

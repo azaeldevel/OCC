@@ -21,7 +21,7 @@ namespace oct::cc::v1::A
             out << "\t#include <stdio.h>\n";
             out << "\t#include <string.h>\n";
             //out << "\t#include \"oas-intel.lexer.hh\"\n";
-            out << "\t#include \"oas-intel-parser.hh\"\n";
+            out << "\t#include \"occ-intel.parser.hh\"\n";
 
 
             // Each time a rule is matched, advance the end cursor/position.
