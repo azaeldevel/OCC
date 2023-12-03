@@ -7,7 +7,7 @@ namespace oct::cc::v1::A
     {
         out << "namespace oct::cc::v1\n";
         out << "{\n";
-            out << "File::~File()\n";
+            /*out << "File::~File()\n";
             out << "{\n";
                 out << "\tif(buffer)\n";
                 out << "\t{\n";
@@ -45,7 +45,7 @@ namespace oct::cc::v1::A
                 out << "\tyy_switch_to_buffer((YY_BUFFER_STATE)buffer,(yyscan_t)scanner);\n";
 
                 out << "\treturn true;\n";
-            out << "}\n";
+            out << "}\n";*/
 
         out << "}\n";
 

@@ -23,8 +23,8 @@
 
 #include <stdio.h>
 #include <filesystem>
-#include <AI/oas-intel-parser.hh>
-#include <AI/oas-intel.lexer.hh>
+//#include <AI/oas-intel-parser.hh>
+//#include <AI/oas-intel.lexer.hh>
 
 namespace oct::cc::v1
 {
@@ -32,17 +32,26 @@ namespace oct::cc::v1
     class Buffer
     {
     private:
-        YY_BUFFER_STATE buffer;
-        yyscan_t scanner;
+        void* buffer;
+        void* scanner;
         FILE* file;
         std::filesystem::path filename;
 
+    private:
+        inline void close();
+        inline void clean();
+
     public:
         Buffer();
+        Buffer(const Buffer&);
+        Buffer(Buffer&&);
         Buffer(const std::filesystem::path&);
         ~Buffer();
 
-        static void switch_buffer(Buffer&);
+        operator void*();
+        Buffer& operator =(Buffer&&);
+
+        static void active(Buffer&);
     };
 
 }

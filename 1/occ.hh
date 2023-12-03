@@ -427,7 +427,7 @@ namespace oct::cc::v1
 	};
 
 
-	class File
+	/*class File
     {
     public:
         File();
@@ -444,7 +444,7 @@ namespace oct::cc::v1
         std::filesystem::path filename;
         void* buffer;
         void* scanner;
-    };
+    };*/
 
     /**
     *\brief Crea un nodo

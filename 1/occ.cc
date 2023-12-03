@@ -27,7 +27,7 @@
 namespace oct::cc::v1
 {
 
-    File::File() : file(NULL),buffer(NULL),scanner(NULL)
+    /*File::File() : file(NULL),buffer(NULL),scanner(NULL)
     {
     }
 
@@ -36,7 +36,7 @@ namespace oct::cc::v1
     void* File::get_scanner()
     {
         return scanner;
-    }
+    }*/
 
 
     Node::Node() : next(NULL)

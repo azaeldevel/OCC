@@ -19,6 +19,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <AI/oas-intel-parser.hh>
+#include <AI/oas-intel.lexer.hh>
+
 #include "Buffer.hh"
 
 namespace oct::cc::v1
@@ -34,12 +37,66 @@ namespace oct::cc::v1
         file = fopen(filename.string().c_str(), "r");
         buffer = yy_create_buffer(file, YY_BUF_SIZE, scanner);
     }
+    Buffer::Buffer(const Buffer& b) : buffer(b.buffer),scanner(b.scanner),file(b.file)
+    {
+    }
+    Buffer::Buffer(Buffer&& b) : buffer(b.buffer),scanner(b.scanner),file(b.file)
+    {
+        b.buffer = NULL;
+        b.scanner = NULL;
+        b.file = NULL;
+    }
     Buffer::~Buffer()
     {
 
     }
-    void Buffer::switch_buffer(Buffer& b)
+    void Buffer::active(Buffer& b)
     {
         yy_switch_to_buffer((YY_BUFFER_STATE)b.buffer,(yyscan_t)b.scanner);
+    }
+
+
+    Buffer::operator void*()
+    {
+        return scanner;
+    }
+    Buffer&  Buffer::operator =(Buffer&& b)
+    {
+       close();
+
+        buffer = b.buffer;
+        scanner = b.scanner;
+        file = b.file;
+        b.buffer = NULL;
+        b.scanner = NULL;
+        b.file = NULL;
+
+        return *this;
+    }
+    void Buffer::close()
+    {
+        if(buffer) yy_delete_buffer ((YY_BUFFER_STATE)buffer, scanner);
+        if(scanner) yylex_destroy (scanner);
+        if(file) fclose(file);
+    }
+
+    void Buffer::clean()
+    {
+        if(buffer)
+        {
+            yy_delete_buffer ((YY_BUFFER_STATE)buffer, scanner);
+            buffer = NULL;
+        }
+        if(scanner)
+        {
+            yylex_destroy (scanner);
+            scanner = NULL;
+        }
+        if(file)
+        {
+            fclose(file);
+            file = NULL;
+        }
+
     }
 }

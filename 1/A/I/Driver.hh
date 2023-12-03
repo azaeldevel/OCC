@@ -6,6 +6,7 @@
 #include <list>
 //#include <A/oas-intel-parser.hh>
 #include "A.hh"
+#include  "../../Buffer.hh"
 
 //#include <A/location.hh>
 
@@ -29,8 +30,9 @@ namespace oct::cc::v1::A::I
     private:
 
     private:
-        File file;
+        //File file;
         Tray* tray;
+        Buffer buffer;
     };
 
 }

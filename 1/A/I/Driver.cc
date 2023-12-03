@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <AI/oas-intel-parser.hh>
 
 #include "Driver.hh"
 
@@ -60,6 +61,15 @@ namespace oct::cc::v1::A::I
     bool Driver::semantic()
     {
         //return tray->unit->semantic();
+    }
+
+    bool occ::A::I::Driver::parse(const std::filesystem::path& path)
+    {
+        //std::cout << "Parsing fuente..\n";
+        buffer = Buffer(path);
+        Buffer::active(buffer);
+        if(yyparse(buffer,tray) == 0) return true;
+        return false;
     }
 
 }

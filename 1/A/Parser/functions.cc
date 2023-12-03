@@ -17,12 +17,12 @@ namespace oct::cc::v1::A
           out << "\tfprintf (stderr, \"%i : El caracter '%c', no es parte de lenguaje.\\n\", yylloc->last_line, c);\n";
         out << "}\n";
 
-        out << "bool occ::A::I::Driver::parse(const std::filesystem::path& path)\n";
+        /*out << "bool occ::A::I::Driver::parse(const std::filesystem::path& path)\n";
         out << "{\n";
             out << "\tfile.open(path);\n";
             out << "\tif(yyparse(file.get_scanner(),tray) == 0) return true;\n";
             out << "\treturn false;\n";
-        out << "}\n";
+        out << "}\n";*/
     }
 }
 
