@@ -41,7 +41,7 @@ namespace oct::cc::v1
 
     public:
         Buffer();
-        Buffer(const Buffer&);
+        //Buffer(const Buffer&);
         Buffer(Buffer&&);
         Buffer(const std::filesystem::path&);
         ~Buffer();

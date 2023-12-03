@@ -27,9 +27,8 @@
 namespace oct::cc::v1
 {
 
-    Buffer::Buffer() : buffer(NULL),file(NULL)
+    Buffer::Buffer() : buffer(NULL),scanner(NULL),file(NULL)
     {
-        yylex_init (&scanner);
     }
     Buffer::Buffer(const std::filesystem::path& f) : filename(f)
     {
@@ -37,9 +36,9 @@ namespace oct::cc::v1
         file = fopen(filename.string().c_str(), "r");
         buffer = yy_create_buffer(file, YY_BUF_SIZE, scanner);
     }
-    Buffer::Buffer(const Buffer& b) : buffer(b.buffer),scanner(b.scanner),file(b.file)
+    /*Buffer::Buffer(const Buffer& b) : buffer(b.buffer),scanner(b.scanner),file(b.file)
     {
-    }
+    }*/
     Buffer::Buffer(Buffer&& b) : buffer(b.buffer),scanner(b.scanner),file(b.file)
     {
         b.buffer = NULL;
