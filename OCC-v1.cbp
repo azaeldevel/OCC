@@ -168,6 +168,9 @@
 		<Unit filename="bin/Debug/AI/occ-intel.lexer.cc">
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
+		<Unit filename="bin/Debug/AI/occ-intel.parser.cc">
+			<Option target="libOCC-AI-dbg" />
+		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

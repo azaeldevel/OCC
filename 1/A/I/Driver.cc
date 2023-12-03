@@ -41,7 +41,7 @@ namespace oct::cc::v1::A::I
 
     void Driver::print(std::ostream& out) const
     {
-        std::cout << "Imprimiendo fuente..\n";
+        //std::cout << "Imprimiendo fuente..\n";
         tray->unit->print(out);
     }
     void Driver::print(std::ostream& out,const Unit* tree) const
@@ -58,9 +58,9 @@ namespace oct::cc::v1::A::I
         //std::cout << "Generando apartir de arbol semantico\n";
         //if(tree) tree->generate(out);
     }
-    bool Driver::semantic()
+    bool Driver::semantic(std::ostream& out)
     {
-        //return tray->unit->semantic();
+        return tray->unit->semantic(out);
     }
 
     bool occ::A::I::Driver::parse(const std::filesystem::path& path)

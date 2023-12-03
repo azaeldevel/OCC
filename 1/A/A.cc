@@ -34,6 +34,11 @@ namespace oct::cc::v1::A
     {
     }
 
+    bool Unit::semantic(std::ostream& out)
+    {
+        return false;
+    }
+
 
 
     void Identifier::print(std::ostream& out)const
