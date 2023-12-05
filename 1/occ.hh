@@ -463,8 +463,6 @@ namespace oct::cc::v1
         Node(size_t);
         Node(const Types&);
         Node(const Types&,size_t);
-
-        Node* next;
     };
 
     template<typename N>

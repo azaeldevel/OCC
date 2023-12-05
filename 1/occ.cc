@@ -39,16 +39,16 @@ namespace oct::cc::v1
     }*/
 
 
-    Node::Node() : next(NULL)
+    Node::Node()
     {
     }
-    Node::Node(size_t s) : core::Node<Types>(s),next(NULL)
+    Node::Node(size_t s) : core::Node<Types>(s)
     {
     }
-    Node::Node(const Types& t) : core::Node<Types>(t), next(NULL)
+    Node::Node(const Types& t) : core::Node<Types>(t)
     {
     }
-    Node::Node(const Types& t,size_t s) : core::Node<Types>(t,s), next(NULL)
+    Node::Node(const Types& t,size_t s) : core::Node<Types>(t,s)
     {
     }
 }

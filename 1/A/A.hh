@@ -51,6 +51,10 @@ namespace oct::cc::v1::A
     struct Identifier : public Node
     {
         std::string string;
+        Node* next;
+
+        Identifier();
+        Identifier(Types);
 
         void print(std::ostream&)const;
     };
@@ -61,7 +65,10 @@ namespace oct::cc::v1::A
     struct Function : public Node
     {
         Identifier* identifier;
+        Node* next;
 
+        Function();
+        Function(Types);
         void print(std::ostream&)const;
     };
 

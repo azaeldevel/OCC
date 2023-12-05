@@ -46,14 +46,24 @@ namespace oct::cc::v1::A
     }
 
 
-
+    Identifier::Identifier() : next(NULL)
+    {
+    }
+    Identifier::Identifier(Types t) : Node(t),next(NULL)
+    {
+    }
     void Identifier::print(std::ostream& out)const
     {
         out << string;
     }
 
 
-
+    Function::Function() : next(NULL)
+    {
+    }
+    Function::Function(Types t) : Node(t),next(NULL)
+    {
+    }
     void Function::print(std::ostream& out)const
     {
         if(identifier) identifier->print(out);
