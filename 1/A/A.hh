@@ -72,6 +72,48 @@ namespace oct::cc::v1::A
         void print(std::ostream&)const;
     };
 
+
+
+    /**
+    *\brief Node Base para instruciones
+    **/
+    struct Instruction : public Node
+    {
+        Node* next;
+        char* inscode;
+
+        /**
+        *\brief
+        *
+        */
+        Instruction();
+        /**
+        *\brief Crea un nodo para la instruccion indicada
+        *\param type tipo de instruccion
+        *\param instsize bytes usados para especificar el codigo de instrccion
+        */
+        Instruction(Types type,size_t instsize);
+        ~Instruction();
+
+        void print(std::ostream&)const;
+    };
+
+
+
+
+    /**
+    *\brief Node Base para instruciones mov
+    **/
+    struct Move : public Instruction
+    {
+        Move();
+        Move(Types,size_t instsize);
+        void print(std::ostream&)const;
+
+        void make(Tokens to, Tokens front);
+        void make(Tokens to, Tokens front,const Node* nTo,const Node* nFront);
+
+    };
 }
 
 

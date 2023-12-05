@@ -451,7 +451,8 @@ namespace oct::cc::v1
         unit,
         declaration,
         function,
-
+        instruction,
+        move,
     };
 
     /**

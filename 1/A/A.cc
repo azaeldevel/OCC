@@ -39,7 +39,6 @@ namespace oct::cc::v1::A
     void Unit::print(std::ostream&)const
     {
     }
-
     bool Unit::semantic(std::ostream& out)
     {
         return false;
@@ -69,5 +68,47 @@ namespace oct::cc::v1::A
         if(identifier) identifier->print(out);
         out << "\n";
         out << "ret;\n";
+    }
+
+
+
+
+    Instruction::Instruction() : next(NULL),inscode(NULL)
+    {
+    }
+    Instruction::Instruction(Types t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
+    {
+    }
+    Instruction::~Instruction()
+    {
+        if(inscode) delete inscode;
+    }
+
+
+    void Instruction::print(std::ostream& out)const
+    {
+    }
+
+
+
+
+    Move::Move()
+    {
+    }
+    Move::Move(Types t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Move::print(std::ostream& out)const
+    {
+    }
+
+    void Move::make(Tokens to, Tokens front)
+    {
+
+    }
+    void Move::make(Tokens to, Tokens front,const Node* nTo,const Node* nFront)
+    {
+        make(to,front);
+
     }
 }
