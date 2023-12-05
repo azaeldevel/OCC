@@ -37,6 +37,8 @@ namespace oct::cc::v1::A::I
     {
         Unit();
         Unit(size_t);
+        Unit(const Types&);
+        Unit(const Types&,size_t);
 
 
         virtual void print(std::ostream& out) const;

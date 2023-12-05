@@ -42,7 +42,13 @@ namespace oct::cc::v1
     Node::Node() : next(NULL)
     {
     }
-    Node::Node(size_t s) : core::Node<Tokens>(s),next(NULL)
+    Node::Node(size_t s) : core::Node<Types>(s),next(NULL)
+    {
+    }
+    Node::Node(const Types& t) : core::Node<Types>(t), next(NULL)
+    {
+    }
+    Node::Node(const Types& t,size_t s) : core::Node<Types>(t,s), next(NULL)
     {
     }
 }

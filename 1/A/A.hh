@@ -38,6 +38,9 @@ namespace oct::cc::v1::A
     {
         Unit() = default;
         Unit(size_t);
+        Unit(const Types&);
+        Unit(const Types&,size_t);
+
         void print(std::ostream&)const;
         virtual bool semantic(std::ostream&);
     };

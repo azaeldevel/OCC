@@ -29,6 +29,12 @@ namespace oct::cc::v1::A
     Unit::Unit(size_t s) : Node(s)
     {
     }
+    Unit::Unit(const Types& t) : Node(t)
+    {
+    }
+    Unit::Unit(const Types& t,size_t s) : Node(t,s)
+    {
+    }
 
     void Unit::print(std::ostream&)const
     {

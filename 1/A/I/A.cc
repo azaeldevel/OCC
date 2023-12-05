@@ -32,6 +32,12 @@ namespace oct::cc::v1::A::I
     Unit::Unit(size_t s) : occ::A::Unit(s)
     {
     }
+    Unit::Unit(const Types& t) : occ::A::Unit(t,2)
+    {
+    }
+    Unit::Unit(const Types& t,size_t s) : occ::A::Unit(t,s)
+    {
+    }
 
     void Unit::print(std::ostream& out)const
     {

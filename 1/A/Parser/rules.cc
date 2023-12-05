@@ -7,7 +7,7 @@ namespace oct::cc::v1::A
     {
         out << "unit : functions\n";
             out << "\t{\n";
-                out << "\t\ttray->unit = new occ::A::I::Unit;\n";
+                out << "\t\ttray->unit = new occ::A::I::Unit(occ::Types::unit);\n";
                 out << "\t\ttray->unit->at(1) = $1;\n";
                 out << "\t\t$$ = tray->unit;\n";
             out << "\t}\n";
@@ -33,7 +33,7 @@ namespace oct::cc::v1::A
 
         out << "function : IDENTIFIER  RET ';'\n";
             out << "\t{\n";
-                out << "\t\t$$ = new occ::A::Function;\n";
+                out << "\t\t$$ = new occ::A::Function(occ::Types::function);\n";
                 out << "\t\t$$->identifier = $1;\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
             out << "\t}\n";

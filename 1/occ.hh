@@ -446,13 +446,23 @@ namespace oct::cc::v1
         void* scanner;
     };*/
 
+    enum class Types
+    {
+        unit,
+        declaration,
+        function,
+
+    };
+
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Node<Tokens>
+    struct Node : public core::Node<Types>
     {
         Node();
         Node(size_t);
+        Node(const Types&);
+        Node(const Types&,size_t);
 
         Node* next;
     };
