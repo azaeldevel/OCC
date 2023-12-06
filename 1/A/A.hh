@@ -66,6 +66,7 @@ namespace oct::cc::v1::A
     {
         Identifier* identifier;
         Node* next;
+        Node* insts;
 
         Function();
         Function(Types);
@@ -99,8 +100,6 @@ namespace oct::cc::v1::A
     };
 
 
-
-
     /**
     *\brief Node Base para instruciones mov
     **/
@@ -114,6 +113,31 @@ namespace oct::cc::v1::A
         void make(Tokens to,const Node* nTo, Tokens front,const Node* nFront);
 
     };
+
+
+    /**
+    *\brief Node Base para instruciones mov
+    **/
+    struct Return : public Instruction
+    {
+        Return();
+        Return(Types,size_t instsize);
+        void print(std::ostream&)const;
+
+    };
+
+
+    /**
+    *\brief Node Base para instruciones mov
+    **/
+    struct Empty : public Instruction
+    {
+        Empty();
+        Empty(Types,size_t instsize);
+        void print(std::ostream&)const;
+
+    };
+
 }
 
 

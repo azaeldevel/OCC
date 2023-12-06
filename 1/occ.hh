@@ -423,11 +423,14 @@ namespace oct::cc::v1
 
     enum class Types
     {
+        none,
         unit,
         declaration,
         function,
         instruction,
         move,
+        ret,
+        empty,
     };
 
     /**

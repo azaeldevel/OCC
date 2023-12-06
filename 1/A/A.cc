@@ -111,4 +111,32 @@ namespace oct::cc::v1::A
         make(to,front);
 
     }
+
+
+
+
+    Return::Return()
+    {
+    }
+    Return::Return(Types t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Return::print(std::ostream& out)const
+    {
+    }
+
+
+
+
+    Empty::Empty()
+    {
+    }
+    Empty::Empty(Types t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Empty::print(std::ostream& out)const
+    {
+    }
+
+
 }
