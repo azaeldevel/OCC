@@ -428,10 +428,10 @@ namespace oct::cc::v1
         declaration,
         function,
         instruction,
-        move,
-        ret,
-        empty,
-        interrupt,
+            move,
+            ret,
+            empty,
+            interrupt,
     };
 
     /**
