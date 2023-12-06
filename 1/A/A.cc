@@ -70,7 +70,7 @@ namespace oct::cc::v1::A
         Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
-            switch(actual_inst->data)
+            switch(reinterpret_cast<core::Node<Types>*>(actual_inst)->data)
             {
             case Types::move:
                     reinterpret_cast<Move*>(actual_inst)->print(out);
