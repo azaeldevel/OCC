@@ -45,10 +45,18 @@ namespace oct::cc::v1
     Node::Node(size_t s) : core::Node<Types>(s)
     {
     }
-    Node::Node(const Types& t) : core::Node<Types>(t)
+    Node::Node(Types t) : core::Node<Types>(t)
     {
     }
-    Node::Node(const Types& t,size_t s) : core::Node<Types>(t,s)
+    Node::Node(Types t,size_t s) : core::Node<Types>(t,s)
+    {
+    }
+
+
+    Number::Number()
+    {
+    }
+    Number::Number(Types t) : Node(t)
     {
     }
 }

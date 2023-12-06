@@ -251,11 +251,17 @@ namespace oct::cc::v1::A
         out << "%token DS\n";
         out << "%token SS\n";
         out << "%token ES\n";
+        out << "%token FS\n";
+        out << "%token GS\n";
 
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
         out << "%token <occ::A::Identifier*> IDENTIFIER\n";
+
+        out << "%token <char> LETTER\n";
+        out << "%token <occ::Number*> INTEGER_DECIMAL\n";
+        out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
 
         out << "%type <occ::A::I::Unit*> unit\n";
         //out << "%type <void*> declarations\n";

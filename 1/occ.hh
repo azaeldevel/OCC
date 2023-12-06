@@ -414,37 +414,12 @@ namespace oct::cc::v1
 		IDENTIFIER,
 
 		//consttantes
-		CONSTANT_INTEGER_DEC,
-		CONSTANT_INTEGER_HEX,
-		CONSTANT_INTEGER_OCT,
-		CONSTANT_INTEGER_BIN,
-		CONSTANT_CHAR,
-		CONSTANT_DECIMAL,//numero float and double
-		CONSTANT_DECIMAL_FLOAT,//numero float and double
-		CONSTANT_DECIMAL_DOUBLE,//numero float and double
+		INTEGER_DECIMAL,
+		INTEGER_HEXDECIMAL,
 
 
 	};
 
-
-	/*class File
-    {
-    public:
-        File();
-        ~File();
-
-        void* get_scanner();
-
-        const std::filesystem::path& get_filename()const;
-        bool open(const std::filesystem::path& file);
-    protected:
-
-    private:
-        FILE* file;
-        std::filesystem::path filename;
-        void* buffer;
-        void* scanner;
-    };*/
 
     enum class Types
     {
@@ -462,8 +437,20 @@ namespace oct::cc::v1
     {
         Node();
         Node(size_t);
-        Node(const Types&);
-        Node(const Types&,size_t);
+        Node(Types);
+        Node(Types,size_t);
+    };
+
+    /**
+    *\brief Node Base para numero constante
+    **/
+    struct Number : public Node
+    {
+        std::string string;
+
+        Number();
+        Number(Types);
+
     };
 
     template<typename N>
@@ -482,7 +469,6 @@ namespace oct::cc::v1
         *\return true si inserta el elemento, falso si ya existe
         **/
         bool add(N*);
-
     };
 
 

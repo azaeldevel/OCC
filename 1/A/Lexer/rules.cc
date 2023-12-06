@@ -46,13 +46,30 @@ namespace oct::cc::v1::A
 
         keywords_c(out);
 
-        out << "{IDENTIFIER}	{\n";
+        out << "{IDENTIFIER}\t\t{\n";
                             out << "\t\tyylval->IDENTIFIER = new occ::A::Identifier;\n";
-                            out << "\t\tyylval->IDENTIFIER->string = yytext;\n";
-                            //out << "\t\tstd::cout << yytext ;\n";
+                            out << "\t\tyylval->IDENTIFIER->string.assign(yytext,yyleng);\n";
+                            //out << "\t\tstd::cout << yytext << \":\" << yyleng ;\n";
                             out << "\t\treturn IDENTIFIER;\n";
         out << "\t\t}\n";
 
+        out << "{INTEGER_DECIMAL}  {\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number;\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL->string.assign(yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_DECIMAL;\n";
+                                out << "\t\t}\n";
+
+        out << "{INTEGER_HEXDECIMAL}  {\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number;\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL->string.assign(yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_HEXDECIMAL;\n";
+                                out << "\t\t}\n";
+
+
+        out << "{LETTER}  {\n";
+                                    out << "\t\tyylval->LETTER = yytext[1];\n";
+                                    out << "\t\treturn LETTER;\n";
+                                out << "\t\t}\n";
 
         out << "[[:punct:]]	{\n";
             out << "\t\treturn (yytoken_kind_t)yytext[0];\n";

@@ -111,7 +111,7 @@ namespace oct::cc::v1::A
         void print(std::ostream&)const;
 
         void make(Tokens to, Tokens front);
-        void make(Tokens to, Tokens front,const Node* nTo,const Node* nFront);
+        void make(Tokens to,const Node* nTo, Tokens front,const Node* nFront);
 
     };
 }

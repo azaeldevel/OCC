@@ -26,10 +26,21 @@ namespace oct::cc::v1::A
 
             // Each time a rule is matched, advance the end cursor/position.
             out << "\t#define YY_USER_ACTION  yylloc->last_column += (int) yyleng;\n";
-            out << "\t#define LOCATION_STEP() do {yylloc->first_line = yylloc->last_line;yylloc->first_column = yylloc->last_column;} while (0)\n";
+            out << "\t#define LOCATION_STEP() yylloc->first_line = yylloc->last_line;yylloc->first_column = yylloc->last_column;\n";
 
         out << "%}\n";
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
+        out << "LETTER '.'\n";
+        out << "INTEGER_DECIMAL \t\t";
+            {
+                out << "0";
+                out << "|";
+                out << "[+-][0-9]+";
+                out << "\n";
+            }
+
+        out << "INTEGER_HEXDECIMAL \t\t(0x|0X)[[:xdigit:]]+\n";
+
 
     }
 

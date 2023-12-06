@@ -106,7 +106,7 @@ namespace oct::cc::v1::A
     {
 
     }
-    void Move::make(Tokens to, Tokens front,const Node* nTo,const Node* nFront)
+    void Move::make(Tokens to,const Node* nTo, Tokens front,const Node* nFront)
     {
         make(to,front);
 
