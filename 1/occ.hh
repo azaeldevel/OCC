@@ -436,7 +436,7 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Node<Types>
+    struct Node : public core::Parent<Types>
     {
         Node();
         Node(size_t);

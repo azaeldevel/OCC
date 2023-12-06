@@ -66,8 +66,24 @@ namespace oct::cc::v1::A
     void Function::print(std::ostream& out)const
     {
         if(identifier) identifier->print(out);
-        out << "\n";
-        out << "ret;\n";
+        out << "\n{\n";
+        Instruction* actual_inst = (Instruction*)insts;
+        while(actual_inst)
+        {
+            switch(actual_inst->data)
+            {
+            case Types::move:
+                    reinterpret_cast<Move*>(actual_inst)->print(out);
+                break;
+            case Types::ret:
+                    reinterpret_cast<Return*>(actual_inst)->print(out);
+                break;
+            default:
+                ;
+            }
+            actual_inst = (Instruction*)actual_inst->next;
+        }
+        out << "}\n";
     }
 
 
@@ -100,6 +116,7 @@ namespace oct::cc::v1::A
     }
     void Move::print(std::ostream& out)const
     {
+        out << "move;\n";
     }
 
     void Move::make(Tokens to, Tokens front)
@@ -123,6 +140,7 @@ namespace oct::cc::v1::A
     }
     void Return::print(std::ostream& out)const
     {
+        out << "return;\n";
     }
 
 

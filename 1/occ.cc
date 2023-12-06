@@ -42,13 +42,13 @@ namespace oct::cc::v1
     Node::Node()
     {
     }
-    Node::Node(size_t s) : core::Node<Types>(s)
+    Node::Node(size_t s) : core::Parent<Types>(s)
     {
     }
-    Node::Node(Types t) : core::Node<Types>(t)
+    Node::Node(Types t) : core::Parent<Types>(t)
     {
     }
-    Node::Node(Types t,size_t s) : core::Node<Types>(t,s)
+    Node::Node(Types t,size_t s) : core::Parent<Types>(t,s)
     {
     }
 
