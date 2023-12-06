@@ -277,6 +277,7 @@ namespace oct::cc::v1::A
         out << "%type <occ::Number*> integer\n";
         out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
         out << "%type <occ::Tokens> segments\n";
+        out << "%type <occ::A::Interrupt*> interrupt\n";
 
         out << "%start unit\n";
     }

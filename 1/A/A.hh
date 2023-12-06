@@ -138,6 +138,18 @@ namespace oct::cc::v1::A
 
     };
 
+
+    /**
+    *\brief Node Base para instruciones mov
+    **/
+    struct Interrupt : public Instruction
+    {
+        Interrupt();
+        Interrupt(Types,size_t instsize);
+        void print(std::ostream&)const;
+
+    };
+
 }
 
 

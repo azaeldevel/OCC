@@ -78,6 +78,9 @@ namespace oct::cc::v1::A
             case Types::ret:
                     reinterpret_cast<Return*>(actual_inst)->print(out);
                 break;
+            case Types::interrupt:
+                    reinterpret_cast<Interrupt*>(actual_inst)->print(out);
+                break;
             default:
                 ;
             }
@@ -154,6 +157,21 @@ namespace oct::cc::v1::A
     }
     void Empty::print(std::ostream& out)const
     {
+        out << ";\n";
+    }
+
+
+
+
+    Interrupt::Interrupt()
+    {
+    }
+    Interrupt::Interrupt(Types t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Interrupt::print(std::ostream& out)const
+    {
+        out << "interrupt;\n";
     }
 
 

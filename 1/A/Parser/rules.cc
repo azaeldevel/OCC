@@ -212,6 +212,13 @@ namespace oct::cc::v1::A
             out << "\t}\n";
             out << "\t;\n";
 
+        out << "interrupt : \n";
+            out << "\tINT integer ';'\n";
+            out << "\t{\n";
+            out << "\t\t$$ = new occ::A::Interrupt(occ::Types::interrupt,2);\n";//2 bit: l6bits
+            out << "\t}\n";
+            out << "\t;\n";
+
         out << "inst : \n";
             out << "\tmove\n";
             out << "\t{\n";
@@ -226,6 +233,11 @@ namespace oct::cc::v1::A
             out << "\t';'\n";
             out << "\t{\n";
             out << "\t\t$$ = NULL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinterrupt\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 

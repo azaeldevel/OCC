@@ -431,6 +431,7 @@ namespace oct::cc::v1
         move,
         ret,
         empty,
+        interrupt,
     };
 
     /**
