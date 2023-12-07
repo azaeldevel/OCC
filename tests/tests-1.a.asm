@@ -63,7 +63,8 @@ print
 
 main
 {
-ret;
+	//https://github.com/FRosner/FrOS/blob/minimal-c-kernel/disk.asm
+	ret;
 }
 
 	
