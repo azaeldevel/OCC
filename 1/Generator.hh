@@ -72,6 +72,7 @@ namespace oct::cc::v1
 
             virtual void declaration(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
+            virtual void rules_instructions(std::ostream& out) const;
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
 

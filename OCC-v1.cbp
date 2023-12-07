@@ -120,6 +120,9 @@
 		<Unit filename="1/A/I/Parser/functions.cc">
 			<Option target="generator-dbg" />
 		</Unit>
+		<Unit filename="1/A/I/Parser/rules-instructions.cc">
+			<Option target="generator-dbg" />
+		</Unit>
 		<Unit filename="1/A/I/Parser/rules.cc">
 			<Option target="generator-dbg" />
 		</Unit>
