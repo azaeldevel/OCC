@@ -91,7 +91,7 @@ occ::Language language(const std::string& lang)
 }
 bool lexer()
 {
-    occ::A::Lexer generator(language(lang));
+    occ::A::I::Lexer generator(language(lang));
 	if(outpath.empty())
     {
         generator.save(std::cout);
@@ -116,7 +116,7 @@ bool lexer()
 }
 bool parser()
 {
-    occ::A::Parser generator(language(lang));
+    occ::A::I::Parser generator(language(lang));
 	if(outpath.empty())
     {
         generator.save(std::cout);

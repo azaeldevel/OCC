@@ -49,7 +49,7 @@ namespace oct::cc::v1
     };
 
 
-    namespace A
+    namespace A::I
     {
         class Lexer :  public Generator
         {

@@ -1,7 +1,7 @@
 
 #include "Generator.hh"
 
-namespace oct::cc::v1::A
+namespace oct::cc::v1::A::I
 {
     void Parser::declaration(std::ostream& out) const
     {

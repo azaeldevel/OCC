@@ -198,34 +198,5 @@ namespace oct::cc::v1
         //out << "\"while\"		return WHILE;\n";
     }
 
-
-    namespace A
-    {
-        Lexer::Lexer(Language l) : Generator(l)
-        {
-        }
-        void Lexer::save(std::ostream& out) const
-        {
-            declaration(out);
-            out << "\n%%\n";
-            rules(out);
-            out << "\n%%\n";
-            functions(out);
-        }
-
-
-        Parser::Parser(Language l) : Generator(l)
-        {
-        }
-        void Parser::save(std::ostream& out) const
-        {
-            declaration(out);
-            out << "\n%%\n";
-            rules(out);
-            out << "\n%%\n";
-            functions(out);
-        }
-    }
-
 }
 

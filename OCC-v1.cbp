@@ -99,34 +99,28 @@
 		<Unit filename="1/A/I/Driver.hh">
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
-		<Unit filename="1/A/Lexer/declarartion.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Lexer/Generator-AI.cc">
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/A/Lexer/functions.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Lexer/declarartion.cc">
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/A/Lexer/rules.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Lexer/functions.cc">
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/A/Parser/declarartion.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Lexer/rules.cc">
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/A/Parser/functions.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Parser/Generator-AI.cc">
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/A/Parser/rules.cc">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="1/A/I/Parser/declarartion.cc">
+			<Option target="generator-dbg" />
+		</Unit>
+		<Unit filename="1/A/I/Parser/functions.cc">
+			<Option target="generator-dbg" />
+		</Unit>
+		<Unit filename="1/A/I/Parser/rules.cc">
 			<Option target="generator-dbg" />
 		</Unit>
 		<Unit filename="1/Buffer.cc">
