@@ -267,19 +267,30 @@ namespace oct::cc::v1::A::I
         //out << "%type <void*> declarations\n";
         out << "%type <occ::A::Function*> function\n";
         out << "%type <occ::A::Function*> functions\n";
+        out << "%type <occ::Number*> integer\n";
+        out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
+        out << "%type <occ::Tokens> segments\n";
+        declaration_regiters(out);
+        declaration_instructions(out);
+
+        out << "%start unit\n";
+    }
+
+    void Parser::declaration_instructions(std::ostream& out) const
+    {
         out << "%type <occ::A::Instruction*> inst\n";
         out << "%type <occ::A::Instruction*> instructions\n";
         out << "%type <occ::A::Move*> move\n";
         out << "%type <occ::A::Return*> ret\n";
+        out << "%type <occ::A::Interrupt*> interrupt\n";
+
+    }
+
+    void Parser::declaration_regiters(std::ostream& out) const
+    {
         out << "%type <occ::Tokens> regiters_8b\n";
         out << "%type <occ::Tokens> regiters_16b\n";
         out << "%type <occ::Tokens> regiters\n";
-        out << "%type <occ::Number*> integer\n";
-        out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
-        out << "%type <occ::Tokens> segments\n";
-        out << "%type <occ::A::Interrupt*> interrupt\n";
-
-        out << "%start unit\n";
     }
 
 }

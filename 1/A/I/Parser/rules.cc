@@ -5,86 +5,7 @@ namespace oct::cc::v1::A::I
 {
     void Parser::rules(std::ostream& out) const
     {
-
-
-        out << "regiters_8b : \n";
-            out << "\tAL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::AL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tAH\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::AH;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::BL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBH\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::BH;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tCL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::CL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tCH\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::CH;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::DL;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDH\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::DH;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
-
-        out << "regiters_16b : \n";
-            out << "\tAX\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::AX;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tBX\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::BX;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tCX\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::CX;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDX\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::DX;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
-
-        out << "regiters : \n";
-            out << "\tregiters_8b\n";
-            out << "\t{\n";
-            out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tregiters_16b\n";
-            out << "\t{\n";
-            out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
+        rules_regiters(out);
 
         out << "integer : \n";
             out << "\tINTEGER_DECIMAL\n";
@@ -168,6 +89,86 @@ namespace oct::cc::v1::A::I
                 out << "\t\ttray->unit = new occ::A::I::Unit(occ::Types::unit);\n";
                 out << "\t\ttray->unit->at(1) = $1;\n";
                 out << "\t\t$$ = tray->unit;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+    }
+
+    void Parser::rules_regiters(std::ostream& out) const
+    {
+        out << "regiters_8b : \n";
+            out << "\tAL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::AL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tAH\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::AH;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::BL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBH\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::BH;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::CL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCH\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::CH;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::DL;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDH\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::DH;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "regiters_16b : \n";
+            out << "\tAX\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::AX;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::BX;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCX\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::CX;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDX\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::DX;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "regiters : \n";
+            out << "\tregiters_8b\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tregiters_16b\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 
