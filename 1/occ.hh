@@ -446,6 +446,21 @@ namespace oct::cc::v1
     };
 
     /**
+    *\brief Node de Identificar
+    **/
+    struct Word : public Node
+    {
+        std::string string;
+
+        Word();
+        Word(Types);
+        Word(Types,const char*, size_t);
+        Word(const char*, size_t);
+
+        void print(std::ostream&)const;
+    };
+
+    /**
     *\brief Node Base para numero constante
     **/
     struct Number : public Node
@@ -460,14 +475,29 @@ namespace oct::cc::v1
     /**
     *\brief Node de Identificar
     **/
-    struct Keyword : public Node
+    struct Keyword : public Word
     {
-        std::string string;
         Node* next;
 
         Keyword();
         Keyword(Types);
         Keyword(Types,const char*, size_t);
+        Keyword(const char*, size_t);
+
+        void print(std::ostream&)const;
+    };
+
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Identifier : public Word
+    {
+        Node* next;
+
+        Identifier();
+        Identifier(Types);
+        Identifier(Types,const char*, size_t);
+        Identifier(const char*, size_t);
 
         void print(std::ostream&)const;
     };

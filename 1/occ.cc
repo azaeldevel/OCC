@@ -61,18 +61,55 @@ namespace oct::cc::v1
     }
 
 
+    Word::Word()
+    {
+    }
+    Word::Word(Types t) : Node(t)
+    {
+    }
+    Word::Word(Types t,const char* text, size_t size) : Node(t),string(text,size)
+    {
+    }
+    Word::Word(const char* text, size_t size) : string(text,size)
+    {
+    }
+    void Word::print(std::ostream& out)const
+    {
+        out << string;
+    }
 
 
     Keyword::Keyword() : next(NULL)
     {
     }
-    Keyword::Keyword(Types t) : Node(t),next(NULL)
+    Keyword::Keyword(Types t) : Word(t),next(NULL)
     {
     }
-    Keyword::Keyword(Types t,const char* text, size_t size) : Node(t),next(NULL),string(text,size)
+    Keyword::Keyword(Types t,const char* text, size_t size) : Word(t,text,size),next(NULL)
+    {
+    }
+    Keyword::Keyword(const char* text, size_t size) : Word(text,size),next(NULL)
     {
     }
     void Keyword::print(std::ostream& out)const
+    {
+        out << string;
+    }
+
+
+    Identifier::Identifier() : next(NULL)
+    {
+    }
+    Identifier::Identifier(Types t) : Word(t),next(NULL)
+    {
+    }
+    Identifier::Identifier(Types t,const char* text, size_t size) : Word(t,text,size),next(NULL)
+    {
+    }
+    Identifier::Identifier(const char* text, size_t size) : Word(text,size),next(NULL)
+    {
+    }
+    void Identifier::print(std::ostream& out)const
     {
         out << string;
     }

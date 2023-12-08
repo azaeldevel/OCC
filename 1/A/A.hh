@@ -48,21 +48,6 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Identificar
     **/
-    struct Identifier : public Node
-    {
-        std::string string;
-        Node* next;
-
-        Identifier();
-        Identifier(Types);
-        Identifier(const char*, size_t);
-
-        void print(std::ostream&)const;
-    };
-
-    /**
-    *\brief Node de Identificar
-    **/
     struct Function : public Node
     {
         Identifier* identifier;

@@ -257,8 +257,7 @@ namespace oct::cc::v1::A::I
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
-        out << "%token <occ::A::Identifier*> IDENTIFIER\n";
-
+        out << "%token <occ::Identifier*> IDENTIFIER\n";
 
         //out << "%type <void*> declarations\n";
         declaration_types(out);
