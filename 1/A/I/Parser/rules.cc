@@ -164,11 +164,20 @@ namespace oct::cc::v1::A::I
 
     void Parser::rules_functions(std::ostream& out) const
     {
-        out << "function : IDENTIFIER '{' instructions '}'\n";
+        out << "function : \n";
+            out << "\tIDENTIFIER '{' instructions '}'\n";
             out << "\t{\n";
                 out << "\t\t$$ = new occ::A::Function(occ::Types::function);\n";
                 out << "\t\t$$->identifier = $1;\n";
                 out << "\t\t$$->insts = $3;\n";
+                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tIDENTIFIER '{' '}'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = new occ::A::Function(occ::Types::function);\n";
+                out << "\t\t$$->identifier = $1;\n";
+                out << "\t\t$$->insts = NULL;\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
             out << "\t}\n";
             out << "\t;\n";
