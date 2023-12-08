@@ -257,7 +257,6 @@ namespace oct::cc::v1::A::I
         out << "%token BYTE\n";
         out << "%token TINY\n";
 
-        out << "%token <occ::Identifier*> IDENTIFIER\n";
 
         //out << "%type <void*> declarations\n";
         declaration_types(out);
@@ -268,8 +267,10 @@ namespace oct::cc::v1::A::I
         declaration_functions(out);
         declaration_unit(out);
 
+        out << "%token <occ::Identifier*> IDENTIFIER\n";
         out << "%type <occ::Word*> identifier\n";
         out << "%type <occ::Keyword*> softword\n";
+
 
         out << "%start unit\n";
     }
