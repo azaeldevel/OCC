@@ -5,92 +5,20 @@ namespace oct::cc::v1::A::I
 {
     void Parser::rules(std::ostream& out) const
     {
+
+        rules_types(out);
+
         rules_regiters(out);
 
-        out << "integer : \n";
-            out << "\tINTEGER_DECIMAL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tINTEGER_HEXDECIMAL\n";
-            out << "\t{\n";
-            out << "\t\t$$ = $1;\n";
-            out << "\t}\n";
-            out << "\t;\n";
+        rules_memory(out);
 
-        out << "memory : \n";
-            out << "\t'[' integer ']'\n";
-            out << "\t{\n";
-            out << "\t\t$$ = $2;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
-
-        out << "segments : \n";
-            out << "\tCS\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::CS;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDS\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::DS;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tES\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::ES;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tFS\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::FS;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tGS\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::GS;\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tSS\n";
-            out << "\t{\n";
-            out << "\t\t$$ = occ::Tokens::SS;\n";
-            out << "\t}\n";
-            out << "\t;\n";
+        rules_segments(out);
 
         rules_instructions(out);
 
-        out << "function : IDENTIFIER '{' instructions '}'\n";
-            out << "\t{\n";
-                out << "\t\t$$ = new occ::A::Function(occ::Types::function);\n";
-                out << "\t\t$$->identifier = $1;\n";
-                out << "\t\t$$->insts = $3;\n";
-                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
-            out << "\t}\n";
-            out << "\t;\n";
+        rules_functions(out);
 
-        out << "functions : \n";
-            out << "\tfunction\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->identifier->string << \"\\n\";\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tfunctions function\n";
-            out << "\t{\n";
-                //out << "\t\tstd::cout << \"Identifier funtion: \" << $2->identifier->string << \"\\n\";\n";
-                out << "\t\t$1->next = $2;\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
-        out << "unit : functions\n";
-            out << "\t{\n";
-                out << "\t\ttray->unit = new occ::A::I::Unit(occ::Types::unit);\n";
-                out << "\t\ttray->unit->at(1) = $1;\n";
-                out << "\t\t$$ = tray->unit;\n";
-            out << "\t}\n";
-            out << "\t;\n";
+        rules_unit(out);
 
     }
 
@@ -172,6 +100,103 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
+    }
+
+    void Parser::rules_types(std::ostream& out) const
+    {
+        out << "integer : \n";
+            out << "\tINTEGER_DECIMAL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINTEGER_HEXDECIMAL\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
+    void Parser::rules_memory(std::ostream& out) const
+    {
+        out << "memory : \n";
+            out << "\t'[' integer ']'\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
+    void Parser::rules_segments(std::ostream& out) const
+    {
+        out << "segments : \n";
+            out << "\tCS\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::CS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDS\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::DS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tES\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::ES;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tFS\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::FS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tGS\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::GS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSS\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::SS;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
+    void Parser::rules_functions(std::ostream& out) const
+    {
+        out << "function : IDENTIFIER '{' instructions '}'\n";
+            out << "\t{\n";
+                out << "\t\t$$ = new occ::A::Function(occ::Types::function);\n";
+                out << "\t\t$$->identifier = $1;\n";
+                out << "\t\t$$->insts = $3;\n";
+                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "functions : \n";
+            out << "\tfunction\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->identifier->string << \"\\n\";\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tfunctions function\n";
+            out << "\t{\n";
+                //out << "\t\tstd::cout << \"Identifier funtion: \" << $2->identifier->string << \"\\n\";\n";
+                out << "\t\t$1->next = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
+    void Parser::rules_unit(std::ostream& out) const
+    {
+        out << "unit : functions\n";
+            out << "\t{\n";
+                out << "\t\ttray->unit = new occ::A::I::Unit(occ::Types::unit);\n";
+                out << "\t\ttray->unit->at(1) = $1;\n";
+                out << "\t\t$$ = tray->unit;\n";
+            out << "\t}\n";
+            out << "\t;\n";
     }
 }
 

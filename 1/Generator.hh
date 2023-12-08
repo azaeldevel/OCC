@@ -71,11 +71,21 @@ namespace oct::cc::v1
             Parser(Language l);
 
             virtual void declaration(std::ostream& out) const;
+            virtual void declaration_types(std::ostream& out) const;
+            virtual void declaration_memory(std::ostream& out) const;
             virtual void declaration_instructions(std::ostream& out) const;
             virtual void declaration_regiters(std::ostream& out) const;
+            virtual void declaration_segments(std::ostream& out) const;
+            virtual void declaration_functions(std::ostream& out) const;
+            virtual void declaration_unit(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
+            virtual void rules_types(std::ostream& out) const;
+            virtual void rules_memory(std::ostream& out) const;
             virtual void rules_instructions(std::ostream& out) const;
             virtual void rules_regiters(std::ostream& out) const;
+            virtual void rules_segments(std::ostream& out) const;
+            virtual void rules_functions(std::ostream& out) const;
+            virtual void rules_unit(std::ostream& out) const;
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
 
