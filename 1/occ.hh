@@ -457,6 +457,21 @@ namespace oct::cc::v1
 
     };
 
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Keyword : public Node
+    {
+        std::string string;
+        Node* next;
+
+        Keyword();
+        Keyword(Types);
+        Keyword(Types,const char*, size_t);
+
+        void print(std::ostream&)const;
+    };
+
     template<typename N>
     class SymbolTable : public std::map<const char*,N*>
     {

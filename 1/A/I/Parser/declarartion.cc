@@ -138,7 +138,7 @@ namespace oct::cc::v1::A::I
         out << "%token INC\n";
         out << "%token INTR\n";
         out << "%token INTO\n";
-        out << "%token IRET  " << instruction_string(Tokens::IRET) << "\n";
+        out << "%token <occ::Keyword*> IRET  " << instruction_string(Tokens::IRET) << "\n";
         out << "%token JA\n";
         out << "%token JNBE\n";
         out << "%token JAE\n";
@@ -181,7 +181,7 @@ namespace oct::cc::v1::A::I
         out << "%token LOOPE\n";
         out << "%token LOOPNE\n";
         out << "%token NMI\n";
-        out << "%token MOV  " << instruction_string(Tokens::MOV) << "\n";
+        out << "%token <occ::Keyword*> MOV  " << instruction_string(Tokens::MOV) << "\n";
         out << "%token MOVS\n";
         out << "%token MOVSB\n";
         out << "%token MOVSW\n";
@@ -201,7 +201,7 @@ namespace oct::cc::v1::A::I
         out << "%token REPZ\n";
         out << "%token REPNE\n";
         out << "%token REPNZ\n";
-        out << "%token RET  " << instruction_string(Tokens::RET) << "\n";
+        out << "%token <occ::Keyword*> RET  " << instruction_string(Tokens::RET) << "\n";
         out << "%token ROL\n";
         out << "%token ROR\n";
         out << "%token SAHF\n";

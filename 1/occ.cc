@@ -63,4 +63,19 @@ namespace oct::cc::v1
 
 
 
+    Keyword::Keyword() : next(NULL)
+    {
+    }
+    Keyword::Keyword(Types t) : Node(t),next(NULL)
+    {
+    }
+    Keyword::Keyword(Types t,const char* text, size_t size) : Node(t),next(NULL),string(text,size)
+    {
+    }
+    void Keyword::print(std::ostream& out)const
+    {
+        out << string;
+    }
+
+
 }

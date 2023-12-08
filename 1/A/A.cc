@@ -51,6 +51,9 @@ namespace oct::cc::v1::A
     Identifier::Identifier(Types t) : Node(t),next(NULL)
     {
     }
+    Identifier::Identifier(const char* text, size_t size) : string(text,size),next(NULL)
+    {
+    }
     void Identifier::print(std::ostream& out)const
     {
         out << string;

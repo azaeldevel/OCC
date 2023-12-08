@@ -55,6 +55,7 @@ namespace oct::cc::v1::A
 
         Identifier();
         Identifier(Types);
+        Identifier(const char*, size_t);
 
         void print(std::ostream&)const;
     };

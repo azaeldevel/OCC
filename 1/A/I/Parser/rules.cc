@@ -226,6 +226,31 @@ namespace oct::cc::v1::A::I
         return NULL;
     }
 
+    void Parser::rules_softword(std::ostream& out) const
+    {
+        out << "softword : \n";
+            out << "\tMOV\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::CS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tRET\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::DS;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tIRET\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::ES;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINT\n";
+            out << "\t{\n";
+            out << "\t\t$$ = occ::Tokens::FS;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+
 
 }
 
