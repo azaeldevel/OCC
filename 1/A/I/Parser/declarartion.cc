@@ -268,6 +268,9 @@ namespace oct::cc::v1::A::I
         declaration_functions(out);
         declaration_unit(out);
 
+        out << "%type <occ::Word*> identifier\n";
+        out << "%type <occ::Keyword*> softword\n";
+
         out << "%start unit\n";
     }
 

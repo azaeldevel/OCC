@@ -80,7 +80,7 @@ namespace oct::cc::v1
             virtual void declaration_unit(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
             virtual void rules_types(std::ostream& out) const;
-            virtual void rules_softword(std::ostream& out) const;
+            virtual void rules_identifier(std::ostream& out) const;
             virtual void rules_memory(std::ostream& out) const;
             virtual void rules_instructions(std::ostream& out) const;
             virtual void rules_regiters(std::ostream& out) const;
