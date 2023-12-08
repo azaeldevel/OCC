@@ -198,5 +198,25 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
     }
+
+    const char* Parser::instruction_string(Tokens t) const
+    {
+        switch(t)
+        {
+        case Tokens::MOV:
+            return "\"mov\"";
+        case Tokens::RET:
+            return "\"ret\"";
+        case Tokens::IRET:
+            return "\"iret\"";
+        case Tokens::INT:
+            return "\"int\"";
+        default:
+            break;
+        }
+        return NULL;
+    }
+
+
 }
 

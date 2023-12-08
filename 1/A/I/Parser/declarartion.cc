@@ -92,7 +92,7 @@ namespace oct::cc::v1::A::I
         out << "%token FOR\n";
         out << "%token GOTO\n";
         out << "%token IF\n";
-        out << "%token INT\n";
+        out << "%token INT  " << instruction_string(Tokens::INT) << "\n";
         out << "%token LONG\n";
         out << "%token REGISTER\n";
         out << "%token RETURN\n";
@@ -138,7 +138,7 @@ namespace oct::cc::v1::A::I
         out << "%token INC\n";
         out << "%token INTR\n";
         out << "%token INTO\n";
-        out << "%token IRET\n";
+        out << "%token IRET  " << instruction_string(Tokens::IRET) << "\n";
         out << "%token JA\n";
         out << "%token JNBE\n";
         out << "%token JAE\n";
@@ -181,7 +181,7 @@ namespace oct::cc::v1::A::I
         out << "%token LOOPE\n";
         out << "%token LOOPNE\n";
         out << "%token NMI\n";
-        out << "%token MOV\n";
+        out << "%token MOV  " << instruction_string(Tokens::MOV) << "\n";
         out << "%token MOVS\n";
         out << "%token MOVSB\n";
         out << "%token MOVSW\n";
@@ -201,7 +201,7 @@ namespace oct::cc::v1::A::I
         out << "%token REPZ\n";
         out << "%token REPNE\n";
         out << "%token REPNZ\n";
-        out << "%token RET\n";
+        out << "%token RET  " << instruction_string(Tokens::RET) << "\n";
         out << "%token ROL\n";
         out << "%token ROR\n";
         out << "%token SAHF\n";
@@ -259,9 +259,6 @@ namespace oct::cc::v1::A::I
 
         out << "%token <occ::A::Identifier*> IDENTIFIER\n";
 
-        out << "%token <char> LETTER\n";
-        out << "%token <occ::Number*> INTEGER_DECIMAL\n";
-        out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
 
         //out << "%type <void*> declarations\n";
         declaration_types(out);
@@ -293,8 +290,10 @@ namespace oct::cc::v1::A::I
 
     void Parser::declaration_types(std::ostream& out) const
     {
+        out << "%token <char> LETTER\n";
+        out << "%token <occ::Number*> INTEGER_DECIMAL\n";
+        out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
         out << "%type <occ::Number*> integer\n";
-
     }
 
     void Parser::declaration_memory(std::ostream& out) const

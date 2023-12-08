@@ -89,6 +89,8 @@ namespace oct::cc::v1
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
 
+            const char* instruction_string(Tokens)const;
+
         };
 
     }
