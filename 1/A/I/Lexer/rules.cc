@@ -36,9 +36,9 @@ namespace oct::cc::v1::A::I
             out << "\"bp\"	        return BP;\n";
             out << "\"sp\"	        return SP;\n";
 
-            out << "\"mov\"         return MOV;\n";
-            out << "\"ret\"	        return RET;\n";
-            out << "\"iret\"	    return IRET;\n";
+            out << "\"mov\"         yylval->MOV = new occ::Keyword(yytext,yyleng);return MOV;\n";
+            out << "\"ret\"	        yylval->RET = new occ::Keyword(yytext,yyleng);return RET;\n";
+            out << "\"iret\"	    yylval->IRET = new occ::Keyword(yytext,yyleng);return IRET;\n";
 
             //out << "\"byte\"		return BYTE;\n";
             //out << "\"tiny\"		return TINY;\n";

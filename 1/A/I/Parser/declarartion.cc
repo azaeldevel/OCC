@@ -92,7 +92,7 @@ namespace oct::cc::v1::A::I
         out << "%token FOR\n";
         out << "%token GOTO\n";
         out << "%token IF\n";
-        out << "%token INT  " << instruction_string(Tokens::INT) << "\n";
+        out << "%token <occ::Keyword*> INT  " << instruction_string(Tokens::INT) << "\n";
         out << "%token LONG\n";
         out << "%token REGISTER\n";
         out << "%token RETURN\n";
