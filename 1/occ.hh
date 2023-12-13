@@ -35,11 +35,12 @@ namespace oct::cc::v1
 	enum class Language
 	{
 	    none,
-	    AI,
-	    AII,
-	    AIII,
-	    C,
-	    CPP,
+	    AI,//octetos assembler
+	    AII,//octetos assembler
+	    AIII,//octetos assembler
+	    B,//octetos hihg lever compiler
+	    C,//C compiler
+	    CPP,//C++ compiler
 	};
 	enum class CPU
 	{
@@ -440,6 +441,9 @@ namespace oct::cc::v1
                 interrupt,
         AII,
         AIII,
+        B,
+        C,
+        CPP,
     };
 
     /**
