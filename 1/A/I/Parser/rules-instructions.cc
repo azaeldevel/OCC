@@ -118,13 +118,15 @@ namespace oct::cc::v1::A::I
             out << "\tinst\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
+                out << "\t\tinstruction_last = $1;\n";
                 //out << "\t\tstd::cout << \"inst\\n\";\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tinstructions inst\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"instructions inst\\n\";\n";
-                out << "\t\t$1->next = $2;\n";
+                out << "\t\tinstruction_last->next = $2;\n";
+                out << "\t\tinstruction_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
 

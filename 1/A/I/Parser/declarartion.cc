@@ -29,6 +29,7 @@ namespace oct::cc::v1::A::I
             out << "\t#include <A/I/A.hh>\n";
             out << "\t#include <A/I/Driver.hh>\n";
             out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
+            out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
 
         out << "}\n";
 
