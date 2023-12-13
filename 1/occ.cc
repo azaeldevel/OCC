@@ -42,7 +42,7 @@ namespace oct::cc::v1
     }
 
 
-    Number::Number()
+    Number::Number() : Word(Statemants::number)
     {
     }
     Number::Number(Statemants t) : Word(t)
@@ -51,7 +51,7 @@ namespace oct::cc::v1
     Number::Number(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
-    Number::Number(const char* text, size_t size) : Word(text,size)
+    Number::Number(const char* text, size_t size) : Word(Statemants::number,text,size)
     {
     }
 
@@ -65,7 +65,7 @@ namespace oct::cc::v1
     Word::Word(Statemants t,const char* text, size_t size) : Node(t),string(text,size)
     {
     }
-    Word::Word(const char* text, size_t size) : string(text,size)
+    Word::Word(const char* text, size_t size) : Node(Statemants::token),string(text,size)
     {
     }
     void Word::print(std::ostream& out)const
@@ -74,7 +74,7 @@ namespace oct::cc::v1
     }
 
 
-    Keyword::Keyword()
+    Keyword::Keyword() : Word(Statemants::keyword)
     {
     }
     Keyword::Keyword(Statemants t) : Word(t)
@@ -83,11 +83,11 @@ namespace oct::cc::v1
     Keyword::Keyword(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
-    Keyword::Keyword(const char* text, size_t size) : Word(text,size)
+    Keyword::Keyword(const char* text, size_t size) : Word(Statemants::keyword,text,size)
     {
     }
 
-    Identifier::Identifier()
+    Identifier::Identifier() : Word(Statemants::identifier)
     {
     }
     Identifier::Identifier(Statemants t) : Word(t)
@@ -96,7 +96,7 @@ namespace oct::cc::v1
     Identifier::Identifier(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
-    Identifier::Identifier(const char* text, size_t size) : Word(text,size)
+    Identifier::Identifier(const char* text, size_t size) : Word(Statemants::identifier,text,size)
     {
     }
 

@@ -426,14 +426,20 @@ namespace oct::cc::v1
     {
         none,
         token,
+            number,
+            keyword,
+            identifier,
         unit,
-        declaration,
-        function,
-        instruction,
-            move,
-            ret,
-            empty,
-            interrupt,
+        AI,
+            declaration,
+            function,
+            instruction,
+                move,
+                ret,
+                empty,
+                interrupt,
+        AII,
+        AIII,
     };
 
     /**
