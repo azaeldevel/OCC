@@ -47,7 +47,7 @@ namespace oct::cc::v1
     }
     Buffer::~Buffer()
     {
-
+        clean();
     }
     void Buffer::active(Buffer& b)
     {
@@ -79,7 +79,7 @@ namespace oct::cc::v1
         if(file) fclose(file);
     }
 
-    void Buffer::clean()
+    inline void Buffer::clean()
     {
         if(buffer)
         {
@@ -96,6 +96,5 @@ namespace oct::cc::v1
             fclose(file);
             file = NULL;
         }
-
     }
 }

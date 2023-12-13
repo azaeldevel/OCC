@@ -463,13 +463,12 @@ namespace oct::cc::v1
     /**
     *\brief Node Base para numero constante
     **/
-    struct Number : public Node
+    struct Number : public Word
     {
-        std::string string;
-
         Number();
         Number(Types);
-
+        Number(Types,const char*, size_t);
+        Number(const char*, size_t);
     };
 
     /**
@@ -477,14 +476,11 @@ namespace oct::cc::v1
     **/
     struct Keyword : public Word
     {
-        Node* next;
-
         Keyword();
         Keyword(Types);
         Keyword(Types,const char*, size_t);
         Keyword(const char*, size_t);
 
-        void print(std::ostream&)const;
     };
 
     /**
@@ -492,14 +488,11 @@ namespace oct::cc::v1
     **/
     struct Identifier : public Word
     {
-        Node* next;
-
         Identifier();
         Identifier(Types);
         Identifier(Types,const char*, size_t);
         Identifier(const char*, size_t);
 
-        void print(std::ostream&)const;
     };
 
     template<typename N>

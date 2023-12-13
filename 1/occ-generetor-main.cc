@@ -23,7 +23,7 @@
 
 #include "Generator.hh"
 
-namespace occ = oct::cc::v1;
+//namespace occ = oct::cc::v1;
 
 occ::Language language(const std::string& lang);
 bool lexer();

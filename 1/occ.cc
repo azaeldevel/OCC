@@ -27,17 +27,6 @@
 namespace oct::cc::v1
 {
 
-    /*File::File() : file(NULL),buffer(NULL),scanner(NULL)
-    {
-    }
-
-
-
-    void* File::get_scanner()
-    {
-        return scanner;
-    }*/
-
 
     Node::Node()
     {
@@ -56,7 +45,13 @@ namespace oct::cc::v1
     Number::Number()
     {
     }
-    Number::Number(Types t) : Node(t)
+    Number::Number(Types t) : Word(t)
+    {
+    }
+    Number::Number(Types t,const char* text, size_t size) : Word(t,text,size)
+    {
+    }
+    Number::Number(const char* text, size_t size) : Word(text,size)
     {
     }
 
@@ -79,39 +74,30 @@ namespace oct::cc::v1
     }
 
 
-    Keyword::Keyword() : next(NULL)
+    Keyword::Keyword()
     {
     }
-    Keyword::Keyword(Types t) : Word(t),next(NULL)
+    Keyword::Keyword(Types t) : Word(t)
     {
     }
-    Keyword::Keyword(Types t,const char* text, size_t size) : Word(t,text,size),next(NULL)
+    Keyword::Keyword(Types t,const char* text, size_t size) : Word(t,text,size)
     {
     }
-    Keyword::Keyword(const char* text, size_t size) : Word(text,size),next(NULL)
+    Keyword::Keyword(const char* text, size_t size) : Word(text,size)
     {
-    }
-    void Keyword::print(std::ostream& out)const
-    {
-        out << string;
     }
 
-
-    Identifier::Identifier() : next(NULL)
+    Identifier::Identifier()
     {
     }
-    Identifier::Identifier(Types t) : Word(t),next(NULL)
+    Identifier::Identifier(Types t) : Word(t)
     {
     }
-    Identifier::Identifier(Types t,const char* text, size_t size) : Word(t,text,size),next(NULL)
+    Identifier::Identifier(Types t,const char* text, size_t size) : Word(t,text,size)
     {
     }
-    Identifier::Identifier(const char* text, size_t size) : Word(text,size),next(NULL)
+    Identifier::Identifier(const char* text, size_t size) : Word(text,size)
     {
-    }
-    void Identifier::print(std::ostream& out)const
-    {
-        out << string;
     }
 
 
