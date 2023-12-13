@@ -62,12 +62,21 @@ print
 	ret;
 }
 
+disk
+{
+
+}
+
 main
 {
 	//https://github.com/FRosner/FrOS/blob/minimal-c-kernel/disk.asm
 	ret;
 }
 
+loader
+{
+
+}
 	
 	
 	

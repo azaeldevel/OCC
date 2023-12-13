@@ -28,6 +28,7 @@ namespace oct::cc::v1::A::I
             //out << "\t#include <Buffer.hh>\n";
             out << "\t#include <A/I/A.hh>\n";
             out << "\t#include <A/I/Driver.hh>\n";
+            out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
 
         out << "}\n";
 
@@ -52,7 +53,6 @@ namespace oct::cc::v1::A::I
             out << "#include <stdlib.h>\n";
             //out << "\t#include \"oas-intel.lexer.hh\"\n";
 
-            //out << "\t\tstatic occ::A::I::Function* function_prev = NULL;\n";
         out << "}\n";
 
 

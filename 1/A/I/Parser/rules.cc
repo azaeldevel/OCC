@@ -188,13 +188,15 @@ namespace oct::cc::v1::A::I
             out << "\tfunction\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
+                out << "\t\tfunction_last = $1;\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->identifier->string << \"\\n\";\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tfunctions function\n";
             out << "\t{\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $2->identifier->string << \"\\n\";\n";
-                out << "\t\t$1->next = $2;\n";
+                out << "\t\tfunction_last->next = $2;\n";
+                out << "\t\tfunction_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
     }
