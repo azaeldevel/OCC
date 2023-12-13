@@ -38,8 +38,8 @@ namespace oct::cc::v1::A
     {
         Unit() = default;
         Unit(size_t);
-        Unit(const Types&);
-        Unit(const Types&,size_t);
+        Unit(const Statemants&);
+        Unit(const Statemants&,size_t);
 
         void print(std::ostream&)const;
         virtual bool semantic(std::ostream&);
@@ -55,7 +55,7 @@ namespace oct::cc::v1::A
         Node* insts;
 
         Function();
-        Function(Types);
+        Function(Statemants);
         void print(std::ostream&)const;
     };
 
@@ -79,7 +79,7 @@ namespace oct::cc::v1::A
         *\param type tipo de instruccion
         *\param instsize bytes usados para especificar el codigo de instrccion
         */
-        Instruction(Types type,size_t instsize);
+        Instruction(Statemants type,size_t instsize);
         ~Instruction();
 
         void print(std::ostream&)const;
@@ -92,7 +92,7 @@ namespace oct::cc::v1::A
     struct Move : public Instruction
     {
         Move();
-        Move(Types,size_t instsize);
+        Move(Statemants,size_t instsize);
         void print(std::ostream&)const;
 
         void make(Tokens to, Tokens front);
@@ -107,7 +107,7 @@ namespace oct::cc::v1::A
     struct Return : public Instruction
     {
         Return();
-        Return(Types,size_t instsize);
+        Return(Statemants,size_t instsize);
         void print(std::ostream&)const;
 
     };
@@ -119,7 +119,7 @@ namespace oct::cc::v1::A
     struct Empty : public Instruction
     {
         Empty();
-        Empty(Types,size_t instsize);
+        Empty(Statemants,size_t instsize);
         void print(std::ostream&)const;
 
     };
@@ -131,7 +131,7 @@ namespace oct::cc::v1::A
     struct Interrupt : public Instruction
     {
         Interrupt();
-        Interrupt(Types,size_t instsize);
+        Interrupt(Statemants,size_t instsize);
         void print(std::ostream&)const;
 
     };

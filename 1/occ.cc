@@ -31,13 +31,13 @@ namespace oct::cc::v1
     Node::Node()
     {
     }
-    Node::Node(size_t s) : core::Parent<Types>(s)
+    Node::Node(size_t s) : core::Parent<Statemants>(s)
     {
     }
-    Node::Node(Types t) : core::Parent<Types>(t)
+    Node::Node(Statemants t) : core::Parent<Statemants>(t)
     {
     }
-    Node::Node(Types t,size_t s) : core::Parent<Types>(t,s)
+    Node::Node(Statemants t,size_t s) : core::Parent<Statemants>(t,s)
     {
     }
 
@@ -45,10 +45,10 @@ namespace oct::cc::v1
     Number::Number()
     {
     }
-    Number::Number(Types t) : Word(t)
+    Number::Number(Statemants t) : Word(t)
     {
     }
-    Number::Number(Types t,const char* text, size_t size) : Word(t,text,size)
+    Number::Number(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
     Number::Number(const char* text, size_t size) : Word(text,size)
@@ -59,10 +59,10 @@ namespace oct::cc::v1
     Word::Word()
     {
     }
-    Word::Word(Types t) : Node(t)
+    Word::Word(Statemants t) : Node(t)
     {
     }
-    Word::Word(Types t,const char* text, size_t size) : Node(t),string(text,size)
+    Word::Word(Statemants t,const char* text, size_t size) : Node(t),string(text,size)
     {
     }
     Word::Word(const char* text, size_t size) : string(text,size)
@@ -77,10 +77,10 @@ namespace oct::cc::v1
     Keyword::Keyword()
     {
     }
-    Keyword::Keyword(Types t) : Word(t)
+    Keyword::Keyword(Statemants t) : Word(t)
     {
     }
-    Keyword::Keyword(Types t,const char* text, size_t size) : Word(t,text,size)
+    Keyword::Keyword(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
     Keyword::Keyword(const char* text, size_t size) : Word(text,size)
@@ -90,10 +90,10 @@ namespace oct::cc::v1
     Identifier::Identifier()
     {
     }
-    Identifier::Identifier(Types t) : Word(t)
+    Identifier::Identifier(Statemants t) : Word(t)
     {
     }
-    Identifier::Identifier(Types t,const char* text, size_t size) : Word(t,text,size)
+    Identifier::Identifier(Statemants t,const char* text, size_t size) : Word(t,text,size)
     {
     }
     Identifier::Identifier(const char* text, size_t size) : Word(text,size)

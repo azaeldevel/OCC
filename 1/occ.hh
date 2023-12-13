@@ -414,6 +414,7 @@ namespace oct::cc::v1
 		IDENTIFIER,
 
 		//consttantes
+		INTEGER,
 		INTEGER_DECIMAL,
 		INTEGER_HEXDECIMAL,
 
@@ -421,9 +422,10 @@ namespace oct::cc::v1
 	};
 
 
-    enum class Types
+    enum class Statemants
     {
         none,
+        token,
         unit,
         declaration,
         function,
@@ -437,12 +439,12 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Parent<Types>
+    struct Node : public core::Parent<Statemants>
     {
         Node();
         Node(size_t);
-        Node(Types);
-        Node(Types,size_t);
+        Node(Statemants);
+        Node(Statemants,size_t);
     };
 
     /**
@@ -453,8 +455,8 @@ namespace oct::cc::v1
         std::string string;
 
         Word();
-        Word(Types);
-        Word(Types,const char*, size_t);
+        Word(Statemants);
+        Word(Statemants,const char*, size_t);
         Word(const char*, size_t);
 
         void print(std::ostream&)const;
@@ -466,8 +468,8 @@ namespace oct::cc::v1
     struct Number : public Word
     {
         Number();
-        Number(Types);
-        Number(Types,const char*, size_t);
+        Number(Statemants);
+        Number(Statemants,const char*, size_t);
         Number(const char*, size_t);
     };
 
@@ -477,8 +479,8 @@ namespace oct::cc::v1
     struct Keyword : public Word
     {
         Keyword();
-        Keyword(Types);
-        Keyword(Types,const char*, size_t);
+        Keyword(Statemants);
+        Keyword(Statemants,const char*, size_t);
         Keyword(const char*, size_t);
 
     };
@@ -489,8 +491,8 @@ namespace oct::cc::v1
     struct Identifier : public Word
     {
         Identifier();
-        Identifier(Types);
-        Identifier(Types,const char*, size_t);
+        Identifier(Statemants);
+        Identifier(Statemants,const char*, size_t);
         Identifier(const char*, size_t);
 
     };

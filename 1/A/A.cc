@@ -29,10 +29,10 @@ namespace oct::cc::v1::A
     Unit::Unit(size_t s) : Node(s)
     {
     }
-    Unit::Unit(const Types& t) : Node(t)
+    Unit::Unit(const Statemants& t) : Node(t)
     {
     }
-    Unit::Unit(const Types& t,size_t s) : Node(t,s)
+    Unit::Unit(const Statemants& t,size_t s) : Node(t,s)
     {
     }
 
@@ -48,7 +48,7 @@ namespace oct::cc::v1::A
     Function::Function() : next(NULL)
     {
     }
-    Function::Function(Types t) : Node(t),next(NULL)
+    Function::Function(Statemants t) : Node(t),next(NULL)
     {
     }
     void Function::print(std::ostream& out)const
@@ -58,15 +58,15 @@ namespace oct::cc::v1::A
         Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
-            switch(reinterpret_cast<core::Node<Types>*>(actual_inst)->data)
+            switch(reinterpret_cast<core::Node<Statemants>*>(actual_inst)->data)
             {
-            case Types::move:
+            case Statemants::move:
                     reinterpret_cast<Move*>(actual_inst)->print(out);
                 break;
-            case Types::ret:
+            case Statemants::ret:
                     reinterpret_cast<Return*>(actual_inst)->print(out);
                 break;
-            case Types::interrupt:
+            case Statemants::interrupt:
                     reinterpret_cast<Interrupt*>(actual_inst)->print(out);
                 break;
             default:
@@ -83,7 +83,7 @@ namespace oct::cc::v1::A
     Instruction::Instruction() : next(NULL),inscode(NULL)
     {
     }
-    Instruction::Instruction(Types t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
+    Instruction::Instruction(Statemants t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
     {
     }
     Instruction::~Instruction()
@@ -102,7 +102,7 @@ namespace oct::cc::v1::A
     Move::Move()
     {
     }
-    Move::Move(Types t,size_t s) : Instruction(t,s)
+    Move::Move(Statemants t,size_t s) : Instruction(t,s)
     {
     }
     void Move::print(std::ostream& out)const
@@ -126,7 +126,7 @@ namespace oct::cc::v1::A
     Return::Return()
     {
     }
-    Return::Return(Types t,size_t s) : Instruction(t,s)
+    Return::Return(Statemants t,size_t s) : Instruction(t,s)
     {
     }
     void Return::print(std::ostream& out)const
@@ -140,7 +140,7 @@ namespace oct::cc::v1::A
     Empty::Empty()
     {
     }
-    Empty::Empty(Types t,size_t s) : Instruction(t,s)
+    Empty::Empty(Statemants t,size_t s) : Instruction(t,s)
     {
     }
     void Empty::print(std::ostream& out)const
@@ -154,7 +154,7 @@ namespace oct::cc::v1::A
     Interrupt::Interrupt()
     {
     }
-    Interrupt::Interrupt(Types t,size_t s) : Instruction(t,s)
+    Interrupt::Interrupt(Statemants t,size_t s) : Instruction(t,s)
     {
     }
     void Interrupt::print(std::ostream& out)const
