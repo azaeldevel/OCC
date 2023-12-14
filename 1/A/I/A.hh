@@ -35,6 +35,8 @@ namespace oct::cc::v1::A::I
     **/
     struct Unit : public occ::A::Unit
     {
+        Function* function;
+
         Unit();
         Unit(size_t);
         Unit(const Statemants&);

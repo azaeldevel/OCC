@@ -31,13 +31,7 @@ namespace oct::cc::v1
     Node::Node()
     {
     }
-    Node::Node(size_t s) : core::Parent<Statemants>(s)
-    {
-    }
-    Node::Node(Statemants t) : core::Parent<Statemants>(t)
-    {
-    }
-    Node::Node(Statemants t,size_t s) : core::Parent<Statemants>(t,s)
+    Node::Node(Statemants t) : core::node<Statemants>(t)
     {
     }
 

@@ -26,13 +26,10 @@
 
 namespace oct::cc::v1::A
 {
-    Unit::Unit(size_t s) : Node(s)
+    Unit::Unit() : Node(Statemants::unit)
     {
     }
     Unit::Unit(const Statemants& t) : Node(t)
-    {
-    }
-    Unit::Unit(const Statemants& t,size_t s) : Node(t,s)
     {
     }
 
@@ -58,7 +55,7 @@ namespace oct::cc::v1::A
         Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
-            switch(reinterpret_cast<core::Node<Statemants>*>(actual_inst)->data)
+            switch(reinterpret_cast<core::node<Statemants>*>(actual_inst)->data)
             {
             case Statemants::move:
                     reinterpret_cast<Move*>(actual_inst)->print(out);

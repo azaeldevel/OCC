@@ -449,12 +449,10 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Parent<Statemants>
+    struct Node : public core::node<Statemants>
     {
         Node();
-        Node(size_t);
         Node(Statemants);
-        Node(Statemants,size_t);
     };
 
     /**

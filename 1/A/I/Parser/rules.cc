@@ -206,7 +206,7 @@ namespace oct::cc::v1::A::I
         out << "unit : functions\n";
             out << "\t{\n";
                 out << "\t\ttray->unit = new occ::A::I::Unit(occ::Statemants::unit);\n";
-                out << "\t\ttray->unit->at(1) = $1;\n";
+                out << "\t\ttray->unit->function = $1;\n";
                 out << "\t\t$$ = tray->unit;\n";
             out << "\t}\n";
             out << "\t;\n";

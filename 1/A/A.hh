@@ -36,10 +36,8 @@ namespace oct::cc::v1::A
     **/
     struct Unit : public Node
     {
-        Unit() = default;
-        Unit(size_t);
+        Unit();
         Unit(const Statemants&);
-        Unit(const Statemants&,size_t);
 
         void print(std::ostream&)const;
         virtual bool semantic(std::ostream&);

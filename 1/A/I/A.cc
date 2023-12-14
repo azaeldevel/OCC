@@ -26,22 +26,16 @@
 
 namespace oct::cc::v1::A::I
 {
-    Unit::Unit() : occ::A::Unit(2)
+    Unit::Unit()
     {
     }
-    Unit::Unit(size_t s) : occ::A::Unit(s)
-    {
-    }
-    Unit::Unit(const Statemants& t) : occ::A::Unit(t,2)
-    {
-    }
-    Unit::Unit(const Statemants& t,size_t s) : occ::A::Unit(t,s)
+    Unit::Unit(const Statemants& t) : occ::A::Unit(t)
     {
     }
 
     void Unit::print(std::ostream& out)const
     {
-        Function* actual = (Function*)at(1);
+        Function* actual = function;
         while(actual)
         {
             actual->print(out);
