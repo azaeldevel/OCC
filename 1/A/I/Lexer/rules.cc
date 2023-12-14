@@ -6,8 +6,17 @@ namespace oct::cc::v1::A::I
     void Lexer::rules(std::ostream& out) const
     {
 
-        out << "\"//\".*		;\n";
-        out << "\\n             yylloc->last_line++; yylloc->last_column = 1;\n";
+        out << "    ;\n";
+        out << "\"//\".*    {\n";
+                                out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+                                out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+        out << "\t\t        }\n";
+        out << "\\n         {\n";
+                                out << "\t\tyylloc->last_line++;\n";
+                                out << "\t\tyylloc->last_column = 1;\n";
+                                out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+                                out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+        out << "\t\t        }\n";
         out << "\\t             ;\n";
         out << "[[:space:]]     ;\n";
 

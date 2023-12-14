@@ -35,7 +35,10 @@ namespace oct::cc::v1
     }
 
 
-    Word::Word(Tokens t,const char* text, size_t size) : Node(to_statement(t)),string(text,size)
+    Word::Word(const char* text, size_t size) : string(text,size),yylexnext(NULL)
+    {
+    }
+    Word::Word(Tokens t,const char* text, size_t size) : Node(to_statement(t)),string(text,size),yylexnext(NULL)
     {
     }
     void Word::print(std::ostream& out)const

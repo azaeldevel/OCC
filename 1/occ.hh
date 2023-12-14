@@ -482,7 +482,9 @@ namespace oct::cc::v1
     {
         std::string string;
         Tokens token;
+        Word* yylexnext;
 
+        Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
         void print(std::ostream&)const;
     };
