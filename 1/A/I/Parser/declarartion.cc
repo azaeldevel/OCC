@@ -227,9 +227,9 @@ namespace oct::cc::v1::A::I
         out << "%token XORG\n";
 
         //registers
-        out << "%token AL\n";
-        out << "%token AH\n";
-        out << "%token AX\n";
+        declaration_add_keyword(out,"al","AL");
+        declaration_add_keyword(out,"ah","AH");
+        declaration_add_keyword(out,"ax","AX");
         out << "%token BL\n";
         out << "%token BH\n";
         out << "%token BX\n";
@@ -319,6 +319,10 @@ namespace oct::cc::v1::A::I
     void Parser::declaration_unit(std::ostream& out) const
     {
         out << "%type <occ::A::I::Unit*> unit\n";
+    }
+    void Parser::declaration_add_keyword(std::ostream& out,const char* string,const char* token) const
+    {
+        out << "%token <occ::Keyword*> " << token << "  \" " << string << "\"\n";
     }
 
 }

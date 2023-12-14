@@ -32,11 +32,9 @@ namespace oct::cc::v1
 
             virtual void declaration(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
+            virtual void rules_add_keyword(std::ostream& out,const char* string,const char* token) const;
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
-
-
-
         };
 
         class Parser :  public Generator
@@ -45,6 +43,7 @@ namespace oct::cc::v1
             Parser(Language l);
 
             virtual void declaration(std::ostream& out) const;
+            virtual void declaration_add_keyword(std::ostream& out,const char* string,const char* token) const;
             virtual void declaration_types(std::ostream& out) const;
             virtual void declaration_memory(std::ostream& out) const;
             virtual void declaration_instructions(std::ostream& out) const;

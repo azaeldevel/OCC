@@ -6,31 +6,30 @@ namespace oct::cc::v1::A::I
     void Lexer::rules(std::ostream& out) const
     {
 
-        out << "    ;\n";
         out << "\"//\".*    {\n";
-                                out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
-                                out << "\t\tyylexnext = yylexnext->yylexnext;\n";
-        out << "\t\t        }\n";
-        out << "\\n         {\n";
-                                out << "\t\tyylloc->last_line++;\n";
-                                out << "\t\tyylloc->last_column = 1;\n";
-                                out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
-                                out << "\t\tyylexnext = yylexnext->yylexnext;\n";
-        out << "\t\t        }\n";
+                                out << "\t\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+                                out << "\t\t\tyylexnext = yylexnext->yylexnext;\n";
+        out << "        }\n";
+        out << "\\n     {\n";
+                                out << "\t\t\tyylloc->last_line++;\n";
+                                out << "\t\t\tyylloc->last_column = 1;\n";
+                                out << "\t\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+                                out << "\t\t\tyylexnext = yylexnext->yylexnext;\n";
+        out << "        }\n";
         out << "\\t             ;\n";
         out << "[[:space:]]     ;\n";
 
 
         {
-            out << "\"al\"	        return AL;\n";
-            out << "\"ah\"	        return AH;\n";
+            rules_add_keyword(out,"al","AL");
+            rules_add_keyword(out,"ah","AH");
+            rules_add_keyword(out,"ax","AX");
             out << "\"bl\"	        return BL;\n";
             out << "\"bh\"	        return BH;\n";
             out << "\"cl\"	        return CL;\n";
             out << "\"ch\"	        return CH;\n";
             out << "\"dl\"	        return DL;\n";
             out << "\"dh\"	        return DH;\n";
-            out << "\"ax\"	        return AX;\n";
             out << "\"bx\"	        return BX;\n";
             out << "\"dx\"	        return DX;\n";
             out << "\"cx\"	        return CX;\n";
@@ -45,9 +44,9 @@ namespace oct::cc::v1::A::I
             out << "\"bp\"	        return BP;\n";
             out << "\"sp\"	        return SP;\n";
 
-            out << "\"mov\"         yylval->MOV = new occ::Keyword(occ::Tokens::MOV,yytext,yyleng);return MOV;\n";
-            out << "\"ret\"	        yylval->RET = new occ::Keyword(occ::Tokens::RET,yytext,yyleng);return RET;\n";
-            out << "\"iret\"	    yylval->IRET = new occ::Keyword(occ::Tokens::IRET,yytext,yyleng);return IRET;\n";
+            rules_add_keyword(out,"mov","MOV");
+            rules_add_keyword(out,"ret","RET");
+            rules_add_keyword(out,"iret","IRET");
 
             //out << "\"byte\"		return BYTE;\n";
             //out << "\"tiny\"		return TINY;\n";
@@ -88,6 +87,16 @@ namespace oct::cc::v1::A::I
 
         out << ".       yyerror_unknow_symbol(yylloc,yyscanner,tray,yytext[0]);\n";
 
+    }
+
+    void Lexer::rules_add_keyword(std::ostream& out,const char* string,const char* token) const
+    {
+        out << "\"" << string << "\"     {\n";
+            out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylval->" << token << " = yylexnext;\n";
+            out << "\t\treturn " << token << ";\n";
+        out << "        }\n";
     }
 
 }

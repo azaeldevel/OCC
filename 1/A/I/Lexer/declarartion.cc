@@ -28,8 +28,8 @@ namespace oct::cc::v1::A::I
             out << "\t#define YY_USER_ACTION  yylloc->last_column += (int) yyleng;\n";
             out << "\t#define LOCATION_STEP() yylloc->first_line = yylloc->last_line;yylloc->first_column = yylloc->last_column;\n";
 
-            out << "\t\tstatic occ::Word root(\"root\",4);\n";
-            out << "\t\tstatic occ::Word* yylexnext = &root;\n";
+            out << "\t\tstatic occ::Word yylexroot(\"root\",4);\n";
+            out << "\t\tstatic occ::Word* yylexnext = &yylexroot;\n";
 
         out << "%}\n";
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
