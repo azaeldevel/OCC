@@ -42,7 +42,7 @@ namespace oct::cc::v1::A
     }
 
 
-    Function::Function() : next(NULL)
+    Function::Function() : Node(Statemants::function),next(NULL)
     {
     }
     Function::Function(Statemants t) : Node(t),next(NULL)
@@ -77,7 +77,7 @@ namespace oct::cc::v1::A
 
 
 
-    Instruction::Instruction() : next(NULL),inscode(NULL)
+    Instruction::Instruction() : Node(Statemants::instruction),next(NULL),inscode(NULL)
     {
     }
     Instruction::Instruction(Statemants t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
@@ -96,7 +96,7 @@ namespace oct::cc::v1::A
 
 
 
-    Move::Move()
+    Move::Move() : Instruction(Statemants::move,2)
     {
     }
     Move::Move(Statemants t,size_t s) : Instruction(t,s)
@@ -120,7 +120,7 @@ namespace oct::cc::v1::A
 
 
 
-    Return::Return()
+    Return::Return() : Instruction(Statemants::ret,2)
     {
     }
     Return::Return(Statemants t,size_t s) : Instruction(t,s)
@@ -134,7 +134,7 @@ namespace oct::cc::v1::A
 
 
 
-    Empty::Empty()
+    Empty::Empty() : Instruction(Statemants::empty,2)
     {
     }
     Empty::Empty(Statemants t,size_t s) : Instruction(t,s)
@@ -148,7 +148,7 @@ namespace oct::cc::v1::A
 
 
 
-    Interrupt::Interrupt()
+    Interrupt::Interrupt() : Instruction(Statemants::interrupt,2)
     {
     }
     Interrupt::Interrupt(Statemants t,size_t s) : Instruction(t,s)
