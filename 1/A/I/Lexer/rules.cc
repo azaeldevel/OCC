@@ -24,15 +24,15 @@ namespace oct::cc::v1::A::I
             rules_add_keyword(out,"al","AL");
             rules_add_keyword(out,"ah","AH");
             rules_add_keyword(out,"ax","AX");
-            out << "\"bl\"	        return BL;\n";
-            out << "\"bh\"	        return BH;\n";
-            out << "\"cl\"	        return CL;\n";
-            out << "\"ch\"	        return CH;\n";
-            out << "\"dl\"	        return DL;\n";
-            out << "\"dh\"	        return DH;\n";
-            out << "\"bx\"	        return BX;\n";
-            out << "\"dx\"	        return DX;\n";
-            out << "\"cx\"	        return CX;\n";
+            rules_add_keyword(out,"bl","BL");
+            rules_add_keyword(out,"bh","BH");
+            rules_add_keyword(out,"bx","BX");
+            rules_add_keyword(out,"cl","CL");
+            rules_add_keyword(out,"ch","CH");
+            rules_add_keyword(out,"cx","CX");
+            rules_add_keyword(out,"dl","DL");
+            rules_add_keyword(out,"dh","DH");
+            rules_add_keyword(out,"dx","DX");
 
             out << "\"es\"	        return ES;\n";
             out << "\"cs\"	        return CS;\n";

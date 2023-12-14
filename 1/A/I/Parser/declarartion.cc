@@ -230,15 +230,15 @@ namespace oct::cc::v1::A::I
         declaration_add_keyword(out,"al","AL");
         declaration_add_keyword(out,"ah","AH");
         declaration_add_keyword(out,"ax","AX");
-        out << "%token BL\n";
-        out << "%token BH\n";
-        out << "%token BX\n";
-        out << "%token CL\n";
-        out << "%token CH\n";
-        out << "%token CX\n";
-        out << "%token DL\n";
-        out << "%token DH\n";
-        out << "%token DX\n";
+        declaration_add_keyword(out,"bl","BL");
+        declaration_add_keyword(out,"bh","BH");
+        declaration_add_keyword(out,"bx","BX");
+        declaration_add_keyword(out,"cl","CL");
+        declaration_add_keyword(out,"ch","CH");
+        declaration_add_keyword(out,"cx","CX");
+        declaration_add_keyword(out,"dl","DL");
+        declaration_add_keyword(out,"dh","DH");
+        declaration_add_keyword(out,"dx","DX");
 
 
         //Ponters
