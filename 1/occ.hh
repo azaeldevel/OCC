@@ -40,7 +40,11 @@ namespace oct::cc::v1
 	    AIII,//octetos assembler
 	    B,//octetos hihg lever compiler
 	    C,//C compiler
+            C90,
+            C99,
 	    CPP,//C++ compiler
+            CPP98,
+            CPP11,
 	};
 	enum class CPU
 	{

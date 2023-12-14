@@ -139,7 +139,7 @@ namespace oct::cc::v1::A::I
         out << "%token INC\n";
         out << "%token INTR\n";
         out << "%token INTO\n";
-        out << "%token <occ::Keyword*> IRET  " << instruction_string(Tokens::IRET) << "\n";
+        declaration_add_keyword(out,"iret","IRET");
         out << "%token JA\n";
         out << "%token JNBE\n";
         out << "%token JAE\n";
@@ -182,7 +182,7 @@ namespace oct::cc::v1::A::I
         out << "%token LOOPE\n";
         out << "%token LOOPNE\n";
         out << "%token NMI\n";
-        out << "%token <occ::Keyword*> MOV  " << instruction_string(Tokens::MOV) << "\n";
+        declaration_add_keyword(out,"mov","MOV");
         out << "%token MOVS\n";
         out << "%token MOVSB\n";
         out << "%token MOVSW\n";
@@ -202,7 +202,7 @@ namespace oct::cc::v1::A::I
         out << "%token REPZ\n";
         out << "%token REPNE\n";
         out << "%token REPNZ\n";
-        out << "%token <occ::Keyword*> RET  " << instruction_string(Tokens::RET) << "\n";
+        declaration_add_keyword(out,"ret","RET");
         out << "%token ROL\n";
         out << "%token ROR\n";
         out << "%token SAHF\n";
@@ -322,7 +322,7 @@ namespace oct::cc::v1::A::I
     }
     void Parser::declaration_add_keyword(std::ostream& out,const char* string,const char* token) const
     {
-        out << "%token <occ::Keyword*> " << token << "  \" " << string << "\"\n";
+        out << "%token <occ::Keyword*> " << token << "\t\"" << string << "\"\n";
     }
 
 }

@@ -13,7 +13,6 @@ namespace oct::cc::v1
     {
     public:
         Generator(Language l);
-        void keywords_c(std::ostream& out) const;
 
     protected:
         Language lang;
@@ -33,6 +32,7 @@ namespace oct::cc::v1
             virtual void declaration(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
             virtual void rules_add_keyword(std::ostream& out,const char* string,const char* token) const;
+            virtual void rules_keywords(std::ostream& out,Language) const;
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
         };
