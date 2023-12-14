@@ -26,7 +26,7 @@ namespace oct::cc::v1
         //out << "\"for\"		return FOR;\n";
         //out << "\"goto\"		return GOTO;\n";
         //out << "\"if\"		return IF;\n";
-        out << "\"int\"		    yylval->INT = new occ::Keyword(yytext,yyleng);return INT;\n";
+        out << "\"int\"		    yylval->INT = new occ::Keyword(occ::Tokens::INT,yytext,yyleng);return INT;\n";
         out << "\"long\"		return LONG;\n";
         out << "\"register\"	return REGISTER;\n";
         //if(has_return_statement()) out << "\"return\"	return RETURN;\n";

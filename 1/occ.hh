@@ -430,6 +430,9 @@ namespace oct::cc::v1
             number,
             keyword,
             identifier,
+            tab,
+            space,
+            newline,
         unit,
         AI,
             declaration,
@@ -446,6 +449,23 @@ namespace oct::cc::v1
         CPP,
     };
 
+    constexpr Statemants to_statement(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::INTEGER:
+        case Tokens::INTEGER_DECIMAL:
+            case Tokens::INTEGER_HEXDECIMAL:
+            return Statemants::number;
+        case Tokens::IDENTIFIER:
+            return Statemants::identifier;
+        default:
+            if(t >= Tokens::AUTO and t<= Tokens::WHILE) return Statemants::keyword;
+        }
+
+        return Statemants::none;
+    }
+
     /**
     *\brief Crea un nodo
     **/
@@ -456,54 +476,20 @@ namespace oct::cc::v1
     };
 
     /**
-    *\brief Node de Identificar
+    *\brief Node de Texto
     **/
     struct Word : public Node
     {
         std::string string;
+        Tokens token;
 
-        Word();
-        Word(Statemants);
-        Word(Statemants,const char*, size_t);
-        Word(const char*, size_t);
-
+        Word(Tokens,const char*, size_t);
         void print(std::ostream&)const;
     };
 
-    /**
-    *\brief Node Base para numero constante
-    **/
-    struct Number : public Word
-    {
-        Number();
-        Number(Statemants);
-        Number(Statemants,const char*, size_t);
-        Number(const char*, size_t);
-    };
-
-    /**
-    *\brief Node de Identificar
-    **/
-    struct Keyword : public Word
-    {
-        Keyword();
-        Keyword(Statemants);
-        Keyword(Statemants,const char*, size_t);
-        Keyword(const char*, size_t);
-
-    };
-
-    /**
-    *\brief Node de Identificar
-    **/
-    struct Identifier : public Word
-    {
-        Identifier();
-        Identifier(Statemants);
-        Identifier(Statemants,const char*, size_t);
-        Identifier(const char*, size_t);
-
-    };
+    typedef Word Keyword;
+    typedef Word Identifier;
+    typedef Word Number;
 
     template<typename N>
     class SymbolTable : public std::map<const char*,N*>

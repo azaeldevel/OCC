@@ -36,9 +36,9 @@ namespace oct::cc::v1::A::I
             out << "\"bp\"	        return BP;\n";
             out << "\"sp\"	        return SP;\n";
 
-            out << "\"mov\"         yylval->MOV = new occ::Keyword(yytext,yyleng);return MOV;\n";
-            out << "\"ret\"	        yylval->RET = new occ::Keyword(yytext,yyleng);return RET;\n";
-            out << "\"iret\"	    yylval->IRET = new occ::Keyword(yytext,yyleng);return IRET;\n";
+            out << "\"mov\"         yylval->MOV = new occ::Keyword(occ::Tokens::MOV,yytext,yyleng);return MOV;\n";
+            out << "\"ret\"	        yylval->RET = new occ::Keyword(occ::Tokens::RET,yytext,yyleng);return RET;\n";
+            out << "\"iret\"	    yylval->IRET = new occ::Keyword(occ::Tokens::IRET,yytext,yyleng);return IRET;\n";
 
             //out << "\"byte\"		return BYTE;\n";
             //out << "\"tiny\"		return TINY;\n";
@@ -47,20 +47,18 @@ namespace oct::cc::v1::A::I
         keywords_c(out);
 
         out << "{IDENTIFIER}\t\t{\n";
-                            out << "\t\tyylval->IDENTIFIER = new occ::Identifier(yytext,yyleng);\n";
+                            out << "\t\tyylval->IDENTIFIER = new occ::Identifier(occ::Tokens::IDENTIFIER,yytext,yyleng);\n";
                             //out << "\t\tstd::cout << yytext << \":\" << yyleng ;\n";
                             out << "\t\treturn IDENTIFIER;\n";
         out << "\t\t}\n";
 
         out << "{INTEGER_DECIMAL}  {\n";
-                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number;\n";
-                                    out << "\t\tyylval->INTEGER_DECIMAL->string.assign(yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Tokens::INTEGER,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_DECIMAL;\n";
                                 out << "\t\t}\n";
 
         out << "{INTEGER_HEXDECIMAL}  {\n";
-                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number;\n";
-                                    out << "\t\tyylval->INTEGER_HEXDECIMAL->string.assign(yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Tokens::INTEGER,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_HEXDECIMAL;\n";
                                 out << "\t\t}\n";
 
