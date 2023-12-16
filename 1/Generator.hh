@@ -43,7 +43,8 @@ namespace oct::cc::v1
             Parser(Language l);
 
             virtual void declaration(std::ostream& out) const;
-            virtual void declaration_add_keyword(std::ostream& out,const char* string,const char* token) const;
+            virtual void declaration_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const;
+            virtual void declaration_add_keyword(std::ostream& out,const std::string& string) const;
             virtual void declaration_types(std::ostream& out) const;
             virtual void declaration_memory(std::ostream& out) const;
             virtual void declaration_instructions(std::ostream& out) const;

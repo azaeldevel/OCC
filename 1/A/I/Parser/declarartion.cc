@@ -1,4 +1,6 @@
 
+#include <core/3/string.hh>
+
 #include "Generator.hh"
 
 namespace oct::cc::v1::A::I
@@ -242,8 +244,8 @@ namespace oct::cc::v1::A::I
 
 
         //Ponters
-        out << "%token SP\n";
-        out << "%token BP\n";
+        declaration_add_keyword(out,"sp");
+        declaration_add_keyword(out,"bp");
         out << "%token SI\n";
         out << "%token DI\n";
 
@@ -320,9 +322,13 @@ namespace oct::cc::v1::A::I
     {
         out << "%type <occ::A::I::Unit*> unit\n";
     }
-    void Parser::declaration_add_keyword(std::ostream& out,const char* string,const char* token) const
+    void Parser::declaration_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
         out << "%token <occ::Keyword*> " << token << "\t\"" << string << "\"\n";
+    }
+    void Parser::declaration_add_keyword(std::ostream& out,const std::string& string) const
+    {
+        out << "%token <occ::Keyword*> " << string << "\t\"" << core::toupper(string) << "\"\n";
     }
 
 }

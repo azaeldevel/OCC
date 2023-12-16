@@ -39,7 +39,6 @@
 				<Compiler>
 					<Add option="-g -fPIC" />
 					<Add option="-DOCTETOS_OCC_V1_A_HH_TDD" />
-					<Add directory="bin/Debug" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.l --lang AI --comp lexer" />
@@ -79,6 +78,10 @@
 			<Add directory="../../octetos" />
 			<Add directory="1" />
 		</Compiler>
+		<Linker>
+			<Add library="octetos-core-3" />
+			<Add directory="../core/bin/Debug" />
+		</Linker>
 		<Unit filename="1/A/A.cc">
 			<Option target="Debug" />
 			<Option target="Release" />
