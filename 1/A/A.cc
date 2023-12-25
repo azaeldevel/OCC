@@ -104,7 +104,7 @@ namespace oct::cc::v1::A
     }
     void Move::print(std::ostream& out)const
     {
-        out << "move;\n";
+        out << "\tmove;\n";
     }
 
     void Move::make(Tokens to, Tokens front)
@@ -128,7 +128,7 @@ namespace oct::cc::v1::A
     }
     void Return::print(std::ostream& out)const
     {
-        out << "return;\n";
+        out << "\treturn;\n";
     }
 
 
@@ -142,7 +142,7 @@ namespace oct::cc::v1::A
     }
     void Empty::print(std::ostream& out)const
     {
-        out << ";\n";
+        out << "\t;\n";
     }
 
 
@@ -156,7 +156,7 @@ namespace oct::cc::v1::A
     }
     void Interrupt::print(std::ostream& out)const
     {
-        out << "interrupt;\n";
+        out << "\tinterrupt;\n";
     }
 
 
