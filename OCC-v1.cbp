@@ -77,11 +77,8 @@
 			<Add option="-Wall -pedantic -std=c++20" />
 			<Add directory="../../octetos" />
 			<Add directory="1" />
+			<Add directory="bin/Debug" />
 		</Compiler>
-		<Linker>
-			<Add library="octetos-core-3" />
-			<Add directory="../core/bin/Debug" />
-		</Linker>
 		<Unit filename="1/A/A.cc">
 			<Option target="Debug" />
 			<Option target="Release" />

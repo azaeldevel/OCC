@@ -242,6 +242,7 @@ namespace oct::cc::v1::A::I
         declaration_add_keyword(out,"dh","DH");
         declaration_add_keyword(out,"dx","DX");
 
+        out << "\n";
 
         //Ponters
         declaration_add_keyword(out,"sp");
@@ -328,7 +329,7 @@ namespace oct::cc::v1::A::I
     }
     void Parser::declaration_add_keyword(std::ostream& out,const std::string& string) const
     {
-        out << "%token <occ::Keyword*> " << string << "\t\"" << core::toupper(string) << "\"\n";
+        out << "%token <occ::Keyword*> " << core::toupper(string) << "\t\"" << string << "\"\n";
     }
 
 }
