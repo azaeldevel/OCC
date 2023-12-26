@@ -1,6 +1,9 @@
 
 #include "Generator.hh"
 
+#include <core/3/string.hh>
+
+
 namespace oct::cc::v1::A::I
 {
     void Lexer::rules(std::ostream& out) const
@@ -35,15 +38,15 @@ namespace oct::cc::v1::A::I
             rules_add_keyword(out,"dh","DH");
             rules_add_keyword(out,"dx","DX");
 
-            out << "\"es\"	        return ES;\n";
-            out << "\"cs\"	        return CS;\n";
-            out << "\"ss\"	        return SS;\n";
-            out << "\"ds\"	        return DS;\n";
+            rules_add_keyword(out,"es");
+            rules_add_keyword(out,"cs");
+            rules_add_keyword(out,"ss");
+            rules_add_keyword(out,"ds");
 
-            out << "\"si\"	        return SI;\n";
-            out << "\"di\"	        return DI;\n";
-            out << "\"bp\"	        return BP;\n";
-            out << "\"sp\"	        return SP;\n";
+            rules_add_keyword(out,"si");
+            rules_add_keyword(out,"di");
+            rules_add_keyword(out,"bp");
+            rules_add_keyword(out,"sp");
 
             rules_add_keyword(out,"mov","MOV");
             rules_add_keyword(out,"ret","RET");
@@ -60,18 +63,17 @@ namespace oct::cc::v1::A::I
         out << "\t\t}\n";
 
         out << "{INTEGER_DECIMAL}  {\n";
-                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Tokens::INTEGER,yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::number,occ::Tokens::INTEGER,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_DECIMAL;\n";
                                 out << "\t\t}\n";
 
         out << "{INTEGER_HEXDECIMAL}  {\n";
-                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Tokens::INTEGER,yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::number,occ::Tokens::INTEGER,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_HEXDECIMAL;\n";
                                 out << "\t\t}\n";
 
-
-        out << "{LETTER}  {\n";
-                                    out << "\t\tyylval->LETTER = yytext[1];\n";
+         out << "{LETTER}  {\n";
+                                    out << "\t\tyylval->LETTER = new occ::Char(yytext[1]);\n";
                                     out << "\t\treturn LETTER;\n";
                                 out << "\t\t}\n";
 
@@ -88,13 +90,23 @@ namespace oct::cc::v1::A::I
 
     }
 
-    void Lexer::rules_add_keyword(std::ostream& out,const char* string,const char* token) const
+    void Lexer::rules_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
+            out << "\t\tyylexnext->yylexnext = new occ::Word(occ::Statemants::keyword,occ::Tokens::" << token << ",yytext,yyleng);\n";
             out << "\t\tyylexnext = yylexnext->yylexnext;\n";
             out << "\t\tyylval->" << token << " = yylexnext;\n";
             out << "\t\treturn " << token << ";\n";
+        out << "        }\n";
+    }
+
+    void Lexer::rules_add_keyword(std::ostream& out,const std::string& string) const
+    {
+        out << "\"" << string << "\"     {\n";
+            out << "\t\tyylexnext->yylexnext = new occ::Word(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylval->" << core::toupper(string) << " = yylexnext;\n";
+            out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
     }
 

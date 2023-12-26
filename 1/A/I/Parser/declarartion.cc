@@ -294,14 +294,14 @@ namespace oct::cc::v1::A::I
 
     void Parser::declaration_regiters(std::ostream& out) const
     {
-        out << "%type <occ::Tokens> regiters_8b\n";
-        out << "%type <occ::Tokens> regiters_16b\n";
-        out << "%type <occ::Tokens> regiters\n";
+        out << "%type <occ::Keyword*> regiters_8b\n";
+        out << "%type <occ::Keyword*> regiters_16b\n";
+        out << "%type <occ::Keyword*> regiters\n";
     }
 
     void Parser::declaration_types(std::ostream& out) const
     {
-        out << "%token <char> LETTER\n";
+        out << "%token <occ::Char*> LETTER\n";
         out << "%token <occ::Number*> INTEGER_DECIMAL\n";
         out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
         out << "%type <occ::Number*> integer\n";
@@ -314,7 +314,7 @@ namespace oct::cc::v1::A::I
 
     void Parser::declaration_segments(std::ostream& out) const
     {
-        out << "%type <occ::Tokens> segments\n";
+        out << "%type <occ::Keyword*> segments\n";
     }
 
     void Parser::declaration_functions(std::ostream& out) const

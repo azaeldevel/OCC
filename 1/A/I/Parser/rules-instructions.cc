@@ -31,17 +31,16 @@ namespace oct::cc::v1::A::I
             //2,3).-
             out << "\tMOV regiters ',' LETTER ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\tauto mv  = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
+            out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV regiters ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV memory ',' CHAR ';'\n";
-            out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\tauto mv  = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
+            out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' integer ';'\n";

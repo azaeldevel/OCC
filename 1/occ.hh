@@ -426,6 +426,39 @@ namespace oct::cc::v1
 
 	};
 
+    constexpr const char* to_string(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::AL:
+            return "AL";
+        case Tokens::AH:
+            return "AH";
+        case Tokens::AX:
+            return "AX";
+        case Tokens::BL:
+            return "BL";
+        case Tokens::BH:
+            return "BH";
+        case Tokens::BX:
+            return "BX";
+        case Tokens::CL:
+            return "CL";
+        case Tokens::CH:
+            return "CH";
+        case Tokens::CX:
+            return "CX";
+        case Tokens::DL:
+            return "DL";
+        case Tokens::DH:
+            return "DH";
+        case Tokens::DX:
+            return "DX";
+        default:
+            return "?";
+        }
+    }
+
 
     enum class Statemants
     {
@@ -437,6 +470,7 @@ namespace oct::cc::v1
             tab,
             space,
             newline,
+            letter,
         unit,
         AI,
             declaration,
@@ -490,6 +524,19 @@ namespace oct::cc::v1
 
         Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
+        Word(Statemants,const char*, size_t);
+        Word(Statemants,Tokens,const char*, size_t);
+        void print(std::ostream&)const;
+    };
+
+    /**
+    *\brief Node de Texto
+    **/
+    struct Char : public Node
+    {
+        char letter;
+
+        Char(char);
         void print(std::ostream&)const;
     };
 

@@ -35,10 +35,16 @@ namespace oct::cc::v1
     }
 
 
-    Word::Word(const char* text, size_t size) : string(text,size),yylexnext(NULL)
+    Word::Word(const char* text, size_t size) : Node(Statemants::none),string(text,size),token(Tokens::none),yylexnext(NULL)
     {
     }
-    Word::Word(Tokens t,const char* text, size_t size) : Node(to_statement(t)),string(text,size),yylexnext(NULL)
+    Word::Word(Tokens t,const char* text, size_t size) : Node(Statemants::none),string(text,size),token(t),yylexnext(NULL)
+    {
+    }
+    Word::Word(Statemants s,const char* text, size_t size) : Node(s),string(text,size),token(Tokens::none),yylexnext(NULL)
+    {
+    }
+    Word::Word(Statemants s,Tokens t,const char* text, size_t size) : Node(s),string(text,size),token(t),yylexnext(NULL)
     {
     }
     void Word::print(std::ostream& out)const
@@ -46,4 +52,12 @@ namespace oct::cc::v1
         out << string;
     }
 
+
+    Char::Char(char c) : Node(Statemants::letter), letter(c)
+    {
+    }
+    void Char::print(std::ostream& out)const
+    {
+        out << "'" << letter << "'";
+    }
 }

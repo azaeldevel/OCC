@@ -91,10 +91,12 @@ namespace oct::cc::v1::A
     {
         Move();
         Move(Statemants,size_t instsize);
+        Move(Statemants,size_t instsize,Node* nTo,Node* nFront);
         void print(std::ostream&)const;
 
-        void make(Tokens to, Tokens front);
-        void make(Tokens to,const Node* nTo, Tokens front,const Node* nFront);
+        void make(Node* nTo,Node* nFront);
+
+        Node *from, *to;
 
     };
 

@@ -96,25 +96,54 @@ namespace oct::cc::v1::A
 
 
 
-    Move::Move() : Instruction(Statemants::move,2)
+    Move::Move() : Instruction(Statemants::move,2),to(NULL),from(NULL)
     {
     }
-    Move::Move(Statemants t,size_t s) : Instruction(t,s)
+    Move::Move(Statemants t,size_t s) : Instruction(t,s),to(NULL),from(NULL)
+    {
+    }
+    Move::Move(Statemants t,size_t s,Node* nTo,Node* nFront) : Instruction(t,s),to(NULL),from(NULL)
     {
     }
     void Move::print(std::ostream& out)const
     {
-        out << "\tmove;\n";
+        out << "\tmove ";
+        if(to)
+        {
+            if(to->data == Statemants::keyword)
+            {
+                out << reinterpret_cast<Keyword*>(to)->string;
+            }
+            else
+            {
+                out << "?";
+            }
+        }
+        out << " ";
+        if(from)
+        {
+            if(from->data == Statemants::number)
+            {
+                out << reinterpret_cast<Number*>(from)->string;
+            }
+            else if(from->data == Statemants::letter)
+            {
+                out << "'" << reinterpret_cast<Char*>(from)->letter << "'";
+            }
+            else
+            {
+                out << "?";
+            }
+        }
+
+        out << "\n";
     }
 
-    void Move::make(Tokens to, Tokens front)
+    void Move::make(Node* t, Node* f)
     {
-
-    }
-    void Move::make(Tokens to,const Node* nTo, Tokens front,const Node* nFront)
-    {
-        make(to,front);
-
+        //std::cout << "nodes move\n";
+        to = t;
+        from = f;
     }
 
 
