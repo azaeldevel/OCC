@@ -247,16 +247,20 @@ namespace oct::cc::v1::A::I
         //Ponters
         declaration_add_keyword(out,"sp");
         declaration_add_keyword(out,"bp");
-        out << "%token SI\n";
-        out << "%token DI\n";
+        declaration_add_keyword(out,"si");
+        declaration_add_keyword(out,"di");
+
+        out << "\n";
 
         //Segments
-        out << "%token CS\n";
-        out << "%token DS\n";
-        out << "%token SS\n";
-        out << "%token ES\n";
-        out << "%token FS\n";
-        out << "%token GS\n";
+        declaration_add_keyword(out,"cs");
+        declaration_add_keyword(out,"ds");
+        declaration_add_keyword(out,"ss");
+        declaration_add_keyword(out,"es");
+        declaration_add_keyword(out,"fs");
+        declaration_add_keyword(out,"gs");
+
+        out << "\n";
 
         out << "%token BYTE\n";
         out << "%token TINY\n";
