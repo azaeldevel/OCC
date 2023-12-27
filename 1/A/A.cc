@@ -119,7 +119,7 @@ namespace oct::cc::v1::A
                 out << "?";
             }
         }
-        out << " ";
+        out << ", ";
         if(from)
         {
             if(from->data == Statemants::number)
@@ -136,7 +136,7 @@ namespace oct::cc::v1::A
             }
         }
 
-        out << "\n";
+        out << ";\n";
     }
 
     void Move::make(Node* t, Node* f)
@@ -177,15 +177,35 @@ namespace oct::cc::v1::A
 
 
 
-    Interrupt::Interrupt() : Instruction(Statemants::interrupt,2)
+    Interrupt::Interrupt() : Instruction(Statemants::interrupt,2),service(NULL)
     {
     }
-    Interrupt::Interrupt(Statemants t,size_t s) : Instruction(t,s)
+    Interrupt::Interrupt(Statemants t,size_t s) : Instruction(t,s),service(NULL)
     {
+    }
+    void Interrupt::make(Number* n)
+    {
+        service = n;
     }
     void Interrupt::print(std::ostream& out)const
     {
-        out << "\tinterrupt;\n";
+        out << "\tinterrupt ";
+        if(service)
+        {
+            if(service->data == Statemants::number)
+            {
+                out << service->string;
+            }
+            else
+            {
+                out << "?";
+            }
+        }
+        else
+        {
+            out << "?";
+        }
+        out << ";\n";
     }
 
 

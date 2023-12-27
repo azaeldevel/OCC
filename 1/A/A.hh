@@ -134,6 +134,10 @@ namespace oct::cc::v1::A
         Interrupt(Statemants,size_t instsize);
         void print(std::ostream&)const;
 
+        void make(Number*);
+
+        //
+        Number* service;
     };
 
 }

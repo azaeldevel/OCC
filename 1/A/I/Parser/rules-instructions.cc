@@ -84,9 +84,11 @@ namespace oct::cc::v1::A::I
             out << "\t;\n";
 
         out << "interrupt : \n";
-            out << "\t" << instruction_string(Tokens::INT) << " integer ';'\n";
+            out << "\tINT integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Interrupt(occ::Statemants::interrupt,2);\n";//2 bit: l6bits
+            out << "\t\tauto inst  = new occ::A::Interrupt;\n";//2 bit: l6bits
+            out << "\t\tinst->make($2);\n";//2 bit: l6bits
+            out << "\t\t$$ = inst;\n";
             out << "\t}\n";
             out << "\t;\n";
 
