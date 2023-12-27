@@ -102,7 +102,13 @@ namespace oct::cc::v1::A
     Move::Move(Statemants t,size_t s) : Instruction(t,s),to(NULL),from(NULL)
     {
     }
-    Move::Move(Statemants t,size_t s,Node* nTo,Node* nFront) : Instruction(t,s),to(NULL),from(NULL)
+    Move::Move(Statemants t,size_t s,Node* nTo,Node* nFront) : Instruction(t,s),to(nTo),from(nFront)
+    {
+    }
+    Move::Move(size_t s,Node* nTo,Node* nFront) : Instruction(Statemants::move,s),to(nTo),from(nFront),form(Form::none)
+    {
+    }
+    Move::Move(size_t s,Node* nTo,Node* nFront,Form f) : Instruction(Statemants::move,s),to(nTo),from(nFront),form(f)
     {
     }
     void Move::print(std::ostream& out)const
@@ -144,6 +150,31 @@ namespace oct::cc::v1::A
         //std::cout << "nodes move\n";
         to = t;
         from = f;
+    }
+
+
+    void Move::make(Node* t, Node* f,signed char mod,signed char rm)
+    {
+        //std::cout << "nodes move\n";
+        to = t;
+        from = f;
+    }
+
+    void Move::bind()
+    {
+    }
+
+    void Move::bind(Form f)
+    {
+        if(f > Form::none)
+        {
+            form = f;
+            bind();
+        }
+        else
+        {
+            bind();
+        }
     }
 
 

@@ -89,14 +89,54 @@ namespace oct::cc::v1::A
     **/
     struct Move : public Instruction
     {
+        enum class Form
+        {
+            none,
+            register_to_register,
+            register_to_memory,
+            memory_to_register,
+        };
         Move();
         Move(Statemants,size_t instsize);
         Move(Statemants,size_t instsize,Node* nTo,Node* nFront);
+
+        /**
+        *\biref Crea la instraccion move
+        *\param instsize cantidad de bytes la instracion
+        *\param nTo Valor semantico del primer paramtro
+        *\param nFront Valor semantico del segundo paramtro
+        **/
+        Move(size_t instsize,Node* nTo,Node* nFront);
+
+        /**
+        *\biref Crea la instraccion move
+        *\param instsize cantidad de bytes la instracion
+        *\param nTo Valor semantico del primer paramtro
+        *\param nFront Valor semantico del segundo paramtro
+        *\param form indiocador de stamtement of instrccion, refereced to intel manual
+        **/
+        Move(size_t instsize,Node* nTo,Node* nFront,Form form);
+
         void print(std::ostream&)const;
 
         void make(Node* nTo,Node* nFront);
+        void make(Node* nTo,Node* nFront,signed char mod,signed char rm);
+
+
+
+        /**
+        *\biref Bind a instruction, is called whe all data is stored
+        **/
+        void bind();
+
+        /**
+        *\biref Bind a instruction, use when contructor o not get form paramter
+        *\param form if 0 will call bind(), if > 0 will set form and call bind()
+        **/
+        void bind(Form form);
 
         Node *from, *to;
+        Form form;
 
     };
 

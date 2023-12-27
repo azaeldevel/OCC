@@ -10,64 +10,67 @@ namespace oct::cc::v1::A::I
             //1,4,5).-
             out << "\tMOV regiters ',' regiters ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' regiters ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tMOV identifier ',' regiters ';'\n";
-            out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_memory);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV regiters ',' memory ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::memory_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
+            out << "\tMOV identifier ',' regiters ';'\n";//identifier is a pointer/inmendiate
+            out << "\t{\n";
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tMOV regiters ',' identifier ';'\n";//identifier is a pointer/inmendiate
+            out << "\t{\n";
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            out << "\t}\n";
             //2,3).-
+            out << "\t|\n";
             out << "\tMOV regiters ',' LETTER ';'\n";
             out << "\t{\n";
-            out << "\t\tauto mv  = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
-            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
-            out << "\t\t$$ = mv;\n";
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV regiters ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\tauto mv  = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
-            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
-            out << "\t\t$$ = mv;\n";
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             //6).-
             out << "\tMOV segments ',' regiters ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV segments ',' memory ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             //7).-
             out << "\tMOV regiters ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(occ::Statemants::move,2);\n";//2 bit: l6bits
+            out << "\t\tauto mv  = new occ::A::Move;\n";//2 bit: l6bits
+            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
+            out << "\t\t$$ = mv;\n";
             out << "\t}\n";
             out << "\t;\n";
 
