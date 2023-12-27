@@ -25,18 +25,18 @@ namespace oct::cc::v1::A::I
         rules_keywords(out,Language::C90);
 
         {
-            rules_add_keyword(out,"al","AL");
-            rules_add_keyword(out,"ah","AH");
-            rules_add_keyword(out,"ax","AX");
-            rules_add_keyword(out,"bl","BL");
-            rules_add_keyword(out,"bh","BH");
-            rules_add_keyword(out,"bx","BX");
-            rules_add_keyword(out,"cl","CL");
-            rules_add_keyword(out,"ch","CH");
-            rules_add_keyword(out,"cx","CX");
-            rules_add_keyword(out,"dl","DL");
-            rules_add_keyword(out,"dh","DH");
-            rules_add_keyword(out,"dx","DX");
+            rules_add_keyword_register(out,"al");
+            rules_add_keyword_register(out,"ah");
+            rules_add_keyword_register(out,"ax");
+            rules_add_keyword_register(out,"bl");
+            rules_add_keyword_register(out,"bh");
+            rules_add_keyword_register(out,"bx");
+            rules_add_keyword_register(out,"cl");
+            rules_add_keyword_register(out,"ch");
+            rules_add_keyword_register(out,"cx");
+            rules_add_keyword_register(out,"dl");
+            rules_add_keyword_register(out,"dh");
+            rules_add_keyword_register(out,"dx");
 
             rules_add_keyword(out,"es");
             rules_add_keyword(out,"cs");
@@ -93,9 +93,9 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::Word(occ::Statemants::keyword,occ::Tokens::" << token << ",yytext,yyleng);\n";
+            out << "\t\tyylexnext->yylexnext = new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << token << ",yytext,yyleng);\n";
             out << "\t\tyylexnext = yylexnext->yylexnext;\n";
-            out << "\t\tyylval->" << token << " = yylexnext;\n";
+            out << "\t\tyylval->" << token << " = (occ::Keyword*)yylexnext;\n";
             out << "\t\treturn " << token << ";\n";
         out << "        }\n";
     }
@@ -103,9 +103,18 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword(std::ostream& out,const std::string& string) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::Word(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
+            out << "\t\tyylexnext->yylexnext = new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
             out << "\t\tyylexnext = yylexnext->yylexnext;\n";
-            out << "\t\tyylval->" << core::toupper(string) << " = yylexnext;\n";
+            out << "\t\tyylval->" << core::toupper(string) << " = (occ::Keyword*)yylexnext;\n";
+            out << "\t\treturn " << core::toupper(string) << ";\n";
+        out << "        }\n";
+    }
+    void Lexer::rules_add_keyword_register(std::ostream& out,const std::string& string) const
+    {
+        out << "\"" << string << "\"     {\n";
+            out << "\t\tyylexnext->yylexnext = new occ::A::Register(occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylval->" << core::toupper(string) << " = (occ::A::Register*)yylexnext;\n";
             out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
     }

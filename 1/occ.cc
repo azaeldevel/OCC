@@ -34,6 +34,10 @@ namespace oct::cc::v1
     {
     }
 
+    void Node::print(std::ostream&)const
+    {
+    }
+
 
     Word::Word(const char* text, size_t size) : Node(Statemants::none),string(text,size),token(Tokens::none),yylexnext(NULL)
     {
@@ -51,6 +55,51 @@ namespace oct::cc::v1
     {
         out << string;
     }
+
+
+
+
+    Keyword::Keyword(const char* text, size_t size) : Word(text,size)
+    {
+    }
+    Keyword::Keyword(Tokens t,const char* text, size_t size) : Word(t,text,size)
+    {
+    }
+    Keyword::Keyword(Statemants s,const char* text, size_t size) : Word(s,text,size)
+    {
+    }
+    Keyword::Keyword(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size)
+    {
+    }
+
+    bool Keyword::is_register()const
+    {
+        if(data == Statemants::keyword)
+        {
+            switch(token)
+            {
+            case Tokens::AL:
+            case Tokens::AH:
+            case Tokens::BL:
+            case Tokens::BH:
+            case Tokens::CL:
+            case Tokens::CH:
+            case Tokens::DL:
+            case Tokens::DH:
+                return true;
+            case Tokens::AX:
+            case Tokens::BX:
+            case Tokens::CX:
+            case Tokens::DX:
+                return true;
+            default :
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 
 
     Char::Char(char c) : Node(Statemants::letter), letter(c)

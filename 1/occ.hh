@@ -511,6 +511,8 @@ namespace oct::cc::v1
     {
         Node();
         Node(Statemants);
+
+        virtual void print(std::ostream&)const;
     };
 
     /**
@@ -526,7 +528,7 @@ namespace oct::cc::v1
         Word(Tokens,const char*, size_t);
         Word(Statemants,const char*, size_t);
         Word(Statemants,Tokens,const char*, size_t);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
     };
 
     /**
@@ -537,10 +539,24 @@ namespace oct::cc::v1
         char letter;
 
         Char(char);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
     };
 
-    typedef Word Keyword;
+
+
+    /**
+    *\brief Node de Texto
+    **/
+    struct Keyword : public Word
+    {
+        Keyword(const char*, size_t);
+        Keyword(Tokens,const char*, size_t);
+        Keyword(Statemants,const char*, size_t);
+        Keyword(Statemants,Tokens,const char*, size_t);
+
+        bool is_register()const;
+    };
+
     typedef Word Identifier;
     typedef Word Number;
 

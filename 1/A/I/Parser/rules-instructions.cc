@@ -36,20 +36,20 @@ namespace oct::cc::v1::A::I
             out << "\t|\n";
             out << "\tMOV regiters ',' LETTER ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV regiters ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_memory);\n";
             out << "\t}\n";
-            out << "\t|\n";
             //6).-
+            out << "\t|\n";
             out << "\tMOV segments ',' regiters ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
@@ -68,9 +68,7 @@ namespace oct::cc::v1::A::I
             out << "\t|\n";
             out << "\tMOV memory ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\tauto mv  = new occ::A::Move;\n";//2 bit: l6bits
-            out << "\t\tmv->make($2,$4);\n";//2 bit: l6bits
-            out << "\t\t$$ = mv;\n";
+            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t;\n";
 

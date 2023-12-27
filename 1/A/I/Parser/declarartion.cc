@@ -229,18 +229,18 @@ namespace oct::cc::v1::A::I
         out << "%token XORG\n";
 
         //registers
-        declaration_add_keyword(out,"al","AL");
-        declaration_add_keyword(out,"ah","AH");
-        declaration_add_keyword(out,"ax","AX");
-        declaration_add_keyword(out,"bl","BL");
-        declaration_add_keyword(out,"bh","BH");
-        declaration_add_keyword(out,"bx","BX");
-        declaration_add_keyword(out,"cl","CL");
-        declaration_add_keyword(out,"ch","CH");
-        declaration_add_keyword(out,"cx","CX");
-        declaration_add_keyword(out,"dl","DL");
-        declaration_add_keyword(out,"dh","DH");
-        declaration_add_keyword(out,"dx","DX");
+        declaration_add_keyword_register(out,"al");
+        declaration_add_keyword_register(out,"ah");
+        declaration_add_keyword_register(out,"ax");
+        declaration_add_keyword_register(out,"bl");
+        declaration_add_keyword_register(out,"bh");
+        declaration_add_keyword_register(out,"bx");
+        declaration_add_keyword_register(out,"cl");
+        declaration_add_keyword_register(out,"ch");
+        declaration_add_keyword_register(out,"cx");
+        declaration_add_keyword_register(out,"dl");
+        declaration_add_keyword_register(out,"dh");
+        declaration_add_keyword_register(out,"dx");
 
         out << "\n";
 
@@ -294,9 +294,9 @@ namespace oct::cc::v1::A::I
 
     void Parser::declaration_regiters(std::ostream& out) const
     {
-        out << "%type <occ::Keyword*> regiters_8b\n";
-        out << "%type <occ::Keyword*> regiters_16b\n";
-        out << "%type <occ::Keyword*> regiters\n";
+        out << "%type <occ::A::Register*> regiters_8b\n";
+        out << "%type <occ::A::Register*> regiters_16b\n";
+        out << "%type <occ::A::Register*> regiters\n";
     }
 
     void Parser::declaration_types(std::ostream& out) const
@@ -334,6 +334,10 @@ namespace oct::cc::v1::A::I
     void Parser::declaration_add_keyword(std::ostream& out,const std::string& string) const
     {
         out << "%token <occ::Keyword*> " << core::toupper(string) << "\t\"" << string << "\"\n";
+    }
+    void Parser::declaration_add_keyword_register(std::ostream& out,const std::string& string) const
+    {
+        out << "%token <occ::A::Register*> " << core::toupper(string) << "\t\"" << string << "\"\n";
     }
 
 }

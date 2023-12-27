@@ -76,16 +76,61 @@ namespace oct::cc::v1::A
 
 
 
+    Register::Register(const char* text, size_t size) : Keyword(text,size)
+    {
+    }
+    Register::Register(Tokens t,const char* text, size_t size) : Keyword(t,text,size)
+    {
+    }
+    Register::Register(Statemants s,const char* text, size_t size) : Keyword(s,text,size)
+    {
+    }
+    Register::Register(Statemants s,Tokens t,const char* text, size_t size) : Keyword(s,t,text,size)
+    {
+    }
+
+    unsigned char Register::register_size()const
+    {
+        if(data == Statemants::keyword)
+        {
+            switch(token)
+            {
+            case Tokens::AL:
+            case Tokens::AH:
+            case Tokens::BL:
+            case Tokens::BH:
+            case Tokens::CL:
+            case Tokens::CH:
+            case Tokens::DL:
+            case Tokens::DH:
+                return 8;
+            case Tokens::AX:
+            case Tokens::BX:
+            case Tokens::CX:
+            case Tokens::DX:
+                return 16;
+            default :
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
 
     Instruction::Instruction() : Node(Statemants::instruction),next(NULL),inscode(NULL)
     {
     }
+    Instruction::Instruction(Statemants t) : Node(t),next(NULL),inscode(NULL)
+    {
+    }
     Instruction::Instruction(Statemants t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
     {
+        for(size_t i = 0; i < instsize; i++) inscode[i] = 0;
     }
     Instruction::~Instruction()
     {
-        if(inscode) delete inscode;
+        if(inscode) delete[] inscode;
     }
 
 
@@ -96,7 +141,7 @@ namespace oct::cc::v1::A
 
 
 
-    Move::Move() : Instruction(Statemants::move,2),to(NULL),from(NULL)
+    Move::Move() : Instruction(Statemants::move),to(NULL),from(NULL)
     {
     }
     Move::Move(Statemants t,size_t s) : Instruction(t,s),to(NULL),from(NULL)
@@ -145,24 +190,100 @@ namespace oct::cc::v1::A
         out << ";\n";
     }
 
-    void Move::make(Node* t, Node* f)
-    {
-        //std::cout << "nodes move\n";
-        to = t;
-        from = f;
-    }
-
-
-    void Move::make(Node* t, Node* f,signed char mod,signed char rm)
-    {
-        //std::cout << "nodes move\n";
-        to = t;
-        from = f;
-    }
-
     void Move::bind()
     {
+
+        switch(form)
+        {
+        case Form::inmediate_to_register:
+            {
+                inscode[0] = 0b1011;
+                if(is_register(from))
+                {
+                    if(register_size(from) == 8)
+                    {
+                        inscode[0] = inscode[0] << 0;
+                    }
+                    else
+                    {
+                        inscode[0] = inscode[0] << 1;
+                    }
+
+                }
+                break;
+            }
+        }
+
     }
+
+    bool Move::is_register(const Node* node) const
+    {
+        if(node)
+        {
+            if(node->data == Statemants::keyword)
+            {
+                switch(reinterpret_cast<const Word*>(node)->token)
+                {
+                case Tokens::AL:
+                case Tokens::AH:
+                case Tokens::BL:
+                case Tokens::BH:
+                case Tokens::CL:
+                case Tokens::CH:
+                case Tokens::DL:
+                case Tokens::DH:
+                    return true;
+                case Tokens::AX:
+                case Tokens::BX:
+                case Tokens::CX:
+                case Tokens::DX:
+                    return true;
+                default :
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    unsigned char Move::register_size(const Node* node) const
+    {
+        if(node)
+        {
+            if(node->data == Statemants::keyword)
+            {
+                switch(reinterpret_cast<const Word*>(node)->token)
+                {
+                case Tokens::AL:
+                case Tokens::AH:
+                case Tokens::BL:
+                case Tokens::BH:
+                case Tokens::CL:
+                case Tokens::CH:
+                case Tokens::DL:
+                case Tokens::DH:
+                    return 8;
+                case Tokens::AX:
+                case Tokens::BX:
+                case Tokens::CX:
+                case Tokens::DX:
+                    return 16;
+                default :
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
 
     void Move::bind(Form f)
     {

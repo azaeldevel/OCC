@@ -58,6 +58,21 @@ namespace oct::cc::v1::A
     };
 
 
+    /**
+    *\brief Node de Texto
+    **/
+    struct Register : public Keyword
+    {
+        Register(const char*, size_t);
+        Register(Tokens,const char*, size_t);
+        Register(Statemants,const char*, size_t);
+        Register(Statemants,Tokens,const char*, size_t);
+
+
+        unsigned char register_size()const;
+
+    };
+
 
     /**
     *\brief Node Base para instruciones
@@ -75,13 +90,21 @@ namespace oct::cc::v1::A
         /**
         *\brief Crea un nodo para la instruccion indicada
         *\param type tipo de instruccion
+        */
+        Instruction(Statemants type);
+        /**
+        *\brief Crea un nodo para la instruccion indicada
+        *\param type tipo de instruccion
         *\param instsize bytes usados para especificar el codigo de instrccion
         */
         Instruction(Statemants type,size_t instsize);
+
         ~Instruction();
 
         void print(std::ostream&)const;
     };
+
+
 
 
     /**
@@ -95,7 +118,10 @@ namespace oct::cc::v1::A
             register_to_register,
             register_to_memory,
             memory_to_register,
+            inmediate_to_register,
+            inmediate_to_memory,
         };
+
         Move();
         Move(Statemants,size_t instsize);
         Move(Statemants,size_t instsize,Node* nTo,Node* nFront);
@@ -119,11 +145,6 @@ namespace oct::cc::v1::A
 
         void print(std::ostream&)const;
 
-        void make(Node* nTo,Node* nFront);
-        void make(Node* nTo,Node* nFront,signed char mod,signed char rm);
-
-
-
         /**
         *\biref Bind a instruction, is called whe all data is stored
         **/
@@ -134,6 +155,9 @@ namespace oct::cc::v1::A
         *\param form if 0 will call bind(), if > 0 will set form and call bind()
         **/
         void bind(Form form);
+
+        bool is_register(const Node*) const;
+        unsigned char register_size(const Node*) const;
 
         Node *from, *to;
         Form form;
