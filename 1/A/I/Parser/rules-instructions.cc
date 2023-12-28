@@ -5,7 +5,6 @@ namespace oct::cc::v1::A::I
 {
     void Parser::rules_instructions(std::ostream& out) const
     {
-
         out << "move : \n";
             //1,4,5).-
             out << "\tMOV regiters ',' regiters ';'\n";

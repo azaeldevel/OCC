@@ -33,7 +33,7 @@ namespace oct::cc::v1::A
     {
     }
 
-    void Unit::print(std::ostream&)const
+    void Unit::print(std::ostream& out)const
     {
     }
     bool Unit::semantic(std::ostream& out)
@@ -55,9 +55,25 @@ namespace oct::cc::v1::A
         Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
+            //out << "statment: " << (int)actual_inst->data << "\n";
+            actual_inst->print(out);
+            actual_inst = (Instruction*)actual_inst->next;
+        }
+        out << "}\n";
+    }
+    /*
+    void Function::print(std::ostream& out)const
+    {
+        if(identifier) identifier->print(out);
+        out << "\n{\n";
+        Instruction* actual_inst = (Instruction*)insts;
+        while(actual_inst)
+        {
+            out << "statment: " << (int)actual_inst->data << "\n";
             switch(reinterpret_cast<core::node<Statemants>*>(actual_inst)->data)
             {
             case Statemants::move:
+                    //out << "move\n";
                     reinterpret_cast<Move*>(actual_inst)->print(out);
                 break;
             case Statemants::ret:
@@ -73,6 +89,7 @@ namespace oct::cc::v1::A
         }
         out << "}\n";
     }
+    */
 
 
 
@@ -161,30 +178,12 @@ namespace oct::cc::v1::A
         out << "\tmove ";
         if(to)
         {
-            if(to->data == Statemants::keyword)
-            {
-                out << reinterpret_cast<Keyword*>(to)->string;
-            }
-            else
-            {
-                out << "?";
-            }
+            to->print(out);
         }
         out << ", ";
         if(from)
         {
-            if(from->data == Statemants::number)
-            {
-                out << reinterpret_cast<Number*>(from)->string;
-            }
-            else if(from->data == Statemants::letter)
-            {
-                out << "'" << reinterpret_cast<Char*>(from)->letter << "'";
-            }
-            else
-            {
-                out << "?";
-            }
+            from->print(out);
         }
 
         out << ";\n";

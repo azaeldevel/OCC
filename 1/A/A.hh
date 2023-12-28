@@ -39,7 +39,7 @@ namespace oct::cc::v1::A
         Unit();
         Unit(const Statemants&);
 
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
         virtual bool semantic(std::ostream&);
     };
 
@@ -54,7 +54,7 @@ namespace oct::cc::v1::A
 
         Function();
         Function(Statemants);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
     };
 
 
@@ -69,8 +69,7 @@ namespace oct::cc::v1::A
         Register(Statemants,Tokens,const char*, size_t);
 
 
-        unsigned char register_size()const;
-
+        unsigned char register_size() const;
     };
 
 
@@ -101,7 +100,7 @@ namespace oct::cc::v1::A
 
         ~Instruction();
 
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
     };
 
 
@@ -143,7 +142,7 @@ namespace oct::cc::v1::A
         **/
         Move(size_t instsize,Node* nTo,Node* nFront,Form form);
 
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
 
         /**
         *\biref Bind a instruction, is called whe all data is stored
@@ -172,7 +171,7 @@ namespace oct::cc::v1::A
     {
         Return();
         Return(Statemants,size_t instsize);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
 
     };
 
@@ -184,7 +183,7 @@ namespace oct::cc::v1::A
     {
         Empty();
         Empty(Statemants,size_t instsize);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
 
     };
 
@@ -196,7 +195,7 @@ namespace oct::cc::v1::A
     {
         Interrupt();
         Interrupt(Statemants,size_t instsize);
-        void print(std::ostream&)const;
+        virtual void print(std::ostream&)const;
 
         void make(Number*);
 

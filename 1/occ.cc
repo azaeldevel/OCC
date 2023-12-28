@@ -27,15 +27,16 @@
 namespace oct::cc::v1
 {
 
-    Node::Node()
+    Node::Node() : core::node<Statemants>(Statemants::none)
     {
     }
     Node::Node(Statemants t) : core::node<Statemants>(t)
     {
     }
 
-    void Node::print(std::ostream&)const
+    void Node::print(std::ostream& out)const
     {
+        out << "node\n";
     }
 
 
