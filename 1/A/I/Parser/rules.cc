@@ -5,23 +5,9 @@ namespace oct::cc::v1::A::I
 {
     void Parser::rules(std::ostream& out) const
     {
-
-        rules_types(out);
-
-        rules_identifier(out);
-
-        rules_regiters(out);
-
-        rules_memory(out);
-
-        rules_segments(out);
-
-        rules_instructions(out);
-
-        rules_functions(out);
-
-        rules_unit(out);
-
+        rules_occ(out);
+        rules_A(out);
+        rules_AI(out);
     }
 
     void Parser::rules_regiters(std::ostream& out) const
@@ -184,7 +170,7 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "functions : \n";
+        /*out << "functions : \n";
             out << "\tfunction\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
@@ -198,7 +184,7 @@ namespace oct::cc::v1::A::I
                 out << "\t\tfunction_last->next = $2;\n";
                 out << "\t\tfunction_last = $2;\n";
             out << "\t}\n";
-            out << "\t;\n";
+            out << "\t;\n";*/
 
 
         out << "type_specifier :\n";
@@ -273,9 +259,6 @@ namespace oct::cc::v1::A::I
                 out << "\t\tstatement_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
-
-
-
     }
 
     void Parser::rules_unit(std::ostream& out) const
@@ -337,6 +320,25 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
+    }
+
+
+    void Parser::rules_occ(std::ostream& out) const
+    {
+        rules_types(out);
+        rules_identifier(out);
+    }
+    void Parser::rules_A(std::ostream& out) const
+    {
+        rules_regiters(out);
+        rules_memory(out);
+        rules_segments(out);
+        rules_instructions(out);
+    }
+    void Parser::rules_AI(std::ostream& out) const
+    {
+        rules_functions(out);
+        rules_unit(out);
     }
 
 

@@ -275,33 +275,6 @@ namespace oct::cc::v1::A::I
         out << "%start unit\n";
     }
 
-    void Parser::declaration_instructions(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_regiters(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_types(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_memory(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_segments(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_functions(std::ostream& out) const
-    {
-    }
-
-    void Parser::declaration_unit(std::ostream& out) const
-    {
-    }
     void Parser::declaration_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
         out << "%token <occ::Keyword*> " << token << "\t\"" << string << "\"\n";
