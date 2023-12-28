@@ -55,6 +55,9 @@ namespace oct::cc::v1
             virtual void declaration_segments(std::ostream& out) const;
             virtual void declaration_functions(std::ostream& out) const;
             virtual void declaration_unit(std::ostream& out) const;
+            virtual void declaration_occ(std::ostream& out) const;
+            virtual void declaration_A(std::ostream& out) const;
+            virtual void declaration_AI(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
             virtual void rules_types(std::ostream& out) const;
             virtual void rules_identifier(std::ostream& out) const;

@@ -267,69 +267,40 @@ namespace oct::cc::v1::A::I
         out << "%token TINY\n";
 
 
-        //out << "%type <void*> declarations\n";
-        declaration_types(out);
-        declaration_regiters(out);
-        declaration_memory(out);
-        declaration_segments(out);
-        declaration_instructions(out);
-        declaration_functions(out);
-        declaration_unit(out);
+        declaration_occ(out);
+        declaration_A(out);
+        declaration_AI(out);
 
-        out << "%token <occ::Identifier*> IDENTIFIER\n";
-        out << "%type <occ::Word*> identifier\n";
-        out << "%type <occ::Keyword*> softword\n";
-        out << "%type <occ::Statement*> statement\n";
-        out << "%type <occ::Statement*> statements\n";
-        out << "%type <occ::Word*> type_specifier\n";
-        out << "%type <occ::Node*> variable\n";
 
         out << "%start unit\n";
     }
 
     void Parser::declaration_instructions(std::ostream& out) const
     {
-        out << "%type <occ::A::Instruction*> inst\n";
-        out << "%type <occ::A::Instruction*> instructions\n";
-        out << "%type <occ::A::Move*> move\n";
-        out << "%type <occ::A::Return*> ret\n";
-        out << "%type <occ::A::Interrupt*> interrupt\n";
     }
 
     void Parser::declaration_regiters(std::ostream& out) const
     {
-        out << "%type <occ::A::Register*> regiters_8b\n";
-        out << "%type <occ::A::Register*> regiters_16b\n";
-        out << "%type <occ::A::Register*> regiters\n";
     }
 
     void Parser::declaration_types(std::ostream& out) const
     {
-        out << "%token <occ::Char*> LETTER\n";
-        out << "%token <occ::Number*> INTEGER_DECIMAL\n";
-        out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
-        out << "%type <occ::Number*> integer\n";
     }
 
     void Parser::declaration_memory(std::ostream& out) const
     {
-        out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
     }
 
     void Parser::declaration_segments(std::ostream& out) const
     {
-        out << "%type <occ::Keyword*> segments\n";
     }
 
     void Parser::declaration_functions(std::ostream& out) const
     {
-        out << "%type <occ::A::Function*> function\n";
-        out << "%type <occ::A::Function*> functions\n";
     }
 
     void Parser::declaration_unit(std::ostream& out) const
     {
-        out << "%type <occ::A::I::Unit*> unit\n";
     }
     void Parser::declaration_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
@@ -342,6 +313,41 @@ namespace oct::cc::v1::A::I
     void Parser::declaration_add_keyword_register(std::ostream& out,const std::string& string) const
     {
         out << "%token <occ::A::Register*> " << core::toupper(string) << "\t\"" << string << "\"\n";
+    }
+
+
+    void Parser::declaration_occ(std::ostream& out) const
+    {
+        out << "%type <occ::Keyword*> segments\n";
+        out << "%token <occ::Char*> LETTER\n";
+        out << "%token <occ::Number*> INTEGER_DECIMAL\n";
+        out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
+        out << "%type <occ::Number*> integer\n";
+        out << "%token <occ::Identifier*> IDENTIFIER\n";
+        out << "%type <occ::Word*> identifier\n";
+        out << "%type <occ::Keyword*> softword\n";
+        out << "%type <occ::Statement*> statement\n";
+        out << "%type <occ::Statement*> statements\n";
+        out << "%type <occ::Word*> type_specifier\n";
+        out << "%type <occ::Node*> variable\n";
+    }
+    void Parser::declaration_A(std::ostream& out) const
+    {
+        out << "%type <occ::A::Function*> function\n";
+        out << "%type <occ::A::Function*> functions\n";
+        out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
+        out << "%type <occ::A::Register*> regiters_8b\n";
+        out << "%type <occ::A::Register*> regiters_16b\n";
+        out << "%type <occ::A::Register*> regiters\n";
+        out << "%type <occ::A::Instruction*> inst\n";
+        out << "%type <occ::A::Instruction*> instructions\n";
+        out << "%type <occ::A::Move*> move\n";
+        out << "%type <occ::A::Return*> ret\n";
+        out << "%type <occ::A::Interrupt*> interrupt\n";
+    }
+    void Parser::declaration_AI(std::ostream& out) const
+    {
+        out << "%type <occ::A::I::Unit*> unit\n";
     }
 
 }
