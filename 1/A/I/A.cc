@@ -35,7 +35,7 @@ namespace oct::cc::v1::A::I
 
     void Unit::print(std::ostream& out)const
     {
-        Function* actual = function;
+        Statement* actual = statement;
         while(actual)
         {
             actual->print(out);

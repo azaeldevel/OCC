@@ -111,4 +111,14 @@ namespace oct::cc::v1
     {
         out << "'" << letter << "'";
     }
+
+
+
+
+    Statement::Statement() : Node(Statemants::none),next(NULL)
+    {
+    }
+    Statement::Statement(Statemants t) : Node(t),next(NULL)
+    {
+    }
 }

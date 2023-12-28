@@ -561,6 +561,18 @@ namespace oct::cc::v1
     typedef Word Identifier;
     typedef Word Number;
 
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Statement : public Node
+    {
+        Statement* next;
+
+        Statement();
+        Statement(Statemants);
+    };
+
+
     template<typename N>
     class SymbolTable : public std::map<const char*,N*>
     {

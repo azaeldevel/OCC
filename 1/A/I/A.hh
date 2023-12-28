@@ -35,7 +35,7 @@ namespace oct::cc::v1::A::I
     **/
     struct Unit : public occ::A::Unit
     {
-        Function* function;
+        Statement* statement;
 
         Unit();
         Unit(size_t);

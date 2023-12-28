@@ -42,10 +42,13 @@ namespace oct::cc::v1::A
     }
 
 
-    Function::Function() : Node(Statemants::function),next(NULL)
+
+
+
+    Function::Function() : Statement(Statemants::function),identifier(NULL),insts(NULL)
     {
     }
-    Function::Function(Statemants t) : Node(t),next(NULL)
+    Function::Function(Statemants t) : Statement(t),identifier(NULL),insts(NULL)
     {
     }
     void Function::print(std::ostream& out)const

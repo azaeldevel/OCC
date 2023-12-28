@@ -199,14 +199,91 @@ namespace oct::cc::v1::A::I
                 out << "\t\tfunction_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
+
+
+        out << "type_specifier :\n";
+            out << "\tVOID\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCHAR\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSHORT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tLONG\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tFLOAT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDOUBLE\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSIGNED\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tUNSIGNED\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "variable : \n";
+            out << "\ttype_specifier IDENTIFIER\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_specifier '*' IDENTIFIER\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "statement : \n";
+            out << "\tfunction\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tvariable\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "statements : \n";
+            out << "\tstatement\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tstatement_last = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstatements statement\n";
+            out << "\t{\n";
+                out << "\t\tstatement_last->next = $2;\n";
+                out << "\t\tstatement_last = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+
     }
 
     void Parser::rules_unit(std::ostream& out) const
     {
-        out << "unit : functions\n";
+        out << "unit : statements\n";
             out << "\t{\n";
                 out << "\t\ttray->unit = new occ::A::I::Unit(occ::Statemants::unit);\n";
-                out << "\t\ttray->unit->function = $1;\n";
+                out << "\t\ttray->unit->statement = $1;\n";
                 out << "\t\t$$ = tray->unit;\n";
             out << "\t}\n";
             out << "\t;\n";

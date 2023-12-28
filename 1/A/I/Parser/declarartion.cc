@@ -32,6 +32,7 @@ namespace oct::cc::v1::A::I
             out << "\t#include <A/I/Driver.hh>\n";
             out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
             out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
+            out << "\t\tstatic occ::Statement* statement_last = NULL;\n";
 
         out << "}\n";
 
@@ -278,7 +279,10 @@ namespace oct::cc::v1::A::I
         out << "%token <occ::Identifier*> IDENTIFIER\n";
         out << "%type <occ::Word*> identifier\n";
         out << "%type <occ::Keyword*> softword\n";
-
+        out << "%type <occ::Statement*> statement\n";
+        out << "%type <occ::Statement*> statements\n";
+        out << "%type <occ::Word*> type_specifier\n";
+        out << "%type <occ::Node*> variable\n";
 
         out << "%start unit\n";
     }

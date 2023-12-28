@@ -30,6 +30,7 @@
 
 namespace oct::cc::v1::A
 {
+    struct Instruction;
 
     /**
     *\brief Node de Identificar
@@ -43,14 +44,14 @@ namespace oct::cc::v1::A
         virtual bool semantic(std::ostream&);
     };
 
+
     /**
     *\brief Node de Identificar
     **/
-    struct Function : public Node
+    struct Function : public Statement
     {
         Identifier* identifier;
-        Node* next;
-        Node* insts;
+        Instruction* insts;
 
         Function();
         Function(Statemants);
@@ -78,7 +79,7 @@ namespace oct::cc::v1::A
     **/
     struct Instruction : public Node
     {
-        Node* next;
+        Instruction* next;
         char* inscode;
 
         /**
