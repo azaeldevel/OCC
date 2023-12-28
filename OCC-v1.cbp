@@ -41,10 +41,7 @@
 					<Add option="-DOCTETOS_OCC_V1_A_HH_TDD" />
 				</Compiler>
 				<ExtraCommands>
-					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.l --lang AI --comp lexer" />
-					<Add before="bin/Debug/generator --output $(TARGET_OUTPUT_DIR)AI/intel.y --lang AI --comp parser" />
-					<Add before="bison  --warnings --debug --report=cex,solved  --report-file=$(TARGET_OUTPUT_DIR)AI/report.txt --header=$(TARGET_OUTPUT_DIR)AI/occ-intel.parser.hh -o $(TARGET_OUTPUT_DIR)AI/occ-intel.parser.cc  $(TARGET_OUTPUT_DIR)AI/intel.y" />
-					<Add before="flex --header-file=$(TARGET_OUTPUT_DIR)AI/occ-intel.lexer.hh -o $(TARGET_OUTPUT_DIR)AI/occ-intel.lexer.cc  $(TARGET_OUTPUT_DIR)AI/intel.l" />
+					<Add before="make -f OCC-v1.mk TARGET_OUTPUT_DIR=$(TARGET_OUTPUT_DIR) all" />
 				</ExtraCommands>
 			</Target>
 			<Target title="generator-dbg">

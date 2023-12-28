@@ -191,15 +191,15 @@ namespace oct::cc::v1::A
 
     void Move::bind()
     {
-
         switch(form)
         {
         case Form::inmediate_to_register:
             {
                 inscode[0] = 0b1011;
-                if(is_register(from))
+                if(reinterpret_cast<Word*>(from)->is_register())
                 {
-                    if(register_size(from) == 8)
+                    Register* reg = (Register*)from;
+                    if(reg->register_size() == 8)
                     {
                         inscode[0] = inscode[0] << 0;
                     }
@@ -213,74 +213,6 @@ namespace oct::cc::v1::A
             }
         }
 
-    }
-
-    bool Move::is_register(const Node* node) const
-    {
-        if(node)
-        {
-            if(node->data == Statemants::keyword)
-            {
-                switch(reinterpret_cast<const Word*>(node)->token)
-                {
-                case Tokens::AL:
-                case Tokens::AH:
-                case Tokens::BL:
-                case Tokens::BH:
-                case Tokens::CL:
-                case Tokens::CH:
-                case Tokens::DL:
-                case Tokens::DH:
-                    return true;
-                case Tokens::AX:
-                case Tokens::BX:
-                case Tokens::CX:
-                case Tokens::DX:
-                    return true;
-                default :
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    unsigned char Move::register_size(const Node* node) const
-    {
-        if(node)
-        {
-            if(node->data == Statemants::keyword)
-            {
-                switch(reinterpret_cast<const Word*>(node)->token)
-                {
-                case Tokens::AL:
-                case Tokens::AH:
-                case Tokens::BL:
-                case Tokens::BH:
-                case Tokens::CL:
-                case Tokens::CH:
-                case Tokens::DL:
-                case Tokens::DH:
-                    return 8;
-                case Tokens::AX:
-                case Tokens::BX:
-                case Tokens::CX:
-                case Tokens::DX:
-                    return 16;
-                default :
-                    return 0;
-                }
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        return 0;
     }
 
 

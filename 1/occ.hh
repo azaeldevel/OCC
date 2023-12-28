@@ -529,6 +529,8 @@ namespace oct::cc::v1
         Word(Statemants,const char*, size_t);
         Word(Statemants,Tokens,const char*, size_t);
         virtual void print(std::ostream&)const;
+
+        bool is_register()const;
     };
 
     /**
@@ -554,7 +556,6 @@ namespace oct::cc::v1
         Keyword(Statemants,const char*, size_t);
         Keyword(Statemants,Tokens,const char*, size_t);
 
-        bool is_register()const;
     };
 
     typedef Word Identifier;

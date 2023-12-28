@@ -155,12 +155,8 @@ namespace oct::cc::v1::A
         **/
         void bind(Form form);
 
-        bool is_register(const Node*) const;
-        unsigned char register_size(const Node*) const;
-
         Node *from, *to;
         Form form;
-
     };
 
 
