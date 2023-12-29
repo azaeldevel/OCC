@@ -593,7 +593,7 @@ namespace oct::cc::v1
     class Symbols : public std::map<K,N*>
     {
     public:
-        typedef std::map<const char*,N*> BASE;
+        typedef std::map<K,N*> BASE;
 
     public:
         Symbols()= default;
@@ -618,6 +618,8 @@ namespace oct::cc::v1
     template<typename N,typename K = const char*>
     class TableSymbols : public Symbols<K,N>
     {
+    public:
+        typedef Symbols<K,N> BASE;
     public:
         TableSymbols()= default;
 
