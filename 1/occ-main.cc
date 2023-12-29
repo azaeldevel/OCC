@@ -135,9 +135,9 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-    occ::SymbolTable<occ::Node> symbols;
+    occ::TableSymbols<occ::Node> symbols;
 	occ::A::I::Tray trayI;
-	trayI.symbols = &symbols;
+	trayI.table = &symbols;
     occ::A::I::Driver driverI(trayI);
 	for(const std::filesystem::path& path : inputs)
 	{

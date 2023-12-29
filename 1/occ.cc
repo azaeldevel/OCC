@@ -27,10 +27,13 @@
 namespace oct::cc::v1
 {
 
-    Node::Node() : core::node<Statemants>(Statemants::none)
+    Node::Node() : core::Node<Statemants>(Statemants::none)
     {
     }
-    Node::Node(Statemants t) : core::node<Statemants>(t)
+    Node::Node(Statemants t) : core::Node<Statemants>(t)
+    {
+    }
+    Node::Node(Statemants t,size_t s) : core::Node<Statemants>(t,s)
     {
     }
 
@@ -59,7 +62,7 @@ namespace oct::cc::v1
 
     bool Word::is_register()const
     {
-        if(data == Statemants::keyword)
+        if(core::node<Statemants>::data == Statemants::keyword)
         {
             switch(token)
             {
@@ -119,6 +122,14 @@ namespace oct::cc::v1
     {
     }
     Statement::Statement(Statemants t) : Node(t),next(NULL)
+    {
+    }
+
+
+    Space::Space() : Statement(Statemants::none)
+    {
+    }
+    Space::Space(Statemants t) : Statement(t)
     {
     }
 }

@@ -471,10 +471,12 @@ namespace oct::cc::v1::A::I
         out << "direct_declarator :\n";
             out << "\tidentifier\n";
             out << "\t{\n";
+            out << "\t\t$$ = new occ::A::Direct_Declarator($1,occ::A::Direct_Declarator::Form::identifier);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t'(' declarator ')'\n";
             out << "\t{\n";
+            out << "\t\t$$ = new occ::A::Direct_Declarator($2,occ::A::Direct_Declarator::Form::declarator);\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -482,10 +484,12 @@ namespace oct::cc::v1::A::I
         out << "pointer :\n";
             out << "\t'*'\n";
             out << "\t{\n";
+            out << "\t\t$$ = new occ::Node(occ::Statemants::pointer);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t'*' type_qualifier_list\n";
             out << "\t{\n";
+            out << "\t\t$$ = new occ::Node(occ::Statemants::pointer);\n";
             out << "\t}\n";
             out << "\t;\n";
 
