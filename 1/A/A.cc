@@ -285,9 +285,16 @@ namespace oct::cc::v1::A
     Call::Call(Statemants t,size_t s) : Instruction(t,s)
     {
     }
+    Call::Call(Statemants t,size_t s,Word* w) : Instruction(t,s),id(w)
+    {
+    }
+    Call::Call(size_t s,Word* w) : Instruction(Statemants::call,s),id(w)
+    {
+    }
     void Call::print(std::ostream& out)const
     {
-        out << "\tcall;\n";
+        if(id) out << "\tcall " << id->string << ";\n";
+        else out << "\tcall;\n";
     }
 
 

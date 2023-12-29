@@ -219,8 +219,11 @@ namespace oct::cc::v1::A
     {
         Call();
         Call(Statemants,size_t instsize);
+        Call(Statemants,size_t instsize,Word*);
+        Call(size_t instsize,Word*);
         virtual void print(std::ostream&)const;
 
+        Word* id;
     };
 
 

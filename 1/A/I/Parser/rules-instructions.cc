@@ -95,7 +95,7 @@ namespace oct::cc::v1::A::I
         out << "call : \n";
             out << "\tCALL identifier ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Call;\n";
+            out << "\t\t$$ = new occ::A::Call(3,$2);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tCALL memory ';'\n";
