@@ -64,36 +64,20 @@ namespace oct::cc::v1::A
         }
         out << "}\n";
     }
-    /*
-    void Function::print(std::ostream& out)const
-    {
-        if(identifier) identifier->print(out);
-        out << "\n{\n";
-        Instruction* actual_inst = (Instruction*)insts;
-        while(actual_inst)
-        {
-            out << "statment: " << (int)actual_inst->data << "\n";
-            switch(reinterpret_cast<core::node<Statemants>*>(actual_inst)->data)
-            {
-            case Statemants::move:
-                    //out << "move\n";
-                    reinterpret_cast<Move*>(actual_inst)->print(out);
-                break;
-            case Statemants::ret:
-                    reinterpret_cast<Return*>(actual_inst)->print(out);
-                break;
-            case Statemants::interrupt:
-                    reinterpret_cast<Interrupt*>(actual_inst)->print(out);
-                break;
-            default:
-                ;
-            }
-            actual_inst = (Instruction*)actual_inst->next;
-        }
-        out << "}\n";
-    }
-    */
 
+
+
+
+
+    Declaration::Declaration() : Statement(Statemants::declaration)
+    {
+    }
+    Declaration::Declaration(Statemants t) : Statement(t)
+    {
+    }
+    void Declaration::print(std::ostream& out)const
+    {
+    }
 
 
     Register::Register(const char* text, size_t size) : Keyword(text,size)

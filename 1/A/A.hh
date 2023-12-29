@@ -60,6 +60,17 @@ namespace oct::cc::v1::A
 
 
     /**
+    *\brief Node de Identificar
+    **/
+    struct Declaration : public Statement
+    {
+        Declaration();
+        Declaration(Statemants);
+        virtual void print(std::ostream&)const;
+    };
+
+
+    /**
     *\brief Node de Texto
     **/
     struct Register : public Keyword

@@ -1,3 +1,5 @@
+const char* message;
+int counter;
 	
 print
 {

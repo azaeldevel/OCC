@@ -14,6 +14,8 @@ namespace oct::cc::v1
     public:
         Generator(Language l);
 
+        bool is_assembler() const;
+
     protected:
         Language lang;
 

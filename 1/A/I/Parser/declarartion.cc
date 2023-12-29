@@ -80,38 +80,38 @@ namespace oct::cc::v1::A::I
 
         out << "%token ENDOFFILE 0  \"end-of-file\"\n";
         //keywords
-        out << "%token AUTO 110200\n";
-        out << "%token BREAK\n";
-        out << "%token CASE\n";
-        out << "%token CHAR\n";
-        out << "%token CONST\n";
-        out << "%token CONTINUE\n";
-        out << "%token DEFAULT\n";
-        out << "%token DO\n";
-        out << "%token DOUBLE\n";
-        out << "%token ELSE\n";
-        out << "%token ENUM\n";
-        out << "%token EXTERN\n";
-        out << "%token FLOAT\n";
-        out << "%token FOR\n";
-        out << "%token GOTO\n";
-        out << "%token IF\n";
-        out << "%token <occ::Keyword*> INT  " << instruction_string(Tokens::INT) << "\n";
-        out << "%token LONG\n";
-        out << "%token REGISTER\n";
-        out << "%token RETURN\n";
-        out << "%token SHORT\n";
-        out << "%token SIGNED\n";
-        out << "%token SIZEOF\n";
-        out << "%token STATIC\n";
-        out << "%token STRUCT\n";
-        out << "%token SWITCH\n";
-        out << "%token TYPEDEF\n";
-        out << "%token UNION\n";
-        out << "%token UNSIGNED\n";
-        out << "%token VOID\n";
-        out << "%token VOLATIL\n";
-        out << "%token WHILE\n";
+        out << "%token <occ::Keyword*> AUTO  110200 \"auto\"\n";
+        declaration_add_keyword(out,"break");
+        declaration_add_keyword(out,"case");
+        declaration_add_keyword(out,"char");
+        declaration_add_keyword(out,"const");
+        declaration_add_keyword(out,"continue");
+        declaration_add_keyword(out,"default");
+        declaration_add_keyword(out,"do");
+        declaration_add_keyword(out,"double");
+        declaration_add_keyword(out,"else");
+        declaration_add_keyword(out,"enum");
+        declaration_add_keyword(out,"extern");
+        declaration_add_keyword(out,"float");
+        declaration_add_keyword(out,"for");
+        declaration_add_keyword(out,"goto");
+        declaration_add_keyword(out,"if");
+        declaration_add_keyword(out,"int");
+        declaration_add_keyword(out,"long");
+        declaration_add_keyword(out,"register");
+        declaration_add_keyword(out,"return");
+        declaration_add_keyword(out,"short");
+        declaration_add_keyword(out,"signed");
+        declaration_add_keyword(out,"sizeof");
+        declaration_add_keyword(out,"static");
+        declaration_add_keyword(out,"struct");
+        declaration_add_keyword(out,"switch");
+        declaration_add_keyword(out,"typedef");
+        declaration_add_keyword(out,"union");
+        declaration_add_keyword(out,"unsigned");
+        declaration_add_keyword(out,"void");
+        declaration_add_keyword(out,"volatil");
+        declaration_add_keyword(out,"while");
 
         //
         declaration_add_keyword(out,"aaa","AAA");
@@ -325,12 +325,12 @@ namespace oct::cc::v1::A::I
     }
     void Parser::declaration_C_expression(std::ostream& out) const
     {
-        out << "%type <occ::A::I::Node*> assignment_expresion\n";
+        out << "%type <occ::Node*> assignment_expresion\n";
     }
     void Parser::declaration_C_declaration(std::ostream& out) const
     {
-        out << "%type <occ::Node*> declararion\n";
-        out << "%type <occ::Node*> declararion_specifiers\n";
+        out << "%type <occ::A::Declaration*> declaration\n";
+        out << "%type <occ::Node*> declaration_specifiers\n";
         out << "%type <occ::Node*> init_declarator_list\n";
         out << "%type <occ::Node*> init_declarator\n";
         out << "%type <occ::Node*> storage_class_specifier\n";

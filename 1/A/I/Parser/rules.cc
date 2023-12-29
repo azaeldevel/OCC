@@ -188,7 +188,7 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";*/
 
-        out << "variable : \n";
+        /*out << "variable : \n";
             out << "\ttype_specifier IDENTIFIER\n";
             out << "\t{\n";
             out << "\t}\n";
@@ -196,7 +196,7 @@ namespace oct::cc::v1::A::I
             out << "\ttype_specifier '*' IDENTIFIER\n";
             out << "\t{\n";
             out << "\t}\n";
-            out << "\t;\n";
+            out << "\t;\n";*/
 
 
         out << "statement : \n";
@@ -204,7 +204,7 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tvariable\n";
+            out << "\tdeclaration\n";
             out << "\t{\n";
             out << "\t}\n";
             out << "\t;\n";
@@ -315,20 +315,20 @@ namespace oct::cc::v1::A::I
     }
     void Parser::rules_C_declaration(std::ostream& out) const
     {
-        out << "declararion :\n";
-            out << "\tstorage_class_specifier init_declarator_list\n";
+        out << "declaration :\n";
+            out << "\tdeclaration_specifiers init_declarator_list ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Declaration;\n";
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "declararion_specifiers :\n";
+        out << "declaration_specifiers :\n";
             out << "\tstorage_class_specifier\n";
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tstorage_class_specifier declararion_specifiers\n";
+            out << "\tstorage_class_specifier declaration_specifiers\n";
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
@@ -338,7 +338,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\ttype_specifier declararion_specifiers\n";
+            out << "\ttype_specifier declaration_specifiers\n";
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
@@ -348,7 +348,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\ttype_qualifier declararion_specifiers\n";
+            out << "\ttype_qualifier declaration_specifiers\n";
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
@@ -371,11 +371,14 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
-            out << "\t|\n";
-            out << "\tdeclarator '=' initializer\n";
-            out << "\t{\n";
-            out << "\t\t;\n";
-            out << "\t}\n";
+            if(lang > Language::AI) //La inicializacion esta disponible a poartir de A II
+            {
+                out << "\t|\n";
+                out << "\tdeclarator '=' initializer\n";
+                out << "\t{\n";
+                out << "\t\t;\n";
+                out << "\t}\n";
+            }
             out << "\t;\n";
 
 
