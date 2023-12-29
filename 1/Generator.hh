@@ -60,7 +60,7 @@ namespace oct::cc::v1
             virtual void rules_identifier(std::ostream& out) const;
             virtual void rules_memory(std::ostream& out) const;
             virtual void rules_instructions(std::ostream& out) const;
-            virtual void rules_regiters(std::ostream& out) const;
+            virtual void rules_registers(std::ostream& out) const;
             virtual void rules_segments(std::ostream& out) const;
             virtual void rules_functions(std::ostream& out) const;
             virtual void rules_unit(std::ostream& out) const;

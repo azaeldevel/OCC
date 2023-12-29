@@ -211,6 +211,43 @@ namespace oct::cc::v1::A
         Number* service;
     };
 
+
+    /**
+    *\brief Instruccion call
+    **/
+    struct Call : public Instruction
+    {
+        Call();
+        Call(Statemants,size_t instsize);
+        virtual void print(std::ostream&)const;
+
+    };
+
+
+    /**
+    *\brief Instruccion call
+    **/
+    struct Push : public Instruction
+    {
+        Push();
+        Push(Statemants,size_t instsize);
+        virtual void print(std::ostream&)const;
+
+    };
+
+
+    /**
+    *\brief Instruccion call
+    **/
+    struct Pop : public Instruction
+    {
+        Pop();
+        Pop(Statemants,size_t instsize);
+        virtual void print(std::ostream&)const;
+
+    };
+
+
 }
 
 

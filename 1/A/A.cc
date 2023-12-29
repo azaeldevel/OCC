@@ -279,4 +279,36 @@ namespace oct::cc::v1::A
     }
 
 
+    Call::Call() : Instruction(Statemants::call,2)
+    {
+    }
+    Call::Call(Statemants t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Call::print(std::ostream& out)const
+    {
+        out << "\tcall;\n";
+    }
+
+
+    Push::Push() : Instruction(Statemants::push,2)
+    {
+    }
+    Push::Push(Statemants t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Push::print(std::ostream& out)const
+    {
+    }
+
+
+    Pop::Pop() : Instruction(Statemants::pop,2)
+    {
+    }
+    Pop::Pop(Statemants t,size_t s) : Instruction(t,s)
+    {
+    }
+    void Pop::print(std::ostream& out)const
+    {
+    }
 }

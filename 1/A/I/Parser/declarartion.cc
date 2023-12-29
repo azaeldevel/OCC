@@ -195,9 +195,9 @@ namespace oct::cc::v1::A::I
         out << "%token NOT\n";
         out << "%token OR\n";
         out << "%token OUT\n";
-        out << "%token POP\n";
+        declaration_add_keyword(out,"pop");
         out << "%token POPF\n";
-        out << "%token PUSH\n";
+        declaration_add_keyword(out,"push");
         out << "%token PUSHF\n";
         out << "%token RCL\n";
         out << "%token RCR\n";
@@ -310,14 +310,17 @@ namespace oct::cc::v1::A::I
         out << "%type <occ::A::Function*> function\n";
         out << "%type <occ::A::Function*> functions\n";
         out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
-        out << "%type <occ::A::Register*> regiters_8b\n";
-        out << "%type <occ::A::Register*> regiters_16b\n";
-        out << "%type <occ::A::Register*> regiters\n";
+        out << "%type <occ::A::Register*> registers_8b\n";
+        out << "%type <occ::A::Register*> registers_16b\n";
+        out << "%type <occ::A::Register*> registers\n";
         out << "%type <occ::A::Instruction*> inst\n";
         out << "%type <occ::A::Instruction*> instructions\n";
         out << "%type <occ::A::Move*> move\n";
         out << "%type <occ::A::Return*> ret\n";
         out << "%type <occ::A::Interrupt*> interrupt\n";
+        out << "%type <occ::A::Call*> call\n";
+        out << "%type <occ::A::Push*> push\n";
+        out << "%type <occ::A::Pop*> pop\n";
     }
     void Parser::declaration_AI(std::ostream& out) const
     {

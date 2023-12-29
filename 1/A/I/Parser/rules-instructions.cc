@@ -7,38 +7,38 @@ namespace oct::cc::v1::A::I
     {
         out << "move : \n";
             //1,4,5).-
-            out << "\tMOV regiters ',' regiters ';'\n";
+            out << "\tMOV registers ',' registers ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV memory ',' regiters ';'\n";
+            out << "\tMOV memory ',' registers ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_memory);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV regiters ',' memory ';'\n";
+            out << "\tMOV registers ',' memory ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::memory_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV identifier ',' regiters ';'\n";//identifier is a pointer/inmendiate
+            out << "\tMOV identifier ',' registers ';'\n";//identifier is a pointer/inmendiate
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV regiters ',' identifier ';'\n";//identifier is a pointer/inmendiate
+            out << "\tMOV registers ',' identifier ';'\n";//identifier is a pointer/inmendiate
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             //2,3).-
             out << "\t|\n";
-            out << "\tMOV regiters ',' LETTER ';'\n";
+            out << "\tMOV registers ',' LETTER ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV regiters ',' integer ';'\n";
+            out << "\tMOV registers ',' integer ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
@@ -49,7 +49,7 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             //6).-
             out << "\t|\n";
-            out << "\tMOV segments ',' regiters ';'\n";
+            out << "\tMOV segments ',' registers ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
@@ -60,7 +60,7 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t|\n";
             //7).-
-            out << "\tMOV regiters ',' segments ';'\n";
+            out << "\tMOV registers ',' segments ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
@@ -72,14 +72,14 @@ namespace oct::cc::v1::A::I
             out << "\t;\n";
 
         out << "ret : \n";
-            out << "\t" << instruction_string(Tokens::RET) << " ';'\n";
+            out << "\tRET ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Return(occ::Statemants::ret,2);\n";//2 bit: l6bits
             out << "\t}\n";
             out << "\t|\n";
-            out << "\t" << instruction_string(Tokens::IRET) << " ';'\n";
+            out << "\tIRET ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Return(occ::Statemants::ret,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::Return(occ::Statemants::iret,2);\n";//2 bit: l6bits
             out << "\t}\n";
             out << "\t;\n";
 
@@ -93,58 +93,58 @@ namespace oct::cc::v1::A::I
             out << "\t;\n";
 
         out << "call : \n";
-            out << "\tCALL identifer ';'\n";
+            out << "\tCALL identifier ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Call;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tCALL memory ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Call;\n";
             out << "\t}\n";
             out << "\t;\n";
 
         out << "push : \n";
-            out << "\tPUSH identifer ';'\n";
+            out << "\tPUSH identifier ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Push;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPUSH memory ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Push;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPUSH registers ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Push;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPUSH segments ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Push;\n";
             out << "\t}\n";
             out << "\t;\n";
 
         out << "pop : \n";
-            out << "\tPOP identifer ';'\n";
+            out << "\tPOP identifier ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Pop;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPOP memory ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Pop;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPOP registers ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Pop;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tPOP segments ';'\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+            out << "\t\t$$ = new occ::A::Pop;\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -161,10 +161,25 @@ namespace oct::cc::v1::A::I
             out << "\t|\n";
             out << "\t';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = NULL;\n";
+            out << "\t\t$$ = new occ::A::Empty;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tinterrupt\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tcall\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tpush\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tpop\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";

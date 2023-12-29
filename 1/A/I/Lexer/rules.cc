@@ -51,6 +51,9 @@ namespace oct::cc::v1::A::I
             rules_add_keyword(out,"mov","MOV");
             rules_add_keyword(out,"ret","RET");
             rules_add_keyword(out,"iret","IRET");
+            rules_add_keyword(out,"call");
+            rules_add_keyword(out,"push");
+            rules_add_keyword(out,"pop");
 
             //out << "\"byte\"		return BYTE;\n";
             //out << "\"tiny\"		return TINY;\n";

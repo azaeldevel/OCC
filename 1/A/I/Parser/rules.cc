@@ -12,9 +12,9 @@ namespace oct::cc::v1::A::I
         rules_AI(out);
     }
 
-    void Parser::rules_regiters(std::ostream& out) const
+    void Parser::rules_registers(std::ostream& out) const
     {
-        out << "regiters_8b : \n";
+        out << "registers_8b : \n";
             out << "\tAL\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
@@ -56,7 +56,7 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "regiters_16b : \n";
+        out << "registers_16b : \n";
             out << "\tAX\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
@@ -78,13 +78,13 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
-        out << "regiters : \n";
-            out << "\tregiters_8b\n";
+        out << "registers : \n";
+            out << "\tregisters_8b\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tregiters_16b\n";
+            out << "\tregisters_16b\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
@@ -293,7 +293,7 @@ namespace oct::cc::v1::A::I
     }
     void Parser::rules_A(std::ostream& out) const
     {
-        rules_regiters(out);
+        rules_registers(out);
         rules_memory(out);
         rules_segments(out);
         rules_instructions(out);
