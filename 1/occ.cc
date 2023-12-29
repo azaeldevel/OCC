@@ -27,13 +27,13 @@
 namespace oct::cc::v1
 {
 
-    Node::Node() : core::Node<Statemants,node<Statemants>>(Statemants::none)
+    Node::Node() : core::Node<Statemants,node>(Statemants::none)
     {
     }
-    Node::Node(Statemants t) : core::Node<Statemants,node<Statemants>>(t)
+    Node::Node(Statemants t) : core::Node<Statemants,node>(t)
     {
     }
-    Node::Node(Statemants t,size_t s) : core::Node<Statemants,node<Statemants>>(t,s)
+    Node::Node(Statemants t,size_t s) : core::Node<Statemants,node>(t,s)
     {
     }
 

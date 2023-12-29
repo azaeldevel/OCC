@@ -513,10 +513,10 @@ namespace oct::cc::v1
     *\brief Crea un nodo
     *\param T parametro de plantilla para determinar el tipo de nodo
     **/
-    template<typename T> struct node : public core::node<T>
+    struct node : public core::node<Statemants>
     {
         node() = default;
-        node(const T& t) : core::node<T>(t)
+        node(const Statemants& t) : core::node<Statemants>(t)
         {
         }
     };
@@ -524,7 +524,7 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Node<Statemants,node<Statemants>>
+    struct Node : public core::Node<Statemants,node>
     {
         Node();
         Node(Statemants);
