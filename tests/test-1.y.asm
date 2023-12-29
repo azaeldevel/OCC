@@ -1,9 +1,5 @@
-const char* message;
-int counter;
-register char type;
 
-print
-{
+
 	mov al , 'B';
 	mov ah , 0x0e;
 	int 0x10;
@@ -61,26 +57,3 @@ print
 	mov al , '.';
 	mov ah , 0x0e;
 	int 0x10;
-	ret;
-}
-
-float money;
-
-disk
-{
-
-}
-
-main
-{
-	//https://github.com/FRosner/FrOS/blob/minimal-c-kernel/disk.asm
-	ret;
-}
-
-loader
-{
-
-}
-	
-	
-	
