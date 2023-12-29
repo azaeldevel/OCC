@@ -268,6 +268,8 @@ namespace oct::cc::v1::A::I
 
 
         declaration_occ(out);
+        declaration_C_expression(out);
+        declaration_C_declaration(out);
         declaration_A(out);
         declaration_AI(out);
 
@@ -301,7 +303,6 @@ namespace oct::cc::v1::A::I
         out << "%type <occ::Keyword*> softword\n";
         out << "%type <occ::Statement*> statement\n";
         out << "%type <occ::Statement*> statements\n";
-        out << "%type <occ::Word*> type_specifier\n";
         out << "%type <occ::Node*> variable\n";
     }
     void Parser::declaration_A(std::ostream& out) const
@@ -321,6 +322,26 @@ namespace oct::cc::v1::A::I
     void Parser::declaration_AI(std::ostream& out) const
     {
         out << "%type <occ::A::I::Unit*> unit\n";
+    }
+    void Parser::declaration_C_expression(std::ostream& out) const
+    {
+        out << "%type <occ::A::I::Node*> assignment_expresion\n";
+    }
+    void Parser::declaration_C_declaration(std::ostream& out) const
+    {
+        out << "%type <occ::Node*> declararion\n";
+        out << "%type <occ::Node*> declararion_specifiers\n";
+        out << "%type <occ::Node*> init_declarator_list\n";
+        out << "%type <occ::Node*> init_declarator\n";
+        out << "%type <occ::Node*> storage_class_specifier\n";
+        out << "%type <occ::Node*> type_specifier\n";
+        out << "%type <occ::Node*> type_qualifier\n";
+        out << "%type <occ::Node*> declarator\n";
+        out << "%type <occ::Node*> direct_declarator\n";
+        out << "%type <occ::Node*> pointer\n";
+        out << "%type <occ::Node*> type_qualifier_list\n";
+        out << "%type <occ::Node*> initializer\n";
+        out << "%type <occ::Node*> initializer_list\n";
     }
 
 }

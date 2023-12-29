@@ -6,6 +6,8 @@ namespace oct::cc::v1::A::I
     void Parser::rules(std::ostream& out) const
     {
         rules_occ(out);
+        rules_C_expression(out);
+        rules_C_declaration(out);
         rules_A(out);
         rules_AI(out);
     }
@@ -186,45 +188,6 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";*/
 
-
-        out << "type_specifier :\n";
-            out << "\tVOID\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tCHAR\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tSHORT\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tINT\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tLONG\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tFLOAT\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tDOUBLE\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tSIGNED\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tUNSIGNED\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n";
-
         out << "variable : \n";
             out << "\ttype_specifier IDENTIFIER\n";
             out << "\t{\n";
@@ -339,6 +302,224 @@ namespace oct::cc::v1::A::I
     {
         rules_functions(out);
         rules_unit(out);
+    }
+
+    void Parser::rules_C_expression(std::ostream& out) const
+    {
+        out << "assignment_expresion :\n";
+            out << "\tinteger\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+    }
+    void Parser::rules_C_declaration(std::ostream& out) const
+    {
+        out << "declararion :\n";
+            out << "\tstorage_class_specifier init_declarator_list\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "declararion_specifiers :\n";
+            out << "\tstorage_class_specifier\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstorage_class_specifier declararion_specifiers\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_specifier\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_specifier declararion_specifiers\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier declararion_specifiers\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "init_declarator_list :\n";
+            out << "\tinit_declarator\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinit_declarator_list, init_declarator\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "init_declarator :\n";
+            out << "\tdeclarator\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclarator '=' initializer\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "storage_class_specifier :\n";
+            out << "\tTYPEDEF\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tEXTERN\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSTATIC\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tAUTO\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tREGISTER\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+
+        out << "type_specifier :\n";
+            out << "\tVOID\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCHAR\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSHORT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tLONG\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tFLOAT\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDOUBLE\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSIGNED\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tUNSIGNED\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            {//TODO: Agrgar desde 6.5.2.1 hasta 6.5.2.2
+                ;
+            }
+            out << "\t;\n";
+
+        out << "type_qualifier :\n";
+            out << "\tCONST\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tVOLATIL\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "declarator :\n";
+            out << "\tpointer direct_declarator\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "direct_declarator :\n";
+            out << "\tidentifier\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'(' declarator ')'\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "pointer :\n";
+            out << "\t'*'\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'*' type_qualifier_list\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "type_qualifier_list :\n";
+            out << "\ttype_qualifier\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier_list type_qualifier\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "initializer :\n";
+            out << "\tassignment_expresion\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\'{' initializer_list '}'\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "initializer_list :\n";
+            out << "\tinitializer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinitializer_list initializer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+
+
     }
 
 
