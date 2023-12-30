@@ -59,7 +59,7 @@
 				<Option object_output="bin/Debug/obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tests/tests-1.a.asm  --output-file bin/Debug/boot.bin --target-cpu intel-8086 --environment freestanding-boot" />
+				<Option parameters="tests/tests-2.a.asm  --output-file bin/Debug/boot.bin --target-cpu intel-8086 --environment freestanding-boot" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-DOCTETOS_OCC_V1_A_HH_TDD" />

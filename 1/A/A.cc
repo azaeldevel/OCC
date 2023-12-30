@@ -80,6 +80,24 @@ namespace oct::cc::v1::A
     }
 
 
+
+    Direct_Declarator::Direct_Declarator() : Statement(Statemants::declaration)
+    {
+    }
+    Direct_Declarator::Direct_Declarator(Statemants t) : Statement(t)
+    {
+    }
+    Direct_Declarator::Direct_Declarator(Statemants t,Node* n,Form f) : Statement(t),first(n),form(f)
+    {
+    }
+    Direct_Declarator::Direct_Declarator(Node* n,Form f) : Statement(Statemants::declaration),first(n),form(f)
+    {
+    }
+    void Direct_Declarator::print(std::ostream& out)const
+    {
+    }
+
+
     Register::Register(const char* text, size_t size) : Keyword(text,size)
     {
     }
@@ -95,7 +113,7 @@ namespace oct::cc::v1::A
 
     unsigned char Register::register_size()const
     {
-        if(data == Statemants::keyword)
+        if(core::node<Statemants>::data == Statemants::keyword)
         {
             switch(token)
             {
@@ -262,7 +280,7 @@ namespace oct::cc::v1::A
         out << "\tinterrupt ";
         if(service)
         {
-            if(service->data == Statemants::number)
+            if(service->core::node<Statemants>::data == Statemants::number)
             {
                 out << service->string;
             }

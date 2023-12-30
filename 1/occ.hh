@@ -474,6 +474,7 @@ namespace oct::cc::v1
         unit,
         AI,
             declaration,
+                pointer,
             function,
             instruction,
                 move,
@@ -510,11 +511,24 @@ namespace oct::cc::v1
 
     /**
     *\brief Crea un nodo
+    *\param T parametro de plantilla para determinar el tipo de nodo
     **/
-    struct Node : public core::node<Statemants>
+    struct node : public core::node<Statemants>
+    {
+        node() = default;
+        node(const Statemants& t) : core::node<Statemants>(t)
+        {
+        }
+    };
+
+    /**
+    *\brief Crea un nodo
+    **/
+    struct Node : public core::Node<Statemants,node>
     {
         Node();
         Node(Statemants);
+        Node(Statemants,size_t);
 
         virtual void print(std::ostream&)const;
     };
@@ -576,30 +590,60 @@ namespace oct::cc::v1
         Statement(Statemants);
     };
 
+    /**
+    *\brief Node de Space,namespace, package, file scope,etc..
+    **/
+    struct Space : public Statement
+    {
+        Space();
+        Space(Statemants);
 
-    template<typename N>
-    class SymbolTable : public std::map<const char*,N*>
+        Identifier* name;
+    };
+
+    template<typename N,typename K = const char*>
+    class Symbols : public std::map<K,N*>
     {
     public:
-        SymbolTable()= default;
+        typedef std::map<K,N*> BASE;
 
+    public:
+        Symbols()= default;
 
-        void print() const;
+        bool add(Identifier* id)
+        {
+            BASE::insert(std::pair(id->string.c_str(),id));
+
+            return true;
+        }
+        bool add(Space* s)
+        {
+            BASE::insert(std::pair(s->name->string.c_str(),s));
+
+            return true;
+        }
 
     protected:
 
-        /**
-        *\brief
-        *\return true si inserta el elemento, falso si ya existe
-        **/
-        bool add(N*);
+    };
+
+    template<typename N,typename K = const char*>
+    class TableSymbols : public Symbols<K,N>
+    {
+    public:
+        typedef Symbols<K,N> BASE;
+    public:
+        TableSymbols()= default;
+
+    protected:
+
     };
 
 
     template<class U,class N = Node>
     struct Tray
     {
-        SymbolTable<N>* symbols;
+        TableSymbols<N>* table;
         U* unit;
     };
 

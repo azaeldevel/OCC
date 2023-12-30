@@ -71,6 +71,27 @@ namespace oct::cc::v1::A
 
 
     /**
+    *\brief Node de Identificar
+    **/
+    struct Direct_Declarator : public Statement
+    {
+        enum class Form
+        {
+            identifier,
+            declarator,
+        };
+        Direct_Declarator();
+        Direct_Declarator(Statemants);
+        Direct_Declarator(Statemants,Node*,Form);
+        Direct_Declarator(Node*,Form);
+        virtual void print(std::ostream&)const;
+
+        Node* first;
+        Form form;
+    };
+
+
+    /**
     *\brief Node de Texto
     **/
     struct Register : public Keyword
