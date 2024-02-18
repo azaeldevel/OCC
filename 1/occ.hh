@@ -31,6 +31,7 @@
 namespace oct::cc::v1
 {
     namespace core = oct::core::v3;
+    typedef unsigned char byte;
 
 	enum class Language
 	{
