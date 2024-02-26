@@ -107,10 +107,10 @@ namespace oct::cc::v1
 
 
 
-    Char::Char(char c) : node(Statemants::letter), letter(c)
+    Letter::Letter(char c) : node(Statemants::letter), letter(c)
     {
     }
-    void Char::print(std::ostream& out)const
+    void Letter::print(std::ostream& out)const
     {
         out << "'" << letter << "'";
     }

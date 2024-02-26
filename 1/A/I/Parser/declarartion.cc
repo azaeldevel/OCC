@@ -254,12 +254,12 @@ namespace oct::cc::v1::A::I
         out << "\n";
 
         //Segments
-        declaration_add_keyword(out,"cs");
-        declaration_add_keyword(out,"ds");
-        declaration_add_keyword(out,"ss");
-        declaration_add_keyword(out,"es");
-        declaration_add_keyword(out,"fs");
-        declaration_add_keyword(out,"gs");
+        declaration_add_keyword_segment(out,"cs");
+        declaration_add_keyword_segment(out,"ds");
+        declaration_add_keyword_segment(out,"ss");
+        declaration_add_keyword_segment(out,"es");
+        declaration_add_keyword_segment(out,"fs");
+        declaration_add_keyword_segment(out,"gs");
 
         out << "\n";
 
@@ -289,12 +289,16 @@ namespace oct::cc::v1::A::I
     {
         out << "%token <occ::A::Register*> " << core::toupper(string) << "\t\"" << string << "\"\n";
     }
+    void Parser::declaration_add_keyword_segment(std::ostream& out,const std::string& string) const
+    {
+        out << "%token <occ::A::Segment*> " << core::toupper(string) << "\t\"" << string << "\"\n";
+    }
 
 
     void Parser::declaration_occ(std::ostream& out) const
     {
-        out << "%type <occ::Keyword*> segments\n";
-        out << "%token <occ::Char*> LETTER\n";
+        out << "%type <occ::A::Segment*> segments\n";
+        out << "%token <occ::Letter*> LETTER\n";
         out << "%token <occ::Number*> INTEGER_DECIMAL\n";
         out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
         out << "%type <occ::Integer*> integer\n";

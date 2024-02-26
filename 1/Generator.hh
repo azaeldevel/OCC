@@ -36,6 +36,7 @@ namespace oct::cc::v1
             virtual void rules_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const;
             virtual void rules_add_keyword(std::ostream& out,const std::string& string) const;
             virtual void rules_add_keyword_register(std::ostream& out,const std::string& string) const;
+            virtual void rules_add_keyword_segment(std::ostream& out,const std::string& string) const;
             virtual void rules_keywords(std::ostream& out,Language) const;
             virtual void functions(std::ostream& out) const;
             virtual void save(std::ostream& out) const;
@@ -50,6 +51,7 @@ namespace oct::cc::v1
             virtual void declaration_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const;
             virtual void declaration_add_keyword(std::ostream& out,const std::string& string) const;
             virtual void declaration_add_keyword_register(std::ostream& out,const std::string& string) const;
+            virtual void declaration_add_keyword_segment(std::ostream& out,const std::string& string) const;
             virtual void declaration_occ(std::ostream& out) const;
             virtual void declaration_A(std::ostream& out) const;
             virtual void declaration_AI(std::ostream& out) const;

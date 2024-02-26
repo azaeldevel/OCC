@@ -555,11 +555,11 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Char : public node
+    struct Letter : public node
     {
         char letter;
 
-        Char(char);
+        Letter(char);
         virtual void print(std::ostream&)const;
     };
 

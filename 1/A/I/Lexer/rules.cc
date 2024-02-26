@@ -38,10 +38,10 @@ namespace oct::cc::v1::A::I
             rules_add_keyword_register(out,"dh");
             rules_add_keyword_register(out,"dx");
 
-            rules_add_keyword(out,"es");
-            rules_add_keyword(out,"cs");
-            rules_add_keyword(out,"ss");
-            rules_add_keyword(out,"ds");
+            rules_add_keyword_segment(out,"es");
+            rules_add_keyword_segment(out,"cs");
+            rules_add_keyword_segment(out,"ss");
+            rules_add_keyword_segment(out,"ds");
 
             rules_add_keyword(out,"si");
             rules_add_keyword(out,"di");
@@ -76,7 +76,7 @@ namespace oct::cc::v1::A::I
                                 out << "\t\t}\n";
 
          out << "{LETTER}  {\n";
-                                    out << "\t\tyylval->LETTER = new occ::Char(yytext[1]);\n";
+                                    out << "\t\tyylval->LETTER = new occ::Letter(yytext[1]);\n";
                                     out << "\t\treturn LETTER;\n";
                                 out << "\t\t}\n";
 
@@ -118,6 +118,15 @@ namespace oct::cc::v1::A::I
             out << "\t\tyylexnext->yylexnext = new occ::A::Register(occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
             out << "\t\tyylexnext = yylexnext->yylexnext;\n";
             out << "\t\tyylval->" << core::toupper(string) << " = (occ::A::Register*)yylexnext;\n";
+            out << "\t\treturn " << core::toupper(string) << ";\n";
+        out << "        }\n";
+    }
+    void Lexer::rules_add_keyword_segment(std::ostream& out,const std::string& string) const
+    {
+        out << "\"" << string << "\"     {\n";
+            out << "\t\tyylexnext->yylexnext = new occ::A::Segment(occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylval->" << core::toupper(string) << " = (occ::A::Segment*)yylexnext;\n";
             out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
     }

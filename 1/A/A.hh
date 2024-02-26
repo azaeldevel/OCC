@@ -97,8 +97,12 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Texto
     **/
-    struct Segment
+    struct Segment : public Keyword
     {
+        Segment(const char*, size_t);
+        Segment(Tokens,const char*, size_t);
+        Segment(Statemants,const char*, size_t);
+        Segment(Statemants,Tokens,const char*, size_t);
 
     };
 
@@ -121,7 +125,6 @@ namespace oct::cc::v1::A
         Register(Tokens,const char*, size_t);
         Register(Statemants,const char*, size_t);
         Register(Statemants,Tokens,const char*, size_t);
-
 
         unsigned char register_size() const;
     };
@@ -165,7 +168,7 @@ namespace oct::cc::v1::A
     **/
     struct Move : public Instruction
     {
-        enum class Form
+        /*enum class Form
         {
             none,
             register_to_register,
@@ -173,11 +176,9 @@ namespace oct::cc::v1::A
             memory_to_register,
             inmediate_to_register,
             inmediate_to_memory,
-        };
+        };*/
 
-        Move();
-        Move(Statemants,size_t instsize);
-        Move(Statemants,size_t instsize,Node* nTo,Node* nFront);
+        Move(Statemants,size_t instsize,node& nTo,node& nFront);
 
         /**
         *\biref Crea la instraccion move
@@ -185,7 +186,7 @@ namespace oct::cc::v1::A
         *\param nTo Valor semantico del primer paramtro
         *\param nFront Valor semantico del segundo paramtro
         **/
-        Move(size_t instsize,Node* nTo,Node* nFront);
+        Move(size_t instsize,node& nTo,node& nFront);
 
         /**
         *\biref Crea la instraccion move
@@ -194,23 +195,40 @@ namespace oct::cc::v1::A
         *\param nFront Valor semantico del segundo paramtro
         *\param form indiocador de stamtement of instrccion, refereced to intel manual
         **/
-        Move(size_t instsize,Node* nTo,Node* nFront,Form form);
+        //Move(size_t instsize,node& nTo,node& nFront,Form form);
 
         virtual void print(std::ostream&)const;
 
         /**
         *\biref Bind a instruction, is called whe all data is stored
         **/
-        void bind();
+        //void bind();
 
         /**
         *\biref Bind a instruction, use when contructor o not get form paramter
         *\param form if 0 will call bind(), if > 0 will set form and call bind()
         **/
-        void bind(Form form);
+        //void bind(Form form);
 
-        Node *from, *to;
-        Form form;
+
+        Move(Register& nTo,Register& nFront);
+        Move(Register& nTo,Memory& nFront);
+        Move(Memory& nTo,Register& nFront);
+
+
+        Move(Register& nTo,Integer& nFront);
+        Move(Register& nTo,Letter& nFront);
+        Move(Memory& nTo,Integer& nFront);
+        Move(Memory& nTo,Letter& nFront);
+
+
+        Move(Segment& nTo,Register& nFront);
+        Move(Segment& nTo,Memory& nFront);
+        Move(Register& nTo,Segment& nFront);
+        Move(Memory& nTo,Segment& nFront);
+
+        node &from, &to;
+        //Form form;
     };
 
 
