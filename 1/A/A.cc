@@ -162,13 +162,13 @@ namespace oct::cc::v1::A
     }
 
 
-    Instruction::Instruction() : Node(Statemants::instruction),next(NULL),inscode(NULL)
+    Instruction::Instruction() : node(Statemants::instruction),next(NULL),inscode(NULL)
     {
     }
-    Instruction::Instruction(Statemants t) : Node(t),next(NULL),inscode(NULL)
+    Instruction::Instruction(Statemants t) : node(t),next(NULL),inscode(NULL)
     {
     }
-    Instruction::Instruction(Statemants t,size_t instsize) : Node(t),next(NULL),inscode(new char[instsize])
+    Instruction::Instruction(Statemants t,size_t instsize) : node(t),next(NULL),inscode(new char[instsize])
     {
         for(size_t i = 0; i < instsize; i++) inscode[i] = 0;
     }
@@ -183,19 +183,6 @@ namespace oct::cc::v1::A
     }
 
 
-
-
-
-
-    Move::Move(Statemants t,size_t s,node& nTo,node& nFront) : Instruction(t,s),to(nTo),from(nFront)
-    {
-    }
-    /*Move::Move(size_t s,node& nTo,node& nFront) : Instruction(Statemants::move,s),to(nTo),from(nFront),form(Form::none)
-    {
-    }*/
-    /*Move::Move(size_t s,node& nTo,node& nFront,Form f) : Instruction(Statemants::move,s),to(nTo),from(nFront),form(f)
-    {
-    }*/
 
 
     Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
@@ -305,29 +292,16 @@ namespace oct::cc::v1::A
 
 
 
-    Interrupt::Interrupt() : Instruction(Statemants::interrupt,2),service(NULL)
+    Interrupt::Interrupt(Integer& s) : service(s)
     {
     }
-    Interrupt::Interrupt(Statemants t,size_t s) : Instruction(t,s),service(NULL)
-    {
-    }
-    void Interrupt::make(Number* n)
-    {
-        service = n;
-    }
+
     void Interrupt::print(std::ostream& out)const
     {
         out << "\tinterrupt ";
-        if(service)
+        if(service.data == Statemants::integer)
         {
-            if(service->core::node<Statemants>::data == Statemants::number)
-            {
-                out << service->string;
-            }
-            else
-            {
-                out << "?";
-            }
+            out << service.string;
         }
         else
         {

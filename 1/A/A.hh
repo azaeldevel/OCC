@@ -135,7 +135,7 @@ namespace oct::cc::v1::A
     /**
     *\brief Node Base para instruciones
     **/
-    struct Instruction : public Node
+    struct Instruction : public node
     {
         Instruction* next;
         char* inscode;
@@ -159,7 +159,7 @@ namespace oct::cc::v1::A
 
         ~Instruction();
 
-        virtual void print(std::ostream&)const;
+        virtual void print(std::ostream&)const = 0;
     };
 
 
@@ -170,49 +170,10 @@ namespace oct::cc::v1::A
     **/
     struct Move : public Instruction
     {
-        /*enum class Form
-        {
-            none,
-            register_to_register,
-            register_to_memory,
-            memory_to_register,
-            inmediate_to_register,
-            inmediate_to_memory,
-        };*/
-
-        Move(Statemants,size_t instsize,node& nTo,node& nFront);
 
         /**
-        *\biref Crea la instraccion move
-        *\param instsize cantidad de bytes la instracion
-        *\param nTo Valor semantico del primer paramtro
-        *\param nFront Valor semantico del segundo paramtro
+        *\biref COntrulle la instruccion Move
         **/
-        Move(size_t instsize,node& nTo,node& nFront);
-
-        /**
-        *\biref Crea la instraccion move
-        *\param instsize cantidad de bytes la instracion
-        *\param nTo Valor semantico del primer paramtro
-        *\param nFront Valor semantico del segundo paramtro
-        *\param form indiocador de stamtement of instrccion, refereced to intel manual
-        **/
-        //Move(size_t instsize,node& nTo,node& nFront,Form form);
-
-        virtual void print(std::ostream&)const;
-
-        /**
-        *\biref Bind a instruction, is called whe all data is stored
-        **/
-        //void bind();
-
-        /**
-        *\biref Bind a instruction, use when contructor o not get form paramter
-        *\param form if 0 will call bind(), if > 0 will set form and call bind()
-        **/
-        //void bind(Form form);
-
-
         Move(Register& nTo,Register& nFront);
         Move(Register& nTo,Memory& nFront);
         Move(Memory& nTo,Register& nFront);
@@ -229,8 +190,11 @@ namespace oct::cc::v1::A
         Move(Register& nTo,Segment& nFront);
         Move(Memory& nTo,Segment& nFront);
 
+
+        virtual void print(std::ostream&)const;
+
+
         node &from, &to;
-        //Form form;
     };
 
 
@@ -263,14 +227,11 @@ namespace oct::cc::v1::A
     **/
     struct Interrupt : public Instruction
     {
-        Interrupt();
-        Interrupt(Statemants,size_t instsize);
+        Interrupt(Integer&);
+
         virtual void print(std::ostream&)const;
-
-        void make(Number*);
-
         //
-        Number* service;
+        Integer& service;
     };
 
 

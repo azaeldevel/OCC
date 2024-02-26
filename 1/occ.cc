@@ -103,6 +103,11 @@ namespace oct::cc::v1
     {
     }
 
+    void Keyword::print(std::ostream& out)const
+    {
+        out << string;
+    }
+
 
 
 

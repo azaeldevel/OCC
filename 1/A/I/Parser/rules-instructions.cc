@@ -86,8 +86,7 @@ namespace oct::cc::v1::A::I
         out << "interrupt : \n";
             out << "\tINT integer ';'\n";
             out << "\t{\n";
-            out << "\t\tauto inst  = new occ::A::Interrupt;\n";//2 bit: l6bits
-            out << "\t\tinst->make($2);\n";//2 bit: l6bits
+            out << "\t\tauto inst  = new occ::A::Interrupt(*$2);\n";//2 bit: l6bits
             out << "\t\t$$ = inst;\n";
             out << "\t}\n";
             out << "\t;\n";
