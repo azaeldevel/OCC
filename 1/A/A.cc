@@ -251,7 +251,7 @@ namespace oct::cc::v1::A
             out << "'" << static_cast<Letter&>(to).letter << "'";
             break;
         case Statemants::integer:
-            out << "'" << static_cast<Integer&>(to).string << "'";
+            out << static_cast<Integer&>(to).string;
             break;
         }
         out << ", ";
@@ -267,52 +267,12 @@ namespace oct::cc::v1::A
             out << "'" << static_cast<Letter&>(from).letter << "'";
             break;
         case Statemants::integer:
-            out << "'" << static_cast<Integer&>(from).string << "'";
+            out << static_cast<Integer&>(from).string;
             break;
         }
 
         out << ";\n";
     }
-
-    /*void Move::bind()
-    {
-        switch(form)
-        {
-        case Form::inmediate_to_register:
-            {
-                inscode[0] = 0b1011;
-                if(reinterpret_cast<Word*>(from)->is_register())
-                {
-                    Register* reg = (Register*)from;
-                    if(reg->register_size() == 8)
-                    {
-                        inscode[0] = inscode[0] << 0;
-                    }
-                    else
-                    {
-                        inscode[0] = inscode[0] << 1;
-                    }
-
-                }
-                break;
-            }
-        }
-
-    }*/
-
-
-    /*void Move::bind(Form f)
-    {
-        if(f > Form::none)
-        {
-            form = f;
-            bind();
-        }
-        else
-        {
-            bind();
-        }
-    }*/
 
 
 
