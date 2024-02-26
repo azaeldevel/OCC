@@ -42,9 +42,8 @@ namespace oct::cc::v1::A
     }
 
 
-    Memory::Memory(Integer&)
+    Memory::Memory(Integer& w) : node(Statemants::memory),memory(w)
     {
-
     }
 
 
@@ -197,6 +196,46 @@ namespace oct::cc::v1::A
     /*Move::Move(size_t s,node& nTo,node& nFront,Form f) : Instruction(Statemants::move,s),to(nTo),from(nFront),form(f)
     {
     }*/
+
+
+    Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Register& nTo,Memory& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Memory& nTo,Register& nFront) : from(nFront),to(nTo)
+    {
+    }
+
+
+    Move::Move(Register& nTo,Integer& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Register& nTo,Letter& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Memory& nTo,Letter& nFront) : from(nFront),to(nTo)
+    {
+    }
+
+
+    Move::Move(Segment& nTo,Register& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Segment& nTo,Memory& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Register& nTo,Segment& nFront) : from(nFront),to(nTo)
+    {
+    }
+    Move::Move(Memory& nTo,Segment& nFront) : from(nFront),to(nTo)
+    {
+    }
+
     void Move::print(std::ostream& out)const
     {
         out << "\tmove ";

@@ -110,10 +110,12 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Texto
     **/
-    struct Memory
+    struct Memory : public node
     {
     public:
         Memory(Integer&);
+
+        node& memory;
     };
 
     /**

@@ -472,6 +472,7 @@ namespace oct::cc::v1
             space,
             newline,
             letter,
+            memory,
         unit,
         AI,
             declaration,
