@@ -239,14 +239,36 @@ namespace oct::cc::v1::A
     void Move::print(std::ostream& out)const
     {
         out << "\tmove ";
-        //if(to)
+        switch(to.data)
         {
-            //to.print(out);
+        case Statemants::reg:
+            out << static_cast<Register&>(to).string;
+            break;
+        case Statemants::segment:
+            out << static_cast<Segment&>(to).string;
+            break;
+        case Statemants::letter:
+            out << "'" << static_cast<Letter&>(to).letter << "'";
+            break;
+        case Statemants::integer:
+            out << "'" << static_cast<Integer&>(to).string << "'";
+            break;
         }
         out << ", ";
-        //if(from)
+        switch(from.data)
         {
-            //from.print(out);
+        case Statemants::reg:
+            out << static_cast<Register&>(from).string;
+            break;
+        case Statemants::segment:
+            out << static_cast<Segment&>(from).string;
+            break;
+        case Statemants::letter:
+            out << "'" << static_cast<Letter&>(from).letter << "'";
+            break;
+        case Statemants::integer:
+            out << "'" << static_cast<Integer&>(from).string << "'";
+            break;
         }
 
         out << ";\n";
