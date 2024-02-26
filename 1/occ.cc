@@ -43,16 +43,16 @@ namespace oct::cc::v1
     }
 
 
-    Word::Word(const char* text, size_t size) : Node(Statemants::none),string(text,size),token(Tokens::none),yylexnext(NULL)
+    Word::Word(const char* text, size_t size) : node(Statemants::none),string(text,size),token(Tokens::none),yylexnext(NULL)
     {
     }
-    Word::Word(Tokens t,const char* text, size_t size) : Node(Statemants::none),string(text,size),token(t),yylexnext(NULL)
+    Word::Word(Tokens t,const char* text, size_t size) : node(Statemants::none),string(text,size),token(t),yylexnext(NULL)
     {
     }
-    Word::Word(Statemants s,const char* text, size_t size) : Node(s),string(text,size),token(Tokens::none),yylexnext(NULL)
+    Word::Word(Statemants s,const char* text, size_t size) : node(s),string(text,size),token(Tokens::none),yylexnext(NULL)
     {
     }
-    Word::Word(Statemants s,Tokens t,const char* text, size_t size) : Node(s),string(text,size),token(t),yylexnext(NULL)
+    Word::Word(Statemants s,Tokens t,const char* text, size_t size) : node(s),string(text,size),token(t),yylexnext(NULL)
     {
     }
     void Word::print(std::ostream& out)const
@@ -107,7 +107,7 @@ namespace oct::cc::v1
 
 
 
-    Char::Char(char c) : Node(Statemants::letter), letter(c)
+    Char::Char(char c) : node(Statemants::letter), letter(c)
     {
     }
     void Char::print(std::ostream& out)const

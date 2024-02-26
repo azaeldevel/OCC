@@ -42,6 +42,12 @@ namespace oct::cc::v1::A
     }
 
 
+    Memory::Memory(Integer&)
+    {
+
+    }
+
+
 
 
 
@@ -81,7 +87,7 @@ namespace oct::cc::v1::A
 
 
 
-    Direct_Declarator::Direct_Declarator() : Statement(Statemants::declaration)
+    /*Direct_Declarator::Direct_Declarator() : Statement(Statemants::declaration)
     {
     }
     Direct_Declarator::Direct_Declarator(Statemants t) : Statement(t)
@@ -92,7 +98,12 @@ namespace oct::cc::v1::A
     }
     Direct_Declarator::Direct_Declarator(Node* n,Form f) : Statement(Statemants::declaration),first(n),form(f)
     {
+    }*/
+
+    Direct_Declarator::Direct_Declarator(Identifier& n)
+    {
     }
+
     void Direct_Declarator::print(std::ostream& out)const
     {
     }

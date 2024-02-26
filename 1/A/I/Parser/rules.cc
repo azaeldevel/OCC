@@ -112,7 +112,7 @@ namespace oct::cc::v1::A::I
         out << "memory : \n";
             out << "\t'[' integer ']'\n";
             out << "\t{\n";
-            out << "\t\t$$ = $2;\n";
+            out << "\t\t$$ = new occ::A::Memory(*$2);\n";
             out << "\t}\n";
             out << "\t;\n";
     }
@@ -471,12 +471,12 @@ namespace oct::cc::v1::A::I
         out << "direct_declarator :\n";
             out << "\tidentifier\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Direct_Declarator($1,occ::A::Direct_Declarator::Form::identifier);\n";
+            //out << "\t\t$$ = new occ::A::Direct_Declarator($1,occ::A::Direct_Declarator::Form::identifier);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\t'(' declarator ')'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Direct_Declarator($2,occ::A::Direct_Declarator::Form::declarator);\n";
+            //out << "\t\t$$ = new occ::A::Direct_Declarator($2,occ::A::Direct_Declarator::Form::declarator);\n";
             out << "\t}\n";
             out << "\t;\n";
 

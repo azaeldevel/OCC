@@ -297,7 +297,7 @@ namespace oct::cc::v1::A::I
         out << "%token <occ::Char*> LETTER\n";
         out << "%token <occ::Number*> INTEGER_DECIMAL\n";
         out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
-        out << "%type <occ::Number*> integer\n";
+        out << "%type <occ::Integer*> integer\n";
         out << "%token <occ::Identifier*> IDENTIFIER\n";
         out << "%type <occ::Word*> identifier\n";
         out << "%type <occ::Keyword*> softword\n";
@@ -309,7 +309,7 @@ namespace oct::cc::v1::A::I
     {
         out << "%type <occ::A::Function*> function\n";
         out << "%type <occ::A::Function*> functions\n";
-        out << "%type <occ::Node*> memory\n";//puede ser un identificador o un entero
+        out << "%type <occ::A::Memory*> memory\n";//puede ser un identificador o un entero
         out << "%type <occ::A::Register*> registers_8b\n";
         out << "%type <occ::A::Register*> registers_16b\n";
         out << "%type <occ::A::Register*> registers\n";

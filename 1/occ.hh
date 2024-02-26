@@ -537,7 +537,7 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Word : public Node
+    struct Word : public node
     {
         std::string string;
         Tokens token;
@@ -555,7 +555,7 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Char : public Node
+    struct Char : public node
     {
         char letter;
 
@@ -579,6 +579,7 @@ namespace oct::cc::v1
 
     typedef Word Identifier;
     typedef Word Number;
+    typedef Word Integer;
 
     /**
     *\brief Node de Identificar

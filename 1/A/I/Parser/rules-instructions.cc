@@ -9,65 +9,65 @@ namespace oct::cc::v1::A::I
             //1,4,5).-
             out << "\tMOV registers ',' registers ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_register);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' registers ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_memory);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::register_to_memory);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV registers ',' memory ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::memory_to_register);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4,occ::A::Move::Form::memory_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV identifier ',' registers ';'\n";//identifier is a pointer/inmendiate
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV registers ',' identifier ';'\n";//identifier is a pointer/inmendiate
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             //2,3).-
             out << "\t|\n";
             out << "\tMOV registers ',' LETTER ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
+            //out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV registers ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
+            //out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_register);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_memory);\n";
+            //out << "\t\t$$ = new occ::A::Move(3,$2,$4,occ::A::Move::Form::inmediate_to_memory);\n";
             out << "\t}\n";
             //6).-
             out << "\t|\n";
             out << "\tMOV segments ',' registers ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV segments ',' memory ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             //7).-
             out << "\tMOV registers ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tMOV memory ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
+            //out << "\t\t$$ = new occ::A::Move(4,$2,$4);\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -79,7 +79,7 @@ namespace oct::cc::v1::A::I
             out << "\t|\n";
             out << "\tIRET ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Return(occ::Statemants::iret,2);\n";//2 bit: l6bits
+            ////out << "\t\t$$ = new occ::A::Return(occ::Statemants::iret,2);\n";//2 bit: l6bits
             out << "\t}\n";
             out << "\t;\n";
 

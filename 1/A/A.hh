@@ -80,16 +80,37 @@ namespace oct::cc::v1::A
             identifier,
             declarator,
         };
-        Direct_Declarator();
+        /*Direct_Declarator();
         Direct_Declarator(Statemants);
         Direct_Declarator(Statemants,Node*,Form);
-        Direct_Declarator(Node*,Form);
+        Direct_Declarator(Node*,Form);*/
+
+        Direct_Declarator(Identifier&);
+
         virtual void print(std::ostream&)const;
 
-        Node* first;
+        node* first;
         Form form;
     };
 
+
+    /**
+    *\brief Node de Texto
+    **/
+    struct Segment
+    {
+
+    };
+
+
+    /**
+    *\brief Node de Texto
+    **/
+    struct Memory
+    {
+    public:
+        Memory(Integer&);
+    };
 
     /**
     *\brief Node de Texto
