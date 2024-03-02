@@ -28,7 +28,7 @@ namespace oct::cc::v1::A::I
 
             //out << "\t#include \"oas-intel.lexer.hh\"\n";
             //out << "\t#include <Buffer.hh>\n";
-            out << "\t#include <A/I/A.hh>\n";
+            out << "\t#include <A/intel.hh>\n";
             out << "\t#include <A/I/Driver.hh>\n";
             out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
             out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
@@ -319,12 +319,12 @@ namespace oct::cc::v1::A::I
         out << "%type <occ::A::Register*> registers\n";
         out << "%type <occ::A::Instruction*> inst\n";
         out << "%type <occ::A::Instruction*> instructions\n";
-        out << "%type <occ::A::Move*> move\n";
-        out << "%type <occ::A::Return*> ret\n";
-        out << "%type <occ::A::Interrupt*> interrupt\n";
-        out << "%type <occ::A::Call*> call\n";
-        out << "%type <occ::A::Push*> push\n";
-        out << "%type <occ::A::Pop*> pop\n";
+        out << "%type <occ::A::intel::Move*> move\n";
+        out << "%type <occ::A::intel::Return*> ret\n";
+        out << "%type <occ::A::intel::Interrupt*> interrupt\n";
+        out << "%type <occ::A::intel::Call*> call\n";
+        out << "%type <occ::A::intel::Push*> push\n";
+        out << "%type <occ::A::intel::Pop*> pop\n";
     }
     void Parser::declaration_AI(std::ostream& out) const
     {

@@ -30,7 +30,40 @@
 
 namespace oct::cc::v1::A
 {
-    struct Instruction;
+
+
+    /**
+    *\brief Node Base para instruciones
+    **/
+    struct Instruction : public node
+    {
+        Instruction* next;
+        char* inscode;
+
+        /**
+        *\brief
+        *
+        */
+        Instruction();
+        /**
+        *\brief Crea un nodo para la instruccion indicada
+        *\param type tipo de instruccion
+        */
+        Instruction(Statemants type);
+        /**
+        *\brief Crea un nodo para la instruccion indicada
+        *\param type tipo de instruccion
+        *\param instsize bytes usados para especificar el codigo de instrccion
+        */
+        Instruction(Statemants type,size_t instsize);
+
+        ~Instruction();
+
+        virtual void print(std::ostream&)const = 0;
+        virtual void generate(std::ostream&)const = 0;
+    };
+
+
 
     /**
     *\brief Node de Identificar
@@ -131,147 +164,6 @@ namespace oct::cc::v1::A
         unsigned char register_size() const;
     };
 
-
-    /**
-    *\brief Node Base para instruciones
-    **/
-    struct Instruction : public node
-    {
-        Instruction* next;
-        char* inscode;
-
-        /**
-        *\brief
-        *
-        */
-        Instruction();
-        /**
-        *\brief Crea un nodo para la instruccion indicada
-        *\param type tipo de instruccion
-        */
-        Instruction(Statemants type);
-        /**
-        *\brief Crea un nodo para la instruccion indicada
-        *\param type tipo de instruccion
-        *\param instsize bytes usados para especificar el codigo de instrccion
-        */
-        Instruction(Statemants type,size_t instsize);
-
-        ~Instruction();
-
-        virtual void print(std::ostream&)const = 0;
-    };
-
-
-
-
-    /**
-    *\brief Node Base para instruciones mov
-    **/
-    struct Move : public Instruction
-    {
-
-        /**
-        *\biref COntrulle la instruccion Move
-        **/
-        Move(Register& nTo,Register& nFront);
-        Move(Register& nTo,Memory& nFront);
-        Move(Memory& nTo,Register& nFront);
-
-
-        Move(Register& nTo,Integer& nFront);
-        Move(Register& nTo,Letter& nFront);
-        Move(Memory& nTo,Integer& nFront);
-        Move(Memory& nTo,Letter& nFront);
-
-
-        Move(Segment& nTo,Register& nFront);
-        Move(Segment& nTo,Memory& nFront);
-        Move(Register& nTo,Segment& nFront);
-        Move(Memory& nTo,Segment& nFront);
-
-
-        virtual void print(std::ostream&)const;
-
-
-        node &from, &to;
-    };
-
-
-    /**
-    *\brief Node Base para instruciones mov
-    **/
-    struct Return : public Instruction
-    {
-        Return();
-        Return(Statemants,size_t instsize);
-        virtual void print(std::ostream&)const;
-
-    };
-
-
-    /**
-    *\brief Node Base para instruciones mov
-    **/
-    struct Empty : public Instruction
-    {
-        Empty();
-        Empty(Statemants,size_t instsize);
-        virtual void print(std::ostream&)const;
-
-    };
-
-
-    /**
-    *\brief Node Base para instruciones mov
-    **/
-    struct Interrupt : public Instruction
-    {
-        Interrupt(Integer&);
-
-        virtual void print(std::ostream&)const;
-        //
-        Integer& service;
-    };
-
-
-    /**
-    *\brief Instruccion call
-    **/
-    struct Call : public Instruction
-    {
-        Call();
-        Call(Statemants,size_t instsize);
-        Call(Statemants,size_t instsize,Word*);
-        Call(size_t instsize,Word*);
-        virtual void print(std::ostream&)const;
-
-        Word* id;
-    };
-
-
-    /**
-    *\brief Instruccion call
-    **/
-    struct Push : public Instruction
-    {
-        Push();
-        Push(Statemants,size_t instsize);
-        virtual void print(std::ostream&)const;
-
-    };
-
-
-    /**
-    *\brief Instruccion call
-    **/
-    struct Pop : public Instruction
-    {
-        Pop();
-        Pop(Statemants,size_t instsize);
-        virtual void print(std::ostream&)const;
-
-    };
 
 
 }

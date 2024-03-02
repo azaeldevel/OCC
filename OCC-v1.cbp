@@ -125,6 +125,12 @@
 		<Unit filename="1/A/I/Parser/rules.cc">
 			<Option target="generator-dbg" />
 		</Unit>
+		<Unit filename="1/A/intel.cc">
+			<Option target="libOCC-AI-dbg" />
+		</Unit>
+		<Unit filename="1/A/intel.hh">
+			<Option target="libOCC-AI-dbg" />
+		</Unit>
 		<Unit filename="1/Buffer.cc">
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
