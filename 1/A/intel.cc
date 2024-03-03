@@ -1,6 +1,8 @@
 
 #include "intel.hh"
 
+#include <core/3/numbers.hh>
+
 namespace oct::cc::v1::A::intel
 {
 
@@ -10,6 +12,7 @@ namespace oct::cc::v1::A::intel
 
     Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
     {
+
     }
     Move::Move(Register& nTo,Memory& nFront) : from(nFront),to(nTo)
     {
@@ -19,11 +22,19 @@ namespace oct::cc::v1::A::intel
     }
 
 
-    Move::Move(Register& nTo,Integer& nFront) : from(nFront),to(nTo)
+    Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,3),from(nFront),to(nTo)
     {
+        mcode[0] = 0x1011;
+        mcode[0] = mcode[0] << 0x0; //word size
+        mcode[0] = mcode[0] << nTo.code();
+        *static_cast<short*>(static_cast<void*>(&mcode[1])) = core::to_number<short>(nFront.string.c_str());
     }
-    Move::Move(Register& nTo,Letter& nFront) : from(nFront),to(nTo)
+    Move::Move(Register& nTo,Letter& nFront) : Instruction(Statemants::move,2),from(nFront),to(nTo)
     {
+        mcode[0] = 0x1011;
+        mcode[0] = mcode[0] << 0x1; //word size
+        mcode[0] = mcode[0] << nTo.code();
+        mcode[1] = nFront.letter;
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
     {
@@ -83,10 +94,6 @@ namespace oct::cc::v1::A::intel
 
         out << ";\n";
     }
-    void Move::generate(std::ostream& out)const
-    {
-
-    }
 
 
 
@@ -101,11 +108,6 @@ namespace oct::cc::v1::A::intel
     {
         out << "\treturn;\n";
     }
-    void Return::generate(std::ostream&)const
-    {
-
-    }
-
 
 
 
@@ -118,10 +120,6 @@ namespace oct::cc::v1::A::intel
     void Empty::print(std::ostream& out)const
     {
         out << "\t;\n";
-    }
-    void Empty::generate(std::ostream&)const
-    {
-
     }
 
 
@@ -144,9 +142,6 @@ namespace oct::cc::v1::A::intel
         }
         out << ";\n";
     }
-    void Interrupt::generate(std::ostream&)const
-    {
-    }
 
 
     Call::Call() : Instruction(Statemants::call,2)
@@ -166,9 +161,6 @@ namespace oct::cc::v1::A::intel
         if(id) out << "\tcall " << id->string << ";\n";
         else out << "\tcall;\n";
     }
-    void Call::generate(std::ostream&)const
-    {
-    }
 
 
     Push::Push() : Instruction(Statemants::push,2)
@@ -180,11 +172,6 @@ namespace oct::cc::v1::A::intel
     void Push::print(std::ostream& out)const
     {
     }
-    void Push::generate(std::ostream&)const
-    {
-
-    }
-
 
     Pop::Pop() : Instruction(Statemants::pop,2)
     {
@@ -194,10 +181,6 @@ namespace oct::cc::v1::A::intel
     }
     void Pop::print(std::ostream& out)const
     {
-    }
-    void Pop::generate(std::ostream&)const
-    {
-
     }
 
 

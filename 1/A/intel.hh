@@ -7,6 +7,9 @@
 
 namespace oct::cc::v1::A::intel
 {
+
+
+
     /**
     *\brief Node Base para instruciones mov
     **/
@@ -19,7 +22,6 @@ namespace oct::cc::v1::A::intel
         Move(Register& nTo,Register& nFront);
         Move(Register& nTo,Memory& nFront);
         Move(Memory& nTo,Register& nFront);
-
 
         Move(Register& nTo,Integer& nFront);
         Move(Register& nTo,Letter& nFront);
@@ -34,8 +36,6 @@ namespace oct::cc::v1::A::intel
 
 
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
-
 
         node &from, &to;
     };
@@ -49,7 +49,6 @@ namespace oct::cc::v1::A::intel
         Return();
         Return(Statemants,size_t instsize);
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
 
     };
 
@@ -62,7 +61,6 @@ namespace oct::cc::v1::A::intel
         Empty();
         Empty(Statemants,size_t instsize);
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
 
     };
 
@@ -75,7 +73,6 @@ namespace oct::cc::v1::A::intel
         Interrupt(Integer&);
 
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
         //
         Integer& service;
     };
@@ -91,7 +88,6 @@ namespace oct::cc::v1::A::intel
         Call(Statemants,size_t instsize,Word*);
         Call(size_t instsize,Word*);
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
 
         Word* id;
     };
@@ -105,7 +101,6 @@ namespace oct::cc::v1::A::intel
         Push();
         Push(Statemants,size_t instsize);
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
 
     };
 
@@ -118,7 +113,6 @@ namespace oct::cc::v1::A::intel
         Pop();
         Pop(Statemants,size_t instsize);
         virtual void print(std::ostream&)const;
-        virtual void generate(std::ostream&)const;
 
     };
 

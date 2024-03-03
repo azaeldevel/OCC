@@ -56,7 +56,7 @@ namespace oct::cc::v1::A::I
     void Driver::generate(std::ostream& out,const Unit* tree)const
     {
         //std::cout << "Generando apartir de arbol semantico\n";
-        //if(tree) tree->generate(out);
+        if(tree) tree->generate(out);
     }
     bool Driver::semantic(std::ostream& out)
     {

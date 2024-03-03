@@ -27,7 +27,6 @@
 
 #include "../occ.hh"
 
-
 namespace oct::cc::v1::A
 {
 
@@ -38,7 +37,8 @@ namespace oct::cc::v1::A
     struct Instruction : public node
     {
         Instruction* next;
-        char* inscode;
+        char* mcode;
+        size_t msize;
 
         /**
         *\brief
@@ -60,7 +60,7 @@ namespace oct::cc::v1::A
         ~Instruction();
 
         virtual void print(std::ostream&)const = 0;
-        virtual void generate(std::ostream&)const = 0;
+        virtual void generate(std::ostream&)const;
     };
 
 
@@ -73,7 +73,7 @@ namespace oct::cc::v1::A
         Unit();
         Unit(const Statemants&);
 
-        virtual void print(std::ostream&)const;
+        virtual void print(std::ostream&) const;
         virtual bool semantic(std::ostream&);
     };
 
@@ -149,6 +149,8 @@ namespace oct::cc::v1::A
         Memory(Integer&);
 
         node& memory;
+
+        unsigned char mode() const;
     };
 
     /**
@@ -161,7 +163,11 @@ namespace oct::cc::v1::A
         Register(Statemants,const char*, size_t);
         Register(Statemants,Tokens,const char*, size_t);
 
-        unsigned char register_size() const;
+        unsigned char size() const;
+        unsigned char mode() const;
+        unsigned char word() const;
+        unsigned char code() const;
+        unsigned char reg() const;
     };
 
 

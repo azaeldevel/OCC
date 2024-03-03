@@ -43,5 +43,8 @@ namespace oct::cc::v1::A::I
             actual = (Function*)actual->next;
         }
     }
+    void Unit::generate(std::ostream& out) const
+    {
+    }
 
 }

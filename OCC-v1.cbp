@@ -147,11 +147,6 @@
 			<Option target="Release" />
 			<Option target="generator-dbg" />
 		</Unit>
-		<Unit filename="1/intel.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
-			<Option target="libOCC-AI-dbg" />
-		</Unit>
 		<Unit filename="1/occ-generetor-main.cc">
 			<Option target="Debug" />
 			<Option target="Release" />

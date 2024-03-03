@@ -60,7 +60,27 @@ namespace oct::cc::v1
         out << string;
     }
 
-    bool Word::is_register()const
+
+    Keyword::Keyword(const char* text, size_t size) : Word(text,size)
+    {
+    }
+    Keyword::Keyword(Tokens t,const char* text, size_t size) : Word(t,text,size)
+    {
+    }
+    Keyword::Keyword(Statemants s,const char* text, size_t size) : Word(s,text,size)
+    {
+    }
+    Keyword::Keyword(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size)
+    {
+    }
+
+    void Keyword::print(std::ostream& out)const
+    {
+        out << string;
+    }
+
+
+    bool Keyword::is_register() const
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
@@ -87,28 +107,10 @@ namespace oct::cc::v1
 
         return false;
     }
-
-
-
-    Keyword::Keyword(const char* text, size_t size) : Word(text,size)
+    bool Keyword::is_memory() const
     {
+        return false;
     }
-    Keyword::Keyword(Tokens t,const char* text, size_t size) : Word(t,text,size)
-    {
-    }
-    Keyword::Keyword(Statemants s,const char* text, size_t size) : Word(s,text,size)
-    {
-    }
-    Keyword::Keyword(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size)
-    {
-    }
-
-    void Keyword::print(std::ostream& out)const
-    {
-        out << string;
-    }
-
-
 
 
 

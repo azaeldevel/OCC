@@ -133,7 +133,7 @@ namespace oct::cc::v1::A
     {
     }
 
-    unsigned char Register::register_size()const
+    unsigned char Register::size()const
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
@@ -160,26 +160,103 @@ namespace oct::cc::v1::A
 
         return 0;
     }
+    unsigned char Register::mode() const
+    {
+        if(is_register()) return 0x11;
+        else return 0x0;
+    }
+    unsigned char Register::word() const
+    {
+        if(core::node<Statemants>::data == Statemants::keyword)
+        {
+            switch(token)
+            {
+            case Tokens::AL:
+            case Tokens::AH:
+            case Tokens::BL:
+            case Tokens::BH:
+            case Tokens::CL:
+            case Tokens::CH:
+            case Tokens::DL:
+            case Tokens::DH:
+                return 0x00;
+            case Tokens::AX:
+            case Tokens::BX:
+            case Tokens::CX:
+            case Tokens::DX:
+            case Tokens::SP:
+            case Tokens::BP:
+            case Tokens::SI:
+            case Tokens::DI:
+                return 0x01;
+            default :
+                return 0;
+            }
+        }
+
+        return 0x11;
+    }
+    unsigned char Register::code() const
+    {
+        if(core::node<Statemants>::data == Statemants::keyword)
+        {
+            switch(token)
+            {
+            case Tokens::AL:
+            case Tokens::AX:
+                return 0x00;
+            case Tokens::CL:
+            case Tokens::CX:
+                return 0x01;
+            case Tokens::DL:
+            case Tokens::DX:
+                return 0x10;
+            case Tokens::BL:
+            case Tokens::BX:
+                return 0x11;
+            case Tokens::AH:
+            case Tokens::SP:
+                return 0x100;
+            case Tokens::CH:
+            case Tokens::BP:
+                return 0x101;
+            case Tokens::DH:
+            case Tokens::SI:
+                return 0x110;
+            case Tokens::BH:
+            case Tokens::DI:
+                return 0x111;
+            default :
+                return 0;
+            }
+        }
+
+        return 0xFF;
+    }
 
 
-    Instruction::Instruction() : node(Statemants::instruction),next(NULL),inscode(NULL)
+    Instruction::Instruction() : node(Statemants::instruction),next(NULL),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t) : node(t),next(NULL),inscode(NULL)
+    Instruction::Instruction(Statemants t) : node(t),next(NULL),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t,size_t instsize) : node(t),next(NULL),inscode(new char[instsize])
+    Instruction::Instruction(Statemants t,size_t s) : node(t),next(NULL),mcode(new char[s]),msize(s)
     {
-        for(size_t i = 0; i < instsize; i++) inscode[i] = 0;
+        //for(size_t i = 0; i < instsize; i++) mcode[i] = 0;
     }
     Instruction::~Instruction()
     {
-        if(inscode) delete[] inscode;
+        if(mcode) delete[] mcode;
     }
 
 
     void Instruction::print(std::ostream& out)const
     {
+    }
+    void Instruction::generate(std::ostream& out) const
+    {
+        out.write(mcode,msize);
     }
 
 
