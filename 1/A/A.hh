@@ -89,6 +89,7 @@ namespace oct::cc::v1::A
         Function();
         Function(Statemants);
         virtual void print(std::ostream&)const;
+        virtual void generate(std::ostream&)const;
     };
 
 

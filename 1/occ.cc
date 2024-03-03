@@ -27,6 +27,15 @@
 namespace oct::cc::v1
 {
 
+    node::node(const Statemants& t) : core::node<Statemants>(t)
+    {
+    }
+
+    void node::print(std::ostream&)const
+    {
+    }
+
+
     Node::Node() : core::Node<Statemants,node>(Statemants::none)
     {
     }
@@ -125,10 +134,10 @@ namespace oct::cc::v1
 
 
 
-    Statement::Statement() : Node(Statemants::none),next(NULL)
+    Statement::Statement() : node(Statemants::none),next(NULL)
     {
     }
-    Statement::Statement(Statemants t) : Node(t),next(NULL)
+    Statement::Statement(Statemants t) : node(t),next(NULL)
     {
     }
 

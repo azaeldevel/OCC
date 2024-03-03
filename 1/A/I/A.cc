@@ -39,12 +39,24 @@ namespace oct::cc::v1::A::I
         Statement* actual = statement;
         while(actual)
         {
-            actual->print(out);
-            actual = (Function*)actual->next;
+            if(actual->data == Statemants::function)
+            {
+                actual->print(out);
+            }
+            actual = actual->next;
         }
     }
     void Unit::generate(std::ostream& out) const
     {
+        Statement* actual = statement;
+        while(actual)
+        {
+            if(actual->data == Statemants::function)
+            {
+                //actual->generate(out);
+            }
+            actual = actual->next;
+        }
     }
 
 }

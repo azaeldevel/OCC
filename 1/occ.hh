@@ -521,9 +521,9 @@ namespace oct::cc::v1
     struct node : public core::node<Statemants>
     {
         node() = default;
-        node(const Statemants& t) : core::node<Statemants>(t)
-        {
-        }
+        node(const Statemants& t);
+
+        virtual void print(std::ostream&)const;
     };
 
     /**
@@ -592,7 +592,7 @@ namespace oct::cc::v1
     /**
     *\brief Node de Identificar
     **/
-    struct Statement : public Node
+    struct Statement : public node
     {
         Statement* next;
 

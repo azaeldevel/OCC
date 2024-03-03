@@ -68,16 +68,35 @@ namespace oct::cc::v1::A
     Function::Function(Statemants t) : Statement(t),identifier(NULL),insts(NULL)
     {
     }
-    void Function::print(std::ostream& out)const
+    void Function::print(std::ostream& out) const
     {
         if(identifier) identifier->print(out);
         out << "\n{\n";
-        Instruction* actual_inst = (Instruction*)insts;
+        Instruction* actual_inst = insts;
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
-            actual_inst->print(out);
-            actual_inst = (Instruction*)actual_inst->next;
+            if(actual_inst->data == Statemants::function)
+            {
+                actual_inst->print(out);
+            }
+            actual_inst = actual_inst->next;
+        }
+        out << "}\n";
+    }
+    void Function::generate(std::ostream& out)const
+    {
+        if(identifier) identifier->print(out);
+        out << "\n{\n";
+        Instruction* actual_inst = insts;
+        while(actual_inst)
+        {
+            //out << "statment: " << (int)actual_inst->data << "\n";
+            if(actual_inst->data == Statemants::function)
+            {
+                actual_inst->generate(out);
+            }
+            actual_inst = actual_inst->next;
         }
         out << "}\n";
     }
@@ -204,28 +223,28 @@ namespace oct::cc::v1::A
             {
             case Tokens::AL:
             case Tokens::AX:
-                return 0x00;
+                return 0b00;
             case Tokens::CL:
             case Tokens::CX:
-                return 0x01;
+                return 0b01;
             case Tokens::DL:
             case Tokens::DX:
-                return 0x10;
+                return 0b10;
             case Tokens::BL:
             case Tokens::BX:
-                return 0x11;
+                return 0b11;
             case Tokens::AH:
             case Tokens::SP:
-                return 0x100;
+                return 0b100;
             case Tokens::CH:
             case Tokens::BP:
-                return 0x101;
+                return 0b101;
             case Tokens::DH:
             case Tokens::SI:
-                return 0x110;
+                return 0b110;
             case Tokens::BH:
             case Tokens::DI:
-                return 0x111;
+                return 0b111;
             default :
                 return 0;
             }
