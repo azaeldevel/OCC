@@ -53,7 +53,7 @@ namespace oct::cc::v1::A::I
         {
             if(actual->data == Statemants::function)
             {
-                //actual->generate(out);
+                static_cast<Function*>(actual)->generate(out);
             }
             actual = actual->next;
         }

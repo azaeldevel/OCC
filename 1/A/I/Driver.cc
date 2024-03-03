@@ -51,7 +51,7 @@ namespace oct::cc::v1::A::I
     }
     void Driver::generate(std::ostream& out) const
     {
-        //if(tray->unit) tray->unit->generate(out);
+        if(tray->unit) tray->unit->generate(out);
     }
     void Driver::generate(std::ostream& out,const Unit* tree)const
     {

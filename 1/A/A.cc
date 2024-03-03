@@ -76,29 +76,23 @@ namespace oct::cc::v1::A
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
-            if(actual_inst->data == Statemants::function)
-            {
-                actual_inst->print(out);
-            }
+            actual_inst->print(out);
             actual_inst = actual_inst->next;
         }
         out << "}\n";
     }
-    void Function::generate(std::ostream& out)const
+    void Function::generate(std::ostream& out) const
     {
-        if(identifier) identifier->print(out);
-        out << "\n{\n";
+        //if(identifier) identifier->print(out);
+        //out << "\n{\n";
         Instruction* actual_inst = insts;
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
-            if(actual_inst->data == Statemants::function)
-            {
-                actual_inst->generate(out);
-            }
+            actual_inst->generate(out);
             actual_inst = actual_inst->next;
         }
-        out << "}\n";
+        //out << "}\n";
     }
 
 
