@@ -1,0 +1,22 @@
+ifndef BUILD_DIR
+	BUILD_DIR=build
+endif
+ifndef BOOT_DISK
+	BOOT_DISK = disk-1.img
+endif
+
+
+$(BUILD_DIR)/$(BOOT_DISK) : $(BUILD_DIR)/boot.bin
+	cp tests/$(BOOT_DISK) $(BUILD_DIR)
+	dd if=$< of=$@ conv=notrunc
+        
+booting : $(BUILD_DIR)/$(BOOT_DISK)
+	qemu-system-i386  -hda $(BUILD_DIR)/$(BOOT_DISK) -boot c
+
+
+
+.PHONY:  clean
+
+clean :
+	rm -rf $(BUILD_DIR)/$(BOOT_DISK)
+	

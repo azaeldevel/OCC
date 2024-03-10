@@ -47,7 +47,8 @@ namespace oct::cc::v1::A::intel
     struct Return : public Instruction
     {
         Return();
-        Return(Statemants,size_t instsize);
+
+
         virtual void print(std::ostream&)const;
 
     };

@@ -74,7 +74,7 @@ namespace oct::cc::v1::A::I
         out << "ret : \n";
             out << "\tRET ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Return(occ::Statemants::ret,2);\n";//2 bit: l6bits
+            out << "\t\t$$ = new occ::A::intel::Return;\n";//2 bit: l6bits
             out << "\t}\n";
             out << "\t|\n";
             out << "\tIRET ';'\n";

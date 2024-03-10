@@ -98,11 +98,9 @@ namespace oct::cc::v1::A::intel
 
 
 
-    Return::Return() : Instruction(Statemants::ret,2)
+    Return::Return() : Instruction(Statemants::ret,1)
     {
-    }
-    Return::Return(Statemants t,size_t s) : Instruction(t,s)
-    {
+        mcode[0] = 0b11000011;
     }
     void Return::print(std::ostream& out)const
     {
@@ -125,8 +123,10 @@ namespace oct::cc::v1::A::intel
 
 
 
-    Interrupt::Interrupt(Integer& s) : service(s)
+    Interrupt::Interrupt(Integer& s) : Instruction(Statemants::interrupt,2),service(s)
     {
+        mcode[0] = 0b11001101;
+        mcode[1] = core::to_number<char>(s.string.c_str());
     }
 
     void Interrupt::print(std::ostream& out)const
@@ -142,7 +142,6 @@ namespace oct::cc::v1::A::intel
         }
         out << ";\n";
     }
-
 
     Call::Call() : Instruction(Statemants::call,2)
     {
