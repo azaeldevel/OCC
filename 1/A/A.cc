@@ -87,6 +87,8 @@ namespace oct::cc::v1::A
         while(actual_inst)
         {
             actual_inst->generate(out);
+            //std::cout << "code:" << actual_inst->mcode[0] << "-" << actual_inst->mcode[1] << "\n";
+            std::cout << "code:" << (void*)actual_inst << "\n";
             actual_inst = actual_inst->next;
         }
     }
@@ -105,20 +107,6 @@ namespace oct::cc::v1::A
     {
     }
 
-
-
-    /*Direct_Declarator::Direct_Declarator() : Statement(Statemants::declaration)
-    {
-    }
-    Direct_Declarator::Direct_Declarator(Statemants t) : Statement(t)
-    {
-    }
-    Direct_Declarator::Direct_Declarator(Statemants t,Node* n,Form f) : Statement(t),first(n),form(f)
-    {
-    }
-    Direct_Declarator::Direct_Declarator(Node* n,Form f) : Statement(Statemants::declaration),first(n),form(f)
-    {
-    }*/
 
     Direct_Declarator::Direct_Declarator(Identifier& n)
     {
@@ -208,47 +196,39 @@ namespace oct::cc::v1::A
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
+            inst = inst << 3;
             switch(token)
             {
             case Tokens::AL:
             case Tokens::AX:
-                inst << 3;
-                inst += 0b000;
                 break;
             case Tokens::CL:
             case Tokens::CX:
-                inst << 3;
-                inst += 0b001;
+                inst +=  1;
                 break;
             case Tokens::DL:
             case Tokens::DX:
-                inst << 3;
-                inst += 0b010;
+                inst += 2;
                 break;
             case Tokens::BL:
             case Tokens::BX:
-                inst << 3;
-                inst += 0b011;
+                inst += 3;
                 break;
             case Tokens::AH:
             case Tokens::SP:
-                inst << 3;
-                inst += 0b100;
+                inst += 4;
                 break;
             case Tokens::CH:
             case Tokens::BP:
-                inst << 3;
-                inst += 0b101;
+                inst += 5;
                 break;
             case Tokens::DH:
             case Tokens::SI:
-                inst << 3;
-                inst += 0b110;
+                inst += 6;
                 break;
             case Tokens::BH:
             case Tokens::DI:
-                inst << 3;
-                inst += 0b111;
+                inst += 7;
                 break;
             }
         }

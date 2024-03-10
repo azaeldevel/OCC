@@ -69,7 +69,7 @@ namespace oct::cc::v1::A::I
         }
 
         //out << "INTEGER_HEXDECIMAL \t\t(0x|0X)[[:xdigit:]]+\n";
-        out << "INTEGER_HEXDECIMAL_TINY \t\t(0x|0X)[[:xdigit:]][[:xdigit:]]\n";
+        out << "INTEGER_HEXDECIMAL_TINY \t\t(0x|0X)[[:xdigit:]]{1,2}\n";
         out << "INTEGER_HEXDECIMAL_SHORT \t\t(0x|0X)[[:xdigit:]]{3,4}\n";
 
 

@@ -25,15 +25,17 @@ namespace oct::cc::v1::A::intel
     Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,1 + nFront.size()),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
+        std::cout << "before : " << mcode[0] << "\n";
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
+        std::cout << "after : " << mcode[0] << "\n";
         if(nFront.size() == 1)
         {
-            mcode[1] = core::to_number<char>(nFront.string.c_str());
+            mcode[1] = (char)std::atoi(nFront.string.c_str());
         }
         else if(nFront.size() == 2)
         {
-            *static_cast<short*>(static_cast<void*>(&mcode[1])) = core::to_number<short>(nFront.string.c_str());
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = (short)std::atoi(nFront.string.c_str());
         }
         else
         {
@@ -43,8 +45,10 @@ namespace oct::cc::v1::A::intel
     Move::Move(Register& nTo,Letter& nFront) : Instruction(Statemants::move,2),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
+        std::cout << "before : " << mcode[0] << "\n";
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
+        std::cout << "afther : " << mcode[0] << "\n";
         mcode[1] = nFront.letter;
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
@@ -135,7 +139,7 @@ namespace oct::cc::v1::A::intel
     Interrupt::Interrupt(Integer& s) : Instruction(Statemants::interrupt,2),service(s)
     {
         mcode[0] = 0b11001101;
-        mcode[1] = core::to_number<char>(s.string.c_str());
+        mcode[1] = (char)std::atoi(s.string.c_str());
     }
 
     void Interrupt::print(std::ostream& out)const
