@@ -34,15 +34,43 @@ namespace oct::cc::v1::A::I
         out << "%}\n";
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
         out << "LETTER '.'\n";
-        out << "INTEGER_DECIMAL \t\t";
-            {
-                out << "0";
-                out << "|";
-                out << "[+-][0-9]+";
-                out << "\n";
-            }
+        /*out << "INTEGER_DECIMAL \t\t";
+        {
+            out << "0";
+            out << "|";
+            out << "[+-][0-9]+";
+            out << "\n";
+        }*/
+        out << "INTEGER_DECIMAL_TINY \t\t";
+        {
+            out << "[+-][0-9]";
+            out << "|";
+            out << "[+-][0-9][0-9]";
+            out << "|";
+            out << "[+-]100";
+            out << "|";
+            out << "[+-]1[0-1][0-9]";
+            out << "|";
+            out << "[+-]12[0-8]";
+            out << "\n";
+        }
+        out << "INTEGER_DECIMAL_UTINY \t\t";
+        {
+            out << "[0-9][0-9]";
+            out << "|";
+            out << "1[0-9][0-9]";
+            out << "|";
+            out << "2[0-4][0-9]";
+            out << "|";
+            out << "250";
+            out << "|";
+            out << "25[0-5]";
+            out << "\n";
+        }
 
-        out << "INTEGER_HEXDECIMAL \t\t(0x|0X)[[:xdigit:]]+\n";
+        //out << "INTEGER_HEXDECIMAL \t\t(0x|0X)[[:xdigit:]]+\n";
+        out << "INTEGER_HEXDECIMAL_TINY \t\t(0x|0X)[[:xdigit:]][[:xdigit:]]\n";
+        out << "INTEGER_HEXDECIMAL_SHORT \t\t(0x|0X)[[:xdigit:]]{3,4}\n";
 
 
     }

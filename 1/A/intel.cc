@@ -22,18 +22,29 @@ namespace oct::cc::v1::A::intel
     }
 
 
-    Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,3),from(nFront),to(nTo)
+    Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,1 + nFront.size()),from(nFront),to(nTo)
     {
-        mcode[0] = 0x1011;
-        mcode[0] = mcode[0] << 0x0; //word size
-        mcode[0] = mcode[0] << nTo.code();
-        *static_cast<short*>(static_cast<void*>(&mcode[1])) = core::to_number<short>(nFront.string.c_str());
+        mcode[0] = 0b1011;
+        nTo.word(mcode[0]);
+        nTo.code(mcode[0]);
+        if(nFront.size() == 1)
+        {
+            mcode[1] = core::to_number<char>(nFront.string.c_str());
+        }
+        else if(nFront.size() == 2)
+        {
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = core::to_number<short>(nFront.string.c_str());
+        }
+        else
+        {
+
+        }
     }
     Move::Move(Register& nTo,Letter& nFront) : Instruction(Statemants::move,2),from(nFront),to(nTo)
     {
-        mcode[0] = 0x1011;
-        mcode[0] = mcode[0] << 0x1; //word size
-        mcode[0] = mcode[0] << nTo.code();
+        mcode[0] = 0b1011;
+        nTo.word(mcode[0]);
+        nTo.code(mcode[0]);
         mcode[1] = nFront.letter;
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
@@ -42,8 +53,6 @@ namespace oct::cc::v1::A::intel
     Move::Move(Memory& nTo,Letter& nFront) : from(nFront),to(nTo)
     {
     }
-
-
     Move::Move(Segment& nTo,Register& nFront) : from(nFront),to(nTo)
     {
     }

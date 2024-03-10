@@ -134,6 +134,7 @@ namespace oct::cc::v1
 
 
 
+
     Statement::Statement() : node(Statemants::none),next(NULL)
     {
     }
@@ -148,4 +149,39 @@ namespace oct::cc::v1
     Space::Space(Statemants t) : Statement(t)
     {
     }
+
+
+
+    Number::Number(const char* text, size_t size) : Word(text,size)
+    {
+    }
+    Number::Number(Tokens t,const char* text, size_t size) : Word(t,text,size)
+    {
+    }
+    Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size)
+    {
+    }
+    Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size)
+    {
+    }
+
+    void Number::print(std::ostream& out)const
+    {
+        out << string;
+    }
+    char Number::size() const
+    {
+        switch(token)
+        {
+        case Tokens::TINY:
+            return 1;
+        case Tokens::SHORT:
+            return 2;
+        default:
+            return 0;
+        }
+
+        return 0;
+    }
+
 }

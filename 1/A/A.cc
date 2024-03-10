@@ -83,16 +83,12 @@ namespace oct::cc::v1::A
     }
     void Function::generate(std::ostream& out) const
     {
-        //if(identifier) identifier->print(out);
-        //out << "\n{\n";
         Instruction* actual_inst = insts;
         while(actual_inst)
         {
-            //out << "statment: " << (int)actual_inst->data << "\n";
             actual_inst->generate(out);
             actual_inst = actual_inst->next;
         }
-        //out << "}\n";
     }
 
 
@@ -175,10 +171,10 @@ namespace oct::cc::v1::A
     }
     unsigned char Register::mode() const
     {
-        if(is_register()) return 0x11;
-        else return 0x0;
+        if(is_register()) return 0b11;
+        else return 0b00;
     }
-    unsigned char Register::word() const
+    void Register::word(unsigned char& inst) const
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
@@ -192,7 +188,8 @@ namespace oct::cc::v1::A
             case Tokens::CH:
             case Tokens::DL:
             case Tokens::DH:
-                return 0x00;
+                inst << 1;
+                break;
             case Tokens::AX:
             case Tokens::BX:
             case Tokens::CX:
@@ -201,15 +198,13 @@ namespace oct::cc::v1::A
             case Tokens::BP:
             case Tokens::SI:
             case Tokens::DI:
-                return 0x01;
-            default :
-                return 0;
+                inst << 1;
+                inst++;
+                break;
             }
         }
-
-        return 0x11;
     }
-    unsigned char Register::code() const
+    void Register::code(unsigned char& inst) const
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
@@ -217,34 +212,46 @@ namespace oct::cc::v1::A
             {
             case Tokens::AL:
             case Tokens::AX:
-                return 0b00;
+                inst << 3;
+                inst += 0b000;
+                break;
             case Tokens::CL:
             case Tokens::CX:
-                return 0b01;
+                inst << 3;
+                inst += 0b001;
+                break;
             case Tokens::DL:
             case Tokens::DX:
-                return 0b10;
+                inst << 3;
+                inst += 0b010;
+                break;
             case Tokens::BL:
             case Tokens::BX:
-                return 0b11;
+                inst << 3;
+                inst += 0b011;
+                break;
             case Tokens::AH:
             case Tokens::SP:
-                return 0b100;
+                inst << 3;
+                inst += 0b100;
+                break;
             case Tokens::CH:
             case Tokens::BP:
-                return 0b101;
+                inst << 3;
+                inst += 0b101;
+                break;
             case Tokens::DH:
             case Tokens::SI:
-                return 0b110;
+                inst << 3;
+                inst += 0b110;
+                break;
             case Tokens::BH:
             case Tokens::DI:
-                return 0b111;
-            default :
-                return 0;
+                inst << 3;
+                inst += 0b111;
+                break;
             }
         }
-
-        return 0xFF;
     }
 
 
@@ -254,9 +261,8 @@ namespace oct::cc::v1::A
     Instruction::Instruction(Statemants t) : node(t),next(NULL),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t,size_t s) : node(t),next(NULL),mcode(new char[s]),msize(s)
+    Instruction::Instruction(Statemants t,size_t s) : node(t),next(NULL),mcode(new unsigned char[s]),msize(s)
     {
-        //for(size_t i = 0; i < instsize; i++) mcode[i] = 0;
     }
     Instruction::~Instruction()
     {
@@ -269,7 +275,7 @@ namespace oct::cc::v1::A
     }
     void Instruction::generate(std::ostream& out) const
     {
-        out.write(mcode,msize);
+        out.write((char*)mcode,msize);
     }
 
 

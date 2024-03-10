@@ -585,9 +585,26 @@ namespace oct::cc::v1
         bool is_memory() const;
     };
 
+
     typedef Word Identifier;
-    typedef Word Number;
-    typedef Word Integer;
+
+
+    /**
+    *\brief Node de Texto
+    **/
+    struct Number : public Word
+    {
+        Number(const char*, size_t);
+        Number(Tokens,const char*, size_t);
+        Number(Statemants,const char*, size_t);
+        Number(Statemants,Tokens,const char*, size_t);
+
+        virtual void print(std::ostream&)const;
+
+        char size()const;
+    };
+
+    typedef Number Integer;
 
     /**
     *\brief Node de Identificar

@@ -65,13 +65,31 @@ namespace oct::cc::v1::A::I
                             out << "\t\treturn IDENTIFIER;\n";
         out << "\t\t}\n";
 
-        out << "{INTEGER_DECIMAL}  {\n";
+        /*out << "{INTEGER_DECIMAL}  {\n";
                                     out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::INTEGER,yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_DECIMAL;\n";
+                                out << "\t\t}\n";*/
+        out << "{INTEGER_DECIMAL_TINY}  {\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_DECIMAL;\n";
+                                out << "\t\t}\n";
+        out << "{INTEGER_DECIMAL_UTINY}  {\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_DECIMAL;\n";
                                 out << "\t\t}\n";
 
-        out << "{INTEGER_HEXDECIMAL}  {\n";
+        /*out << "{INTEGER_HEXDECIMAL}  {\n";
                                     out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::INTEGER,yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_HEXDECIMAL;\n";
+                                out << "\t\t}\n";*/
+
+        out << "{INTEGER_HEXDECIMAL_TINY}  {\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng);\n";
+                                    out << "\t\treturn INTEGER_HEXDECIMAL;\n";
+                                out << "\t\t}\n";
+
+        out << "{INTEGER_HEXDECIMAL_SHORT}  {\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::SHORT,yytext,yyleng);\n";
                                     out << "\t\treturn INTEGER_HEXDECIMAL;\n";
                                 out << "\t\t}\n";
 

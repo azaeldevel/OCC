@@ -37,7 +37,7 @@ namespace oct::cc::v1::A
     struct Instruction : public node
     {
         Instruction* next;
-        char* mcode;
+        unsigned char* mcode;
         size_t msize;
 
         /**
@@ -166,8 +166,8 @@ namespace oct::cc::v1::A
 
         unsigned char size() const;
         unsigned char mode() const;
-        unsigned char word() const;
-        unsigned char code() const;
+        void word(unsigned char&) const;
+        void code(unsigned char&) const;
         unsigned char reg() const;
     };
 
