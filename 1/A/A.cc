@@ -176,7 +176,7 @@ namespace oct::cc::v1::A
             case Tokens::CH:
             case Tokens::DL:
             case Tokens::DH:
-                inst << 1;
+                inst <<= 1;
                 break;
             case Tokens::AX:
             case Tokens::BX:
@@ -186,7 +186,7 @@ namespace oct::cc::v1::A
             case Tokens::BP:
             case Tokens::SI:
             case Tokens::DI:
-                inst << 1;
+                inst <<= 1;
                 inst++;
                 break;
             }
@@ -197,7 +197,7 @@ namespace oct::cc::v1::A
         if(core::node<Statemants>::data == Statemants::reg)
         {
             std::cout << "REG<<";
-            inst << 3;
+            inst <<= 3;
             switch(token)
             {
             case Tokens::AL:
@@ -217,7 +217,7 @@ namespace oct::cc::v1::A
                 break;
             case Tokens::AH:
             case Tokens::SP:
-                inst += 4;
+                inst += 0b100;
                 break;
             case Tokens::CH:
             case Tokens::BP:
@@ -244,6 +244,7 @@ namespace oct::cc::v1::A
     }
     Instruction::Instruction(Statemants t,size_t s) : node(t),next(NULL),mcode(new unsigned char[s]),msize(s)
     {
+        for(size_t i = 0; i < s ; i++) mcode[i] = 0;
     }
     Instruction::~Instruction()
     {

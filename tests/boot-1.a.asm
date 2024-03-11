@@ -6,7 +6,7 @@ long valor2 5;
 //byte test 1;
 int flag2 1598;
 
-
+/b0 42 b4 0e cd 10 b0 6f
 main
 {
 	mov al , 'B';
