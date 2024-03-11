@@ -152,16 +152,19 @@ namespace oct::cc::v1
 
 
 
-    Number::Number(const char* text, size_t size) : Word(text,size)
+    Number::Number(const char* text, size_t size) : Word(text,size),base(10)
     {
     }
-    Number::Number(Tokens t,const char* text, size_t size) : Word(t,text,size)
+    Number::Number(Tokens t,const char* text, size_t size) : Word(t,text,size),base(10)
     {
     }
-    Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size)
+    Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size),base(10)
     {
     }
-    Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size)
+    Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size),base(10)
+    {
+    }
+    Number::Number(Statemants s,Tokens t,const char* text, size_t size,char b) : Word(s,t,text,size),base(b)
     {
     }
 

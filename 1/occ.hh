@@ -598,10 +598,13 @@ namespace oct::cc::v1
         Number(Tokens,const char*, size_t);
         Number(Statemants,const char*, size_t);
         Number(Statemants,Tokens,const char*, size_t);
+        Number(Statemants,Tokens,const char*, size_t,char base);
 
         virtual void print(std::ostream&)const;
 
         char size()const;
+
+        char base;
     };
 
     typedef Number Integer;

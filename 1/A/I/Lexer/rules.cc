@@ -74,7 +74,7 @@ namespace oct::cc::v1::A::I
                                     out << "\t\treturn INTEGER_DECIMAL;\n";
                                 out << "\t\t}\n";
         out << "{INTEGER_DECIMAL_UTINY}  {\n";
-                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_DECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng,10);\n";
                                     out << "\t\treturn INTEGER_DECIMAL;\n";
                                 out << "\t\t}\n";
 
@@ -84,12 +84,12 @@ namespace oct::cc::v1::A::I
                                 out << "\t\t}\n";*/
 
         out << "{INTEGER_HEXDECIMAL_TINY}  {\n";
-                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::TINY,yytext,yyleng,16);\n";
                                     out << "\t\treturn INTEGER_HEXDECIMAL;\n";
                                 out << "\t\t}\n";
 
         out << "{INTEGER_HEXDECIMAL_SHORT}  {\n";
-                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::SHORT,yytext,yyleng);\n";
+                                    out << "\t\tyylval->INTEGER_HEXDECIMAL = new occ::Number(occ::Statemants::integer,occ::Tokens::SHORT,yytext,yyleng,16);\n";
                                     out << "\t\treturn INTEGER_HEXDECIMAL;\n";
                                 out << "\t\t}\n";
 

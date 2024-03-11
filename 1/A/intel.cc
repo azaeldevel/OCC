@@ -25,17 +25,17 @@ namespace oct::cc::v1::A::intel
     Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,1 + nFront.size()),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
-        std::cout << "before : " << mcode[0] << "\n";
+        std::cout << "before : " << (int)mcode[0] << "\n";
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
-        std::cout << "after : " << mcode[0] << "\n";
+        std::cout << "after : " << (int)mcode[0] << "\n";
         if(nFront.size() == 1)
         {
-            mcode[1] = (char)std::atoi(nFront.string.c_str());
+            mcode[1] = static_cast<char>(std::strtol(nFront.string.c_str(),NULL,nFront.base));
         }
         else if(nFront.size() == 2)
         {
-            *static_cast<short*>(static_cast<void*>(&mcode[1])) = (short)std::atoi(nFront.string.c_str());
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(nFront.string.c_str(),NULL,nFront.base));
         }
         else
         {
@@ -45,10 +45,10 @@ namespace oct::cc::v1::A::intel
     Move::Move(Register& nTo,Letter& nFront) : Instruction(Statemants::move,2),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
-        std::cout << "before : " << mcode[0] << "\n";
+        std::cout << "before : " << (int)mcode[0] << "\n";
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
-        std::cout << "afther : " << mcode[0] << "\n";
+        std::cout << "afther : " << (int)mcode[0] << "\n";
         mcode[1] = nFront.letter;
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
@@ -139,7 +139,19 @@ namespace oct::cc::v1::A::intel
     Interrupt::Interrupt(Integer& s) : Instruction(Statemants::interrupt,2),service(s)
     {
         mcode[0] = 0b11001101;
-        mcode[1] = (char)std::atoi(s.string.c_str());
+        //mcode[1] = (char)std::atoi(s.string.c_str());
+        if(s.size() == 1)
+        {
+            mcode[1] = static_cast<char>(std::strtol(s.string.c_str(),NULL,s.base));
+        }
+        else if(s.size() == 2)
+        {
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(s.string.c_str(),NULL,s.base));
+        }
+        else
+        {
+
+        }
     }
 
     void Interrupt::print(std::ostream& out)const

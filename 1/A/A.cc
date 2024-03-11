@@ -194,8 +194,9 @@ namespace oct::cc::v1::A
     }
     void Register::code(unsigned char& inst) const
     {
-        if(core::node<Statemants>::data == Statemants::keyword)
+        if(core::node<Statemants>::data == Statemants::reg)
         {
+            std::cout << "REG<<";
             inst = inst << 3;
             switch(token)
             {
