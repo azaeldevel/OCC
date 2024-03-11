@@ -166,6 +166,7 @@ namespace oct::cc::v1::A
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
+            inst << 1;
             switch(token)
             {
             case Tokens::AL:
@@ -176,7 +177,6 @@ namespace oct::cc::v1::A
             case Tokens::CH:
             case Tokens::DL:
             case Tokens::DH:
-                inst <<= 1;
                 break;
             case Tokens::AX:
             case Tokens::BX:
@@ -186,7 +186,6 @@ namespace oct::cc::v1::A
             case Tokens::BP:
             case Tokens::SI:
             case Tokens::DI:
-                inst <<= 1;
                 inst++;
                 break;
             }
@@ -196,8 +195,8 @@ namespace oct::cc::v1::A
     {
         if(core::node<Statemants>::data == Statemants::reg)
         {
-            std::cout << "REG<<";
-            inst <<= 3;
+            //std::cout << "REG<<";
+            inst << 3;
             switch(token)
             {
             case Tokens::AL:
