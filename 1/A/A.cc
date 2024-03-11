@@ -197,7 +197,7 @@ namespace oct::cc::v1::A
         if(core::node<Statemants>::data == Statemants::reg)
         {
             std::cout << "REG<<";
-            inst = inst << 3;
+            inst << 3;
             switch(token)
             {
             case Tokens::AL:
