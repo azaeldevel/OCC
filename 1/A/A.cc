@@ -217,7 +217,7 @@ namespace oct::cc::v1::A
                 break;
             case Tokens::AH:
             case Tokens::SP:
-                inst += 0b100;
+                inst += 4;
                 break;
             case Tokens::CH:
             case Tokens::BP:
