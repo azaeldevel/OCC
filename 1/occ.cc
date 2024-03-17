@@ -69,6 +69,26 @@ namespace oct::cc::v1
         out << string;
     }
 
+    Word& Word::operator=(const Word& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
+    }
+    Word& Word::operator=(Word&& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
+    }
+
+
 
     Keyword::Keyword(const char* text, size_t size) : Word(text,size)
     {
@@ -86,6 +106,25 @@ namespace oct::cc::v1
     void Keyword::print(std::ostream& out)const
     {
         out << string;
+    }
+
+    Keyword& Keyword::operator=(const Keyword& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
+    }
+    Keyword& Keyword::operator=(Keyword&& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
     }
 
 
@@ -129,6 +168,21 @@ namespace oct::cc::v1
     void Letter::print(std::ostream& out)const
     {
         out << "'" << letter << "'";
+    }
+
+    Letter& Letter::operator=(const Letter& l)
+    {
+        letter = l.letter;
+        data = l.data;
+
+        return *this;
+    }
+    Letter& Letter::operator=(Letter&& l)
+    {
+        letter = l.letter;
+        data = l.data;
+
+        return *this;
     }
 
 
@@ -186,5 +240,25 @@ namespace oct::cc::v1
 
         return 0;
     }
+
+    Number& Number::operator=(const Number& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
+    }
+    Number& Number::operator=(Number&& w)
+    {
+        string = w.string;
+        token = w.token;
+        yylexnext = w.yylexnext;
+        data = w.data;
+
+        return *this;
+    }
+
 
 }

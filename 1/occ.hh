@@ -547,10 +547,15 @@ namespace oct::cc::v1
         Tokens token;
         Word* yylexnext;
 
+        Word() = default;
         Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
         Word(Statemants,const char*, size_t);
         Word(Statemants,Tokens,const char*, size_t);
+
+        Word& operator=(const Word&);
+        Word& operator=(Word&&);
+
         virtual void print(std::ostream&)const;
 
         bool is_register()const;
@@ -563,7 +568,12 @@ namespace oct::cc::v1
     {
         char letter;
 
+        Letter() = default;
         Letter(char);
+
+        Letter& operator=(const Letter&);
+        Letter& operator=(Letter&&);
+
         virtual void print(std::ostream&)const;
     };
 
@@ -574,10 +584,14 @@ namespace oct::cc::v1
     **/
     struct Keyword : public Word
     {
+        Keyword() = default;
         Keyword(const char*, size_t);
         Keyword(Tokens,const char*, size_t);
         Keyword(Statemants,const char*, size_t);
         Keyword(Statemants,Tokens,const char*, size_t);
+
+        Keyword& operator=(const Keyword&);
+        Keyword& operator=(Keyword&&);
 
         virtual void print(std::ostream&)const;
 
@@ -594,11 +608,15 @@ namespace oct::cc::v1
     **/
     struct Number : public Word
     {
+        Number() = default;
         Number(const char*, size_t);
         Number(Tokens,const char*, size_t);
         Number(Statemants,const char*, size_t);
         Number(Statemants,Tokens,const char*, size_t);
         Number(Statemants,Tokens,const char*, size_t,char base);
+
+        Number& operator=(const Number&);
+        Number& operator=(Number&&);
 
         virtual void print(std::ostream&)const;
 
@@ -666,6 +684,81 @@ namespace oct::cc::v1
         TableSymbols()= default;
 
     protected:
+
+    };
+
+    template<class T>
+    class Block : public std::list<core::array<T>>
+    {
+    private:
+        typedef std::list<core::array<T>> BASE;
+        static const size_t default_size = 1024;
+
+    public:
+        Block() : index(0)
+        {
+            BASE::push_back(core::array<T>(default_size));
+            block = BASE::begin();
+        }
+        Block(size_t s) : index(0)
+        {
+            BASE::push_back(core::array<T>(s));
+            block = BASE::begin();
+        }
+
+        T* next()
+        {
+            T* t;
+            if(index < block->size())
+            {
+                t = &block->at(index);
+                index++;
+                return t;
+            }
+            else
+            {
+                BASE::push_back(core::array<T>(default_size));
+                block++;
+                index = 0;
+                t = &BASE::at(block).at(index);
+                index++;
+                return t;
+            }
+
+            return NULL;
+        }
+
+        template <typename... Args>
+        T* next(Args... args)
+        {
+            T* t;
+            if(index < block->size())
+            {
+                t = &block->at(index);
+                index++;
+            }
+            else
+            {
+                BASE::push_back(core::array<T>(default_size));
+                block++;
+                index = 0;
+                t = &block->at(index);
+                index++;
+            }
+
+            t->operator = (T(args...));
+
+            return t;
+        }
+
+        T* get()
+        {
+            return &block->at(index);
+        }
+
+    private:
+        BASE::iterator block;
+        size_t index;
 
     };
 

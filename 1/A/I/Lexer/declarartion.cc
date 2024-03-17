@@ -31,6 +31,10 @@ namespace oct::cc::v1::A::I
             out << "\t\tstatic occ::Word yylexroot(\"root\",4);\n";
             out << "\t\tstatic occ::Word* yylexnext = &yylexroot;\n";
 
+            out << "\t\tstatic occ::Block<occ::Letter> letters;\n";
+            out << "\t\tstatic occ::Block<occ::Number> numbers;\n";
+            out << "\t\tstatic occ::Block<occ::Keyword> keywords;\n";
+
         out << "%}\n";
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
         out << "LETTER '.'\n";
