@@ -25,6 +25,7 @@ namespace oct::cc::v1::A::intel
     Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,1 + nFront.size()),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
+        //mcode[0] <<= 4;
         //std::cout << "before : " << (int)mcode[0] << "\n";
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
