@@ -188,6 +188,8 @@ namespace oct::cc::v1::A
             case Tokens::DI:
                 inst++;
                 break;
+            default:
+                break;
             }
         }
     }
@@ -229,6 +231,8 @@ namespace oct::cc::v1::A
             case Tokens::BH:
             case Tokens::DI:
                 inst += 7;
+                break;
+            default:
                 break;
             }
         }

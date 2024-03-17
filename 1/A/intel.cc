@@ -88,6 +88,8 @@ namespace oct::cc::v1::A::intel
         case Statemants::integer:
             out << static_cast<Integer&>(to).string;
             break;
+        default:
+            break;
         }
         out << ", ";
         switch(from.data)
@@ -103,6 +105,8 @@ namespace oct::cc::v1::A::intel
             break;
         case Statemants::integer:
             out << static_cast<Integer&>(from).string;
+            break;
+        default:
             break;
         }
 
