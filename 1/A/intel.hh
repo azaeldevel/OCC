@@ -88,6 +88,10 @@ namespace oct::cc::v1::A::intel
         Call(Statemants,size_t instsize);
         Call(Statemants,size_t instsize,Word*);
         Call(size_t instsize,Word*);
+
+        Call(const Memory&);
+        Call(const Identifier&);
+
         virtual void print(std::ostream&)const;
 
         Word* id;
