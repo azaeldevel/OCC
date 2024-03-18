@@ -26,6 +26,8 @@
 
 
 #include <core/3/tree.hh>
+#include <core/3/Exception.hh>
+
 
 
 namespace oct::cc::v1

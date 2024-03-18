@@ -12,13 +12,15 @@ namespace oct::cc::v1::A::intel
 
     Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
     {
-
+        throw core::exception("Still developing..");
     }
     Move::Move(Register& nTo,Memory& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Memory& nTo,Register& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
 
 
@@ -54,21 +56,27 @@ namespace oct::cc::v1::A::intel
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Memory& nTo,Letter& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Segment& nTo,Register& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Segment& nTo,Memory& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Register& nTo,Segment& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
     Move::Move(Memory& nTo,Segment& nFront) : from(nFront),to(nTo)
     {
+        throw core::exception("Still developing..");
     }
 
     void Move::print(std::ostream& out)const
@@ -129,9 +137,11 @@ namespace oct::cc::v1::A::intel
 
     Empty::Empty() : Instruction(Statemants::empty,2)
     {
+        throw core::exception("Still developing..");
     }
     Empty::Empty(Statemants t,size_t s) : Instruction(t,s)
     {
+        throw core::exception("Still developing..");
     }
     void Empty::print(std::ostream& out)const
     {
@@ -175,15 +185,19 @@ namespace oct::cc::v1::A::intel
 
     Call::Call() : Instruction(Statemants::call,2)
     {
+        throw core::exception("Still developing..");
     }
     Call::Call(Statemants t,size_t s) : Instruction(t,s)
     {
+        throw core::exception("Still developing..");
     }
     Call::Call(Statemants t,size_t s,Word* w) : Instruction(t,s),id(w)
     {
+        throw core::exception("Still developing..");
     }
     Call::Call(size_t s,Word* w) : Instruction(Statemants::call,s),id(w)
     {
+        throw core::exception("Still developing..");
     }
     void Call::print(std::ostream& out)const
     {
@@ -194,6 +208,7 @@ namespace oct::cc::v1::A::intel
 
     Push::Push() : Instruction(Statemants::push,2)
     {
+        throw core::exception("Still developing..");
     }
     Push::Push(Statemants t,size_t s) : Instruction(t,s)
     {
@@ -204,6 +219,7 @@ namespace oct::cc::v1::A::intel
 
     Pop::Pop() : Instruction(Statemants::pop,2)
     {
+        throw core::exception("Still developing..");
     }
     Pop::Pop(Statemants t,size_t s) : Instruction(t,s)
     {

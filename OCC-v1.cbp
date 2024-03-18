@@ -5,6 +5,7 @@
 		<Option title="OCC-v1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="1/A/" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/OCC-v1" prefix_auto="1" extension_auto="1" />
@@ -129,6 +130,8 @@
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
 		<Unit filename="1/A/intel.hh">
+			<Option target="Debug" />
+			<Option target="Release" />
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
 		<Unit filename="1/Buffer.cc">
