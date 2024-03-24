@@ -33,6 +33,7 @@ namespace oct::cc::v1::A::I
             out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
             out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
             out << "\t\tstatic occ::Statement* statement_last = NULL;\n";
+            out << "\t\tstatic occ::Block<occ::A::Declaration> declarations;\n";
 
         out << "}\n";
 
@@ -302,7 +303,7 @@ namespace oct::cc::v1::A::I
         out << "%token <occ::Number*> INTEGER_DECIMAL\n";
         out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
         out << "%type <occ::Integer*> integer\n";
-        out << "%token <occ::Identifier*> IDENTIFIER\n";
+        out << "%token <occ::Word*> IDENTIFIER\n";
         out << "%type <occ::Word*> identifier\n";
         out << "%type <occ::Keyword*> softword\n";
         out << "%type <occ::Statement*> statement\n";
@@ -332,23 +333,23 @@ namespace oct::cc::v1::A::I
     }
     void Parser::declaration_C_expression(std::ostream& out) const
     {
-        out << "%type <occ::Node*> assignment_expresion\n";
+        out << "%type <occ::node*> assignment_expresion\n";
     }
     void Parser::declaration_C_declaration(std::ostream& out) const
     {
         out << "%type <occ::A::Declaration*> declaration\n";
-        out << "%type <occ::Node*> declaration_specifiers\n";
-        out << "%type <occ::Node*> init_declarator_list\n";
-        out << "%type <occ::Node*> init_declarator\n";
-        out << "%type <occ::Node*> storage_class_specifier\n";
-        out << "%type <occ::Node*> type_specifier\n";
-        out << "%type <occ::Node*> type_qualifier\n";
-        out << "%type <occ::Node*> declarator\n";
-        out << "%type <occ::Node*> direct_declarator\n";
-        out << "%type <occ::Node*> pointer\n";
-        out << "%type <occ::Node*> type_qualifier_list\n";
-        out << "%type <occ::Node*> initializer\n";
-        out << "%type <occ::Node*> initializer_list\n";
+        out << "%type <occ::node*> declaration_specifiers\n";
+        out << "%type <occ::node*> init_declarator_list\n";
+        out << "%type <occ::node*> init_declarator\n";
+        out << "%type <occ::node*> storage_class_specifier\n";
+        out << "%type <occ::node*> type_specifier\n";
+        out << "%type <occ::node*> type_qualifier\n";
+        out << "%type <occ::A::Declarator*> declarator\n";
+        out << "%type <occ::Statement*> direct_declarator\n";
+        out << "%type <occ::node*> pointer\n";
+        out << "%type <occ::node*> type_qualifier_list\n";
+        out << "%type <occ::node*> initializer\n";
+        out << "%type <occ::node*> initializer_list\n";
     }
 
 }

@@ -100,15 +100,24 @@ namespace oct::cc::v1::A
     Declaration::Declaration() : Statement(Statemants::declaration)
     {
     }
-    Declaration::Declaration(Statemants t) : Statement(t)
+    Declaration::Declaration(Statemants t) : Statement(Statemants::declaration)
     {
     }
-    void Declaration::print(std::ostream& out)const
+    Declaration::Declaration(node& specifiers) : Statement(Statemants::declaration)
+    {
+    }
+    Declaration::Declaration(node& specifiers,node& initlist) : Statement(Statemants::declaration)
+    {
+    }
+    void Declaration::print(std::ostream& out) const
     {
     }
 
 
     Direct_Declarator::Direct_Declarator(Identifier& n)
+    {
+    }
+    Direct_Declarator::Direct_Declarator(Declarator& n)
     {
     }
 

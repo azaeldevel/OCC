@@ -643,16 +643,8 @@ namespace oct::cc::v1
     /**
     *\brief Node de Space,namespace, package, file scope,etc..
     **/
-    struct Space : public Statement
-    {
-        Space();
-        Space(Statemants);
-
-        Identifier* name;
-    };
-
     template<typename N,typename K = const char*>
-    class Symbols : public std::map<K,N*>
+    class Symbols : public std::map<K,N*>, public Statement
     {
     public:
         typedef std::map<K,N*> BASE;
@@ -660,18 +652,21 @@ namespace oct::cc::v1
     public:
         Symbols()= default;
 
-        bool add(Identifier* id)
+        bool add(Identifier& id)
         {
-            BASE::insert(std::pair(id->string.c_str(),id));
+            BASE::insert(std::pair(id.string.c_str(),id));
 
             return true;
         }
-        bool add(Space* s)
+        bool add(Symbols& s)
         {
-            BASE::insert(std::pair(s->name->string.c_str(),s));
+            BASE::insert(std::pair(s.name->string.c_str(),s));
 
             return true;
         }
+
+    public:
+        Identifier* name;
 
     protected:
 

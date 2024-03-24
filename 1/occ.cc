@@ -197,13 +197,6 @@ namespace oct::cc::v1
     }
 
 
-    Space::Space() : Statement(Statemants::none)
-    {
-    }
-    Space::Space(Statemants t) : Statement(t)
-    {
-    }
-
 
 
     Number::Number(const char* text, size_t size) : Word(text,size),base(10)

@@ -100,6 +100,9 @@ namespace oct::cc::v1::A
     {
         Declaration();
         Declaration(Statemants);
+        Declaration(node& specifiers);
+        Declaration(node& specifiers,node& initlist);
+
         virtual void print(std::ostream&)const;
     };
 
@@ -107,24 +110,21 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Identificar
     **/
+    struct Declarator : public Statement
+    {
+        virtual void print(std::ostream&)const;
+    };
+
+    /**
+    *\brief Node de Identificar
+    **/
     struct Direct_Declarator : public Statement
     {
-        enum class Form
-        {
-            identifier,
-            declarator,
-        };
-        /*Direct_Declarator();
-        Direct_Declarator(Statemants);
-        Direct_Declarator(Statemants,Node*,Form);
-        Direct_Declarator(Node*,Form);*/
-
+    public:
         Direct_Declarator(Identifier&);
+        Direct_Declarator(Declarator&);
 
         virtual void print(std::ostream&)const;
-
-        node* first;
-        Form form;
     };
 
 
