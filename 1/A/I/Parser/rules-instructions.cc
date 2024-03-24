@@ -196,9 +196,7 @@ namespace oct::cc::v1::A::I
             out << "\t|\n";
             out << "\tinstructions inst\n";
             out << "\t{\n";
-                //out << "\t\tstd::cout << \"instructions inst\\n\";\n";
                 out << "\t\tinstruction_last->next = $2;\n";
-                out << "\t\tinstruction_last->next->next = NULL;\n";
                 out << "\t\tinstruction_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";

@@ -482,6 +482,7 @@ namespace oct::cc::v1
         AI,
             declaration,
                 pointer,
+            init_declarator,
             function,
             instruction,
                 move,
@@ -525,8 +526,12 @@ namespace oct::cc::v1
         node() = default;
         node(const Statemants& t);
 
+        node* next;
+
         virtual void print(std::ostream&)const;
     };
+
+
 
     /**
     *\brief Crea un nodo

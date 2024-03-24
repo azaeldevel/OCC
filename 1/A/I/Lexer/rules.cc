@@ -124,6 +124,7 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword(std::ostream& out,const std::string& string) const
     {
         out << "\"" << string << "\"     {\n";
+            //out << "\t\tstd::cout << \"" << core::toupper(string) << "\" << \"\\n\";\n";
             out << "\t\tyylexnext->yylexnext = new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
             out << "\t\tyylexnext = yylexnext->yylexnext;\n";
             out << "\t\tyylval->" << core::toupper(string) << " = (occ::Keyword*)yylexnext;\n";

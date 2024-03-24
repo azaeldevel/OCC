@@ -39,10 +39,7 @@ namespace oct::cc::v1::A::I
         Statement* actual = statement;
         while(actual)
         {
-            if(actual->data == Statemants::function)
-            {
-                actual->print(out);
-            }
+            actual->print(out);
             actual = actual->next;
         }
     }

@@ -172,33 +172,6 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
-        /*out << "functions : \n";
-            out << "\tfunction\n";
-            out << "\t{\n";
-                out << "\t\t$$ = $1;\n";
-                out << "\t\tfunction_last = $1;\n";
-                //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->identifier->string << \"\\n\";\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\tfunctions function\n";
-            out << "\t{\n";
-                //out << "\t\tstd::cout << \"Identifier funtion: \" << $2->identifier->string << \"\\n\";\n";
-                out << "\t\tfunction_last->next = $2;\n";
-                out << "\t\tfunction_last = $2;\n";
-            out << "\t}\n";
-            out << "\t;\n";*/
-
-        /*out << "variable : \n";
-            out << "\ttype_specifier IDENTIFIER\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t|\n";
-            out << "\ttype_specifier '*' IDENTIFIER\n";
-            out << "\t{\n";
-            out << "\t}\n";
-            out << "\t;\n";*/
-
-
         out << "statement : \n";
             out << "\tfunction\n";
             out << "\t{\n";
@@ -316,7 +289,7 @@ namespace oct::cc::v1::A::I
     void Parser::rules_C_declaration(std::ostream& out) const
     {
         out << "declaration :\n";
-            out << "\tdeclaration_specifiers';'\n";
+            out << "\tdeclaration_specifiers ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = declarations.next(*$1);\n";
             out << "\t}\n";
@@ -330,32 +303,40 @@ namespace oct::cc::v1::A::I
         out << "declaration_specifiers :\n";
             out << "\tstorage_class_specifier\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tstorage_class_specifier declaration_specifiers\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_specifier\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_specifier declaration_specifiers\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_qualifier\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\ttype_qualifier declaration_specifiers\n";
             out << "\t{\n";
-            out << "\t\t;\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -376,36 +357,37 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
             out << "\t\t;\n";
             out << "\t}\n";
-            if(lang > Language::AI) //La inicializacion esta disponible a poartir de A II
-            {
-                out << "\t|\n";
-                out << "\tdeclarator '=' initializer\n";
-                out << "\t{\n";
-                out << "\t\t;\n";
-                out << "\t}\n";
-            }
+            out << "\t|\n";
+            out << "\tdeclarator '=' initializer\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
             out << "\t;\n";
-
 
         out << "storage_class_specifier :\n";
             out << "\tTYPEDEF\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tEXTERN\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tSTATIC\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tAUTO\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tREGISTER\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -414,38 +396,56 @@ namespace oct::cc::v1::A::I
         out << "type_specifier :\n";
             out << "\tVOID\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tCHAR\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tSHORT\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tINT\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tLONG\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tFLOAT\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tDOUBLE\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tSIGNED\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tUNSIGNED\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             {//TODO: Agrgar desde 6.5.2.1 hasta 6.5.2.2
                 ;
@@ -455,10 +455,12 @@ namespace oct::cc::v1::A::I
         out << "type_qualifier :\n";
             out << "\tCONST\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tVOLATIL\n";
             out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -498,7 +500,6 @@ namespace oct::cc::v1::A::I
             out << "\t}\n";
             out << "\t;\n";
 
-
         out << "type_qualifier_list :\n";
             out << "\ttype_qualifier\n";
             out << "\t{\n";
@@ -528,9 +529,6 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
             out << "\t}\n";
             out << "\t;\n";
-
-
-
 
     }
 

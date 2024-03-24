@@ -97,20 +97,34 @@ namespace oct::cc::v1::A
 
 
 
-    Declaration::Declaration() : Statement(Statemants::declaration)
+    Declaration::Declaration() : Statement(Statemants::declaration),specifiers(NULL),initlist(NULL)
     {
     }
-    Declaration::Declaration(Statemants t) : Statement(Statemants::declaration)
+    Declaration::Declaration(Statemants t) : Statement(Statemants::declaration),specifiers(NULL),initlist(NULL)
     {
     }
-    Declaration::Declaration(node& specifiers) : Statement(Statemants::declaration)
+    Declaration::Declaration(node& s) : Statement(Statemants::declaration),specifiers(&s),initlist(NULL)
     {
     }
-    Declaration::Declaration(node& specifiers,node& initlist) : Statement(Statemants::declaration)
+    Declaration::Declaration(node& s,node& i) : Statement(Statemants::declaration),specifiers(&s),initlist(&i)
     {
     }
+
     void Declaration::print(std::ostream& out) const
     {
+        //out << "void Declaration::print(std::ostream& out) const\n";
+        node* actual = specifiers;
+        if(actual)
+        {
+            //out << "\tif(actual)\n\t{\n";
+            while(actual)
+            {
+                actual->print(out);
+                actual = actual->next;
+            }
+            //out << "\n\t}\n";
+            out << "\n";
+        }
     }
 
 
@@ -272,5 +286,20 @@ namespace oct::cc::v1::A
         out.write((char*)mcode,msize);
     }
 
+
+
+    Init_Declarator::Init_Declarator() : Statement(Statemants::init_declarator)
+    {
+    }
+    Init_Declarator::Init_Declarator(Declarator&) : Statement(Statemants::init_declarator)
+    {
+    }
+    Init_Declarator::Init_Declarator(Declarator&,node& initializer) : Statement(Statemants::init_declarator)
+    {
+    }
+
+    void Init_Declarator::print(std::ostream& out)const
+    {
+    }
 
 }

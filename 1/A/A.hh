@@ -103,6 +103,8 @@ namespace oct::cc::v1::A
         Declaration(node& specifiers);
         Declaration(node& specifiers,node& initlist);
 
+        node *specifiers,*initlist;
+
         virtual void print(std::ostream&)const;
     };
 
@@ -172,6 +174,16 @@ namespace oct::cc::v1::A
     };
 
 
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Init_Declarator : public Statement
+    {
+        Init_Declarator();
+        Init_Declarator(Declarator&);
+        Init_Declarator(Declarator&,node& initializer);
+        virtual void print(std::ostream&)const;
+    };
 
 }
 

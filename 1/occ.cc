@@ -27,7 +27,7 @@
 namespace oct::cc::v1
 {
 
-    node::node(const Statemants& t) : core::node<Statemants>(t)
+    node::node(const Statemants& t) : core::node<Statemants>(t),next(NULL)
     {
     }
 

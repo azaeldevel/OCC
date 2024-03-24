@@ -33,6 +33,7 @@ namespace oct::cc::v1::A::I
             out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
             out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
             out << "\t\tstatic occ::Statement* statement_last = NULL;\n";
+            out << "\t\tstatic occ::node* specifiers_last = NULL;\n";
             out << "\t\tstatic occ::Block<occ::A::Declaration> declarations;\n";
 
         out << "}\n";
@@ -341,9 +342,9 @@ namespace oct::cc::v1::A::I
         out << "%type <occ::node*> declaration_specifiers\n";
         out << "%type <occ::node*> init_declarator_list\n";
         out << "%type <occ::node*> init_declarator\n";
-        out << "%type <occ::node*> storage_class_specifier\n";
-        out << "%type <occ::node*> type_specifier\n";
-        out << "%type <occ::node*> type_qualifier\n";
+        out << "%type <occ::Word*> storage_class_specifier\n";
+        out << "%type <occ::Word*> type_specifier\n";
+        out << "%type <occ::Word*> type_qualifier\n";
         out << "%type <occ::A::Declarator*> declarator\n";
         out << "%type <occ::Statement*> direct_declarator\n";
         out << "%type <occ::node*> pointer\n";
