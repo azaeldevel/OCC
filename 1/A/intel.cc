@@ -34,11 +34,11 @@ namespace oct::cc::v1::A::intel
         //std::cout << "after : " << (int)mcode[0] << "\n";
         if(nFront.size() == 1)
         {
-            mcode[1] = static_cast<char>(std::strtol(nFront.string.c_str(),NULL,nFront.base));
+            mcode[1] = static_cast<char>(std::strtol(nFront.string().c_str(),NULL,nFront.base()));
         }
         else if(nFront.size() == 2)
         {
-            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(nFront.string.c_str(),NULL,nFront.base));
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(nFront.string().c_str(),NULL,nFront.base()));
         }
         else
         {
@@ -85,16 +85,16 @@ namespace oct::cc::v1::A::intel
         switch(to.data)
         {
         case Statemants::reg:
-            out << static_cast<Register&>(to).string;
+            out << static_cast<Register&>(to).string();
             break;
         case Statemants::segment:
-            out << static_cast<Segment&>(to).string;
+            out << static_cast<Segment&>(to).string();
             break;
         case Statemants::letter:
             out << "'" << static_cast<Letter&>(to).letter << "'";
             break;
         case Statemants::integer:
-            out << static_cast<Integer&>(to).string;
+            out << static_cast<Integer&>(to).string();
             break;
         default:
             break;
@@ -103,16 +103,16 @@ namespace oct::cc::v1::A::intel
         switch(from.data)
         {
         case Statemants::reg:
-            out << static_cast<Register&>(from).string;
+            out << static_cast<Register&>(from).string();
             break;
         case Statemants::segment:
-            out << static_cast<Segment&>(from).string;
+            out << static_cast<Segment&>(from).string();
             break;
         case Statemants::letter:
             out << "'" << static_cast<Letter&>(from).letter << "'";
             break;
         case Statemants::integer:
-            out << static_cast<Integer&>(from).string;
+            out << static_cast<Integer&>(from).string();
             break;
         default:
             break;
@@ -157,11 +157,11 @@ namespace oct::cc::v1::A::intel
         //mcode[1] = (char)std::atoi(s.string.c_str());
         if(s.size() == 1)
         {
-            mcode[1] = static_cast<char>(std::strtol(s.string.c_str(),NULL,s.base));
+            mcode[1] = static_cast<char>(std::strtol(s.string().c_str(),NULL,s.base()));
         }
         else if(s.size() == 2)
         {
-            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(s.string.c_str(),NULL,s.base));
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(s.string().c_str(),NULL,s.base()));
         }
         else
         {
@@ -174,7 +174,7 @@ namespace oct::cc::v1::A::intel
         out << "\tinterrupt ";
         if(service.data == Statemants::integer)
         {
-            out << service.string;
+            out << service.string();
         }
         else
         {
@@ -201,7 +201,7 @@ namespace oct::cc::v1::A::intel
     }
     void Call::print(std::ostream& out)const
     {
-        if(id) out << "\tcall " << id->string << ";\n";
+        if(id) out << "\tcall " << id->string() << ";\n";
         else out << "\tcall;\n";
     }
 

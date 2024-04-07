@@ -52,40 +52,52 @@ namespace oct::cc::v1
     }
 
 
-    Word::Word(const char* text, size_t size) : node(Statemants::none),string(text,size),token(Tokens::none),yylexnext(NULL)
+    Word::Word(const char* text, size_t size) : node(Statemants::none),_string_(text,size),_token_(Tokens::none),_yylexnext_(NULL)
     {
     }
-    Word::Word(Tokens t,const char* text, size_t size) : node(Statemants::none),string(text,size),token(t),yylexnext(NULL)
+    Word::Word(Tokens t,const char* text, size_t size) : node(Statemants::none),_string_(text,size),_token_(t),_yylexnext_(NULL)
     {
     }
-    Word::Word(Statemants s,const char* text, size_t size) : node(s),string(text,size),token(Tokens::none),yylexnext(NULL)
+    Word::Word(Statemants s,const char* text, size_t size) : node(s),_string_(text,size),_token_(Tokens::none),_yylexnext_(NULL)
     {
     }
-    Word::Word(Statemants s,Tokens t,const char* text, size_t size) : node(s),string(text,size),token(t),yylexnext(NULL)
+    Word::Word(Statemants s,Tokens t,const char* text, size_t size) : node(s),_string_(text,size),_token_(t),_yylexnext_(NULL)
     {
     }
     void Word::print(std::ostream& out)const
     {
-        out << string;
+        out << _string_;
     }
 
     Word& Word::operator=(const Word& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
     }
     Word& Word::operator=(Word&& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
+    }
+    const std::string& Word::string() const
+    {
+        return _string_;
+    }
+    void Word::yylexnext(Word* w)
+    {
+        _yylexnext_ = w;
+    }
+    Word* Word::yylexnext()
+    {
+        return _yylexnext_;
     }
 
 
@@ -105,23 +117,23 @@ namespace oct::cc::v1
 
     void Keyword::print(std::ostream& out)const
     {
-        out << string;
+        out << _string_;
     }
 
     Keyword& Keyword::operator=(const Keyword& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
     }
     Keyword& Keyword::operator=(Keyword&& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
@@ -132,7 +144,7 @@ namespace oct::cc::v1
     {
         if(core::node<Statemants>::data == Statemants::keyword)
         {
-            switch(token)
+            switch(_token_)
             {
             case Tokens::AL:
             case Tokens::AH:
@@ -199,29 +211,29 @@ namespace oct::cc::v1
 
 
 
-    Number::Number(const char* text, size_t size) : Word(text,size),base(10)
+    Number::Number(const char* text, size_t size) : Word(text,size),_base_(10)
     {
     }
-    Number::Number(Tokens t,const char* text, size_t size) : Word(t,text,size),base(10)
+    Number::Number(Tokens t,const char* text, size_t size) : Word(t,text,size),_base_(10)
     {
     }
-    Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size),base(10)
+    Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size),_base_(10)
     {
     }
-    Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size),base(10)
+    Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size),_base_(10)
     {
     }
-    Number::Number(Statemants s,Tokens t,const char* text, size_t size,char b) : Word(s,t,text,size),base(b)
+    Number::Number(Statemants s,Tokens t,const char* text, size_t size,char b) : Word(s,t,text,size),_base_(b)
     {
     }
 
     void Number::print(std::ostream& out)const
     {
-        out << string;
+        out << _string_;
     }
     char Number::size() const
     {
-        switch(token)
+        switch(_token_)
         {
         case Tokens::TINY:
             return 1;
@@ -236,21 +248,25 @@ namespace oct::cc::v1
 
     Number& Number::operator=(const Number& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
     }
     Number& Number::operator=(Number&& w)
     {
-        string = w.string;
-        token = w.token;
-        yylexnext = w.yylexnext;
+        _string_ = w._string_;
+        _token_ = w._token_;
+        _yylexnext_ = w._yylexnext_;
         data = w.data;
 
         return *this;
+    }
+    char Number::base()const
+    {
+        return _base_;
     }
 
 

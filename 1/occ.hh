@@ -548,12 +548,15 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Word : public node
+    class Word : public node
     {
-        std::string string;
-        Tokens token;
-        Word* yylexnext;
+    protected:
+        Tokens _token_;
 
+        std::string _string_;
+        Word* _yylexnext_;
+
+    public:
         Word() = default;
         Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
@@ -564,8 +567,12 @@ namespace oct::cc::v1
         Word& operator=(Word&&);
 
         virtual void print(std::ostream&)const;
-
         bool is_register()const;
+
+        const std::string& string() const;
+        void yylexnext(Word*);
+        Word* yylexnext();
+
     };
 
     /**
@@ -613,8 +620,9 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Number : public Word
+    class Number : public Word
     {
+    public:
         Number() = default;
         Number(const char*, size_t);
         Number(Tokens,const char*, size_t);
@@ -628,8 +636,10 @@ namespace oct::cc::v1
         virtual void print(std::ostream&)const;
 
         char size()const;
+        char base()const;
 
-        char base;
+    private:
+        char _base_;
     };
 
     typedef Number Integer;
@@ -659,13 +669,13 @@ namespace oct::cc::v1
 
         bool add(Identifier& id)
         {
-            BASE::insert(std::pair(id.string.c_str(),id));
+            BASE::insert(std::pair(id.string().c_str(),id));
 
             return true;
         }
         bool add(Symbols& s)
         {
-            BASE::insert(std::pair(s.name->string.c_str(),s));
+            BASE::insert(std::pair(s.name->string().c_str(),s));
 
             return true;
         }

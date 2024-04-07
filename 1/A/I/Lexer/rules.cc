@@ -10,14 +10,14 @@ namespace oct::cc::v1::A::I
     {
 
         out << "\"//\".*    {\n";
-                                out << "\t\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
-                                out << "\t\t\tyylexnext = yylexnext->yylexnext;\n";
+                                out << "\t\t\tyylexnext->yylexnext(new occ::Word(yytext,yyleng));\n";
+                                out << "\t\t\tyylexnext = yylexnext->yylexnext();\n";
         out << "        }\n";
         out << "\\n     {\n";
                                 out << "\t\t\tyylloc->last_line++;\n";
                                 out << "\t\t\tyylloc->last_column = 1;\n";
-                                out << "\t\t\tyylexnext->yylexnext = new occ::Word(yytext,yyleng);\n";
-                                out << "\t\t\tyylexnext = yylexnext->yylexnext;\n";
+                                out << "\t\t\tyylexnext->yylexnext(new occ::Word(yytext,yyleng));\n";
+                                out << "\t\t\tyylexnext = yylexnext->yylexnext();\n";
         out << "        }\n";
         out << "\\t             ;\n";
         out << "[[:space:]]     ;\n";
@@ -114,8 +114,8 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword(std::ostream& out,const std::string& string,const std::string& token) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << token << ",yytext,yyleng);\n";
-            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylexnext->yylexnext(new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << token << ",yytext,yyleng));\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext();\n";
             out << "\t\tyylval->" << token << " = (occ::Keyword*)yylexnext;\n";
             out << "\t\treturn " << token << ";\n";
         out << "        }\n";
@@ -125,8 +125,8 @@ namespace oct::cc::v1::A::I
     {
         out << "\"" << string << "\"     {\n";
             //out << "\t\tstd::cout << \"" << core::toupper(string) << "\" << \"\\n\";\n";
-            out << "\t\tyylexnext->yylexnext = new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
-            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylexnext->yylexnext(new occ::Keyword(occ::Statemants::keyword,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng));\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext();\n";
             out << "\t\tyylval->" << core::toupper(string) << " = (occ::Keyword*)yylexnext;\n";
             out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
@@ -134,8 +134,8 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword_register(std::ostream& out,const std::string& string) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::A::Register(occ::Statemants::reg,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
-            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylexnext->yylexnext(new occ::A::Register(occ::Statemants::reg,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng));\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext();\n";
             out << "\t\tyylval->" << core::toupper(string) << " = (occ::A::Register*)yylexnext;\n";
             out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
@@ -143,8 +143,8 @@ namespace oct::cc::v1::A::I
     void Lexer::rules_add_keyword_segment(std::ostream& out,const std::string& string) const
     {
         out << "\"" << string << "\"     {\n";
-            out << "\t\tyylexnext->yylexnext = new occ::A::Segment(occ::Statemants::segment,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng);\n";
-            out << "\t\tyylexnext = yylexnext->yylexnext;\n";
+            out << "\t\tyylexnext->yylexnext(new occ::A::Segment(occ::Statemants::segment,occ::Tokens::" << core::toupper(string) << ",yytext,yyleng));\n";
+            out << "\t\tyylexnext = yylexnext->yylexnext();\n";
             out << "\t\tyylval->" << core::toupper(string) << " = (occ::A::Segment*)yylexnext;\n";
             out << "\t\treturn " << core::toupper(string) << ";\n";
         out << "        }\n";
