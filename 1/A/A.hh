@@ -135,6 +135,7 @@ namespace oct::cc::v1::A
     **/
     struct Segment : public Keyword
     {
+        Segment() = default;
         Segment(const char*, size_t);
         Segment(Tokens,const char*, size_t);
         Segment(Statemants,const char*, size_t);
@@ -161,6 +162,7 @@ namespace oct::cc::v1::A
     **/
     struct Register : public Keyword
     {
+        Register() =default;
         Register(const char*, size_t);
         Register(Tokens,const char*, size_t);
         Register(Statemants,const char*, size_t);

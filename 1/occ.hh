@@ -601,8 +601,9 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Keyword : public Word
+    class Keyword : public Word
     {
+    public:
         Keyword() = default;
         Keyword(const char*, size_t);
         Keyword(Tokens,const char*, size_t);

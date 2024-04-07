@@ -34,6 +34,10 @@ namespace oct::cc::v1::A::I
             out << "\t\tstatic occ::Block<occ::Letter> letters;\n";
             out << "\t\tstatic occ::Block<occ::Number> numbers;\n";
             out << "\t\tstatic occ::Block<occ::Keyword> keywords;\n";
+            out << "\t\tstatic occ::Block<occ::A::Register> registers;\n";
+            out << "\t\tstatic occ::Block<occ::A::Segment> segments;\n";
+            out << "\t\tstatic occ::Block<occ::Word> words;\n";
+            out << "\t\tstatic occ::Block<occ::Identifier> identifiers;\n";
 
         out << "%}\n";
         out << "IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*\n";
