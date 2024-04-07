@@ -174,27 +174,36 @@ namespace oct::cc::v1
 
 
 
-    Letter::Letter(char c) : node(Statemants::letter), letter(c)
+    Letter::Letter(char c) : node(Statemants::letter), _letter_(c)
     {
     }
     void Letter::print(std::ostream& out)const
     {
-        out << "'" << letter << "'";
+        out << "'" << _letter_ << "'";
     }
 
     Letter& Letter::operator=(const Letter& l)
     {
-        letter = l.letter;
+        _letter_ = l._letter_;
         data = l.data;
 
         return *this;
     }
     Letter& Letter::operator=(Letter&& l)
     {
-        letter = l.letter;
+        _letter_ = l._letter_;
         data = l.data;
 
         return *this;
+    }
+
+    void Letter::letter(char l)
+    {
+        _letter_ = l;
+    }
+    char Letter::letter()const
+    {
+        return _letter_;
     }
 
 

@@ -578,10 +578,12 @@ namespace oct::cc::v1
     /**
     *\brief Node de Texto
     **/
-    struct Letter : public node
+    class Letter : public node
     {
-        char letter;
+    protected:
+        char _letter_;
 
+    public:
         Letter() = default;
         Letter(char);
 
@@ -589,6 +591,9 @@ namespace oct::cc::v1
         Letter& operator=(Letter&&);
 
         virtual void print(std::ostream&)const;
+
+        void letter(char);
+        char letter()const;
     };
 
 

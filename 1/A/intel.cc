@@ -52,7 +52,7 @@ namespace oct::cc::v1::A::intel
         nTo.word(mcode[0]);
         nTo.code(mcode[0]);
         //std::cout << "afther : " << (int)mcode[0] << "\n";
-        mcode[1] = nFront.letter;
+        mcode[1] = nFront.letter();
     }
     Move::Move(Memory& nTo,Integer& nFront) : from(nFront),to(nTo)
     {
@@ -91,7 +91,7 @@ namespace oct::cc::v1::A::intel
             out << static_cast<Segment&>(to).string();
             break;
         case Statemants::letter:
-            out << "'" << static_cast<Letter&>(to).letter << "'";
+            out << "'" << static_cast<Letter&>(to).letter() << "'";
             break;
         case Statemants::integer:
             out << static_cast<Integer&>(to).string();
@@ -109,7 +109,7 @@ namespace oct::cc::v1::A::intel
             out << static_cast<Segment&>(from).string();
             break;
         case Statemants::letter:
-            out << "'" << static_cast<Letter&>(from).letter << "'";
+            out << "'" << static_cast<Letter&>(from).letter() << "'";
             break;
         case Statemants::integer:
             out << static_cast<Integer&>(from).string();
