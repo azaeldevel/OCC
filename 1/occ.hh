@@ -643,6 +643,7 @@ namespace oct::cc::v1
 
         char size()const;
         char base()const;
+        void to_short(unsigned char* from)const ;
 
     private:
         char _base_;

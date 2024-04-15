@@ -9,7 +9,6 @@ namespace oct::cc::v1::A::intel
 {
 
 
-
     /**
     *\brief Node Base para instruciones mov
     **/
@@ -44,12 +43,27 @@ namespace oct::cc::v1::A::intel
     /**
     *\brief Node Base para instruciones mov
     **/
-    struct Return : public Instruction
+    class Return : public Instruction
     {
+    public:
+        enum Type
+        {
+            none,
+            within,
+            within_sp,
+            inter,
+            inter_sp
+        };
+
+    public:
         Return();
+        Return(const Integer&, Type type);
 
 
         virtual void print(std::ostream&)const;
+
+    private:
+        static size_t get_size(Type type);
 
     };
 

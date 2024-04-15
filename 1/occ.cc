@@ -277,6 +277,20 @@ namespace oct::cc::v1
     {
         return _base_;
     }
+    void Number::to_short(unsigned char* from) const
+    {
+        short& integer = *static_cast<short*>(static_cast<void*>(from));
+
+        switch(_token_)
+        {
+        case Tokens::TINY:
+        case Tokens::SHORT:
+            integer = std::stoi(_string_,0,_base_);
+        default:
+            integer = 0;
+        }
+
+    }
 
 
 }

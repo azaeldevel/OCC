@@ -128,9 +128,44 @@ namespace oct::cc::v1::A::intel
     {
         mcode[0] = 0b11000011;
     }
+    Return::Return(const Integer& address , Type type) : Instruction(Statemants::ret,get_size(type))
+    {
+        switch(type)
+        {
+            case Type::within:
+                mcode[0] = 0b11000011;
+                break;
+            case Type::within_sp:
+                mcode[0] = 0b11000010;
+                address.to_short(mcode + 1);
+            break;
+            case Type::inter:
+
+            break;
+            case Type::inter_sp:
+
+            break;
+        }
+    }
     void Return::print(std::ostream& out)const
     {
         out << "\treturn;\n";
+    }
+    size_t Return::get_size(Type type)
+    {
+        switch(type)
+        {
+            case Type::inter:
+                return 1;
+            case Type::inter_sp:
+                return 3;
+            case Type::within:
+                return 1;
+            case Type::within_sp:
+                return 3;
+        }
+
+        return 0;
     }
 
 
