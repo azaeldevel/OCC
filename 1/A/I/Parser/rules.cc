@@ -456,6 +456,7 @@ namespace oct::cc::v1::A::I
             out << "\tCONST\n";
             out << "\t{\n";
                 out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tVOLATIL\n";

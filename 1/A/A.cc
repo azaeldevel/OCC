@@ -114,17 +114,25 @@ namespace oct::cc::v1::A
     {
         //out << "void Declaration::print(std::ostream& out) const\n";
         node* actual = specifiers;
-        if(actual)
+        //out << "\tif(actual)\n\t{\n";
+        while(actual)
         {
-            //out << "\tif(actual)\n\t{\n";
-            while(actual)
+            switch(actual->data)
             {
+            case Statemants::keyword:
+            case Statemants::identifier:
+            case Statemants::segment:
+            case Statemants::reg:
                 actual->print(out);
                 actual = actual->next;
+                break;
+            default:
+                actual = NULL;
+                break;
             }
-            //out << "\n\t}\n";
-            out << "\n";
         }
+        //out << "\n\t}\n";
+        out << "\n";
     }
 
 
