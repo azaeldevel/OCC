@@ -140,10 +140,11 @@ namespace oct::cc::v1::A::intel
                 address.to_short(mcode + 1);
             break;
             case Type::inter:
-
+                mcode[0] = 0b11010011;
             break;
             case Type::inter_sp:
-
+                mcode[0] = 0b1101010;
+                address.to_short(mcode + 1);
             break;
         }
     }
