@@ -240,27 +240,46 @@ namespace oct::cc::v1::A::intel
         out << ";\n";
     }
 
-    Call::Call() : Instruction(Statemants::call,2)
+
+
+
+        Call::Call(const Integer& a, Type t) : Instruction(Statemants::call,get_size(t)),type(t),address(&a)
+        {
+
+        }
+        Call::Call(const Identifier&)
+        {
+
+        }
+        Call::Call(const Identifier&, Type type)
+        {
+
+        }
+    size_t Call::get_size(Type type)
     {
-        throw core::exception("Still developing..");
+        switch(type)
+        {
+        case Type::within:
+            return 3;
+        case Type::within_indirect:
+            return 4;
+        case Type::within_direct:
+            return 3;
+        case Type::inter_indirect:
+            return 4;
+        default:
+            break;
+        }
+
+        return 0;
     }
-    Call::Call(Statemants t,size_t s) : Instruction(t,s)
-    {
-        throw core::exception("Still developing..");
-    }
-    Call::Call(Statemants t,size_t s,Word* w) : Instruction(t,s),id(w)
-    {
-        throw core::exception("Still developing..");
-    }
-    Call::Call(size_t s,Word* w) : Instruction(Statemants::call,s),id(w)
-    {
-        throw core::exception("Still developing..");
-    }
+
     void Call::print(std::ostream& out)const
     {
-        if(id) out << "\tcall " << id->string() << ";\n";
-        else out << "\tcall;\n";
+        out << "Call;\n";
     }
+
+
 
 
     Push::Push() : Instruction(Statemants::push,2)

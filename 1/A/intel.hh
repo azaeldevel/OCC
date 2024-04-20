@@ -94,22 +94,37 @@ namespace oct::cc::v1::A::intel
     };
 
 
-    /**
-    *\brief Instruccion call
-    **/
-    struct Call : public Instruction
-    {
-        Call();
-        Call(Statemants,size_t instsize);
-        Call(Statemants,size_t instsize,Word*);
-        Call(size_t instsize,Word*);
 
-        Call(Memory&);
-        Call(Identifier&);
+
+
+    /**
+    *\brief Node Base para instruciones call
+    **/
+    class Call : public Instruction
+    {
+    public:
+        enum Type
+        {
+            none,
+            within,
+            within_indirect,
+            within_direct,
+            inter_indirect
+        };
+
+    public:
+        Call() = default;
+        Call(const Integer&, Type type);
+        Call(const Identifier&);
+        Call(const Identifier&, Type type);
+
 
         virtual void print(std::ostream&)const;
 
-        Word* id;
+    private:
+        static size_t get_size(Type type);
+        Type type;
+        const Integer* address;
     };
 
 

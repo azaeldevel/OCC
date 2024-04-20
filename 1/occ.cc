@@ -51,7 +51,9 @@ namespace oct::cc::v1
         out << "Node " << (void*)this << "\n";
     }
 
-
+    Word::Word(const Word& w) : node(w),_string_(w._string_),_token_(w._token_),_yylexnext_(w._yylexnext_)
+    {
+    }
     Word::Word(const char* text, size_t size) : node(Statemants::none),_string_(text,size),_token_(Tokens::none),_yylexnext_(NULL)
     {
     }
@@ -220,6 +222,9 @@ namespace oct::cc::v1
 
 
 
+    Number::Number(const Number& n) : Word(n),_base_(n._base_)
+    {
+    }
     Number::Number(const char* text, size_t size) : Word(text,size),_base_(10)
     {
     }

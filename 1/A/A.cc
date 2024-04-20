@@ -42,9 +42,6 @@ namespace oct::cc::v1::A
     }
 
 
-    Memory::Memory(Integer& w) : node(Statemants::memory),memory(w)
-    {
-    }
 
 
 
@@ -310,4 +307,16 @@ namespace oct::cc::v1::A
     {
     }
 
+
+    Memory::Memory(const Integer& i) : Integer(i)
+    {
+    }
+    Memory::Memory(const Memory& i) : Integer(i)
+    {
+    }
+
+    void Memory::print(std::ostream& out) const
+    {
+        out << _string_;
+    }
 }

@@ -45,6 +45,7 @@ disk
 
 main
 {
+	call greethings;
 }
 
 loader

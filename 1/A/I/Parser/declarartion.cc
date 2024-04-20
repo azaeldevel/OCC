@@ -35,6 +35,8 @@ namespace oct::cc::v1::A::I
             out << "\t\tstatic occ::Statement* statement_last = NULL;\n";
             out << "\t\tstatic occ::node* specifiers_last = NULL;\n";
             out << "\t\tstatic occ::Block<occ::A::Declaration> declarations;\n";
+            out << "\t\tstatic occ::Block<occ::A::Memory> memories;\n";
+            out << "\t\tstatic occ::Block<occ::A::Call> calls;\n";
 
         out << "}\n";
 

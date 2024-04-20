@@ -558,6 +558,7 @@ namespace oct::cc::v1
 
     public:
         Word() = default;
+        Word(const Word&);
         Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
         Word(Statemants,const char*, size_t);
@@ -630,6 +631,7 @@ namespace oct::cc::v1
     {
     public:
         Number() = default;
+        Number(const Number& );
         Number(const char*, size_t);
         Number(Tokens,const char*, size_t);
         Number(Statemants,const char*, size_t);

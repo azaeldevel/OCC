@@ -112,7 +112,7 @@ namespace oct::cc::v1::A::I
         out << "memory : \n";
             out << "\t'[' integer ']'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::Memory(*$2);\n";
+            out << "\t\t$$ = memories.next(*$2);\n";
             out << "\t}\n";
             out << "\t;\n";
     }
