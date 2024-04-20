@@ -64,7 +64,8 @@ namespace oct::cc::v1::A::intel
 
     private:
         static size_t get_size(Type type);
-
+        Type type;
+        const Integer* address;
     };
 
 

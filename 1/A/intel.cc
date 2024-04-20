@@ -124,46 +124,67 @@ namespace oct::cc::v1::A::intel
 
 
 
-    Return::Return() : Instruction(Statemants::ret,1)
+    Return::Return() : Instruction(Statemants::ret,1),type(Type::none),address(NULL)
     {
         mcode[0] = 0b11000011;
     }
-    Return::Return(const Integer& address , Type type) : Instruction(Statemants::ret,get_size(type))
+    Return::Return(const Integer& a, Type t) : Instruction(Statemants::ret,get_size(t)),type(t),address(&a)
     {
         switch(type)
         {
             case Type::within:
-                mcode[0] = 0b11000011;
+                throw core::exception("Return Within segment has not address.");
                 break;
             case Type::within_sp:
                 mcode[0] = 0b11000010;
-                address.to_short(mcode + 1);
-            break;
+                address->to_short(mcode + 1);
+                break;
             case Type::inter:
-                mcode[0] = 0b11010011;
-            break;
+                throw core::exception("Return Within segment has not address.");
+                break;
             case Type::inter_sp:
                 mcode[0] = 0b1101010;
-                address.to_short(mcode + 1);
-            break;
+                address->to_short(mcode + 1);
+                break;
+            default:
+                break;
         }
     }
     void Return::print(std::ostream& out)const
     {
-        out << "\treturn;\n";
+        switch(type)
+        {
+        case Type::within:
+            out << "\treturn;\n";
+            break;
+        case Type::within_sp:
+            out << "\treturn " << address->string() << ";\n";
+            break;
+        case Type::inter:
+            out << "\treturn;\n";
+            break;
+        case Type::inter_sp:
+            out << "\treturn " << address->string() << ";\n";
+            break;
+        default:
+            out << "\treturn;\n";
+            break;
+        }
     }
     size_t Return::get_size(Type type)
     {
         switch(type)
         {
-            case Type::inter:
-                return 1;
-            case Type::inter_sp:
-                return 3;
-            case Type::within:
-                return 1;
-            case Type::within_sp:
-                return 3;
+        case Type::inter:
+            return 1;
+        case Type::inter_sp:
+            return 3;
+        case Type::within:
+            return 1;
+        case Type::within_sp:
+            return 3;
+        default:
+            break;
         }
 
         return 0;
