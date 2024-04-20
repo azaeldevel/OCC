@@ -304,8 +304,8 @@ namespace oct::cc::v1::A::I
         out << "%token <occ::Number*> INTEGER_DECIMAL\n";
         out << "%token <occ::Number*> INTEGER_HEXDECIMAL\n";
         out << "%type <occ::Integer*> integer\n";
-        out << "%token <occ::Word*> IDENTIFIER\n";
-        out << "%type <occ::Word*> identifier\n";
+        out << "%token <occ::Identifier*> IDENTIFIER\n";
+        out << "%type <occ::Identifier*> identifier\n";
         out << "%type <occ::Keyword*> softword\n";
         out << "%type <occ::Statement*> statement\n";
         out << "%type <occ::Statement*> statements\n";

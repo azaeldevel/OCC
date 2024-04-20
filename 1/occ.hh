@@ -575,6 +575,9 @@ namespace oct::cc::v1
 
     };
 
+
+    typedef Word Identifier;
+
     /**
     *\brief Node de Texto
     **/
@@ -618,9 +621,6 @@ namespace oct::cc::v1
         bool is_register() const;
         bool is_memory() const;
     };
-
-
-    typedef Word Identifier;
 
 
     /**
