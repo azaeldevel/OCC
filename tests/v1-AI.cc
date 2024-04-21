@@ -103,8 +103,18 @@ void v1_AI_developing()
     nodes.push_back(new occ::A::Register(occ::Tokens::BP,"bp",2));
     nodes.back()->next = new occ::Integer(occ::Statemants::number,occ::Tokens::SHORT,"10000",5);
 
+    /*
+    occ::A::intel::Call call1(*nodes[0],occ::A::intel::Call::within_direct);
+    std::cout << "Code : " << (int)call1.mcode[1] << "\n";
+    occ::A::intel::Call call2(nodes[1],occ::A::intel::Call::within_direct);
+    occ::A::intel::Call call3(nodes[2],occ::A::intel::Call::within_direct);
+    occ::A::intel::Call call4(nodes[3],occ::A::intel::Call::within_direct);
+    occ::A::intel::Call call5(nodes[4],occ::A::intel::Call::within_direct);
+    occ::A::intel::Call call6(nodes[5],occ::A::intel::Call::within_direct);
+    */
+
     occ::A::intel::Call call1(occ::Integer(occ::Statemants::number,occ::Tokens::SHORT,"10000",5),occ::A::intel::Call::within_direct);
-    std::cout << "Code : " << call1.mcode[1] << "\n";
+    std::cout << "Code : " << (int)call1.mcode[1] << "\n";
 }
 
 

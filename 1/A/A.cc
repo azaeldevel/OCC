@@ -294,33 +294,34 @@ namespace oct::cc::v1::A
     /**
     *\brief write the mod code on the i-byte of mcode array, based on the node string passed
     */
-    void Instruction::mode(size_t i, const node& n)
+    void Instruction::mode(size_t i, const node& node)
     {
-        //if n.data is equal to occ::Statemants::reg this is a occ::A::Register data else return inmediatly
-        if(n.data != Statemants::reg) return;
+        std::cout << "mode : 1\n";
 
         //create a pointer to Register variable casting from node
-        const Register* node = static_cast<const Register*>(&n);
+        const Register* node_register = static_cast<const Register*>(&node);
 
-        std::cout << "1\n";
+        std::cout << "mode : 2\n";
         //if has only one register(general register) in the string then set mod value 0b11
-        if(!node->next)
+        if(!node_register->next)
         {
-            std::cout << "1.1\n";
-            if(is_general_register(node->token()))
+            std::cout << "2.1\n";
+            if(is_general_register(node_register->token()))
             {
-                std::cout << "1.1.1\n";
+                std::cout << "2.1.1\n";
                 mcode[i] = (mcode[i] << 2) + 0b11;
                 return;
             }
         }
 
+        std::cout << "mode : 3\n";
         //if has one or two register combining BX,BP with SI, DI or memory then set mod value 0b00
-        if(node->token() == Tokens::BP || node->token() == Tokens::BX || node->data == Statemants::memory)
+        if(node_register->token() == Tokens::BP || node_register->token() == Tokens::BX || node_register->data == Statemants::memory)
         {
-            if(node->next and node->data != Statemants::reg)
+            std::cout << "mode : 3.1\n";
+            if(node_register->next and node_register->data != Statemants::reg)
             {
-                const Register* offset = static_cast<const Register*>(node->next);
+                const Register* offset = static_cast<const Register*>(node_register->next);
                 if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
                 {
                     mcode[i] = (mcode[i] << 2) + 0b00;
@@ -328,18 +329,20 @@ namespace oct::cc::v1::A
                 }
             }
         }
-        else if(node->token() == Tokens::SI || node->token() == Tokens::DI || node->data == Statemants::memory || node->token() == Tokens::BX)
+        else if(node_register->token() == Tokens::SI || node_register->token() == Tokens::DI || node.data == Statemants::number || node_register->token() == Tokens::BX)
         {
+            std::cout << "mode : 3.2\n";
             mcode[i] = (mcode[i] << 2) + 0b00;
             return;
         }
 
+        std::cout << "mode : 4\n";
         //if has one or two register combining BX,BP with SI, DI and 8-bits number then set mod value 0b01
-        if(node->token() == Tokens::BX || node->token() == Tokens::BP )
+        if(node_register->token() == Tokens::BX || node_register->token() == Tokens::BP )
         {
-            if(node->next and node->data != Statemants::reg)
+            if(node_register->next and node_register->data != Statemants::reg)
             {
-                const Register* offset = static_cast<const Register*>(node->next);
+                const Register* offset = static_cast<const Register*>(node_register->next);
                 if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
                 {
                     if(not offset->next)
@@ -369,12 +372,13 @@ namespace oct::cc::v1::A
             }
         }
 
+        std::cout << "mode : 5\n";
         //if has one or two register combining BX,BP with SI, DI and 16-bits number then set mod value 0b10
-        if(node->token() == Tokens::BX || node->token() == Tokens::BP )
+        if(node_register->token() == Tokens::BX || node_register->token() == Tokens::BP )
         {
-            if(node->next and node->data != Statemants::reg)
+            if(node_register->next and node_register->data != Statemants::reg)
             {
-                const Register* offset = static_cast<const Register*>(node->next);
+                const Register* offset = static_cast<const Register*>(node_register->next);
                 if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
                 {
                     if(not offset->next)

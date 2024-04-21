@@ -241,7 +241,6 @@ namespace oct::cc::v1::A::intel
     }
 
 
-
     /**
     *\brief Generate code for call instrucction
     **/
@@ -254,11 +253,13 @@ namespace oct::cc::v1::A::intel
             break;
         case Type::within_direct:
             mcode[0] = 0b11101000;
-            //*static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(s.string().c_str(),NULL,s.base()));
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(a.string().c_str(),NULL,a.base()));
             break;
         case Type::within_indirect:
             mcode[0] = 0b11111111;
             mode(1,a);
+            mcode[1] = (mcode[1] << 3) + 0b010;
+            mcode[1] = (mcode[1] << 3) + 0b110;
             //*static_cast<short*>(static_cast<void*>(&mcode[2])) = static_cast<short>(std::strtol(s.string().c_str(),NULL,s.base()));
             break;
         case Type::inter_direct:
