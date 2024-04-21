@@ -63,6 +63,9 @@ namespace oct::cc::v1
     Word::Word(Statemants s,const char* text, size_t size) : node(s),_string_(text,size),_token_(Tokens::none),_yylexnext_(NULL)
     {
     }
+    Word::Word(Statemants s,const Word& w) : node(s),_string_(w._string_),_token_(w._token_),_yylexnext_(w._yylexnext_)
+    {
+    }
     Word::Word(Statemants s,Tokens t,const char* text, size_t size) : node(s),_string_(text,size),_token_(t),_yylexnext_(NULL)
     {
     }
@@ -100,6 +103,10 @@ namespace oct::cc::v1
     Word* Word::yylexnext()
     {
         return _yylexnext_;
+    }
+    Tokens Word::token()const
+    {
+        return _token_;
     }
 
 
@@ -232,6 +239,9 @@ namespace oct::cc::v1
     {
     }
     Number::Number(Statemants s,const char* text, size_t size) : Word(s,text,size),_base_(10)
+    {
+    }
+    Number::Number(Statemants s,const Number& n) : Word(s, n),_base_(n._base_)
     {
     }
     Number::Number(Statemants s,Tokens t,const char* text, size_t size) : Word(s,t,text,size),_base_(10)

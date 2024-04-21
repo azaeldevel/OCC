@@ -98,18 +98,21 @@ namespace oct::cc::v1::A::intel
 
 
     /**
-    *\brief Node Base para instruciones call
+    *\brief Class for instrucction call intel 8086 processor
     **/
     class Call : public Instruction
     {
     public:
+        /**
+        *\brief Set the format for this instrucction
+        **/
         enum Type
         {
             none,
-            within,
-            within_indirect,
-            within_direct,
-            inter_indirect
+            within_direct,//Direct whitin segment
+            within_indirect,//Indirect whitin segment
+            inter_direct,//Direct intersegment
+            inter_indirect//Indirect intersement
         };
 
     public:
@@ -117,6 +120,7 @@ namespace oct::cc::v1::A::intel
         Call(const Integer&, Type type);
         Call(const Identifier&);
         Call(const Identifier&, Type type);
+
 
 
         virtual void print(std::ostream&)const;

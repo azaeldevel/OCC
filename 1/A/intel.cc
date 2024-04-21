@@ -242,28 +242,49 @@ namespace oct::cc::v1::A::intel
 
 
 
-
-        Call::Call(const Integer& a, Type t) : Instruction(Statemants::call,get_size(t)),type(t),address(&a)
+    /**
+    *\brief Generate code for call instrucction
+    **/
+    Call::Call(const Integer& a, Type t) : Instruction(Statemants::call,get_size(t)),type(t),address(&a)
+    {
+        //write the instruction code on mscode varible for ever case
+        switch(type)
         {
+        case Type::none:
+            break;
+        case Type::within_direct:
+            mcode[0] = 0b11101000;
+            //*static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(s.string().c_str(),NULL,s.base()));
+            break;
+        case Type::within_indirect:
+            mcode[0] = 0b11111111;
+            mode(1,a);
+            //*static_cast<short*>(static_cast<void*>(&mcode[2])) = static_cast<short>(std::strtol(s.string().c_str(),NULL,s.base()));
+            break;
+        case Type::inter_direct:
+            break;
+        case Type::inter_indirect:
 
+            break;
+        default:
+            break;
         }
-        Call::Call(const Identifier&)
-        {
-
-        }
-        Call::Call(const Identifier&, Type type)
-        {
-
-        }
+    }
+    Call::Call(const Identifier&)
+    {
+    }
+    Call::Call(const Identifier&, Type type)
+    {
+    }
     size_t Call::get_size(Type type)
     {
         switch(type)
         {
-        case Type::within:
+        case Type::within_direct:
             return 3;
         case Type::within_indirect:
             return 4;
-        case Type::within_direct:
+        case Type::inter_direct:
             return 3;
         case Type::inter_indirect:
             return 4;

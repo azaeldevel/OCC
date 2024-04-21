@@ -14,7 +14,11 @@
 				<Option parameters="--lang AI --comp lexer --output bin/Debug/comp.ll" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DOCTETOS_CC_V1_TDD" />
 				</Compiler>
+				<Linker>
+					<Add library="cunit" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/OCC-v1" prefix_auto="1" extension_auto="1" />
@@ -88,9 +92,11 @@
 		</Unit>
 		<Unit filename="1/A/I/A.cc">
 			<Option target="libOCC-AI-dbg" />
+			<Option target="Debug" />
 		</Unit>
 		<Unit filename="1/A/I/A.hh">
 			<Option target="libOCC-AI-dbg" />
+			<Option target="Debug" />
 		</Unit>
 		<Unit filename="1/A/I/Driver.cc">
 			<Option target="libOCC-AI-dbg" />
@@ -127,6 +133,7 @@
 		</Unit>
 		<Unit filename="1/A/intel.cc">
 			<Option target="libOCC-AI-dbg" />
+			<Option target="Debug" />
 		</Unit>
 		<Unit filename="1/A/intel.hh">
 			<Option target="Debug" />
@@ -140,17 +147,14 @@
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
 		<Unit filename="1/Generator.cc">
-			<Option target="Debug" />
 			<Option target="Release" />
 			<Option target="generator-dbg" />
 		</Unit>
 		<Unit filename="1/Generator.hh">
-			<Option target="Debug" />
 			<Option target="Release" />
 			<Option target="generator-dbg" />
 		</Unit>
 		<Unit filename="1/occ-generetor-main.cc">
-			<Option target="Debug" />
 			<Option target="Release" />
 			<Option target="generator-dbg" />
 		</Unit>
@@ -174,6 +178,25 @@
 		</Unit>
 		<Unit filename="bin/Debug/AI/occ-intel.parser.cc">
 			<Option target="libOCC-AI-dbg" />
+		</Unit>
+		<Unit filename="tests/main-tdd.cc">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="tests/main-v1-AI.cc">
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="tests/v1-AI.cc">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="tests/v1.cc">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="tests/v1.hh">
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
 		<Extensions />
 	</Project>

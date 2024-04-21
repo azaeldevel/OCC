@@ -291,6 +291,121 @@ namespace oct::cc::v1::A
         out.write((char*)mcode,msize);
     }
 
+    /**
+    *\brief write the mod code on the i-byte of mcode array, based on the node string passed
+    */
+    void Instruction::mode(size_t i, const node& n)
+    {
+        //if n.data is equal to occ::Statemants::reg this is a occ::A::Register data else return inmediatly
+        if(n.data != Statemants::reg) return;
+
+        //create a pointer to Register variable casting from node
+        const Register* node = static_cast<const Register*>(&n);
+
+        std::cout << "1\n";
+        //if has only one register(general register) in the string then set mod value 0b11
+        if(!node->next)
+        {
+            std::cout << "1.1\n";
+            if(is_general_register(node->token()))
+            {
+                std::cout << "1.1.1\n";
+                mcode[i] = (mcode[i] << 2) + 0b11;
+                return;
+            }
+        }
+
+        //if has one or two register combining BX,BP with SI, DI or memory then set mod value 0b00
+        if(node->token() == Tokens::BP || node->token() == Tokens::BX || node->data == Statemants::memory)
+        {
+            if(node->next and node->data != Statemants::reg)
+            {
+                const Register* offset = static_cast<const Register*>(node->next);
+                if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
+                {
+                    mcode[i] = (mcode[i] << 2) + 0b00;
+                    return;
+                }
+            }
+        }
+        else if(node->token() == Tokens::SI || node->token() == Tokens::DI || node->data == Statemants::memory || node->token() == Tokens::BX)
+        {
+            mcode[i] = (mcode[i] << 2) + 0b00;
+            return;
+        }
+
+        //if has one or two register combining BX,BP with SI, DI and 8-bits number then set mod value 0b01
+        if(node->token() == Tokens::BX || node->token() == Tokens::BP )
+        {
+            if(node->next and node->data != Statemants::reg)
+            {
+                const Register* offset = static_cast<const Register*>(node->next);
+                if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
+                {
+                    if(not offset->next)
+                    {
+                        mcode[i] = (mcode[i] << 2) + 0b01;
+                        return;
+                    }
+                    else if(offset->next->data == Statemants::number)
+                    {
+                        const Number* dt8 = static_cast<const Number*>(offset->next);
+                        if(dt8->size() == 1)
+                        {
+                            mcode[i] = (mcode[i] << 2) + 0b01;
+                            return;
+                        }
+                    }
+                }
+                else if(offset->next->data == Statemants::number)
+                {
+                    const Number* dt8 = static_cast<const Number*>(offset->next);
+                    if(dt8->size() == 1)
+                    {
+                        mcode[i] = (mcode[i] << 2) + 0b01;
+                        return;
+                    }
+                }
+            }
+        }
+
+        //if has one or two register combining BX,BP with SI, DI and 16-bits number then set mod value 0b10
+        if(node->token() == Tokens::BX || node->token() == Tokens::BP )
+        {
+            if(node->next and node->data != Statemants::reg)
+            {
+                const Register* offset = static_cast<const Register*>(node->next);
+                if(offset->token() == Tokens::SI || offset->token() == Tokens::DI)
+                {
+                    if(not offset->next)
+                    {
+                        mcode[i] = (mcode[i] << 2) + 0b10;
+                        return;
+                    }
+                    else if(offset->next->data == Statemants::number)
+                    {
+                        const Number* dt16 = static_cast<const Number*>(offset->next);
+                        if(dt16->size() == 2)
+                        {
+                            mcode[i] = (mcode[i] << 2) + 0b10;
+                            return;
+                        }
+                    }
+                }
+                else if(offset->next->data == Statemants::number)
+                {
+                    const Number* dt8 = static_cast<const Number*>(offset->next);
+                    if(dt8->size() == 1)
+                    {
+                        mcode[i] = (mcode[i] << 2) + 0b10;
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
+
 
 
     Init_Declarator::Init_Declarator() : Statement(Statemants::init_declarator)
@@ -308,10 +423,10 @@ namespace oct::cc::v1::A
     }
 
 
-    Memory::Memory(const Integer& i) : Integer(i)
+    Memory::Memory(const Integer& i) : Integer(Statemants::memory,i)
     {
     }
-    Memory::Memory(const Memory& i) : Integer(i)
+    Memory::Memory(const Memory& i) : Integer(Statemants::memory,i)
     {
     }
 
@@ -320,3 +435,4 @@ namespace oct::cc::v1::A
         out << _string_;
     }
 }
+

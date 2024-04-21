@@ -462,6 +462,30 @@ namespace oct::cc::v1
         }
     }
 
+	constexpr bool is_general_register(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::AL:
+        case Tokens::AH:
+        case Tokens::AX:
+        case Tokens::BL:
+        case Tokens::BH:
+        case Tokens::BX:
+        case Tokens::CL:
+        case Tokens::CH:
+        case Tokens::CX:
+        case Tokens::DL:
+        case Tokens::DH:
+        case Tokens::DX:
+            return true;
+        default:
+            return false;
+        }
+
+		return false;
+    }
+
 
     enum class Statemants
     {
@@ -562,6 +586,7 @@ namespace oct::cc::v1
         Word(const char*, size_t);
         Word(Tokens,const char*, size_t);
         Word(Statemants,const char*, size_t);
+        Word(Statemants,const Word&);
         Word(Statemants,Tokens,const char*, size_t);
 
         Word& operator=(const Word&);
@@ -573,7 +598,7 @@ namespace oct::cc::v1
         const std::string& string() const;
         void yylexnext(Word*);
         Word* yylexnext();
-
+		Tokens token()const;
     };
 
 
@@ -635,6 +660,7 @@ namespace oct::cc::v1
         Number(const char*, size_t);
         Number(Tokens,const char*, size_t);
         Number(Statemants,const char*, size_t);
+        Number(Statemants,const Number&);
         Number(Statemants,Tokens,const char*, size_t);
         Number(Statemants,Tokens,const char*, size_t,char base);
 
