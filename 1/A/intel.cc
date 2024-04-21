@@ -243,10 +243,48 @@ namespace oct::cc::v1::A::intel
     /**
     *\brief Generate code for call instrucction
     **/
-    Call::Call(const node& n) : Instruction(Statemants::call,get_size(Type::none)),type(Type::none),address(NULL)
+    Call::Call(const node& n) : Instruction(Statemants::call,get_size(Type::none)),type(Type::none),address(&n)
     {
-        //if the node is integer o memory node then the mode is 0b00, the type is direct within segment and address is thu number in the node
+        //if the node is integer o memory node then the type is direct within segment and address is thu number in the node
+        if(n.data == Statemants::integer or n.data == Statemants::memory)
+        {
+            //initializind data
+            type = Type::within_direct;
+            msize = get_size(type);
+            mcode = new unsigned char[msize];
+
+            //generating mcode
+            mcode[0] = 0b11101000;
+            if(address->data == Statemants::integer)
+            {
+                auto number = static_cast<const Integer*>(address);
+                *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(number->string().c_str(),NULL,number->base()));
+            }
+            else if(address->data == Statemants::memory)
+            {
+                auto memory = static_cast<const Memory*>(address);
+                *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(memory->string().c_str(),NULL,memory->base()));
+            }
+            return;
+        }
         //if the node is general register use it like direction value
+        else if(is_general_register(static_cast<const Word&>(n).token()) and not n.next)
+        {
+            //initializind data
+            type = Type::within_indirect;//becuase use register to set address
+            msize = get_size(type);
+            mcode = new unsigned char[msize];
+
+            //generating mcode
+            mcode[0] = 0b11111111;
+            mcode[1] = (mcode[1] << 3) + 0b000;
+            mcode[1] = (mcode[1] << 3) + 0b010;
+            const Register& reg = static_cast<const Register&>(n);
+
+
+            return;
+        }
+        //throw core::exception("Still develipong..");
         //if the node is some combination of BP or BX with SI or DI use it like direction value
         //if the node is some combination of BP or BX with SI or DI and has a integer 8 bits use it like direction value
         //if the node is some combination of BP or BX with SI or DI and has a integer 16 bits use it like direction value
@@ -280,12 +318,6 @@ namespace oct::cc::v1::A::intel
         default:
             break;
         }
-    }
-    Call::Call(const Identifier&)
-    {
-    }
-    Call::Call(const Identifier&, Type type)
-    {
     }
     size_t Call::get_size(Type type)
     {

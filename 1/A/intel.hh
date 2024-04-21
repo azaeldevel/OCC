@@ -119,8 +119,6 @@ namespace oct::cc::v1::A::intel
         Call() = default;
         Call(const node&);
         Call(const Integer&, Type type);
-        Call(const Identifier&);
-        Call(const Identifier&, Type type);
 
 
 
@@ -129,7 +127,7 @@ namespace oct::cc::v1::A::intel
     private:
         static size_t get_size(Type type);
         Type type;
-        const Integer* address;
+        const node* address;
     };
 
 

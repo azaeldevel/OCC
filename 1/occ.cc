@@ -73,6 +73,12 @@ namespace oct::cc::v1
     {
         out << _string_;
     }
+    Word::Word(short s) : node(Statemants::integer),_string_(std::to_string(s),std::to_string(s).size()),_token_(Tokens::SHORT),_yylexnext_(NULL)
+    {
+    }
+    Word::Word(int s) : node(Statemants::integer),_string_(std::to_string(s),std::to_string(s).size()),_token_(Tokens::INTEGER),_yylexnext_(NULL)
+    {
+    }
 
     Word& Word::operator=(const Word& w)
     {
@@ -248,6 +254,12 @@ namespace oct::cc::v1
     {
     }
     Number::Number(Statemants s,Tokens t,const char* text, size_t size,char b) : Word(s,t,text,size),_base_(b)
+    {
+    }
+    Number::Number(short n) : Word(n),_base_(10)
+    {
+    }
+    Number::Number(int n) : Word(n),_base_(10)
     {
     }
 

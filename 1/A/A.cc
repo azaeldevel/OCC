@@ -265,7 +265,68 @@ namespace oct::cc::v1::A
             }
         }
     }
+    void Register::mode(unsigned char& inst) const
+    {
+        if(next and is_general_register(token()))
+        {
+            switch(token())
+            {
+            case Tokens::AL:
+            case Tokens::AH:
+            case Tokens::AX:
+            case Tokens::BL:
+            case Tokens::BH:
+            case Tokens::BX:
+                inst = (inst << 2) + 0b00;
+                break;
+            }
+        }
 
+    }
+    void Register::rm(unsigned char& inst) const
+    {
+        if(core::node<Statemants>::data == Statemants::reg)
+        {
+            inst <<= 3;
+            //std::cout << "REG<<";
+            switch(_token_)
+            {
+            case Tokens::AL:
+            case Tokens::AX:
+                break;
+            case Tokens::CL:
+            case Tokens::CX:
+                inst +=  1;
+                break;
+            case Tokens::DL:
+            case Tokens::DX:
+                inst += 2;
+                break;
+            case Tokens::BL:
+            case Tokens::BX:
+                inst += 3;
+                break;
+            case Tokens::AH:
+            case Tokens::SP:
+                inst += 4;
+                break;
+            case Tokens::CH:
+            case Tokens::BP:
+                inst += 5;
+                break;
+            case Tokens::DH:
+            case Tokens::SI:
+                inst += 6;
+                break;
+            case Tokens::BH:
+            case Tokens::DI:
+                inst += 7;
+                break;
+            default:
+                break;
+            }
+        }
+    }
 
     Instruction::Instruction() : node(Statemants::instruction),next(NULL),mcode(NULL),msize(0)
     {

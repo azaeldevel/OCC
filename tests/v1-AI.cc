@@ -103,6 +103,22 @@ void v1_AI_developing()
     nodes.push_back(new occ::A::Register(occ::Tokens::BP,"bp",2));
     nodes.back()->next = new occ::Integer(occ::Statemants::number,occ::Tokens::SHORT,"10000",5);
 
+    const occ::A::Register* reg;
+    unsigned char mcode1;
+
+    reg = static_cast<const occ::A::Register*>(nodes[0]);
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 0)
+    reg = static_cast<const occ::A::Register*>(nodes[1]);
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 0)
+    reg = static_cast<const occ::A::Register*>(nodes[2]);
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 0)
+    reg = static_cast<const occ::A::Register*>(nodes[3]);
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 0)
+
     /*
     occ::A::intel::Call call1(*nodes[0],occ::A::intel::Call::within_direct);
     std::cout << "Code : " << (int)call1.mcode[1] << "\n";
@@ -113,8 +129,16 @@ void v1_AI_developing()
     occ::A::intel::Call call6(nodes[5],occ::A::intel::Call::within_direct);
     */
 
-    occ::A::intel::Call call1(occ::Integer(occ::Statemants::number,occ::Tokens::SHORT,"10000",5),occ::A::intel::Call::within_direct);
-    std::cout << "Code : " << (int)call1.mcode[1] << "\n";
+    occ::Integer num1((short)100);
+    occ::A::intel::Call call1(num1);
+    CU_ASSERT(call1.mcode != NULL)
+    CU_ASSERT(call1.mcode[0] == 0xE8)
+    //std::cout << "Code : " << call1.mcode[0] << "\n";
+    //std::cout << "Code : " << (int)call1.mcode[1] << "\n";
+
+    occ::A::intel::Call call2(*nodes[0]);
+    CU_ASSERT(call2.mcode != NULL)
+    CU_ASSERT(call2.mcode[0] == 0xFF)
 }
 
 

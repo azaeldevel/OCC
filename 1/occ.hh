@@ -588,6 +588,8 @@ namespace oct::cc::v1
         Word(Statemants,const char*, size_t);
         Word(Statemants,const Word&);
         Word(Statemants,Tokens,const char*, size_t);
+        Word(short);
+        Word(int);
 
         Word& operator=(const Word&);
         Word& operator=(Word&&);
@@ -663,6 +665,8 @@ namespace oct::cc::v1
         Number(Statemants,const Number&);
         Number(Statemants,Tokens,const char*, size_t);
         Number(Statemants,Tokens,const char*, size_t,char base);
+        Number(short);
+        Number(int);
 
         Number& operator=(const Number&);
         Number& operator=(Number&&);
