@@ -221,7 +221,7 @@ namespace oct::cc::v1::A
             }
         }
     }
-    void Register::code(unsigned char& inst) const
+    /*void Register::code(unsigned char& inst) const
     {
         inst <<= 3;
         if(core::node<Statemants>::data == Statemants::reg)
@@ -264,10 +264,10 @@ namespace oct::cc::v1::A
                 break;
             }
         }
-    }
+    }*/
     void Register::mode(unsigned char& inst) const
     {
-        if(next and is_general_register(token()))
+        if(not next and is_general_register(token()) or _token_ == Tokens::BP or _token_ == Tokens::BX or _token_ == Tokens::SI or _token_ == Tokens::DI)
         {
             switch(token())
             {
@@ -277,9 +277,23 @@ namespace oct::cc::v1::A
             case Tokens::BL:
             case Tokens::BH:
             case Tokens::BX:
-                inst = (inst << 2) + 0b00;
+            case Tokens::CL:
+            case Tokens::CH:
+            case Tokens::CX:
+            case Tokens::DL:
+            case Tokens::DH:
+            case Tokens::DX:
+            case Tokens::SP:
+            case Tokens::BP:
+            case Tokens::SI:
+            case Tokens::DI:
+                inst = (inst << 2) + 0b11;
                 break;
             }
+        }
+        else if(next)
+        {
+
         }
 
     }

@@ -176,7 +176,7 @@ namespace oct::cc::v1::A
         unsigned char size() const;
         unsigned char mode() const;
         void word(unsigned char&) const;
-        void code(unsigned char&) const;
+        //void code(unsigned char&) const;
         void mode(unsigned char&) const;
         void rm(unsigned char&) const;
         unsigned char reg() const;

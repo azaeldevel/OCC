@@ -30,7 +30,7 @@ namespace oct::cc::v1::A::intel
         //mcode[0] <<= 4;
         //std::cout << "before : " << (int)mcode[0] << "\n";
         nTo.word(mcode[0]);
-        nTo.code(mcode[0]);
+        nTo.rm(mcode[0]);
         //std::cout << "after : " << (int)mcode[0] << "\n";
         if(nFront.size() == 1)
         {
@@ -50,7 +50,7 @@ namespace oct::cc::v1::A::intel
         mcode[0] = 0b1011;
         //std::cout << "before : " << (int)mcode[0] << "\n";
         nTo.word(mcode[0]);
-        nTo.code(mcode[0]);
+        nTo.rm(mcode[0]);
         //std::cout << "afther : " << (int)mcode[0] << "\n";
         mcode[1] = nFront.letter();
     }

@@ -9,10 +9,7 @@
 
 void v1_AI_developing()
 {
-    //write a vector of pointers to occ::node
     std::vector<occ::node*> nodes;
-
-    //add all general registers usando the node oc::A::Registers class, 8 and 16 btis
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AL,"al",2));
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AH,"ah",2));
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AX,"ax",2));
@@ -45,6 +42,7 @@ void v1_AI_developing()
     //add memory
     nodes.push_back(new occ::A::Memory(occ::Integer(occ::Tokens::TINY,"100",3)));
     //add a BX
+    nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
 
     //add a BX + SI + D8
     nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
@@ -106,39 +104,104 @@ void v1_AI_developing()
     const occ::A::Register* reg;
     unsigned char mcode1;
 
+    //AL
     reg = static_cast<const occ::A::Register*>(nodes[0]);
+    mcode1 = 0;
     reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
     CU_ASSERT(mcode1 == 0)
+    //AH
     reg = static_cast<const occ::A::Register*>(nodes[1]);
+    mcode1 = 0;
     reg->mode(mcode1);
-    CU_ASSERT(mcode1 == 0)
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 4)
+    //AX
     reg = static_cast<const occ::A::Register*>(nodes[2]);
+    mcode1 = 0;
     reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
     CU_ASSERT(mcode1 == 0)
+    //BL
     reg = static_cast<const occ::A::Register*>(nodes[3]);
+    mcode1 = 0;
     reg->mode(mcode1);
-    CU_ASSERT(mcode1 == 0)
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    //BH
+    reg = static_cast<const occ::A::Register*>(nodes[4]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 7)
+    //BX
+    reg = static_cast<const occ::A::Register*>(nodes[5]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    //CL
+    reg = static_cast<const occ::A::Register*>(nodes[6]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 1)
+    //CH
+    reg = static_cast<const occ::A::Register*>(nodes[7]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 5)
+    //CX
+    reg = static_cast<const occ::A::Register*>(nodes[8]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 1)
+    //DL
+    reg = static_cast<const occ::A::Register*>(nodes[9]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 2)
+    //DH
+    reg = static_cast<const occ::A::Register*>(nodes[10]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 6)
+    //DX
+    reg = static_cast<const occ::A::Register*>(nodes[11]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 2)
 
-    /*
-    occ::A::intel::Call call1(*nodes[0],occ::A::intel::Call::within_direct);
-    std::cout << "Code : " << (int)call1.mcode[1] << "\n";
-    occ::A::intel::Call call2(nodes[1],occ::A::intel::Call::within_direct);
-    occ::A::intel::Call call3(nodes[2],occ::A::intel::Call::within_direct);
-    occ::A::intel::Call call4(nodes[3],occ::A::intel::Call::within_direct);
-    occ::A::intel::Call call5(nodes[4],occ::A::intel::Call::within_direct);
-    occ::A::intel::Call call6(nodes[5],occ::A::intel::Call::within_direct);
-    */
 
-    occ::Integer num1((short)100);
-    occ::A::intel::Call call1(num1);
-    CU_ASSERT(call1.mcode != NULL)
-    CU_ASSERT(call1.mcode[0] == 0xE8)
-    //std::cout << "Code : " << call1.mcode[0] << "\n";
-    //std::cout << "Code : " << (int)call1.mcode[1] << "\n";
-
-    occ::A::intel::Call call2(*nodes[0]);
-    CU_ASSERT(call2.mcode != NULL)
-    CU_ASSERT(call2.mcode[0] == 0xFF)
 }
 
 
