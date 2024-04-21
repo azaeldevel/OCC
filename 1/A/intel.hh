@@ -117,6 +117,7 @@ namespace oct::cc::v1::A::intel
 
     public:
         Call() = default;
+        Call(const node&);
         Call(const Integer&, Type type);
         Call(const Identifier&);
         Call(const Identifier&, Type type);
