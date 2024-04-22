@@ -22,6 +22,10 @@ void v1_AI_developing()
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DL,"dl",2));
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DH,"dh",2));
     nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DX,"dx",2));
+    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::BP,"bp",2));
+    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::SI,"si",2));
+    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DI,"di",2));
+    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::SP,"sp",2));
 
     //add a BX + SI
     nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
@@ -200,7 +204,22 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 2)
-
+    //BP
+    reg = static_cast<const occ::A::Register*>(nodes[12]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 5)
+    //SI
+    reg = static_cast<const occ::A::Register*>(nodes[13]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 6)
 
 }
 
