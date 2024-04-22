@@ -87,6 +87,9 @@ namespace oct::cc::v1
 
 
 
+    /**
+     * \brief For identifier diferent tokens
+    */
 	enum class Tokens : int
 	{//https://www.charset.org/utf-8,https://www.asciitable.com/,https://www.rapidtables.com/code/text/ascii-table.html
 		command = -100,
@@ -240,7 +243,7 @@ namespace oct::cc::v1
 		//>>>Tokens
 		base = 0x110000,
 
-		//C-keywords
+		//C-keywords begins here
 		AUTO = 110200,
 		BREAK = 110202,
 		CASE,
@@ -274,7 +277,7 @@ namespace oct::cc::v1
 		VOLATIL,
 		WHILE,
 
-		//Intel instruction set
+		//Intel instruction set begin here
 		AAA,
 		AAD,
 		AAM,
@@ -429,8 +432,9 @@ namespace oct::cc::v1
 
 	};
 
+
     /**
-    *\brief convert the paramter to its string representation
+    *\brief convert the parameter to its string representation
     **/
     constexpr const char* to_string(Tokens t)
     {
@@ -470,7 +474,84 @@ namespace oct::cc::v1
         case Tokens::DI:
             return "DI";
 
-        //TODO : add allthe segment of the processor i8086 CS,DS,SS,ES here
+        case Tokens::CS:
+            return "CS";
+        case Tokens::DS:
+            return "DS";
+        case Tokens::SS:
+            return "SS";
+        case Tokens::ES:
+            return "ES";
+
+        case Tokens::BYTE:
+            return "byte";
+        case Tokens::TINY:
+            return "tiny";
+
+        case Tokens::AUTO:
+            return "auto";
+        case Tokens::BREAK:
+            return "break";
+        case Tokens::CASE:
+            return "case";
+        case Tokens::CHAR:
+            return "char";
+        case Tokens::CONST:
+            return "const";
+        case Tokens::CONTINUE:
+            return "continue";
+        case Tokens::DEFAULT:
+            return "default";
+        case Tokens::DO:
+            return "do";
+        case Tokens::DOUBLE:
+            return "double";
+        case Tokens::ELSE:
+            return "else";
+        case Tokens::ENUM:
+            return "enum";
+        case Tokens::EXTERN:
+            return "extern";
+        case Tokens::FLOAT:
+            return "float";
+        case Tokens::FOR:
+            return "for";
+        case Tokens::GOTO:
+            return "goto";
+        case Tokens::IF:
+            return "if";
+        case Tokens::INT:
+            return "int";
+        case Tokens::LONG:
+            return "long";
+        case Tokens::REGISTER:
+            return "register";
+        case Tokens::RETURN:
+            return "return";
+        case Tokens::SHORT:
+            return "short";
+        case Tokens::SIGNED:
+            return "signed";
+        case Tokens::SIZEOF:
+            return "sizeof";
+        case Tokens::STATIC:
+            return "static";
+        case Tokens::STRUCT:
+            return "struct";
+        case Tokens::SWITCH:
+            return "switch";
+        case Tokens::TYPEDEF:
+            return "typedef";
+        case Tokens::UNION:
+            return "union";
+        case Tokens::UNSIGNED:
+            return "unsigned";
+        case Tokens::VOID:
+            return "void";
+        case Tokens::VOLATIL:
+            return "volatil";
+        case Tokens::WHILE:
+            return "while";
 
         default:
             return "?";
@@ -479,8 +560,9 @@ namespace oct::cc::v1
 
 
 
+
     /**
-    *\brief get string size
+    *\brief get string size for the parameter t
     **/
     constexpr size_t string_size(Tokens t)
     {
@@ -505,6 +587,15 @@ namespace oct::cc::v1
         case Tokens::SI:
         case Tokens::DI:
             return 2;
+
+        //C 90 keywords from here
+        case Tokens::AUTO: return 4;
+        case Tokens::BREAK: return 5;
+        case Tokens::CASE: return 4;
+        case Tokens::CHAR: return 4;
+        case Tokens::CONST: return 4;
+        case Tokens::CONTINUE: return 9;
+        case Tokens::DEFAULT: return 7;
 
         default:
             return 1;
