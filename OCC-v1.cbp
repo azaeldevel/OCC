@@ -179,8 +179,7 @@
 		<Unit filename="bin/Debug/AI/occ-intel.parser.cc">
 			<Option target="libOCC-AI-dbg" />
 		</Unit>
-		<Unit filename="tests/main-v1-AI.cc">
-			<Option target="Release" />
+		<Unit filename="tests/main-AI.cc">
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="tests/v1-AI.cc">
