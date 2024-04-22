@@ -38,3 +38,5 @@ bin/Release/AIII/*
 
 .vs/
 ing/
+
+build/
