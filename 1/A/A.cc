@@ -157,6 +157,9 @@ namespace oct::cc::v1::A
     Register::Register(Statemants s,Tokens t,const char* text, size_t size) : Keyword(s,t,text,size)
     {
     }
+    Register::Register(Tokens t) : Keyword(Statemants::reg,t,to_string(t),string_size(t))
+    {
+    }
 
     unsigned char Register::size()const
     {
@@ -267,33 +270,12 @@ namespace oct::cc::v1::A
     }*/
     void Register::mode(unsigned char& inst) const
     {
-        if(not next and is_general_register(token()) or _token_ == Tokens::BP or _token_ == Tokens::BX or _token_ == Tokens::SI or _token_ == Tokens::DI)
+        if(not next and is_general_register(_token_) or is_pointer(_token_))
         {
-            switch(token())
-            {
-            case Tokens::AL:
-            case Tokens::AH:
-            case Tokens::AX:
-            case Tokens::BL:
-            case Tokens::BH:
-            case Tokens::BX:
-            case Tokens::CL:
-            case Tokens::CH:
-            case Tokens::CX:
-            case Tokens::DL:
-            case Tokens::DH:
-            case Tokens::DX:
-            case Tokens::SP:
-            case Tokens::BP:
-            case Tokens::SI:
-            case Tokens::DI:
-                inst = (inst << 2) + 0b11;
-                break;
-            }
+            inst = (inst << 2) + 0b11;
         }
         else if(next)
         {
-
         }
 
     }

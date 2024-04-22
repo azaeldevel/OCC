@@ -429,6 +429,9 @@ namespace oct::cc::v1
 
 	};
 
+    /**
+    *\brief convert the paramter to its string representation
+    **/
     constexpr const char* to_string(Tokens t)
     {
         switch(t)
@@ -457,8 +460,54 @@ namespace oct::cc::v1
             return "DH";
         case Tokens::DX:
             return "DX";
+
+        case Tokens::SP:
+            return "SP";
+        case Tokens::BP:
+            return "BP";
+        case Tokens::SI:
+            return "SI";
+        case Tokens::DI:
+            return "DI";
+
+        //TODO : add allthe segment of the processor i8086 CS,DS,SS,ES here
+
         default:
             return "?";
+        }
+    }
+
+
+
+    /**
+    *\brief get string size
+    **/
+    constexpr size_t string_size(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::AL:
+        case Tokens::AH:
+        case Tokens::AX:
+        case Tokens::BL:
+        case Tokens::BH:
+        case Tokens::BX:
+        case Tokens::CL:
+        case Tokens::CH:
+        case Tokens::CX:
+        case Tokens::DL:
+        case Tokens::DH:
+        case Tokens::DX:
+            return 2;
+
+        case Tokens::SP:
+        case Tokens::BP:
+        case Tokens::SI:
+        case Tokens::DI:
+            return 2;
+
+        default:
+            return 1;
         }
     }
 
@@ -486,6 +535,38 @@ namespace oct::cc::v1
 		return false;
     }
 
+
+	constexpr bool is_pointer(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::SP:
+        case Tokens::BP:
+        case Tokens::DI:
+        case Tokens::SI:
+            return true;
+        default:
+            return false;
+        }
+
+		return false;
+    }
+
+	constexpr bool is_segment(Tokens t)
+    {
+        switch(t)
+        {
+        case Tokens::SP:
+        case Tokens::DS:
+        case Tokens::ES:
+        case Tokens::SS:
+            return true;
+        default:
+            return false;
+        }
+
+		return false;
+    }
 
     enum class Statemants
     {
@@ -540,6 +621,8 @@ namespace oct::cc::v1
 
         return Statemants::none;
     }
+
+
 
     /**
     *\brief Crea un nodo

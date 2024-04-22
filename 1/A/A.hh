@@ -172,6 +172,8 @@ namespace oct::cc::v1::A
         Register(Tokens,const char*, size_t);
         Register(Statemants,const char*, size_t);
         Register(Statemants,Tokens,const char*, size_t);
+        Register(Tokens);
+
 
         unsigned char size() const;
         unsigned char mode() const;

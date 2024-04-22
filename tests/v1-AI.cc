@@ -10,39 +10,39 @@
 void v1_AI_developing()
 {
     std::vector<occ::node*> nodes;
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AL,"al",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AH,"ah",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::AX,"ax",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::BL,"bl",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::BH,"bh",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::BX,"bx",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::CL,"cl",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::CH,"ch",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::CX,"cx",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DL,"dl",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DH,"dh",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DX,"dx",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::BP,"bp",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::SI,"si",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::DI,"di",2));
-    nodes.push_back(new occ::A::Register(occ::Statemants::reg,occ::Tokens::SP,"sp",2));
+    nodes.push_back(new occ::A::Register(occ::Tokens::AL));
+    nodes.push_back(new occ::A::Register(occ::Tokens::AH));
+    nodes.push_back(new occ::A::Register(occ::Tokens::AX));
+    nodes.push_back(new occ::A::Register(occ::Tokens::BL));
+    nodes.push_back(new occ::A::Register(occ::Tokens::BH));
+    nodes.push_back(new occ::A::Register(occ::Tokens::BX));
+    nodes.push_back(new occ::A::Register(occ::Tokens::CL));
+    nodes.push_back(new occ::A::Register(occ::Tokens::CH));
+    nodes.push_back(new occ::A::Register(occ::Tokens::CX));
+    nodes.push_back(new occ::A::Register(occ::Tokens::DL));
+    nodes.push_back(new occ::A::Register(occ::Tokens::DH));
+    nodes.push_back(new occ::A::Register(occ::Tokens::DX));
+    nodes.push_back(new occ::A::Register(occ::Tokens::BP));
+    nodes.push_back(new occ::A::Register(occ::Tokens::SI));
+    nodes.push_back(new occ::A::Register(occ::Tokens::DI));
+    nodes.push_back(new occ::A::Register(occ::Tokens::SP));
 
     //add a BX + SI
-    nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
-    nodes.back()->next = new occ::A::Register(occ::Tokens::SI,"si",2);
+    nodes.push_back(new occ::A::Register(occ::Tokens::BX));
+    nodes.back()->next = new occ::A::Register(occ::Tokens::SI);
     //add a BX + DI
-    nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
-    nodes.back()->next = new occ::A::Register(occ::Tokens::DI,"di",2);
+    nodes.push_back(new occ::A::Register(occ::Tokens::BX));
+    nodes.back()->next = new occ::A::Register(occ::Tokens::DI);
     //add a BP + SI
-    nodes.push_back(new occ::A::Register(occ::Tokens::BP,"bp",2));
-    nodes.back()->next = new occ::A::Register(occ::Tokens::SI,"si",2);
+    nodes.push_back(new occ::A::Register(occ::Tokens::BP));
+    nodes.back()->next = new occ::A::Register(occ::Tokens::SI);
     //add a BX + DI
-    nodes.push_back(new occ::A::Register(occ::Tokens::BX,"bx",2));
-    nodes.back()->next = new occ::A::Register(occ::Tokens::DI,"di",2);
+    nodes.push_back(new occ::A::Register(occ::Tokens::BX));
+    nodes.back()->next = new occ::A::Register(occ::Tokens::DI);
     //add a SI
-    nodes.push_back(new occ::A::Register(occ::Tokens::SI,"si",2));
+    nodes.push_back(new occ::A::Register(occ::Tokens::SI));
     //add a DI
-    nodes.push_back(new occ::A::Register(occ::Tokens::DI,"di",2));
+    nodes.push_back(new occ::A::Register(occ::Tokens::DI));
     //add memory
     nodes.push_back(new occ::A::Memory(occ::Integer(occ::Tokens::TINY,"100",3)));
     //add a BX
@@ -220,6 +220,22 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 6)
+    //DI
+    reg = static_cast<const occ::A::Register*>(nodes[14]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 7)
+    //SP
+    reg = static_cast<const occ::A::Register*>(nodes[15]);
+    mcode1 = 0;
+    reg->mode(mcode1);
+    CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 4)
 
 }
 
