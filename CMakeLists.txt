@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(OCC VERSION 1.0.0)
-
 include(CTest)
+
+
 set(CMAKE_BUILD_TYPE Debug)
 
 # Enable Coverage Tests
