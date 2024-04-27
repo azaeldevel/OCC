@@ -336,7 +336,7 @@ namespace oct::cc::v1::A
     }
     Instruction::~Instruction()
     {
-        if(mcode) delete[] mcode;
+        //if(mcode) delete[] mcode;
     }
 
 
