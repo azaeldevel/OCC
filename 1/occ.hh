@@ -724,7 +724,7 @@ namespace oct::cc::v1
         node() = default;
         node(const Statemants& t);
 
-        const node* next;
+        node* next;
 
         virtual void print(std::ostream&)const;
         bool is_addressable()const;
@@ -942,16 +942,14 @@ namespace oct::cc::v1
             {
                 t = &block->at(index);
                 index++;
-                return t;
             }
             else
             {
                 BASE::push_back(core::array<T>(default_size));
                 block++;
                 index = 0;
-                t = &BASE::at(block).at(index);
+                t = &block->at(index);
                 index++;
-                return t;
             }
 
             return NULL;

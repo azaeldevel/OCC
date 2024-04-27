@@ -263,7 +263,7 @@ namespace oct::cc::v1::A::intel
             else if(address->data == Statemants::memory)
             {
                 auto memory = static_cast<const Memory*>(address);
-                *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(memory->string().c_str(),NULL,memory->base()));
+                //*static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(memory->string().c_str(),NULL,memory->base()));
             }
             return;
         }
