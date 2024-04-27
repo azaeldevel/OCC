@@ -157,6 +157,8 @@ namespace oct::cc::v1::A
         Memory(const Memory&);
 
         virtual void print(std::ostream&)const;
+        
+        char mode()const;
 
     private:
 
@@ -182,7 +184,7 @@ namespace oct::cc::v1::A
         //void code(unsigned char&) const;
         void mode(unsigned char&) const;
         void rm(unsigned char&) const;
-        unsigned char reg() const;
+        //unsigned char reg() const;
     };
 
 

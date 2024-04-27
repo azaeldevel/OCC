@@ -157,7 +157,44 @@ namespace oct::cc::v1
 
     bool Keyword::is_register() const
     {
-        if(core::node<Statemants>::data == Statemants::keyword)
+        if(core::node<Statemants>::data == Statemants::reg)
+        {
+            switch(_token_)
+            {
+            case Tokens::AL:
+            case Tokens::AH:
+            case Tokens::BL:
+            case Tokens::BH:
+            case Tokens::CL:
+            case Tokens::CH:
+            case Tokens::DL:
+            case Tokens::DH:
+                return true;
+            case Tokens::AX:
+            case Tokens::BX:
+            case Tokens::CX:
+            case Tokens::DX:
+                return true;
+            case Tokens::BP:
+            case Tokens::SP:
+            case Tokens::DI:
+            case Tokens::SI:
+                return true;
+            case Tokens::ES:
+            case Tokens::CS:
+            case Tokens::SS:
+            case Tokens::DS:
+                return true;
+            default :
+                return false;
+            }
+        }
+
+        return false;
+    }
+    bool Keyword::is_general_register() const
+    {
+        if(core::node<Statemants>::data == Statemants::reg)
         {
             switch(_token_)
             {
@@ -182,8 +219,52 @@ namespace oct::cc::v1
 
         return false;
     }
+    bool Keyword::is_pointer_register() const
+    {
+        if(core::node<Statemants>::data == Statemants::reg)
+        {
+            switch(_token_)
+            {
+            case Tokens::BP:
+            case Tokens::SP:
+            case Tokens::DI:
+            case Tokens::SI:
+                return true;
+            default :
+                return false;
+            }
+        }
+
+        return false;
+    }
+    bool Keyword::is_segment_register() const
+    {
+        if(core::node<Statemants>::data == Statemants::reg)
+        {
+            switch(_token_)
+            {
+            case Tokens::ES:
+            case Tokens::CS:
+            case Tokens::SS:
+            case Tokens::DS:
+                return true;
+            default :
+                return false;
+            }
+        }
+
+        return false;
+    }
     bool Keyword::is_memory() const
     {
+        //retur true if it is a register
+        if(next == NULL and is_general_register())
+        {
+            return true;
+        }
+
+        //
+
         return false;
     }
 

@@ -727,6 +727,7 @@ namespace oct::cc::v1
         node* next;
 
         virtual void print(std::ostream&)const;
+        bool is_addressable()const;
     };
 
 
@@ -821,6 +822,9 @@ namespace oct::cc::v1
         virtual void print(std::ostream&)const;
 
         bool is_register() const;
+        bool is_general_register() const;
+        bool is_pointer_register() const;
+        bool is_segment_register() const;
         bool is_memory() const;
     };
 
