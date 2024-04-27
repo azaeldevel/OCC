@@ -195,9 +195,9 @@ namespace oct::cc::v1::A
     }
     void Register::word(unsigned char& inst) const
     {
-        inst <<= 1;
-        if(core::node<Statemants>::data == Statemants::keyword)
+        if(core::node<Statemants>::data == Statemants::reg)
         {
+            inst <<= 1;
             switch(_token_)
             {
             case Tokens::AL:

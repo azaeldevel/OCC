@@ -116,6 +116,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 0)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //AH
     reg = static_cast<const occ::A::Register*>(nodes[1]);
     mcode1 = 0;
@@ -124,6 +127,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 4)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //AX
     reg = static_cast<const occ::A::Register*>(nodes[2]);
     mcode1 = 0;
@@ -132,6 +138,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 0)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //BL
     reg = static_cast<const occ::A::Register*>(nodes[3]);
     mcode1 = 0;
@@ -140,6 +149,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //BH
     reg = static_cast<const occ::A::Register*>(nodes[4]);
     mcode1 = 0;
@@ -148,6 +160,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 7)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //BX
     reg = static_cast<const occ::A::Register*>(nodes[5]);
     mcode1 = 0;
@@ -156,6 +171,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 3)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //CL
     reg = static_cast<const occ::A::Register*>(nodes[6]);
     mcode1 = 0;
@@ -164,6 +182,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 1)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //CH
     reg = static_cast<const occ::A::Register*>(nodes[7]);
     mcode1 = 0;
@@ -172,6 +193,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 5)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //CX
     reg = static_cast<const occ::A::Register*>(nodes[8]);
     mcode1 = 0;
@@ -179,6 +203,9 @@ void v1_AI_developing()
     CU_ASSERT(mcode1 == 3)
     mcode1 = 0;
     reg->rm(mcode1);
+    CU_ASSERT(mcode1 == 1)
+    mcode1 = 0;
+    reg->word(mcode1);
     CU_ASSERT(mcode1 == 1)
     //DL
     reg = static_cast<const occ::A::Register*>(nodes[9]);
@@ -188,6 +215,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 2)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //DH
     reg = static_cast<const occ::A::Register*>(nodes[10]);
     mcode1 = 0;
@@ -196,6 +226,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 6)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 0)
     //DX
     reg = static_cast<const occ::A::Register*>(nodes[11]);
     mcode1 = 0;
@@ -204,6 +237,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 2)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //BP
     reg = static_cast<const occ::A::Register*>(nodes[12]);
     mcode1 = 0;
@@ -212,6 +248,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 5)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //SI
     reg = static_cast<const occ::A::Register*>(nodes[13]);
     mcode1 = 0;
@@ -220,6 +259,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 6)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //DI
     reg = static_cast<const occ::A::Register*>(nodes[14]);
     mcode1 = 0;
@@ -228,6 +270,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 7)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
     //SP
     reg = static_cast<const occ::A::Register*>(nodes[15]);
     mcode1 = 0;
@@ -236,6 +281,9 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->rm(mcode1);
     CU_ASSERT(mcode1 == 4)
+    mcode1 = 0;
+    reg->word(mcode1);
+    CU_ASSERT(mcode1 == 1)
 
 }
 
