@@ -165,8 +165,9 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Texto
     **/
-    struct Register : public Keyword
+    class Register : public Keyword
     {
+    public:
         Register() =default;
         Register(const char*, size_t);
         Register(Tokens,const char*, size_t);
