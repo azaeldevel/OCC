@@ -724,7 +724,7 @@ namespace oct::cc::v1
         node() = default;
         node(const Statemants& t);
 
-        node* next;
+        const node* next;
 
         virtual void print(std::ostream&)const;
         bool is_addressable()const;

@@ -12,14 +12,14 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV memory ',' registers ';'\n";
+            out << "\tMOV '[' memory ']' ',' registers ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
+            out << "\t\t$$ = new occ::A::intel::Move(*$3,*$6);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV registers ',' memory ';'\n";
+            out << "\tMOV registers ',' '[' memory ']' ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
+            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$5);\n";
             out << "\t}\n";
             /*out << "\t|\n";
             out << "\tMOV identifier ',' registers ';'\n";//identifier is a pointer/inmendiate
@@ -43,9 +43,9 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV memory ',' integer ';'\n";
+            out << "\tMOV '[' memory ']' ',' integer ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
+            out << "\t\t$$ = new occ::A::intel::Move(*$3,*$6);\n";
             out << "\t}\n";
             //6).-
             out << "\t|\n";
@@ -54,9 +54,9 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV segments ',' memory ';'\n";
+            out << "\tMOV segments ',' '[' memory ']' ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
+            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$5);\n";
             out << "\t}\n";
             out << "\t|\n";
             //7).-
@@ -65,9 +65,9 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tMOV memory ',' segments ';'\n";
+            out << "\tMOV '[' memory ']' ',' segments ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = new occ::A::intel::Move(*$2,*$4);\n";
+            out << "\t\t$$ = new occ::A::intel::Move(*$3,*$6);\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -97,9 +97,9 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = calls.next(*$2);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCALL memory ';'\n";
+            out << "\tCALL '[' memory ']' ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = calls.next(*$2);\n";
+            out << "\t\t$$ = calls.next(*$3);\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -109,7 +109,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Push;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tPUSH memory ';'\n";
+            out << "\tPUSH '[' memory ']' ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::intel::Push;\n";
             out << "\t}\n";
@@ -131,7 +131,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Pop;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tPOP memory ';'\n";
+            out << "\tPOP '[' memory ']' ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::intel::Pop;\n";
             out << "\t}\n";

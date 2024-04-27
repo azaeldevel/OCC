@@ -484,16 +484,17 @@ namespace oct::cc::v1::A
     }
 
 
-    Memory::Memory(const Integer& i) : Integer(Statemants::memory,i)
+    Memory::Memory() : node(Statemants::memory)
     {
     }
-    Memory::Memory(const Memory& i) : Integer(Statemants::memory,i)
+
+    void Memory::set(node& i)
     {
+        next = &i;
     }
 
     void Memory::print(std::ostream& out) const
     {
-        out << _string_;
     }
 }
 

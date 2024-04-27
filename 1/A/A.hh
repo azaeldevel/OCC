@@ -149,17 +149,17 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Texto
     **/
-    class Memory : public Integer
+    class Memory : public node
     {
     public:
-        Memory() = default;
-        Memory(const Integer&);
-        Memory(const Memory&);
+        Memory();
+
+        void set(node&);
+
 
         virtual void print(std::ostream&)const;
+        char mode() const;
         
-        char mode()const;
-
     private:
 
     };
