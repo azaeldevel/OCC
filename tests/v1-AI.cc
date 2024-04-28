@@ -354,6 +354,26 @@ void v1_AI_developing()
     index++;
     memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
+
+
+    //BX + SI
+    index++;
+    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    CU_ASSERT(memories[index].mode() == 0)
+    //BX + DI
+    index++;
+    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    CU_ASSERT(memories[index].mode() == 0)
+    //BP + SI
+    index++;
+    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    CU_ASSERT(memories[index].mode() == 0)
+    //BP + SP
+    index++;
+    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    CU_ASSERT(memories[index].mode() == 0)
+
+    
 }
 
 
