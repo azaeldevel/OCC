@@ -152,16 +152,33 @@ namespace oct::cc::v1::A
     class Memory : public node
     {
     public:
+        enum Type
+        {//https://faculty.cs.niu.edu/~berezin/463/notes/addrmode.html
+            none,
+            implied,
+            staked,
+            inmediate,
+            registers,
+            direct,
+            relative,
+            indirect,
+            indexed,
+            displacement
+        };
+
+    public:
         Memory();
 
-        void set(node&);
-
+        void set(node&,Type);
 
         virtual void print(std::ostream&)const;
+        //return el mod de direccionanminewto de memoria
         char mode() const;
+        void mode(unsigned char&) const;
+        char rm() const;
         
     private:
-
+        Type type;
     };
 
     /**
