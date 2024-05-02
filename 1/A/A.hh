@@ -242,6 +242,7 @@ namespace oct::cc::v1::A
         void word(unsigned char&) const;
         //void code(unsigned char&) const;
         void mode(unsigned char&) const;
+        void mode(unsigned char&,char type) const;
         void rm(unsigned char&) const;
         //unsigned char reg() const;
     };

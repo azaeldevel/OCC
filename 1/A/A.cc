@@ -270,7 +270,18 @@ namespace oct::cc::v1::A
     }*/
     void Register::mode(unsigned char& inst) const
     {
-        if(not next and (is_general_register() or is_pointer_register()))
+        if(not next and is_general_register())
+        {
+            inst = (inst << 2) + 0b11;
+        }
+        else if(next)
+        {
+        }
+
+    }
+    void Register::mode(unsigned char& inst, char type) const
+    {
+        if(not next and is_general_register() and type == 3)
         {
             inst = (inst << 2) + 0b11;
         }

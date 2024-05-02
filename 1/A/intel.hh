@@ -12,9 +12,9 @@ namespace oct::cc::v1::A::intel
     /**
     *\brief Node Base para instruciones mov
     **/
-    struct Move : public Instruction
+    class Move : public Instruction
     {
-
+    public:
         /**
         *\biref COntrulle la instruccion Move
         **/
@@ -42,6 +42,7 @@ namespace oct::cc::v1::A::intel
 
         virtual void print(std::ostream&)const;
 
+    private:
         const node &from, &to;
     };
 

@@ -273,28 +273,15 @@ namespace oct::cc::v1
             case Tokens::DL:
             case Tokens::DH:
                 return true;
-            case Tokens::AX:
-            case Tokens::BX:
-            case Tokens::CX:
-            case Tokens::DX:
-                return true;
-            default :
-                return false;
-            }
-        }
-
-        return false;
-    }
-    bool Keyword::is_pointer_register() const
-    {
-        if(core::node<Statemants>::data == Statemants::reg)
-        {
-            switch(_token_)
-            {
             case Tokens::BP:
             case Tokens::SP:
             case Tokens::DI:
             case Tokens::SI:
+                return true;
+            case Tokens::AX:
+            case Tokens::BX:
+            case Tokens::CX:
+            case Tokens::DX:
                 return true;
             default :
                 return false;

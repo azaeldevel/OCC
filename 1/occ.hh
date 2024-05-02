@@ -618,19 +618,6 @@ namespace oct::cc::v1
         case Tokens::DL:
         case Tokens::DH:
         case Tokens::DX:
-            return true;
-        default:
-            return false;
-        }
-
-		return false;
-    }
-
-
-	constexpr bool is_pointer(Tokens t)
-    {
-        switch(t)
-        {
         case Tokens::SP:
         case Tokens::BP:
         case Tokens::DI:
@@ -840,7 +827,7 @@ namespace oct::cc::v1
 
         bool is_register() const;
         bool is_general_register() const;
-        bool is_pointer_register() const;
+        //bool is_pointer_register() const;
         bool is_segment_register() const;
         bool is_memory() const;
     };
