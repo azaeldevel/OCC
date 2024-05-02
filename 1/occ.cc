@@ -27,6 +27,9 @@
 namespace oct::cc::v1
 {
 
+    node::node() : core::node<Statemants>(Statemants::none),next(NULL)
+    {
+    }
     node::node(const Statemants& t) : core::node<Statemants>(t),next(NULL)
     {
     }
@@ -76,6 +79,18 @@ namespace oct::cc::v1
     }
     const node* node::is_memory()const
     {
+    }
+    size_t node::size() const
+    {
+        node* n = next;
+        size_t z = 1;
+        while(n)
+        {
+            z++;
+            n = n->next;
+        }
+
+        return z;
     }
 
     void node::print(std::ostream&)const

@@ -719,12 +719,14 @@ namespace oct::cc::v1
     *\brief Crea un nodo
     *\param T parametro de plantilla para determinar el tipo de nodo
     **/
-    struct node : public core::node<Statemants>
+    class node : public core::node<Statemants>
     {
-        node() = default;
-        node(const Statemants& t);
-
+    public:
         node* next;
+
+    public:
+        node();
+        node(const Statemants& t);
 
         virtual void print(std::ostream&)const;
 
@@ -739,7 +741,7 @@ namespace oct::cc::v1
         node* is_memory();
         const node* is_memory() const;
 
-
+        size_t size() const;
     };
 
 
@@ -747,8 +749,9 @@ namespace oct::cc::v1
     /**
     *\brief Crea un nodo
     **/
-    struct Node : public core::Node<Statemants,node>
+    class Node : public core::Node<Statemants,node>
     {
+    public:
         Node();
         Node(Statemants);
         Node(Statemants,size_t);
