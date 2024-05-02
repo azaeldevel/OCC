@@ -10,7 +10,7 @@ namespace oct::cc::v1::A::intel
 
 
 
-
+    /*
     Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
     {
         throw core::exception("Still developing..");
@@ -77,7 +77,7 @@ namespace oct::cc::v1::A::intel
     {
         throw core::exception("Still developing..");
     }
-
+    */
     Move::Move(const node& nTo,const node& nFront) : from(nFront),to(nTo)
     {
         if(nTo.is_register())

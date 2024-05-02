@@ -18,7 +18,7 @@ namespace oct::cc::v1::A::intel
         /**
         *\biref COntrulle la instruccion Move
         **/
-
+        /*
         Move(Register& nTo,Register& nFront);
         Move(Register& nTo,Memory& nFront);
         Move(Memory& nTo,Register& nFront);
@@ -32,7 +32,7 @@ namespace oct::cc::v1::A::intel
         Move(Segment& nTo,Memory& nFront);
         Move(Register& nTo,Segment& nFront);
         Move(Memory& nTo,Segment& nFront);
-
+        */
         void generate(const Register& nTo,const Integer& nFront);
         void generate(const Register& nTo,const Letter& nFront);
 
