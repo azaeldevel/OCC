@@ -10,6 +10,7 @@ namespace oct::cc::v1::A::intel
 
 
 
+
     Move::Move(Register& nTo,Register& nFront) : from(nFront),to(nTo)
     {
         throw core::exception("Still developing..");
@@ -22,8 +23,6 @@ namespace oct::cc::v1::A::intel
     {
         throw core::exception("Still developing..");
     }
-
-
     Move::Move(Register& nTo,Integer& nFront) : Instruction(Statemants::move,1 + nFront.size()),from(nFront),to(nTo)
     {
         mcode[0] = 0b1011;
@@ -78,9 +77,56 @@ namespace oct::cc::v1::A::intel
     {
         throw core::exception("Still developing..");
     }
-    Move::Move(node& nTo,node& nFront) : from(nFront),to(nTo)
+
+    Move::Move(const node& nTo,const node& nFront) : from(nFront),to(nTo)
     {
-        throw core::exception("Still developing..");
+        if(nTo.is_register())
+        {
+            if(nFront.is_integer())
+            {
+                generate(static_cast<const Register&>(nTo),static_cast<const Integer&>(nFront));
+            }
+            else if(nFront.is_letter())
+            {
+                generate(static_cast<const Register&>(nTo),static_cast<const Letter&>(nFront));
+            }
+        }
+    }
+
+    void Move::generate(const Register& nTo,const Integer& nFront)
+    {
+        Instruction::init(Statemants::move,1 + nFront.size());
+
+        mcode[0] = 0b1011;
+        //mcode[0] <<= 4;
+        //std::cout << "before : " << (int)mcode[0] << "\n";
+        nTo.word(mcode[0]);
+        nTo.rm(mcode[0]);
+        //std::cout << "after : " << (int)mcode[0] << "\n";
+        if(nFront.size() == 1)
+        {
+            mcode[1] = static_cast<char>(std::strtol(nFront.string().c_str(),NULL,nFront.base()));
+        }
+        else if(nFront.size() == 2)
+        {
+            *static_cast<short*>(static_cast<void*>(&mcode[1])) = static_cast<short>(std::strtol(nFront.string().c_str(),NULL,nFront.base()));
+        }
+        else
+        {
+
+        }
+    }
+
+    void Move::generate(const Register& nTo,const Letter& nFront)
+    {
+        Instruction::init(Statemants::move,2);
+
+        mcode[0] = 0b1011;
+        //std::cout << "before : " << (int)mcode[0] << "\n";
+        nTo.word(mcode[0]);
+        nTo.rm(mcode[0]);
+        //std::cout << "afther : " << (int)mcode[0] << "\n";
+        mcode[1] = nFront.letter();
     }
 
     void Move::print(std::ostream& out)const
@@ -89,16 +135,16 @@ namespace oct::cc::v1::A::intel
         switch(to.data)
         {
         case Statemants::reg:
-            out << static_cast<Register&>(to).string();
+            out << static_cast<const Register&>(to).string();
             break;
         case Statemants::segment:
-            out << static_cast<Segment&>(to).string();
+            out << static_cast<const Segment&>(to).string();
             break;
         case Statemants::letter:
-            out << "'" << static_cast<Letter&>(to).letter() << "'";
+            out << "'" << static_cast<const Letter&>(to).letter() << "'";
             break;
         case Statemants::integer:
-            out << static_cast<Integer&>(to).string();
+            out << static_cast<const Integer&>(to).string();
             break;
         default:
             break;
@@ -107,16 +153,16 @@ namespace oct::cc::v1::A::intel
         switch(from.data)
         {
         case Statemants::reg:
-            out << static_cast<Register&>(from).string();
+            out << static_cast<const Register&>(from).string();
             break;
         case Statemants::segment:
-            out << static_cast<Segment&>(from).string();
+            out << static_cast<const Segment&>(from).string();
             break;
         case Statemants::letter:
-            out << "'" << static_cast<Letter&>(from).letter() << "'";
+            out << "'" << static_cast<const Letter&>(from).letter() << "'";
             break;
         case Statemants::integer:
-            out << static_cast<Integer&>(from).string();
+            out << static_cast<const Integer&>(from).string();
             break;
         default:
             break;

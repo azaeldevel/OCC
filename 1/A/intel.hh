@@ -18,6 +18,7 @@ namespace oct::cc::v1::A::intel
         /**
         *\biref COntrulle la instruccion Move
         **/
+
         Move(Register& nTo,Register& nFront);
         Move(Register& nTo,Memory& nFront);
         Move(Memory& nTo,Register& nFront);
@@ -27,17 +28,21 @@ namespace oct::cc::v1::A::intel
         Move(Memory& nTo,Integer& nFront);
         Move(Memory& nTo,Letter& nFront);
 
-
         Move(Segment& nTo,Register& nFront);
         Move(Segment& nTo,Memory& nFront);
         Move(Register& nTo,Segment& nFront);
         Move(Memory& nTo,Segment& nFront);
-        Move(node& nTo,node& nFront);
+
+        void generate(const Register& nTo,const Integer& nFront);
+        void generate(const Register& nTo,const Letter& nFront);
+
+        //
+        Move(const node& nTo,const node& nFront);
 
 
         virtual void print(std::ostream&)const;
 
-        node &from, &to;
+        const node &from, &to;
     };
 
 

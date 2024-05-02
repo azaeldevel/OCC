@@ -74,12 +74,6 @@ namespace oct::cc::v1
         if(data == Statemants::integer) if(static_cast<const Integer*>(this)->base() == 16) return this;
         return NULL;
     }
-    node* node::is_memory()
-    {
-    }
-    const node* node::is_memory()const
-    {
-    }
     size_t node::size() const
     {
         node* n = next;
@@ -91,6 +85,16 @@ namespace oct::cc::v1
         }
 
         return z;
+    }
+    node* node::is_letter()
+    {
+        if(data == Statemants::letter) return this;
+        return NULL;
+    }
+    const node* node::is_letter() const
+    {
+        if(data == Statemants::letter) return this;
+        return NULL;
     }
 
     void node::print(std::ostream&)const

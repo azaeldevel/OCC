@@ -740,6 +740,8 @@ namespace oct::cc::v1
         const node* is_integer_16b() const;
         node* is_memory();
         const node* is_memory() const;
+        node* is_letter();
+        const node* is_letter() const;
 
         size_t size() const;
     };

@@ -160,33 +160,32 @@ namespace oct::cc::v1::A::I
 
     void Parser::rules_memory(std::ostream& out) const
     {
-        //additional Register-Memory Field Encoding
+        //Additional Register-Memory Field Encoding
         out << "AREMFEN : \n";
-            out << "\tBX '+' SI \n";
+            out << "\tBX '+' SI\n";
             out << "\t{\n";
             out << "\t\t$1->next = $3;\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBX '+' SI \n";
+            out << "\tBX '+' SI\n";
             out << "\t{\n";
             out << "\t\t$1->next = $3;\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBP '+' SI \n";
+            out << "\tBP '+' SI\n";
             out << "\t{\n";
             out << "\t\t$1->next = $3;\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tBP '+' DI \n";
+            out << "\tBP '+' DI\n";
             out << "\t{\n";
             out << "\t\t$1->next = $3;\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
-
 
         out << "memory : \n";
             out << "\tAREMFEN\n";

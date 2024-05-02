@@ -338,6 +338,19 @@ namespace oct::cc::v1::A
     {
     }
 
+    void Instruction::init(size_t s)
+    {
+        data = Statemants::instruction;
+        mcode = new unsigned char[s];
+        for(size_t i = 0; i < s ; i++) mcode[i] = 0;
+    }
+    void Instruction::init(Statemants t,size_t s)
+    {
+        data = t;
+        mcode = new unsigned char[s];
+        for(size_t i = 0; i < s ; i++) mcode[i] = 0;
+    }
+
 
     void Instruction::print(std::ostream& out)const
     {

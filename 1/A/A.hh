@@ -63,6 +63,9 @@ namespace oct::cc::v1::A
         virtual void generate(std::ostream&)const;
 
         void mode(size_t, const node& );
+
+        void init(size_t);
+        void init(Statemants type,size_t);
     };
 
 
