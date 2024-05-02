@@ -164,18 +164,26 @@ namespace oct::cc::v1::A::I
         out << "amc : \n";
             out << "\tBX '+' SI \n";
             out << "\t{\n";
+            out << "\t\t$1->next = $2\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tBX '+' SI \n";
             out << "\t{\n";
+            out << "\t\t$1->next = $2\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tBP '+' SI \n";
             out << "\t{\n";
+            out << "\t\t$1->next = $2\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tBP '+' DI \n";
             out << "\t{\n";
+            out << "\t\t$1->next = $2\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -183,10 +191,18 @@ namespace oct::cc::v1::A::I
         out << "memory : \n";
             out << "\tamc\n";
             out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
             out << "\tamc '+' integer\n";
             out << "\t{\n";
+            out << "\t\t$1->next->next = $3\n";
+            out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinteger\n";
+            out << "\t{\n";
+            out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t;\n";
 
