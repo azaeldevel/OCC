@@ -74,6 +74,9 @@ namespace oct::cc::v1
     node* node::is_memory()
     {
     }
+    const node* node::is_memory()const
+    {
+    }
 
     void node::print(std::ostream&)const
     {
