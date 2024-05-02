@@ -203,6 +203,9 @@ namespace oct::cc::v1::A
 
     public:
         TFE();
+        TFE(node&);
+        TFE(node&,node&);
+        TFE(node&,node&,node&);
 
         void set(node&,Type);
 

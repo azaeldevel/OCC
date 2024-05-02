@@ -336,7 +336,6 @@ namespace oct::cc::v1::A
     }
     Instruction::~Instruction()
     {
-        //if(mcode) delete[] mcode;
     }
 
 
@@ -688,6 +687,21 @@ namespace oct::cc::v1::A
 
     TFE::TFE() : node(Statemants::none)
     {
+    }
+    TFE::TFE(node& n) : node(Statemants::none)
+    {
+        next = &n;
+    }
+    TFE::TFE(node& n,node& m) : node(Statemants::none)
+    {
+        next = &n;
+        n.next = &m;
+    }
+    TFE::TFE(node& n,node& m,node& o) : node(Statemants::none)
+    {
+        next = &n;
+        n.next = &m;
+        m.next = &o;
     }
 
     void TFE::set(node& i,Type t)

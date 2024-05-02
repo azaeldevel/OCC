@@ -287,90 +287,90 @@ void v1_AI_developing()
 
 
 
-    std::vector<occ::A::Memory> memories(30);
+    std::vector<occ::A::TFE> memories(30);
     size_t index = 0;
 
 
     //AL
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //AH
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //AX
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //BL
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //BH
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //BX
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //CL
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //CH
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //CX
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //DL
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //DH
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //DX
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //BP
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //SI
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //DI
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
     //SP
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::inmediate);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::inmediate);
     CU_ASSERT(memories[index].mode() == 3)
 
 
     //BX + SI
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::implied);
     CU_ASSERT(memories[index].mode() == 0)
     //BX + DI
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::implied);
     CU_ASSERT(memories[index].mode() == 0)
     //BP + SI
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::implied);
     CU_ASSERT(memories[index].mode() == 0)
     //BP + SP
     index++;
-    memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
+    memories[index].set(*nodes[index],occ::A::TFE::Type::implied);
     CU_ASSERT(memories[index].mode() == 0)
 
 
