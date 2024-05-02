@@ -116,7 +116,6 @@ namespace oct::cc::v1::A::intel
 
         }
     }
-
     void Move::generate(const Register& nTo,const Letter& nFront)
     {
         Instruction::init(Statemants::move,2);
