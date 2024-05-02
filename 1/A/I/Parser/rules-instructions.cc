@@ -97,9 +97,9 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = calls.next(*$2);\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tCALL '[' memory ']' ';'\n";
+            out << "\tCALL memory ';'\n";
             out << "\t{\n";
-            out << "\t\t$$ = calls.next(*$3);\n";
+            out << "\t\t$$ = calls.next(*$2);\n";
             out << "\t}\n";
             out << "\t;\n";
 
@@ -109,7 +109,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Push;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tPUSH '[' memory ']' ';'\n";
+            out << "\tPUSH memory ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::intel::Push;\n";
             out << "\t}\n";
@@ -131,7 +131,7 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$ = new occ::A::intel::Pop;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tPOP '[' memory ']' ';'\n";
+            out << "\tPOP  memory ';'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::intel::Pop;\n";
             out << "\t}\n";
