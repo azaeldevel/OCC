@@ -160,8 +160,8 @@ namespace oct::cc::v1::A::I
 
     void Parser::rules_memory(std::ostream& out) const
     {
-        //address memory calculation
-        out << "amc : \n";
+        //additional Register-Memory Field Encoding
+        out << "AREMFEN : \n";
             out << "\tBX '+' SI \n";
             out << "\t{\n";
             out << "\t\t$1->next = $3;\n";
@@ -189,12 +189,12 @@ namespace oct::cc::v1::A::I
 
 
         out << "memory : \n";
-            out << "\tamc\n";
+            out << "\tAREMFEN\n";
             out << "\t{\n";
             out << "\t\t$$ = $1;\n";
             out << "\t}\n";
             out << "\t|\n";
-            out << "\tamc '+' integer\n";
+            out << "\tAREMFEN '+' integer\n";
             out << "\t{\n";
             out << "\t\t$1->next->next = $3;\n";
             out << "\t\t$$ = $1;\n";
