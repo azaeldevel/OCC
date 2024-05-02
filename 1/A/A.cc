@@ -488,7 +488,7 @@ namespace oct::cc::v1::A
     {
     }
 
-    void Memory::set(node& i,Type t) 
+    void Memory::set(node& i,Type t)
     {
         next = &i;
         type = t;
@@ -515,7 +515,7 @@ namespace oct::cc::v1::A
                 }
                 else if(node2->token() == Tokens::DI)
                 {
-                    return 2;                    
+                    return 2;
                 }
             }
             else if(node1->token() == Tokens::BP)
@@ -527,7 +527,7 @@ namespace oct::cc::v1::A
                 }
                 else if(node2->token() == Tokens::DI)
                 {
-                    return 4;                    
+                    return 4;
                 }
             }
         }
@@ -603,7 +603,7 @@ namespace oct::cc::v1::A
                 }
                 else if(node2->token() == Tokens::DI)
                 {
-                    return 0;                    
+                    return 0;
                 }
             }
             else if(node1->token() == Tokens::BP)
@@ -615,7 +615,7 @@ namespace oct::cc::v1::A
                 }
                 else if(node2->token() == Tokens::DI)
                 {
-                    return 0;                    
+                    return 0;
                 }
             }
         }
@@ -677,5 +677,209 @@ namespace oct::cc::v1::A
 
         return char(0xff);
     }
+
+
+
+
+
+
+
+
+
+    TFE::TFE() : node(Statemants::none)
+    {
+    }
+
+    void TFE::set(node& i,Type t)
+    {
+        next = &i;
+        type = t;
+    }
+
+    void TFE::print(std::ostream& out) const
+    {
+    }
+    char TFE::rm() const
+    {
+        auto node1 = static_cast<Register*>(next);
+        if(node1->next)
+        {
+            auto node2 = static_cast<Register*>(node1->next);
+            if(node2->next)
+            {
+                return char(0xff);
+            }
+            else if(node1->token() == Tokens::BX)
+            {
+                if(node2->token() == Tokens::SI)
+                {
+                    return 1;
+                }
+                else if(node2->token() == Tokens::DI)
+                {
+                    return 2;
+                }
+            }
+            else if(node1->token() == Tokens::BP)
+            {
+                auto node2 = static_cast<Register*>(node1->next);
+                if(node2->token() == Tokens::SI)
+                {
+                    return 3;
+                }
+                else if(node2->token() == Tokens::DI)
+                {
+                    return 4;
+                }
+            }
+        }
+        else //solo un nodo
+        {
+            if(node1->is_general_register())
+            {
+                switch(node1->token())
+                {
+                case Tokens::AL:
+                case Tokens::AX:
+                    break;
+                case Tokens::CL:
+                case Tokens::CX:
+                    return 1;
+                case Tokens::DL:
+                case Tokens::DX:
+                    return 2;
+                case Tokens::BL:
+                case Tokens::BX:
+                    return 3;
+                case Tokens::AH:
+                case Tokens::SP:
+                    return 4;
+                case Tokens::CH:
+                case Tokens::BP:
+                    return 5;
+                case Tokens::DH:
+                case Tokens::SI:
+                    return 6;
+                case Tokens::BH:
+                case Tokens::DI:
+                    return 7;
+                default:
+                    break;
+                }
+            }
+            else if(node1->token() == Tokens::SI)
+            {
+                return 4;
+            }
+            else if(node1->token() == Tokens::DI)
+            {
+                return 5;
+            }
+            else if(node1->data ==Statemants::integer or node1->data == Statemants::number)
+            {
+                return 6;
+            }
+            else if(node1->token() == Tokens::DI)
+            {
+                return 7;
+            }
+        }
+
+        return char(0xff);
+    }
+    char TFE::mode() const
+    {
+        auto node1 = static_cast<Register*>(next);
+        if(node1->next)
+        {
+            auto node2 = static_cast<Register*>(node1->next);
+            if(node2->next)
+            {
+                return char(0xff);
+            }
+            else if(node1->token() == Tokens::BX)
+            {
+                if(node2->token() == Tokens::SI)
+                {
+                    return 0;
+                }
+                else if(node2->token() == Tokens::DI)
+                {
+                    return 0;
+                }
+            }
+            else if(node1->token() == Tokens::BP)
+            {
+                auto node2 = static_cast<Register*>(node1->next);
+                if(node2->token() == Tokens::SI)
+                {
+                    return 0;
+                }
+                else if(node2->token() == Tokens::DI)
+                {
+                    return 0;
+                }
+            }
+        }
+        else //solo un nodo
+        {
+            if(node1->is_general_register() and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::SI and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::DI and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::BP and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::SP and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::SI and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::DI and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::SP and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::BP and type == Type::inmediate)
+            {
+                return 3;
+            }
+            else if(node1->data ==Statemants::integer or node1->data == Statemants::number)
+            {
+                return 0;
+            }
+            else if(node1->token() == Tokens::SI and type == Type::implied)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::DI and type == Type::implied)
+            {
+                return 3;
+            }
+            else if(node1->token() == Tokens::BX and type == Type::implied)
+            {
+                return 3;
+            }
+        }
+
+        return char(0xff);
+    }
+
+
 }
 
