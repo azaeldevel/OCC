@@ -317,7 +317,7 @@ namespace oct::cc::v1::A::I
     {
         out << "%type <occ::A::Function*> function\n";
         out << "%type <occ::A::Function*> functions\n";
-        out << "%type <occ::A::Memory*> memory\n";//puede ser un identificador o un entero
+        out << "%type <occ::node*> memory\n";//puede ser un identificador o un entero
         out << "%type <occ::A::Register*> registers_8b\n";
         out << "%type <occ::A::Register*> registers_16b\n";
         out << "%type <occ::A::Register*> registers\n";

@@ -31,6 +31,50 @@ namespace oct::cc::v1
     {
     }
 
+    node* node::is_register()
+    {
+        if(data == Statemants::reg) return this;
+        return NULL;
+    }
+    const node* node::is_register() const
+    {
+        if(data == Statemants::reg) return this;
+        return NULL;
+    }
+    node* node::is_integer()
+    {
+        if(data == Statemants::integer) return this;
+        return NULL;
+    }
+    const node* node::is_integer() const
+    {
+        if(data == Statemants::integer) return this;
+        return NULL;
+    }
+    node* node::is_integer_8b()
+    {
+        if(data == Statemants::integer) if(static_cast<Integer*>(this)->base() == 8) return this;
+        return NULL;
+    }
+    const node* node::is_integer_8b() const
+    {
+        if(data == Statemants::integer) if(static_cast<const Integer*>(this)->base() == 8) return this;
+        return NULL;
+    }
+    node* node::is_integer_16b()
+    {
+        if(data == Statemants::integer) if(static_cast<Integer*>(this)->base() == 16) return this;
+        return NULL;
+    }
+    const node* node::is_integer_16b() const
+    {
+        if(data == Statemants::integer) if(static_cast<const Integer*>(this)->base() == 16) return this;
+        return NULL;
+    }
+    node* node::is_memory()
+    {
+    }
+
     void node::print(std::ostream&)const
     {
     }

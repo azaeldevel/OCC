@@ -78,6 +78,10 @@ namespace oct::cc::v1::A::intel
     {
         throw core::exception("Still developing..");
     }
+    Move::Move(node& nTo,node& nFront) : from(nFront),to(nTo)
+    {
+        throw core::exception("Still developing..");
+    }
 
     void Move::print(std::ostream& out)const
     {

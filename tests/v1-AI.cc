@@ -284,7 +284,7 @@ void v1_AI_developing()
     mcode1 = 0;
     reg->word(mcode1);
     CU_ASSERT(mcode1 == 1)
-    
+
 
 
     std::vector<occ::A::Memory> memories(30);
@@ -373,7 +373,7 @@ void v1_AI_developing()
     memories[index].set(*nodes[index],occ::A::Memory::Type::implied);
     CU_ASSERT(memories[index].mode() == 0)
 
-    
+
 }
 
 

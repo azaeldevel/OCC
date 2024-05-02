@@ -727,7 +727,19 @@ namespace oct::cc::v1
         node* next;
 
         virtual void print(std::ostream&)const;
-        bool is_addressable()const;
+
+        node* is_register();
+        const node* is_register() const;
+        node* is_integer();
+        const node* is_integer() const;
+        node* is_integer_8b();
+        const node* is_integer_8b() const;
+        node* is_integer_16b();
+        const node* is_integer_16b() const;
+        node* is_memory();
+        const node* is_memory() const;
+
+
     };
 
 
@@ -852,6 +864,9 @@ namespace oct::cc::v1
         virtual void print(std::ostream&)const;
 
         char size()const;
+        /**
+        *\brief Base del sistem de numeracion, 2, 10, 16
+        */
         char base()const;
         void to_short(unsigned char* from)const ;
 

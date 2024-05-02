@@ -107,7 +107,7 @@ namespace oct::cc::v1::A::I
             out << "\t;\n";
     }
 
-    void Parser::rules_memory(std::ostream& out) const
+    /*void Parser::rules_memory(std::ostream& out) const
     {
         out << "memory : \n";
             out << "\tinteger\n";
@@ -156,6 +156,40 @@ namespace oct::cc::v1::A::I
             out << "\t\t$$->set(*$1,occ::A::Memory::inmediate);\n";
             out << "\t}\n";
             out << "\t;\n";
+    }*/
+
+    void Parser::rules_memory(std::ostream& out) const
+    {
+        //address memory calculation
+        out << "amc : \n";
+            out << "\tBX '+' SI \n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBX '+' SI \n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' SI \n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tBP '+' DI \n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "memory : \n";
+            out << "\tamc\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tamc '+' integer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
     }
 
     void Parser::rules_segments(std::ostream& out) const

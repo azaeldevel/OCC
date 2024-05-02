@@ -32,6 +32,7 @@ namespace oct::cc::v1::A::intel
         Move(Segment& nTo,Memory& nFront);
         Move(Register& nTo,Segment& nFront);
         Move(Memory& nTo,Segment& nFront);
+        Move(node& nTo,node& nFront);
 
 
         virtual void print(std::ostream&)const;
