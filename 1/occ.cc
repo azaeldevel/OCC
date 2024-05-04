@@ -385,17 +385,17 @@ namespace oct::cc::v1
 
 
 
-    Function::Function() : Statement(Statemants::function),identifier(NULL),insts(NULL)
+    Function::Function() : Statement(Statemants::function),identifier(NULL),stmts(NULL)
     {
     }
-    Function::Function(Statemants t) : Statement(t),identifier(NULL),insts(NULL)
+    Function::Function(Statemants t) : Statement(t),identifier(NULL),stmts(NULL)
     {
     }
     void Function::print(std::ostream& out) const
     {
         if(identifier) identifier->print(out);
         out << "\n{\n";
-        Statement* actual_inst = insts;
+        Statement* actual_inst = stmts;
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";

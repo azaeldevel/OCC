@@ -33,12 +33,14 @@ namespace oct::cc::v1::A
     /**
     *\brief Node Base para instruciones
     **/
-    struct Instruction : public Statement
+    class Instruction : public Statement
     {
+    protected:
         //Instruction* next;
         unsigned char* mcode;
         size_t msize;
 
+    public:
         /**
         *\brief
         *

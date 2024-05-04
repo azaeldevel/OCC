@@ -899,10 +899,11 @@ namespace oct::cc::v1
     /**
     *\brief Node de Identificar
     **/
-    struct Function : public Statement
+    class Function : public Statement
     {
+    public:
         Identifier* identifier;
-        Statement* insts;
+        Statement* stmts;
 
         Function();
         Function(Statemants);

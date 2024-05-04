@@ -69,7 +69,7 @@ namespace oct::cc::v1::A
     {
         if(identifier) identifier->print(out);
         out << "\n{\n";
-        Instruction* actual_inst = (Instruction*)insts;
+        Instruction* actual_inst = (Instruction*)stmts;
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
@@ -80,7 +80,7 @@ namespace oct::cc::v1::A
     }
     void Function::generate(std::ostream& out) const
     {
-        Instruction* actual_inst = (Instruction*)insts;
+        Instruction* actual_inst = (Instruction*)stmts;
         while(actual_inst)
         {
             actual_inst->generate(out);

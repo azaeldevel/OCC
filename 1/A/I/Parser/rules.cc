@@ -249,7 +249,7 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
                 out << "\t\t$$ = new occ::A::Function(occ::Statemants::function);\n";
                 out << "\t\t$$->identifier = $1;\n";
-                out << "\t\t$$->insts = $3;\n";
+                out << "\t\t$$->stmts = $3;\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
             out << "\t}\n";
             out << "\t|\n";
@@ -257,7 +257,7 @@ namespace oct::cc::v1::A::I
             out << "\t{\n";
                 out << "\t\t$$ = new occ::A::Function(occ::Statemants::function);\n";
                 out << "\t\t$$->identifier = $1;\n";
-                out << "\t\t$$->insts = NULL;\n";
+                out << "\t\t$$->stmts = NULL;\n";
                 //out << "\t\tstd::cout << \"Identifier funtion: \" << $1->string << \"\\n\";\n";
             out << "\t}\n";
             out << "\t;\n";
