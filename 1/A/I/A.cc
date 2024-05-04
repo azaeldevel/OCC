@@ -40,7 +40,7 @@ namespace oct::cc::v1::A::I
         while(actual)
         {
             actual->print(out);
-            actual = actual->next;
+            actual = (Statement*)actual->next;
         }
     }
     void Unit::generate(std::ostream& out) const
@@ -52,7 +52,7 @@ namespace oct::cc::v1::A::I
             {
                 static_cast<Function*>(actual)->generate(out);
             }
-            actual = actual->next;
+            actual = (Statement*)actual->next;
         }
     }
 

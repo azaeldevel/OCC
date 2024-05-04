@@ -661,12 +661,14 @@ namespace oct::cc::v1
             memory,
             reg,
             segment,
+            string,
         unit,
+        data,
+        function,
         AI,
             declaration,
                 pointer,
             init_declarator,
-            function,
             instruction,
                 move,
                 ret,
@@ -769,6 +771,7 @@ namespace oct::cc::v1
         Word(Statemants,Tokens,const char*, size_t);
         Word(short);
         Word(int);
+        Word(const char*);
 
         Word& operator=(const Word&);
         Word& operator=(Word&&);
@@ -871,25 +874,39 @@ namespace oct::cc::v1
     /**
     *\brief Node de Identificar
     **/
-    struct Statement : public node
+    class Statement : public node
     {
-        Statement* next;
+    public:
+        //Statement* next;
 
         Statement();
         Statement(Statemants);
     };
 
     /**
+    *\brief Node de Identificar
+    **/
+    class Data : public Statement
+    {
+    public:
+        Data() = default;
+        Data(Statemants);
+    };
+
+
+    /**
     *\brief Node de Space,namespace, package, file scope,etc..
     **/
-    template<typename N,typename K = const char*>
-    class Symbols : public std::map<K,N*>, public Statement
+    template<typename N,typename K>
+    class Space : public std::map<K*,N*>, Statement
     {
     public:
         typedef std::map<K,N*> BASE;
 
     public:
-        Symbols()= default;
+        Space() : name(NULL)
+        {
+        }
 
         bool add(Identifier& id)
         {
@@ -897,7 +914,7 @@ namespace oct::cc::v1
 
             return true;
         }
-        bool add(Symbols& s)
+        bool add(Space& s)
         {
             BASE::insert(std::pair(s.name->string().c_str(),s));
 
@@ -911,11 +928,11 @@ namespace oct::cc::v1
 
     };
 
-    template<typename N,typename K = const char*>
-    class TableSymbols : public Symbols<K,N>
+    template<typename N = node,typename K = Identifier>
+    class TableSymbols : public Space<K,N>
     {
     public:
-        typedef Symbols<K,N> BASE;
+        typedef Space<K,N> BASE;
     public:
         TableSymbols()= default;
 
@@ -997,7 +1014,7 @@ namespace oct::cc::v1
     };
 
 
-    template<class U,class N = Node>
+    template<class U,class N>
     struct Tray
     {
         TableSymbols<N>* table;

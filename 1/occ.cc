@@ -21,6 +21,7 @@
 
 
 #include "occ.hh"
+#include <cstring>
 
 
 
@@ -143,6 +144,9 @@ namespace oct::cc::v1
     {
     }
     Word::Word(int s) : node(Statemants::integer),_string_(std::to_string(s),std::to_string(s).size()),_token_(Tokens::INTEGER),_yylexnext_(NULL)
+    {
+    }
+    Word::Word(const char* s) : node(Statemants::none),_string_(s,strlen(s)),_token_(Tokens::none),_yylexnext_(NULL)
     {
     }
 
@@ -359,10 +363,17 @@ namespace oct::cc::v1
 
 
 
-    Statement::Statement() : node(Statemants::none),next(NULL)
+    Statement::Statement() : node(Statemants::none)
     {
     }
-    Statement::Statement(Statemants t) : node(t),next(NULL)
+    Statement::Statement(Statemants t) : node(t)
+    {
+    }
+
+
+
+
+    Data::Data(Statemants t) : Statement(t)
     {
     }
 

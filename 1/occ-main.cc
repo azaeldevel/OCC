@@ -135,7 +135,7 @@ int main (int argc, char* argv[])
 		return EXIT_FAILURE;
     }
 
-    occ::TableSymbols<occ::Node> symbols;
+    occ::TableSymbols symbols;
 	occ::A::I::Tray trayI;
 	trayI.table = &symbols;
     occ::A::I::Driver driverI(trayI);

@@ -9,6 +9,16 @@
 
 void v1_AI_developing()
 {
+    occ::TableSymbols tb;
+    occ::Identifier id1("id1"),id2("id2"),id3("id3"),id4("id4");
+
+
+
+}
+
+
+void v1_AI_TAbleModeAddressing()
+{
     std::vector<occ::node*> nodes;
     nodes.push_back(new occ::A::Register(occ::Tokens::AL));
     nodes.push_back(new occ::A::Register(occ::Tokens::AH));

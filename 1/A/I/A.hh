@@ -47,7 +47,7 @@ namespace oct::cc::v1::A::I
         virtual void generate(std::ostream&) const;
     };
 
-    struct Tray : public occ::Tray<Unit>
+    struct Tray : public occ::Tray<Unit,node>
     {
     };
 

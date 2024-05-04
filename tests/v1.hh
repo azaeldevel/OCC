@@ -10,5 +10,6 @@ int v1_init(void);
 int v1_clean(void);
 
 void v1_AI_developing();
+void v1_AI_TAbleModeAddressing();
 
 #endif

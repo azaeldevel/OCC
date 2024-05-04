@@ -60,7 +60,7 @@ namespace oct::cc::v1::A::I
         }
 
         out << "{IDENTIFIER}\t\t{\n";
-                            out << "\t\tyylval->IDENTIFIER = identifiers.next(occ::Tokens::IDENTIFIER,yytext,yyleng);\n";
+                            out << "\t\tyylval->IDENTIFIER = identifiers.next(occ::Statemants::string,occ::Tokens::IDENTIFIER,yytext,yyleng);\n";
                             //out << "\t\tstd::cout << yytext << \":\" << yyleng ;\n";
                             out << "\t\treturn IDENTIFIER;\n";
         out << "\t\t}\n";
