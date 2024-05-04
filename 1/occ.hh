@@ -881,6 +881,8 @@ namespace oct::cc::v1
 
         Statement();
         Statement(Statemants);
+        virtual void print(std::ostream&)const;
+        virtual void generate(std::ostream&)const;
     };
 
     /**
@@ -893,6 +895,19 @@ namespace oct::cc::v1
         Data(Statemants);
     };
 
+
+    /**
+    *\brief Node de Identificar
+    **/
+    struct Function : public Statement
+    {
+        Identifier* identifier;
+        Statement* insts;
+
+        Function();
+        Function(Statemants);
+        virtual void print(std::ostream&)const;
+    };
 
     /**
     *\brief Node de Space,namespace, package, file scope,etc..

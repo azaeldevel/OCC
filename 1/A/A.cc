@@ -59,17 +59,17 @@ namespace oct::cc::v1::A
     }
 
 
-    Function::Function() : Statement(Statemants::function),identifier(NULL),insts(NULL)
+    Function::Function() : v1::Function(Statemants::function)
     {
     }
-    Function::Function(Statemants t) : Statement(t),identifier(NULL),insts(NULL)
+    Function::Function(Statemants t) : v1::Function(t)
     {
     }
     void Function::print(std::ostream& out) const
     {
         if(identifier) identifier->print(out);
         out << "\n{\n";
-        Instruction* actual_inst = insts;
+        Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
@@ -80,7 +80,7 @@ namespace oct::cc::v1::A
     }
     void Function::generate(std::ostream& out) const
     {
-        Instruction* actual_inst = insts;
+        Instruction* actual_inst = (Instruction*)insts;
         while(actual_inst)
         {
             actual_inst->generate(out);
@@ -335,13 +335,13 @@ namespace oct::cc::v1::A
         }
     }
 
-    Instruction::Instruction() : node(Statemants::instruction),next(NULL),mcode(NULL),msize(0)
+    Instruction::Instruction() : Statement(Statemants::instruction),next(NULL),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t) : node(t),next(NULL),mcode(NULL),msize(0)
+    Instruction::Instruction(Statemants t) : Statement(t),next(NULL),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t,size_t s) : node(t),next(NULL),mcode(new unsigned char[s]),msize(s)
+    Instruction::Instruction(Statemants t,size_t s) : Statement(t),next(NULL),mcode(new unsigned char[s]),msize(s)
     {
         for(size_t i = 0; i < s ; i++) mcode[i] = 0;
     }

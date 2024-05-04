@@ -30,11 +30,10 @@
 namespace oct::cc::v1::A
 {
 
-
     /**
     *\brief Node Base para instruciones
     **/
-    struct Instruction : public node
+    struct Instruction : public Statement
     {
         Instruction* next;
         unsigned char* mcode;
@@ -86,15 +85,13 @@ namespace oct::cc::v1::A
     /**
     *\brief Node de Identificar
     **/
-    struct Function : public Statement
+    struct Function : public v1::Function
     {
-        Identifier* identifier;
-        Instruction* insts;
-
         Function();
         Function(Statemants);
-        virtual void print(std::ostream&)const;
+
         virtual void generate(std::ostream&)const;
+        virtual void print(std::ostream&)const;
     };
 
 

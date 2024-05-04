@@ -369,12 +369,40 @@ namespace oct::cc::v1
     Statement::Statement(Statemants t) : node(t)
     {
     }
+    void Statement::print(std::ostream& out) const
+    {
+    }
+    void Statement::generate(std::ostream& out) const
+    {
+    }
 
 
 
 
     Data::Data(Statemants t) : Statement(t)
     {
+    }
+
+
+
+    Function::Function() : Statement(Statemants::function),identifier(NULL),insts(NULL)
+    {
+    }
+    Function::Function(Statemants t) : Statement(t),identifier(NULL),insts(NULL)
+    {
+    }
+    void Function::print(std::ostream& out) const
+    {
+        if(identifier) identifier->print(out);
+        out << "\n{\n";
+        Statement* actual_inst = insts;
+        while(actual_inst)
+        {
+            //out << "statment: " << (int)actual_inst->data << "\n";
+            actual_inst->print(out);
+            actual_inst = (Statement*)actual_inst->next;
+        }
+        out << "}\n";
     }
 
 

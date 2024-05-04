@@ -30,7 +30,7 @@ namespace oct::cc::v1::A::I
             //out << "\t#include <Buffer.hh>\n";
             out << "\t#include <A/intel.hh>\n";
             out << "\t#include <A/I/Driver.hh>\n";
-            out << "\t\tstatic occ::A::Function* function_last = NULL;\n";
+            out << "\t\tstatic occ::Function* function_last = NULL;\n";
             out << "\t\tstatic occ::A::Instruction* instruction_last = NULL;\n";
             out << "\t\tstatic occ::Statement* statement_last = NULL;\n";
             out << "\t\tstatic occ::node* specifiers_last = NULL;\n";
@@ -315,8 +315,8 @@ namespace oct::cc::v1::A::I
     }
     void Parser::declaration_A(std::ostream& out) const
     {
-        out << "%type <occ::A::Function*> function\n";
-        out << "%type <occ::A::Function*> functions\n";
+        out << "%type <occ::Function*> function\n";
+        out << "%type <occ::Function*> functions\n";
         out << "%type <occ::node*> AREMFEN\n";//puede ser un identificador o un entero
         out << "%type <occ::node*> memory\n";//puede ser un identificador o un entero
         out << "%type <occ::A::Register*> registers_8b\n";
