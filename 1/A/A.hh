@@ -35,7 +35,7 @@ namespace oct::cc::v1::A
     **/
     struct Instruction : public Statement
     {
-        Instruction* next;
+        //Instruction* next;
         unsigned char* mcode;
         size_t msize;
 

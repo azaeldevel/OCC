@@ -74,7 +74,7 @@ namespace oct::cc::v1::A
         {
             //out << "statment: " << (int)actual_inst->data << "\n";
             actual_inst->print(out);
-            actual_inst = actual_inst->next;
+            actual_inst = (Instruction*)actual_inst->next;
         }
         out << "}\n";
     }
@@ -86,7 +86,7 @@ namespace oct::cc::v1::A
             actual_inst->generate(out);
             //std::cout << "code:" << actual_inst->mcode[0] << "-" << actual_inst->mcode[1] << "\n";
             //std::cout << "code:" << (void*)actual_inst << "\n";
-            actual_inst = actual_inst->next;
+            actual_inst = (Instruction*)actual_inst->next;
         }
     }
 
@@ -335,13 +335,13 @@ namespace oct::cc::v1::A
         }
     }
 
-    Instruction::Instruction() : Statement(Statemants::instruction),next(NULL),mcode(NULL),msize(0)
+    Instruction::Instruction() : Statement(Statemants::instruction),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t) : Statement(t),next(NULL),mcode(NULL),msize(0)
+    Instruction::Instruction(Statemants t) : Statement(t),mcode(NULL),msize(0)
     {
     }
-    Instruction::Instruction(Statemants t,size_t s) : Statement(t),next(NULL),mcode(new unsigned char[s]),msize(s)
+    Instruction::Instruction(Statemants t,size_t s) : Statement(t),mcode(new unsigned char[s]),msize(s)
     {
         for(size_t i = 0; i < s ; i++) mcode[i] = 0;
     }
