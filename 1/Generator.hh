@@ -57,6 +57,7 @@ namespace oct::cc::v1
             virtual void declaration_AI(std::ostream& out) const;
             virtual void declaration_C_expression(std::ostream& out) const;
             virtual void declaration_C_declaration(std::ostream& out) const;
+            virtual void declaration_A_declaration(std::ostream& out) const;
             virtual void rules(std::ostream& out) const;
             virtual void rules_types(std::ostream& out) const;
             virtual void rules_identifier(std::ostream& out) const;
@@ -69,6 +70,7 @@ namespace oct::cc::v1
             virtual void rules_occ(std::ostream& out) const;
             virtual void rules_C_expression(std::ostream& out) const;
             virtual void rules_C_declaration(std::ostream& out) const;
+            virtual void rules_A_declaration(std::ostream& out) const;
             virtual void rules_A(std::ostream& out) const;
             virtual void rules_AI(std::ostream& out) const;
             virtual void functions(std::ostream& out) const;

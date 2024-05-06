@@ -7,7 +7,8 @@ namespace oct::cc::v1::A::I
     {
         rules_occ(out);
         rules_C_expression(out);
-        rules_C_declaration(out);
+        //rules_C_declaration(out);
+        rules_A_declaration(out);
         rules_A(out);
         rules_AI(out);
     }
@@ -575,6 +576,238 @@ namespace oct::cc::v1::A::I
             out << "\t'(' declarator ')'\n";
             out << "\t{\n";
             out << "\t\t$$ = new occ::A::Direct_Declarator(*$2);\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "pointer :\n";
+            out << "\t'*'\n";
+            out << "\t{\n";
+            out << "\t\t$$ = new occ::Node(occ::Statemants::pointer);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'*' type_qualifier_list\n";
+            out << "\t{\n";
+            out << "\t\t$$ = new occ::Node(occ::Statemants::pointer);\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "type_qualifier_list :\n";
+            out << "\ttype_qualifier\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier_list type_qualifier\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "initializer :\n";
+            out << "\tassignment_expresion\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\'{' initializer_list '}'\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "initializer_list :\n";
+            out << "\tinitializer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tinitializer_list initializer\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+    }
+
+
+    void Parser::rules_A_declaration(std::ostream& out) const
+    {
+        out << "declaration :\n";
+            out << "\tdeclaration_specifiers declarator_list ';'\n";
+            out << "\t{\n";
+            out << "\t\t$$ = declarations.next(*$1,*$2);\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "declaration_specifiers :\n";
+            out << "\tstorage_class_specifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tstorage_class_specifier declaration_specifiers\n";
+            out << "\t{\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_specifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_specifier declaration_specifiers\n";
+            out << "\t{\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                out << "\t\tspecifiers_last = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\ttype_qualifier declaration_specifiers\n";
+            out << "\t{\n";
+                out << "\t\tspecifiers_last->next = $2;\n";
+                out << "\t\tspecifiers_last = $2;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "declarator_list :\n";
+            out << "\tdeclarator\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdeclarator_list, declarator\n";
+            out << "\t{\n";
+            out << "\t\t;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "storage_class_specifier :\n";
+            out << "\tTYPEDEF\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tEXTERN\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSTATIC\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tAUTO\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tREGISTER\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+
+        out << "type_specifier :\n";
+            out << "\tVOID\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tCHAR\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSHORT\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tINT\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tLONG\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tFLOAT\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tDOUBLE\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tSIGNED\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tUNSIGNED\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            {//TODO: Agrgar desde 6.5.2.1 hasta 6.5.2.2
+                ;
+            }
+            out << "\t;\n";
+
+        out << "type_qualifier :\n";
+            out << "\tCONST\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+                //out << "\t\t$1->print(std::cout);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tVOLATIL\n";
+            out << "\t{\n";
+                out << "\t\t$$ = $1;\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+        out << "declarator :\n";
+            out << "\tpointer direct_declarator\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\tdirect_declarator\n";
+            out << "\t{\n";
+            out << "\t}\n";
+            out << "\t;\n";
+
+
+        out << "direct_declarator :\n";
+            out << "\tidentifier\n";
+            out << "\t{\n";
+            //out << "\t\t$$ = new occ::A::Direct_Declarator(*$1);\n";
+            out << "\t}\n";
+            out << "\t|\n";
+            out << "\t'(' declarator ')'\n";
+            out << "\t{\n";
+            //out << "\t\t$$ = new occ::A::Direct_Declarator(*$2);\n";
             out << "\t}\n";
             out << "\t;\n";
 

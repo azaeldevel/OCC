@@ -29,7 +29,6 @@
 
 namespace oct::cc::v1::A
 {
-
     /**
     *\brief Node Base para instruciones
     **/
@@ -68,8 +67,6 @@ namespace oct::cc::v1::A
         void init(size_t);
         void init(Statemants type,size_t);
     };
-
-
 
     /**
     *\brief Node de Identificar

@@ -893,6 +893,10 @@ namespace oct::cc::v1
     public:
         Data() = default;
         Data(Statemants);
+        Data(Statemants,Identifier*);
+
+    private:
+        Identifier* id;
     };
 
 
@@ -905,6 +909,7 @@ namespace oct::cc::v1
         Identifier* identifier;
         Statement* stmts;
 
+    public:
         Function();
         Function(Statemants);
         virtual void print(std::ostream&)const;

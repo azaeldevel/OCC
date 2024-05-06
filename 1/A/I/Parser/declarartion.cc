@@ -273,7 +273,8 @@ namespace oct::cc::v1::A::I
 
         declaration_occ(out);
         declaration_C_expression(out);
-        declaration_C_declaration(out);
+        //declaration_C_declaration(out);
+        declaration_A_declaration(out);
         declaration_A(out);
         declaration_AI(out);
 
@@ -354,6 +355,19 @@ namespace oct::cc::v1::A::I
         out << "%type <occ::node*> type_qualifier_list\n";
         out << "%type <occ::node*> initializer\n";
         out << "%type <occ::node*> initializer_list\n";
+    }
+    void Parser::declaration_A_declaration(std::ostream& out) const
+    {
+        out << "%type <occ::A::Declaration*> declaration\n";
+        out << "%type <occ::node*> declaration_specifiers\n";
+        out << "%type <occ::Word*> storage_class_specifier\n";
+        out << "%type <occ::Word*> type_specifier\n";
+        out << "%type <occ::Word*> type_qualifier\n";
+        out << "%type <occ::Statement*> declarator\n";
+        out << "%type <occ::Statement*> declarator_list\n";
+        out << "%type <occ::Statement*> direct_declarator\n";
+        out << "%type <occ::node*> pointer\n";
+        out << "%type <occ::node*> type_qualifier_list\n";
     }
 
 }

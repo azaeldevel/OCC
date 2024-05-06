@@ -1,8 +1,7 @@
 const char* message;
 int counter;
 register char type;
-//b0 42 b4 0e cd 10 b0 6f
-//0b 42 0f 0e cd 10 0b 6f
+
 greethings
 {
 	mov al , 'B';
